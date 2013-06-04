@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>forms-parent</artifactId>
+		<groupId>org.bonitasoft.forms</groupId>
+		<version>6.0.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.bonitasoft.forms</groupId>
+	<artifactId>forms-view</artifactId>
+	<name>forms view</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-view</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-rpc</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-forms-config</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.bonitasoft.forms</groupId>
+									<artifactId>forms-config</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/forms-config</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.bonitasoft.forms</groupId>
+									<artifactId>forms-design</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/forms-design</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-design-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+			            	<goal>run</goal>
+            			</goals>
+            			<configuration>
+            				<tasks>
+	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
+	            					<fileset dir="${project.build.directory}/forms-config/platform/tenant-template/work/looknfeel/default" />
+	            				</copy>
+	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
+	            					<fileset dir="${project.build.directory}/forms-design/application/application" />
+	            				</copy>
+	            			</tasks>
+            			</configuration>
+            		</execution>
+            	</executions>
+            </plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,12 @@
+<connectorImplementation>
+
+	<definitionId>org.bonitasoft.forms.server.testConnectors.testExternalConnector</definitionId>
+	<definitionVersion>1.0</definitionVersion>
+	<implementationClassname>org.bonitasoft.forms.server.testConnectors.TestExternalConnector</implementationClassname>
+	<implementationId>org.bonitasoft.forms.server.testConnectors.testExternalConnector</implementationId>
+	<implementationVersion>1.0</implementationVersion>
+
+	<jarDependencies>
+		<jarDependency>TestExternalConnector.jar</jarDependency>
+	</jarDependencies>
+</connectorImplementation>

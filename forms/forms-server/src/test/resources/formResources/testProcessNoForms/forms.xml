@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<forms-definition product-version="6.0">
+  <migration-product-version>6.0</migration-product-version>
+  <application name="testProcessNoForms" version="1.5">
+    <permissions>process#testProcessNoForms--1.5</permissions>
+<application-label>
+			<expression>
+				<expression-content>testProcessNoForms</expression-content>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<return-type>java.lang.String</return-type>
+				<dependencies />
+			</expression>
+		</application-label>
+    <application-layout>html/testProcessNoForms_process_template.html</application-layout>
+    <mandatory-symbol>
+			<expression>
+				<expression-content>*</expression-content>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<return-type>java.lang.String</return-type>
+				<dependencies />
+			</expression>
+		</mandatory-symbol>
+    <error-template>html/testProcessNoForms_error_template.html</error-template>
+  </application>
+</forms-definition>

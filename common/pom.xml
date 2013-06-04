@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>bonita-console</artifactId>
+		<groupId>org.bonitasoft.console</groupId>
+		<version>6.0.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.bonitasoft.console</groupId>
+	<artifactId>common-parent</artifactId>
+	<name>common parent</name>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>common-config</module>
+		<module>common-model</module>
+		<module>common-server</module>
+		<module>common-view</module>
+	</modules>
+
+	<scm>
+		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.0.0/common</connection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.0.0/common</url>
+	</scm>
+
+</project>

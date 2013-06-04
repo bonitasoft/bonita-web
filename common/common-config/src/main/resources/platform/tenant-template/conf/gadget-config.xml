@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gadgets>
+	<gadget>
+		<title>User search</title>
+		<name>userlist</name>
+		<url>http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fconsole%2FgadgetResource%3Fgadget%3Duserlist%26location%3DUsersGadget.gadget.xml</url>
+		<trust>0</trust>
+		<hindex>0</hindex>
+		<vindex>0</vindex>
+	</gadget>
+	<gadget>
+		<title>Process list</title>
+		<name>processlist</name>
+		<url>http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fconsole%2FgadgetResource%3Fgadget%3Dprocesslist%26location%3DProcessListGadget.gadget.xml</url>
+		<trust>0</trust>
+		<hindex>0</hindex>
+		<vindex>0</vindex>
+	</gadget>
+	<gadget>
+		<title>Book search</title>
+		<name>booksearch</name>
+		<url>http%3A%2F%2Fwww.google.com%2Fig%2Fmodules%2Fchinagadgets%2Fibooksearch%2Fibooksearch.xml</url>
+		<trust>0</trust>
+		<hindex>0</hindex>
+		<vindex>0</vindex>
+	</gadget>
+</gadgets>

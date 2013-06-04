@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+			Forms definition schema for Bonita open solution.
+			Copyright (C) 2009-2012
+			BonitaSoft S.A.
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="forms-definition" type="FormsDefinition" />
+
+	<xsd:complexType name="FormsDefinition">
+		<xsd:sequence>
+			<xsd:element name="home-page" type="xsd:string" minOccurs="0" />
+			<xsd:element name="migration-product-version" type="xsd:string" minOccurs="0" />
+			<xsd:element name="application" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="application-label" type="ExpressionContainer" />
+						<xsd:element name="application-layout" type="xsd:string" minOccurs="0" />
+						<xsd:element name="mandatory-symbol" type="ExpressionContainer" minOccurs="0" />
+						<xsd:element name="mandatory-label" type="ExpressionContainer" minOccurs="0" />
+						<xsd:element name="mandatory-style" type="xsd:string" minOccurs="0" />
+						<xsd:element name="error-template" type="xsd:string" minOccurs="0" />
+						<xsd:element name="forms" type="Forms" minOccurs="0" />
+						<xsd:element name="permissions" type="xsd:string" />
+					</xsd:all>
+					<xsd:attribute name="name" type="xsd:string" use="required" />
+					<xsd:attribute name="version" type="xsd:string" use="required" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="product-version" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+	<xsd:complexType name="Forms">
+		<xsd:sequence>
+			<xsd:element name="form" type="Form" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Form">
+		<xsd:all>
+			<xsd:element name="pages" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="page" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:all>
+									<xsd:element name="page-label" type="ExpressionContainer" />
+									<xsd:element name="allow-html-in-label" type="xsd:boolean" minOccurs="0" />
+									<xsd:element name="page-layout" type="xsd:string" minOccurs="0" />
+									<xsd:element name="widgets" type="Widgets" />
+									<xsd:element name="page-validators" type="Validators" minOccurs="0" />
+									<xsd:element name="next-page" type="ExpressionContainer" minOccurs="0" />
+									<xsd:element name="actions" type="Actions" minOccurs="0" />
+								</xsd:all>
+								<xsd:attribute name="id" type="xsd:string" />
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="first-page" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="confirmation-layout" type="xsd:string" minOccurs="0" />
+			<xsd:element name="confirmation-message" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="redirection-url" type="RedirectionURL" minOccurs="0" />
+			<xsd:element name="transient-data" type="TransientData" minOccurs="0" />
+			<xsd:element name="connectors" type="Connectors" minOccurs="0" />
+			<xsd:element name="permissions" type="xsd:string" />
+			<xsd:element name="next-form" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="form-type" type="FormType" />
+		</xsd:all>
+		<xsd:attribute name="id" type="xsd:string" />
+	</xsd:complexType>
+
+	<xsd:complexType name="TransientData">
+		<xsd:sequence>
+			<xsd:element name="data" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="classname" type="xsd:string" />
+						<xsd:element name="value" type="ExpressionContainer" minOccurs="0" />
+					</xsd:all>
+					<xsd:attribute name="name" type="xsd:string" use="required" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Widgets">
+		<xsd:sequence>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element name="widget" type="Widget" />
+				<xsd:element name="group" type="WidgetGroup" />
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Widget">
+		<xsd:all>
+			<xsd:element name="title" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="max-length" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="max-height" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="label" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="label-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="input-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="label-position" type="ItemPosition" minOccurs="0" />
+			<xsd:element name="allow-html-in-label" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="allow-html-in-field" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="mandatory" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="readonly" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="initial-value" type="FieldValue" minOccurs="0" />
+			<xsd:element name="display-format" type="xsd:string" minOccurs="0" />
+			<xsd:element name="items-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="html-attributes" type="HTMLAttributes" minOccurs="0" />
+			<xsd:element name="available-values" type="AvailableValues" minOccurs="0" />
+			<xsd:element name="validators" type="Validators" minOccurs="0" />
+			<xsd:element name="label-button" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="max-items" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="multi-instantiated" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="max-instances" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="min-instances" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="add-label" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="add-label-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="add-title" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="remove-label" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="remove-label-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="remove-title" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="display-attachment-image" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="display-condition" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="image-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="table-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="cell-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="headings-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="headings-positions" type="HeadingsPositions" minOccurs="0" />
+			<xsd:element name="horizontal-header" type="Header" minOccurs="0" />
+			<xsd:element name="vertical-header" type="Header" minOccurs="0" />
+			<xsd:element name="select-mode" type="SelectMode" minOccurs="0" />
+			<xsd:element name="selected-items-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="value-column-index" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="max-rows" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="min-rows" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="max-columns" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="min-columns" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="variable-columns" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="variable-rows" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="dependencies" type="Dependencies" minOccurs="0" />
+			<xsd:element name="display-before-event" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="display-after-event" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="value-after-event" type="FieldValue" minOccurs="0" />
+			<xsd:element name="available-values-after-event" type="AvailableValues" minOccurs="0" />
+			<xsd:element name="widget-position" type="WidgetPosition" minOccurs="0" />
+			<xsd:element name="delay_millis" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="sub-title" type="SubTitle" minOccurs="0" />
+			<xsd:element name="popup-tooltip" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="file-input-type" type="FileWidgetInputType" minOccurs="0" />
+			<xsd:element name="field-output-type" type="xsd:string" minOccurs="0" />
+		</xsd:all>
+		<xsd:attribute name="id" type="xsd:string" use="required" />
+		<xsd:attribute name="type" type="WidgetType" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="WidgetPosition">
+		<xsd:all>
+			<xsd:element name="row" type="xsd:integer" />
+			<xsd:element name="column" type="xsd:integer" />
+			<xsd:element name="rowspan" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="colspan" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="cell-styles" type="xsd:string" minOccurs="0" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="WidgetGroup">
+		<xsd:all>
+			<xsd:element name="title" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="label" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="label-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="label-position" type="ItemPosition" minOccurs="0" />
+			<xsd:element name="allow-html-in-label" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="initial-value" type="FieldValue" minOccurs="0" />
+			<xsd:element name="multi-instantiated" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="iterator-name" type="xsd:string" minOccurs="0" />
+			<xsd:element name="max-instances" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="min-instances" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="add-label" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="add-label-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="add-title" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="remove-label" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="remove-label-style" type="xsd:string" minOccurs="0" />
+			<xsd:element name="remove-title" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="display-condition" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="dependencies" type="Dependencies" minOccurs="0" />
+			<xsd:element name="display-before-event" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="display-after-event" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="value-after-event" type="FieldValue" minOccurs="0" />
+			<xsd:element name="widgets" type="Widgets" minOccurs="0" />
+			<xsd:element name="rows-styles" type="RowsStyles" minOccurs="0" />
+			<xsd:element name="columns-styles" type="ColumnsStyles" minOccurs="0" />
+			<xsd:element name="widget-position" type="WidgetPosition" minOccurs="0" />
+		</xsd:all>
+		<xsd:attribute name="id" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="FieldValue">
+		<xsd:choice>
+			<xsd:element name="expression" type="Expression" minOccurs="0" />
+			<xsd:element name="expression-array" type="ExpressionArray" minOccurs="0" />
+			<xsd:element name="connectors" type="Connectors" minOccurs="0" />
+			<xsd:element name="resource" type="Resource" minOccurs="0" />
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Resource">
+		<xsd:sequence>
+			<xsd:element name="path" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="AvailableValues">
+		<xsd:choice>
+			<xsd:element name="expression" type="Expression" minOccurs="0" />
+			<xsd:element name="connectors" type="Connectors" minOccurs="0" />
+			<xsd:element name="values-list" type="ValuesList" minOccurs="0" />
+			<xsd:element name="values-array" type="ValuesArray" minOccurs="0" />
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="Header">
+		<xsd:choice>
+			<xsd:element name="expression" type="Expression" minOccurs="0" />
+			<xsd:element name="expression-list" type="ExpressionList" minOccurs="0" />
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="Connectors">
+		<xsd:sequence>
+			<xsd:element name="connector" type="Connector" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Connector">
+		<xsd:all>
+			<xsd:element name="id" type="xsd:string" />
+			<xsd:element name="version" type="xsd:string" />
+			<xsd:element name="name" type="xsd:string" minOccurs="0" />
+			<xsd:element name="throw-exception" type="xsd:boolean" />
+			<xsd:element name="input-parameters" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="input-parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="output-operations" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="output-operation" type="Operation" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="Parameter">
+		<xsd:sequence>
+			<xsd:element name="expression" type="Expression" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="Operation">
+		<xsd:all>
+			<xsd:element name="variable" type="xsd:string" minOccurs="0" />
+			<xsd:element name="operator" type="xsd:string" minOccurs="0" />
+			<xsd:element name="expression" type="Expression" minOccurs="0" />
+		</xsd:all>
+		<xsd:attribute name="type" type="OperationType" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="RowsStyles">
+		<xsd:sequence>
+			<xsd:element name="row-style" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="row" type="xsd:string" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ColumnsStyles">
+		<xsd:sequence>
+			<xsd:element name="column-style" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="column" type="xsd:string" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ValuesList">
+		<xsd:sequence>
+			<xsd:element name="available-value" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="label" type="ExpressionContainer" />
+						<xsd:element name="value" type="ExpressionContainer" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ValuesArray">
+		<xsd:sequence>
+			<xsd:element name="row" type="ValuesList" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HTMLAttributes">
+		<xsd:sequence>
+			<xsd:element name="html-attribute" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HeadingsPositions">
+		<xsd:all>
+			<xsd:element name="left-headings" type="xsd:boolean" />
+			<xsd:element name="top-headings" type="xsd:boolean" />
+			<xsd:element name="right-headings" type="xsd:boolean" />
+			<xsd:element name="bottom-headings" type="xsd:boolean" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="Dependencies">
+		<xsd:sequence>
+			<xsd:element name="dependency" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="depends-on" type="xsd:string" />
+						<xsd:element name="refresh-on-change" type="xsd:boolean" minOccurs="0" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Validators">
+		<xsd:sequence>
+			<xsd:element name="validator" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="classname" type="xsd:string" />
+						<xsd:element name="label" type="ExpressionContainer" />
+						<xsd:element name="parameter" type="ExpressionContainer" minOccurs="0" />
+						<xsd:element name="style" type="xsd:string" minOccurs="0" />
+						<xsd:element name="position" type="ValidatorPosition" minOccurs="0" />
+					</xsd:all>
+					<xsd:attribute name="id" type="xsd:string" use="required" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="RedirectionURL">
+		<xsd:all>
+			<xsd:element name="url" type="ExpressionContainer" minOccurs="0" />
+			<xsd:element name="transmit-submission-url" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="actions" type="Actions" minOccurs="0" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="SubTitle">
+		<xsd:all>
+			<xsd:element name="label" type="ExpressionContainer" />
+			<xsd:element name="position" type="SubTitlePosition" minOccurs="0" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="Actions">
+		<xsd:sequence>
+			<xsd:element name="action" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="variable" type="xsd:string" minOccurs="0" />
+						<xsd:element name="external" type="xsd:boolean" minOccurs="0" />
+						<xsd:element name="attachment" type="xsd:string" minOccurs="0" />
+						<xsd:element name="operator" type="xsd:string" minOccurs="0" />
+						<xsd:element name="input-type" type="xsd:string" minOccurs="0" />
+						<xsd:element name="expression" type="Expression" minOccurs="0" />
+						<xsd:element name="submit-button" type="xsd:string" minOccurs="0" />
+						<xsd:element name="connector" type="Connector" minOccurs="0" />
+					</xsd:all>
+					<xsd:attribute name="type" type="ActionType" use="required" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Expression">
+		<xsd:all>
+			<xsd:element name="name" type="xsd:string" minOccurs="0" />
+			<xsd:element name="expression-content" type="xsd:string" />
+			<xsd:element name="expression-type" type="xsd:string" />
+			<xsd:element name="return-type" type="xsd:string" />
+			<xsd:element name="interpreter" type="xsd:string" minOccurs="0" />
+			<xsd:element name="dependencies" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="expression" type="Expression" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="ExpressionContainer">
+		<xsd:all>
+			<xsd:element name="expression" type="Expression" />
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="ExpressionArray">
+		<xsd:sequence>
+			<xsd:element name="row" type="ExpressionList" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ExpressionList">
+		<xsd:sequence>
+			<xsd:element name="expression" type="Expression" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="ActionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ASSIGNMENT" />
+			<xsd:enumeration value="JAVA_METHOD" />
+			<xsd:enumeration value="XPATH_UPDATE_QUERY" />
+			<xsd:enumeration value="STRING_INDEX" />
+			<xsd:enumeration value="DOCUMENT_CREATE_UPDATE" />
+			<xsd:enumeration value="EXECUTE_CONNECTOR" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OperationType">
+		<xsd:restriction base="ActionType">
+			<xsd:enumeration value="ASSIGNMENT" />
+			<xsd:enumeration value="JAVA_METHOD" />
+			<xsd:enumeration value="XPATH_UPDATE_QUERY" />
+			<xsd:enumeration value="STRING_INDEX" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="WidgetType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MESSAGE" />
+			<xsd:enumeration value="TEXT" />
+			<xsd:enumeration value="TEXTAREA" />
+			<xsd:enumeration value="RICH_TEXTAREA" />
+			<xsd:enumeration value="TEXTBOX" />
+			<xsd:enumeration value="RADIOBUTTON_GROUP" />
+			<xsd:enumeration value="LISTBOX_SIMPLE" />
+			<xsd:enumeration value="LISTBOX_MULTIPLE" />
+			<xsd:enumeration value="SUGGESTBOX" />
+			<xsd:enumeration value="SUGGESTBOX_ASYNC" />
+			<xsd:enumeration value="CHECKBOX" />
+			<xsd:enumeration value="CHECKBOX_GROUP" />
+			<xsd:enumeration value="DATE" />
+			<xsd:enumeration value="DURATION" />
+			<xsd:enumeration value="PASSWORD" />
+			<xsd:enumeration value="FILEUPLOAD" />
+			<xsd:enumeration value="FILEDOWNLOAD" />
+			<xsd:enumeration value="IMAGE" />
+			<xsd:enumeration value="TABLE" />
+			<xsd:enumeration value="EDITABLE_GRID" />
+			<xsd:enumeration value="IFRAME" />
+			<xsd:enumeration value="HIDDEN" />
+			<xsd:enumeration value="BUTTON" />
+			<xsd:enumeration value="BUTTON_SUBMIT" />
+			<xsd:enumeration value="BUTTON_NEXT" />
+			<xsd:enumeration value="BUTTON_PREVIOUS" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ItemPosition">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LEFT" />
+			<xsd:enumeration value="TOP" />
+			<xsd:enumeration value="RIGHT" />
+			<xsd:enumeration value="BOTTOM" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ValidatorPosition">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TOP" />
+			<xsd:enumeration value="BOTTOM" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SubTitlePosition">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TOP" />
+			<xsd:enumeration value="BOTTOM" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SelectMode">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NONE" />
+			<xsd:enumeration value="SINGLE" />
+			<xsd:enumeration value="MULTIPLE" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="FormType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="entry" />
+			<xsd:enumeration value="view" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="FileWidgetInputType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="URL" />
+			<xsd:enumeration value="FILE" />
+			<xsd:enumeration value="ALL" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

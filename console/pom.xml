@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>bonita-console</artifactId>
+		<groupId>org.bonitasoft.console</groupId>
+		<version>6.0.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.bonitasoft.console</groupId>
+	<artifactId>console-parent</artifactId>
+	<name>console parent</name>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>console-config</module>
+		<module>console-model</module>
+ 		<module>console-reporting</module>
+		<module>console-server-impl</module>
+		<module>console-view</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>buildAll</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>console-war</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>buildLibs</id>
+		</profile>
+	</profiles>
+
+	<scm>
+		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.0.0/console</connection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.0.0/console</url>
+	</scm>
+</project>
