@@ -42,7 +42,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-model</artifactId>
+			<artifactId>common-model</artifactId>
 			<version>${project.version}</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
