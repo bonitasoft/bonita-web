@@ -139,7 +139,7 @@ public class Cookie extends ParametersStorage {
             // Set the expires date
             final Date now = new Date();
             now.setTime(now.getTime() + COOKIE_EXPIRE);
-            Cookies.setCookie(LOGIN_COOKIE_NAME, value, now);
+            Cookies.setCookie(LOGIN_COOKIE_NAME, value, now, null, "/", false);
         }
     }
 
