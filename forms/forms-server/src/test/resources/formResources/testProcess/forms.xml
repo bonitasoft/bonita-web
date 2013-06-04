@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<forms-definition product-version="6.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="forms.xsd">
+	<migration-product-version>6.0</migration-product-version>
+	<application name="testProcess" version="1.5">
+		<permissions>process#testProcess--1.5</permissions>
+		<application-label>
+			<expression>
+				<expression-content>testProcess</expression-content>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<return-type>java.lang.String</return-type>
+				<dependencies />
+			</expression>
+		</application-label>
+		<application-layout>html/testProcess_process_template.html
+		</application-layout>
+		<mandatory-symbol>
+			<expression>
+				<expression-content>*</expression-content>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<return-type>java.lang.String</return-type>
+				<dependencies />
+			</expression>
+		</mandatory-symbol>
+		<error-template>html/testProcess_error_template.html</error-template>
+		<forms>
+			<form id="testProcess--1.5$entry">
+				<form-type>entry</form-type>
+				<first-page>
+					<expression>
+						<expression-content>testProcess</expression-content>
+						<expression-type>TYPE_CONSTANT</expression-type>
+						<return-type>java.lang.String</return-type>
+						<dependencies />
+					</expression>
+				</first-page>
+				<permissions>process#testProcess--1.5</permissions>
+				<pages>
+					<page id="testProcess">
+						<page-label>
+							<expression>
+								<expression-content>testProcess</expression-content>
+								<expression-type>TYPE_CONSTANT</expression-type>
+								<return-type>java.lang.String</return-type>
+								<dependencies />
+							</expression>
+
+						</page-label>
+						<allow-html-in-label>false</allow-html-in-label>
+						<page-layout>html/testProcess_process_testProcess.html
+						</page-layout>
+						<widgets>
+							<widget id="testDefaultValue" type="TEXTBOX">
+								<initial-value>
+									<expression>
+										<name>formWidgetValue</name>
+										<expression-content>test1</expression-content>
+										<expression-type>TYPE_VARIABLE</expression-type>
+										<return-type>java.lang.String</return-type>
+										<dependencies />
+									</expression>
+								</initial-value>
+
+								<allow-html-in-field>false</allow-html-in-field>
+								<mandatory>false</mandatory>
+								<readonly>false</readonly>
+								<label>
+									<expression>
+										<name />
+										<expression-content>TEXTBOX Label</expression-content>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<return-type>java.lang.String</return-type>
+										<dependencies />
+									</expression>
+								</label>
+								<allow-html-in-label>false</allow-html-in-label>
+								<label-position>LEFT</label-position>
+							</widget>
+							<widget id="Submit1" type="BUTTON_SUBMIT">
+								<label-button>false</label-button>
+								<label>
+									<expression>
+										<expression-content>Submit Button</expression-content>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<return-type>java.lang.String</return-type>
+										<dependencies />
+									</expression>
+								</label>
+								<allow-html-in-label>false</allow-html-in-label>
+								<label-position>LEFT</label-position>
+							</widget>
+						</widgets>
+						<actions>
+							<action type="ASSIGNMENT">
+								<variable>test1</variable>
+								<operator>=</operator>
+								<submit-button></submit-button>
+								<expression>
+									<expression-content>field_testDefaultValue</expression-content>
+									<expression-type>TYPE_INPUT</expression-type>
+									<return-type>java.lang.String</return-type>
+									<dependencies />
+								</expression>
+							</action>
+						</actions>
+					</page>
+				</pages>
+			</form>
+			<form id="testProcess--1.5--userTask1$entry">
+				<form-type>entry</form-type>
+				<first-page>
+					<expression>
+						<expression-content>userTask1</expression-content>
+						<expression-type>TYPE_CONSTANT</expression-type>
+						<return-type>java.lang.String</return-type>
+						<dependencies />
+					</expression>
+				</first-page>
+				<permissions>activity#testProcess--1.5--userTask1</permissions>
+				<pages>
+					<page id="userTask1">
+						<page-label>
+							<expression>
+								<expression-content>userTask1</expression-content>
+								<expression-type>TYPE_CONSTANT</expression-type>
+								<return-type>java.lang.String</return-type>
+								<dependencies />
+							</expression>
+						</page-label>
+						<allow-html-in-label>false</allow-html-in-label>
+						<page-layout>html/userTask1_userTask1.html</page-layout>
+						<widgets>
+							<widget id="testTextBox" type="TEXTBOX">
+								<initial-value>
+									<expression>
+										<name>formWidgetValue</name>
+										<expression-content>test1</expression-content>
+										<expression-type>TYPE_VARIABLE</expression-type>
+										<return-type>java.lang.String</return-type>
+										<dependencies />
+									</expression>
+								</initial-value>
+								<allow-html-in-field>false</allow-html-in-field>
+								<mandatory>false</mandatory>
+								<readonly>false</readonly>
+								<label>
+									<expression>
+										<expression-content>test1</expression-content>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<return-type>java.lang.String</return-type>
+										<dependencies />
+									</expression>
+								</label>
+								<allow-html-in-label>false</allow-html-in-label>
+								<label-position>LEFT</label-position>
+							</widget>
+							<widget id="Submit1" type="BUTTON_SUBMIT">
+								<label-button>false</label-button>
+								<label>
+									<expression>
+										<expression-content>Submit1</expression-content>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<return-type>java.lang.String</return-type>
+										<dependencies />
+									</expression>
+								</label>
+								<allow-html-in-label>false</allow-html-in-label>
+								<label-position>LEFT</label-position>
+							</widget>
+						</widgets>
+						<actions>
+<action type="ASSIGNMENT">
+								<variable>test1</variable>
+								<operator>=</operator>
+								<submit-button></submit-button>
+								<expression>
+									<expression-content>field_testTextBox</expression-content>
+									<expression-type>TYPE_INPUT</expression-type>
+									<return-type>java.lang.String</return-type>
+									<dependencies />
+								</expression>
+							</action>
+						</actions>
+					</page>
+				</pages>
+			</form>
+		</forms>
+	</application>
+</forms-definition>

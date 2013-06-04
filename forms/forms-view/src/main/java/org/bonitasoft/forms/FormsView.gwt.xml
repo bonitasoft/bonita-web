@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
+<module>
+	<!-- Inherit the core Web Toolkit stuff.                        -->
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name="com.google.gwt.i18n.I18N"/>
+
+	<inherits name='org.bonitasoft.console.common.CommonView' />
+
+	<!-- French language, independent of country					-->
+	<extend-property name="locale" values="fr"/>
+
+	<!-- Spanish language, independent of country					-->
+	<extend-property name="locale" values="es_ES"/>
+	
+	<!-- German language, independent of country					-->
+	<extend-property name="locale" values="de"/>
+	
+	<!-- Portuguese language in Brazil								-->
+	<extend-property name="locale" values="pt_BR"/>
+	
+	<!-- Chinese language, independent of country					-->
+	<!-- <extend-property name="locale" values="zh"/> -->
+	
+	<!-- Dutch language, independent of country						-->
+	<!-- <extend-property name="locale" values="nl"/> -->
+
+	<!-- Italian language, independent of country					-->
+	<extend-property name="locale" values="it"/>
+	
+	<!-- Estonian language, independent of country					-->
+	<!-- <extend-property name="locale" values="et"/> -->
+	
+	<!-- Hungarian language, independent of country					-->
+	<!-- <extend-property name="locale" values="hu"/> -->
+	
+	<!-- Portuguese language, independent of country				-->
+<!-- 	<extend-property name="locale" values="pt"/> -->
+	
+	<!-- Russian language, independent of country					-->
+	<!-- <extend-property name="locale" values="ru"/> -->
+	
+	<!-- Turkish language, independent of country					-->
+	<!-- <extend-property name="locale" values="tr"/> -->
+	
+	<!-- Croatian language, independent of country					-->
+	<!-- <extend-property name="locale" values="hr"/> -->
+	
+	<!-- Catalan language, independent of country					-->
+	<!-- <extend-property name="locale" values="ca"/> -->
+	
+	<!-- Source path of the module                                  -->
+	<source path="client" />
+
+	<!-- Servlets for RPC calls                                     -->
+ 	<servlet path="/formsService" class="org.bonitasoft.forms.server.FormsServlet" />
+</module>

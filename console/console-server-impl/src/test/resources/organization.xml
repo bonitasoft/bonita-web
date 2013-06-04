@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organization:Organization
+	xmlns:organization="http://www.bonitasoft.org/ns/organization/6.0">
+	<users>
+		<user userName="test">
+			<firstName>bonita</firstName>
+			<lastName>beijing</lastName>
+			<password>a</password>
+			<iconPath />
+			<title>Mr.</title>
+			<jobTitle>Developer</jobTitle>
+			<personalData>
+				<address>jianguomen</address>
+				<building>saite</building>
+				<city>beijing</city>
+				<country>china</country>
+				<email>test@bonitasoft.com</email>
+				<faxNumber>50090033</faxNumber>
+				<mobileNumber>50090033</mobileNumber>
+				<phoneNumber>50090033</phoneNumber>
+				<room>300</room>
+				<state>beijing</state>
+				<website />
+				<zipCode>100002</zipCode>
+			</personalData>
+			<professionalData>
+				<address>jianguomen</address>
+				<building>saite</building>
+				<city>beijing</city>
+				<country>china</country>
+				<email>test@bonitasoft.com</email>
+				<faxNumber>50090033</faxNumber>
+				<mobileNumber>50090033</mobileNumber>
+				<phoneNumber>50090033</phoneNumber>
+				<room>303</room>
+				<state>beijing</state>
+				<website />
+				<zipCode>100001</zipCode>
+			</professionalData>
+			<manager>testManager</manager>
+		</user>
+		<user userName="testManager">
+			<firstName>manager</firstName>
+			<lastName>test</lastName>
+			<password>a</password>
+			<iconPath />
+			<title>Mr.</title>
+			<jobTitle>leader</jobTitle>
+			<personalData>
+				<address>huilongguan</address>
+				<building>Xinganxian</building>
+				<city>Beijing</city>
+				<country>China</country>
+				<email>testManager@bonitasoft.com</email>
+				<faxNumber>12345678</faxNumber>
+				<mobileNumber>12343456675</mobileNumber>
+				<phoneNumber>12345678</phoneNumber>
+				<room>1001</room>
+				<state />
+				<website>www.bonitasoft.com</website>
+				<zipCode>102209</zipCode>
+			</personalData>
+			<professionalData>
+				<address>jianguomen st.</address>
+				<building>saite</building>
+				<city>beijing</city>
+				<country>China</country>
+				<email>testManager@bonitasoft.com</email>
+				<faxNumber>56789876</faxNumber>
+				<mobileNumber>12333333333</mobileNumber>
+				<phoneNumber>56781234</phoneNumber>
+				<room>30304</room>
+				<state />
+				<website>http://www.bonitasoft.com</website>
+				<zipCode>100003</zipCode>
+			</professionalData>
+		</user>
+	</users>
+	<roles>
+		<role name="Developer">
+			<description>develop software</description>
+			<iconPath />
+		</role>
+		<role name="Tester">
+			<description>test software</description>
+			<iconPath />
+		</role>
+		<role name="leader">
+			<description>lead the team</description>
+			<iconPath />
+		</role>
+	</roles>
+	<groups>
+		<group name="RD" parentPath="">
+			<description>Research and Development</description>
+			<iconPath />
+		</group>
+		<group name="Web" parentPath="RD">
+			<description>web team</description>
+			<iconPath />
+		</group>
+	</groups>
+	<memberships>
+		<membership>
+			<userName>test</userName>
+			<roleName>Developer</roleName>
+			<groupName>Web</groupName>
+			<groupParentPath>RD</groupParentPath>
+			<assignedDate>138888888884545</assignedDate>
+		</membership>
+		<membership>
+			<userName>testManager</userName>
+			<roleName>leader</roleName>
+			<groupName>Web</groupName>
+			<groupParentPath>RD</groupParentPath>
+			<assignedDate>134648464564654</assignedDate>
+		</membership>
+	</memberships>
+</organization:Organization>

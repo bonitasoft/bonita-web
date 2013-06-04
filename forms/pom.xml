@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>bonita-console</artifactId>
+		<groupId>org.bonitasoft.console</groupId>
+		<version>6.1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.bonitasoft.forms</groupId>
+	<artifactId>forms-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>forms parent</name>
+
+	<scm>
+		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/forms</connection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/forms</url>
+	</scm>
+
+	<modules>
+		<module>forms-design</module>
+		<module>forms-config</module>
+		<module>forms-model</module>
+		<module>forms-rpc</module>
+		<module>forms-server</module>
+		<module>forms-view</module>
+		<!--<module>forms-migration</module>-->
+	</modules>
+
+</project>

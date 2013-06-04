@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to='console'>
+
+	<!-- Other Bonita resources -->
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name='org.bonitasoft.console.ConsoleView' />
+
+	<!-- Specify the app entry point class. -->
+	<entry-point class='org.bonitasoft.console.client.ConsoleClient' />
+
+</module>
