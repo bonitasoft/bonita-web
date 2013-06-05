@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>common-parent</artifactId>
+		<groupId>org.bonitasoft.console</groupId>
+		<version>6.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>common-model</artifactId>
+	<name>common model</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bonitasoft.web.toolkit</groupId>
+			<artifactId>toolkit-view</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>
