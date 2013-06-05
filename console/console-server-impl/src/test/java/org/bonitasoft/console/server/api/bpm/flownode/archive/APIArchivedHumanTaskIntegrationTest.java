@@ -123,7 +123,7 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     public void testSearchArchivedHumanTask() throws Exception {
         HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
         ArrayList<String> deploys = getProcessIdDeploy();
-        HashMap<String, String> filters = getIdFilter(humanTaskInstance);
+        HashMap<String, String> filters = getNameFilter(humanTaskInstance);
 
         ArchivedHumanTaskItem archivedHumanTaskItem = apiArchivedHumanTask.runSearch(0, 1, null, null,
                 filters, deploys, new ArrayList<String>()).getResults().get(0);
@@ -137,9 +137,9 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         return deploys;
     }
 
-    private HashMap<String, String> getIdFilter(HumanTaskInstance humanTaskInstance) {
+    private HashMap<String, String> getNameFilter(HumanTaskInstance humanTaskInstance) {
         final HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(ArchivedHumanTaskItem.ATTRIBUTE_ID, String.valueOf(humanTaskInstance.getId()));
+        filters.put(ArchivedHumanTaskItem.ATTRIBUTE_NAME, humanTaskInstance.getName());
         return filters;
     }
 
