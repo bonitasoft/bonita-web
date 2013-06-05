@@ -35,13 +35,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-view</artifactId>
-			<version>${project.version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
 			<artifactId>common-model</artifactId>
 			<version>${project.version}</version>
 			<classifier>sources</classifier>
