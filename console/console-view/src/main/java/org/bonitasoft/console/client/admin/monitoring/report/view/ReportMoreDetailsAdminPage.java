@@ -69,11 +69,6 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
     }
 
     @Override
-    protected void buildToolbar(ReportItem report) {
-        addToolbarLink(newBackButton());
-    }
-
-    @Override
     protected void defineTitle(ReportItem item) {
         setTitle("");
     }
@@ -136,6 +131,7 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
                         reportDateRangePicker(localeDateFormat, "p_date_");
                         hookReportFormSubmition(localeDateFormat, "p_date_");
                         retrieveFieldsValues(getParams(url), localeDateFormat);
+                        addToolbarLink(newBackButton());
                     } else {
                         // html.setHtml("Failed<BR/>");
                     }
