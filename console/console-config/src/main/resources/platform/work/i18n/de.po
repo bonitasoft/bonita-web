@@ -30,7 +30,7 @@ msgstr "ID"
 #: console/console-view/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportMoreDetailsAdminPage.java:134
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/chart/SerieChart.java:326
 msgid "mm/dd/yy"
-msgstr "dd/mm/yyyy"
+msgstr "dd/mm/yy"
 
 #: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/BonitaSystem.java:59
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/utils/DateFormat.java:55
