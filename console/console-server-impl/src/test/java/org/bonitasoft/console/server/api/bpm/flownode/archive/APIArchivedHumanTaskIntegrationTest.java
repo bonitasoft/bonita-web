@@ -66,6 +66,26 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         return humanTaskInstance;
     }
 
+    private ProcessAPI getProcessAPI() throws Exception {
+        return TenantAPIAccessor.getProcessAPI(getInitiator().getSession());
+    }
+
+    private ArrayList<String> getProcessIdDeploy() {
+        final ArrayList<String> deploys = new ArrayList<String>();
+        deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
+        return deploys;
+    }
+
+    private HashMap<String, String> getNameFilter(HumanTaskInstance humanTaskInstance) {
+        final HashMap<String, String> filters = new HashMap<String, String>();
+        filters.put(ArchivedHumanTaskItem.ATTRIBUTE_NAME, humanTaskInstance.getName());
+        return filters;
+    }
+
+    private Map<String, String> buildArchivedHumanTaskStateCompletedForCaseIdFilter(APIID caseId) {
+        return MapUtil.asMap(new Arg(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, caseId));
+    }
+
     /**
      * Wait the process contain PendingHumanTaskInstance
      */
@@ -104,10 +124,6 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         }.waitUntil());
     }
 
-    private ProcessAPI getProcessAPI() throws Exception {
-        return TenantAPIAccessor.getProcessAPI(getInitiator().getSession());
-    }
-
     @Test
     public void testGetArchivedHumanTask() throws Exception {
         HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
@@ -123,24 +139,12 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     public void testSearchArchivedHumanTask() throws Exception {
         HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
         ArrayList<String> deploys = getProcessIdDeploy();
-        HashMap<String, String> filters = getIdFilter(humanTaskInstance);
+        HashMap<String, String> filters = getNameFilter(humanTaskInstance);
 
         ArchivedHumanTaskItem archivedHumanTaskItem = apiArchivedHumanTask.runSearch(0, 1, null, null,
                 filters, deploys, new ArrayList<String>()).getResults().get(0);
         
         assertNotNull("Can't find the good archivedTaskItem", archivedHumanTaskItem);
-    }
-
-    private ArrayList<String> getProcessIdDeploy() {
-        final ArrayList<String> deploys = new ArrayList<String>();
-        deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
-        return deploys;
-    }
-
-    private HashMap<String, String> getIdFilter(HumanTaskInstance humanTaskInstance) {
-        final HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(ArchivedHumanTaskItem.ATTRIBUTE_ID, String.valueOf(humanTaskInstance.getId()));
-        return filters;
     }
 
     @Test
@@ -157,9 +161,5 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         ItemSearchResult<ArchivedHumanTaskItem> search = apiArchivedHumanTask.runSearch(0, 1, null, orders, filters, null, null);
         
 //        assertEquals(search.getResults().get(0).getSourceObjectId(), archive.getId());
-    }
-    
-    private Map<String, String> buildArchivedHumanTaskStateCompletedForCaseIdFilter(APIID caseId) {
-        return MapUtil.asMap(new Arg(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, caseId));
     }
 }
