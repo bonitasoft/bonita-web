@@ -39,12 +39,6 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.GQuery;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.WindowScrollListener;
-
 /**
  * @author Bastien Rohart
  * 
@@ -70,7 +64,6 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
 
     @Override
     protected void buildToolbar(ReportItem report) {
-        addToolbarLink(newBackButton());
     }
 
     @Override
@@ -81,13 +74,6 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
     @Override
     protected void buildMetadatas(ReportItem item) {
     }
-
-    // @Override
-    // protected LinkedList<ItemDetailsAction> defineActions(final ReportItem
-    // item) {
-    // ReportMoreDetailsAdminPage.this.addToolbarLink(newBackButton());
-    // return new LinkedList<ItemDetailsAction>();
-    // }
 
     private Button newBackButton() {
         return new Button(new JsId("back"), _("Back"),
@@ -105,6 +91,7 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
         final Html html = new Html();
         String locale = AbstractI18n.getDefaultLocale().toString();
         final Container<Html> container = new Container<Html>();
+        container.append(getLoader());
         addBody(container);
 
         try {
@@ -129,13 +116,15 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
                         String response = aResponse.getText();
                         GWT.log(response);
                         response = response.substring(response.indexOf("<div class=\"report\">"), response.lastIndexOf("</div>"));
-                        response = response.replaceAll("<img(.*)src=\"([^ ]*)\"(.*)([>|/>])", "<img$1src=\"$2&r="+(Math.random())+"\"$3$4");
+                        response = response.replaceAll("<img(.*)src=\"([^ ]*)\"(.*)([>|/>])", "<img$1src=\"$2&r=" + (Math.random()) + "\"$3$4");
+                        container.empty();
                         container.append(new Html(response));
                         removeReportStyle();
                         String localeDateFormat = _("mm/dd/yy");
                         reportDateRangePicker(localeDateFormat, "p_date_");
                         hookReportFormSubmition(localeDateFormat, "p_date_");
                         retrieveFieldsValues(getParams(url), localeDateFormat);
+                        addToolbarLink(newBackButton());
                     } else {
                         // html.setHtml("Failed<BR/>");
                     }
@@ -146,6 +135,17 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
 
         } catch (RequestException e) {
         }
+    }
+
+    /**
+     * @return
+     */
+    private Html getLoader() {
+        return new Html("<div id=\"initloader\">" +
+                "<div class=\"loader\">" +
+                "<img src=\"images/loader.gif\" />" +
+                "</div>" +
+                "</div>");
     }
 
     private String buildReportFormURL(final ReportItem item, String locale) {
@@ -159,41 +159,42 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
                 .append("&_pf=" + URLUtils.getInstance().getHashParameter(UrlOption.PROFILE));
         return frameURL.toString();
     }
-    
-    private String getParams(String url){
-        return url.substring(url.lastIndexOf("?")+1);
+
+    private String getParams(String url) {
+        return url.substring(url.lastIndexOf("?") + 1);
     }
-    
-    
+
     private native void reportDateRangePicker(String localeDateFormat, String prefix)
     /*-{
         $wnd.reportDateRangePicker(localeDateFormat, prefix);
     }-*/;
+
     private native void hookReportFormSubmition(String localeDateFormat, String prefix)
     /*-{
         $wnd.hookReportFormSubmition(localeDateFormat, prefix);
     }-*/;
+
     private native void retrieveFieldsValues(String params, String localeDateFormat)
     /*-{
         $wnd.retrieveFieldsValues(params, localeDateFormat);
     }-*/;
-    
+
     private native void removeReportStyle()
     /*-{
         $wnd.removeReportStyle();
     }-*/;
-    
-    @SuppressWarnings(value={"deprecation"}) 
+
+    @SuppressWarnings(value = { "deprecation" })
     private Long oneWeekBefore() {
         Date date = new Date();
         date.setHours(0);
         date.setMinutes(0);
         date.setSeconds(0);
-        long epoch = date.getTime() - ONE_WEEK * 1000;//TODO manage daylight saving time
+        long epoch = date.getTime() - ONE_WEEK * 1000;// TODO manage daylight saving time
         return epoch;
     }
 
-    @SuppressWarnings(value={"deprecation"}) 
+    @SuppressWarnings(value = { "deprecation" })
     private Long thisDay() {
         Date date = new Date();
         date.setHours(23);
