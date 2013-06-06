@@ -95,6 +95,13 @@ function refreshReport(e, localeDateFormat, prefix){
 	fromDate.val(fromDateVal);
 	
 	$.ajax({
+		beforeSend: function() {
+			$("div.report").html("<div id=\"initloader\">" +
+		            "<div class=\"loader\">" +
+		            "<img src=\"images/loader.gif\" />" +
+		            "</div>" +
+		            "</div>");
+		 },
 		url: urlRefresh,
 		data: params+"&locale="+bosCookieObj._l+"&_pf="+getProfileId(),
 		cache: false,
@@ -123,7 +130,16 @@ function retrieveFieldsValues(params, localeDateFormat){
 					if(uriValue %1 == 0){
 						uriValue =  $.datepicker.formatDate(localeDateFormat, new Date(parseInt(uriValue)));
 					}else{
-						uriValue = Date.parseExact(uriValue, localeDateFormat); // if the date is returned in localized format instead timestamp
+						uriValue = Date.parseExact(uriValue, localeDateFormat); // if
+																				// the
+																				// date
+																				// is
+																				// returned
+																				// in
+																				// localized
+																				// format
+																				// instead
+																				// timestamp
 					}
 					field.val(uriValue);
 				}else{
