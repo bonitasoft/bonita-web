@@ -27,7 +27,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<slf4j.version>1.6.1</slf4j.version>
-		<gwt.version>2.5.0</gwt.version>
+		<gwt.version>2.5.1</gwt.version>
 		<!-- The following property is used by the gwt-maven plugin. As it does 
 			not follow the same naming convention as others, we decided to have both 
 			gwt.version and gwtVersion properties. Of course the two properties refer 
@@ -330,7 +330,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>gwt-maven-plugin</artifactId>
-					<version>2.5.0</version>
+					<version>${gwt.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
