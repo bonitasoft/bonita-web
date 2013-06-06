@@ -121,20 +121,17 @@ export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/forms/forms-war/src/main/java"
 ##SECURITY
 ##common-model
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/common/common-model/src/main/java"
+export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/common/common-model/src/main/resources"
 
 ##common-server
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/common/common-server/src/main/java"
 
-##common-view
-export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/common/common-view/src/main/java"
 
 ##console
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-model/src/main/java"
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-server-impl/src/main/java"
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-reporting/src/main/java"
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-reporting/src/main/resources"
-export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-view/src/main/java"
-export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-view/src/main/resources"
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-war/src/main/java"
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/console/console-war/src/main/resources"
 
@@ -143,7 +140,7 @@ export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/org/bonitasoft/platform/platform-mod
 export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/org/bonitasoft/platform/platform-server-impl/$BONITATARGETVERSION/platform-server-impl-$BONITATARGETVERSION.jar"
 
 #source $BONITA_HOME/client/platform/scripts/createDefaultTenant.sh 1 $BONITA_HOME $PATHTOPROJECT/console/console-war/target/console-war-$CONSOLETARGETVERSION/WEB-INF/lib $TECH_USER $TECH_PASSWORD
-java -Xmx512m -XX:MaxPermSize=256m -cp $CLASSPATH -Dfile.encoding=UTF-8 -Dbonita.home=$BONITA_HOME -Xdebug -Xnoagent -Djava.compiler=NONE -Dbuild.compiler=org.bonitasoft.tools.gwt.JDTCompiler -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y -Dcatalina.base="$PATHTOPROJECT/console/console-war/target/tomcat" com.google.gwt.dev.DevMode -server org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher -gen "$PATHTOPROJECT/console/console-war/target/.generated" -logLevel INFO -war "$PATHTOPROJECT/console/console-war/target/console-war-$CONSOLETARGETVERSION" -port 8888 -startupUrl login.jsp?redirectUrl=console%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997 org.bonitasoft.console.$GWT_MODULE
+java -Xmx512m -XX:MaxPermSize=256m -cp $CLASSPATH -Dfile.encoding=UTF-8 -Dbonita.home=$BONITA_HOME -Xdebug -Xnoagent -Djava.compiler=NONE -Dbuild.compiler=org.bonitasoft.tools.gwt.JDTCompiler -Xrunjdwp:transport=dt_socket,server=y,address=8001,suspend=y -Dcatalina.base="$PATHTOPROJECT/console/console-war/target/tomcat" com.google.gwt.dev.DevMode -server org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher -gen "$PATHTOPROJECT/console/console-war/target/.generated" -logLevel INFO -war "$PATHTOPROJECT/console/console-war/target/console-war-$CONSOLETARGETVERSION" -port 8888 -startupUrl login.jsp?redirectUrl=console%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997 org.bonitasoft.console.$GWT_MODULE
 
 ## Delete .class files
 deleteClassFilesFromToolkitSrcFolder
