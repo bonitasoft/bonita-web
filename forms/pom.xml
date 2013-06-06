@@ -10,11 +10,6 @@
 	<packaging>pom</packaging>
 	<name>forms parent</name>
 
-	<scm>
-		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/forms</connection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/forms</url>
-	</scm>
-
 	<modules>
 		<module>forms-design</module>
 		<module>forms-config</module>

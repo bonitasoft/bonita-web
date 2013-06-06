@@ -16,8 +16,8 @@
 	</modules>
 
 	<scm>
-		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk</developerConnection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk</url>
+		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/branches/bos-web-6.0.x</developerConnection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/branches/bos-web-6.0.x</url>
 	</scm>
 
 	<properties>
