@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<artifactId>console-parent</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
@@ -8,62 +9,39 @@
 	<artifactId>console-war</artifactId>
 	<name>console war</name>
 	<packaging>war</packaging>
-	
+
 	<properties>
 		<permutations>All</permutations>
 	</properties>
 
 	<dependencies>
+		<!-- Compile dependency -->
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-view</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- GWT dependency (sources) -->
 		<dependency>
 			<groupId>org.bonitasoft.web.toolkit</groupId>
 			<artifactId>toolkit-view</artifactId>
-			<version>${project.version}</version>
 			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-model</artifactId>
 			<version>${project.version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-server</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-model</artifactId>
-			<version>${project.version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-server-impl</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-        <dependency>
-            <groupId>org.bonitasoft.console</groupId>
-            <artifactId>console-reporting</artifactId>
-            <version>${project.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-view</artifactId>
-			<version>${project.version}</version>
-			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-view</artifactId>
-			<version>${project.version}</version>
 			<classifier>sources</classifier>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-rpc</artifactId>
+			<classifier>sources</classifier>
+			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -74,37 +52,88 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-rpc</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-view</artifactId>
 			<classifier>sources</classifier>
+			<version>${project.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-model</artifactId>
+			<classifier>sources</classifier>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Runtime dependencies -->
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-server-impl</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-reporting</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-server</artifactId>
 			<version>${project.version}</version>
+			<scope>runtime</scope>
 		</dependency>
+
 		<!-- GWT deps -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-			<scope>runtime</scope>
+			<artifactId>gwt-user</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 	</dependencies>
-
 	<build>
-	    <resources>
-	        <resource>
-        		<directory>src/main/resources</directory>
-      		</resource>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
 		</resources>
+
 		<plugins>
+			<!-- Jar configuration for SP -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-a-jar</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- War configuration -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes>.gwt-tmp/**, WEB-INF/deploy/**, WEB-INF/classes/debug/**</packagingExcludes>
+					<packagingExcludes>
+						.gwt-tmp/**,
+						WEB-INF/deploy/**,
+						WEB-INF/classes/**
+					</packagingExcludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -119,8 +148,11 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<mkdir dir="${project.build.directory}/${project.artifactId}-${project.version}" />
-								<echo file="${project.build.directory}/${project.artifactId}-${project.version}/VERSION" append="false">version : ${project.version}</echo>
+								<mkdir
+									dir="${project.build.directory}/${project.artifactId}-${project.version}" />
+								<echo
+									file="${project.build.directory}/${project.artifactId}-${project.version}/VERSION"
+									append="false">version : ${project.version}</echo>
 							</tasks>
 						</configuration>
 					</execution>
@@ -128,15 +160,19 @@
 						<id>copy-html-resources</id>
 						<phase>prepare-package</phase>
 						<goals>
-			            	<goal>run</goal>
-            			</goals>
-            			<configuration>
-            				<tasks>
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html" file="${project.build.directory}/forms-design/html/page.html" />
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html" file="${project.build.directory}/forms-design/html/process.html" />
-	            			</tasks>
-            			</configuration>
-            		</execution>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html"
+									file="${project.build.directory}/forms-design/html/page.html" />
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html"
+									file="${project.build.directory}/forms-design/html/process.html" />
+							</tasks>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -147,12 +183,20 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<!-- configure the GWT-Maven plugin -->
+			
+			<!-- GWT configuration -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-				    <localWorkers>2</localWorkers>
+					<localWorkers>2</localWorkers>
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
 					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
@@ -164,18 +208,11 @@
 					<compileReport>false</compileReport>
 					<noServer>false</noServer>
 					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-					<!-- this parameter is VERY important with automatic mode - has to 
-						match the version in your declared deps if this does not match (default if 
-						left out is 1.5.3) you will have mysterious errors -->
+					<!-- this parameter is VERY important with automatic mode - has to match 
+						the version in your declared deps if this does not match (default if left 
+						out is 1.5.3) you will have mysterious errors -->
 					<gwtVersion>${gwtVersion}</gwtVersion>
-			    </configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -213,7 +250,7 @@
 					<groupId>org.bonitasoft.engine</groupId>
 					<artifactId>bonita-server</artifactId>
 				</dependency>
-				
+
 				<!-- GWT tools -->
 				<dependency>
 					<!-- only used by debugger -->
@@ -223,82 +260,82 @@
 					<version>${gwt.version}</version>
 					<scope>runtime</scope>
 				</dependency>
-		
-                <!-- DATASOURCE JNDI -->
-                <dependency>
-                    <groupId>commons-dbcp</groupId>
-                    <artifactId>commons-dbcp</artifactId>
-                    <version>1.4</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.mortbay.jetty</groupId>
-                    <artifactId>jetty-naming</artifactId>
-                    <version>6.1.26</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.mortbay.jetty</groupId>
-                    <artifactId>jetty-plus</artifactId>
-                    <version>6.1.26</version>
-                    <scope>runtime</scope>
-                </dependency>
-                    
-                <!-- DATASOURCE JTA --> 
-                <dependency>
-                    <groupId>org.codehaus.btm</groupId>
-                    <artifactId>btm</artifactId>
-                    <version>2.1.3</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
-                    <version>1.1</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.codehaus.btm</groupId>
-                    <artifactId>btm-jetty6-lifecycle</artifactId>
-                    <version>2.0.1</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <version>1.6.0</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                    <version>1.6.0</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                    <version>1.2.15</version>
-                    <scope>runtime</scope>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>com.sun.jmx</groupId>
-                            <artifactId>jmxri</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>com.sun.jdmk</groupId>
-                            <artifactId>jmxtools</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>javax.jms</groupId>
-                            <artifactId>jms</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
+
+				<!-- DATASOURCE JNDI -->
+				<dependency>
+					<groupId>commons-dbcp</groupId>
+					<artifactId>commons-dbcp</artifactId>
+					<version>1.4</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-naming</artifactId>
+					<version>6.1.26</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-plus</artifactId>
+					<version>6.1.26</version>
+					<scope>runtime</scope>
+				</dependency>
+
+				<!-- DATASOURCE JTA -->
+				<dependency>
+					<groupId>org.codehaus.btm</groupId>
+					<artifactId>btm</artifactId>
+					<version>2.1.3</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>javax.transaction</groupId>
+					<artifactId>jta</artifactId>
+					<version>1.1</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.codehaus.btm</groupId>
+					<artifactId>btm-jetty6-lifecycle</artifactId>
+					<version>2.0.1</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+					<version>1.6.0</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+					<version>1.6.0</version>
+					<scope>runtime</scope>
+				</dependency>
+				<dependency>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+					<version>1.2.15</version>
+					<scope>runtime</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>com.sun.jmx</groupId>
+							<artifactId>jmxri</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>com.sun.jdmk</groupId>
+							<artifactId>jmxtools</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>javax.jms</groupId>
+							<artifactId>jms</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
 			</dependencies>
 			<build>
-			    <resources>
-		        	<resource>
+				<resources>
+					<resource>
 						<directory>src/main/debug</directory>
 						<filtering>true</filtering>
 					</resource>

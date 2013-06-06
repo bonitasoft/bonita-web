@@ -7,13 +7,13 @@ del /S %PATHTOPROJECT%\toolkit\toolkit-view\src\*.class
 
 rem GWT / GWTx
 rem gwt
-set CLASSPATH="%MAVENREPOPATH%\com\google\gwt\gwt-user\2.5.0\gwt-user-2.5.0.jar";
-set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\com\google\gwt\gwt-dev\2.5.0\gwt-dev-2.5.0.jar";
+set CLASSPATH="%MAVENREPOPATH%\com\google\gwt\gwt-user\2.5.1\gwt-user-2.5.1.jar";
+set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\com\google\gwt\gwt-dev\2.5.1\gwt-dev-2.5.1.jar";
 set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\com\googlecode\gwtquery\gwtquery\1.3.1\gwtquery-1.3.1.jar";
 set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\com\google\code\gwtx\gwtx\1.5.3\gwtx-1.5.3.jar";
 set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA.jar";
 
-set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\org\bonitasoft\web\tooling\bonita-gwt-tools\2.5.0\bonita-gwt-tools-2.5.0.jar";
+set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\org\bonitasoft\web\tooling\bonita-gwt-tools\2.5.1\bonita-gwt-tools-2.5.1.jar";
 
 rem JTA
 set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\org\codehaus\btm\btm\2.1.3\btm-2.1.3.jar"
@@ -62,27 +62,18 @@ set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\toolkit\toolkit-server\src\main\resou
 rem COMMON
 rem common-model
 set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\common\common-model\src\main\java"
+set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\common\common-model\src\main\resources"
 
 rem common-server
 set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\common\common-server\src\main\java"
 
-rem common-view
-set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\common\common-view\src\main\java"
-
 rem CONSOLE
-rem console-model
-set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-model\src\main\java"
-
 rem console-server-impl
 set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-server-impl\src\main\java"
 
 rem console-reporting
 set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-reporting\src\main\java"
 set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-reporting\src\main\resources"
-
-rem console-view
-set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-view\src\main\java"
-set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-view\src\main\resources"
 
 rem console-war
 set CLASSPATH=%CLASSPATH%;"%PATHTOPROJECT%\console\console-war\src\main\java"
@@ -111,7 +102,7 @@ set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\org\bonitasoft\platform\platform-mode
 set CLASSPATH=%CLASSPATH%;"%MAVENREPOPATH%\org\bonitasoft\platform\platform-server-impl\%CONSOLETARGETVERSION%\platform-server-impl-%CONSOLETARGETVERSION%.jar"
 
 @echo on
-java -Xmx512m -XX:MaxPermSize=256m -cp %CLASSPATH% -Dfile.encoding=UTF-8 -Dbonita.home=%BONITA_HOME% -Xdebug -Xnoagent -Djava.compiler=NONE -Dbuild.compiler=org.bonitasoft.tools.gwt.JDTCompiler -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y -Dcatalina.base="%PATHTOPROJECT%\console\console-war\target\tomcat" com.google.gwt.dev.DevMode -server org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher -gen "%PATHTOPROJECT%\console\console-war\target\.generated" -logLevel INFO -war "%PATHTOPROJECT%\console\console-war\target\console-war-%CONSOLETARGETVERSION%" -port 8888 -startupUrl login.jsp?redirectUrl=console%%2Fhomepage%%3Fgwt.codesvr%%3D127.0.0.1%%3A9997  org.bonitasoft.console.%GWT_MODULE%
+java -Xmx512m -XX:MaxPermSize=256m -cp %CLASSPATH% -Dfile.encoding=UTF-8 -Dbonita.home=%BONITA_HOME% -Xdebug -Xnoagent -Djava.compiler=NONE -Dbuild.compiler=org.bonitasoft.tools.gwt.JDTCompiler -Xrunjdwp:transport=dt_socket,server=y,address=8001,suspend=y -Dcatalina.base="%PATHTOPROJECT%\console\console-war\target\tomcat" com.google.gwt.dev.DevMode -server org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher -gen "%PATHTOPROJECT%\console\console-war\target\.generated" -logLevel INFO -war "%PATHTOPROJECT%\console\console-war\target\console-war-%CONSOLETARGETVERSION%" -port 8888 -startupUrl login.jsp?redirectUrl=console%%2Fhomepage%%3Fgwt.codesvr%%3D127.0.0.1%%3A9997  org.bonitasoft.console.%GWT_MODULE%
 
 rem #################################################
 rem # Delete annoying .class files from src folder  #
