@@ -98,6 +98,13 @@ function refreshReport(e, localeDateFormat, prefix){
 	fromDate.val(fromDateVal);
 	
 	$.ajax({
+		beforeSend: function() {
+			$("div.report").html("<div id=\"initloader\">" +
+		            "<div class=\"loader\">" +
+		            "<img src=\"images/loader.gif\" />" +
+		            "</div>" +
+		            "</div>");
+		 },
 		url: urlRefresh,
 		data: params+"&locale="+bosCookieObj._l+"&_pf="+getProfileId(),
 		cache: false,
