@@ -14,7 +14,7 @@ deleteClassFilesFromToolkitSrcFolder
 
 ##GWT / GWTx
 ##gwt
-export CLASSPATH="$MAVENREPOPATH/com/google/gwt/gwt-user/2.5.0/gwt-user-2.5.0.jar":"$MAVENREPOPATH/com/google/gwt/gwt-dev/2.5.0/gwt-dev-2.5.0.jar"
+export CLASSPATH="$MAVENREPOPATH/com/google/gwt/gwt-user/2.5.1/gwt-user-2.5.1.jar":"$MAVENREPOPATH/com/google/gwt/gwt-dev/2.5.1/gwt-dev-2.5.1.jar"
 
 # JTA
 export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/org/codehaus/btm/btm/2.1.3/btm-2.1.3.jar"
@@ -93,7 +93,7 @@ export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/commons-dbcp/commons-dbcp/1.4/common
 export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/commons-pool/commons-pool/1.5.5/commons-pool-1.5.5.jar"
 export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/com/googlecode/gwtquery/gwtquery/1.3.1/gwtquery-1.3.1.jar"
 
-export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/org/bonitasoft/web/tooling/bonita-gwt-tools/2.5.0/bonita-gwt-tools-2.5.0.jar"
+export CLASSPATH=$CLASSPATH:"$MAVENREPOPATH/org/bonitasoft/web/tooling/bonita-gwt-tools/2.5.1/bonita-gwt-tools-2.5.1.jar"
 
 ##Bonita web toolkit
 export CLASSPATH=$CLASSPATH:"$PATHTOPROJECT/toolkit/toolkit-view/src/main/java"
