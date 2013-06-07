@@ -68,7 +68,20 @@ public abstract class AttachmentImageServlet extends AttachmentDownloadServlet {
         byte[] attachment = null;
 
         if (srcStr != null) {
-            final File file = new File(this.directoryPath + srcStr);
+            final File iconDir = new File(this.directoryPath);
+            final File file = new File(iconDir, srcStr);
+                        
+            try {
+                if (!file.getCanonicalPath().startsWith(iconDir.getCanonicalPath())) {
+                    throw new IOException();
+                }
+            } catch (final IOException e) {
+                final String errorMessage = "Error while getting the resource " + srcStr + " For security reasons, access to paths other than " + iconDir.getName() + " is restricted";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new ServletException(errorMessage);
+            }
 
             int fileLength = 0;
             if (file.length() > Integer.MAX_VALUE) {
