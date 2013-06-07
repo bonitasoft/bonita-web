@@ -156,7 +156,8 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected void buildDoneTasks(final CaseItem item) {
         final ItemTable doneTasksTable = getArchivedTaskTable(item);
         prepareArchivedTasksTable(doneTasksTable);
-        final Section section = new Section(_("Performed tasks"), doneTasksTable.setView(VIEW_TYPE.VIEW_LIST));
+        final Section section = new Section(_("Closed tasks"),
+                doneTasksTable.setView(VIEW_TYPE.VIEW_LIST));
         section.addClass("tasks");
         section.addClass("performed");
         addBody(section);
