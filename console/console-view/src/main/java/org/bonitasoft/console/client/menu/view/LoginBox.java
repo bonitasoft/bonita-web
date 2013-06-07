@@ -32,6 +32,7 @@ import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.UrlBuilder;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
@@ -101,8 +102,8 @@ public class LoginBox extends RawView {
     /**
      * Overridden in SP
      */
-    protected String getLogOutUrl() {
-        return LOGOUT_URL;
+    protected LogoutUrl getLogOutUrl(String locale) {
+        return new LogoutUrl(new UrlBuilder(), locale);
     }
 
     private void addProfileMenu() {
@@ -180,7 +181,10 @@ public class LoginBox extends RawView {
     }
 
     private Menu createSettingsMenu() {
-        return new Menu(new MenuFolder(new JsId("options"), _("Settings"), createLogoutLink(), createLanguageLink(), createAboutLink()));
+        return new Menu(new MenuFolder(new JsId("options"), _("Settings"),
+                createLogoutLink(),
+                createLanguageLink(),
+                createAboutLink()));
     }
 
     private MenuLink createLogoutLink() {
@@ -188,27 +192,11 @@ public class LoginBox extends RawView {
 
             @Override
             public void execute() {
-                Window.Location.assign(buildLogoutUrl());
+                Window.Location.replace(
+                        getLogOutUrl(Session.getParameter(UrlOption.LANG))
+                                .toString());
             }
-
         });
-    }
-
-    private String buildLogoutUrl() {
-        return Window.Location.createUrlBuilder()
-                .setPath(LOGOUT_URL)
-                .setParameter(UrlOption.LANG, Session.getParameter(UrlOption.LANG))
-                .setHash(cloneHash() + "_l=" + Session.getParameter(UrlOption.LANG))
-                .buildString();
-    }
-
-    private String cloneHash() {
-        return "#";
-        // String hash = Window.Location.getHash();
-        // if(hash == null || hash.isEmpty()) {
-        // return "#";
-        // }
-        // return hash + "&";
     }
 
     private MenuLink createLanguageLink() {
@@ -222,7 +210,7 @@ public class LoginBox extends RawView {
     }
 
     /**
-     * @author SÃ©verin Moussel
+     * @author Séverin Moussel
      */
     private final class CurrentUserAvatarFiller extends Filler<MenuFolder> {
 
