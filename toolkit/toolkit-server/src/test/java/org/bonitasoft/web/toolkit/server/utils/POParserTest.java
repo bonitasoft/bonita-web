@@ -14,32 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.menu.view;
+package org.bonitasoft.web.toolkit.server.utils;
 
-import org.bonitasoft.web.toolkit.client.common.UrlBuilder;
+import static junit.framework.Assert.assertEquals;
+
+import java.io.File;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Vincent Elcrin
  * 
  */
-public class LogoutUrl {
+public class POParserTest {
 
-    public static final String LOGOUT_URL = "../logoutservice";
+    Map<String, String> i18n;
 
-    private final UrlBuilder builder;
-
-    public LogoutUrl(UrlBuilder builder, String locale) {
-        this.builder = builder;
-        this.builder.setRootUrl(LOGOUT_URL);
-        this.builder.addParameter("_l", locale);
+    @Before
+    public void setUp() {
+        i18n = POParser.parse(new File("src/test/resources/en.po"));
     }
 
-    public void setParameter(String key, String value) {
-        builder.addParameter(key, value);
+    @Test
+    public void testToParseASimpleMsg() {
+        assertEquals("This is a multilinesMessage", i18n.get("MultilineMessageId"));
     }
 
-    @Override
-    public String toString() {
-        return builder.toString();
+    @Test
+    public void testToParseAMultiLinesMsg() {
+        assertEquals("theMsg", i18n.get("theId"));
     }
+
 }

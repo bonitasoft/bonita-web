@@ -210,7 +210,7 @@ public class LoginBox extends RawView {
     }
 
     /**
-     * @author Séverin Moussel
+     * @author SÃ©verin Moussel
      */
     private final class CurrentUserAvatarFiller extends Filler<MenuFolder> {
 

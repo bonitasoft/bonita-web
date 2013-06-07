@@ -15,12 +15,17 @@
 
 package org.bonitasoft.web.toolkit.server.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.fedorahosted.tennera.jgettext.Catalog;
+import org.fedorahosted.tennera.jgettext.Message;
+import org.fedorahosted.tennera.jgettext.PoParser;
+import org.fedorahosted.tennera.jgettext.catalog.parse.ParseException;
 
 /**
  * 
@@ -48,75 +53,23 @@ public class POParser {
 
     public Map<String, String> parseFile(final File file) {
         try {
-
-            final FileReader fileReader = new FileReader(file);
-            final BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            parseBuffer(bufferedReader);
-
-            bufferedReader.close();
-            fileReader.close();
-
-        } catch (final java.io.FileNotFoundException e) {
-            // TODO Log error
-        } catch (final java.io.IOException e) {
-            // TODO Log error
+            parseCatalog(new PoParser().parseCatalog(file));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("I18N: File not found " + file.getPath());
+        } catch (ParseException e) {
+            throw new RuntimeException("I18N: Couldnt parse po file " + file.getPath());
+        } catch (IOException e) {
+            throw new RuntimeException("I18N: IO issues while parsing " + file.getPath());
         }
 
         return this.translations;
     }
 
-    /**
-     * Parse the bufferedReader
-     * 
-     */
-
-    private void parseBuffer(final BufferedReader bufferedReader) {
-        String source = null;
-        String destination = null;
-
-        String line;
-        while ((line = nextLine(bufferedReader)) != null) {
-            if (line.toLowerCase().startsWith("msgid ")) {
-                source = readContent(line);
-            } else if (line.toLowerCase().startsWith("msgstr ")) {
-                destination = readContent(line);
-            }
-            if (source != null && destination != null && destination.length() > 0) {
-                this.translations.put(source, destination);
-                source = null;
-                destination = null;
-            }
+    private void parseCatalog(Catalog catalog) {
+        Iterator<Message> it = catalog.iterator();
+        while (it.hasNext()) {
+            Message msg = it.next();
+            translations.put(msg.getMsgid(), msg.getMsgstr());
         }
-    }
-
-    /**
-     * Retrieve the main content from a line by getting the content in quotes
-     * 
-     * @param value
-     * @return
-     */
-    private String readContent(final String value) {
-        return value.replaceAll("^.*?\"(.*)\"$", "$1");
-    }
-
-    /**
-     * Read the next valid line (avoid empty lines and comments
-     * 
-     * @return
-     */
-    private String nextLine(final BufferedReader bufferedReader) {
-        try {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                line = line.trim();
-                if (line.length() > 0 && !line.startsWith("#~")) {
-                    return line;
-                }
-            }
-        } catch (final IOException e) {
-            // TODO log error
-        }
-        return null;
     }
 }
