@@ -47,6 +47,10 @@ public class UrlBuilder {
         this.rootUrl = rootUrl;
     }
 
+    protected String encode(String decodedURL) {
+        return URL.encode(decodedURL);
+    }
+
     /**
      * Build the URL and return it as an encoded string.
      */
@@ -65,7 +69,7 @@ public class UrlBuilder {
 
             if (value instanceof String || value instanceof Character || value instanceof Number || value instanceof Boolean) {
                 sb.append(prefix).append(name).append('=');
-                sb.append(URL.encode(String.valueOf(value)));
+                sb.append(encode(String.valueOf(value)));
             } else if (value instanceof Map) {
                 this.buildParameters(sb, (HashMap<String, Object>) value, name);
             } else if (value instanceof List) {
@@ -94,7 +98,7 @@ public class UrlBuilder {
             if (value == null) {
                 sb.append('&').append(parentName).append('=');
             } else if (value instanceof String) {
-                sb.append('&').append(parentName).append('=').append(URL.encode((String) value));
+                sb.append('&').append(parentName).append('=').append(encode((String) value));
             } else if (value instanceof Map) {
                 this.buildParameters(sb, (HashMap<String, Object>) value, parentName);
             } else if (value instanceof List) {
