@@ -2,15 +2,7 @@ var cookie = document.cookie;
 var bosCookieValue = getCookie("bos_cookie");
 var bosCookieObj = jQuery.parseJSON(bosCookieValue);
 
-getDatePickerLocale(bosCookieObj);
-
-function getDatePickerLocale(bosCookie) {
-	var head= document.getElementsByTagName('head')[0]
-	var oScript =  document.createElement("script");
-	oScript.src = "scripts/includes/daterangepicker."+bosCookie._l+".js";
-	oScript.type = "text/javascript";
-	head.appendChild(oScript);
-}
+$.getScript("scripts/includes/daterangepicker."+(bosCookieObj ? bosCookieObj._l : "en")+".js");
 
 function getProfileId(){
 	paramsMap = {}; 
@@ -35,14 +27,17 @@ function removeReportStyle(){
 	$("#report-form-ctn").parent().removeAttr("style");
 }
 function reportDateRangePicker(localeDateFormat, prefix){
+	$(".ui-daterangepickercontain").remove();
 	$('#'+prefix+'from, #'+prefix+'to').daterangepicker({
 		presetRanges: localeRange,
 		presets: localePresets,
 		dateFormat: localeDateFormat, 
-		constrainDates: true, 
+		constrainDates: true,
 		onClose: function() {
+			$(".ui-daterangepickercontain").remove();
 			 setTimeout(function(){$('#report-form').submit();},500);
 		}
+	
 	}).addClass("dateRangePickers");
 	$("#report-form select").attr("onchange", "refreshReport(this.form, \""+localeDateFormat+"\", \""+prefix+"\")");
 }
@@ -78,6 +73,8 @@ function hookReportFormSubmition(localeDateFormat, prefix){
 function refreshReport(e, localeDateFormat, prefix){
 	var reportForm = $(e);
 	
+	var parseLocale = localeDateFormat.replace("yyyy","yy").replace("yy","yyyy").replace("mm","M");
+	
 	var urlRefresh = reportForm.attr("action");
 	
 	var toDate = $('#'+prefix+'to', reportForm);
@@ -86,8 +83,8 @@ function refreshReport(e, localeDateFormat, prefix){
 	var toDateVal = toDate.val();
 	var fromDateVal = fromDate.val();
 	
-	var fromDateObj = Date.parse(fromDateVal, localeDateFormat);
-	var toDateObj =  Date.parse(toDateVal, localeDateFormat);
+	var toDateObj =  Date.parseExact(toDateVal, parseLocale);
+	var fromDateObj = Date.parseExact(fromDateVal, parseLocale);
 	
 	fromDate.val(fromDateObj.getTime());// 00:00:00
 	toDate.val(toDateObj.getTime()+(24*3600*1000)-1000);// 23:59:59
@@ -133,7 +130,16 @@ function retrieveFieldsValues(params, localeDateFormat){
 					if(uriValue %1 == 0){
 						uriValue =  $.datepicker.formatDate(localeDateFormat, new Date(parseInt(uriValue)));
 					}else{
-						uriValue = Date.parseExact(uriValue, localeDateFormat); // if the date is returned in localized format instead timestamp
+						uriValue = Date.parseExact(uriValue, localeDateFormat); // if
+																				// the
+																				// date
+																				// is
+																				// returned
+																				// in
+																				// localized
+																				// format
+																				// instead
+																				// timestamp
 					}
 					field.val(uriValue);
 				}else{

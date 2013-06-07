@@ -31,10 +31,20 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class DefaultReports {
 
-    private static List<ReportItem> reports = Arrays.asList(
-            createReportItem("case_list", _("Case list"), _("List of cases")),
-            createReportItem("case_avg_time", _("Case average time"), _("average case duration")),
-            createReportItem("task_list", _("Task list"), _("List of tasks"))
+    private static List<ReportItem> reports = Arrays
+            .asList(
+                    createReportItem(
+                            "case_list",
+                            _("Case list"),
+                            _("This report, display the list of cases available in the different status (open or closed) for a given period and/or apps. You can access the portail, by clicking on the link in the below table.")),
+                    createReportItem(
+                            "case_avg_time",
+                            _("Case average time"),
+                            _("This report, display the average time to close a case. 2 data are available, 1 for the mean and one for the median for a given period and/or apps. You can access the portal, by clicking on the link in the below table.")),
+                    createReportItem(
+                            "task_list",
+                            _("Task list"),
+                            _("This report, display the list of human tasks available in the different status (opened, failed or closed) for a given period and/or apps. You can access the portail, by clicking on the link in the below table."))
             );
 
     public List<ReportItem> asList() {
