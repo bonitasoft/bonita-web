@@ -17,7 +17,6 @@
 package org.bonitasoft.web.toolkit.server.utils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +55,15 @@ public class I18n extends AbstractI18n {
     }
 
     private TreeMap<String, String> loadLocale(final LOCALE locale, List<File> files) {
-        TreeMap<String,String> treeMap = new TreeMap<String, String>();
+        TreeMap<String, String> treeMap = new TreeMap<String, String>();
         for (File file : getLocaleFiles(locale, files)) {
-            treeMap.putAll(POParser.parse(file));
+            treeMap.putAll(parsePoFile(file));
         }
         return treeMap;
+    }
+
+    private Map<String, String> parsePoFile(final File file) {
+        return POParser.parse(file);
     }
 
     private List<File> getLocaleFiles(final LOCALE locale, List<File> files) {
