@@ -147,6 +147,11 @@
 				<artifactId>validation-api</artifactId>
 				<version>1.0.0.GA</version>
 			</dependency>
+			<dependency>
+				<groupId>org.fedorahosted.tennera</groupId>
+				<artifactId>jgettext</artifactId>
+				<version>0.13</version>
+			</dependency>
 
 			<!-- JSON -->
 			<dependency>
