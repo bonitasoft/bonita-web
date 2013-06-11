@@ -21,9 +21,10 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import org.bonitasoft.console.client.admin.organization.users.action.AddUserFormAction;
 import org.bonitasoft.console.client.model.identity.UserDefinition;
 import org.bonitasoft.console.client.model.identity.UserItem;
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.StringNoSpaceValidator;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.StringRegexpValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
@@ -44,20 +45,21 @@ public class PopupAddUserPage extends Page {
     @Override
     public void buildView() {
 
-        final ItemDefinition itemDef = Definitions.get(UserDefinition.TOKEN);
+        final ItemDefinition<UserItem> definition = UserDefinition.get();
 
         final Form form = new Form()
-                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Login"), _("Enter the login for this user"))
-                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
+                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Login"), _("Enter the login for this user"))
+                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
                 .addPasswordEntry(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Confirm password"), _("Confirm the password for this user"))
 
-                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"))
-                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"))
+                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"))
+                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"))
 
+                .addValidator(new JsId(UserItem.ATTRIBUTE_USERNAME), new StringNoSpaceValidator())
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD), new MandatoryValidator())
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), new MandatoryValidator(_("Confirm password")));
 
-        form.addButton(new JsId("create"), _("Create"), _("Create this user"), new AddUserFormAction(itemDef));
+        form.addButton(new JsId("create"), _("Create"), _("Create this user"), new AddUserFormAction(definition));
 
         form.addCancelButton();
 

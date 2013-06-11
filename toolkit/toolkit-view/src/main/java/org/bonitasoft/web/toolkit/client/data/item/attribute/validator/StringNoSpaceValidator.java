@@ -25,7 +25,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 public class StringNoSpaceValidator extends AbstractStringFormatValidator {
 
     public StringNoSpaceValidator() {
-        super(" *");
+        super(" ", true);
     }
 
     @Override
