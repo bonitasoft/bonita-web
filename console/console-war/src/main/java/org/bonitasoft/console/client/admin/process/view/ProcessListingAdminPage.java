@@ -171,8 +171,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
         return new ItemListingTable(new JsId(TABLE_ACTION_DELETE),
                 _("Deletable"),
                 createItemTable()
-                        .addGroupedAction(
-                                new JsId("delete"), _("Delete"), _("Delete selected apps"), new DeleteProcessesAction()),
+                        .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
                 new ProcessQuickDetailsAdminPage());
     }
 
