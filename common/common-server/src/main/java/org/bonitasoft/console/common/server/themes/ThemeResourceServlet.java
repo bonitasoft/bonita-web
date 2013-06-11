@@ -118,6 +118,9 @@ public class ThemeResourceServlet extends HttpServlet {
             }
             throw new ServletException(errorMessage);
         }
+        if (fileName.contains("?")) {
+            fileName = fileName.substring(0, fileName.indexOf("?"));
+        }
         themeName = URLDecoder.decode(themeName, "UTF-8");
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
