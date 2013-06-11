@@ -31,6 +31,7 @@ import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
@@ -91,6 +92,12 @@ public class ProcessListingPage extends ItemListingPage<ProcessItem> implements 
         return categories;
     }
 
+    @Override
+    protected Title defineResourceFiltersTitle() {
+        return new Title(_("Categories"));
+    }
+
+    
     // ////////////////////
     // TABLES
     // ////////////////////
