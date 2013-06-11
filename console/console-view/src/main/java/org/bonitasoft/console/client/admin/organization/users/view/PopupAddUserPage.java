@@ -24,6 +24,7 @@ import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.StringNoSpaceValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
@@ -54,6 +55,7 @@ public class PopupAddUserPage extends Page {
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"))
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"))
 
+                .addValidator(new JsId(UserItem.ATTRIBUTE_USERNAME), new StringNoSpaceValidator())
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD), new MandatoryValidator())
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), new MandatoryValidator(_("Confirm password")));
 
