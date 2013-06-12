@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.action.ShowAddMembershipToActorPageAction;
+import org.bonitasoft.console.client.common.view.ViewParameter;
 import org.bonitasoft.console.client.model.bpm.process.ActorItem;
 import org.bonitasoft.console.client.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.console.client.model.identity.MemberType;
-import org.bonitasoft.console.common.client.FilterKey;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
@@ -59,7 +59,7 @@ public class ListProcessActorMembershipPage extends ListProcessActorMemberPage {
         final Map<String, String> params = new HashMap<String, String>();
         params.put(ActorMemberItem.ATTRIBUTE_ACTOR_ID, actor.getId().toString());
         params.put(DeleteActorMemberPage.PARAM_REDIRECT_TOKEN, TOKEN);
-        params.put(FilterKey.PROCESS_ID.name(), this.getParameter(FilterKey.PROCESS_ID.name()));
+        params.put(ViewParameter.PROCESS_ID, this.getParameter(ViewParameter.PROCESS_ID));
         return params;
     }
 

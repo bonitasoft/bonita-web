@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.common.view.ViewParameter;
 import org.bonitasoft.console.client.model.bpm.process.ActorMemberDefinition;
 import org.bonitasoft.console.client.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.console.common.client.FilterKey;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
@@ -56,8 +56,8 @@ public class DeleteActorMemberAction extends ItemAction {
     public void execute() {
 
         final HashMap<String, String> params = new HashMap<String, String>();
-        params.put("id", this.actorId);
-        params.put(FilterKey.PROCESS_ID.name(), this.processId);
+        params.put(ViewParameter.ID, this.actorId);
+        params.put(ViewParameter.PROCESS_ID, this.processId);
         new APICaller<ActorMemberItem>(Definitions.get(ActorMemberDefinition.TOKEN)).delete(this.actorMemberIds, new APICallback() {
 
             @Override

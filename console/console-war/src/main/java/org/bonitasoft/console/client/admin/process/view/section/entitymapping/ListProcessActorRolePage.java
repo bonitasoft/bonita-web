@@ -19,10 +19,10 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.HashMap;
 
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.action.ShowAddRoleToActorPageAction;
+import org.bonitasoft.console.client.common.view.ViewParameter;
 import org.bonitasoft.console.client.model.bpm.process.ActorItem;
 import org.bonitasoft.console.client.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.console.client.model.identity.MemberType;
-import org.bonitasoft.console.common.client.FilterKey;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
@@ -55,11 +55,11 @@ public class ListProcessActorRolePage extends ListProcessActorMemberPage {
     }
 
     private HashMap<String, String> buildItemTableParameters(final String actorId) {
-        final String processId = this.getParameter(FilterKey.PROCESS_ID.name());
+        final String processId = this.getParameter(ViewParameter.PROCESS_ID);
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put(ActorMemberItem.ATTRIBUTE_ACTOR_ID, actorId);
         params.put(DeleteActorMemberPage.PARAM_REDIRECT_TOKEN, TOKEN);
-        params.put(FilterKey.PROCESS_ID.name(), processId);
+        params.put(ViewParameter.PROCESS_ID, processId);
         return params;
     }
 

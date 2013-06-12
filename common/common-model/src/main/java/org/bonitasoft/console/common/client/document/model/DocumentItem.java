@@ -66,7 +66,7 @@ public class DocumentItem extends Item {
 
     public static final String DOCUMENT_URL = "documentURL";
 
-    public static final String DOCUMENT_CREATION_TYPE = FilterKey.DOCUMENT_CREATION_TYPE.name();
+    public static final String DOCUMENT_CREATION_TYPE = "DOCUMENT_CREATION_TYPE";
 
     public static final String DOCUMENT_UPLOAD = "documentUpload";
 

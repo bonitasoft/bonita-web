@@ -17,7 +17,7 @@ package org.bonitasoft.console.client.admin.process.view.section.entitymapping;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.process.action.DeleteActorMemberAction;
-import org.bonitasoft.console.common.client.FilterKey;
+import org.bonitasoft.console.client.common.view.ViewParameter;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -45,10 +45,10 @@ public class DeleteActorMemberPage extends Page {
 
     @Override
     public void buildView() {
-        final String actorMemberId = this.getParameter("id");
+        final String actorMemberId = this.getParameter(ViewParameter.ID);
         final String redirectToken = this.getParameter(PARAM_REDIRECT_TOKEN);
         final String actorId = this.getParameter("actor_id");
-        final String processId = this.getParameter(FilterKey.PROCESS_ID.name());
+        final String processId = this.getParameter(ViewParameter.PROCESS_ID);
         final DeleteActorMemberAction action = new DeleteActorMemberAction(actorId, actorMemberId, processId, redirectToken);
 
         addBody(createDeleteForm(action, new HistoryBackAction()));

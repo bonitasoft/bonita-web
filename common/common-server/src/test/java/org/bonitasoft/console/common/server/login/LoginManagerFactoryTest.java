@@ -16,8 +16,10 @@
  */
 package org.bonitasoft.console.common.server.login;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
+import org.bonitasoft.console.common.client.FilterKey;
 import org.junit.Test;
 
 
@@ -43,4 +45,8 @@ public class LoginManagerFactoryTest {
         assertNotNull("Cannot get the login manager", LoginManagerFactory.getLoginManager(new Long(0)));
     }
 
+    @Test
+    public void testName() throws Exception {
+        System.out.println(FilterKey.CASE_ID.name());
+    }
 }
