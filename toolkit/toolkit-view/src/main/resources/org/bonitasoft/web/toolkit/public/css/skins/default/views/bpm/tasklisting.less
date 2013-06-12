@@ -83,12 +83,20 @@
 						color: @taskList-processName-textColor;
 						.fontSize(@taskList-processName-fontSize);
 						position: @taskList-processName-position;
-						
 					}
 					&.td_displayname{
 						height: @taskList-task-height;
 						overflow: hidden;
 						width: @taskList-task-width;
+					}
+				}
+			}
+		}
+		.section{
+			&_performed{
+				.table .tr .td{
+					&.td_processId_displayName{
+						left: @taskList-processName-performed-left;
 					}
 				}
 			}
