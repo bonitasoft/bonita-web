@@ -70,8 +70,6 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ReportItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
-        // metadatas.add(installOn(item));
-        // metadatas.add(installBy(item));
         return metadatas;
     }
 
@@ -104,23 +102,17 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
      * @return
      */
     private AbstractComponent getReportScreenshot(ReportItem report) {
-        Image screenshot = new Image(new Url(""), 200, 200, _("Report's screenshot"));
-        if (report.getId().equals("task_list")) {
-            screenshot.setUrl(new Url("images/task_list.png"));
-        } else if (report.getId().equals("case_list")) {
-            screenshot.setUrl(new Url("images/case_list.png"));
-        } else if (report.getId().equals("case_avg_time")) {
-            screenshot.setUrl(new Url("images/case_avg_time.png"));
-        }
+        Image screenshot = new Image(new Url("/console/ReportScreenshotServlet?reportName=" + report.getId()), 0, 0, _("Report's screenshot"));
         Link link = new Link(
                 new JsId("screenshotReportLink"),
                 _("Go to more details report view"),
                 _("Go to more details report view"),
                 new ActionShowView(new ReportMoreDetailsAdminPage(
                         report)));
-        link.setImage(screenshot);
+        link.addClass("reportScreenshot");
 
-        return new Section(new JsId("section"), _("Screen shot"), screenshot);
+        link.setImage(screenshot);
+        return new Section(new JsId("section"), _("Screen shot"), link);
 
     }
 }
