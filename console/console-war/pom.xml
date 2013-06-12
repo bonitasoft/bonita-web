@@ -71,6 +71,12 @@
 			<artifactId>console-reporting</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jdtcore</artifactId>
+					<groupId>eclipse</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
@@ -162,7 +168,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			
+
 			<!-- GWT configuration -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -191,6 +197,15 @@
 						the version in your declared deps if this does not match (default if left 
 						out is 1.5.3) you will have mysterious errors -->
 					<gwtVersion>${gwtVersion}</gwtVersion>
+
+					<!-- 
+					<systemProperties>
+						<bonita.home>/home/colin/workspace/bonita_home</bonita.home>
+						<build.compiler>org.bonitasoft.tools.gwt.JDTCompiler</build.compiler>
+						<java.compiler>NONE</java.compiler>
+					</systemProperties>
+					<server>org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher</server>
+					<extraJvmArgs>-XX:MaxPermSize=256m</extraJvmArgs> -->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -311,6 +326,11 @@
 						</exclusion>
 					</exclusions>
 				</dependency>
+				<dependency>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+					<version>1.3.170</version>
+				</dependency>
 			</dependencies>
 			<build>
 				<resources>
@@ -329,6 +349,18 @@
 							<draftCompile>true</draftCompile>
 							<enableAssertions>true</enableAssertions>
 							<extraParam>-deploy=${project.build.directory}</extraParam>
+
+							<module>org.bonitasoft.console.LightBonitaConsole</module>
+							<!-- configuration for gwt:run and gwt:debug -->
+							<systemProperties>
+								<bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
+								<build.compiler>org.bonitasoft.tools.gwt.JDTCompiler</build.compiler>
+								<java.compiler>NONE</java.compiler>
+							</systemProperties>
+							<server>org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher</server>
+							<extraJvmArgs>-XX:MaxPermSize=256m</extraJvmArgs>
+							<runTarget>login.jsp?redirectUrl=console%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997</runTarget>
+							<deploy>${project.build.directory}</deploy>
 						</configuration>
 					</plugin>
 				</plugins>
