@@ -154,6 +154,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                         .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
                         .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                         .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
+                        .addColumn(new DeployedAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false),
                 new ArchivedHumanTaskQuickDetailsPage());
     }
