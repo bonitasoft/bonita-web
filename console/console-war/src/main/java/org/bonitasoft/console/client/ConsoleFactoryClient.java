@@ -9,9 +9,6 @@ import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTask
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.category.view.AddCategoryPage;
-import org.bonitasoft.console.client.admin.category.view.DeleteCategoryPage;
-import org.bonitasoft.console.client.admin.category.view.EditCategoryPage;
 import org.bonitasoft.console.client.admin.monitoring.report.view.ReportListingAdminPage;
 import org.bonitasoft.console.client.admin.monitoring.report.view.ReportMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.monitoring.report.view.ReportQuickDetailsAdminPage;
@@ -30,7 +27,6 @@ import org.bonitasoft.console.client.admin.organization.users.view.UserListingAd
 import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserQuickDetailsPage;
-import org.bonitasoft.console.client.admin.process.view.DeleteProcessPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessQuickDetailsAdminPage;
@@ -128,20 +124,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new StartProcessOnBehalfPage();
         } else if (UploadProcessPage.TOKEN.equals(token)) {
             return new UploadProcessPage();
-        } else if (AddCategoryPage.TOKEN.equals(token)) {
-            return new AddCategoryPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)) {
             return new CreateCategoryAndAddToProcessPage();
-        } else if (EditCategoryPage.TOKEN.equals(token)) {
-            return new EditCategoryPage();
-        } else if (DeleteCategoryPage.TOKEN.equals(token)) {
-            return new DeleteCategoryPage();
         } else if (AddProcessCategoryPage.TOKEN.equals(token)) {
             return new AddProcessCategoryPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token)) {
             return new ProcessMoreDetailsAdminPage();
-        } else if (DeleteProcessPage.TOKEN.equals(token)) {
-            return new DeleteProcessPage();
         } else if (UpdateUserPage.TOKEN.equals(token)) {
             return new UpdateUserPage();
         } else if (RoleListingPage.TOKEN.equals(token)) {
