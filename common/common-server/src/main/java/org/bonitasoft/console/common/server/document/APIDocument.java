@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.FilterKey;
 import org.bonitasoft.console.common.client.document.model.DocumentDefinition;
 import org.bonitasoft.console.common.client.document.model.DocumentItem;
 import org.bonitasoft.console.common.server.CommonAPI;
@@ -83,14 +82,14 @@ public class APIDocument extends CommonAPI<DocumentItem> {
         try {
 
             if (filters != null) {
-                if (filters.containsKey(FilterKey.CASE_ID.name())) {
-                    caseId = filters.get(FilterKey.CASE_ID.name());
+                if (filters.containsKey(DocumentItem.FILTER_CASE_ID)) {
+                    caseId = filters.get(DocumentItem.FILTER_CASE_ID);
                 }
-                if (filters.containsKey(FilterKey.VIEW.name())) {
-                    viewType = filters.get(FilterKey.VIEW.name());
+                if (filters.containsKey(DocumentItem.FILTER_VIEW_TYPE)) {
+                    viewType = filters.get(DocumentItem.FILTER_VIEW_TYPE);
                 }
-                if (filters.containsKey(FilterKey.USER_ID.name())) {
-                    final String user = filters.get(FilterKey.USER_ID.name());
+                if (filters.containsKey(DocumentItem.FILTER_USER_ID)) {
+                    final String user = filters.get(DocumentItem.FILTER_USER_ID);
                     if (user != null) {
                         userId = Long.valueOf(user);
                     } else {

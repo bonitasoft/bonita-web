@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.FilterKey;
 import org.bonitasoft.console.common.client.document.model.ArchivedDocumentDefinition;
 import org.bonitasoft.console.common.client.document.model.ArchivedDocumentItem;
 import org.bonitasoft.console.common.client.document.model.DocumentItem;
@@ -80,14 +79,14 @@ public class APIArchivedDocument extends CommonAPI<ArchivedDocumentItem> {
         String documentName = null;
         long userId = -1;
         try {
-            if (filters.containsKey(FilterKey.CASE_ID.name())) {
-                caseId = filters.get(FilterKey.CASE_ID.name());
+            if (filters.containsKey(ArchivedDocumentItem.FILTER_CASE_ID)) {
+                caseId = filters.get(ArchivedDocumentItem.FILTER_CASE_ID);
             }
-            if (filters.containsKey(FilterKey.VIEW.name())) {
-                viewType = filters.get(FilterKey.VIEW.name());
+            if (filters.containsKey(ArchivedDocumentItem.FILTER_VIEW_TYPE)) {
+                viewType = filters.get(ArchivedDocumentItem.FILTER_VIEW_TYPE);
             }
-            if (filters.containsKey(FilterKey.USER_ID.name())) {
-                final String user = filters.get(FilterKey.USER_ID.name());
+            if (filters.containsKey(ArchivedDocumentItem.FILTER_USER_ID)) {
+                final String user = filters.get(ArchivedDocumentItem.FILTER_USER_ID);
                 if (user != null) {
                     userId = Long.valueOf(user);
                 } else {

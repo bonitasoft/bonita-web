@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.console.common.client.document.model;
 
-import org.bonitasoft.console.common.client.FilterKey;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -69,6 +68,13 @@ public class DocumentItem extends Item {
     public static final String DOCUMENT_CREATION_TYPE = "DOCUMENT_CREATION_TYPE";
 
     public static final String DOCUMENT_UPLOAD = "documentUpload";
+    
+    /* Filter are in uppercase due to a refactoring (delete FilterKey class), please put them in lowercase if there is no side effect */
+    public static final String FILTER_CASE_ID = "CASE_ID";
+    
+    public static final String FILTER_VIEW_TYPE = "VIEW";
+    
+    public static final String FILTER_USER_ID = "USER_ID";
 
     public void setDocumentId(final String documentId) {
         this.setAttribute(DOCUMENT_ID, documentId);
