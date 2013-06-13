@@ -12,7 +12,6 @@
 
 	<modules>
 		<module>common-config</module>
-		<module>common-model</module>
 		<module>common-server</module>
 	</modules>
 

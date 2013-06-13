@@ -10,6 +10,7 @@
 	<modules>
 		<module>toolkit</module>
 		<module>common</module>
+		<module>rest-api</module>
 		<module>forms</module>
 		<module>console</module>
 		<module>platform</module>

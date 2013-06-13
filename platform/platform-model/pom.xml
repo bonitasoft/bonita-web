@@ -16,8 +16,8 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-model</artifactId>
+			<groupId>org.bonitasoft.web</groupId>
+			<artifactId>bonita-rest-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- GWT deps -->
