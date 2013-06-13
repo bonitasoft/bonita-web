@@ -151,7 +151,7 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
     private String buildReportFormURL(final ReportItem item, String locale) {
         final StringBuilder frameURL = new StringBuilder()
                 .append(GWT.getModuleBaseURL()).append("runreport")
-                .append("?reportName=" + item.getId())
+                .append("?reportName=" + item.getName())
                 .append("&locale=" + locale)
                 .append("&reportFormat=HTML")
                 .append("&p_date_from=" + oneWeekBefore())

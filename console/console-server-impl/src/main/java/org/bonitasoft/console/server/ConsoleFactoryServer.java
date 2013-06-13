@@ -47,7 +47,6 @@ import org.bonitasoft.console.server.api.bpm.process.APIProcessCategory;
 import org.bonitasoft.console.server.api.bpm.process.APIProcessConnector;
 import org.bonitasoft.console.server.api.bpm.process.APIProcessConnectorDependency;
 import org.bonitasoft.console.server.api.bpm.process.APIProcessResolutionProblem;
-import org.bonitasoft.console.server.api.monitoring.report.APIReport;
 import org.bonitasoft.console.server.api.organization.APIGroup;
 import org.bonitasoft.console.server.api.organization.APIMembership;
 import org.bonitasoft.console.server.api.organization.APIPersonalContactData;
@@ -169,11 +168,7 @@ public class ConsoleFactoryServer extends CommonFactoryServer {
             } else if ("caseVariable".equals(resourceToken)) {
                 return new APICaseVariable();
             }
-        } else if ("monitoring".equals(apiToken)) {
-            if ("report".equals(resourceToken)) {
-                return new APIReport();
-            }
-        }
+        } 
         return super.defineApis(apiToken, resourceToken);
     }
 
