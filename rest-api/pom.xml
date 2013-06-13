@@ -15,7 +15,7 @@
 	
 	<modules>
 		<module>rest-api-model</module>
-		<module>rest-api-server</module>
+		<!-- <module>rest-api-server</module> -->
 	</modules>
 
 </project>
