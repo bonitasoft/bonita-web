@@ -71,10 +71,14 @@ public class DocumentItem extends Item {
     
     /* Filter are in uppercase due to a refactoring (delete FilterKey class), please put them in lowercase if there is no side effect */
     public static final String FILTER_CASE_ID = "CASE_ID";
-    
     public static final String FILTER_VIEW_TYPE = "VIEW";
-    
     public static final String FILTER_USER_ID = "USER_ID";
+    
+    /* idem for values */
+    public static final String VALUE_VIEW_TYPE_ADMINISTRATOR = "ADMINISTRATOR";
+    public static final String VALUE_VIEW_TYPE_USER = "USER";
+    public static final String VALUE_VIEW_TYPE_TEAM_MANAGER = "TEAM_MANAGER";
+    public static final String VALUE_VIEW_TYPE_PROCESS_OWNER = "PROCESS_OWNER";
 
     public void setDocumentId(final String documentId) {
         this.setAttribute(DOCUMENT_ID, documentId);

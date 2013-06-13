@@ -24,7 +24,6 @@ import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 
-import org.bonitasoft.console.common.client.ViewType;
 import org.bonitasoft.console.common.client.document.model.ArchivedDocumentItem;
 import org.bonitasoft.console.common.client.document.model.DocumentItem;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
@@ -76,46 +75,29 @@ public class DocumentDatastore {
     public SearchResult<Document> searchDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder) throws InvalidSessionException,
             BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException, ServletException {
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
-        SearchResult<Document> result = null;
-        switch (ViewType.valueOf(viewType)) {
-            case ADMINISTRATOR:
-                result = processAPI.searchDocuments(builder.done());
-            case USER:
-                result = processAPI.searchDocumentsSupervisedBy(userId, builder.done());
-                break;
-            case TEAM_MANAGER:
-                result = processAPI.searchDocuments(builder.done());
-                break;
-            case PROCESS_OWNER:
-                result = processAPI.searchDocumentsSupervisedBy(userId, builder.done());
-                break;
-            default:
-                throw new ServletException("Invalid view type.");
-
+        if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
+                || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)) {
+            return processAPI.searchDocuments(builder.done());
+        } else if (DocumentItem.VALUE_VIEW_TYPE_TEAM_MANAGER.equals(viewType)) {
+            return processAPI.searchDocuments(builder.done());
+        } else if (DocumentItem.VALUE_VIEW_TYPE_PROCESS_OWNER.equals(viewType)) {
+            return processAPI.searchDocumentsSupervisedBy(userId, builder.done());
         }
-
-        return result;
+        throw new ServletException("Invalid view type.");
     }
 
     public SearchResult<ArchivedDocument> searchArchivedDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder)
             throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException,
             ServletException {
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
-        SearchResult<ArchivedDocument> result = null;
-        switch (ViewType.valueOf(viewType)) {
-            case ADMINISTRATOR:
-            case USER:
-            case TEAM_MANAGER:
-                result = processAPI.searchArchivedDocuments(builder.done());
-                break;
-            case PROCESS_OWNER:
-                result = processAPI.searchArchivedDocumentsSupervisedBy(userId, builder.done());
-                break;
-            default:
-                throw new ServletException("Invalid view type.");
-
+        if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
+                || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)
+                || DocumentItem.VALUE_VIEW_TYPE_TEAM_MANAGER.equals(viewType)) {
+            return processAPI.searchArchivedDocuments(builder.done());
+        } else if (DocumentItem.VALUE_VIEW_TYPE_PROCESS_OWNER.equals(viewType)) {
+            return processAPI.searchArchivedDocumentsSupervisedBy(userId, builder.done());
         }
-        return result;
+        throw new ServletException("Invalid view type.");
     }
 
     public DocumentItem createDocument(final long processInstanceId, final String documentName, final String documentCreationType, final String path) 
