@@ -16,27 +16,16 @@
  */
 package org.bonitasoft.console.server;
 
-import org.bonitasoft.console.client.model.ModelFactory;
-import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
-import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.servlet.ServiceServlet;
 
 /**
  * @author Séverin Moussel
  * 
  */
+@SuppressWarnings("serial")
 public class ConsoleServiceServlet extends ServiceServlet {
 
-    private static final long serialVersionUID = 4956178724095093318L;
-
-    @Override
-    protected ItemDefinitionFactory defineApplicatioFactoryCommon() {
-        return new ModelFactory();
-    }
-
-    @Override
-    protected RestAPIFactory defineApplicatioFactoryServer() {
-        return new ConsoleRestAPIFactory();
-    }
-
+    public ConsoleServiceServlet() {
+		super(new ConsoleServiceFactory());
+	}
 }

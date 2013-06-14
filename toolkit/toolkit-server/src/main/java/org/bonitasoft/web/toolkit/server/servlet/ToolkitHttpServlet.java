@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
@@ -38,7 +37,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundExcepti
 import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.ServletCall;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
@@ -116,17 +114,13 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
     /**
      * Initialize the toolkit
      */
-    private void initializeToolkit() {
+    protected void initializeToolkit() {
         Item.setApplyInputModifiersByDefault(false);
         Item.setApplyValidatorsByDefault(false);
         Item.setApplyOutputModifiersByDefault(false);
         Item.setApplyValidatorMandatoryByDefault(false);
 
         CommonDateFormater.setDateFormater(new ServerDateFormater());
-
-        ItemDefinitionFactory.setDefaultFactory(defineApplicatioFactoryCommon());
-        RestAPIFactory.setDefaultFactory(defineApplicatioFactoryServer());
-
     }
 
     /**
@@ -168,10 +162,6 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected abstract ServletCall defineServletCall(final HttpServletRequest req, final HttpServletResponse resp);
-
-    protected abstract ItemDefinitionFactory defineApplicatioFactoryCommon();
-
-    protected abstract RestAPIFactory defineApplicatioFactoryServer();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // INITIATE CALL

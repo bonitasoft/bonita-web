@@ -38,9 +38,11 @@ import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 public class ServiceServletCall extends ServletCall {
 
     private String calledToolToken;
+	private ServiceFactory serviceFactory;
 
-    public ServiceServletCall(final HttpServletRequest request, final HttpServletResponse response) {
+    public ServiceServletCall(ServiceFactory serviceFactory, final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);
+		this.serviceFactory = serviceFactory;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class ServiceServletCall extends ServletCall {
      * Instantiate and run the service.
      */
     private void run() {
-        final Service service = RestAPIFactory.getDefaultFactory().defineServices(this.calledToolToken);
+        final Service service = serviceFactory.getService(this.calledToolToken);
         service.setCaller(this);
 
         final Object response = service.run();

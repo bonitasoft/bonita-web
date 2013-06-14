@@ -16,24 +16,17 @@
  */
 package org.bonitasoft.web.toolkit.server;
 
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
- * @author Séverin Moussel
- * 
+ * @author Colin PUY
  */
-public abstract class RestAPIFactory {
+public interface ServiceFactory {
 
-    private static RestAPIFactory defaultFactory = null;
-
-    public static void setDefaultFactory(final RestAPIFactory factory) {
-        defaultFactory = factory;
-    }
-
-    public static RestAPIFactory getDefaultFactory() {
-        return defaultFactory;
-    }
-
-    public abstract API<? extends IItem> defineApis(final String apiToken, final String resourceToken);
+    /**
+     * 
+     * @param calledToolToken
+     *            The token as a path. For example if the tool url is ".../TOOLS/actors/import", the token will be "actors/import".
+     */
+    public Service getService(String calledToolToken);
 
 }

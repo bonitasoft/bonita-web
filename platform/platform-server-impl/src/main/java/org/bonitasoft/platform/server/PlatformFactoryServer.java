@@ -22,7 +22,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundExcepti
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.API;
 import org.bonitasoft.web.toolkit.server.RestAPIFactory;
-import org.bonitasoft.web.toolkit.server.Service;
 import org.bonitasoft.web.toolkit.server.api.system.APII18nLocale;
 import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
 
@@ -49,10 +48,5 @@ public class PlatformFactoryServer extends RestAPIFactory {
         }
 
         throw new APINotFoundException(apiToken, resourceToken);
-    }
-
-    @Override
-    public Service defineServices(final String calledToolToken) {
-        return null;
     }
 }

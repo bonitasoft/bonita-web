@@ -171,14 +171,4 @@ public class ConsoleRestAPIFactory extends CommonRestAPIFactory {
         } 
         return super.defineApis(apiToken, resourceToken);
     }
-
-    @Override
-    public Service defineServices(final String calledToolToken) {
-        if (OrganizationImportService.TOKEN.equals(calledToolToken)) {
-            return new OrganizationImportService();
-        } else if (ProcessActorImportService.TOKEN.equals(calledToolToken)) {
-            return new ProcessActorImportService();
-        }
-        return super.defineServices(calledToolToken);
-    }
 }

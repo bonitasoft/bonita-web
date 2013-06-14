@@ -42,9 +42,4 @@ public class CommonRestAPIFactory extends RestAPIFactory {
         }
         throw new APINotFoundException(apiToken, resourceToken);
     }
-
-    @Override
-    public Service defineServices(final String calledToolToken) {
-        throw new ServiceNotFoundException(calledToolToken);
-    }
 }

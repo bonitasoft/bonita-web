@@ -19,7 +19,9 @@ package org.bonitasoft.web.toolkit.server.servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.server.APIServletCall;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.ServletCall;
 
 /**
@@ -31,8 +33,18 @@ public abstract class APIServlet extends ToolkitHttpServlet {
     private static final long serialVersionUID = 1852124460966605504L;
 
     @Override
+    protected void initializeToolkit() {
+    	super.initializeToolkit();
+    	ItemDefinitionFactory.setDefaultFactory(defineApplicatioFactoryCommon());
+        RestAPIFactory.setDefaultFactory(defineApplicatioFactoryServer());
+    }
+    
+    @Override
     protected ServletCall defineServletCall(final HttpServletRequest req, final HttpServletResponse resp) {
         return new APIServletCall(req, resp);
     }
 
+    protected abstract ItemDefinitionFactory defineApplicatioFactoryCommon();
+
+    protected abstract RestAPIFactory defineApplicatioFactoryServer();
 }

@@ -19,6 +19,7 @@ package org.bonitasoft.web.toolkit.server.servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.web.toolkit.server.ServiceFactory;
 import org.bonitasoft.web.toolkit.server.ServiceServletCall;
 import org.bonitasoft.web.toolkit.server.ServletCall;
 
@@ -28,16 +29,17 @@ import org.bonitasoft.web.toolkit.server.ServletCall;
  * @author Séverin Moussel
  * 
  */
+@SuppressWarnings("serial")
 public abstract class ServiceServlet extends ToolkitHttpServlet {
 
-    private static final long serialVersionUID = -7441974955819328574L;
+	private ServiceFactory serviceFactory;
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CATCHING ENTRY POINTS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	public ServiceServlet(ServiceFactory serviceFactory) {
+		this.serviceFactory = serviceFactory;
+	}
+	
     @Override
     protected ServletCall defineServletCall(final HttpServletRequest req, final HttpServletResponse resp) {
-        return new ServiceServletCall(req, resp);
+        return new ServiceServletCall(serviceFactory, req, resp);
     }
 }
