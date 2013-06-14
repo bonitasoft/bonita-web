@@ -161,6 +161,7 @@ public class ThemeResourceServlet extends HttpServlet {
             response.setContentType(contentType);
             response.setContentLength(content.length);
             response.setBufferSize(content.length);
+            response.setHeader("Cache-Control", "no-cache");
             final OutputStream out = response.getOutputStream();
             out.write(content, 0, content.length);
             response.flushBuffer();
