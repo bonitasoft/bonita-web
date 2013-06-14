@@ -22,14 +22,14 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundExcepti
 import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.API;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.Service;
 
 /**
  * @author Séverin Moussel
  * 
  */
-public class CommonFactoryServer extends ApplicationFactoryServer {
+public class CommonRestAPIFactory extends RestAPIFactory {
 
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {

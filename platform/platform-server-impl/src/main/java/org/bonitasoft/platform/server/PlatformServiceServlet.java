@@ -17,8 +17,8 @@
 package org.bonitasoft.platform.server;
 
 import org.bonitasoft.platform.client.PlatformFactoryCommon;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.servlet.ServiceServlet;
 
 /**
@@ -30,12 +30,12 @@ public class PlatformServiceServlet extends ServiceServlet {
     private static final long serialVersionUID = 8631822986477720506L;
 
     @Override
-    protected ApplicationFactoryCommon defineApplicatioFactoryCommon() {
+    protected ItemDefinitionFactory defineApplicatioFactoryCommon() {
         return new PlatformFactoryCommon();
     }
 
     @Override
-    protected ApplicationFactoryServer defineApplicatioFactoryServer() {
+    protected RestAPIFactory defineApplicatioFactoryServer() {
         return new PlatformFactoryServer();
     }
 

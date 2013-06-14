@@ -16,13 +16,13 @@ package org.bonitasoft.console.common.client;
 
 import org.bonitasoft.console.common.client.document.model.ArchivedDocumentDefinition;
 import org.bonitasoft.console.common.client.document.model.DocumentDefinition;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Yongtao Guo
  */
-public class CommonModelFactory extends ApplicationFactoryCommon {
+public class CommonModelFactory extends ItemDefinitionFactory {
 
     @Override
     public ItemDefinition defineItemDefinitions(final String token) {

@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.console.common.client.CommonModelFactory;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.servlet.APIServlet;
 
 /**
@@ -42,13 +42,13 @@ public class CommonAPIServlet extends APIServlet {
     }
 
     @Override
-    protected ApplicationFactoryCommon defineApplicatioFactoryCommon() {
+    protected ItemDefinitionFactory defineApplicatioFactoryCommon() {
         return new CommonModelFactory();
     }
 
     @Override
-    protected ApplicationFactoryServer defineApplicatioFactoryServer() {
-        return new CommonFactoryServer();
+    protected RestAPIFactory defineApplicatioFactoryServer() {
+        return new CommonRestAPIFactory();
     }
 
     @Override

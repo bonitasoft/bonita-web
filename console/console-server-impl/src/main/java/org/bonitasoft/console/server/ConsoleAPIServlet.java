@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.console.server;
 
-import org.bonitasoft.console.client.model.ConsoleFactoryCommon;
+import org.bonitasoft.console.client.model.ModelFactory;
 import org.bonitasoft.console.common.server.CommonAPIServlet;
 import org.bonitasoft.console.server.datastore.bpm.flownode.FlowNodeConverter;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 
 /**
  * @author Séverin Moussel
@@ -37,13 +37,13 @@ public class ConsoleAPIServlet extends CommonAPIServlet {
     }
 
     @Override
-    protected ApplicationFactoryCommon defineApplicatioFactoryCommon() {
-        return new ConsoleFactoryCommon();
+    protected ItemDefinitionFactory defineApplicatioFactoryCommon() {
+        return new ModelFactory();
     }
 
     @Override
-    protected ApplicationFactoryServer defineApplicatioFactoryServer() {
-        return new ConsoleFactoryServer();
+    protected RestAPIFactory defineApplicatioFactoryServer() {
+        return new ConsoleRestAPIFactory();
     }
 
 }

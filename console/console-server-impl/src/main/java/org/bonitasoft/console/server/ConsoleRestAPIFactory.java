@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.server;
 
-import org.bonitasoft.console.common.server.CommonFactoryServer;
+import org.bonitasoft.console.common.server.CommonRestAPIFactory;
 import org.bonitasoft.console.common.server.api.system.APISession;
 import org.bonitasoft.console.common.server.document.APIArchivedDocument;
 import org.bonitasoft.console.common.server.document.APIDocument;
@@ -69,7 +69,7 @@ import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
  * @author Séverin Moussel
  * 
  */
-public class ConsoleFactoryServer extends CommonFactoryServer {
+public class ConsoleRestAPIFactory extends CommonRestAPIFactory {
 
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {

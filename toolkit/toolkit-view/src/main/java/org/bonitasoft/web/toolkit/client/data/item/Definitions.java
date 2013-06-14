@@ -16,7 +16,7 @@ package org.bonitasoft.web.toolkit.client.data.item;
 
 import java.util.HashMap;
 
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 
 /**
  * @author Julien Mege
@@ -46,7 +46,7 @@ public class Definitions {
         } else if (DummyItemDefinition.TOKEN.equals(token)) {
             return new DummyItemDefinition();
         } else {
-            final ItemDefinition<?> itemDefinition = ApplicationFactoryCommon.getDefaultFactory().defineItemDefinitions(token);
+            final ItemDefinition<?> itemDefinition = ItemDefinitionFactory.getDefaultFactory().defineItemDefinitions(token);
             if (itemDefinition != null) {
                 this.itemDefinitions.put(token, itemDefinition);
                 return itemDefinition;

@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.console.server.listener;
 
-import org.bonitasoft.console.client.model.ConsoleFactoryCommon;
-import org.bonitasoft.console.server.ConsoleFactoryServer;
+import org.bonitasoft.console.client.model.ModelFactory;
+import org.bonitasoft.console.server.ConsoleRestAPIFactory;
 import org.bonitasoft.console.server.datastore.bpm.flownode.FlowNodeConverter;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.listener.ApplicationContextListener;
 
 /**
@@ -30,13 +30,13 @@ import org.bonitasoft.web.toolkit.server.listener.ApplicationContextListener;
 public class ConsoleContextListener extends ApplicationContextListener {
 
     @Override
-    public ApplicationFactoryCommon defineApplicationFactoryCommon() {
-        return new ConsoleFactoryCommon();
+    public ItemDefinitionFactory defineApplicationFactoryCommon() {
+        return new ModelFactory();
     }
 
     @Override
-    public ApplicationFactoryServer defineApplicationFactoryServer() {
-        return new ConsoleFactoryServer();
+    public RestAPIFactory defineApplicationFactoryServer() {
+        return new ConsoleRestAPIFactory();
     }
 
     @Override

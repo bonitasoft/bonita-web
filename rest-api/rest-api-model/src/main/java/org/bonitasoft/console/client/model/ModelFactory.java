@@ -64,7 +64,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 /**
  * @author Yongtao Guo
  */
-public class ConsoleFactoryCommon extends CommonModelFactory {
+public class ModelFactory extends CommonModelFactory {
 
     @Override
     public ItemDefinition<?> defineItemDefinitions(final String token) {

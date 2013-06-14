@@ -19,14 +19,14 @@ import org.bonitasoft.platform.client.monitoring.model.JvmStaticMonitoringDefini
 import org.bonitasoft.platform.client.monitoring.model.SystemPropertyDefinition;
 import org.bonitasoft.platform.client.platform.model.PlatformDefinition;
 import org.bonitasoft.platform.client.tenant.model.TenantDefinition;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Haojie Yuan
  */
-public class PlatformFactoryCommon extends ApplicationFactoryCommon {
+public class PlatformFactoryCommon extends ItemDefinitionFactory {
 
     @Override
     public ItemDefinition defineItemDefinitions(final String token) {

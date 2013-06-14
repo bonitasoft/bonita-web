@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.menu.view.LoginBox;
-import org.bonitasoft.console.client.model.ConsoleFactoryCommon;
+import org.bonitasoft.console.client.model.ModelFactory;
 import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.view.FormsAsyncCallback;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
@@ -29,7 +29,7 @@ import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
 import org.bonitasoft.forms.client.view.controller.FormViewControllerFactory;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.ClientApplication;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
@@ -72,8 +72,8 @@ public class ConsoleClient extends ClientApplication {
     }
 
     @Override
-    public ApplicationFactoryCommon defineApplicationFactoryCommon() {
-        return new ConsoleFactoryCommon();
+    public ItemDefinitionFactory defineApplicationFactoryCommon() {
+        return new ModelFactory();
     }
 
     @Override

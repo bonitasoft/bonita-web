@@ -25,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 public class APIs {
 
     public static API<? extends IItem> get(final String apiToken, final String resourceToken) {
-        return ApplicationFactoryServer.getDefaultFactory().defineApis(apiToken, resourceToken);
+        return RestAPIFactory.getDefaultFactory().defineApis(apiToken, resourceToken);
     }
 
 }

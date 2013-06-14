@@ -14,25 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client;
+package org.bonitasoft.web.toolkit.server;
 
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
- * @author Firstname Lastname
+ * @author Séverin Moussel
  * 
  */
-public abstract class ApplicationFactoryCommon {
+public abstract class RestAPIFactory {
 
-    private static ApplicationFactoryCommon defaultFactory = null;
+    private static RestAPIFactory defaultFactory = null;
 
-    public static void setDefaultFactory(final ApplicationFactoryCommon factory) {
+    public static void setDefaultFactory(final RestAPIFactory factory) {
         defaultFactory = factory;
     }
 
-    public static ApplicationFactoryCommon getDefaultFactory() {
+    public static RestAPIFactory getDefaultFactory() {
         return defaultFactory;
     }
 
-    public abstract ItemDefinition defineItemDefinitions(String token);
+    public abstract API<? extends IItem> defineApis(final String apiToken, final String resourceToken);
+
+    /**
+     * 
+     * @param calledToolToken
+     *            The token as a path. For example if the tool url is ".../TOOLS/actors/import", the token will be "actors/import".
+     */
+    public abstract Service defineServices(String calledToolToken);
+
 }

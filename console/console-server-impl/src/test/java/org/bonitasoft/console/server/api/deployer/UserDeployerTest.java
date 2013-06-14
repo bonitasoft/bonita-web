@@ -22,10 +22,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.bonitasoft.console.client.model.ConsoleFactoryCommon;
+import org.bonitasoft.console.client.model.ModelFactory;
 import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class UserDeployerTest {
     @Before
     public void setUp() {
         initMocks(this);
-        ApplicationFactoryCommon.setDefaultFactory(new ConsoleFactoryCommon());
+        ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
     }
 
     @Test

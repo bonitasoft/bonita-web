@@ -84,7 +84,7 @@ public class ServiceServletCall extends ServletCall {
      * Instantiate and run the service.
      */
     private void run() {
-        final Service service = ApplicationFactoryServer.getDefaultFactory().defineServices(this.calledToolToken);
+        final Service service = RestAPIFactory.getDefaultFactory().defineServices(this.calledToolToken);
         service.setCaller(this);
 
         final Object response = service.run();

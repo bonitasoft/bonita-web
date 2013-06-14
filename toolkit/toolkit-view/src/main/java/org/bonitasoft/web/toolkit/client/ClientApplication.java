@@ -88,7 +88,7 @@ public abstract class ClientApplication implements EntryPoint {
 
         // Pages and Definitions factories
         ApplicationFactoryClient.setDefaultFactory(ClientApplication.this.defineApplicationFactoryClient());
-        ApplicationFactoryCommon.setDefaultFactory(ClientApplication.this.defineApplicationFactoryCommon());
+        ItemDefinitionFactory.setDefaultFactory(ClientApplication.this.defineApplicationFactoryCommon());
 
         // 1 - Load Session
         this.clientApplicationURL.initSession(new Action() {
@@ -119,7 +119,7 @@ public abstract class ClientApplication implements EntryPoint {
 
     public abstract ApplicationFactoryClient defineApplicationFactoryClient();
 
-    public abstract ApplicationFactoryCommon defineApplicationFactoryCommon();
+    public abstract ItemDefinitionFactory defineApplicationFactoryCommon();
 
     protected ClientApplicationURL defineClientApplicationURL() {
         return new ClientApplicationURL();

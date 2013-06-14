@@ -17,11 +17,11 @@ package org.bonitasoft.web.toolkit.server.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.bonitasoft.web.toolkit.client.ApplicationFactoryCommon;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.utils.JSonUnserializerServer;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
@@ -44,17 +44,17 @@ public abstract class ApplicationContextListener implements ServletContextListen
 
         CommonDateFormater.setDateFormater(new ServerDateFormater());
 
-        ApplicationFactoryServer.setDefaultFactory(defineApplicationFactoryServer());
-        ApplicationFactoryCommon.setDefaultFactory(defineApplicationFactoryCommon());
+        RestAPIFactory.setDefaultFactory(defineApplicationFactoryServer());
+        ItemDefinitionFactory.setDefaultFactory(defineApplicationFactoryCommon());
     }
 
     @Override
     public void contextDestroyed(final ServletContextEvent arg0) {
     }
 
-    public abstract ApplicationFactoryCommon defineApplicationFactoryCommon();
+    public abstract ItemDefinitionFactory defineApplicationFactoryCommon();
 
-    public abstract ApplicationFactoryServer defineApplicationFactoryServer();
+    public abstract RestAPIFactory defineApplicationFactoryServer();
 
     public abstract void init();
 }

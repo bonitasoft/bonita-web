@@ -21,7 +21,7 @@ import org.bonitasoft.platform.server.api.platform.APIPlatform;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.API;
-import org.bonitasoft.web.toolkit.server.ApplicationFactoryServer;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.Service;
 import org.bonitasoft.web.toolkit.server.api.system.APII18nLocale;
 import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
  * @author Séverin Moussel
  * 
  */
-public class PlatformFactoryServer extends ApplicationFactoryServer {
+public class PlatformFactoryServer extends RestAPIFactory {
 
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
