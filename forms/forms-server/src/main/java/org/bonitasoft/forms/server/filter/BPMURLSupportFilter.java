@@ -17,7 +17,7 @@
  */
 package org.bonitasoft.forms.server.filter;
 
-import static org.bonitasoft.console.common.server.utils.SearchOptionsBuilderUtil.computeIndex;
+import static org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil.computeIndex;
 
 import java.io.IOException;
 import java.util.Arrays;
