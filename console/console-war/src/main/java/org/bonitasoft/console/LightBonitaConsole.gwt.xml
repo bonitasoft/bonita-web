@@ -8,6 +8,6 @@
 	<set-property name="locale" value="default" />
 	
 	<!-- Limit permutations to firefox/chrmoe. Addie7,ie8,ie9 to support internet explorer -->
-	<set-property name="user.agent" value="gecko1_8,safari" />
+	<set-property name="user.agent" value="gecko1_8,safari,ie9,ie8,ie6" />
 
 </module>
