@@ -27,7 +27,7 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.api.model.document.DocumentDefinition;
 import org.bonitasoft.web.rest.api.model.document.DocumentItem;
-import org.bonitasoft.web.rest.server.CommonAPI;
+import org.bonitasoft.web.rest.server.api.CommonAPI;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
 import org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

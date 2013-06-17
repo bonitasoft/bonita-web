@@ -16,7 +16,7 @@ package org.bonitasoft.web.rest.server.api.system;
 
 import java.util.List;
 
-import org.bonitasoft.web.rest.server.CommonAPI;
+import org.bonitasoft.web.rest.server.api.CommonAPI;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.session.SessionItem;

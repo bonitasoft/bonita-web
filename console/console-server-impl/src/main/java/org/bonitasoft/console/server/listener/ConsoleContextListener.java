@@ -17,7 +17,7 @@
 package org.bonitasoft.console.server.listener;
 
 import org.bonitasoft.web.rest.api.model.ModelFactory;
-import org.bonitasoft.web.rest.server.ConsoleRestAPIFactory;
+import org.bonitasoft.web.rest.server.BonitaRestAPIFactory;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.server.RestAPIFactory;
@@ -36,7 +36,7 @@ public class ConsoleContextListener extends ApplicationContextListener {
 
     @Override
     public RestAPIFactory defineApplicationFactoryServer() {
-        return new ConsoleRestAPIFactory();
+        return new BonitaRestAPIFactory();
     }
 
     @Override

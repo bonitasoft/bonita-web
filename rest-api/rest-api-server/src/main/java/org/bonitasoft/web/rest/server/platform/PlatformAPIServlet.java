@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.server.platform;
 
 import org.bonitasoft.web.rest.api.model.ModelFactory;
+import org.bonitasoft.web.rest.server.BonitaRestAPIFactory;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.servlet.APIServlet;
@@ -36,7 +37,7 @@ public class PlatformAPIServlet extends APIServlet {
 
     @Override
     protected RestAPIFactory defineApplicatioFactoryServer() {
-        return new PlatformFactoryServer();
+        return new BonitaRestAPIFactory();
     }
 
 }

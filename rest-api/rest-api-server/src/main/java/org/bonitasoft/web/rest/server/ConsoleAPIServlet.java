@@ -42,7 +42,7 @@ public class ConsoleAPIServlet extends CommonAPIServlet {
 
     @Override
     protected RestAPIFactory defineApplicatioFactoryServer() {
-        return new ConsoleRestAPIFactory();
+        return new BonitaRestAPIFactory();
     }
 
 }

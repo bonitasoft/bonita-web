@@ -48,7 +48,7 @@ public class CommonAPIServlet extends APIServlet {
 
     @Override
     protected RestAPIFactory defineApplicatioFactoryServer() {
-        return new CommonRestAPIFactory();
+        return new BonitaRestAPIFactory();
     }
 
     @Override

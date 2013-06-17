@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 BonitaSoft S.A.
+ * Copyright (C) 2011 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server;
+package org.bonitasoft.web.rest.server.api;
 
-import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.API;
 
 /**
- * @author Séverin Moussel
+ * @author Julien Mege
  * 
  */
-public abstract class CommonAPI<T extends IItem> extends API<T> {
-
-    private APISession sessionSingleton = null;
+public abstract class PlatformAPI<T extends IItem> extends CommonAPI<T> {
 
     /**
-     * Get the session to access the engine SDK
+     * platform session
      */
-    protected final APISession getEngineSession() {
-        if (this.sessionSingleton == null) {
-            this.sessionSingleton = (APISession) getHttpSession().getAttribute("apiSession");
-        }
-        return this.sessionSingleton;
-    }
+    private static final String PLATFORMSESSION = "platformSession";
 
+    /**
+     * Get the session
+     */
+    protected final PlatformSession getSession() {
+        return (PlatformSession) getHttpSession().getAttribute(PLATFORMSESSION);
+    }
 }

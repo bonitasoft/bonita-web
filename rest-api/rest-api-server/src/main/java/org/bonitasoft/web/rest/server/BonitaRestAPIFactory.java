@@ -51,13 +51,16 @@ import org.bonitasoft.web.rest.server.api.organization.APIPersonalContactData;
 import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactData;
 import org.bonitasoft.web.rest.server.api.organization.APIRole;
 import org.bonitasoft.web.rest.server.api.organization.APIUser;
+import org.bonitasoft.web.rest.server.api.platform.APIPlatform;
 import org.bonitasoft.web.rest.server.api.system.APISession;
 import org.bonitasoft.web.rest.server.api.theme.impl.APITheme;
 import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfile;
 import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfileEntry;
 import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfileMember;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.API;
+import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.api.system.APII18nLocale;
 import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
 
@@ -65,7 +68,7 @@ import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
  * @author Séverin Moussel
  * 
  */
-public class ConsoleRestAPIFactory extends CommonRestAPIFactory {
+public class BonitaRestAPIFactory extends RestAPIFactory {
 
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
@@ -163,8 +166,16 @@ public class ConsoleRestAPIFactory extends CommonRestAPIFactory {
                 return new APIProcessConnectorDependency();
             } else if ("caseVariable".equals(resourceToken)) {
                 return new APICaseVariable();
+            } else if ("document".equals(resourceToken)) {
+                return new APIDocument();
+            } else if ("archiveddocument".equals(resourceToken)) {
+                return new APIArchivedDocument();
+            }
+        } else if ("platform".equals(apiToken)) {
+            if ("platform".equals(resourceToken)) {
+                return new APIPlatform();
             }
         } 
-        return super.defineApis(apiToken, resourceToken);
+        throw new APINotFoundException(apiToken, resourceToken);
     }
 }

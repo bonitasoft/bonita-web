@@ -16,11 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.api;
 
-import java.util.Map;
-
-import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.web.rest.server.CommonAPI;
-import org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
@@ -28,22 +23,5 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  * 
  */
 public abstract class ConsoleAPI<T extends IItem> extends CommonAPI<T> {
-
-    /**
-     * @param pageIndex
-     * @param itemPerPage
-     * @param search
-     * @param order
-     * @param filtersMap
-     */
-    protected final SearchOptionsBuilder MakeSearchOptions(final int pageIndex, final int itemPerPage, final String search, final String order,
-            final Map<String, String> filtersMap) {
-        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(pageIndex, itemPerPage, order, search);
-
-        for (final String attributeName : filtersMap.keySet()) {
-            builder.filter(attributeName, filtersMap.get(attributeName));
-        }
-        return builder;
-    }
 
 }

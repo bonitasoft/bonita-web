@@ -38,7 +38,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * 
  *         this class might be transform in NON-REST API
  */
-public class APIPlatform extends org.bonitasoft.web.rest.server.platform.PlatformAPI<PlatformItem> {
+public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<PlatformItem> {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
