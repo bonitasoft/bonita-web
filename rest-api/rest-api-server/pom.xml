@@ -13,7 +13,7 @@
 	<name>Bonita REST API server</name>
 	
 	<dependencies>
-		<!-- dependecy to common-server kept for PropertieFactory used in DocumentDatastore -->
+		<!-- dependency to common-server kept for PropertieFactory used in DocumentDatastore -->
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
 			<artifactId>common-server</artifactId>
