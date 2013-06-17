@@ -14,11 +14,7 @@
  */
 package org.bonitasoft.platform.client;
 
-import org.bonitasoft.platform.client.monitoring.model.JvmDynamicMonitoringDefinition;
-import org.bonitasoft.platform.client.monitoring.model.JvmStaticMonitoringDefinition;
-import org.bonitasoft.platform.client.monitoring.model.SystemPropertyDefinition;
 import org.bonitasoft.platform.client.platform.model.PlatformDefinition;
-import org.bonitasoft.platform.client.tenant.model.TenantDefinition;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -30,16 +26,9 @@ public class PlatformFactoryCommon extends ItemDefinitionFactory {
 
     @Override
     public ItemDefinition defineItemDefinitions(final String token) {
-        if (TenantDefinition.TOKEN.equals(token)) {
-            return new TenantDefinition();
-        } else if (PlatformDefinition.TOKEN.equals(token)) {
+     
+        if (PlatformDefinition.TOKEN.equals(token)) {
             return new PlatformDefinition();
-        } else if (JvmDynamicMonitoringDefinition.TOKEN.equals(token)) {
-            return new JvmDynamicMonitoringDefinition();
-        } else if (JvmStaticMonitoringDefinition.TOKEN.equals(token)) {
-            return new JvmStaticMonitoringDefinition();
-        } else if (SystemPropertyDefinition.TOKEN.equals(token)) {
-            return new SystemPropertyDefinition();
         } else if (SessionDefinition.TOKEN.equals(token)) {
             return new SessionDefinition();
         } else {
