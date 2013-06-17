@@ -12,7 +12,6 @@
 
 	<modules>
 		<module>platform-config</module>
-		<module>platform-model</module>
 		<module>platform-server-impl</module>
 	</modules>
 
