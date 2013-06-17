@@ -24,8 +24,13 @@
             <artifactId>bonita-client</artifactId>
         </dependency>
         <dependency>
-        	<artifactId>bos-web-toolkit</artifactId>
 			<groupId>org.bonitasoft.web.toolkit</groupId>
+        	<artifactId>toolkit-view</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+        	<artifactId>common-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
         <!-- jasper -->
