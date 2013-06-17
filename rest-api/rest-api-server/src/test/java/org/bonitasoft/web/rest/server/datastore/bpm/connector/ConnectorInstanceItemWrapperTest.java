@@ -23,7 +23,7 @@ import org.bonitasoft.engine.bpm.connector.ConnectorInstance;
 import org.bonitasoft.engine.bpm.connector.ConnectorState;
 import org.bonitasoft.engine.bpm.connector.impl.ConnectorInstanceImpl;
 import org.bonitasoft.web.rest.api.model.bpm.connector.ConnectorInstanceItem;
-import org.bonitasoft.web.rest.server.ConsoleAPIServlet;
+import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceItemWrapper;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceStateConverter;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -37,11 +37,11 @@ import org.junit.Test;
  */
 public class ConnectorInstanceItemWrapperTest {
 
-    private static ConsoleAPIServlet consoleAPIServlet;
+    private static BonitaRestAPIServlet consoleAPIServlet;
 
     @BeforeClass
     public static void initContextForDefinition() {
-        consoleAPIServlet = new ConsoleAPIServlet();
+        consoleAPIServlet = new BonitaRestAPIServlet();
     }
     
     @AfterClass

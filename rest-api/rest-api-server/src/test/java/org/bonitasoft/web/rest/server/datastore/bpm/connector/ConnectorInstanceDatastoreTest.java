@@ -32,7 +32,7 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.api.model.bpm.connector.ConnectorInstanceItem;
-import org.bonitasoft.web.rest.server.ConsoleAPIServlet;
+import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceItemWrapper;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -61,7 +61,7 @@ public class ConnectorInstanceDatastoreTest {
     @BeforeClass
     public static void initEnvironnement() {
         I18n.getInstance();
-        new ConsoleAPIServlet();
+        new BonitaRestAPIServlet();
     }
 
     @Before

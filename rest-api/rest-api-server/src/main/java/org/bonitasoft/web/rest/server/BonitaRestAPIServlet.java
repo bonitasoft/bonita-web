@@ -34,11 +34,11 @@ import org.bonitasoft.web.toolkit.server.servlet.APIServlet;
  * @author Séverin Moussel
  * 
  */
-public class ConsoleAPIServlet extends APIServlet {
+public class BonitaRestAPIServlet extends APIServlet {
 
     private static final long serialVersionUID = 525945083859596909L;
 
-    public ConsoleAPIServlet() {
+    public BonitaRestAPIServlet() {
         super();
 
         FlowNodeConverter.setFlowNodeConverter(new FlowNodeConverter());

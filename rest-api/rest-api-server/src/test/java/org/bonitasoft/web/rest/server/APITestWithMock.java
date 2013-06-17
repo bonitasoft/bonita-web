@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server;
 
 import static junit.framework.Assert.assertTrue;
 
-import org.bonitasoft.web.rest.server.ConsoleAPIServlet;
+import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.server.utils.I18n;
 import org.junit.BeforeClass;
@@ -36,7 +36,7 @@ public class APITestWithMock {
      */
     @BeforeClass
     public static void initEnvironement() {
-        new ConsoleAPIServlet();
+        new BonitaRestAPIServlet();
         I18n.getInstance();
     }
     

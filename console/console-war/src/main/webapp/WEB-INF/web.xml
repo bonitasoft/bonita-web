@@ -154,8 +154,8 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>ConsoleAPIServlet</servlet-name>
-		<servlet-class>org.bonitasoft.console.server.ConsoleAPIServlet</servlet-class>
+		<servlet-name>BonitaRestAPIServlet</servlet-name>
+		<servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -332,7 +332,7 @@
 	</servlet-mapping>
 	
 	<servlet-mapping>
-		<servlet-name>ConsoleAPIServlet</servlet-name>
+		<servlet-name>BonitaRestAPIServlet</servlet-name>
 		<url-pattern>/API/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>

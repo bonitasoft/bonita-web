@@ -19,7 +19,7 @@ package org.bonitasoft.web.rest.server;
 import static junit.framework.Assert.assertTrue;
 
 import org.bonitasoft.console.common.server.AbstractJUnitWebTest;
-import org.bonitasoft.web.rest.server.ConsoleAPIServlet;
+import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 /**
@@ -36,7 +36,7 @@ public abstract class AbstractConsoleTest extends AbstractJUnitWebTest {
     public void webTestSetUp() throws Exception {
         FlowNodeConverter.setFlowNodeConverter(new FlowNodeConverter());
 
-        new ConsoleAPIServlet();
+        new BonitaRestAPIServlet();
         consoleTestSetUp();
     }
 
