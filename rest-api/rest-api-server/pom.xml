@@ -42,17 +42,5 @@
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
-		<!-- TESTS -->
-		<dependency>
-			<groupId>org.bonitasoft.engine</groupId>
-			<artifactId>bonita-server</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.test.toolkit</groupId>
-			<artifactId>bos-test-toolkit</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 </project>
