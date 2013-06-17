@@ -20,9 +20,9 @@ import static junit.framework.Assert.assertTrue;
 import static org.bonitasoft.console.server.model.builder.profile.entry.EngineProfileEntryBuilder.anEngineProfileEntry;
 import static org.bonitasoft.console.server.model.builder.profile.entry.ProfileEntryItemBuilder.aProfileEntryItem;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.engine.profile.ProfileEntry;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
 import org.junit.Test;
 
 /**

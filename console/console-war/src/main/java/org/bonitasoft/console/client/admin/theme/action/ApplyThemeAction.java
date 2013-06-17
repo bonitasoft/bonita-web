@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.theme.view.ListThemePage;
-import org.bonitasoft.console.client.model.portal.theme.ThemeItem;
+import org.bonitasoft.web.rest.api.model.portal.theme.ThemeItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonUtil;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

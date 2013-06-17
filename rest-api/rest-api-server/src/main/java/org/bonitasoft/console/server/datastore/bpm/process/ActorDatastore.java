@@ -16,13 +16,12 @@
  */
 package org.bonitasoft.console.server.datastore.bpm.process;
 
-import static org.bonitasoft.console.client.model.bpm.process.ActorItem.ATTRIBUTE_DESCRIPTION;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.ATTRIBUTE_DESCRIPTION;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName.ATTRIBUTE_DISPLAY_NAME;
 
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ActorItem;
 import org.bonitasoft.console.common.server.datastore.CommonDatastore;
 import org.bonitasoft.console.common.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -35,6 +34,7 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

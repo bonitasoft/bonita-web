@@ -18,11 +18,11 @@ package org.bonitasoft.console.server.datastore.bpm.flownode.archive;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedUserTaskItem;
 import org.bonitasoft.console.server.datastore.SearchOptionsCreator;
 import org.bonitasoft.engine.bpm.flownode.ArchivedUserTaskInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedUserTaskItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;

@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessMoreDetailsAdminPage;
-import org.bonitasoft.console.client.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

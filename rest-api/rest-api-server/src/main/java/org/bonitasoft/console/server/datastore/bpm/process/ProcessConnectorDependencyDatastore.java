@@ -16,21 +16,21 @@
  */
 package org.bonitasoft.console.server.datastore.bpm.process;
 
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.console.common.server.datastore.CommonDatastore;
 import org.bonitasoft.console.common.server.utils.ListUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.connector.ConnectorImplementationDescriptor;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;

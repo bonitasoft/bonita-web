@@ -13,7 +13,6 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.standard;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
@@ -22,6 +21,7 @@ import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 /**
  * @author Chong Zhao

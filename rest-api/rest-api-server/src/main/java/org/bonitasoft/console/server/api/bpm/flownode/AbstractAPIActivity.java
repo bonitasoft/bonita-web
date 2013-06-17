@@ -18,11 +18,11 @@ package org.bonitasoft.console.server.api.bpm.flownode;
 
 import java.util.List;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.console.client.model.bpm.flownode.IActivityItem;
 import org.bonitasoft.console.server.datastore.bpm.flownode.ActivityDatastore;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.IActivityItem;
 import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**

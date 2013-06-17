@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import org.bonitasoft.console.client.model.bpm.cases.CommentItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentItem;
 import org.junit.Test;
 
 public class APICommentIntegrationTest extends AbstractConsoleTest {

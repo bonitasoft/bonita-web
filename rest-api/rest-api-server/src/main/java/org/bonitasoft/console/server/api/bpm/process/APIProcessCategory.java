@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.console.server.api.bpm.process;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessCategoryDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
 import org.bonitasoft.web.toolkit.server.api.APIHasDelete;

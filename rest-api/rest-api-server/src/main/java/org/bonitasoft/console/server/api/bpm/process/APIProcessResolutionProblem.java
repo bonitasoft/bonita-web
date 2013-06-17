@@ -18,10 +18,10 @@ package org.bonitasoft.console.server.api.bpm.process;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessResolutionProblemDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessResolutionProblemDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

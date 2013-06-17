@@ -17,7 +17,6 @@
  */
 package org.bonitasoft.console.server.engineclient;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.ProfileEntry;
@@ -25,6 +24,7 @@ import org.bonitasoft.engine.profile.ProfileEntryNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;

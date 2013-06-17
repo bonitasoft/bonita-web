@@ -16,8 +16,8 @@ package org.bonitasoft.console.client.admin.process.action;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

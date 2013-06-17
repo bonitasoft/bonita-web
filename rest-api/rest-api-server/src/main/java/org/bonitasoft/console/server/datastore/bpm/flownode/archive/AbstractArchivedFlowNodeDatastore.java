@@ -18,7 +18,6 @@ package org.bonitasoft.console.server.datastore.bpm.flownode.archive;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.console.common.server.datastore.CommonDatastore;
 import org.bonitasoft.console.server.datastore.SearchOptionsCreator;
 import org.bonitasoft.console.server.datastore.Sorts;
@@ -32,6 +31,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;

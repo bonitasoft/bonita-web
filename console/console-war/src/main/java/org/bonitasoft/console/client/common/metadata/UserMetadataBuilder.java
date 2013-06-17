@@ -20,8 +20,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import static org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader.DEFAULT_FORMAT;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
-import org.bonitasoft.console.client.model.identity.ProfessionalContactDataItem;
-import org.bonitasoft.console.client.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.CompoundAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;

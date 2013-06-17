@@ -20,14 +20,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.MembershipDefinition;
-import org.bonitasoft.console.client.model.identity.MembershipItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.organization.GroupDatastore;
 import org.bonitasoft.console.server.datastore.organization.MembershipDatastore;
 import org.bonitasoft.console.server.datastore.organization.RoleDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
 import org.bonitasoft.engine.identity.UserMembershipCriterion;
+import org.bonitasoft.web.rest.api.model.identity.MembershipDefinition;
+import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

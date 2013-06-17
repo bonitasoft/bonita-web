@@ -21,14 +21,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.UserDefinition;
-import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.flownode.HumanTaskDatastore;
 import org.bonitasoft.console.server.datastore.organization.PersonalContactDataDatastore;
 import org.bonitasoft.console.server.datastore.organization.ProfessionalContactDataDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

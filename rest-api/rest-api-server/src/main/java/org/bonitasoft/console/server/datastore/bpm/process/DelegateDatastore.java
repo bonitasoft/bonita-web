@@ -23,8 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.DelegationItem;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.process.DelegationItem;
 
 /**
  * @author Haojie Yuan

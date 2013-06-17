@@ -23,12 +23,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;

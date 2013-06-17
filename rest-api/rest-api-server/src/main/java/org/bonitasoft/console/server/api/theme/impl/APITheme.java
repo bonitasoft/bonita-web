@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.theme.ThemeDefinition;
-import org.bonitasoft.console.client.model.portal.theme.ThemeItem;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.themes.ThemeConfigManager;
 import org.bonitasoft.console.common.server.themes.ThemeManager;
@@ -33,6 +31,8 @@ import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.theme.exception.ThemeDescriptorNotFoundException;
 import org.bonitasoft.theme.model.ThemeDescriptor;
+import org.bonitasoft.web.rest.api.model.portal.theme.ThemeDefinition;
+import org.bonitasoft.web.rest.api.model.portal.theme.ThemeItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
@@ -13,6 +12,7 @@ import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Assert;

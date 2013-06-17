@@ -18,8 +18,8 @@ package org.bonitasoft.console.server.datastore.monitoring.report;
 
 import java.util.Collections;
 
-import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
 import org.bonitasoft.console.server.datastore.utils.SearchUtils;
+import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Test;
 

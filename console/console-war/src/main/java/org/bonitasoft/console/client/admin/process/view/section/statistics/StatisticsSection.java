@@ -26,7 +26,7 @@ import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.ArchivedCasesFiller;
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.FailedTasksFiller;
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.OngoingCasesFiller;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;

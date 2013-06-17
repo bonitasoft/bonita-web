@@ -19,7 +19,7 @@ package org.bonitasoft.console.client.admin.theme.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.theme.action.ApplyThemeAction;
-import org.bonitasoft.console.client.model.portal.theme.ThemeDefinition;
+import org.bonitasoft.web.rest.api.model.portal.theme.ThemeDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

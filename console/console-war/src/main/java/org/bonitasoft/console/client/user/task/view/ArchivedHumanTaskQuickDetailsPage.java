@@ -23,9 +23,9 @@ import java.util.List;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;

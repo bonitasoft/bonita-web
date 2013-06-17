@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.rpc.FormsServiceAsync;
 import org.bonitasoft.forms.client.view.FormsAsyncCallback;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
@@ -28,6 +27,7 @@ import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
 import org.bonitasoft.forms.client.view.controller.FormViewControllerFactory;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

@@ -18,7 +18,7 @@ package org.bonitasoft.console.client.common.formatter;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.toolkit.client.ui.component.Span;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ItemTableCellFormatter;

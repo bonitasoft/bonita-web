@@ -18,12 +18,12 @@ package org.bonitasoft.console.server.api.bpm.process;
 
 import junit.framework.Assert;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

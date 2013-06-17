@@ -16,16 +16,6 @@
  */
 package org.bonitasoft.console.server.datastore.bpm.flownode;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedActivityItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedFlowNodeItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedUserTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.TaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.UserTaskItem;
 import org.bonitasoft.console.server.datastore.bpm.flownode.archive.ArchivedActivityDatastore;
 import org.bonitasoft.console.server.datastore.bpm.flownode.archive.ArchivedFlowNodeDatastore;
 import org.bonitasoft.console.server.datastore.bpm.flownode.archive.ArchivedHumanTaskDatastore;
@@ -41,6 +31,16 @@ import org.bonitasoft.engine.bpm.flownode.FlowNodeInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.TaskInstance;
 import org.bonitasoft.engine.bpm.flownode.UserTaskInstance;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedActivityItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedUserTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.TaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.UserTaskItem;
 
 /**
  * @author Séverin Moussel

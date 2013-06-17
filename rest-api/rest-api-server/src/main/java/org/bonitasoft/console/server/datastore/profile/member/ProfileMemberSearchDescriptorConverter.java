@@ -19,9 +19,9 @@ package org.bonitasoft.console.server.datastore.profile.member;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.console.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.engine.profile.ProfileMemberSearchDescriptor;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 
 /**
  * @author Vincent Elcrin

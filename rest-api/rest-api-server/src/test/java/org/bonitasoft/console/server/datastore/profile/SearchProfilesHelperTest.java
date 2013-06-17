@@ -25,13 +25,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.console.server.datastore.utils.SearchUtils;
 import org.bonitasoft.console.server.engineclient.ProfileEngineClient;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Before;
 import org.junit.Test;

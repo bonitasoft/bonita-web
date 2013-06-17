@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;

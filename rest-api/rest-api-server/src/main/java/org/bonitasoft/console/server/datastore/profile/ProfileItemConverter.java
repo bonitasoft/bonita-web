@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.server.datastore.profile;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
 import org.bonitasoft.console.server.datastore.converter.ItemConverter;
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 
 /**
  * @author Vincent Elcrin

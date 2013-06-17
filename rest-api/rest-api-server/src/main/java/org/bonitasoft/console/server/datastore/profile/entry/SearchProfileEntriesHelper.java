@@ -18,7 +18,6 @@ package org.bonitasoft.console.server.datastore.profile.entry;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.console.server.datastore.SearchOptionsCreator;
 import org.bonitasoft.console.server.datastore.Sorts;
 import org.bonitasoft.console.server.datastore.converter.ItemSearchResultConverter;
@@ -27,6 +26,7 @@ import org.bonitasoft.console.server.datastore.filter.GenericFilterCreator;
 import org.bonitasoft.console.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 

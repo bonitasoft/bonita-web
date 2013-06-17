@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.RoleItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.identity.Role;
 import org.bonitasoft.test.toolkit.organization.TestGroup;
@@ -21,6 +20,7 @@ import org.bonitasoft.test.toolkit.organization.TestRole;
 import org.bonitasoft.test.toolkit.organization.TestRoleFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Assert;

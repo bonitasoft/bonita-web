@@ -20,9 +20,9 @@ import java.util.HashMap;
 
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.action.ShowAddGroupToActorPageAction;
 import org.bonitasoft.console.client.common.view.ViewParameter;
-import org.bonitasoft.console.client.model.bpm.process.ActorItem;
-import org.bonitasoft.console.client.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.console.client.model.identity.MemberType;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.api.model.identity.MemberType;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;

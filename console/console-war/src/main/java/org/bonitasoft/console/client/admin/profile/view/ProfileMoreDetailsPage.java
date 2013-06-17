@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.MemberAttributeReader;
-import org.bonitasoft.console.client.model.identity.UserItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;

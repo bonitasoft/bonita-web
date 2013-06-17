@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.MemberType;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.api.model.identity.MemberType;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

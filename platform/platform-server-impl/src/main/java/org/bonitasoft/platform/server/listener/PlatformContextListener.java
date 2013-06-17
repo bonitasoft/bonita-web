@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.platform.server.listener;
 
-import org.bonitasoft.platform.client.PlatformFactoryCommon;
 import org.bonitasoft.platform.server.PlatformFactoryServer;
+import org.bonitasoft.web.rest.api.model.ModelFactory;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 import org.bonitasoft.web.toolkit.server.listener.ApplicationContextListener;
@@ -30,7 +30,7 @@ public class PlatformContextListener extends ApplicationContextListener {
 
     @Override
     public ItemDefinitionFactory defineApplicationFactoryCommon() {
-        return new PlatformFactoryCommon();
+        return new ModelFactory();
     }
 
     @Override

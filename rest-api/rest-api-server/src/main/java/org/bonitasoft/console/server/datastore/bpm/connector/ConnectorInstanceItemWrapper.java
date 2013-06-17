@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.server.datastore.bpm.connector;
 
-import org.bonitasoft.console.client.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.engine.bpm.connector.ConnectorInstance;
+import org.bonitasoft.web.rest.api.model.bpm.connector.ConnectorInstanceItem;
 
 /**
  * Bridge object between engine and console web implementation of an item

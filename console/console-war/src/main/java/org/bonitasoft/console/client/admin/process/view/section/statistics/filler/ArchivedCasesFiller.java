@@ -20,9 +20,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.ArchivedCaseDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.ArchivedCaseItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

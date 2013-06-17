@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
@@ -45,6 +44,7 @@ import org.bonitasoft.console.common.server.preferences.properties.SecurityPrope
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 /**
  * @author Vincent Elcrin

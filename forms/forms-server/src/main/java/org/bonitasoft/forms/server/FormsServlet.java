@@ -29,7 +29,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
@@ -73,6 +72,7 @@ import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
+import org.bonitasoft.web.rest.api.model.user.User;
 import org.w3c.dom.Document;
 
 import com.google.gwt.user.client.rpc.SerializationException;

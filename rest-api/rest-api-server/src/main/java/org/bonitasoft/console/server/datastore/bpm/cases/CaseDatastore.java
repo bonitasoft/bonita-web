@@ -19,7 +19,6 @@ package org.bonitasoft.console.server.datastore.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
 import org.bonitasoft.console.common.server.datastore.CommonDatastore;
 import org.bonitasoft.console.common.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -30,6 +29,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

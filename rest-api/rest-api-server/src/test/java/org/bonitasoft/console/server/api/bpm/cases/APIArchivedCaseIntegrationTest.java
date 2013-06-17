@@ -19,7 +19,6 @@ package org.bonitasoft.console.server.api.bpm.cases;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.bonitasoft.console.client.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
@@ -27,6 +26,7 @@ import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
 import org.junit.Test;

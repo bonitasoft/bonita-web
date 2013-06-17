@@ -18,12 +18,12 @@ package org.bonitasoft.console.server.datastore.bpm.connector;
 
 import junit.framework.Assert;
 
-import org.bonitasoft.console.client.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.console.server.ConsoleAPIServlet;
 import org.bonitasoft.engine.bpm.connector.ConnectorEvent;
 import org.bonitasoft.engine.bpm.connector.ConnectorInstance;
 import org.bonitasoft.engine.bpm.connector.ConnectorState;
 import org.bonitasoft.engine.bpm.connector.impl.ConnectorInstanceImpl;
+import org.bonitasoft.web.rest.api.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

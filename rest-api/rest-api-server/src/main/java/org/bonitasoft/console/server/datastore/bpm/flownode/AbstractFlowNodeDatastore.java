@@ -18,8 +18,6 @@ package org.bonitasoft.console.server.datastore.bpm.flownode;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.FlowNodeDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.console.common.server.datastore.CommonDatastore;
 import org.bonitasoft.console.common.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -30,6 +28,8 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;

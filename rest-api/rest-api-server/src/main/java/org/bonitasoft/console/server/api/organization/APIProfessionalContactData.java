@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.console.server.api.organization;
 
-import org.bonitasoft.console.client.model.identity.ProfessionalContactDataDefinition;
-import org.bonitasoft.console.client.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.organization.ProfessionalContactDataDatastore;
+import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataDefinition;
+import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.APIHasAdd;

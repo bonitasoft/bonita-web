@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.server.datastore.organization;
 
-import org.bonitasoft.console.client.model.identity.AbstractContactDataItem;
 import org.bonitasoft.console.server.datastore.converter.ItemConverter;
 import org.bonitasoft.engine.identity.ContactData;
+import org.bonitasoft.web.rest.api.model.identity.AbstractContactDataItem;
 
 /**
  * @author Vincent Elcrin

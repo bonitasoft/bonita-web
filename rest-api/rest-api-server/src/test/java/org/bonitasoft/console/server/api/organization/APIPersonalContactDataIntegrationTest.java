@@ -21,10 +21,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.PersonalContactDataItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 

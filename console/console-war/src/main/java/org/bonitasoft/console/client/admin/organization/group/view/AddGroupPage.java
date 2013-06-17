@@ -19,8 +19,8 @@ package org.bonitasoft.console.client.admin.organization.group.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.organization.group.action.AddGroupFormAction;
-import org.bonitasoft.console.client.model.identity.GroupDefinition;
-import org.bonitasoft.console.client.model.identity.GroupItem;
+import org.bonitasoft.web.rest.api.model.identity.GroupDefinition;
+import org.bonitasoft.web.rest.api.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

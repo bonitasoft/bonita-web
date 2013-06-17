@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.server.api.deployer;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
 import org.bonitasoft.console.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.console.server.datastore.profile.entry.GetProfileEntryHelper;
@@ -26,6 +24,8 @@ import org.bonitasoft.console.server.engineclient.EngineClientFactory;
 import org.bonitasoft.console.server.engineclient.ProfileEngineClient;
 import org.bonitasoft.console.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.server.Deployer;
 
 /**

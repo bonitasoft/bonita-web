@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.document.model.DocumentDefinition;
-import org.bonitasoft.console.common.client.document.model.DocumentItem;
 import org.bonitasoft.console.common.server.CommonAPI;
 import org.bonitasoft.console.common.server.document.api.impl.DocumentDatastore;
 import org.bonitasoft.console.common.server.utils.SearchOptionsBuilderUtil;
@@ -30,6 +28,8 @@ import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.document.DocumentDefinition;
+import org.bonitasoft.web.rest.api.model.document.DocumentItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

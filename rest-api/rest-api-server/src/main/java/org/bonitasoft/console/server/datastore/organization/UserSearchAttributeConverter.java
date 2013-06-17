@@ -16,12 +16,12 @@
  */
 package org.bonitasoft.console.server.datastore.organization;
 
-import static org.bonitasoft.console.client.model.identity.UserItem.ATTRIBUTE_FIRSTNAME;
-import static org.bonitasoft.console.client.model.identity.UserItem.ATTRIBUTE_LASTNAME;
-import static org.bonitasoft.console.client.model.identity.UserItem.ATTRIBUTE_MANAGER_ID;
-import static org.bonitasoft.console.client.model.identity.UserItem.ATTRIBUTE_USERNAME;
-import static org.bonitasoft.console.client.model.identity.UserItem.FILTER_GROUP_ID;
-import static org.bonitasoft.console.client.model.identity.UserItem.FILTER_ROLE_ID;
+import static org.bonitasoft.web.rest.api.model.identity.UserItem.ATTRIBUTE_FIRSTNAME;
+import static org.bonitasoft.web.rest.api.model.identity.UserItem.ATTRIBUTE_LASTNAME;
+import static org.bonitasoft.web.rest.api.model.identity.UserItem.ATTRIBUTE_MANAGER_ID;
+import static org.bonitasoft.web.rest.api.model.identity.UserItem.ATTRIBUTE_USERNAME;
+import static org.bonitasoft.web.rest.api.model.identity.UserItem.FILTER_GROUP_ID;
+import static org.bonitasoft.web.rest.api.model.identity.UserItem.FILTER_ROLE_ID;
 
 import org.bonitasoft.console.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.console.server.datastore.converter.AttributeConverterException;

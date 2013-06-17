@@ -19,7 +19,7 @@ package org.bonitasoft.console.client.admin.process.action;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
-import org.bonitasoft.console.client.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.popup.ItemDeletePopupAction;

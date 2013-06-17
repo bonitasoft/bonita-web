@@ -18,8 +18,6 @@ package org.bonitasoft.console.server.api.userXP.profile;
 
 import java.util.List;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.console.server.api.deployer.DeployerFactory;
 import org.bonitasoft.console.server.datastore.ComposedDatastore;
 import org.bonitasoft.console.server.datastore.profile.member.AddProfileMemberHelper;
@@ -28,6 +26,8 @@ import org.bonitasoft.console.server.datastore.profile.member.SearchProfileMembe
 import org.bonitasoft.console.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.console.server.engineclient.EngineClientFactory;
 import org.bonitasoft.console.server.engineclient.ProfileMemberEngineClient;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.Datastore;
 

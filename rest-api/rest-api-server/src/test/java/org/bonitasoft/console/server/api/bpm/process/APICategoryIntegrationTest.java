@@ -12,7 +12,6 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
-import org.bonitasoft.console.client.model.bpm.process.CategoryItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.console.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.engine.bpm.category.Category;
@@ -21,6 +20,7 @@ import org.bonitasoft.test.toolkit.bpm.TestCategory;
 import org.bonitasoft.test.toolkit.bpm.TestCategoryFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;

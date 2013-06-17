@@ -22,10 +22,10 @@ import static org.bonitasoft.console.server.model.builder.profile.ProfileItemBui
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.console.server.engineclient.ProfileEngineClient;
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;

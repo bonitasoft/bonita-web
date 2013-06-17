@@ -19,10 +19,10 @@ package org.bonitasoft.console.server.datastore.bpm.flownode.archive.converter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedActivityItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedFlowNodeItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstanceSearchDescriptor;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedActivityItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskItem;
 
 /**
  * @author Vincent Elcrin

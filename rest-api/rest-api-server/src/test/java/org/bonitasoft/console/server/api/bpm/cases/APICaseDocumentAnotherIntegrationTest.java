@@ -21,12 +21,12 @@ import static junit.framework.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Test;
 

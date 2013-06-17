@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.server.api.userXP.profile;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.ComposedDatastore;
 import org.bonitasoft.console.server.datastore.profile.GetProfileHelper;
@@ -23,6 +21,8 @@ import org.bonitasoft.console.server.datastore.profile.SearchProfilesHelper;
 import org.bonitasoft.console.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.console.server.engineclient.EngineClientFactory;
 import org.bonitasoft.console.server.engineclient.ProfileEngineClient;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
 import org.bonitasoft.web.toolkit.server.api.APIHasDelete;

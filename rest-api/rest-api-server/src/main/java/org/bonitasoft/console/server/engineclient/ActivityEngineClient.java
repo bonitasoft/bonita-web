@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.console.server.engineclient;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 
 /**

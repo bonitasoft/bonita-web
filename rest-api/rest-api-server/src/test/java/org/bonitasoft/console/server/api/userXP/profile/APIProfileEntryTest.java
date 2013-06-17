@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.console.server.api.userXP.profile;
 
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
 import static org.bonitasoft.console.server.model.builder.profile.entry.ProfileEntryItemBuilder.aProfileEntryItem;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -28,10 +28,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.console.server.datastore.ComposedDatastore;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributeMissingException;
 import org.junit.Before;
 import org.junit.Test;

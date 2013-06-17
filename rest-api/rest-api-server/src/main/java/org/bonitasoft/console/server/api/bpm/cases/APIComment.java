@@ -19,12 +19,12 @@ package org.bonitasoft.console.server.api.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CommentDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CommentItem;
-import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.cases.CommentDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.APIHasAdd;

@@ -23,10 +23,10 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.junit.Before;
 import org.junit.Test;

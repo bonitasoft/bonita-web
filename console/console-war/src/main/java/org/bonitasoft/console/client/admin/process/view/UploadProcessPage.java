@@ -21,8 +21,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;

@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.console.server.api.bpm.connector;
 
-import org.bonitasoft.console.client.model.bpm.connector.ArchivedConnectorInstanceDefinition;
-import org.bonitasoft.console.client.model.bpm.connector.ArchivedConnectorInstanceItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.connector.ArchivedConnectorInstanceDatastore;
 import org.bonitasoft.engine.bpm.connector.ConnectorInstanceCriterion;
+import org.bonitasoft.web.rest.api.model.bpm.connector.ArchivedConnectorInstanceDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.connector.ArchivedConnectorInstanceItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.APIHasSearch;

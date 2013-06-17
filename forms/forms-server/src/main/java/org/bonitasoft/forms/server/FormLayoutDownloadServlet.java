@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
@@ -40,6 +39,7 @@ import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
+import org.bonitasoft.web.rest.api.model.user.User;
 import org.w3c.dom.Document;
 
 /**

@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.server.api.bpm.flownode;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityItem;
 
 /**
  * @author Séverin Moussel

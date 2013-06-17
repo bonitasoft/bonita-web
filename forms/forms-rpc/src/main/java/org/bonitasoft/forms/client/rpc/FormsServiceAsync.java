@@ -19,7 +19,6 @@ package org.bonitasoft.forms.client.rpc;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormURLComponents;
 import org.bonitasoft.forms.client.model.ReducedApplicationConfig;
@@ -28,6 +27,7 @@ import org.bonitasoft.forms.client.model.ReducedFormPage;
 import org.bonitasoft.forms.client.model.ReducedFormValidator;
 import org.bonitasoft.forms.client.model.ReducedFormWidget;
 import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

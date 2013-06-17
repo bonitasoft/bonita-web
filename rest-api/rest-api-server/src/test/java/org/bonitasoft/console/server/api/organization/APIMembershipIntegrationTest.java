@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.MembershipItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.test.toolkit.organization.TestGroup;
 import org.bonitasoft.test.toolkit.organization.TestGroupFactory;
@@ -14,6 +13,7 @@ import org.bonitasoft.test.toolkit.organization.TestRole;
 import org.bonitasoft.test.toolkit.organization.TestRoleFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

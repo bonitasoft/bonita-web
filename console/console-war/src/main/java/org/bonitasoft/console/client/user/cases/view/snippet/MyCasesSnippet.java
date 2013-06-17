@@ -20,9 +20,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.common.component.snippet.SectionSnippet;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
-import org.bonitasoft.console.client.model.bpm.cases.CaseDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

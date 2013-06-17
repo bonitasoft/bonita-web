@@ -19,11 +19,11 @@ package org.bonitasoft.console.server.api.bpm.process;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.CategoryDefinition;
-import org.bonitasoft.console.client.model.bpm.process.CategoryItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.engine.bpm.category.CategoryCriterion;
+import org.bonitasoft.web.rest.api.model.bpm.process.CategoryDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

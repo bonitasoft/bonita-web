@@ -18,13 +18,13 @@ package org.bonitasoft.console.server.engineclient;
 
 import static junit.framework.Assert.assertEquals;
 
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.test.toolkit.bpm.TestCaseFactory;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
 import org.junit.Test;
 
 /**

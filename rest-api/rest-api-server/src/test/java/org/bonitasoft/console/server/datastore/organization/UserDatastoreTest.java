@@ -18,12 +18,12 @@ package org.bonitasoft.console.server.datastore.organization;
 
 import java.util.Collections;
 
-import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.console.server.datastore.converter.AttributeConverterException;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

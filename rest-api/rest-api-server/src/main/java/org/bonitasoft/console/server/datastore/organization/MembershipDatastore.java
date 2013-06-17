@@ -20,7 +20,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.MembershipItem;
 import org.bonitasoft.console.common.server.datastore.CommonDatastore;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -32,6 +31,7 @@ import org.bonitasoft.engine.identity.UserMembership;
 import org.bonitasoft.engine.identity.UserMembershipCriterion;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

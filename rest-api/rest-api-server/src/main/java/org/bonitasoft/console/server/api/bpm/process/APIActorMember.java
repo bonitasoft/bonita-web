@@ -16,17 +16,17 @@
  */
 package org.bonitasoft.console.server.api.bpm.process;
 
-import static org.bonitasoft.console.client.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
 
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ActorMemberDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.console.server.api.userXP.profile.AbstractAPIMember;
 import org.bonitasoft.console.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.console.server.datastore.bpm.process.ActorMemberDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterEmptyException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

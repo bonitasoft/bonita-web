@@ -19,10 +19,10 @@ package org.bonitasoft.console.client.admin.bpm.cases.filler;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

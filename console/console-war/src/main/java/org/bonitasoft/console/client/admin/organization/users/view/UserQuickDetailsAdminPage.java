@@ -23,7 +23,7 @@ import java.util.LinkedList;
 
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
-import org.bonitasoft.console.client.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;

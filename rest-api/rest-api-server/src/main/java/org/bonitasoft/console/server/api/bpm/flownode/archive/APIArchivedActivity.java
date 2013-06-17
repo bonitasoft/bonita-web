@@ -18,10 +18,10 @@ package org.bonitasoft.console.server.api.bpm.flownode.archive;
 
 import java.util.List;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedActivityDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.console.server.api.bpm.flownode.AbstractAPIActivity;
 import org.bonitasoft.console.server.datastore.bpm.flownode.archive.ArchivedActivityDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedActivityDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedActivityItem;
 
 /**
  * @author Séverin Moussel

@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.server.datastore.bpm.flownode.archive;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedActivityItem;
 
 /**
  * @author Séverin Moussel

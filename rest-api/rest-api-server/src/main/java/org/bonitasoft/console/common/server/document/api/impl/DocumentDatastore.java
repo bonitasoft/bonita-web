@@ -27,8 +27,6 @@ import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 
-import org.bonitasoft.console.common.client.document.model.ArchivedDocumentItem;
-import org.bonitasoft.console.common.client.document.model.DocumentItem;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -51,6 +49,8 @@ import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.api.model.document.ArchivedDocumentItem;
+import org.bonitasoft.web.rest.api.model.document.DocumentItem;
 
 /**
  * Document data store

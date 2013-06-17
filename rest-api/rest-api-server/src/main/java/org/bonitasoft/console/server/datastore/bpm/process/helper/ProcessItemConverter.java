@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.server.datastore.bpm.process.helper;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
 import org.bonitasoft.console.server.datastore.converter.ItemConverter;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 
 /**
  * @author Vincent Elcrin

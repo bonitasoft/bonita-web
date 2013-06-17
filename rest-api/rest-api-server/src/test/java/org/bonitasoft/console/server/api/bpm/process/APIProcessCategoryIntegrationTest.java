@@ -21,7 +21,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.test.toolkit.bpm.TestCategory;
@@ -30,6 +29,7 @@ import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 

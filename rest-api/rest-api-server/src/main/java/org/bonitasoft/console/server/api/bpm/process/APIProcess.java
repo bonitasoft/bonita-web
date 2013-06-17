@@ -20,13 +20,13 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.api.deployer.UserDeployer;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

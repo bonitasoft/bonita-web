@@ -19,7 +19,6 @@ package org.bonitasoft.console.server.api.bpm.cases;
 import java.io.File;
 import java.util.HashMap;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.document.Document;
@@ -27,6 +26,7 @@ import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.console.server.datastore.bpm.flownode.HumanTaskDatastore;
 import org.bonitasoft.engine.bpm.flownode.TaskPriority;
@@ -13,6 +12,7 @@ import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 

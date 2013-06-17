@@ -18,11 +18,11 @@ package org.bonitasoft.console.client.common.component.snippet;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.model.bpm.cases.ArchivedCommentDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CommentDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CommentItem;
-import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.console.client.owner.comment.action.AddCommentAction;
+import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCommentDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;

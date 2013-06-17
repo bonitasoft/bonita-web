@@ -16,7 +16,6 @@ package org.bonitasoft.console.common.server.login.impl.oauth;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
@@ -26,6 +25,7 @@ import org.bonitasoft.console.common.server.preferences.properties.PropertiesFac
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.user.User;
 import org.scribe.model.Token;
 
 /**

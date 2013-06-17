@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**

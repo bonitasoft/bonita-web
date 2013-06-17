@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.server.model.builder.bpm.process;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
 
 /**
  * @author Colin PUY

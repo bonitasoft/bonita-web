@@ -19,9 +19,9 @@ package org.bonitasoft.console.server.datastore.bpm.process.helper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
 import org.bonitasoft.console.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 
 /**
  * @author Vincent Elcrin

@@ -22,9 +22,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.bonitasoft.console.client.model.ModelFactory;
-import org.bonitasoft.console.client.model.identity.UserItem;
-import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.api.model.ModelFactory;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;

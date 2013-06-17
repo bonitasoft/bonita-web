@@ -18,8 +18,8 @@ package org.bonitasoft.forms.client.view.controller;
 
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.model.ReducedFormPage;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 

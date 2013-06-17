@@ -20,7 +20,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.menu.view.navigation.MenuListCreator;
 import org.bonitasoft.console.client.menu.view.navigation.NavigationMenuView;
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;

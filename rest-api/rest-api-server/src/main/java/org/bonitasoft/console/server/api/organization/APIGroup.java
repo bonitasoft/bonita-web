@@ -19,13 +19,13 @@ package org.bonitasoft.console.server.api.organization;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.identity.GroupDefinition;
-import org.bonitasoft.console.client.model.identity.GroupItem;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.organization.GroupDatastore;
 import org.bonitasoft.engine.identity.GroupCriterion;
+import org.bonitasoft.web.rest.api.model.identity.GroupDefinition;
+import org.bonitasoft.web.rest.api.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

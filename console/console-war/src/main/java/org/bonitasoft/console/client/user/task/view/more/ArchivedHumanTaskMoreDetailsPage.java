@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.console.client.user.task.view.PluginTask;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskItem;
 
 /**
  * @author Séverin Moussel

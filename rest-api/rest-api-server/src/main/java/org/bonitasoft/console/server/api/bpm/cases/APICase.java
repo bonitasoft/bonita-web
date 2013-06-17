@@ -19,13 +19,13 @@ package org.bonitasoft.console.server.api.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceCriterion;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

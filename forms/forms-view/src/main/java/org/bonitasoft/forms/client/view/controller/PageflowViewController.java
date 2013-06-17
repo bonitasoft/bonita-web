@@ -18,7 +18,6 @@ package org.bonitasoft.forms.client.view.controller;
 
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.ReducedFormPage;
 import org.bonitasoft.forms.client.model.exception.AbortedFormException;
@@ -35,6 +34,7 @@ import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

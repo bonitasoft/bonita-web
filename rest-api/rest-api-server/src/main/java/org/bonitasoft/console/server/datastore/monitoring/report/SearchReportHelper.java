@@ -18,7 +18,7 @@ package org.bonitasoft.console.server.datastore.monitoring.report;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 

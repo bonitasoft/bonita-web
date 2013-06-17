@@ -18,8 +18,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.LinkedList;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;

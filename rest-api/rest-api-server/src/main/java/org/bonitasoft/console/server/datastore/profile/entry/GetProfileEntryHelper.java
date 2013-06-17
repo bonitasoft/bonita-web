@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.server.datastore.profile.entry;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.console.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.engine.profile.ProfileEntry;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
 

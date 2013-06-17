@@ -19,7 +19,6 @@ package org.bonitasoft.forms.client.rpc;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormURLComponents;
 import org.bonitasoft.forms.client.model.ReducedApplicationConfig;
@@ -41,6 +40,7 @@ import org.bonitasoft.forms.client.model.exception.RPCException;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.client.model.exception.SkippedFormException;
 import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 

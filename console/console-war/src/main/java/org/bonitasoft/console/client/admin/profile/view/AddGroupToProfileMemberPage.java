@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.profile.action.AddProfileMemberAction;
-import org.bonitasoft.console.client.model.identity.GroupDefinition;
-import org.bonitasoft.console.client.model.identity.GroupItem;
-import org.bonitasoft.console.client.model.identity.MemberType;
-import org.bonitasoft.console.client.model.identity.UserItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.api.model.identity.GroupDefinition;
+import org.bonitasoft.web.rest.api.model.identity.GroupItem;
+import org.bonitasoft.web.rest.api.model.identity.MemberType;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

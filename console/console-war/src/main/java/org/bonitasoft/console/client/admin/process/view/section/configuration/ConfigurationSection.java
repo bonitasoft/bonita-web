@@ -21,9 +21,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessResolutionProblemDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessResolutionProblemItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

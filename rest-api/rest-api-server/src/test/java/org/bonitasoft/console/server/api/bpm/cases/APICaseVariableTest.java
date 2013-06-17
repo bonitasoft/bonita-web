@@ -19,10 +19,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseVariableDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.console.server.datastore.bpm.cases.CaseVariableDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;

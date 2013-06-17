@@ -19,10 +19,10 @@ package org.bonitasoft.console.client.user.cases.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.common.component.button.MoreButton;
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
-import org.bonitasoft.console.client.model.bpm.cases.CommentDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedHumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;

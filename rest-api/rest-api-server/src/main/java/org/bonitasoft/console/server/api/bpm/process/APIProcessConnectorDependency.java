@@ -16,19 +16,19 @@
  */
 package org.bonitasoft.console.server.api.bpm.process;
 
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
 
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessConnectorDependencyDatastore;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.engine.bpm.connector.ConnectorCriterion;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.server.api.APIHasSearch;

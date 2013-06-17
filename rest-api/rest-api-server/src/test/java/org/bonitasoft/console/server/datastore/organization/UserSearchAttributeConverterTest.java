@@ -18,8 +18,8 @@ package org.bonitasoft.console.server.datastore.organization;
 
 import static junit.framework.Assert.assertEquals;
 
-import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.junit.Before;
 import org.junit.Test;
 

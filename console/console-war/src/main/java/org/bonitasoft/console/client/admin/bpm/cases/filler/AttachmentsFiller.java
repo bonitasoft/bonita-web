@@ -18,9 +18,9 @@ package org.bonitasoft.console.client.admin.bpm.cases.filler;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseDocumentDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CaseDocumentItem;
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

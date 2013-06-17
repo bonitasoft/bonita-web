@@ -22,10 +22,10 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.section.category.action.CreateCategoryAction;
-import org.bonitasoft.console.client.model.bpm.process.CategoryDefinition;
-import org.bonitasoft.console.client.model.bpm.process.CategoryItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.CategoryDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.APIID;

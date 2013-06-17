@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.server.model.builder.profile;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileItem;
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
 
 /**
  * @author Colin PUY

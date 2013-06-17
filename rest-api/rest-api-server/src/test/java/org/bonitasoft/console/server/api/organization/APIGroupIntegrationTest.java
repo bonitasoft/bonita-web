@@ -2,10 +2,10 @@ package org.bonitasoft.console.server.api.organization;
 
 import static org.bonitasoft.console.server.model.builder.organisation.GroupItemBuilder.aGroup;
 
-import org.bonitasoft.console.client.model.identity.GroupItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.junit.Test;
 

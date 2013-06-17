@@ -25,7 +25,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.client.model.identity.UserItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -36,6 +35,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
 import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasCreator;

@@ -30,7 +30,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -96,6 +95,7 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.ApplicationURLUtils;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
+import org.bonitasoft.web.rest.api.model.user.User;
 import org.w3c.dom.Document;
 
 /**

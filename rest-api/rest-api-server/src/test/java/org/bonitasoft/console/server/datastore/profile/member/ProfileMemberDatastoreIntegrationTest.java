@@ -5,7 +5,6 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.console.server.api.userXP.profile.APIProfileMember;
 import org.bonitasoft.test.toolkit.organization.TestGroup;
@@ -15,6 +14,7 @@ import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.organization.profiles.TestProfile;
 import org.bonitasoft.test.toolkit.organization.profiles.TestProfileFactory;
 import org.bonitasoft.test.toolkit.organization.profiles.TestProfileMember;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Ignore;

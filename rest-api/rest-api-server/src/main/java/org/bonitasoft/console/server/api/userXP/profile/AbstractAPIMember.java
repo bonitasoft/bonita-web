@@ -16,19 +16,19 @@
  */
 package org.bonitasoft.console.server.api.userXP.profile;
 
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.ATTRIBUTE_USER_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_USER_ID;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.organization.GroupDatastore;
 import org.bonitasoft.console.server.datastore.organization.RoleDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributesException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.APIHasAdd;

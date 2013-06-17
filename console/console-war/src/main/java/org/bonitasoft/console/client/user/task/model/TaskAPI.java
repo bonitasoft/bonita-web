@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.HiddenUserTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HiddenUserTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HiddenUserTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HiddenUserTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIAddRequest;

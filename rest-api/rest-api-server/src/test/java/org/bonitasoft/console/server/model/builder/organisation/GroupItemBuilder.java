@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.server.model.builder.organisation;
 
-import org.bonitasoft.console.client.model.identity.GroupItem;
+import org.bonitasoft.web.rest.api.model.identity.GroupItem;
 
 
 /**

@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.server.api.deployer;
 
-import org.bonitasoft.console.client.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.Deployer;

@@ -18,9 +18,9 @@ package org.bonitasoft.console.client.admin.process.view.section.category;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.model.bpm.process.CategoryItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessCategoryDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Item;

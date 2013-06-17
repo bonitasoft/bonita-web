@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.IFlowNodeItem;
-import org.bonitasoft.console.client.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 

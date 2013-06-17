@@ -16,16 +16,16 @@
  */
 package org.bonitasoft.console.client.data.item.attribute.reader;
 
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.ATTRIBUTE_USER_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_USER_ID;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.model.identity.GroupItem;
-import org.bonitasoft.console.client.model.identity.RoleItem;
-import org.bonitasoft.console.client.model.identity.UserItem;
-import org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem;
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.api.model.identity.GroupItem;
+import org.bonitasoft.web.rest.api.model.identity.RoleItem;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.CompoundAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;

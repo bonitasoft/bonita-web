@@ -19,10 +19,10 @@ package org.bonitasoft.console.server.api.bpm.flownode;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.console.server.datastore.bpm.flownode.HumanTaskDatastore;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

@@ -19,15 +19,15 @@ package org.bonitasoft.console.client.user.task.view.more;
 import java.util.Map;
 
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
-import org.bonitasoft.console.client.model.bpm.flownode.HiddenUserTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
 import org.bonitasoft.console.client.user.task.action.UserTasksUnhideAction;
 import org.bonitasoft.console.client.user.task.view.PluginTask;
 import org.bonitasoft.console.client.user.task.view.TaskButtonFactory;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HiddenUserTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

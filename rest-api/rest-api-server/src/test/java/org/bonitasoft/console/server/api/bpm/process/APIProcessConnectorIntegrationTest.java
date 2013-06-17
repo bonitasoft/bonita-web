@@ -22,8 +22,6 @@ import static junit.framework.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
@@ -31,6 +29,8 @@ import org.bonitasoft.test.toolkit.bpm.process.TestProcessConnector;
 import org.bonitasoft.test.toolkit.bpm.process.TestProcessConnectorFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Test;

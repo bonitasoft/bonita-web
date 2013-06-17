@@ -18,7 +18,6 @@ package org.bonitasoft.console.server.datastore.bpm.process.helper;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
 import org.bonitasoft.console.server.datastore.SearchOptionsCreator;
 import org.bonitasoft.console.server.datastore.Sorts;
 import org.bonitasoft.console.server.datastore.converter.ItemSearchResultConverter;
@@ -27,6 +26,7 @@ import org.bonitasoft.console.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

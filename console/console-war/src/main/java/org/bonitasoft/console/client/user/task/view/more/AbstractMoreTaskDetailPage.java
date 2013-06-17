@@ -22,10 +22,10 @@ import java.util.List;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.IHumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.flownode.TaskItem;
 import org.bonitasoft.console.client.user.task.view.AbstractTaskDetailsPage;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;

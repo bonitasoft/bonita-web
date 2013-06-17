@@ -18,9 +18,9 @@ package org.bonitasoft.console.common.server.utils;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 /**
  * @author Ruiheng.Fan

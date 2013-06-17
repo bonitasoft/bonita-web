@@ -19,7 +19,7 @@ package org.bonitasoft.console.server.datastore.bpm.process;
 import static java.util.Arrays.asList;
 import static java.util.Collections.EMPTY_LIST;
 import static junit.framework.Assert.assertTrue;
-import static org.bonitasoft.console.client.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_PROCESS_ID;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
@@ -31,13 +31,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.HashMap;
 
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.connector.ConnectorCriterion;
 import org.bonitasoft.engine.bpm.connector.ConnectorImplementationDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

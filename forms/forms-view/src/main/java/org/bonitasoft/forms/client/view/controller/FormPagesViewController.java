@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormType;
@@ -56,6 +55,7 @@ import org.bonitasoft.forms.client.view.widget.FormButtonWidget;
 import org.bonitasoft.forms.client.view.widget.FormFieldWidget;
 import org.bonitasoft.forms.client.view.widget.FormMessageWidget;
 import org.bonitasoft.forms.client.view.widget.FormValidationMessageWidget;
+import org.bonitasoft.web.rest.api.model.user.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

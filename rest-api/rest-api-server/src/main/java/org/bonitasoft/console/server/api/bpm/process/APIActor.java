@@ -16,19 +16,19 @@
  */
 package org.bonitasoft.console.server.api.bpm.process;
 
-import static org.bonitasoft.console.client.model.bpm.process.ActorItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.ATTRIBUTE_PROCESS_ID;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName.ATTRIBUTE_NAME;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.process.ActorDefinition;
-import org.bonitasoft.console.client.model.bpm.process.ActorItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.console.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

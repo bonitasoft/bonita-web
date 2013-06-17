@@ -18,7 +18,7 @@ package org.bonitasoft.console.client.owner.comment.action;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;

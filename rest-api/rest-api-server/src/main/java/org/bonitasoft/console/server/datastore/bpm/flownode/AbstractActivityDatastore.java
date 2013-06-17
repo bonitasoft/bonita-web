@@ -18,10 +18,6 @@ package org.bonitasoft.console.server.datastore.bpm.flownode;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.console.client.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.console.common.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
@@ -30,6 +26,10 @@ import org.bonitasoft.engine.bpm.flownode.ActivityStates;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

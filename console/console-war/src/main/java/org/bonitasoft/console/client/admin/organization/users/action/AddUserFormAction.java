@@ -21,8 +21,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
-import org.bonitasoft.console.client.model.identity.UserDefinition;
-import org.bonitasoft.console.client.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

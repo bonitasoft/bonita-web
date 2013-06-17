@@ -16,17 +16,15 @@
  */
 package org.bonitasoft.console.server.api.userXP.profile;
 
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_INDEX;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
-import static org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_INDEX;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
+import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
 
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryDefinition;
-import org.bonitasoft.console.client.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.api.deployer.DeployerFactory;
 import org.bonitasoft.console.server.datastore.ComposedDatastore;
@@ -35,6 +33,8 @@ import org.bonitasoft.console.server.datastore.profile.entry.SearchProfileEntrie
 import org.bonitasoft.console.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.console.server.engineclient.EngineClientFactory;
 import org.bonitasoft.console.server.engineclient.ProfileEntryEngineClient;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryDefinition;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributeMissingException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;

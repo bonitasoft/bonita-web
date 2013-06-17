@@ -18,8 +18,8 @@ package org.bonitasoft.console.server.datastore.profile.member;
 
 import static junit.framework.Assert.assertTrue;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.engine.profile.ProfileMemberSearchDescriptor;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.junit.Test;
 
 /**

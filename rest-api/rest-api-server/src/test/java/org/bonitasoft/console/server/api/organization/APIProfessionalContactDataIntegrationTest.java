@@ -20,12 +20,12 @@ import static org.bonitasoft.console.server.model.builder.identity.ContactDataBu
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 
-import org.bonitasoft.console.client.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.console.server.model.builder.identity.ContactDataBuilder;
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 

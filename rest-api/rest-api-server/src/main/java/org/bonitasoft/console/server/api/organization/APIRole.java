@@ -3,14 +3,14 @@ package org.bonitasoft.console.server.api.organization;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.console.client.model.identity.RoleDefinition;
-import org.bonitasoft.console.client.model.identity.RoleItem;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.server.api.ConsoleAPI;
 import org.bonitasoft.console.server.datastore.organization.RoleDatastore;
 import org.bonitasoft.console.server.datastore.organization.UserDatastore;
 import org.bonitasoft.engine.identity.RoleCriterion;
+import org.bonitasoft.web.rest.api.model.identity.RoleDefinition;
+import org.bonitasoft.web.rest.api.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.server.api.APIHasAdd;

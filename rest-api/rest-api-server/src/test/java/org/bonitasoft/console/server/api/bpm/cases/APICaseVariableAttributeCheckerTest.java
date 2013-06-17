@@ -19,7 +19,7 @@ package org.bonitasoft.console.server.api.bpm.cases;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
 import org.junit.Test;

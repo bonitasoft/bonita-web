@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.server.datastore.monitoring.report;
 
-import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
 import org.bonitasoft.console.server.APITestWithMock;
+import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
 import org.junit.Test;
 
 /**

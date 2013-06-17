@@ -18,10 +18,10 @@ package org.bonitasoft.console.server.api.bpm.process;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.bonitasoft.console.client.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
-import static org.bonitasoft.console.client.model.identity.MemberType.GROUP;
-import static org.bonitasoft.console.client.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
 import static org.bonitasoft.console.server.model.builder.bpm.process.ActorMemberItemBuilder.anActorMemberItem;
+import static org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
+import static org.bonitasoft.web.rest.api.model.identity.MemberType.GROUP;
+import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,8 +30,6 @@ import static org.junit.Assert.assertNull;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bonitasoft.console.client.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.console.client.model.identity.MemberType;
 import org.bonitasoft.console.server.AbstractConsoleTest;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -45,6 +43,8 @@ import org.bonitasoft.test.toolkit.organization.TestGroupFactory;
 import org.bonitasoft.test.toolkit.organization.TestRoleFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.api.model.identity.MemberType;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Test;
 

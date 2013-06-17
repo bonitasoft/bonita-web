@@ -20,11 +20,11 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.LinkedList;
 
-import org.bonitasoft.console.client.model.bpm.cases.ArchivedCaseDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.ArchivedCaseItem;
-import org.bonitasoft.console.client.model.bpm.cases.CaseDefinition;
-import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;

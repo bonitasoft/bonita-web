@@ -21,12 +21,12 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Arrays;
 
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
-import org.bonitasoft.console.client.model.identity.PersonalContactDataDefinition;
-import org.bonitasoft.console.client.model.identity.PersonalContactDataItem;
-import org.bonitasoft.console.client.model.identity.ProfessionalContactDataDefinition;
-import org.bonitasoft.console.client.model.identity.ProfessionalContactDataItem;
-import org.bonitasoft.console.client.model.identity.UserDefinition;
-import org.bonitasoft.console.client.model.identity.UserItem;
+import org.bonitasoft.web.rest.api.model.identity.PersonalContactDataDefinition;
+import org.bonitasoft.web.rest.api.model.identity.PersonalContactDataItem;
+import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataDefinition;
+import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
+import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.api.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

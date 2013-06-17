@@ -18,7 +18,6 @@ package org.bonitasoft.console.server.datastore.bpm.flownode.archive;
 
 import java.io.Serializable;
 
-import org.bonitasoft.console.client.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.console.server.datastore.bpm.flownode.archive.converter.ArchivedFlowNodeSearchDescriptorConverter;
 import org.bonitasoft.console.server.datastore.converter.BooleanValueConverter;
 import org.bonitasoft.console.server.datastore.filter.Field;
@@ -26,6 +25,7 @@ import org.bonitasoft.console.server.datastore.filter.Filter;
 import org.bonitasoft.console.server.datastore.filter.FilterCreator;
 import org.bonitasoft.console.server.datastore.filter.StrValue;
 import org.bonitasoft.console.server.datastore.filter.Value;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
 
 /**
  * @author Vincent Elcrin

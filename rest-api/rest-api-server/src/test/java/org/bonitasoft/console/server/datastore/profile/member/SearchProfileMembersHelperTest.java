@@ -27,13 +27,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bonitasoft.console.client.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.console.server.APITestWithMock;
 import org.bonitasoft.console.server.datastore.utils.SearchUtils;
 import org.bonitasoft.console.server.engineclient.ProfileMemberEngineClient;
 import org.bonitasoft.engine.profile.ProfileMember;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
+import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Before;

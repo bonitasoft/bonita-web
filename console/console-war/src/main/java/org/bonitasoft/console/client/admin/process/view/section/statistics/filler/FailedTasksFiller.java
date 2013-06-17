@@ -18,9 +18,9 @@ package org.bonitasoft.console.client.admin.process.view.section.statistics.fill
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.console.client.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.console.client.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
