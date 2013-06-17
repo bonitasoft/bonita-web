@@ -1,0 +1,112 @@
+/*******************************************************************************
+ * Copyright (C) 2009, 2013 BonitaSoft S.A.
+ * BonitaSoft is a trademark of BonitaSoft SA.
+ * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
+ * For commercial licensing information, contact:
+ * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
+ * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
+ *******************************************************************************/
+package org.bonitasoft.web.rest.server.datastore.bpm.cases;
+
+import static org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil.computeIndex;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.bpm.data.DataInstance;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.utils.converter.TypeConverter;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
+import org.bonitasoft.web.toolkit.server.api.DatastoreHasUpdate;
+import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
+
+/**
+ * @author Colin PUY
+ * 
+ */
+public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, DataInstance>
+        implements DatastoreHasSearch<CaseVariableItem>, DatastoreHasUpdate<CaseVariableItem> {
+
+    private final TypeConverter converter = new TypeConverter();
+
+    public CaseVariableDatastore(final APISession engineSession) {
+        super(engineSession);
+    }
+
+    @Override
+    protected CaseVariableItem convertEngineToConsoleItem(final DataInstance item) {
+        return new CaseVariableItem(item.getContainerId(),
+                item.getName(), item.getValue(), item.getClassName(), item.getDescription());
+    }
+
+    private List<CaseVariableItem> convert(final List<DataInstance> dataInstances) {
+        final List<CaseVariableItem> caseVariables = new ArrayList<CaseVariableItem>();
+        for (final DataInstance dataInstance : dataInstances) {
+            caseVariables.add(convertEngineToConsoleItem(dataInstance));
+        }
+        return caseVariables;
+    }
+
+    protected ProcessAPI getEngineProcessAPI() {
+        try {
+            return TenantAPIAccessor.getProcessAPI(getEngineSession());
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    @Override
+    public CaseVariableItem update(final APIID id, final Map<String, String> attributes) {
+        throw new RuntimeException("Not implemented / No need to / Not used");
+    }
+
+    @Override
+    public ItemSearchResult<CaseVariableItem> search(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters) {
+        throw new RuntimeException("Not implemented / No need to / Not used");
+    }
+
+    public void updateVariableValue(final long caseId, final String variableName, final String className, final String newValue) {
+        try {
+            final Serializable converteValue = this.converter.convert(className, newValue);
+            getEngineProcessAPI().updateProcessDataInstance(variableName, caseId, converteValue);
+        } catch (final Exception e) {
+            throw new APIException("Error when updating case variable", e);
+        }
+    }
+
+    public ItemSearchResult<CaseVariableItem> findByCaseId(final long caseId, final int page, final int resultsByPage) {
+        try {
+            final List<DataInstance> processDataInstances =
+                    getEngineProcessAPI().getProcessDataInstances(caseId, computeIndex(page, resultsByPage), resultsByPage);
+            return new ItemSearchResult<CaseVariableItem>(page, resultsByPage,
+                    countByCaseId(caseId), convert(processDataInstances));
+        } catch (final Exception e) {
+            throw new APIException("Error when getting case variables");
+        }
+    }
+
+    private long countByCaseId(final long caseId) {
+        try {
+            return getEngineProcessAPI().getNumberOfProcessDataInstances(caseId);
+        } catch (final Exception e) {
+            throw new APIException("Error while getting the number of case variables");
+        }
+    }
+
+    public CaseVariableItem findById(final long caseId, final String variableName) {
+        try {
+            return convertEngineToConsoleItem(getEngineProcessAPI().getProcessDataInstance(variableName, caseId));
+        } catch (final Exception e) {
+            throw new APIException("Error while getting case variable");
+        }
+    }
+}
