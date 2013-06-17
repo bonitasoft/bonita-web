@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.userXP.profile;
+package org.bonitasoft.web.rest.server.api.profile;
 
 import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
 import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;

@@ -1,4 +1,4 @@
-package org.bonitasoft.web.rest.server.api.userXP.profile;
+package org.bonitasoft.web.rest.server.api.profile;
 // /**
 // * Copyright (C) 2012 BonitaSoft S.A.
 // * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble

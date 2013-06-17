@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberDefinition;
 import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.web.rest.server.api.userXP.profile.AbstractAPIMember;
+import org.bonitasoft.web.rest.server.api.profile.AbstractAPIMember;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorMemberDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterEmptyException;

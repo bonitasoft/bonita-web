@@ -52,11 +52,11 @@ import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactDat
 import org.bonitasoft.web.rest.server.api.organization.APIRole;
 import org.bonitasoft.web.rest.server.api.organization.APIUser;
 import org.bonitasoft.web.rest.server.api.platform.APIPlatform;
+import org.bonitasoft.web.rest.server.api.profile.APIProfile;
+import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
+import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.rest.server.api.system.APISession;
-import org.bonitasoft.web.rest.server.api.theme.impl.APITheme;
-import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfile;
-import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfileEntry;
-import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfileMember;
+import org.bonitasoft.web.rest.server.api.theme.APITheme;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.API;

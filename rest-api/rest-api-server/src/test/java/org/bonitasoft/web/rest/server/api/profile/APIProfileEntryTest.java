@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.userXP.profile;
+package org.bonitasoft.web.rest.server.api.profile;
 
 import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
 import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
@@ -31,7 +31,7 @@ import java.util.Map;
 import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.api.userXP.profile.APIProfileEntry;
+import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
 import org.bonitasoft.web.rest.server.datastore.ComposedDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributeMissingException;
 import org.junit.Before;
