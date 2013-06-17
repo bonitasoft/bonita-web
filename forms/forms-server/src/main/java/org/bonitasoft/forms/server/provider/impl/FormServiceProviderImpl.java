@@ -32,8 +32,8 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
-import org.bonitasoft.console.common.server.privileges.datastore.PrivilegesDatastore;
-import org.bonitasoft.console.common.server.privileges.datastore.PrivilegesDatastoreImpl;
+import org.bonitasoft.engine.api.CommandAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
@@ -2237,10 +2237,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private Map<Long, Set<Long>> getProcessActors(final APISession session) throws BPMEngineException {
-        final PrivilegesDatastore instance = PrivilegesDatastoreImpl.getInstance();
         Map<Long, Set<Long>> getProcessActors = new HashMap<Long, Set<Long>>();
         try {
-            getProcessActors = instance.getProcessActors(session);
+            getProcessActors = getProcessActors2(session);
         } catch (final BonitaException e) {
             final String message = "The engine was not able to retrieve the actors of process Actors ";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -2250,7 +2249,22 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
         return getProcessActors;
     }
-
+    
+    // FIXME refactor
+    private Map<Long, Set<Long>> getProcessActors2(final APISession aAPISession) throws BonitaException {
+        Map<Long, Set<Long>> result = null;
+        try {
+            final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(aAPISession);
+            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+            parameters.put("USER_ID_KEY", aAPISession.getUserId());
+            result = (Map<Long, Set<Long>>) commandAPI.execute("getActorIdsForUserIdIncludingTeam", parameters);
+        } catch (final Exception e) {
+            final String msg = "Encountered error while executing this command:";
+            throw new BonitaException(msg);
+        }
+        return result;
+    }
+    
     private void logInfoMessage(final Throwable e, final String message) {
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, message, e);

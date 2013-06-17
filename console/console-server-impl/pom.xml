@@ -30,6 +30,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.web</groupId>
+			<artifactId>bonita-rest-server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.web</groupId>
 			<artifactId>theme-builder</artifactId>
 		</dependency>
 		<dependency>
