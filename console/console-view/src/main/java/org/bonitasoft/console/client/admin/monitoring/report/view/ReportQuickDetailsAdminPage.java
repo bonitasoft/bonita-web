@@ -24,18 +24,19 @@ import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserRead
 import org.bonitasoft.console.client.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.console.client.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
-import org.bonitasoft.web.toolkit.client.ui.component.Definition;
+import org.bonitasoft.web.toolkit.client.ui.component.Image;
+import org.bonitasoft.web.toolkit.client.ui.component.Link;
+import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
-
-import com.google.gwt.i18n.client.LocalizableResource.Description;
+import org.bonitasoft.web.toolkit.client.ui.utils.Url;
 
 /**
  * @author Paul AMAR, Rohart Bastien
@@ -70,8 +71,6 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ReportItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
-//         metadatas.add(installOn(item));
-//         metadatas.add(installBy(item));
         return metadatas;
     }
 
@@ -96,16 +95,25 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
 
     @Override
     protected void buildBody(final ReportItem report) {
-//        addBody(getParametersSection(report));
+        addBody(getReportScreenshot(report));
     }
 
-//    /**
-//     * @param report
-//     * @return
-//     */
-//    private AbstractComponent getParametersSection(ReportItem report) {
-//        
-//        return new Definition(_("Parameters"), new AttributeReader(ReportItem.).read(report.));
-//    }
+    /**
+     * @param report
+     * @return
+     */
+    private AbstractComponent getReportScreenshot(ReportItem report) {
+        Image screenshot = new Image(new Url("/console/ReportScreenshotServlet?reportName=" + report.getId()), 0, 0, _("Report's screenshot"));
+        Link link = new Link(
+                new JsId("screenshotReportLink"),
+                _("Go to more details report view"),
+                _("Go to more details report view"),
+                new ActionShowView(new ReportMoreDetailsAdminPage(
+                        report)));
+        link.addClass("reportScreenshot");
 
+        link.setImage(screenshot);
+        return new Section(new JsId("section"), _("Screen shot"), link);
+
+    }
 }
