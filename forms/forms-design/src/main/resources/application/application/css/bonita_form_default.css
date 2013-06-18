@@ -231,6 +231,7 @@ div#bonita-identification-area {
 }
 
 .bonita_user_xp_label {
+	cursor: pointer;
 	padding: 0 10px 0 20px;
 }
 

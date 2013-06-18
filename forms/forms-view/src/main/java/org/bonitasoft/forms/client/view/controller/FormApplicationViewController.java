@@ -349,8 +349,8 @@ public class FormApplicationViewController {
                                 userXPLabel.setStyleName("bonita_user_xp_label");
                                 final Image userXPIcon = new Image(PICTURE_PLACEHOLDER);
                                 userXPIcon.setStyleName("bonita_user_xp_icon");
-                                userXPIcon.setTitle(FormsResourceBundle.getMessages().openUserXPButtonTitle());
-                                userXPIcon.addClickHandler(new ClickHandler() {
+
+                                ClickHandler userXPLinkHandler = new ClickHandler() {
 
                                     @Override
                                     public void onClick(final ClickEvent event) {
@@ -365,7 +365,12 @@ public class FormApplicationViewController {
                                             urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
                                         }
                                     }
-                                });
+                                };
+
+                                userXPIcon.setTitle(FormsResourceBundle.getMessages().openUserXPButtonTitle());
+
+                                userXPIcon.addClickHandler(userXPLinkHandler);
+                                userXPLabel.addClickHandler(userXPLinkHandler);
                                 applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                                 applicationHTMLPanel.add(userXPIcon, OPEN_USER_XP_ELEMENT_ID);
                             }
