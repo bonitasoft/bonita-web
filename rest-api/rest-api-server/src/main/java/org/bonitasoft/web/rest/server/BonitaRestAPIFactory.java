@@ -55,14 +55,14 @@ import org.bonitasoft.web.rest.server.api.platform.APIPlatform;
 import org.bonitasoft.web.rest.server.api.profile.APIProfile;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
+import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
+import org.bonitasoft.web.rest.server.api.system.APII18nTranslation;
 import org.bonitasoft.web.rest.server.api.system.APISession;
 import org.bonitasoft.web.rest.server.api.theme.APITheme;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.server.API;
 import org.bonitasoft.web.toolkit.server.RestAPIFactory;
-import org.bonitasoft.web.toolkit.server.api.system.APII18nLocale;
-import org.bonitasoft.web.toolkit.server.api.system.APII18nTranslation;
 
 /**
  * @author Séverin Moussel

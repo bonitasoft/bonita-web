@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.server.api.system;
+package org.bonitasoft.web.rest.server.api.system;
 
 import java.util.LinkedList;
 import java.util.List;
