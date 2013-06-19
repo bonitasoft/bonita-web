@@ -18,10 +18,16 @@ package org.bonitasoft.web.rest.server;
 
 import static junit.framework.Assert.assertTrue;
 
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.server.AbstractJUnitWebTest;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
+import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.server.APIServletCall;
 /**
  * @author Vincent Elcrin
  * 
@@ -40,6 +46,21 @@ public abstract class AbstractConsoleTest extends AbstractJUnitWebTest {
         consoleTestSetUp();
     }
 
+    public APIServletCall getAPICaller(final APISession apiSession, final String apiPath) {
+
+        // Get the httpSession and set attributes
+        final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        mockHttpServletRequest.setPathInfo(apiPath);
+        final MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
+        final HttpSession httpSession = mockHttpServletRequest.getSession();
+        httpSession.setAttribute(USERNAME_SESSION_PARAM, apiSession.getUserName());
+        httpSession.setAttribute(API_SESSION_PARAM_KEY, apiSession);
+
+        // Initialize APIUser for HTTP requests of the API
+        final APIServletCall caller = new APIServletCall(mockHttpServletRequest, mockHttpServletResponse);
+        return caller;
+    }
+    
     public abstract void consoleTestSetUp() throws Exception;
     
     protected void assertItemEquals(Item expectedItem, Item actual) {

@@ -16,15 +16,9 @@
  */
 package org.bonitasoft.console.common.server;
 
-import javax.servlet.http.HttpSession;
-
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.AbstractJUnitTest;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
-import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
-import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.APIServletCall;
 import org.bonitasoft.web.toolkit.server.utils.I18n;
 
 /**
@@ -72,21 +66,6 @@ public abstract class AbstractJUnitWebTest extends AbstractJUnitTest {
 
     }
 
-    public APIServletCall getAPICaller(final APISession apiSession, final String apiPath) {
-
-        // Get the httpSession and set attributes
-        final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
-        mockHttpServletRequest.setPathInfo(apiPath);
-        final MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
-        final HttpSession httpSession = mockHttpServletRequest.getSession();
-        httpSession.setAttribute(USERNAME_SESSION_PARAM, apiSession.getUserName());
-        httpSession.setAttribute(API_SESSION_PARAM_KEY, apiSession);
-
-        // Initialize APIUser for HTTP requests of the API
-        final APIServletCall caller = new APIServletCall(mockHttpServletRequest, mockHttpServletResponse);
-        return caller;
-    }
-    
     protected boolean areEquals(Item item1, Item item2) {
         return item1.getAttributes().equals(item2.getAttributes());
     }
