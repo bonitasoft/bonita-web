@@ -4,7 +4,7 @@ import static org.bonitasoft.web.rest.server.model.builder.organisation.GroupIte
 
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.identity.GroupItem;
+import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.organization.APIGroup;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;

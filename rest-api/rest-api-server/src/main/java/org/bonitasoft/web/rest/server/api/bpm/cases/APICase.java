@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.process.ProcessInstanceCriterion;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;

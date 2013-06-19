@@ -25,7 +25,7 @@ import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseDocument;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

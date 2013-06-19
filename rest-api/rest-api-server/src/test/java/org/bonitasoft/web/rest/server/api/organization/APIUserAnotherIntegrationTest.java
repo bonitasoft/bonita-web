@@ -34,7 +34,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
 import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.organization.APIUser;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;

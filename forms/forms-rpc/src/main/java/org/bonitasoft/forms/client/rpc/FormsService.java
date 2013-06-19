@@ -40,7 +40,7 @@ import org.bonitasoft.forms.client.model.exception.RPCException;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.client.model.exception.SkippedFormException;
 import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 

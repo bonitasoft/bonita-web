@@ -29,7 +29,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;

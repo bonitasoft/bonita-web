@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Ruiheng.Fan

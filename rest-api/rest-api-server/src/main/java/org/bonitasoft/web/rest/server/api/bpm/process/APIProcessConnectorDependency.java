@@ -16,16 +16,16 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
 
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.connector.ConnectorCriterion;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessConnectorDependencyDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;

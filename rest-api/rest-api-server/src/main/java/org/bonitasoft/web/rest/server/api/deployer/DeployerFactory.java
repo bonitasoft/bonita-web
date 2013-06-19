@@ -17,8 +17,8 @@
 package org.bonitasoft.web.rest.server.api.deployer;
 
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
 import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.web.rest.server.datastore.profile.entry.GetProfileEntryHelper;

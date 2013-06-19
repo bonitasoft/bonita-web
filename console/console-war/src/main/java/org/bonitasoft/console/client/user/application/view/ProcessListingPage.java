@@ -22,10 +22,10 @@ import java.util.LinkedList;
 
 import org.bonitasoft.console.client.user.task.view.PluginProcess;
 import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
-import org.bonitasoft.web.rest.api.model.bpm.process.CategoryDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

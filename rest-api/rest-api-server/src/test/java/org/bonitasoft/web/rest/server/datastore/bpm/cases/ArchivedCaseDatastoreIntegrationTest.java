@@ -9,7 +9,7 @@ import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

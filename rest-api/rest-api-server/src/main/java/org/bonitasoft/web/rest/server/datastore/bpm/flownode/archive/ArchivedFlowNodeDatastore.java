@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 
 /**
  * @author Séverin Moussel

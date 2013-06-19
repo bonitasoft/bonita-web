@@ -12,7 +12,7 @@ import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.organization.profiles.TestProfile;
 import org.bonitasoft.test.toolkit.organization.profiles.TestProfileFactory;
 import org.bonitasoft.test.toolkit.organization.profiles.TestProfileMember;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.toolkit.client.data.APIID;

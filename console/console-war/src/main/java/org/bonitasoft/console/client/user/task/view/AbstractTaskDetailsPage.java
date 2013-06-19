@@ -22,9 +22,9 @@ import static org.bonitasoft.web.toolkit.client.ViewController.showPopup;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IHumanTaskItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.TaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;

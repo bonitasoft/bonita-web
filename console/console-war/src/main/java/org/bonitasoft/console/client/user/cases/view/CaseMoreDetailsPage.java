@@ -21,7 +21,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;

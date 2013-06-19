@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.process.helper;
 
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 
 /**

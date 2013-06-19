@@ -49,8 +49,8 @@ import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.web.rest.api.model.document.ArchivedDocumentItem;
-import org.bonitasoft.web.rest.api.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.document.ArchivedDocumentItem;
+import org.bonitasoft.web.rest.model.document.DocumentItem;
 
 /**
  * Document data store

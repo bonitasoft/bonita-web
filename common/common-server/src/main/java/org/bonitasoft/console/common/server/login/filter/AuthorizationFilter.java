@@ -44,7 +44,7 @@ import org.bonitasoft.console.common.server.preferences.properties.SecurityPrope
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Vincent Elcrin

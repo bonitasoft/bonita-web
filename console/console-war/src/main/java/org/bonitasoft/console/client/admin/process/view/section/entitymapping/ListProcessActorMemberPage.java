@@ -19,11 +19,11 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Map;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.MemberAttributeReader;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.web.rest.api.model.identity.MemberType;
+import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.identity.MemberType;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.ItemHasDualNameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

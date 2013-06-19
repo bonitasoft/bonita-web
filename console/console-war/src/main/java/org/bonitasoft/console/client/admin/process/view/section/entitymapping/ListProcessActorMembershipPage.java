@@ -21,9 +21,9 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.action.ShowAddMembershipToActorPageAction;
 import org.bonitasoft.console.client.common.view.ViewParameter;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.web.rest.api.model.identity.MemberType;
+import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.identity.MemberType;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;

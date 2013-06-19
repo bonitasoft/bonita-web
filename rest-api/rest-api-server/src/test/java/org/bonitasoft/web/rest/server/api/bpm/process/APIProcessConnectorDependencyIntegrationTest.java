@@ -18,9 +18,9 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ import org.bonitasoft.test.toolkit.bpm.process.TestProcessConnector;
 import org.bonitasoft.test.toolkit.bpm.process.TestProcessConnectorFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnectorDependency;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

@@ -21,7 +21,7 @@ import java.util.Map;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.Sorts;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConverter;

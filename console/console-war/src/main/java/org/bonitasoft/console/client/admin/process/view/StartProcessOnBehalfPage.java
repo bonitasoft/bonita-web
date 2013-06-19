@@ -19,8 +19,8 @@ package org.bonitasoft.console.client.admin.process.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.common.view.SelectMembershipAndDoPageOnItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;

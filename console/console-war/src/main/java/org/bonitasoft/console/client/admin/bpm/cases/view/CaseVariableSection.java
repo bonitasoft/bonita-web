@@ -3,9 +3,9 @@ package org.bonitasoft.console.client.admin.bpm.cases.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.bpm.cases.action.EditCaseVariableAction;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.form.generatedForm.EditorFactory;

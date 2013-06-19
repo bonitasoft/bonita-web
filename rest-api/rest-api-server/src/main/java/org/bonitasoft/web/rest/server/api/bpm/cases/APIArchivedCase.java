@@ -19,8 +19,8 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;

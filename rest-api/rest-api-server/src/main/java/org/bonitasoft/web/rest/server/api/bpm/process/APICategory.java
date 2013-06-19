@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.category.CategoryCriterion;
-import org.bonitasoft.web.rest.api.model.bpm.process.CategoryDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
+import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.web.toolkit.client.data.APIID;

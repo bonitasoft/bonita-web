@@ -16,14 +16,14 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
-import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
+import static org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
 
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.web.rest.server.api.profile.AbstractAPIMember;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorMemberDatastore;

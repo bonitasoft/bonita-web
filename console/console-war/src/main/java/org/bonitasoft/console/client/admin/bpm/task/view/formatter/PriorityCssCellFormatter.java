@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view.formatter;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.TaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.DefaultItemTableCellFormatter;
 
 

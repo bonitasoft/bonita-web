@@ -19,8 +19,8 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.document.DocumentsSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDocumentItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDocumentDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

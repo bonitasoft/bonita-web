@@ -95,7 +95,7 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.ApplicationURLUtils;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
 /**

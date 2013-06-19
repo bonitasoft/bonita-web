@@ -22,11 +22,11 @@ import java.util.HashMap;
 
 import org.bonitasoft.console.client.common.identity.view.PageOnUserItem;
 import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
-import org.bonitasoft.web.rest.api.model.identity.GroupItem;
-import org.bonitasoft.web.rest.api.model.identity.MembershipDefinition;
-import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
-import org.bonitasoft.web.rest.api.model.identity.RoleItem;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.GroupItem;
+import org.bonitasoft.web.rest.model.identity.MembershipDefinition;
+import org.bonitasoft.web.rest.model.identity.MembershipItem;
+import org.bonitasoft.web.rest.model.identity.RoleItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;

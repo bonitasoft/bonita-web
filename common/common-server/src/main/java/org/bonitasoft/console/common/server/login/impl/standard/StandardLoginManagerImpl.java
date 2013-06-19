@@ -21,7 +21,7 @@ import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Chong Zhao

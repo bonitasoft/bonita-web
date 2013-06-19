@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.UserDeployer;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;

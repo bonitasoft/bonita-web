@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessCategoryDatastore;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

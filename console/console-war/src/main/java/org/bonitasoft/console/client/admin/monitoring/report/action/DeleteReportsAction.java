@@ -19,7 +19,7 @@ package org.bonitasoft.console.client.admin.monitoring.report.action;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportDefinition;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

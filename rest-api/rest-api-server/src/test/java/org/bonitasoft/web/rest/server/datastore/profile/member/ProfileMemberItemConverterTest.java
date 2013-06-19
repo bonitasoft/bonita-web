@@ -21,7 +21,7 @@ import static org.bonitasoft.web.rest.server.model.builder.profile.member.Engine
 import static org.bonitasoft.web.rest.server.model.builder.profile.member.ProfileMemberItemBuilder.aProfileMemberItem;
 
 import org.bonitasoft.engine.profile.ProfileMember;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.profile.member.ProfileMemberItemConverter;
 import org.junit.Test;

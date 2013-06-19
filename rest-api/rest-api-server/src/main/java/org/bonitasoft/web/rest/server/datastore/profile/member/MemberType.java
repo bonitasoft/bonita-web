@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile.member;
 
-import org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem;
 
 /**
  * @author Vincent Elcrin

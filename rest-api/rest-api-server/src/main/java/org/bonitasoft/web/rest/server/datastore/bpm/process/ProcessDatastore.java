@@ -27,7 +27,7 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.helper.ProcessItemConverter;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.helper.SearchProcessHelper;

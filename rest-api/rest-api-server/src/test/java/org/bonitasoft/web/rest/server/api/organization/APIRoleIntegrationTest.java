@@ -19,7 +19,7 @@ import org.bonitasoft.test.toolkit.organization.TestRole;
 import org.bonitasoft.test.toolkit.organization.TestRoleFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.identity.RoleItem;
+import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.organization.APIRole;
 import org.bonitasoft.web.toolkit.client.data.APIID;

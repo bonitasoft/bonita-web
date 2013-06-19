@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.datastore.monitoring.report;
 
 import java.util.Collections;
 
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.rest.server.datastore.monitoring.report.DefaultReports;
 import org.bonitasoft.web.rest.server.datastore.monitoring.report.SearchReportHelper;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchUtils;

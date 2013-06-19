@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.bonitasoft.console.client.user.task.model.TaskAPI;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;

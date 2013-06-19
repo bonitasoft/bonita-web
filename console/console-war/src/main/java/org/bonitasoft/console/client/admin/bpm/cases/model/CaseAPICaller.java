@@ -19,7 +19,7 @@ package org.bonitasoft.console.client.admin.bpm.cases.model;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIDeleteRequest;

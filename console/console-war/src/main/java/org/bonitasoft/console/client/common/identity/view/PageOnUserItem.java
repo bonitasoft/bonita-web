@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.client.common.identity.view;
 
-import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;

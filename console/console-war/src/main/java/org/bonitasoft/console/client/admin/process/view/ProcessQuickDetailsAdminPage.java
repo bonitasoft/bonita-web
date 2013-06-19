@@ -26,8 +26,8 @@ import org.bonitasoft.console.client.admin.process.view.section.configuration.Co
 import org.bonitasoft.console.client.admin.process.view.section.statistics.StatisticsSection;
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;

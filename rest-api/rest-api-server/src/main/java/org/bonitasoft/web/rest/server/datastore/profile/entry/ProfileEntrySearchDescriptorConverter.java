@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 
 /**

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 
 /**

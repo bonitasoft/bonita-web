@@ -25,7 +25,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessCategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;

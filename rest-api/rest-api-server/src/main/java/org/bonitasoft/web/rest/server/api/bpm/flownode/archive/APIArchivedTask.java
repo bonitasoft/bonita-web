@@ -18,8 +18,8 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode.archive;
 
 import java.util.List;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedTaskDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.AbstractAPITask;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.ArchivedTaskDatastore;
 

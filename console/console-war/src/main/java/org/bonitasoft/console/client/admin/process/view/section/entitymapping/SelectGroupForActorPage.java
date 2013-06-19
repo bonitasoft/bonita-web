@@ -21,10 +21,10 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Map;
 
 import org.bonitasoft.console.client.common.view.SelectGroupAndDoPageOnItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

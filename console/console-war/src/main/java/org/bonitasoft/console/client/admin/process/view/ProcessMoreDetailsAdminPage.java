@@ -30,10 +30,10 @@ import org.bonitasoft.console.client.admin.process.view.section.configuration.Pr
 import org.bonitasoft.console.client.admin.process.view.section.connector.ConnectorSection;
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.EntityMappingSection;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

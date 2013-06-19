@@ -19,9 +19,9 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CommentDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CommentItem;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CommentItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CommentDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;

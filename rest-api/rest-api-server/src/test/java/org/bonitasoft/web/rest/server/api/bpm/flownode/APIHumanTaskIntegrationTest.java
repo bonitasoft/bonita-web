@@ -15,7 +15,7 @@ import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.APIHumanTask;
 import org.bonitasoft.web.toolkit.client.data.APIID;

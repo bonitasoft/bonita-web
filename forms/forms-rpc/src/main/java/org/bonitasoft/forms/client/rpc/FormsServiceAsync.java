@@ -27,7 +27,7 @@ import org.bonitasoft.forms.client.model.ReducedFormPage;
 import org.bonitasoft.forms.client.model.ReducedFormValidator;
 import org.bonitasoft.forms.client.model.ReducedFormWidget;
 import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

@@ -20,9 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstanceSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedActivityItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedHumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 
 /**
  * @author Vincent Elcrin

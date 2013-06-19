@@ -19,7 +19,7 @@ package org.bonitasoft.web.rest.server.datastore.monitoring.report;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
 

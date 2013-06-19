@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
-import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 
 /**
  * @author Séverin Moussel

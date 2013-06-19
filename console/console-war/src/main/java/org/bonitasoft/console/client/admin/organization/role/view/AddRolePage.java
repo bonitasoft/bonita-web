@@ -19,8 +19,8 @@ package org.bonitasoft.console.client.admin.organization.role.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.organization.role.action.AddRoleFormAction;
-import org.bonitasoft.web.rest.api.model.identity.RoleDefinition;
-import org.bonitasoft.web.rest.api.model.identity.RoleItem;
+import org.bonitasoft.web.rest.model.identity.RoleDefinition;
+import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

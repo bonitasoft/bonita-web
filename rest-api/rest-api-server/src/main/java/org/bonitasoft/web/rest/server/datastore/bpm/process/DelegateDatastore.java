@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.bpm.process.DelegationItem;
+import org.bonitasoft.web.rest.model.bpm.process.DelegationItem;
 
 /**
  * @author Haojie Yuan

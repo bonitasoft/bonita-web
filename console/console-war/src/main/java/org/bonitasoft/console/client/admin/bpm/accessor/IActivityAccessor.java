@@ -18,9 +18,9 @@ package org.bonitasoft.console.client.admin.bpm.accessor;
 
 import java.util.Date;
 
-import org.bonitasoft.web.rest.api.model.bpm.connector.ArchivedConnectorInstanceItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IActivityItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.connector.ArchivedConnectorInstanceItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**

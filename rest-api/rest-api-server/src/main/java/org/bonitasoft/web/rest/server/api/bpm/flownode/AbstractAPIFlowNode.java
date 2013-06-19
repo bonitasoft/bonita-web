@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeDatastore;

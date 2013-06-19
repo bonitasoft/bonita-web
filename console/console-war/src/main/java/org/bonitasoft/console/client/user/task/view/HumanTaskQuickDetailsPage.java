@@ -22,8 +22,8 @@ import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnip
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;

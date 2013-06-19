@@ -10,7 +10,7 @@ package org.bonitasoft.web.rest.server.model.builder.bpm.cases;
 
 import java.io.Serializable;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 
 
 /**

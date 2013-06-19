@@ -17,9 +17,9 @@
 package org.bonitasoft.console.client.admin.process.view.section.category.action;
 
 import org.bonitasoft.console.client.admin.process.view.section.category.RemoveCategoryPopUp;
-import org.bonitasoft.web.rest.api.model.bpm.process.CategoryItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessCategoryDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.ItemAction;

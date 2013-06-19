@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.web.rest.api.model.ModelFactory;
+import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

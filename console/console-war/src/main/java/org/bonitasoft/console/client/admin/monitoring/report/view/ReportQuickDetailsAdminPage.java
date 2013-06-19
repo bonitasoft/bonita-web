@@ -21,8 +21,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportDefinition;
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;

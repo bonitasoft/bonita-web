@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;

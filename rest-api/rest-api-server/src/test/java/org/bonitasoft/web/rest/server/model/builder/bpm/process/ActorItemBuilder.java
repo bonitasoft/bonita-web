@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.model.builder.bpm.process;
 
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 
 /**
  * @author Colin PUY

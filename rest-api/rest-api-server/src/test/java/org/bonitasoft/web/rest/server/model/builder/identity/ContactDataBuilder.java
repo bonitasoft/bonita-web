@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.model.builder.identity;
 
 import org.bonitasoft.engine.identity.ContactDataCreator;
-import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
+import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 
 /**
  * @author Colin PUY

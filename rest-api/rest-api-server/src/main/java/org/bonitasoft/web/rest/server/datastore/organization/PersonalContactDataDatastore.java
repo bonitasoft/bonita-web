@@ -25,7 +25,7 @@ import org.bonitasoft.engine.identity.ContactDataUpdater;
 import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.web.rest.api.model.identity.PersonalContactDataItem;
+import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;

@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.process.DelegationDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.DelegationItem;
+import org.bonitasoft.web.rest.model.bpm.process.DelegationDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.DelegationItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.DelegateDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

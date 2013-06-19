@@ -17,7 +17,7 @@
 package org.bonitasoft.console.client.admin.bpm.cases.action;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.FlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;

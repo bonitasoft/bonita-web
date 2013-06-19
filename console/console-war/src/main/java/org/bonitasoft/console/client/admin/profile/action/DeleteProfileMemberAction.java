@@ -17,9 +17,9 @@ package org.bonitasoft.console.client.admin.profile.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
 import java.io.Serializable;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.ArchivedFlowNodeSearchDescriptorConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.BooleanValueConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Field;

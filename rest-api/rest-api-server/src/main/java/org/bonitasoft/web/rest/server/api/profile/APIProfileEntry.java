@@ -16,17 +16,17 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
-import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_INDEX;
-import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
-import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
-import static org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
+import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
+import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_INDEX;
+import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
+import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
+import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
 
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryDefinition;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.datastore.ComposedDatastore;

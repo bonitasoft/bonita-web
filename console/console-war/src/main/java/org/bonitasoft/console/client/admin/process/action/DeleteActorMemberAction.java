@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.common.view.ViewParameter;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;

@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.model.builder.profile.member;
 
 import org.bonitasoft.engine.profile.ProfileMember;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 
 /**
  * @author Vincent Elcrin

@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessResolutionProblemItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**

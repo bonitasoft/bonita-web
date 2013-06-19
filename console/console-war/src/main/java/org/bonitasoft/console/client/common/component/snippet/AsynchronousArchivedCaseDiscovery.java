@@ -18,7 +18,7 @@ package org.bonitasoft.console.client.common.component.snippet;
 
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIRequest;

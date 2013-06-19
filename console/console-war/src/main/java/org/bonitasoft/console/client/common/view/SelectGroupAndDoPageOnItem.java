@@ -21,8 +21,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.web.rest.api.model.identity.GroupDefinition;
-import org.bonitasoft.web.rest.api.model.identity.GroupItem;
+import org.bonitasoft.web.rest.model.identity.GroupDefinition;
+import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

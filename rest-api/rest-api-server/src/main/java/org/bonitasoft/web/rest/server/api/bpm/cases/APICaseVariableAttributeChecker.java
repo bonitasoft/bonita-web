@@ -20,7 +20,7 @@ import static java.lang.String.format;
 
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 
 /**

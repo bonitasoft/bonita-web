@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.server.listener;
 
-import org.bonitasoft.web.rest.api.model.ModelFactory;
+import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.server.BonitaRestAPIFactory;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;

@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
+import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactData;
 import org.bonitasoft.web.rest.server.model.builder.identity.ContactDataBuilder;

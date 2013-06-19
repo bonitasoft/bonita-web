@@ -21,10 +21,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
-import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
-import org.bonitasoft.web.rest.api.model.identity.PersonalContactDataItem;
-import org.bonitasoft.web.rest.api.model.identity.ProfessionalContactDataItem;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.MembershipItem;
+import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
+import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

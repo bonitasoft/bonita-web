@@ -11,8 +11,8 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseVariableDatastore;
 import org.bonitasoft.web.toolkit.client.data.APIID;

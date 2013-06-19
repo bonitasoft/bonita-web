@@ -20,9 +20,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.LinkedList;
 
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportDefinition;
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

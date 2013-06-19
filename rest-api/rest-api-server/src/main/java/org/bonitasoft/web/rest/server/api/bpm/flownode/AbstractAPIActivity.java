@@ -19,9 +19,9 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.util.List;
 
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.ActivityDatastore;
 import org.bonitasoft.web.toolkit.server.api.Datastore;
 

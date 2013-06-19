@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.bonitasoft.engine.profile.ProfileMember;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.profile.member.AddProfileMemberHelper;
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;

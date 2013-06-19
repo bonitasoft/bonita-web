@@ -50,7 +50,7 @@ import org.bonitasoft.forms.server.exception.FormSubmissionException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
-import org.bonitasoft.web.rest.api.model.user.User;
+import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
 /**

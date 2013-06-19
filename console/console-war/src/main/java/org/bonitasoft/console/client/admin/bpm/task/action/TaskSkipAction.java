@@ -19,8 +19,8 @@ package org.bonitasoft.console.client.admin.bpm.task.action;
 import java.util.Collections;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ActivityDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APIUpdateCallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIRequest;

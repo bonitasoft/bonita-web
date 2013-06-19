@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;

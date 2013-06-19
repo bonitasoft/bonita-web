@@ -28,7 +28,7 @@ import java.util.List;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.profile.ProfileItemConverter;
 import org.bonitasoft.web.rest.server.datastore.profile.SearchProfilesHelper;

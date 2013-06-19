@@ -17,8 +17,8 @@
 package org.bonitasoft.web.rest.server.api.bpm.connector;
 
 import org.bonitasoft.engine.bpm.connector.ConnectorInstanceCriterion;
-import org.bonitasoft.web.rest.api.model.bpm.connector.ConnectorInstanceDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.connector.ConnectorInstanceItem;
+import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceDefinition;
+import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceDatastore;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;

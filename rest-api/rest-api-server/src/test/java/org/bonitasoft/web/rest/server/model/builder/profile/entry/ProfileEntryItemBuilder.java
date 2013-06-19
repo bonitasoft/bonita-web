@@ -17,8 +17,8 @@
 package org.bonitasoft.web.rest.server.model.builder.profile.entry;
 
 import org.bonitasoft.engine.profile.ProfileEntry;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
 
 /**
  * @author Vincent Elcrin

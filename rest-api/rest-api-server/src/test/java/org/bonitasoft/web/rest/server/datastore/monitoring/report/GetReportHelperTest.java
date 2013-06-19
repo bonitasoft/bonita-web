@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.monitoring.report;
 
-import org.bonitasoft.web.rest.api.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.monitoring.report.DefaultReports;
 import org.bonitasoft.web.rest.server.datastore.monitoring.report.GetReportHelper;

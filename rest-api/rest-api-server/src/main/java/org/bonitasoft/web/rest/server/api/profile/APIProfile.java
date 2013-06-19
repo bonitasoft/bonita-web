@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileDefinition;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.ComposedDatastore;
 import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;

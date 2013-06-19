@@ -19,7 +19,7 @@ package org.bonitasoft.web.rest.server.datastore.profile.member;
 import static junit.framework.Assert.assertTrue;
 
 import org.bonitasoft.engine.profile.ProfileMemberSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.datastore.profile.member.ProfileMemberSearchDescriptorConverter;
 import org.junit.Test;
 

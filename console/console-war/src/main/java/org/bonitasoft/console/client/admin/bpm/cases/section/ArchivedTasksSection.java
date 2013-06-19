@@ -20,10 +20,10 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirectionAction;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
-import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.TaskItem;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

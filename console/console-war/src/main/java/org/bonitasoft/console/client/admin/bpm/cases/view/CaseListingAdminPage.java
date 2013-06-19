@@ -22,10 +22,10 @@ import java.util.LinkedList;
 
 import org.bonitasoft.console.client.admin.bpm.cases.action.DeleteCaseAction;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;

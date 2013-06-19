@@ -25,7 +25,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnector;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessConnectorDatastore;

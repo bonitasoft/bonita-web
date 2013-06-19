@@ -19,8 +19,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseVariable;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseVariableAttributeChecker;

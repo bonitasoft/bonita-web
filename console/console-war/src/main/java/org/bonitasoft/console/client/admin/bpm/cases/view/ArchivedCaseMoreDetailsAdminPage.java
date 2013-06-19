@@ -26,9 +26,9 @@ import org.bonitasoft.console.client.admin.bpm.cases.section.ArchivedTasksSectio
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
-import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.ArchivedCaseItem;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;

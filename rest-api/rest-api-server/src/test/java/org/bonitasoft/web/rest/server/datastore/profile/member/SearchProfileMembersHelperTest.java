@@ -30,7 +30,7 @@ import java.util.List;
 import org.bonitasoft.engine.profile.ProfileMember;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.profile.member.MemberType;
 import org.bonitasoft.web.rest.server.datastore.profile.member.ProfileMemberItemConverter;

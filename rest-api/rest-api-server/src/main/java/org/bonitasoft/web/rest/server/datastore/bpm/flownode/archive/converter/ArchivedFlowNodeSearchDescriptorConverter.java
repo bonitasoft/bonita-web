@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceSearchDescriptor;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 

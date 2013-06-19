@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.organization;
 
 import org.bonitasoft.engine.identity.ContactData;
-import org.bonitasoft.web.rest.api.model.identity.AbstractContactDataItem;
+import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 
 /**

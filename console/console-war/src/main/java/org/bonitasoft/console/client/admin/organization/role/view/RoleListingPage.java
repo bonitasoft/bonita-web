@@ -22,8 +22,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.web.rest.api.model.identity.RoleDefinition;
-import org.bonitasoft.web.rest.api.model.identity.RoleItem;
+import org.bonitasoft.web.rest.model.identity.RoleDefinition;
+import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.ItemHasDualNameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;

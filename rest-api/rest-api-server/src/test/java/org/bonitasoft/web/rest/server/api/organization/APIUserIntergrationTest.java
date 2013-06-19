@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.organization.APIUser;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

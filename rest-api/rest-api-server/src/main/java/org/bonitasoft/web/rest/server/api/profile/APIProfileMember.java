@@ -18,8 +18,8 @@ package org.bonitasoft.web.rest.server.api.profile;
 
 import java.util.List;
 
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.datastore.ComposedDatastore;
 import org.bonitasoft.web.rest.server.datastore.profile.member.AddProfileMemberHelper;

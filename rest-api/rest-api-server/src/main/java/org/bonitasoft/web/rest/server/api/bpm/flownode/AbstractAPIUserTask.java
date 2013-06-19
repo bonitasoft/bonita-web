@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.IUserTaskItem;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.UserTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.IUserTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.UserTaskDefinition;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.UserTaskDatastore;
 import org.bonitasoft.web.toolkit.server.api.Datastore;
 

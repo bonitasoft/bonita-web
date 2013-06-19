@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 
 /**
  * @author Séverin Moussel

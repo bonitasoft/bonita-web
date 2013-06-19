@@ -1,8 +1,8 @@
 package org.bonitasoft.console.client.admin.bpm.cases.action;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.EditCaseVariablePopUp;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.ui.action.ItemAction;
 import org.bonitasoft.web.toolkit.client.ui.component.form.generatedForm.EditorFactory;

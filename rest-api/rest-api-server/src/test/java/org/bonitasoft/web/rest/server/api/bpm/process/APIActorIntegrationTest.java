@@ -17,12 +17,12 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static java.util.Arrays.asList;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.ATTRIBUTE_DESCRIPTION;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.ATTRIBUTE_PROCESS_ID;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.COUNTER_GROUPS;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.COUNTER_MEMBERSHIPS;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.COUNTER_ROLES;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.COUNTER_USERS;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.ATTRIBUTE_DESCRIPTION;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_GROUPS;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_MEMBERSHIPS;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_ROLES;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_USERS;
 import static org.bonitasoft.web.rest.server.model.builder.bpm.process.ActorItemBuilder.anActorItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName.ATTRIBUTE_DISPLAY_NAME;
@@ -45,7 +45,7 @@ import org.bonitasoft.test.toolkit.organization.TestGroupFactory;
 import org.bonitasoft.test.toolkit.organization.TestRoleFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIActor;
 import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;

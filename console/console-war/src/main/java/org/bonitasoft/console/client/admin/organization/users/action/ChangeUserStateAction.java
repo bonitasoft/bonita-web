@@ -19,8 +19,8 @@ package org.bonitasoft.console.client.admin.organization.users.action;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;

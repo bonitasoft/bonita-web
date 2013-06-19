@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_NAME;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_PROCESS_ID;
-import static org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_VERSION;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_NAME;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_VERSION;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.connector.ConnectorCriterion;
 import org.bonitasoft.engine.bpm.connector.ConnectorImplementationDescriptor;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.bpm.process.ProcessConnectorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.bonitasoft.console.client.menu.action.ChangeProfileAction;
 import org.bonitasoft.console.client.menu.view.navigation.MenuListCreator;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;

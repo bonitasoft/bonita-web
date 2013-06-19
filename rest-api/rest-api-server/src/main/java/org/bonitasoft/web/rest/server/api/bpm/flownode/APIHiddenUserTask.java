@@ -18,8 +18,8 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import java.util.List;
 
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HiddenUserTaskDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HiddenUserTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HiddenUserTaskDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

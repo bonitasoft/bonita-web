@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.profile.member;
 
 import org.bonitasoft.engine.profile.ProfileMember;
-import org.bonitasoft.web.rest.api.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 
 /**

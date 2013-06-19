@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static org.bonitasoft.web.rest.api.model.bpm.process.ActorItem.ATTRIBUTE_PROCESS_ID;
+import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.ATTRIBUTE_PROCESS_ID;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName.ATTRIBUTE_NAME;
 
 import java.util.Arrays;
@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorDefinition;
-import org.bonitasoft.web.rest.api.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;

@@ -16,8 +16,8 @@ package org.bonitasoft.console.client.admin.organization.users.action;
 
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.identity.MembershipDefinition;
-import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
+import org.bonitasoft.web.rest.model.identity.MembershipDefinition;
+import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;

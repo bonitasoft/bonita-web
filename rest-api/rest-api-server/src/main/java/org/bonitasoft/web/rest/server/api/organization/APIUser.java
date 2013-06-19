@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.web.rest.api.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.api.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.PersonalContactDataDatastore;

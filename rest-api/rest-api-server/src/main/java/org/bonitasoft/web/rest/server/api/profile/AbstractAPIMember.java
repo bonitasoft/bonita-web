@@ -16,15 +16,15 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
-import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;
-import static org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem.ATTRIBUTE_USER_ID;
+import static org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem.ATTRIBUTE_GROUP_ID;
+import static org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem.ATTRIBUTE_ROLE_ID;
+import static org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem.ATTRIBUTE_USER_ID;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.api.model.portal.profile.AbstractMemberItem;
+import org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.organization.GroupDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.RoleDatastore;

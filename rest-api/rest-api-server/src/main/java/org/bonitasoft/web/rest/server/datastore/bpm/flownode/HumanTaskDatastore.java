@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.api.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 
 /**
  * @author Séverin Moussel

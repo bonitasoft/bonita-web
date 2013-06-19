@@ -30,7 +30,7 @@ import org.bonitasoft.engine.identity.UserMembership;
 import org.bonitasoft.engine.identity.UserMembershipCriterion;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.web.rest.api.model.identity.MembershipItem;
+import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
