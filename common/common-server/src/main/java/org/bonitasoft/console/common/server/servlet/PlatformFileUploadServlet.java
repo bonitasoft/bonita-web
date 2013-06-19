@@ -17,7 +17,6 @@ package org.bonitasoft.console.common.server.servlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.web.toolkit.server.servlet.FileUploadServlet;
 
 /**
  * Servlet allowing to upload a file in the platform common temp folder

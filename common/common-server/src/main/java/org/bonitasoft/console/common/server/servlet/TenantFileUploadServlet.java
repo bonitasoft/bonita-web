@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.server.servlet.FileUploadServlet;
 
 /**
  * Servlet allowing to upload a file in the tenant common temp folder
