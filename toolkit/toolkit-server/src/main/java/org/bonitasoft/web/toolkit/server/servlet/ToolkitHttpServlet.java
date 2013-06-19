@@ -51,7 +51,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
     /**
      * Console logger
      */
-    protected static final Logger LOGGER = Logger.getLogger(APIServlet.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(ToolkitHttpServlet.class.getName());
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CATCH ALL EXCEPTIONS

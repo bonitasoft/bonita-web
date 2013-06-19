@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2012 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,18 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.platform.server.listener;
+package org.bonitasoft.web.toolkit.server.api;
 
-import org.bonitasoft.web.toolkit.server.listener.ApplicationContextListener;
+import java.util.List;
+
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
- * @author Haojie Yuan
+ * @author Séverin Moussel
  * 
  */
-public class PlatformContextListener extends ApplicationContextListener {
+public interface DatastoreHasDelete {
 
-    @Override
-    public void init() {
-    }
-
+    public abstract void delete(final List<APIID> ids);
 }
