@@ -19,12 +19,13 @@ package org.bonitasoft.platform.server.servlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.servlet.AttachmentImageServlet;
 
 /**
  * @author Anthony Birembaut
  * 
  */
-public class TenantIconServlet extends org.bonitasoft.web.toolkit.server.servlet.AttachmentImageServlet {
+public class TenantIconServlet extends AttachmentImageServlet {
 
     /**
      * UID
