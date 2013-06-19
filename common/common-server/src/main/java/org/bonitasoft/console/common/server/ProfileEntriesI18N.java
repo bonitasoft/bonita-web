@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General protected License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.datastore.profile.entry;
+package org.bonitasoft.console.common.server;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
