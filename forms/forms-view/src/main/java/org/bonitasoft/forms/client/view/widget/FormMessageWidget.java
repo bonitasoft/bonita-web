@@ -18,6 +18,8 @@ package org.bonitasoft.forms.client.view.widget;
 
 import java.util.Date;
 
+import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.ReducedFormWidget;
 import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 
