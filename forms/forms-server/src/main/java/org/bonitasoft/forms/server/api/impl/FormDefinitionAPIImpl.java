@@ -43,20 +43,6 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
 
-import org.bonitasoft.forms.client.model.ActivityAttribute;
-import org.bonitasoft.forms.client.model.ApplicationConfig;
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormPage;
-import org.bonitasoft.forms.client.model.FormType;
-import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.client.model.FormWidget;
-import org.bonitasoft.forms.client.model.HeadNode;
-import org.bonitasoft.forms.client.model.HtmlTemplate;
-import org.bonitasoft.forms.client.model.ReducedFormValidator.ValidatorPosition;
-import org.bonitasoft.forms.client.model.TransientData;
-import org.bonitasoft.forms.client.model.WidgetType;
-import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
@@ -80,6 +66,16 @@ import org.w3c.dom.Document;
  * @author Anthony Birembaut, Haojie Yuan
  */
 public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
+
+    /**
+     * onload attribute to evaluate only with ie7 and ie8
+     */
+    private static final String IE_ONLOAD = "ieonload";
+
+    /**
+     * HTML script element name
+     */
+    private static final String SCRIPT_ELEMENT_NAME = "script";
 
     /**
      * Logger
@@ -683,6 +679,9 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             }
 
             final Source source = new Source(htmlFileStream);
+
+            final Map<String, String> bodyAttributes = new HashMap<String, String>();
+
             final Element headElement = source.getFirstElement("head");
             final List<HeadNode> headNodes = new ArrayList<HeadNode>();
             if (headElement != null) {
@@ -694,12 +693,15 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                             nodeAttributes.put(attribute.getKey().toLowerCase(), attribute.getValue());
                         }
                     }
+                    // fix for IE7 and IE8 failing to evaluate scripts in inserted HTML pages headers
+                    if (SCRIPT_ELEMENT_NAME.equalsIgnoreCase(headChildElement.getName())) {
+                        bodyAttributes.put(IE_ONLOAD, headChildElement.getContent().toString());
+                    }
                     headNodes.add(new HeadNode(headChildElement.getName(), nodeAttributes, headChildElement.getContent().toString()));
                 }
             }
 
             String body = null;
-            final Map<String, String> bodyAttributes = new HashMap<String, String>();
             final Element bodyElement = source.getFirstElement("body");
             if (bodyElement != null) {
                 final Attributes attributes = bodyElement.getAttributes();
@@ -774,6 +776,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
             final Source source = new Source(htmlFileStream);
 
+            final Map<String, String> bodyAttributes = new HashMap<String, String>();
+
             final List<HeadNode> headNodes = new ArrayList<HeadNode>();
             final Element headElement = source.getFirstElement("head");
             if (headElement != null) {
@@ -784,6 +788,10 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                         for (final Attribute attribute : attributes) {
                             nodeAttributes.put(attribute.getKey(), attribute.getValue());
                         }
+                    }
+                    // fix for IE7 and IE8 failing to evaluate scripts in inserted HTML pages headers
+                    if (SCRIPT_ELEMENT_NAME.equalsIgnoreCase(headChildElement.getName())) {
+                        bodyAttributes.put(IE_ONLOAD, headChildElement.getContent().toString());
                     }
                     headNodes.add(new HeadNode(headChildElement.getName(), nodeAttributes, headChildElement.getContent().toString()));
                 }
@@ -796,7 +804,6 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             }
 
             String body = null;
-            final Map<String, String> bodyAttributes = new HashMap<String, String>();
             final Element bodyElement = source.getFirstElement("body");
             if (bodyElement != null) {
                 final Attributes attributes = bodyElement.getAttributes();
