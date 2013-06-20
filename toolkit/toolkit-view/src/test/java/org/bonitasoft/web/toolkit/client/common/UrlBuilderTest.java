@@ -17,7 +17,7 @@
 package org.bonitasoft.web.toolkit.client.common;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.either;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
@@ -35,8 +35,8 @@ public class UrlBuilderTest {
         builder.addParameter("anotherParameter", "itsOwnValue");
 
         assertThat(builder.toString(),
-                either(equalTo("rootUrl?aParameter=itsValue&anotherParameter=itsOwnValue"))
-                        .or(equalTo("rootUrl?anotherParameter=itsOwnValue&aParameter=itsValue")));
+                anyOf(equalTo("rootUrl?aParameter=itsValue&anotherParameter=itsOwnValue"),
+                        equalTo("rootUrl?anotherParameter=itsOwnValue&aParameter=itsValue")));
     }
 
     private UrlBuilder createHackedUrlBuilder(String rootUrl) {
