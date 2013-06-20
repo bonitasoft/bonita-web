@@ -31,8 +31,8 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseVariable;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Ignore;
 import org.junit.Test;
 

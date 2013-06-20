@@ -32,11 +32,11 @@ import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.A
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Séverin Moussel

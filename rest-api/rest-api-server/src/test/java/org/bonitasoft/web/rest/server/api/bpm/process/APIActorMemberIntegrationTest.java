@@ -19,9 +19,9 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem.ATTRIBUTE_ACTOR_ID;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.ActorMemberItemBuilder.anActorMemberItem;
 import static org.bonitasoft.web.rest.model.identity.MemberType.GROUP;
 import static org.bonitasoft.web.rest.model.portal.profile.AbstractMemberItem.FILTER_MEMBER_TYPE;
-import static org.bonitasoft.web.rest.server.model.builder.bpm.process.ActorMemberItemBuilder.anActorMemberItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -46,7 +46,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.web.rest.model.identity.MemberType;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIActorMember;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Test;
 
 /**

@@ -16,17 +16,17 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
-import static org.bonitasoft.web.rest.server.model.builder.identity.ContactDataBuilder.aContactData;
+import static org.bonitasoft.web.rest.model.builder.identity.ContactDataBuilder.aContactData;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.bonitasoft.web.rest.model.builder.identity.ContactDataBuilder;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactData;
-import org.bonitasoft.web.rest.server.model.builder.identity.ContactDataBuilder;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 

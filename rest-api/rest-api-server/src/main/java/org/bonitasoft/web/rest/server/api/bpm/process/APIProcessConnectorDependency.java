@@ -29,10 +29,10 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessConnectorDependencyDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
-import org.bonitasoft.web.toolkit.server.api.APIHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Séverin Moussel

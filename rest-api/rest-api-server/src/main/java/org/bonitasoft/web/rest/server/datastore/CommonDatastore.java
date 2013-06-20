@@ -24,10 +24,10 @@ import java.util.Map;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.api.EnumConverter;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
-import org.bonitasoft.web.toolkit.server.api.EnumConverter;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Julien Mege

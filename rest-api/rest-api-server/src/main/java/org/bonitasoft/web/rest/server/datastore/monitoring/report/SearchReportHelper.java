@@ -19,8 +19,8 @@ package org.bonitasoft.web.rest.server.datastore.monitoring.report;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 
 /**
  * @author Vincent Elcrin

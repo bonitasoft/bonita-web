@@ -19,8 +19,8 @@ package org.bonitasoft.web.rest.server.datastore.converter;
 import java.io.Serializable;
 
 import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Vincent Elcrin

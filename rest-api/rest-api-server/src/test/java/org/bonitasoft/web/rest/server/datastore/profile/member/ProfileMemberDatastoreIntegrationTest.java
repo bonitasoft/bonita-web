@@ -15,8 +15,8 @@ import org.bonitasoft.test.toolkit.organization.profiles.TestProfileMember;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Ignore;
 import org.junit.Test;
 

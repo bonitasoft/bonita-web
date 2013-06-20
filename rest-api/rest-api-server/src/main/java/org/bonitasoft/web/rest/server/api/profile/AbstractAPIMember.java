@@ -29,12 +29,12 @@ import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.organization.GroupDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.RoleDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributesException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
-import org.bonitasoft.web.toolkit.server.api.APIHasDelete;
-import org.bonitasoft.web.toolkit.server.api.APIHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Séverin Moussel

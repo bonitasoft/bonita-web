@@ -30,12 +30,12 @@ import org.bonitasoft.web.rest.model.document.ArchivedDocumentItem;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.api.CommonAPI;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
-import org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Julien Mege

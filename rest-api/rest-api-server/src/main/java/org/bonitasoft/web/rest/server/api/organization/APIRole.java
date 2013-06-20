@@ -11,15 +11,15 @@ import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.organization.RoleDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.APIHasFiles;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
-import org.bonitasoft.web.toolkit.server.api.APIHasDelete;
-import org.bonitasoft.web.toolkit.server.api.APIHasFiles;
-import org.bonitasoft.web.toolkit.server.api.APIHasGet;
-import org.bonitasoft.web.toolkit.server.api.APIHasSearch;
-import org.bonitasoft.web.toolkit.server.api.APIHasUpdate;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 public class APIRole extends ConsoleAPI<RoleItem> implements
         APIHasGet<RoleItem>,

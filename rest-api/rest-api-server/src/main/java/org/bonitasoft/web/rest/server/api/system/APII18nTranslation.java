@@ -18,13 +18,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.server.framework.API;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nTranslationDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nTranslationItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.API;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.server.utils.I18n;
 
 /**

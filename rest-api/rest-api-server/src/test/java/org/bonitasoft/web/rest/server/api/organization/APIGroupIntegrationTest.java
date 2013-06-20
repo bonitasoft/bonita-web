@@ -1,6 +1,6 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
-import static org.bonitasoft.web.rest.server.model.builder.organisation.GroupItemBuilder.aGroup;
+import static org.bonitasoft.web.rest.model.builder.organisation.GroupItemBuilder.aGroup;
 
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;

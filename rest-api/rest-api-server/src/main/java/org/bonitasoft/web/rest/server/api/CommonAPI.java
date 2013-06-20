@@ -20,9 +20,9 @@ import java.util.Map;
 
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil;
+import org.bonitasoft.web.rest.server.framework.API;
+import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.API;
 
 /**
  * @author Séverin Moussel

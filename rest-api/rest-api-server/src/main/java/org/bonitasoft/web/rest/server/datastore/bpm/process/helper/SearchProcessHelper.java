@@ -27,9 +27,9 @@ import org.bonitasoft.web.rest.server.datastore.Sorts;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Vincent Elcrin

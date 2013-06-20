@@ -20,10 +20,10 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessCategoryDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
-import org.bonitasoft.web.toolkit.server.api.APIHasDelete;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**
  * @author Séverin Moussel

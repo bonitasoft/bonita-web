@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
 import static java.util.Arrays.asList;
-import static org.bonitasoft.web.rest.server.model.builder.bpm.process.ProcessCategoryItemBuilder.aProcessCategory;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.ProcessCategoryItemBuilder.aProcessCategory;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;

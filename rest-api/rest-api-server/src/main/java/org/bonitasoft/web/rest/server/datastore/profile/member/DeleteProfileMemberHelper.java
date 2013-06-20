@@ -19,8 +19,8 @@ package org.bonitasoft.web.rest.server.datastore.profile.member;
 import java.util.List;
 
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasDelete;
 
 /**
  * @author Vincent Elcrin

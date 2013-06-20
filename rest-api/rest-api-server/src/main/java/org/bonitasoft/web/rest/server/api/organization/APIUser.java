@@ -29,13 +29,13 @@ import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.PersonalContactDataDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.ProfessionalContactDataDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationError;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationException;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Séverin Moussel

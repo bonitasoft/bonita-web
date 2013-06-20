@@ -23,10 +23,10 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**
  * @author Séverin Moussel

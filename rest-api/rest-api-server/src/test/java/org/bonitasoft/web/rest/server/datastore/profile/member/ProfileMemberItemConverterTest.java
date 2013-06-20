@@ -17,8 +17,8 @@
 package org.bonitasoft.web.rest.server.datastore.profile.member;
 
 import static junit.framework.Assert.assertTrue;
-import static org.bonitasoft.web.rest.server.model.builder.profile.member.EngineProfileMemberBuilder.anEngineProfileMember;
-import static org.bonitasoft.web.rest.server.model.builder.profile.member.ProfileMemberItemBuilder.aProfileMemberItem;
+import static org.bonitasoft.web.rest.model.builder.profile.member.EngineProfileMemberBuilder.anEngineProfileMember;
+import static org.bonitasoft.web.rest.model.builder.profile.member.ProfileMemberItemBuilder.aProfileMemberItem;
 
 import org.bonitasoft.engine.profile.ProfileMember;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;

@@ -32,13 +32,13 @@ import org.bonitasoft.web.rest.server.datastore.bpm.flownode.TaskDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.APIHasGet;
-import org.bonitasoft.web.toolkit.server.api.APIHasSearch;
-import org.bonitasoft.web.toolkit.server.api.APIHasUpdate;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * Contains all the implementation for a APIFlowNode and inherited APIs

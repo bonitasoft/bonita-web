@@ -19,16 +19,16 @@ package org.bonitasoft.web.rest.server.datastore;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasAdd;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasDelete;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasUpdate;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Vincent Elcrin

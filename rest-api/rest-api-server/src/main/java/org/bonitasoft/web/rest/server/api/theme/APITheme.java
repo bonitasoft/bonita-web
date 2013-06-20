@@ -33,11 +33,11 @@ import org.bonitasoft.theme.model.ThemeDescriptor;
 import org.bonitasoft.web.rest.model.portal.theme.ThemeDefinition;
 import org.bonitasoft.web.rest.model.portal.theme.ThemeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Nicolas Tith

@@ -20,12 +20,12 @@ import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.organization.ProfessionalContactDataDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
-import org.bonitasoft.web.toolkit.server.api.APIHasGet;
-import org.bonitasoft.web.toolkit.server.api.APIHasUpdate;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**
  * @author Paul AMAR

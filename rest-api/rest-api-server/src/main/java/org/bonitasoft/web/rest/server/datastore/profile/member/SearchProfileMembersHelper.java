@@ -28,8 +28,8 @@ import org.bonitasoft.web.rest.server.datastore.filter.FilterAccessor;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 
 /**
  * @author Vincent Elcrin

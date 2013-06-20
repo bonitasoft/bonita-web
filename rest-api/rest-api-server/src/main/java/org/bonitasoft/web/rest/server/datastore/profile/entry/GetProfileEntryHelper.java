@@ -19,8 +19,8 @@ package org.bonitasoft.web.rest.server.datastore.profile.entry;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
 
 /**
  * @author Vincent Elcrin

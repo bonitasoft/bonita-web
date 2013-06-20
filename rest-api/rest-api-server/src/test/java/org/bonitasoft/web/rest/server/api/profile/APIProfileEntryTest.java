@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
+import static org.bonitasoft.web.rest.model.builder.profile.entry.ProfileEntryItemBuilder.aProfileEntryItem;
 import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME;
 import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_NAME;
 import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_PAGE;
 import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_TYPE;
-import static org.bonitasoft.web.rest.server.model.builder.profile.entry.ProfileEntryItemBuilder.aProfileEntryItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;

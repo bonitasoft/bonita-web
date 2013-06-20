@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static org.bonitasoft.web.rest.server.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;

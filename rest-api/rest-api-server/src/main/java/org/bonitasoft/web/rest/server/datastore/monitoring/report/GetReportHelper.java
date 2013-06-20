@@ -20,8 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
 
 /**
  * @author Vincent Elcrin

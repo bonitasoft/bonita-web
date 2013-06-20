@@ -23,7 +23,7 @@ import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_GROUPS
 import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_MEMBERSHIPS;
 import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_ROLES;
 import static org.bonitasoft.web.rest.model.bpm.process.ActorItem.COUNTER_USERS;
-import static org.bonitasoft.web.rest.server.model.builder.bpm.process.ActorItemBuilder.anActorItem;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.ActorItemBuilder.anActorItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName.ATTRIBUTE_DISPLAY_NAME;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName.ATTRIBUTE_NAME;
@@ -48,7 +48,7 @@ import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIActor;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Assert;
 import org.junit.Test;
 

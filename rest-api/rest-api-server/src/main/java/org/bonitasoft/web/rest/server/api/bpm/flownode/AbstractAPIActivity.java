@@ -23,7 +23,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.ActivityDatastore;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 
 /**
  * @author Séverin Moussel

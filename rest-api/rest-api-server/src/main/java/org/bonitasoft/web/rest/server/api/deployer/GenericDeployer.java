@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.api.deployer;
 
+import org.bonitasoft.web.rest.server.framework.Deployer;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.Deployer;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
 
 /**
  * @author Vincent Elcrin

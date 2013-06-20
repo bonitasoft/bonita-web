@@ -22,13 +22,13 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HiddenUserTaskDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
-import org.bonitasoft.web.toolkit.server.api.APIHasDelete;
-import org.bonitasoft.web.toolkit.server.api.APIHasGet;
 
 /**
  * @author Julien Mege, Vincent Elcrin

@@ -59,10 +59,10 @@ import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
 import org.bonitasoft.web.rest.server.api.system.APII18nTranslation;
 import org.bonitasoft.web.rest.server.api.system.APISession;
 import org.bonitasoft.web.rest.server.api.theme.APITheme;
+import org.bonitasoft.web.rest.server.framework.API;
+import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.server.API;
-import org.bonitasoft.web.toolkit.server.RestAPIFactory;
 
 /**
  * @author Séverin Moussel

@@ -29,9 +29,9 @@ import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConver
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 public class SearchProfilesHelper implements DatastoreHasSearch<ProfileItem> {
 

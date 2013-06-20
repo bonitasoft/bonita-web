@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.profile.member;
 
 import static junit.framework.Assert.assertTrue;
-import static org.bonitasoft.web.rest.server.model.builder.profile.member.EngineProfileMemberBuilder.anEngineProfileMember;
+import static org.bonitasoft.web.rest.model.builder.profile.member.EngineProfileMemberBuilder.anEngineProfileMember;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
@@ -37,8 +37,8 @@ import org.bonitasoft.web.rest.server.datastore.profile.member.ProfileMemberItem
 import org.bonitasoft.web.rest.server.datastore.profile.member.SearchProfileMembersHelper;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchUtils;
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

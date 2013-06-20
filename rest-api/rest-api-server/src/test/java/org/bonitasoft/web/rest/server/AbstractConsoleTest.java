@@ -26,8 +26,8 @@ import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
 import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
+import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.APIServletCall;
 /**
  * @author Vincent Elcrin
  * 

@@ -12,7 +12,7 @@ import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CommentDatastore;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Test;
 
 public class CommentDatastoreIntegrationTest extends AbstractConsoleTest {

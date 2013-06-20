@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
 import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
-import org.bonitasoft.web.toolkit.server.api.EnumConverter;
+import org.bonitasoft.web.rest.server.framework.api.EnumConverter;
 
 /**
  * @author Vincent Elcrin

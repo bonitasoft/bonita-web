@@ -28,8 +28,8 @@ import org.bonitasoft.web.rest.server.datastore.profile.member.SearchProfileMemb
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**
  * @author Nicolas Tith

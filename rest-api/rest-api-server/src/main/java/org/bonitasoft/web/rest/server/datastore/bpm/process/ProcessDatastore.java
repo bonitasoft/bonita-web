@@ -34,14 +34,14 @@ import org.bonitasoft.web.rest.server.datastore.bpm.process.helper.SearchProcess
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasAdd;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasDelete;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasGet;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasUpdate;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 
 /**

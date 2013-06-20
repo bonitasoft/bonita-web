@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore;
 
-import static org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil.computeIndex;
+import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
 
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;

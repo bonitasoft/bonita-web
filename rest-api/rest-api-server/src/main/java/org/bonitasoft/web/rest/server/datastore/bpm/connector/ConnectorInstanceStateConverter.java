@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.connector;
 
 import org.bonitasoft.engine.bpm.connector.ConnectorState;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
-import org.bonitasoft.web.toolkit.server.api.EnumConverter;
+import org.bonitasoft.web.rest.server.framework.api.EnumConverter;
 
 /**
  * Convenient object to convert ATTRIBUTE_VALUE from {@link ConnectorInstanceItem} into {@link ConnectorState}

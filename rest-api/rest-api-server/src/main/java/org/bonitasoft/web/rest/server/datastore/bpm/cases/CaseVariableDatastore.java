@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import static org.bonitasoft.web.rest.server.utils.SearchOptionsBuilderUtil.computeIndex;
+import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
-import org.bonitasoft.web.rest.server.utils.converter.TypeConverter;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.utils.converter.TypeConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasSearch;
-import org.bonitasoft.web.toolkit.server.api.DatastoreHasUpdate;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Colin PUY

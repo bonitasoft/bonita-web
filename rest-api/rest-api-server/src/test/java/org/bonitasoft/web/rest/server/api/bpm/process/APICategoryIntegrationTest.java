@@ -1,7 +1,7 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static junit.framework.Assert.assertNull;
-import static org.bonitasoft.web.rest.server.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 
 import java.util.ArrayList;

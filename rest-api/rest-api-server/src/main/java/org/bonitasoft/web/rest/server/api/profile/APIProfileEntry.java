@@ -35,15 +35,15 @@ import org.bonitasoft.web.rest.server.datastore.profile.entry.SearchProfileEntri
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributeMissingException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.server.api.APIHasAdd;
-import org.bonitasoft.web.toolkit.server.api.APIHasDelete;
-import org.bonitasoft.web.toolkit.server.api.APIHasGet;
-import org.bonitasoft.web.toolkit.server.api.APIHasSearch;
-import org.bonitasoft.web.toolkit.server.api.APIHasUpdate;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**
  * @author Nicolas Tith

@@ -21,11 +21,11 @@ import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceDefinition;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.APIHasSearch;
-import org.bonitasoft.web.toolkit.server.api.APIHasUpdate;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
 
 /**
  * @author Vincent Elcrin

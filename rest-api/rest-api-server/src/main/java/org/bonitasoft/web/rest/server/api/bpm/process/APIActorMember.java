@@ -27,12 +27,12 @@ import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
 import org.bonitasoft.web.rest.server.api.profile.AbstractAPIMember;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorMemberDatastore;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterEmptyException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.server.api.Datastore;
-import org.bonitasoft.web.toolkit.server.search.ItemSearchResult;
 
 /**
  * @author Julien Mege

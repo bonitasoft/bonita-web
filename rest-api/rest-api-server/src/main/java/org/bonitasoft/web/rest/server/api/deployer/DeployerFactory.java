@@ -26,7 +26,7 @@ import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
-import org.bonitasoft.web.toolkit.server.Deployer;
+import org.bonitasoft.web.rest.server.framework.Deployer;
 
 /**
  * @author Vincent Elcrin
