@@ -1,11 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.console</groupId>
 	<artifactId>bonita-console</artifactId>
 	<name>bonita console</name>
 	<packaging>pom</packaging>
-	<version>6.1.0-SNAPSHOT</version>
+	<version>6.1.0-rc-01</version>
 
 	<modules>
 		<module>toolkit</module>
@@ -18,8 +17,8 @@
 	</modules>
 
 	<scm>
-		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk</developerConnection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk</url>
+		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-01</developerConnection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-01</url>
 	</scm>
 
 	<properties>
