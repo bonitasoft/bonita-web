@@ -67,18 +67,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-reporting</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>jdtcore</artifactId>
-					<groupId>eclipse</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-server</artifactId>
 			<version>${project.version}</version>
