@@ -16,13 +16,20 @@
  */
 package org.bonitasoft.forms.client.view.widget;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -32,7 +39,7 @@ import com.google.gwt.user.client.ui.Image;
  * 
  * @author Anthony Birembaut
  */
-public class ImageWidget extends Composite {
+public class ImageWidget extends Composite implements HasClickHandlers, ClickHandler {
 
     /**
      * The formID retrieved from the request as a String
@@ -58,6 +65,11 @@ public class ImageWidget extends Composite {
      * archived : indicates if the required document is archived
      */
     protected boolean isArchived;
+
+    /**
+     * Click handlers registered for the widget
+     */
+    protected List<ClickHandler> clickHandlers;
 
     /**
      * Constructor
@@ -94,6 +106,7 @@ public class ImageWidget extends Composite {
         if (imageStyle != null && imageStyle.length() > 0) {
             image.addStyleName(imageStyle);
         }
+        image.addClickHandler(this);
 
         flowPanel.add(image);
         initWidget(flowPanel);
@@ -129,4 +142,44 @@ public class ImageWidget extends Composite {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onClick(final ClickEvent clickEvent) {
+        if (clickHandlers != null) {
+            for (final ClickHandler clickHandler : clickHandlers) {
+                clickHandler.onClick(clickEvent);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public HandlerRegistration addClickHandler(final ClickHandler clickHandler) {
+        if (clickHandlers == null) {
+            clickHandlers = new ArrayList<ClickHandler>();
+        }
+        clickHandlers.add(clickHandler);
+        return new EventHandlerRegistration(clickHandler);
+    }
+
+    /**
+     * Custom Handler registration
+     */
+    protected class EventHandlerRegistration implements HandlerRegistration {
+
+        protected EventHandler eventHandler;
+
+        public EventHandlerRegistration(final EventHandler eventHandler) {
+            this.eventHandler = eventHandler;
+        }
+
+        @Override
+        public void removeHandler() {
+            clickHandlers.remove(eventHandler);
+        }
+    }
 }
