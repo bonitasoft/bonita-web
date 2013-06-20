@@ -12,7 +12,6 @@
 
 	<modules>
 		<module>console-config</module>
- 		<module>console-reporting</module>
 		<module>console-server-impl</module>
 	</modules>
 
