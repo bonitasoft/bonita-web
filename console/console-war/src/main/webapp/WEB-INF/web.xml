@@ -140,12 +140,6 @@
 	</filter-mapping>
 	<!-- Cache Filter Mapping End -->
 
-	<listener>
-		<listener-class>
-			org.bonitasoft.console.server.listener.ConsoleContextListener
-		</listener-class>
-	</listener>
-	
 	<!-- Platform and tenant context listener -->
 	<listener>
 		<listener-class>
