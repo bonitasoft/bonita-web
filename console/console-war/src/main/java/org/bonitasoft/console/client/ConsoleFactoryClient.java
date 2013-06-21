@@ -242,6 +242,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // Report
         } else if (ReportQuickDetailsAdminPage.TOKEN.equals(token)) {
             return new ReportQuickDetailsAdminPage();
+        } else if (ReportListingAdminPage.TOKEN.equals(token)) {
+            return new ReportListingAdminPage();
         } else if (ReportMoreDetailsAdminPage.TOKEN.equals(token)) {
             return new ReportMoreDetailsAdminPage();
 

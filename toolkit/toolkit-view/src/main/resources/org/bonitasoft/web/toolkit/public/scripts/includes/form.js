@@ -16,9 +16,9 @@
 
 $(function() {
 
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	/// Add some forms cross platform compatibility
-	////////////////////////////////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////////////////////////////
+	// / Add some forms cross platform compatibility
+	// //////////////////////////////////////////////////////////////////////////////////////////////
 	
 	$.fn.formManager = function() {
 		var forms = this;
@@ -53,7 +53,7 @@ $(function() {
 			}
 		});
 		
-		//set autocomplete width to field width
+		// set autocomplete width to field width
 		$('.dropdown.autocomplete', forms).each(function(){
 			var dropdown = $(this);
 			var field = dropdown.siblings('.delegateinput.autocomplete:first');
@@ -76,7 +76,9 @@ $(function() {
 					;
 				}
 			});
+			
 		});
+		
 		
 		
 		return this;
@@ -212,5 +214,6 @@ $(function() {
 			$('form :input:first', context).focus();
 		}
 	});
+
 
 });

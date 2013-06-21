@@ -19,7 +19,8 @@ package org.bonitasoft.web.rest.model.monitoring.report;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileIsImageValidator;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Vincent Elcrin
@@ -47,11 +48,15 @@ public class ReportDefinition extends ItemDefinition<ReportItem> {
 
     @Override
     protected void defineAttributes() {
-        createAttribute(ReportItem.ATTRIBUTE_ID, TYPE.ITEM_ID);
-        createAttribute(ReportItem.ATTRIBUTE_NAME, TYPE.STRING);
-        createAttribute(ReportItem.ATTRIBUTE_DESCRIPTION, TYPE.TEXT);
-        createAttribute(ReportItem.ATTRIBUTE_INSTALLED_ON, TYPE.DATE);
-        createAttribute(ReportItem.ATTRIBUTE_INSTALLED_BY, TYPE.ITEM_ID);
+        createAttribute(ReportItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(ReportItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING)
+                .isMandatory();
+        createAttribute(ReportItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
+        createAttribute(ReportItem.ATTRIBUTE_INSTALLED_ON, ItemAttribute.TYPE.DATE);
+        createAttribute(ReportItem.ATTRIBUTE_INSTALLED_BY, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(ReportItem.ATTRIBUTE_IS_PROVIDED, ItemAttribute.TYPE.BOOLEAN);
+        createAttribute(ReportItem.ATTRIBUTE_ICON, ItemAttribute.TYPE.IMAGE).addValidator(new FileIsImageValidator());
+        createAttribute(ReportItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
     }
 
     @Override

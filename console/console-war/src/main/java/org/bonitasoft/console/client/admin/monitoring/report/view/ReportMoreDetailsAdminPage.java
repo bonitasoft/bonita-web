@@ -34,6 +34,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -120,10 +121,14 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
                         container.empty();
                         container.append(new Html(response));
                         removeReportStyle();
+                        try {
                         String localeDateFormat = _("mm/dd/yy");
                         reportDateRangePicker(localeDateFormat, "p_date_");
                         hookReportFormSubmition(localeDateFormat, "p_date_");
                         retrieveFieldsValues(getParams(url), localeDateFormat);
+                        } catch(JavaScriptException e) {
+                            
+                        }
                         addToolbarLink(newBackButton());
                     } else {
                         // html.setHtml("Failed<BR/>");

@@ -16,9 +16,11 @@
  */
 package org.bonitasoft.console.client.admin.monitoring.report.view;
 
+import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
@@ -70,6 +72,10 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ReportItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
+        if(!item.isProvided()) {
+            metadatas.add(installOn(item));
+            metadatas.add(installBy(item));
+        }
         return metadatas;
     }
 
@@ -82,7 +88,7 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
 
     private ItemDetailsMetadata installBy(final ReportItem item) {
         return new ItemDetailsMetadata(new DeployedUserReader(
-                item.getAttributeValue(ReportItem.ATTRIBUTE_INSTALLED_BY)),
+                ReportItem.ATTRIBUTE_INSTALLED_BY),
                 _("Installed by"),
                 _("Name of the user who install this report"));
     }
@@ -90,6 +96,11 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
     @Override
     public String defineToken() {
         return TOKEN;
+    }
+    
+    @Override
+    protected List<String> defineDeploys() {
+        return asList(ReportItem.ATTRIBUTE_INSTALLED_BY);
     }
 
     @Override
@@ -102,7 +113,7 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
      * @return
      */
     private AbstractComponent getReportScreenshot(ReportItem report) {
-        Image screenshot = new Image(new Url("/console/ReportScreenshotServlet?reportName=" + report.getId()), 0, 0, _("Report's screenshot"));
+        Image screenshot = new Image(new Url("/console/ReportScreenshotServlet?reportName=" + report.getName()), 0, 0, _("Report's screenshot"));
         Link link = new Link(
                 new JsId("screenshotReportLink"),
                 _("Go to more details report view"),

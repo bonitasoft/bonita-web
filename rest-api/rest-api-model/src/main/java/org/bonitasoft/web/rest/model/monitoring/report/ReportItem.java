@@ -23,13 +23,15 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasIcon;
+import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
  * @author Vincent Elcrin
  * 
  */
-public class ReportItem extends Item implements ItemHasUniqueId {
+public class ReportItem extends Item implements ItemHasUniqueId, ItemHasIcon, ItemHasLastUpdateDate {
 
     public static final String ATTRIBUTE_NAME = "name";
 
@@ -38,11 +40,9 @@ public class ReportItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_INSTALLED_ON = "installedOn";
 
     public static final String ATTRIBUTE_INSTALLED_BY = "installedBy";
-
-    @Override
-    public ItemDefinition getItemDefinition() {
-        return Definitions.get(ReportDefinition.TOKEN);
-    }
+    
+    public static final String ATTRIBUTE_IS_PROVIDED = "isProvided";
+    
 
     @Override
     public void setId(final String id) {
@@ -69,6 +69,25 @@ public class ReportItem extends Item implements ItemHasUniqueId {
     public void setInstalledBy(final APIID userId) {
         setAttribute(ATTRIBUTE_INSTALLED_BY, userId);
     }
+    
+    public void setIsProvided(final boolean isProvided) {
+        setAttribute(ATTRIBUTE_IS_PROVIDED, isProvided);
+    }
+    
+    @Override
+    public void setIcon(String icon) {
+        setAttribute(ATTRIBUTE_ICON, icon);
+    }
+
+    @Override
+    public void setLastUpdateDate(final String date) {
+        setAttribute(ATTRIBUTE_LAST_UPDATE_DATE, date);
+    }
+
+    @Override
+    public void setLastUpdateDate(final Date date) {
+        setAttribute(ATTRIBUTE_LAST_UPDATE_DATE, date);
+    }
 
     public String getName() {
         return getAttributeValue(ATTRIBUTE_NAME);
@@ -88,5 +107,23 @@ public class ReportItem extends Item implements ItemHasUniqueId {
 
     public UserItem getInstalledBy() {
         return (UserItem) getDeploy(ATTRIBUTE_INSTALLED_BY);
+    }
+    
+    public boolean isProvided() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_PROVIDED));
+    }
+    
+    public String getIcon() {
+        return getAttributeValue(ATTRIBUTE_ICON);
+    }
+
+    @Override
+    public Date getLastUpdateDate() {
+        return getAttributeValueAsDate(ATTRIBUTE_LAST_UPDATE_DATE);
+    }
+    
+    @Override
+    public ItemDefinition getItemDefinition() {
+        return Definitions.get(ReportDefinition.TOKEN);
     }
 }

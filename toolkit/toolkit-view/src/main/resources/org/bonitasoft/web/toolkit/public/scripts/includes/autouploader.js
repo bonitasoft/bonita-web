@@ -75,13 +75,13 @@ $(function() {
 		
 		var input = fileInput
 		
-		var uploaderEl = $('<div id="uploader"><a id="filepicker"></a></div>')
+		var uploaderEl = $('<div id="uploader"><a id="' + input.attr("name") + '"></a></div>')
 		
 		var pluploader = new plupload.Uploader({
 			runtimes : 'gears,html5,flash,silverlight,browserplus',
 			multipart : true,
 			container : 'uploader',
-			browse_button : 'filepicker',
+			browse_button : input.attr("name"),
 			url : input.getOption('url'),
 			flash_swf_url : 'scripts/ext/plupload.flash.swf',
 			silverlight_xap_url : 'scripts/ext/plupload.silverlight.xap',
@@ -135,7 +135,7 @@ $(function() {
 		
 		var addError = function(message) {
 			$('div.alert_message.ERROR').remove();
-			$('#filepicker', uploaderEl).parent().after('<div class="alert_message ERROR">'+ message +'<\div>');
+			$('#filepicker', 'uploader').after('<div class="alert_message ERROR">'+ message +'<\div>');
 		}
 		
 		/**
@@ -161,7 +161,7 @@ $(function() {
 			uploaderEl.addClass(cssClass)
 			
 			if($.isDefined(message)) {
-				$('#filepicker', uploaderEl).text(message)				
+				$(uploaderEl.children()[0], uploaderEl).text(message)				
 			}
 			
 			input	.data(UPLOADING_STATUS, isUploading)
