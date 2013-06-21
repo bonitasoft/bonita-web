@@ -17,13 +17,6 @@
 			<artifactId>toolkit-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-config</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency> -->
 		<dependency>
 			<groupId>org.bonitasoft.web</groupId>
 			<artifactId>bonita-rest-model</artifactId>
