@@ -79,15 +79,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     private ItemListingFilter currentFilter = null;
 
-    /**
-     * The current sort order for tables.
-     */
-    private String currentSort = null;
-
-    /**
-     * The current sort direction for tables.
-     */
-    private boolean currentSortAscending = true;
 
     /**
      * The search bar.
@@ -512,18 +503,10 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
             @Override
             public void execute() {
                 // default
-                if (ItemListingPage.this.currentSort == null || !this.sort.getSortName().equals(ItemListingPage.this.currentSort)) {
-                    ItemListingPage.this.currentSort = this.sort.getSortName();
-                } else if (this.sort.getSortName().equals(ItemListingPage.this.currentSort)) {
-                    // ItemListingPage.this.currentSortAscending = !ItemListingPage.this.currentSortAscending;
-                    ItemListingPage.this.currentSort = this.sort.getSortName();
-                }
                 for (final String tableName : ChangeFilterAction.this.filter.getTablesToDisplay()) {
                     final ItemTable table = ItemListingPage.this.tables.get(tableName).getItemTable();
-                    table.setOrder(ItemListingPage.this.currentSort, this.desc);
-
+                    table.setOrder(sort.getSortName(), desc);
                 }
-
             }
         }
 
@@ -747,20 +730,11 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      * Initialize the table panel (middle panel).
      */
     private void initTablesPanel() {
+        sortMenu.addFolder(menuSorts);
+        menuSorts.addJsOption("selectMode", true).addJsOption("align", "right");
+        tablesPanel.addHeader(sortMenu);
 
-        final LinkedList<ItemListingTable> tables = defineTables();
-
-        this.currentSort = defineDefaultSort().getSortName();
-        this.currentSortAscending = defineDefaultSort().isSortAscending();
-
-        ItemListingPage.this.sortMenu.addFolder(ItemListingPage.this.menuSorts);
-        this.menuSorts
-                .addJsOption("selectMode", true)
-                .addJsOption("align", "right");
-        //
-        ItemListingPage.this.tablesPanel.addHeader(ItemListingPage.this.sortMenu);
-
-        for (final ItemListingTable itemListingTable : tables) {
+        for (ItemListingTable itemListingTable : defineTables()) {
 
             itemListingTable.getItemTable().setFillOnRefresh(false);
             itemListingTable.getItemTable().setFillOnLoad(false);
@@ -772,7 +746,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
                     .setShowSearch(true)
                     .setView(VIEW_TYPE.VIEW_DETAILS);
 
-            sortTable(table);
+            sortTable(table, defineDefaultSort());
 
             this.tablesPanel.addHeader(getTitle());
             this.tablesPanel.addBody(itemListingTable);
@@ -786,26 +760,22 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         this.tablesPanel.addHeader(this.tablesSearch);
     }
 
-    private void sortTable(final ItemTable table) {
-        if (table.getOrder() == null) {
-            table.setOrder(this.currentSort, this.currentSortAscending);
-        } else {
-            saveCurrentSort(table.getOrder());
-        }
-    }
-
-    private void saveCurrentSort(final String order) {
-        final String[] split = order.split(" ");
-        this.currentSort = split[0];
-        this.currentSortAscending = "ASC".equals(split[1]);
+    private void sortTable(final ItemTable table, ItemListingSort itemListingSort) {
+        if (table.getOrder() == null && itemListingSort != null) {
+            table.setOrder(itemListingSort.getSortName(), itemListingSort.isSortAscending());
+        } 
     }
 
     /**
      * Define the default sorting.
      * 
      * @return This method must return the default sort that must be used.
+     * @deprecated don't add sort order on page but on tables, use {@link ItemTable#setOrder(String, boolean)} 
      */
-    protected abstract ItemListingSort defineDefaultSort();
+    @Deprecated
+    protected ItemListingSort defineDefaultSort() {
+    	return null;
+    }
 
     /**
      * Define the list of tables that can be displayed by filters.
