@@ -118,20 +118,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         return this.currentFilter;
     }
 
-    /**
-     * @return the currentSort
-     */
-    public String getCurrentSort() {
-        return this.currentSort;
-    }
-
-    /**
-     * @return the currentSortAscending
-     */
-    public boolean isCurrentSortAscending() {
-        return this.currentSortAscending;
-    }
-
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // BUILD VIEW
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
