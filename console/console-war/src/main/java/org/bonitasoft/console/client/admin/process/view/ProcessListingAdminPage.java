@@ -23,7 +23,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.process.action.DeleteProcessesAction;
 import org.bonitasoft.console.client.admin.process.action.DisableProcessAction;
 import org.bonitasoft.console.client.admin.process.action.EnableProcessAction;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
