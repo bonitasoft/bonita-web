@@ -205,7 +205,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 setClassloader(formServiceProvider, context);
                 final List<TransientData> transientData = definitionAPI.getFormTransientData(formID, context);
                 final Map<String, Serializable> transientDataContext = definitionAPI.getTransientDataContext(transientData, userLocale, context);
-                setFormTransientDataContext(formID, transientDataContext);
+                setFormTransientDataContext(formServiceProvider, formID, transientDataContext, context);
                 context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
                 context.put(FormServiceProviderUtil.FIELD_VALUES, new HashMap<String, FormFieldValue>());
                 final String pageId = (String) formServiceProvider.resolveExpression(pageIdExpression, context);
@@ -319,7 +319,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final String migrationProductVersion = definitionAPI.getMigrationProductVersion(formID, context);
             formServiceProvider.isAllowed(formID, permissions, productVersion, migrationProductVersion, context, true);
             setClassloader(formServiceProvider, context);
-            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formID);
+            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
             context.put(FormServiceProviderUtil.FIELD_VALUES, fieldValues);
             final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID);
@@ -403,7 +403,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
             setClassloader(formServiceProvider, context);
             final Map<String, List<ReducedFormValidator>> nonCompliantValidators = new HashMap<String, List<ReducedFormValidator>>();
-            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formID);
+            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
             for (final Entry<String, String> validatorsEntry : validatorsMap.entrySet()) {
                 final String fieldId = getFieldId(validatorsEntry.getKey());
@@ -445,7 +445,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final long tenantID = retrieveCredentialAndReturnTenantID(request, context);
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
             setClassloader(formServiceProvider, context);
-            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formID);
+            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
             final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID);
             final List<FormValidator> pageValidators = formCacheUtil.getPageValidators(pageValidatorsId);
@@ -512,7 +512,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final IFormDefinitionAPI definitionAPI = FormAPIFactory.getFormDefinitionAPI(tenantID, document, deployementDate, localeStr);
             final HtmlTemplate htmlTemplate = definitionAPI.getFormConfirmationLayout(formID, context);
             setClassloader(formServiceProvider, context);
-            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formID);
+            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
             htmlTemplate.setDynamicMessage((String) formServiceProvider.resolveExpression(htmlTemplate.getDynamicMessageExpression(), context));
             return htmlTemplate.getReducedHtmlTemplate();
@@ -572,6 +572,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             context.put(FormServiceProviderUtil.REQUEST, request);
             final long tenantID = retrieveCredentialAndReturnTenantID(request, context);
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
+            removeFormTransientDataContext(formServiceProvider, formID, context);
             return formServiceProvider.getNextFormURLParameters(formID, context);
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
@@ -589,16 +590,54 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     /**
      * store the transient data context for the current page flow displayed in the session
      * 
+     * @param formServiceProvider
      * @param formID
      *            the form ID
      * @param transientDataContext
      *            the transient data context
+     * @param context
      */
-    protected void setFormTransientDataContext(final String formID, final Map<String, Serializable> transientDataContext) {
+    protected void setFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
+            final Map<String, Serializable> transientDataContext, final Map<String, Object> context) {
 
         final HttpServletRequest request = getThreadLocalRequest();
         final HttpSession session = request.getSession();
-        session.setAttribute(TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, transientDataContext);
+        formServiceProvider.storeFormTransientDataContext(session, TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, transientDataContext, context);
+    }
+
+    /**
+     * Get the transient data context for the current page flow displayed from the session
+     * 
+     * @param formServiceProvider
+     * @param formID
+     *            the form ID
+     * @param context
+     * @return a Map<String, Object> containing the context of transient data
+     */
+    @SuppressWarnings("unchecked")
+    protected Map<String, Serializable> getFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
+            final Map<String, Object> context) {
+
+        final HttpServletRequest request = getThreadLocalRequest();
+        final HttpSession session = request.getSession();
+        return formServiceProvider.retrieveFormTransientDataContext(session, TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, context);
+    }
+
+    /**
+     * Get the transient data context for the current page flow displayed from the session
+     * 
+     * @param formServiceProvider
+     * @param formID
+     *            the form ID
+     * @param context
+     * @return a Map<String, Object> containing the context of transient data
+     */
+    @SuppressWarnings("unchecked")
+    protected void removeFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID, final Map<String, Object> context) {
+
+        final HttpServletRequest request = getThreadLocalRequest();
+        final HttpSession session = request.getSession();
+        formServiceProvider.removeFormTransientDataContext(session, TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, context);
     }
 
     /**
@@ -614,7 +653,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final long tenantID = retrieveCredentialAndReturnTenantID(request, context);
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
             setClassloader(formServiceProvider, context);
-            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formID);
+            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
             // put the current value of the field in the field context
             final Map<String, FormFieldValue> fieldContext = new HashMap<String, FormFieldValue>();
@@ -699,25 +738,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     }
 
     /**
-     * Get the transient data context for the current page flow displayed from the session
-     * 
-     * @param formID
-     *            the form ID
-     * @return a Map<String, Object> containing the context of transient data
-     */
-    @SuppressWarnings("unchecked")
-    protected Map<String, Serializable> getFormTransientDataContext(final String formID) {
-
-        final HttpServletRequest request = getThreadLocalRequest();
-        final HttpSession session = request.getSession();
-        Map<String, Serializable> transientDataContext = (Map<String, Serializable>) session.getAttribute(TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID);
-        if (transientDataContext == null) {
-            transientDataContext = new HashMap<String, Serializable>();
-        }
-        return transientDataContext;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -738,7 +758,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final IFormDefinitionAPI definitionAPI = FormAPIFactory.getFormDefinitionAPI(tenantID, document, deployementDate, localeStr);
             final List<FormAction> actions = definitionAPI.getFormActions(formID, pageIds, context);
             setClassloader(formServiceProvider, context);
-            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formID);
+            final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
             return formServiceProvider.executeActions(actions, context);
         } catch (final FormAlreadySubmittedException e) {

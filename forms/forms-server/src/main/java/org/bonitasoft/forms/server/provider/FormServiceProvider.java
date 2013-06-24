@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
@@ -431,4 +433,44 @@ public interface FormServiceProvider {
      * @throws FormNotFoundException
      */
     ClassLoader getClassloader(final Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException;
+
+    /**
+     * Store the transient data context in the HTTP session
+     * 
+     * @param session
+     *            HTTP session
+     * @param storageKey
+     *            key for the session entry
+     * @param transientDataContext
+     *            transient data context to store
+     * @param context
+     *            Map of context (containing the URL parameters and other data)
+     */
+    void storeFormTransientDataContext(HttpSession session, String storageKey, Map<String, Serializable> transientDataContext, Map<String, Object> context);
+
+    /**
+     * Retrieve a transient data context for the current form
+     * 
+     * @param session
+     *            HTTP session
+     * @param storageKey
+     *            key for the session entry
+     * @param context
+     *            Map of context (containing the URL parameters and other data)
+     * @return the transient data context to use
+     */
+    Map<String, Serializable> retrieveFormTransientDataContext(HttpSession session, String storageKey, Map<String, Object> context);
+
+    /**
+     * remove a transient data context form the HTTP session
+     * 
+     * @param session
+     *            HTTP session
+     * @param storageKey
+     *            key for the session entry
+     * @param context
+     *            Map of context (containing the URL parameters and other data)
+     * @return the transient data context to use
+     */
+    void removeFormTransientDataContext(HttpSession session, String storageKey, Map<String, Object> context);
 }
