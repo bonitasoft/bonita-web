@@ -736,7 +736,10 @@ public class Form extends AbstractForm {
      * @param description
      *            (Optional) A more complete description on how to fill the input and what it is for.
      * @return This function returns the form itself in order to allow cascading calls
+     * 
+     * @deprecated Use {@link #addEntry(new FileUpload())}
      */
+    @Deprecated
     public Form addFileEntry(final JsId jsid, final String label, final String tooltip, final String description, final String submissionUrl) {
         return this.addFileEntry(jsid, label, tooltip, description, null, submissionUrl);
     }
@@ -755,7 +758,10 @@ public class Form extends AbstractForm {
      * @param example
      *            (Optional) An example of valid input.
      * @return This function returns the form itself in order to allow cascading calls
+     * 
+     * @deprecated Use {@link #addEntry(new FileUpload())}
      */
+    @Deprecated
     public Form addFileEntry(final JsId jsid, final String label, final String tooltip, final String description, final String example,
             final String submissionUrl) {
         addEntry(new FileUpload(submissionUrl, jsid, label, tooltip, description, example));
