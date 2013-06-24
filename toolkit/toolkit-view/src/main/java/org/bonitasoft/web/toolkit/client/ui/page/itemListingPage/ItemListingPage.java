@@ -20,7 +20,6 @@ import static com.google.gwt.query.client.GQuery.$;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,11 +28,8 @@ import java.util.Map;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
-import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
@@ -45,7 +41,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
-import org.bonitasoft.web.toolkit.client.ui.component.filler.ComponentFiller;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.Menu;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
@@ -54,7 +49,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 import org.bonitasoft.web.toolkit.client.ui.component.table.TableColumn;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
-import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 import org.bonitasoft.web.toolkit.client.ui.utils.Url;
 
 /**
@@ -201,7 +195,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     }
 
-    private void selectFirstFilter() {
+    void selectFirstFilter() {
         $(ItemListingPage.this.filtersLinks.values().iterator().next().getElement()).click();
     }
 
@@ -305,7 +299,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         this.filtersPanel.addBody(this.resourceFilters);
 
         addTitleToSection(defineResourceFiltersTitle(), this.resourceFilters);
-        this.resourceFilters.addFiller(new ResourceFilterFiller(filter));
+        this.resourceFilters.addFiller(new ResourceFilterFiller<T>(this, filter));
     }
 
     /**
@@ -376,93 +370,16 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         }
     }
 
-    /**
-     * Fill the resourceFilter section with the filters found in database.
-     * 
-     * @author Séverin Moussel
-     */
-    public final class ResourceFilterFiller extends ComponentFiller {
-
-        /**
-         * The resource filter definition to use to retrieve data.
-         */
-        private final ItemListingResourceFilter filter;
-
-        /**
-         * Default constructor.
-         * 
-         * @param filter
-         *            The resource filter definition
-         */
-        public ResourceFilterFiller(final ItemListingResourceFilter filter) {
-            this.filter = filter;
-        }
-
-        /**
-         * Define how to read data.
-         * 
-         * @see Filler#getData(APICallback)
-         * 
-         */
-        @Override
-        protected void getData(final APICallback callback) {
-            this.filter.getSearchRequest().run(callback);
-        }
-
-        /**
-         * Define how to display data.
-         * 
-         * @see Filler#setData(String, Map)
-         */
-        @Override
-        protected void setData(final String json, final Map<String, String> headers) {
-            final List<IItem> items = JSonItemReader.parseItems(json, this.filter.getSearchRequest().getItemDefinition());
-            final List<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
-
-            for (final IItem item : items) {
-
-                // Fill additional filters using filters mapping
-                final Map<String, String> additionalFilters = new HashMap<String, String>();
-                additionalFilters.putAll(this.filter.getFilters());
-
-                for (final String tableResourceAttributeName : this.filter.getFiltersMapping().keySet()) {
-                    final String filterResourceAttributeName = this.filter.getFiltersMapping().get(tableResourceAttributeName);
-                    additionalFilters.put(tableResourceAttributeName, item.getAttributeValue(filterResourceAttributeName));
-                }
-
-                // Create resourceListingFilters
-                final ItemListingFilter resourceFilter = new ItemListingFilter(
-                        item.getId().toString(),
-                        item.getAttributeValue(this.filter.getLabelAttributeName()),
-                        item.getAttributeValue(this.filter.getLabelAttributeName()),
-                        this.filter.getTablesToDisplay()
-                        );
-                resourceFilter.setIsResourceFilter(true);
-                if (!StringUtil.isBlank(this.filter.getIconAttributeName())) {
-                    resourceFilter.setImage(item.getAttributeValue(this.filter.getIconAttributeName()));
-                }
-                resourceFilter.setFilters(additionalFilters);
-
-                filters.add(resourceFilter);
-            }
-
-            // Display filters
-            ItemListingPage.this.addLinkFilters(filters, ItemListingPage.this.resourceFilters);
-
-            if (hasResourceFilterParameter()) {
-                selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
-            } else if (!hasParameter(UrlOption.FILTER)) {
-                selectFirstFilter();
-            }
-
-        }
-
-        private boolean hasResourceFilterParameter() {
-            return hasParameter(UrlOption.RESOURCE_FILTER) && ItemListingPage.this.filtersLinks.containsKey(getParameter(UrlOption.RESOURCE_FILTER));
-        }
+    boolean hasResourceFilterParameter() {
+    	return hasParameter(UrlOption.RESOURCE_FILTER) && ItemListingPage.this.filtersLinks.containsKey(getParameter(UrlOption.RESOURCE_FILTER));
     }
-
-    private void selectFilter(final String filterId) {
+    
+    void displayFilters(final List<ItemListingFilter> filters) {
+    	ItemListingPage.this.addLinkFilters(filters, ItemListingPage.this.resourceFilters);
+    }
+    
+    
+    void selectFilter(final String filterId) {
         final Link defaultFilterLink = this.filtersLinks.get(filterId);
         $(defaultFilterLink.getElement()).click();
     }
@@ -503,7 +420,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
              */
             @Override
             public void execute() {
-                // default
                 for (final String tableName : ChangeFilterAction.this.filter.getTablesToDisplay()) {
                     final ItemTable table = ItemListingPage.this.tables.get(tableName).getItemTable();
                     table.setOrder(sort.getSortName(), desc);
@@ -831,4 +747,12 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         // $(getCurrentFilter().getLink().getElement()).click();
 
     }
+
+	void selectRightResourceFilter() {
+		if (hasResourceFilterParameter()) {
+	        selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
+	    } else if (!hasParameter(UrlOption.FILTER)) {
+	        selectFirstFilter();
+	    }
+	}
 }
