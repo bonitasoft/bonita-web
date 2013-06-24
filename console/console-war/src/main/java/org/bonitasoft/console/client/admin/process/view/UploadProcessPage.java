@@ -18,13 +18,11 @@ package org.bonitasoft.console.client.admin.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
-import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
@@ -40,18 +38,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.entry.FileUpload;
 import com.google.gwt.core.client.GWT;
 
 /**
- * @author Haojie Yuan
- * 
+ * Page containing a form to upload a process and install it
  */
 public class UploadProcessPage extends Page {
 
-    public static final String TOKEN = "ProcessUpload";
-
-    public static final String URL_API = "../API/bpm/process";
-
-    private Form form;
-
-    private final JsId fileEntryJsId = new JsId("fileupload");
+    public static final String TOKEN = "processupload";
 
     @Override
     public void defineTitle() {
@@ -66,48 +57,39 @@ public class UploadProcessPage extends Page {
     @Override
     public void buildView() {
         addBody(new Text(_("Browse your computer and select the business archive containing the app definition to install.")));
-
-        this.form = new Form(new JsId("uploadForm"))
-                .addFileEntry(this.fileEntryJsId, "Business archive", _("A business archive has a .bar extension"),
-                        GWT.getModuleBaseURL() + "processUpload")
-
-                .addValidator(this.fileEntryJsId, new FileExtensionAllowedValidator("bar"))
-                .addValidator(this.fileEntryJsId, new MandatoryValidator())
-
-                .addButton(new JsId("installUpload"), _("Install"), _("Install a app"), new SendFormAction(URL_API, new ProcessInstallCallback()))
-                .addCancelButton();
-
-        // add upload filter
-        ((FileUpload) this.form.getEntry(this.fileEntryJsId)).addFilter(new BarUploadFilter());
-
-        addBody(this.form);
-
+        addBody(uploadProcessForm());
     }
 
+	private Form uploadProcessForm() {
+		Form form = new Form();
+        form.addEntry(uploadProcessFileUpload());
+        form.addButton(new JsId("installUpload"), _("Install"), _("Install a app"), 
+        		new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback()));
+        form.addCancelButton();
+        return form;
+	}
+
+	private FileUpload uploadProcessFileUpload() {
+		FileUpload fileUpload = new FileUpload(GWT.getModuleBaseURL() + "processUpload", new JsId("fileupload"), 
+        		"Business archive", _("A business archive has a .bar extension"));
+        fileUpload.addFilter(new BarUploadFilter());
+        fileUpload.addValidator(new FileExtensionAllowedValidator("bar"));
+        fileUpload.addValidator(new MandatoryValidator());
+		return fileUpload;
+	}
+
+	/**
+	 * APICallback for process installation.
+	 *
+	 * Redirect to process more view on installation success
+	 * Show an error pop-up on installation failure
+	 */
     private final class ProcessInstallCallback extends APICallback {
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            final ProcessItem p = (ProcessItem) JSonItemReader.parseItem(response, ProcessDefinition.get());
-            final HashMap<String, String> params = new HashMap<String, String>();
-            params.put("id", p.getAttributeValue("id"));
-            ViewController.showView(ProcessMoreDetailsAdminPage.TOKEN, params);
-        }
-
-        @Override
-        public void onError(final String message, final Integer errorCode) {
-            final ServerException ex = parseException(message, errorCode);
-
-            if ("class org.bonitasoft.engine.exception.InvalidBusinessArchiveFormat".equals(ex.getOriginalClassName())) {
-                UploadProcessPage.this.form.addError(UploadProcessPage.this.fileEntryJsId,
-                        _("The archive file can't be read. This can be due to a corrupted file or a file created with another version of Bonita."));
-            } else if ("class org.bonitasoft.engine.exception.ObjectAlreadyExistsException".equals(ex.getOriginalClassName())) {
-                UploadProcessPage.this.form.addError(UploadProcessPage.this.fileEntryJsId,
-                        _("This app has already been installed."));
-            } else {
-                super.onError(message, errorCode);
-            }
+            ProcessItem process = JSonItemReader.parseItem(response, ProcessDefinition.get());
+            ViewController.showView(new ProcessMoreDetailsAdminPage(process));
         }
     }
-
 }
