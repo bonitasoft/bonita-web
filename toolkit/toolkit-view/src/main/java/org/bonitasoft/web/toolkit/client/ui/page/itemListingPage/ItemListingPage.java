@@ -53,6 +53,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 import org.bonitasoft.web.toolkit.client.ui.component.table.TableColumn;
+import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 import org.bonitasoft.web.toolkit.client.ui.utils.Url;
 
@@ -752,7 +753,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
             this.tablesPanel.addBody(itemListingTable);
 
             // Add quickDetailsAction
-            table.setDefaultAction(new UpdateQuickDetailsAction(itemListingTable));
+            table.setDefaultAction(new UpdateQuickDetailsAction<T>(this, itemListingTable));
         }
 
         // add the table Search
@@ -784,43 +785,13 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     protected abstract LinkedList<ItemListingTable> defineTables();
 
-    /**
-     * Action that update the content of the details panel (right panel).
-     * 
-     * @author Séverin Moussel
-     */
-    private final class UpdateQuickDetailsAction extends Action {
+    public void updateQuickDetailPanel(ItemQuickDetailsPage<?> itemQuickDetailsPage, String itemId) {
+    	final TreeIndexed<String> params = itemQuickDetailsPage.getParameters();
+        params.addValue("id", itemId);
 
-        private final ItemListingTable table;
-
-        /**
-         * Default Constructor.
-         * 
-         * @param table
-         */
-        public UpdateQuickDetailsAction(final ItemListingTable table) {
-            super();
-            this.table = table;
-        }
-
-        /**
-         * @see Action#execute()
-         */
-        @Override
-        public void execute() {
-            $(".tr", this.table.getElement()).removeClass("current");
-            $(".tr_" + getParameter("cell_index"), this.table.getElement()).addClass("current");
-
-            final TreeIndexed<String> params = this.table.getQuickDetailsPage().getParameters();
-            params.addValue("id", UpdateQuickDetailsAction.this.getParameter("id"));
-
-            ClientApplicationURL.addAttribute("_id", UpdateQuickDetailsAction.this.getParameter("id"));
-            ClientApplicationURL.refreshUrl(false);
-            ViewController.showView(
-                    this.table.getQuickDetailsPage().getToken(),
-                    ItemListingPage.this.detailsPanel.getElement(),
-                    params);
-        }
+        ClientApplicationURL.addAttribute("_id", itemId);
+        ClientApplicationURL.refreshUrl(false);
+        ViewController.showView(itemQuickDetailsPage.getToken(), detailsPanel.getElement(), params);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
