@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.I18NCellFormatter;
@@ -33,7 +34,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingSort
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTable;
 
 /**
- * @author Paul AMAR
+ * @author Paul AMAR, Bastien ROHART
  * 
  */
 public class ReportListingAdminPage extends ItemListingPage<ReportItem> {
@@ -74,7 +75,8 @@ public class ReportListingAdminPage extends ItemListingPage<ReportItem> {
         tables.add(new ItemListingTable(new JsId(TABLE_REPORT), _("All"),
                 new ItemTable(Definitions.get(ReportDefinition.TOKEN))
                         .addColumn(ReportItem.ATTRIBUTE_NAME, _("Name"), true)
-                        .addColumn(ReportItem.ATTRIBUTE_DESCRIPTION, _("Description"), false)
+                        .addColumn(new DescriptionAttributeReader(ReportItem.ATTRIBUTE_DESCRIPTION),
+                                _("Description"), false)
                         .addCellFormatter(ReportItem.ATTRIBUTE_NAME, new I18NCellFormatter())
                         .addCellFormatter(ReportItem.ATTRIBUTE_DESCRIPTION, new I18NCellFormatter())
                 ,

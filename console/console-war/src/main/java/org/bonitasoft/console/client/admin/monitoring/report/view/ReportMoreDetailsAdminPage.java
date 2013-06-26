@@ -40,6 +40,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+
 /**
  * @author Bastien Rohart
  * 
@@ -89,7 +90,6 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
 
     @Override
     protected void buildBody(final ReportItem item) {
-        final Html html = new Html();
         String locale = AbstractI18n.getDefaultLocale().toString();
         final Container<Html> container = new Container<Html>();
         container.append(getLoader());
@@ -120,17 +120,19 @@ public class ReportMoreDetailsAdminPage extends ReportQuickDetailsAdminPage {
                         response = response.replaceAll("<img(.*)src=\"([^ ]*)\"(.*)([>|/>])", "<img$1src=\"$2&r=" + (Math.random()) + "\"$3$4");
                         container.empty();
                         container.append(new Html(response));
-                        removeReportStyle();
+
                         try {
-                        String localeDateFormat = _("mm/dd/yy");
-                        reportDateRangePicker(localeDateFormat, "p_date_");
-                        hookReportFormSubmition(localeDateFormat, "p_date_");
-                        retrieveFieldsValues(getParams(url), localeDateFormat);
-                        } catch(JavaScriptException e) {
-                            
+                            removeReportStyle();
+                            String localeDateFormat = _("mm/dd/yy");
+                            reportDateRangePicker(localeDateFormat, "p_date_");
+                            hookReportFormSubmition(localeDateFormat, "p_date_");
+                            retrieveFieldsValues(getParams(url), localeDateFormat);
+                            addToolbarLink(newBackButton());
+                        } catch (Exception e) {
+                            addToolbarLink(newBackButton());
                         }
-                        addToolbarLink(newBackButton());
                     } else {
+                        addToolbarLink(newBackButton());
                         // html.setHtml("Failed<BR/>");
                     }
                 }

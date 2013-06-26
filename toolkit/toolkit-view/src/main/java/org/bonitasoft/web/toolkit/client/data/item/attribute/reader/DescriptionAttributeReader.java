@@ -31,6 +31,11 @@ public class DescriptionAttributeReader extends FirstNotBlancAttributeReader {
         setDefaultValue(_("No description."));
         this.leadAttribute = DisplayDescriptionAttributeToRead;
     }
+    
+    public DescriptionAttributeReader(final String DescriptionAttributeToRead) {
+        super(DescriptionAttributeToRead);
+        setDefaultValue(_("No description."));
+    }
 
     
     public DescriptionAttributeReader() {
