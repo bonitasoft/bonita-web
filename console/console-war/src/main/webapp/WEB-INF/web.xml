@@ -221,7 +221,7 @@
 	</servlet>
 	<servlet>
 		<servlet-name>fileUpload</servlet-name>
-		<servlet-class>org.bonitasoft.console.common.server.document.servlet.DocumentUploadServlet</servlet-class>
+		<servlet-class>org.bonitasoft.console.common.server.servlet.DocumentUploadServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>documentDownload</servlet-name>
