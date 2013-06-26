@@ -17,7 +17,6 @@
 package org.bonitasoft.web.toolkit.server.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,43 +27,26 @@ import java.util.List;
  */
 public class FileUtils {
 
-    private static File emptyFile = null;
-
-    public static File getEmptyFile() {
-        if (emptyFile == null) {
-            emptyFile = createEmptyFile();
-        }
-        return emptyFile;
-    }
-
-    private static File createEmptyFile() {
-        try {
-            return File.createTempFile(".empty", "");
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't create a temporary empty file");
-        }
-    }
-
-    public static List<File> listDir(File dir) {
-        File[] files = dir.listFiles();
-        if (files == null) {
-            files = new File[0];
-        }
-        return Arrays.asList(files);
-    }
-    
     public static List<File> getMatchingFiles(final String regex, List<File> files) {
-        List<File> locales = new ArrayList<File>();
-        for (File file : files) {
-            if (isFileMatching(file, regex)) {
-                locales.add(file);
-            }
-        }
-        return locales;
-    }
+	    List<File> locales = new ArrayList<File>();
+	    for (File file : files) {
+	        if (isFileMatching(file, regex)) {
+	            locales.add(file);
+	        }
+	    }
+	    return locales;
+	}
 
-    private static boolean isFileMatching(File file, String regex) {
-        return file.isFile() && file.getName().matches(regex);
-    }
+	private static boolean isFileMatching(File file, String regex) {
+	    return file.isFile() && file.getName().matches(regex);
+	}
+
+	public static List<File> listDir(File dir) {
+	    File[] files = dir.listFiles();
+	    if (files == null) {
+	        files = new File[0];
+	    }
+	    return Arrays.asList(files);
+	}
 
 }
