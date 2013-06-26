@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.server.utils;
+package org.bonitasoft.console.common.server.jsp;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

@@ -22,7 +22,7 @@
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.bonitasoft.web.toolkit.server.utils.I18n"%>
 <%@page import="static org.bonitasoft.web.toolkit.server.utils.I18n._"%>
-<%@page import="org.bonitasoft.web.toolkit.server.utils.JSPUtils"%>
+<%@page import="org.bonitasoft.console.common.server.jsp.JSPUtils"%>
 <%
     JSPUtils JSP = new JSPUtils(request, session);
 
