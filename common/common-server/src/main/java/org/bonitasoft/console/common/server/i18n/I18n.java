@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
-import org.bonitasoft.web.toolkit.server.utils.POParser;
 
 /**
  * @author Séverin Moussel, Fabio Lombardi

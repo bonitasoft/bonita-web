@@ -13,7 +13,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.bonitasoft.web.toolkit.server.utils;
+package org.bonitasoft.console.common.server.i18n;
 
 import java.io.File;
 import java.io.FileNotFoundException;
