@@ -26,7 +26,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;
-import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceException;
+import org.bonitasoft.web.toolkit.server.ServiceException;
 
 /**
  * @author Paul AMAR

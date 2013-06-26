@@ -2,9 +2,9 @@ package org.bonitasoft.console.server;
 
 import org.bonitasoft.console.server.service.OrganizationImportService;
 import org.bonitasoft.console.server.service.ProcessActorImportService;
-import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.server.Service;
 import org.bonitasoft.web.toolkit.server.ServiceFactory;
+import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
 
 public class ConsoleServiceFactory implements ServiceFactory {
 

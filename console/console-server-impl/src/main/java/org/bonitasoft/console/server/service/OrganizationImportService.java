@@ -26,7 +26,7 @@ import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceException;
+import org.bonitasoft.web.toolkit.server.ServiceException;
 
 /**
  * @author Séverin Moussel

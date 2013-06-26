@@ -34,9 +34,9 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenExcept
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
-import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.server.ServletCall;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
