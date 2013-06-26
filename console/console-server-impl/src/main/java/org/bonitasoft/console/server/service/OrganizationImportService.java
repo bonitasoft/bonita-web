@@ -22,11 +22,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.toolkit.client.common.exception.service.ServiceException;
-import org.bonitasoft.web.toolkit.server.utils.I18n;
 
 /**
  * @author Séverin Moussel

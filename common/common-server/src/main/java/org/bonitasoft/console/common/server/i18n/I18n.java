@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.server.utils;
+package org.bonitasoft.console.common.server.i18n;
 
 import java.io.File;
 import java.util.LinkedHashMap;
@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.server.utils.POParser;
 
 /**
  * @author Séverin Moussel, Fabio Lombardi

@@ -23,10 +23,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.api.bpm.connector.APIConnectorInstance;
 import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceDatastore;
-import org.bonitasoft.web.toolkit.server.utils.I18n;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.console.common.server;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.test.toolkit.AbstractJUnitTest;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.utils.I18n;
 
 /**
  * @author Vincent Elcrin

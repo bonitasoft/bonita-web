@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile.entry;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
-import org.bonitasoft.web.toolkit.server.utils.I18n;
 
 /**
  * @author Vincent Elcrin

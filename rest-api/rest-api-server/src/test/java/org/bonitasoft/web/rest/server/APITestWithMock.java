@@ -18,9 +18,9 @@ package org.bonitasoft.web.rest.server;
 
 import static junit.framework.Assert.assertTrue;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.utils.I18n;
 import org.junit.BeforeClass;
 
 
