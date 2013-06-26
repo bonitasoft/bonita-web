@@ -21,6 +21,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import org.bonitasoft.console.client.common.component.snippet.SectionSnippet;
 import org.bonitasoft.web.rest.model.bpm.connector.ArchivedConnectorInstanceDefinition;
 import org.bonitasoft.web.rest.model.bpm.connector.ArchivedConnectorInstanceItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -35,10 +36,10 @@ public class ArchivedConnectorInstanceSectionSnippet implements SectionSnippet {
 
     private int nbLinesByPage = 10;
 
-    private final IFlowNodeItem item;
+    private final ArchivedFlowNodeItem item;
 
     public ArchivedConnectorInstanceSectionSnippet(final IFlowNodeItem item) {
-        this.item = item;
+        this.item = (ArchivedFlowNodeItem) item;
     }
 
     @Override
@@ -59,8 +60,8 @@ public class ArchivedConnectorInstanceSectionSnippet implements SectionSnippet {
     private ItemTable buildConnectorTable() {
         return new ItemTable(new JsId("connectors"), Definitions.get(ArchivedConnectorInstanceDefinition.TOKEN))
                 // filter
-                .addHiddenFilter(ArchivedConnectorInstanceItem.ATTRIBUTE_SOURCE_OBJECT_ID,
-                        this.item.getAttributeValue(ArchivedConnectorInstanceItem.ATTRIBUTE_SOURCE_OBJECT_ID))
+                .addHiddenFilter(ArchivedConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID,
+                        this.item.getAttributeValue(ArchivedFlowNodeItem.ATTRIBUTE_SOURCE_OBJECT_ID))
 
                 // columns
                 .addColumn(ArchivedConnectorInstanceItem.ATTRIBUTE_NAME, _("Name"))
