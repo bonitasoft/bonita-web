@@ -32,10 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 
 /**
  * Servlet allowing to download process application resources

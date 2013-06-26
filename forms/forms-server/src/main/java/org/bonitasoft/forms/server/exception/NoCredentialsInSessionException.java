@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.exception;
+package org.bonitasoft.forms.server.exception;
 
 /**
  * Exception thrown when there are no credentials in the session

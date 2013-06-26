@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
@@ -92,6 +91,7 @@ import org.bonitasoft.forms.server.exception.FormSubmissionException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
 import org.bonitasoft.forms.server.exception.FormWorflowApiException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
+import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.ApplicationURLUtils;

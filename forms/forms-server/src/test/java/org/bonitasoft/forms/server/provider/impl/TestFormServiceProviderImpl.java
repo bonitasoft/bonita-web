@@ -29,7 +29,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -50,6 +49,7 @@ import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.server.FormsTestCase;
 import org.bonitasoft.forms.server.WaitUntil;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
+import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;

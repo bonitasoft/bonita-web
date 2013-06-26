@@ -40,7 +40,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
@@ -52,6 +51,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.exception.ForbiddenProcessAccessException;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
+import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 
 /**
  * This filter transform the regular URL parameters into Hash parameters, with a generated formID.

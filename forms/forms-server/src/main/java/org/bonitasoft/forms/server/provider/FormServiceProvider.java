@@ -26,7 +26,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
@@ -51,6 +50,7 @@ import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormSubmissionException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
+import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
 import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
