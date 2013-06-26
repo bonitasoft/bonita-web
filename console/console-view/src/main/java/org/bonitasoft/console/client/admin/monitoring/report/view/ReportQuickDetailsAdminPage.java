@@ -103,7 +103,7 @@ public class ReportQuickDetailsAdminPage extends ItemQuickDetailsPage<ReportItem
      * @return
      */
     private AbstractComponent getReportScreenshot(ReportItem report) {
-        Image screenshot = new Image(new Url("/console/ReportScreenshotServlet?reportName=" + report.getId()), 0, 0, _("Report's screenshot"));
+        Image screenshot = new Image(new Url("ReportScreenshotServlet?reportName=" + report.getId()), 0, 0, _("Report's screenshot"));
         Link link = new Link(
                 new JsId("screenshotReportLink"),
                 _("Go to more details report view"),
