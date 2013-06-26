@@ -26,6 +26,7 @@ import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
  * @author Paul AMAR
  * 
  */
+// TODO : remove all reference in rest-server to DateFormat, Modifier, Reader, etc... Then delete this class
 public class ServerDateFormater extends CommonDateFormater {
 
     /**
