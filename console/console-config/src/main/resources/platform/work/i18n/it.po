@@ -412,7 +412,7 @@ msgstr "Svolto da:"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:159
 #, fuzzy
 msgid "Closed tasks"
-msgstr "Closed tasks"
+msgstr "Task chiusi"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:19
 msgid "Case variable"
@@ -638,13 +638,13 @@ msgstr "Nome dell'utente che installa questo report"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:105
 msgid "Report's screenshot"
-msgstr "Report's screenshot"
+msgstr "Schermata del rapporto"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:108
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:109
 #, fuzzy
 msgid "Go to more details report view"
-msgstr "Go to more details report view"
+msgstr "Accedere alla schermata dei dettagli del rapporto"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:115
 msgid "Screen shot"
@@ -2241,7 +2241,7 @@ msgstr "Avviato da:"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:78
 #, fuzzy
 msgid "Archives"
-msgstr "Archives"
+msgstr "Archivi"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:69
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/MyCasesSnippet.java:69
@@ -2959,11 +2959,11 @@ msgstr "Impossibile fare il deployment dell'archivio aziendale"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:85
 msgid "Unable to enable process"
-msgstr "Unable to enable process"
+msgstr "Impossibile attivare il processo"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:93
 msgid "Unable to disable process"
-msgstr "Unable to disable process"
+msgstr "Impossibile disattivare il processo"
 
 #: console/console-war/src/main/webapp/login.jsp:72
 #: console/console-war/target/console-war-6.1.0-SNAPSHOT/login.jsp:72
