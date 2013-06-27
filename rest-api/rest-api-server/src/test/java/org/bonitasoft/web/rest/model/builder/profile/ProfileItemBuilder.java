@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.model.builder.profile;
 
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.engine.profile.impl.ProfileImpl;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 
 /**
@@ -25,10 +26,10 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
  */
 public class ProfileItemBuilder {
 
-    private long id = 1L;
-    private String name = "aName";
-    private String description = "aDescription";
-    private String icon = "anIcon";
+    protected long id = 1L;
+    protected String name = "aName";
+    protected String description = "aDescription";
+    protected String icon = "anIcon";
 
     public static ProfileItemBuilder aProfileItem() {
         return new ProfileItemBuilder();
@@ -42,7 +43,14 @@ public class ProfileItemBuilder {
         item.setIcon(icon);
         return item;
     }
-
+    
+    public Profile toProfile() {
+    	ProfileImpl profile = new ProfileImpl(name);
+    	profile.setDescription(description);
+    	profile.setIconPath(icon);
+    	return profile;
+    }
+    
     public ProfileItemBuilder fromEngineItem(Profile profile) {
         id = profile.getId();
         name = profile.getName();

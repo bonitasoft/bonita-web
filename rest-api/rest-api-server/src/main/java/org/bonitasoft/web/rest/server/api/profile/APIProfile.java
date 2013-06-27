@@ -23,11 +23,8 @@ import org.bonitasoft.web.rest.server.datastore.profile.SearchProfilesHelper;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
-import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
-import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
-import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
@@ -35,11 +32,8 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Séverin Moussel
  */
 public class APIProfile extends ConsoleAPI<ProfileItem> implements
-        APIHasAdd<ProfileItem>,
         APIHasGet<ProfileItem>,
-        APIHasSearch<ProfileItem>,
-        APIHasUpdate<ProfileItem>,
-        APIHasDelete
+        APIHasSearch<ProfileItem>
 {
 
     @Override
