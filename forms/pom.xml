@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>bonita-console</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
-		<version>6.1.0-rc-03</version>
+		<version>6.1.0-rc-04-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.forms</groupId>
@@ -11,8 +11,8 @@
 	<name>forms parent</name>
 
 	<scm>
-		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-03/forms</connection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-03/forms</url>
+		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/forms</connection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/forms</url>
 	</scm>
 
 	<modules>
