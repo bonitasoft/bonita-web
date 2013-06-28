@@ -45,14 +45,14 @@ public class RunReportServlet extends HttpServlet {
      * UID
      */
     private static final long serialVersionUID = -4217020871249201709L;
-    
+
     private static final Log log = LogFactory.getLog(RunReportServlet.class);
 
     /**
      * the engine API session param key name
      */
     public static final String API_SESSION_PARAM_KEY = "apiSession";
-    
+
     public static final String PROFILE_PARAM_KEY = "_pf";
 
     // Constante
@@ -179,7 +179,7 @@ public class RunReportServlet extends HttpServlet {
             // url to generate PDF
             parameters.put("BONITA_EXPORT_TO_PDF", actionUrlForm + pdfQueryString);
             // user
-            parameters.put("BONITA_LOGGED_USER_ID",  request.getParameter(PROFILE_PARAM_KEY));
+            parameters.put("BONITA_LOGGED_USER_ID", request.getParameter(PROFILE_PARAM_KEY));
             parameters.put("BONITA_LOGGED_USER", bonitaSystem.getCurrentUser());
             // locale
             parameters.put("REPORT_LOCALE", BonitaSystem.getCurrentLocale(request));
