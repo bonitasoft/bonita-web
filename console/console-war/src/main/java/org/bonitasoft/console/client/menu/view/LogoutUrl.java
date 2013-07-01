@@ -17,6 +17,7 @@
 package org.bonitasoft.console.client.menu.view;
 
 import org.bonitasoft.web.toolkit.client.common.UrlBuilder;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 /**
  * @author Vincent Elcrin
@@ -31,7 +32,9 @@ public class LogoutUrl {
     public LogoutUrl(UrlBuilder builder, String locale) {
         this.builder = builder;
         this.builder.setRootUrl(LOGOUT_URL);
-        this.builder.addParameter("_l", locale);
+        if (!StringUtil.isBlank(locale)) {
+            this.builder.addParameter("_l", locale);
+        }
     }
 
     public void setParameter(String key, String value) {
