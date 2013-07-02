@@ -2875,29 +2875,29 @@ msgid "This category has already been added to this apps"
 msgstr "Cette catégorie a déjà été ajoutée à cette app"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:38
-msgid "Case list"
+msgid "case_list"
 msgstr "Liste des cas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:39
-msgid "This report, display the list of cases available in the different status (open or closed) for a given period and/or apps. You can access the portail, by clicking on the link in the below table."
+msgid "This report, display the list of cases available in the different status (open or closed) for a given period and/or apps. \nYou can access the portail, by clicking on the link in the below table."
 msgstr "Ce rapport permet de lister les différents cas du système dans les différents statuts (ouvert ou fermé) pour une date donnée et/ou une app donnée."
 "Il est possible de naviguer vers le portail en cliquant sur un lien dans le tableau ci dessous."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:42
-msgid "Case average time"
+msgid "case_avg_time"
 msgstr "Temps moyen de résolution d'un case"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:43
-msgid "This report, display the average time to close a case. 2 data are available, 1 for the mean and one for the median for a given period and/or apps. You can access the portal, by clicking on the link in the below table."
+msgid "This report, display the average time to close a case. 2 data are available, 1 for the mean and one for the median for a given period and/or apps. \nYou can access the portal, by clicking on the link in the below table."
 msgstr "Ce rapport affiche le temps moyen de fermeture d'un case. 2 données sont disponibles, une pour la durée moyenne et une pour la médiane pour une période donnée et/ou une app. "
 "Vous pouvez accéder au portail en cliquant sur un lien dans la table ci dessous."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:46
-msgid "Task list"
+msgid "task_list"
 msgstr "Liste des tâches"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:47
-msgid "This report, display the list of human tasks available in the different status (opened, failed or closed) for a given period and/or apps. You can access the portail, by clicking on the link in the below table."
+msgid "This report, display the list of human tasks available in the different status (opened, failed or closed) for a given period and/or apps. \nYou can access the portail, by clicking on the link in the below table."
 msgstr "Ce rapport permet de lister les différentes tâches humaines du système dans les différents statuts (ouvert, en échec ou fermée) pour une date donnée et/ou une app donnée."
 "Il est possible de naviguer vers le portail en cliquant sur un lien dans le tableau ci dessous."
 
