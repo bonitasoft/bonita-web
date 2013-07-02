@@ -10,7 +10,7 @@
 			<directory>${project.basedir}/src/main/resources</directory>
 			<outputDirectory>/</outputDirectory>
 			<includes>
-				<include>**/*</include>
+				<include>**/*.html</include>
 			</includes>
 		</fileSet>
 		<fileSet>
