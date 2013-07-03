@@ -16,6 +16,7 @@ package org.bonitasoft.web.toolkit.client.ui.component;
 
 import static com.google.gwt.query.client.GQuery.$;
 
+import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
@@ -44,6 +45,8 @@ public class Section extends Component {
     private final Container<AbstractComponent> footer = new Container<AbstractComponent>();
 
     private boolean footerIncluded = false;
+    
+    private String className;
 
     public Section(final JsId jsId) {
         this(jsId, (String) null, (AbstractComponent) null);
@@ -73,6 +76,7 @@ public class Section extends Component {
         if (body != null && body.length > 0) {
             this.body.append(body);
         }
+        className = CssClass.SECTION;
     }
 
     /**
@@ -82,7 +86,7 @@ public class Section extends Component {
     protected final Element makeElement() {
 
         this.element = DOM.createDiv();
-        this.element.addClassName("section");
+        this.element.addClassName(getClassName());
 
         if (getJsId() != null) {
             this.element.addClassName(getJsId().toString("section"));
@@ -105,6 +109,17 @@ public class Section extends Component {
         }
 
         return this.element;
+    }
+
+    /**
+     * @return
+     */
+    public String getClassName() {
+        return className;
+    }
+    
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public final Section empty() {

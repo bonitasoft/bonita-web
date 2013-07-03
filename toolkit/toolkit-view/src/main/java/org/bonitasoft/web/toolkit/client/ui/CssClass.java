@@ -23,4 +23,8 @@ package org.bonitasoft.web.toolkit.client.ui;
 public abstract class CssClass {
 
     public static final String MORE_DETAILS = "moredetails";
+    
+    public static final String DOUBLE_SECTION = "doublesection";
+    
+    public static final String SECTION = "section";
 }
