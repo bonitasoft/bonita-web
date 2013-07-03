@@ -45,12 +45,11 @@ public class ReportListingAdminPage extends ItemListingPage<ReportItem> {
 
     public static final String FILTER_REPORT = "reports";
 
-    
     public ReportListingAdminPage() {
         super();
         showSearchBar = true;
     }
-    
+
     @Override
     protected LinkedList<ItemListingFilter> definePrimaryFilters() {
         final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
@@ -71,7 +70,7 @@ public class ReportListingAdminPage extends ItemListingPage<ReportItem> {
     @Override
     protected LinkedList<ItemListingTable> defineTables() {
         final LinkedList<ItemListingTable> tables = new LinkedList<ItemListingTable>();
-        
+
         tables.add(new ItemListingTable(new JsId(TABLE_REPORT), _("All"),
                 new ItemTable(Definitions.get(ReportDefinition.TOKEN))
                         .addColumn(ReportItem.ATTRIBUTE_NAME, _("Name"), true)
@@ -79,6 +78,7 @@ public class ReportListingAdminPage extends ItemListingPage<ReportItem> {
                                 _("Description"), false)
                         .addCellFormatter(ReportItem.ATTRIBUTE_NAME, new I18NCellFormatter())
                         .addCellFormatter(ReportItem.ATTRIBUTE_DESCRIPTION, new I18NCellFormatter())
+                        .addGroupedMultipleDeleteAction(_("Delete selected reports"), ReportDefinition.get(), _("report"), _("reports"))
                 ,
                 new ReportQuickDetailsAdminPage()
                 ));
