@@ -127,6 +127,7 @@
 							<tasks>
 								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html" file="${project.build.directory}/forms-design/html/page.html" />
 								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html" file="${project.build.directory}/forms-design/html/process.html" />
+								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html" file="${project.build.directory}/forms-design/html/error.html" />
 							</tasks>
 						</configuration>
 					</execution>
