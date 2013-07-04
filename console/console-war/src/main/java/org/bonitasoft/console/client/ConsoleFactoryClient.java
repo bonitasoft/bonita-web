@@ -9,9 +9,6 @@ import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTask
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.monitoring.report.view.ReportListingAdminPage;
-import org.bonitasoft.console.client.admin.monitoring.report.view.ReportMoreDetailsAdminPage;
-import org.bonitasoft.console.client.admin.monitoring.report.view.ReportQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.organization.group.view.AddGroupPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupQuickDetailsAdminPage;
@@ -205,9 +202,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (GroupQuickDetailsAdminPage.TOKEN.equals(token)) {
             return new GroupQuickDetailsAdminPage();
 
-        } else if (ReportListingAdminPage.TOKEN.equals(token)) {
-            return new ReportListingAdminPage();
-            // User page
         } else if (TasksListingPage.TOKEN.equals(token)) {
             return new TasksListingPage();
         } else if (CaseListingPage.TOKEN.equals(token)) {
@@ -238,17 +232,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new CaseMoreDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token)) {
             return new StartProcessFormPage();
-
-            // Report
-        } else if (ReportQuickDetailsAdminPage.TOKEN.equals(token)) {
-            return new ReportQuickDetailsAdminPage();
-        } else if (ReportListingAdminPage.TOKEN.equals(token)) {
-            return new ReportListingAdminPage();
-        } else if (ReportMoreDetailsAdminPage.TOKEN.equals(token)) {
-            return new ReportMoreDetailsAdminPage();
-
-            // Technical User
-        } else if (TechnicalUserWarningView.TOKEN.equals(token)) {
+        }  else if (TechnicalUserWarningView.TOKEN.equals(token)) {
             return new TechnicalUserWarningView();
             // System
         } else if (PopupAboutPage.TOKEN.equals(token)) {

@@ -1,0 +1,43 @@
+.doublesection .body{
+    padding: 0;
+    .menuEditor{
+        .menu{
+            .clearFix();
+        	position:absolute;
+            width: -moz-available;
+            .height(@header-menu-height);
+            .verticalGradient(@header-menu-gradientColor1, @header-menu-gradientPosition1, @header-menu-gradientColor2, @header-menu-gradientPosition2);
+            padding: @header-menu-margin;
+        }
+        >.datatable {
+            float: left;
+            width: auto;
+            text-align: center;
+            >.pager{
+                display: none;    
+            }
+            >.table{
+                width: auto;
+                >.thead{
+                    display: none;    
+                }
+                >.tbody{
+                    background: @header-submenuCurrent-bgColor !important;
+                    .tr_1{
+                        .height(@header-menu-height);
+                        width: 100%;
+            			display: block;
+        				font-weight: @header-menu-link-fontWeight;
+        				color: @header-menu-link-textColor;
+        				text-align: @header-menu-link-textAlign;
+        				position: relative;
+                        >.td{
+                            padding: @header-menu-link-padding;
+                            .height(@header-menu-height);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
