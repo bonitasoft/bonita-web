@@ -471,11 +471,11 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void removeEmptyCssClass() {
-        this.element.removeClassName("empty");
+        this.getElement().removeClassName("empty");
     }
 
     private void addEmptyCssClass() {
-        this.element.addClassName("empty");
+        this.getElement().addClassName("empty");
     }
 
     private Element createEmptyLinesElement() {
