@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -35,6 +36,8 @@ public class APIProfile extends ConsoleAPI<ProfileItem> implements
         APIHasGet<ProfileItem>,
         APIHasSearch<ProfileItem>
 {
+
+    private static final String PROFILES_ICON_FOLDER_PATH = "/" + WebBonitaConstants.PROFILES_ICONS_FOLDER_NAME;
 
     @Override
     protected ComposedDatastore<ProfileItem> defineDefaultDatastore() {

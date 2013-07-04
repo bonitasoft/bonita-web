@@ -187,6 +187,17 @@ public class WebBonitaConstantsUtils {
                 .getConsoleGroupIconsFolderPath());
     }
 
+    /**
+     * 
+     * Get the folder of the Console profile icons
+     * 
+     * @throws ConsoleException
+     */
+    public File getConsoleProfileIconsFolder() {
+        return getFolderFromBonitaHome(webBonitaConstants
+                .getConsoleProfilesIconsFolderPath());
+    }
+
     private String getBonitaHomePath() {
         final String bonitaHomePath = System
                 .getProperty(WebBonitaConstants.BONITA_HOME);
