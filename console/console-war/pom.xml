@@ -11,6 +11,8 @@
 
 	<properties>
 		<permutations>All</permutations>
+		<enable.engine.http.api.start>&lt;!--</enable.engine.http.api.start>
+        <enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
 	</properties>
 
 	<dependencies>
@@ -95,8 +97,18 @@
 					<packagingExcludes>
 						.gwt-tmp/**,
 						WEB-INF/deploy/**,
-						WEB-INF/classes/**
+						%regex[WEB-INF/classes/(?!html).*]
 					</packagingExcludes>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/resources</directory>
+							<includes>
+								<include>web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+					<webXml>${basedir}/src/main/resources/web.xml</webXml>
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
