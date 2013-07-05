@@ -109,7 +109,6 @@
 							</includes>
 						</resource>
 					</webResources>
-					<webXml>${basedir}/src/main/resources/web.xml</webXml>
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
