@@ -1,5 +1,7 @@
 .doublesection .body{
     padding: 0;
+    font-family: @header-menu-font; 
+	.fontSize(@header-menu-fontSize);
     .menuEditor{
         .menu{
             .clearFix();
@@ -9,31 +11,71 @@
             .verticalGradient(@header-menu-gradientColor1, @header-menu-gradientPosition1, @header-menu-gradientColor2, @header-menu-gradientPosition2);
             padding: @header-menu-margin;
         }
-        >.datatable {
+        >.tablesPannel{
+            padding: 0 0 0 150px;
             float: left;
-            width: auto;
-            text-align: center;
-            >.pager{
-                display: none;    
+            .btn{
+                position: relative;
+                clear: both;
             }
-            >.table{
+            >.tablePannel{
+                float: left;
                 width: auto;
-                >.thead{
-                    display: none;    
+                text-align: center;
+                .btn{
+                    clear: both;
+                    display: block;
+                    position: relative;
+                    text-align: left;
+                    text-decoration: underline;
+                    width: auto;
+                    background: @header-submenuCurrent-bgColor; 
+                    color: @header-menu-link-textColorHover;
                 }
-                >.tbody{
-                    background: @header-submenuCurrent-bgColor !important;
-                    .tr_1{
-                        .height(@header-menu-height);
-                        width: 100%;
-            			display: block;
-        				font-weight: @header-menu-link-fontWeight;
-        				color: @header-menu-link-textColor;
-        				text-align: @header-menu-link-textAlign;
-        				position: relative;
-                        >.td{
-                            padding: @header-menu-link-padding;
-                            .height(@header-menu-height);
+                >.datatable{
+                    width: auto;
+                    text-align: center;
+                    >.pager{
+                        display: none;    
+                    }
+                    >.table{
+                        width: auto;
+                        >.thead{
+                            display: none;    
+                        }
+                        >.tbody{
+                            .tr{
+                                color: @header-menu-link-textColorHover;
+                                background: @header-submenuCurrent-bgColor; 
+                                text-align: left;
+                                >.td_actions{
+                                    padding: 0;
+                                    a{
+                                        margin: 0;    
+                                    }
+                                }
+                            }
+                            .tr_1{
+                                display: block;
+            					font-weight: @header-menu-link-fontWeight;
+        						.boxSizing();
+        						color: @header-menu-link-textColor;
+        						text-align: @header-menu-link-textAlign;
+                                background: @header-submenu-linkHover-bgColor;
+                                .height(@header-menu-height);
+                                width: 100%;
+                				position: relative;
+                                >.td{
+                                    padding: @header-menu-link-padding;
+                                    .height(@header-menu-height);
+                                }
+                                >.td_actions{
+                                    padding: 0;
+                                    a{
+                                        margin: 0;    
+                                    }
+                                }
+                            }
                         }
                     }
                 }
