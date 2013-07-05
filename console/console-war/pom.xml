@@ -102,6 +102,7 @@
 					<webResources>
 						<resource>
 							<filtering>true</filtering>
+							<targetPath>WEB-INF</targetPath>
 							<directory>src/main/resources</directory>
 							<includes>
 								<include>web.xml</include>
