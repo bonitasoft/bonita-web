@@ -182,15 +182,6 @@
 						the version in your declared deps if this does not match (default if left 
 						out is 1.5.3) you will have mysterious errors -->
 					<gwtVersion>${gwtVersion}</gwtVersion>
-
-					<!-- 
-					<systemProperties>
-						<bonita.home>/home/colin/workspace/bonita_home</bonita.home>
-						<build.compiler>org.bonitasoft.tools.gwt.JDTCompiler</build.compiler>
-						<java.compiler>NONE</java.compiler>
-					</systemProperties>
-					<server>org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher</server>
-					<extraJvmArgs>-XX:MaxPermSize=256m</extraJvmArgs> -->
 				</configuration>
 			</plugin>
 			<plugin>
