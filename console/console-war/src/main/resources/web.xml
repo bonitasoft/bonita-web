@@ -258,8 +258,8 @@
 		<servlet-class>org.bonitasoft.forms.server.HomepageServlet</servlet-class>
 	</servlet>
 	<!-- End theme -->
-${enable.engine.http.api.start}
     <!-- For engine HTTP API -->
+${enable.engine.http.api.start}
 	<servlet>
 		<servlet-name>HttpAPIServlet</servlet-name>
 		<servlet-class>org.bonitasoft.engine.api.internal.servlet.HttpAPIServlet</servlet-class>
@@ -349,8 +349,8 @@ ${enable.engine.http.api.end}
 		<servlet-name>org.bonitasoft.forms.server.FormLayoutDownloadServletconsole/formLayoutDownload</servlet-name>
 		<url-pattern>/console/formLayoutDownload</url-pattern>
 	</servlet-mapping>
-${enable.engine.http.api.start}
     <!-- For engine HTTP API -->
+${enable.engine.http.api.start}
 	<servlet-mapping>
 		<servlet-name>HttpAPIServlet</servlet-name>
 		<url-pattern>/serverAPI/*</url-pattern>
