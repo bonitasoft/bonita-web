@@ -4,7 +4,7 @@
 	<artifactId>bonita-console</artifactId>
 	<name>bonita console</name>
 	<packaging>pom</packaging>
-	<version>6.1.0-rc-05-SNAPSHOT</version>
+	<version>6.1.0-rc-04</version>
 
 	<modules>
 		<module>toolkit</module>
@@ -17,8 +17,8 @@
 	</modules>
 
 	<scm>
-		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk</developerConnection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk</url>
+		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-04</developerConnection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-04</url>
 	</scm>
 
 	<properties>
