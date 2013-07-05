@@ -22,15 +22,15 @@
                 float: left;
                 width: auto;
                 text-align: center;
-                .btn{
+                a.profileaddpages{
                     clear: both;
                     display: block;
-                    position: relative;
-                    text-align: left;
-                    text-decoration: underline;
-                    width: auto;
-                    background: @header-submenuCurrent-bgColor; 
+                    padding: @profileMoreDetails-linkEditor-padding;
                     color: @header-menu-link-textColorHover;
+                    .boxShadow(@dropdown-shadowX, @dropdown-shadowY, @dropdown-shadowBlur, @dropdown-shadowColor);
+                    border: @profileMoreDetails-linkEditor-border;
+                    text-decoration: underline;
+                    text-align: left;
                 }
                 >.datatable{
                     width: auto;
@@ -40,6 +40,8 @@
                     }
                     >.table{
                         width: auto;
+                        margin: 0;
+                        .boxShadow(@dropdown-shadowX, 0, @dropdown-shadowBlur, @dropdown-shadowColor);
                         >.thead{
                             display: none;    
                         }
@@ -48,6 +50,7 @@
                                 color: @header-menu-link-textColorHover;
                                 background: @header-submenuCurrent-bgColor; 
                                 text-align: left;
+                                .boxSizing();
                                 >.td_actions{
                                     padding: 0;
                                     a{
