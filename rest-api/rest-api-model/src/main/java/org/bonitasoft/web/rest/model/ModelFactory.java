@@ -54,6 +54,7 @@ import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.web.rest.model.platform.PlatformDefinition;
+import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
@@ -160,6 +161,8 @@ public class ModelFactory extends ItemDefinitionFactory {
         // system
         else if (ProfileDefinition.TOKEN.equals(token)) {
             return new ProfileDefinition();
+        } else if(BonitaPageDefinition.TOKEN.equals(token)) {
+            return new BonitaPageDefinition();
         } else if (ProfileEntryDefinition.TOKEN.equals(token)) {
             return new ProfileEntryDefinition();
         } else if (ProfileMemberDefinition.TOKEN.equals(token)) {
