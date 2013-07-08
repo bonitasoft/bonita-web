@@ -876,11 +876,9 @@ public class FormFieldValuesUtil {
             IOException,
             FileTooBigException {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
-        Map<WidgetExpressionEntry, Expression> displayExpressions = new DisplayExpressions(widgets)
-                .asMap();
 
         final Map<String, Serializable> evaluatedDisplayExpressions = formServiceProvider.resolveExpressions(
-                new ArrayList<Expression>(displayExpressions.values()),
+                new DisplayExpressions(widgets).asList(),
                 context);
         final Map<String, Serializable> evaluatedExpressions = formServiceProvider.resolveExpressions(
                 getExpressionsToEvaluation(widgets, evaluatedDisplayExpressions, context),

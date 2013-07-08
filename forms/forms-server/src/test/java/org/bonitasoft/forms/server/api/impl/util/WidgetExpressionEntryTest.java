@@ -54,9 +54,13 @@ public class WidgetExpressionEntryTest {
 
     @Test
     public void testWeCanRetrieveWidgetExpressionEntryFromMap() {
-        WidgetExpressionEntry widget =
+        WidgetExpressionEntry widgetExpressionEntry =
                 new WidgetExpressionEntry("widgetId", ExpressionId.WIDGET_DISPLAY_CONDITION);
         Map<WidgetExpressionEntry, Boolean> map = new HashMap<WidgetExpressionEntry, Boolean>();
 
+        map.put(widgetExpressionEntry, true);
+
+        assertTrue(map.containsKey(widgetExpressionEntry));
+        assertTrue(map.get(widgetExpressionEntry));
     }
 }
