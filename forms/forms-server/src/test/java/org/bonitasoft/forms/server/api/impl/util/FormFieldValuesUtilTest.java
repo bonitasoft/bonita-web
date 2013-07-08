@@ -17,9 +17,10 @@
 package org.bonitasoft.forms.server.api.impl.util;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,17 +42,17 @@ public class FormFieldValuesUtilTest {
         List<FormWidget> widgets = Arrays.asList(
                 aWidgetWithLabelExpression("widget1"),
                 aWidgetWithLabelExpression("widget2"),
-                aWidgetWithLabelExpression("widget3")
-                );
+                aWidgetWithLabelExpression("widget3"));
 
-        Map<String, Boolean> displayConfiguration = new HashMap<String, Boolean>();
-        displayConfiguration.put("widget1", true);
-        displayConfiguration.put("widget2", false);
-        displayConfiguration.put("widget3", true);
+        Map<String, Serializable> resolvedDisplayExp = new HashMap<String, Serializable>();
+        resolvedDisplayExp.put(new WidgetExpressionEntry("widget1", ExpressionId.WIDGET_DISPLAY_CONDITION)
+                .toString(), true);
+        resolvedDisplayExp.put(new WidgetExpressionEntry("widget2", ExpressionId.WIDGET_DISPLAY_CONDITION)
+                .toString(), false);
 
         List<Expression> expressions = util.getExpressionsToEvaluation(
                 widgets,
-                displayConfiguration,
+                resolvedDisplayExp,
                 new HashMap<String, Object>());
 
         assertEquals(2, expressions.size());
@@ -60,12 +61,12 @@ public class FormFieldValuesUtilTest {
     }
 
     @Test
-    public void testWeRetrieveExpressionOfWidgetNotPresentInConfiguration() throws Exception {
+    public void testWeRetrieveExpressionOfWidgetWithoutDisplayExpressions() throws Exception {
         List<FormWidget> widgets = Arrays.asList(aWidgetWithLabelExpression("widget"));
 
         List<Expression> expressions = util.getExpressionsToEvaluation(
                 widgets,
-                new HashMap<String, Boolean>(),
+                new HashMap<String, Serializable>(),
                 new HashMap<String, Object>());
 
         assertEquals(1, expressions.size());
@@ -73,20 +74,23 @@ public class FormFieldValuesUtilTest {
     }
 
     @Test
-    public void testWeRetrieveOnlyDisplayExpressionOfNotDisplayedWidget() {
+    public void testWeDoNotRetrieveDisplayExpressionOfWidgetNotDisplayed() {
         FormWidget widget = new FormWidget();
         widget.setId("widget");
         Expression expression = new Expression();
         expression.setName("expression");
         widget.setDisplayConditionExpression(expression);
 
+        Map<String, Serializable> resolvedDisplayExp = new HashMap<String, Serializable>();
+        resolvedDisplayExp.put(new WidgetExpressionEntry("widget", ExpressionId.WIDGET_DISPLAY_CONDITION)
+                .toString(), false);
+
         List<Expression> expressions = util.getExpressionsToEvaluation(
                 Arrays.asList(widget),
-                Collections.singletonMap("widget", false),
+                resolvedDisplayExp,
                 new HashMap<String, Object>());
 
-        assertEquals(1, expressions.size());
-        assertEquals("expression", expressions.get(0).getName());
+        assertTrue(expressions.isEmpty());
     }
 
     FormWidget aWidgetWithLabelExpression(String id) {

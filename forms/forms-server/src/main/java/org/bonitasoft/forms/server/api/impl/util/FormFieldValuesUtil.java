@@ -868,7 +868,6 @@ public class FormFieldValuesUtil {
      */
     public void setFormWidgetsValues(final long tenantID,
             final List<FormWidget> widgets,
-            final Map<String, Boolean> widgetDisplayConfigurations,
             final Map<String, Object> context)
 
             throws FormNotFoundException,
@@ -876,33 +875,41 @@ public class FormFieldValuesUtil {
             SessionTimeoutException,
             IOException,
             FileTooBigException {
-        final List<Expression> expressionsToEvaluate = getExpressionsToEvaluation(widgets, widgetDisplayConfigurations, context);
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
-        final Map<String, Serializable> evaluatedExpressions = formServiceProvider.resolveExpressions(expressionsToEvaluate, context);
+        Map<WidgetExpressionEntry, Expression> displayExpressions = new DisplayExpressions(widgets)
+                .asMap();
+
+        final Map<String, Serializable> evaluatedDisplayExpressions = formServiceProvider.resolveExpressions(
+                new ArrayList<Expression>(displayExpressions.values()),
+                context);
+        final Map<String, Serializable> evaluatedExpressions = formServiceProvider.resolveExpressions(
+                getExpressionsToEvaluation(widgets, evaluatedDisplayExpressions, context),
+                context);
+        evaluatedExpressions.putAll(evaluatedDisplayExpressions);
+
         for (final FormWidget formWidget : widgets) {
             setFormWidgetValues(tenantID, formWidget, evaluatedExpressions, context);
             setTablesParams(formWidget, evaluatedExpressions, context);
         }
     }
 
-    protected List<Expression> getExpressionsToEvaluation(final List<FormWidget> widgets, final Map<String, Boolean> widgetDisplayConfigurations,
+    protected List<Expression> getExpressionsToEvaluation(final List<FormWidget> widgets,
+            final Map<String, Serializable> resolvedDisplayExp,
             final Map<String, Object> context) {
         final List<Expression> expressionsToEvaluate = new ArrayList<Expression>();
         for (final FormWidget formWidget : widgets) {
-            if (isAllowed(widgetDisplayConfigurations, formWidget.getId())) {
+            if (isAllowed(resolvedDisplayExp, formWidget.getId())) {
                 expressionsToEvaluate.addAll(getWidgetExpressions(formWidget, context));
-            } else {
-                if (formWidget.getDisplayConditionExpression() != null) {
-                    expressionsToEvaluate.add(formWidget.getDisplayConditionExpression());
-                }
             }
         }
         return expressionsToEvaluate;
     }
 
-    private Boolean isAllowed(final Map<String, Boolean> widgetDisplayConfigurations, final String widgetId) {
-        return !widgetDisplayConfigurations.containsKey(widgetId)
-                || widgetDisplayConfigurations.get(widgetId);
+    private Boolean isAllowed(final Map<String, Serializable> resolvedDisplayExp, final String widgetId) {
+        String widgetExpressionEntry = new WidgetExpressionEntry(widgetId, ExpressionId.WIDGET_DISPLAY_CONDITION)
+                .toString();
+        return !resolvedDisplayExp.containsKey(widgetExpressionEntry)
+                || Boolean.valueOf(resolvedDisplayExp.get(widgetExpressionEntry).toString());
     }
 
     public void storeWidgetsInCacheAndSetCacheID(final long tenantID, final String formID, final String pageID, final String locale,
@@ -966,19 +973,6 @@ public class FormFieldValuesUtil {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Return map of all widget with the information of rather or not they will be inserted
-     * 
-     */
-    public Map<String, Boolean> getWidgetDisplayConfigurations(
-            List<FormWidget> widgets,
-            FormServiceProvider formServiceProvider,
-            Map<String, Object> context)
-            throws FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException {
-        return new DisplayConfigurations(widgets, formServiceProvider, context)
-                .asMap();
     }
 
 }
