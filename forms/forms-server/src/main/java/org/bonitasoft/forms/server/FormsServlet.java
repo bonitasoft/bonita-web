@@ -66,6 +66,7 @@ import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
+import org.bonitasoft.forms.server.api.impl.util.DisplayConfigurations;
 import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
@@ -212,7 +213,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 formPage = definitionAPI.getFormPage(formID, pageId, context);
                 if (formPage != null) {
                     formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-                    formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
+                    formFieldValuesUtil.setFormWidgetsValues(tenantID,
+                            formPage.getFormWidgets(),
+                            new DisplayConfigurations(formPage.getFormWidgets(),
+                                    formServiceProvider,
+                                    context).asMap(),
+                            context);
                     formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
                 }
             }
@@ -327,7 +333,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final String pageId = (String) formServiceProvider.resolveExpression(nextPageIdExpression, context);
             final FormPage formPage = definitionAPI.getFormPage(formID, pageId, context);
             formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-            formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
+            formFieldValuesUtil.setFormWidgetsValues(tenantID,
+                    formPage.getFormWidgets(),
+                    formFieldValuesUtil.getWidgetDisplayConfigurations(formPage.getFormWidgets(),
+                            formServiceProvider,
+                            context),
+                    context);
             formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
             return formPage.getReducedFormPage();
         } catch (final ForbiddenFormAccessException e) {
