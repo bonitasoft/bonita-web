@@ -26,9 +26,6 @@
 		<bos-test-toolkit.version>6.1.0-rc-04</bos-test-toolkit.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	
-		<!-- used in child modules -->
-		<bonita.web.version>${project.version}</bonita.web.version>
 		
 		<slf4j.version>1.6.1</slf4j.version>
 		<gwt.version>2.5.1</gwt.version>
