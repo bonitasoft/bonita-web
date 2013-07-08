@@ -116,6 +116,8 @@ public class Table extends AbstractTable implements Refreshable {
     private int nbLinesByPage = 10;
 
     private boolean showSearch = true;
+    
+    private boolean selectLineOnClick = true;
 
     private String defaultSearch = "";
 
@@ -256,12 +258,14 @@ public class Table extends AbstractTable implements Refreshable {
         if (className != null) {
             line.addClass(className);
         }
-
-        CheckLineAction action = new CheckLineAction(checkboxId);
-        action.setDefaultAction(defaultAction);
-        line.setDefaultAction(action);
-
-        // line.setDefaultAction(defaultAction);
+        
+        if (selectLineOnClick) {
+            CheckLineAction action = new CheckLineAction(checkboxId);
+            action.setDefaultAction(defaultAction);
+            line.setDefaultAction(action);
+        } else {    
+            line.setDefaultAction(defaultAction);
+        }    
 
         this.lines.append(line);
 
@@ -927,6 +931,10 @@ public class Table extends AbstractTable implements Refreshable {
         if (this.refreshEvery != null) {
             this.refreshFiller.setRepeatEvery(this.refreshEvery);
         }
+    }
+    
+    public final void setSelectLineOnClick(boolean value) {
+        this.selectLineOnClick = value;
     }
 
     @Override

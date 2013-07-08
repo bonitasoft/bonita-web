@@ -8,9 +8,11 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.model.portal.profile;
 
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 
 /**
@@ -29,6 +31,11 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
 
     public static final String TOKEN = "bonitaPage";
     
+    /**
+     * the URL of profile resource
+     */
+    protected static final String API_URL = "../API/userXP/bonitaPage";
+    
     @Override
     protected String defineToken() {
         return TOKEN;
@@ -37,12 +44,13 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
 
     @Override
     protected String defineAPIUrl() {
-        return null;
+        return API_URL;
     }
 
 
     @Override
     protected void defineAttributes() {
+        createAttribute(BonitaPageItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
     }
 
 
@@ -56,8 +64,8 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
     }
 
     @Override
-    public APICaller getAPICaller() {
-        return null;
+    public APICaller<BonitaPageItem> getAPICaller() {
+        return new APICaller<BonitaPageItem>(this);
     }
 
 }

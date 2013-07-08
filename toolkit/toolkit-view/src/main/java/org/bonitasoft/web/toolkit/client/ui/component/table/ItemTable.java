@@ -697,6 +697,11 @@ public class ItemTable extends AbstractTable implements Refreshable {
         return this;
     }
 
+    public final ItemTable setSelectLineOnClick(boolean value) {
+        this.table.setSelectLineOnClick(value);
+        return this;
+    }
+
     public final String getOrder() {
         return this.table.getOrder();
     }
