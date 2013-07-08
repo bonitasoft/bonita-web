@@ -41,8 +41,7 @@ public class FormFieldValuesUtilTest {
     public void testWeRetrieveExpressionOfDisplayedWidgetOnly() throws Exception {
         List<FormWidget> widgets = Arrays.asList(
                 aWidgetWithLabelExpression("widget1"),
-                aWidgetWithLabelExpression("widget2"),
-                aWidgetWithLabelExpression("widget3"));
+                aWidgetWithLabelExpression("widget2"));
 
         Map<String, Serializable> resolvedDisplayExp = new HashMap<String, Serializable>();
         resolvedDisplayExp.put(new WidgetExpressionEntry("widget1", ExpressionId.WIDGET_DISPLAY_CONDITION)
@@ -55,9 +54,8 @@ public class FormFieldValuesUtilTest {
                 resolvedDisplayExp,
                 new HashMap<String, Object>());
 
-        assertEquals(2, expressions.size());
+        assertEquals(1, expressions.size());
         assertEquals("widget1:label", expressions.get(0).getName());
-        assertEquals("widget3:label", expressions.get(1).getName());
     }
 
     @Test
