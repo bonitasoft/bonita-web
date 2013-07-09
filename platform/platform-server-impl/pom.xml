@@ -58,8 +58,9 @@
 		
 		<!-- TESTS -->
 		<dependency>
-			<groupId>org.bonitasoft.test.toolkit</groupId>
-			<artifactId>bos-test-toolkit</artifactId>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-test-toolkit</artifactId>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
