@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.console.client.menu.view.navigation;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class NavigationMenuView extends RawView {
     private void getProfileEntries(String profileId, APICallback callback) {
         final Map<String, String> params = Collections.singletonMap(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, profileId);
         ProfileEntryDefinition.get().getAPICaller()
-                .search(0, 100, ProfileEntryItem.ATTRIBUTE_INDEX + " " + "ASC", null, params, callback);
+                .search(0, 100, ProfileEntryItem.ATTRIBUTE_INDEX + " " + "ASC", null, params, Arrays.asList(ProfileEntryItem.ATTRIBUTE_PAGE), callback);
     }
 
     private void listenViewChangeEvent(ChangeViewHandler handler) {

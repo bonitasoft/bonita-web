@@ -22,8 +22,10 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
@@ -81,7 +83,19 @@ public class MenuListCreator {
 
     private MenuLink createLink(final ProfileEntryItem entry) {
         saveFirstPageMet(entry);
-        return new MenuLink(new JsId(entry.getPage()), _(entry.getName()), _(entry.getDescription()), entry.getPage());
+        return new MenuLink(
+                createJsId(entry),
+                getLinkName(entry),
+                _(entry.getDescription()),
+                entry.getPage());
+    }
+
+    private JsId createJsId(final ProfileEntryItem entry) {
+        if (!StringUtil.isBlank(entry.getPage())) {
+            return new JsId(entry.getPage());
+        } else {
+            return JsId.getRandom();
+        }
     }
 
     private MenuItem createFolder(ProfileEntryItem entry) {
@@ -109,5 +123,23 @@ public class MenuListCreator {
                 folder.addLink(createLink(orphelineProfileEntry));
             }
         }
+    }
+
+    private String getLinkName(final ProfileEntryItem entry) {
+        /* TODO for custum Page, activate the custom page name */
+        // if (!StringUtil.isBlank(entry.getName())) {
+        // return entry.getName();
+        // } else {
+        if (entry.getDeploy(ProfileEntryItem.ATTRIBUTE_PAGE) != null) {
+            String name = entry.getDeploy(ProfileEntryItem.ATTRIBUTE_PAGE).getAttributeValue(BonitaPageItem.ATTRIBUTE_MENU_NAME);
+            if (!StringUtil.isBlank(name)) {
+                return _(name);
+            } else {
+                return "";
+            }
+        }
+        // }
+
+        return "";
     }
 }

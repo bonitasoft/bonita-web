@@ -17,9 +17,11 @@
 package org.bonitasoft.web.rest.server.api.deployer;
 
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.datastore.profile.GetBonitaPageHelper;
 import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.web.rest.server.datastore.profile.entry.GetProfileEntryHelper;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
@@ -52,6 +54,10 @@ public class DeployerFactory {
         return new GenericDeployer<ProfileEntryItem>(createProfileEntryGetter(), attribute);
     }
 
+    public Deployer createBonitaPageDeployer(String attribute) {
+        return new GenericDeployer<BonitaPageItem>(createBonitaPageGetter(), attribute);
+    }
+
     private UserDatastore createUserDatastore() {
         return new UserDatastore(apiSession);
     }
@@ -63,6 +69,10 @@ public class DeployerFactory {
     private ProfileEngineClient createProfileEngineClient() {
         return getEngineClientFactory()
                 .createProfileEngineClient(apiSession);
+    }
+
+    private GetBonitaPageHelper createBonitaPageGetter() {
+        return new GetBonitaPageHelper();
     }
 
     private GetProfileEntryHelper createProfileEntryGetter() {

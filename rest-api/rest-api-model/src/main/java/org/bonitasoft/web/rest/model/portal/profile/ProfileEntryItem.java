@@ -166,7 +166,9 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
         return getAttributeValue(ATTRIBUTE_PAGE);
     }
 
-    // Deploys
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // DEPLOYS
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public ProfileEntryItem getParentEntry() {
         return (ProfileEntryItem) ProfileEntryDefinition.get().createItem(getDeploy(ATTRIBUTE_PARENT_ID));
@@ -174,6 +176,10 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
 
     public ProfileItem getProfile() {
         return (ProfileItem) ProfileDefinition.get().createItem(getDeploy(ATTRIBUTE_PROFILE_ID));
+    }
+
+    public BonitaPageItem getBonitaPage() {
+        return new BonitaPageItem(getDeploy(ATTRIBUTE_PAGE));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

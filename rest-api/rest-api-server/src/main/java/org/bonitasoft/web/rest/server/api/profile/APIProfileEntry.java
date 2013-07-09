@@ -40,15 +40,16 @@ import org.bonitasoft.web.rest.server.framework.api.Datastore;
  */
 public class APIProfileEntry extends ConsoleAPI<ProfileEntryItem> implements
         APIHasGet<ProfileEntryItem>,
-        APIHasSearch<ProfileEntryItem>        
+        APIHasSearch<ProfileEntryItem>
 {
+
+    protected DeployerFactory factory;
 
     @Override
     protected ProfileEntryDefinition defineItemDefinition() {
         return ProfileEntryDefinition.get();
     }
 
-   
     @Override
     public String defineDefaultSearchOrder() {
         return ATTRIBUTE_INDEX;
@@ -61,9 +62,10 @@ public class APIProfileEntry extends ConsoleAPI<ProfileEntryItem> implements
          * because need the engine session which is set
          * by setter instead of being injected in API constructor...
          */
-        DeployerFactory factory = getDeployerFactory();
+        factory = getDeployerFactory();
         addDeployer(factory.createProfileDeployer(ProfileEntryItem.ATTRIBUTE_PROFILE_ID));
         addDeployer(factory.createProfileEntryDeployer(ProfileEntryItem.ATTRIBUTE_PARENT_ID));
+        addDeployer(factory.createBonitaPageDeployer(ProfileEntryItem.ATTRIBUTE_PAGE));
         super.fillDeploys(item, deploys);
 
     }
