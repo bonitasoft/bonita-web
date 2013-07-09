@@ -18,16 +18,20 @@ package org.bonitasoft.web.toolkit.client.ui;
 
 import static com.google.gwt.query.client.GQuery.$;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
+import org.bonitasoft.web.toolkit.client.ui.component.DoubleSection;
+import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.CustomPanel;
 import org.bonitasoft.web.toolkit.client.ui.html.HTML;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
-import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
 
 import com.google.gwt.user.client.Element;
 
@@ -111,12 +115,34 @@ public abstract class RawView extends Callable {
      *            The list of Components to add in the current view.
      */
     protected void addBody(final AbstractComponent... components) {
-        this.body.append(components);
+        List<AbstractComponent> finalComponents = new ArrayList<AbstractComponent>();
+        for (AbstractComponent comp : components) {
+            finalComponents.add(comp);
+            if (isDoubleSection(comp)) {
+                Section hiddenSection = createHiddenSection();
+                finalComponents.add(hiddenSection);
+            }
+        }
+
+        AbstractComponent[] arrayComp = new AbstractComponent[finalComponents.size()];
+        arrayComp = finalComponents.toArray(arrayComp);
+
+        this.body.append(arrayComp);
 
         if (this.generated) {
             ViewController.getInstance().triggerLoad();
         }
 
+    }
+
+    private Section createHiddenSection() {
+        Section emptySection = new Section(new JsId("doubleSectionShadow"));
+        emptySection.addClass("displayNone");
+        return emptySection;
+    }
+
+    private boolean isDoubleSection(AbstractComponent comp) {
+        return comp instanceof DoubleSection;
     }
 
     /**
@@ -255,8 +281,8 @@ public abstract class RawView extends Callable {
             ViewController.updateUI(getElement());
         }
     }
-    
-    public Action getClosePopupAction(){
+
+    public Action getClosePopupAction() {
         return new HistoryBackAction();
     }
 

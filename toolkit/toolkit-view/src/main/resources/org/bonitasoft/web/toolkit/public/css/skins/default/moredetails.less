@@ -3,7 +3,7 @@
 		display: block;
 	}
 	>.body{
-	    min-width: @moreDetails-min-width; 
+		min-width: @moreDetails-min-width;
 		top: @moreDetails-body-top;
 		padding: @moreDetails-body-padding !important; 
 		.boxSizing();
@@ -38,6 +38,7 @@
 			width: @moreDetails-section-width;
 			padding: @moreDetails-sectionLeft-padding;
 			&.doublesection{
+				clear: both;
 				width: @moreDetails-double-section-width;
 			}
 			&.tasks, &.cases {
