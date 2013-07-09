@@ -449,11 +449,6 @@ public class FormFieldValuesUtil {
             popupToolTipExpression.setName(widgetId + EXPRESSION_KEY_SEPARATOR + WIDGET_TOOLTIP);
             expressionsToEvaluate.add(popupToolTipExpression);
         }
-        if (formWidget.getDisplayConditionExpression() != null) {
-            final Expression expression = formWidget.getDisplayConditionExpression();
-            expression.setName(widgetId + EXPRESSION_KEY_SEPARATOR + WIDGET_DISPLAY_CONDITION);
-            expressionsToEvaluate.add(expression);
-        }
         addFormWidgetValueExpressionToEvaluate(formWidget, expressionsToEvaluate, context);
         addFormWidgetAvailableValuesExpressions(formWidget, expressionsToEvaluate);
 

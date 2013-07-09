@@ -32,8 +32,6 @@ public class DisplayExpressions {
 
     private List<FormWidget> widgets;
 
-    protected static final String WIDGET_DISPLAY_CONDITION = "display-condition";
-
     public DisplayExpressions(List<FormWidget> widgets) {
         assert widgets != null;
         this.widgets = widgets;
