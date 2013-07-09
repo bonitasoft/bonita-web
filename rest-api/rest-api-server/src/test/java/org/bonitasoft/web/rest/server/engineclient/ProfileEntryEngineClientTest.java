@@ -21,8 +21,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.bonitasoft.engine.api.ProfileAPI;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.ProfileEntryNotFoundException;
+import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.rest.server.APITestWithMock;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
@@ -59,5 +63,21 @@ public class ProfileEntryEngineClientTest extends APITestWithMock  {
                
         doThrow(new APIItemNotFoundException("profile entry not found", APIID.makeAPIID(-1L))).when(profileAPI).getProfileEntry(-1L);
         engineClient.getProfileEntry(-1L);
+    }
+    
+    @Test
+    public void searchProfileEntries_call_engine_and_get_specific_results() throws SearchException {
+        SearchOptions searchOptions = new SearchOptionsBuilder(0, 10).done();
+        engineClient.searchProfiles(searchOptions);
+        
+        verify(profileAPI).searchProfileEntries(searchOptions);        
+    }
+    
+    @Test(expected = APIException.class)
+    public void searchProfileEntries_call_engine_and_raise_Search_Exception_because_of_invalid_options() throws SearchException {
+        SearchOptions searchOptions = new SearchOptionsBuilder(-1, 10).done();
+        
+        doThrow(new APIException("Search options invalid")).when(profileAPI).searchProfileEntries(searchOptions);
+        engineClient.searchProfiles(searchOptions);
     }
 }
