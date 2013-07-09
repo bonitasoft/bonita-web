@@ -68,6 +68,18 @@ public class Text extends Input {
 
         return input;
     }
+    
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if(getInputElement() != null) {
+            if (enabled == false){
+                getInputElement().setAttribute("disabled", "disabled");
+            } else {
+                getInputElement().removeAttribute("disabled");
+            }
+        }
+    }
 
     public long getMaxLength() {
         return maxLength;
