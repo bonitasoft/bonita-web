@@ -11,13 +11,12 @@ package org.bonitasoft.web.rest.model.portal.profile;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
  * @author Fabio Lombardi
  *
  */
-public class BonitaPageItem extends Item implements ItemHasUniqueId{  
+public class BonitaPageItem extends Item {  
     
     /*private String name;
     private String token;
@@ -27,14 +26,15 @@ public class BonitaPageItem extends Item implements ItemHasUniqueId{
     public static final String ATTRIBUTE_NAME = "name";
     public static final String ATTRIBUTE_TOKEN = "token";
     public static final String ATTRIBUTE_DESCRIPTION = "description";
+    public static final String ATTRIBUTE_MENU_NAME = "menuName";
     
-    public BonitaPageItem(Long id, String name, String token, String description) {
-        setId(id);
-        setName(name);
+    public BonitaPageItem(String token, String name, String description, String menuName) {
         setToken(token);
+        setName(name);
         setDescription(description);
+        setMenuName(menuName);
     }
-    
+
     /**
      * Default Constructor.
      */
@@ -58,6 +58,10 @@ public class BonitaPageItem extends Item implements ItemHasUniqueId{
         this.setAttribute(ATTRIBUTE_DESCRIPTION, description);
     }
     
+    private void setMenuName(String menuName) {
+        this.setAttribute(ATTRIBUTE_MENU_NAME, menuName);
+    }
+    
     public String getName() {
         return this.getAttributeValue(ATTRIBUTE_NAME);
     }
@@ -70,16 +74,9 @@ public class BonitaPageItem extends Item implements ItemHasUniqueId{
         return this.getAttributeValue(ATTRIBUTE_DESCRIPTION);
     }
        
-    @Override
-    public void setId(final String id) {
-        this.setAttribute("id", id);
-    }
-
-    @Override
-    public void setId(final Long id) {
-        this.setAttribute("id", id.toString());
-    }
-    
+    public String getMenuName() {
+        return this.getAttributeValue(ATTRIBUTE_MENU_NAME);
+    }    
     
     @Override
     public ItemDefinition<BonitaPageItem> getItemDefinition() {

@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.model.portal.profile;
 
-import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -50,12 +49,16 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
 
     @Override
     protected void defineAttributes() {
+        createAttribute(BonitaPageItem.ATTRIBUTE_TOKEN, ItemAttribute.TYPE.STRING);
         createAttribute(BonitaPageItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(BonitaPageItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.STRING);
+        createAttribute(BonitaPageItem.ATTRIBUTE_MENU_NAME, ItemAttribute.TYPE.STRING);
     }
 
 
     @Override
     protected void definePrimaryKeys() {
+        setPrimaryKeys(BonitaPageItem.ATTRIBUTE_TOKEN);
     }
 
     @Override
