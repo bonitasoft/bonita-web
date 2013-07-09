@@ -9,7 +9,6 @@
 		<fileSet>
 			<directory>${project.basedir}/src/main/resources</directory>
 			<outputDirectory>/</outputDirectory>
-			<filtered>true</filtered>
 			<includes>
 				<include>**/*</include>
 			</includes>

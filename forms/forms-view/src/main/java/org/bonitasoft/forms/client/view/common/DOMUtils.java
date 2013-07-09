@@ -337,11 +337,37 @@ public class DOMUtils {
                     if ("onload".equalsIgnoreCase(bodyAttribute.getKey())) {
                         onloadValue = bodyAttribute.getValue();
                     }
-                    bodyElement.setAttribute(bodyAttribute.getKey(), bodyAttribute.getValue());
+                    // fix for IE7 and IE8 failing to evaluate scripts in inserted HTML pages headers
+                    if ("ieonload".equalsIgnoreCase(bodyAttribute.getKey()) && (isIE7() || isIE8())) {
+                        onloadValue = onloadValue == null ? bodyAttribute.getValue() : onloadValue + bodyAttribute.getValue();
+                    } else {
+                        bodyElement.setAttribute(bodyAttribute.getKey(), bodyAttribute.getValue());
+                    }
                 }
             }
         }
         return onloadValue;
+    }
+
+    /**
+     * @return true if the current web browser is ie7
+     */
+    public boolean isIE7() {
+        return getUserAgent().indexOf("MSIE 7.") != -1;
+    }
+
+    /**
+     * @return true if the current web browser is ie8
+     */
+    public boolean isIE8() {
+        return getUserAgent().indexOf("MSIE 8.") != -1;
+    }
+
+    /**
+     * @return the user Agent string in lower case
+     */
+    private String getUserAgent() {
+        return Window.Navigator.getUserAgent();
     }
 
     /**

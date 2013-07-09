@@ -2,6 +2,7 @@ package org.bonitasoft.reporting.exporters;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -61,7 +62,7 @@ public class Exporter {
             } else if ("PDF".equals(reportFormat)) {
 
                 exporter = new PDFExporter();
-                response.setHeader("Content-Disposition", " inline; filename=" + reportName + ".pdf");
+                response.setHeader("Content-Disposition", " inline; filename=" + reportName + "_" + (new Date().getTime()) + ".pdf");
 
                 final FileBufferedOutputStream fbos = new FileBufferedOutputStream();
 
@@ -110,5 +111,4 @@ public class Exporter {
             throw new BonitaReportException("Error during report export (io)", e);
         }
     }
-
 }

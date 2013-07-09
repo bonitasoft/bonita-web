@@ -30,10 +30,14 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.console.common.server.privileges.datastore.PrivilegesDatastore;
 import org.bonitasoft.console.common.server.privileges.datastore.PrivilegesDatastoreImpl;
+import org.bonitasoft.engine.api.CommandAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
@@ -43,7 +47,6 @@ import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotEnabledException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
@@ -2237,18 +2240,66 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private Map<Long, Set<Long>> getProcessActors(final APISession session) throws BPMEngineException {
-        final PrivilegesDatastore instance = PrivilegesDatastoreImpl.getInstance();
-        Map<Long, Set<Long>> getProcessActors = new HashMap<Long, Set<Long>>();
         try {
-            getProcessActors = instance.getProcessActors(session);
-        } catch (final BonitaException e) {
-            final String message = "The engine was not able to retrieve the actors of process Actors ";
+            final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
+            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+            parameters.put("USER_ID_KEY", session.getUserId());
+            return (Map<Long, Set<Long>>) commandAPI.execute("getActorIdsForUserIdIncludingTeam", parameters);
+
+        } catch (final Exception e) {
+            final String message = "The engine was not able to retrieve the actors of process Actors. Error while executing command:";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
             throw new BPMEngineException(message);
         }
-        return getProcessActors;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void storeFormTransientDataContext(final HttpSession session, final String storageKey, final Map<String, Serializable> transientDataContext,
+            final Map<String, Object> context) {
+        final String id = getInstanceIdToUse(context);
+        session.setAttribute(storageKey + "--" + id, transientDataContext);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, Serializable> retrieveFormTransientDataContext(final HttpSession session, final String storageKey, final Map<String, Object> context) {
+        final String id = getInstanceIdToUse(context);
+        @SuppressWarnings("unchecked")
+        Map<String, Serializable> transientDataContext = (Map<String, Serializable>) session.getAttribute(storageKey + "--" + id);
+        if (transientDataContext == null) {
+            transientDataContext = new HashMap<String, Serializable>();
+        }
+        return transientDataContext;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeFormTransientDataContext(final HttpSession session, final String storageKey, final Map<String, Object> context) {
+        final String id = getInstanceIdToUse(context);
+        session.removeAttribute(storageKey + "--" + id);
+    }
+
+    private String getInstanceIdToUse(final Map<String, Object> context) {
+        String id = null;
+        @SuppressWarnings("unchecked")
+        final Map<String, Object> urlContext = (Map<String, Object>) context.get(FormServiceProviderUtil.URL_CONTEXT);
+        if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
+            id = urlContext.get(FormServiceProviderUtil.TASK_UUID).toString();
+        } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
+            id = urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString();
+        } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
+            id = urlContext.get(FormServiceProviderUtil.INSTANCE_UUID).toString();
+        }
+        return id;
     }
 
     private void logInfoMessage(final Throwable e, final String message) {
