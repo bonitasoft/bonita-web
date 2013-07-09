@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>bonita-console</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
-		<version>6.1.0-rc-05-SNAPSHOT</version>
+		<version>6.1.0-rc-05</version>
 	</parent>
 	
 	<groupId>org.bonitasoft.web.toolkit</groupId>
@@ -19,7 +19,7 @@
 	</modules>
 
 	<scm>
-		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/toolkit</developerConnection>
+		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-05/toolkit</developerConnection>
 	</scm>
 
 	<properties>
