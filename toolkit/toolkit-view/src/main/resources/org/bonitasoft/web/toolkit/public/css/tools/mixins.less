@@ -98,7 +98,15 @@
 .borderRadiusRight(@radius){
 	.borderRadius(0, @radius, 0, @radius, 0);
 }
-
+.borderRadiusTop(@radius){
+	.borderRadius(@radius, @radius, 0, 0);
+}
+.borderRadiusBottom(@radius){
+	.borderRadius(0, 0, @radius ,@radius);
+}
+.noBorderRadius(){
+	.borderRadius(0);
+}
 .textOverflow(@overflow) {
 	-ms-text-overflow:@overflow;
 	-o-text-overflow:@overflow;

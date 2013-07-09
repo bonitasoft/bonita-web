@@ -189,7 +189,11 @@
 @header-menu-link-fontSize: 13;
 @header-menu-link-fontSizePx: unit(@header-menu-link-fontSize, px);
 @header-menu-link-paddingY: 2*@h;
-@header-menu-link-padding: @header-menu-link-paddingY 8*@w @header-menu-link-paddingY 8*@w;
+@header-menu-link-paddingX: 8*@w;
+@header-menu-link-padding: @header-menu-link-paddingY @header-menu-link-paddingX;
+@header-menuEditor-actionLink-width: 4*@w;
+@header-menuEditor-link-padding: @header-menu-link-paddingY @header-menu-link-paddingX @header-menu-link-paddingY (@header-menu-link-paddingX - @header-menuEditor-actionLink-width);
+
 
 @header-menu-link-borderWidth: @border-width;
 @header-menu-link-borderLeft: @header-menu-link-borderWidth solid darken(@mainAccentColor, 7%);
@@ -642,8 +646,19 @@
 @profileList-description-position: absolute;
 @profileList-description-width: 77*@w;
 
+// ----------------------------------------------------------------------------
+// profile more details
+// ----------------------------------------------------------------------------
 @profileMoreDetails-linkEditor-padding: @table-cell-padding;
 @profileMoreDetails-linkEditor-border: @table-border;
+@profileMoreDetails-addMenulink-margin: ((@header-menu-height - @button-height)/2) 1*@w;
+@profileMoreDetails-deleteProfileEntryLink-bg: "trash.png";
+@profileMoreDetails-deleteProfileEntryLink-width: 6*@w;
+@profileMoreDetails-deleteProfileEntryLink-height: 4*@h;
+
+@profileMoreDetails-menuEditor-folder-padding: @header-menu-link-paddingY (@header-menu-link-paddingX - @profileMoreDetails-deleteProfileEntryLink-width) @header-menu-link-paddingY @header-menu-link-paddingX;
+@profileMoreDetails-menuEditor-folder-borderTop: none;
+@profileMoreDetails-menuEditor-folder-textAlign: left;
 // ----------------------------------------------------------------------------
 // report list admin
 // ----------------------------------------------------------------------------
@@ -714,7 +729,8 @@
 @moreDetails-padding: 5*@h 4*@w 4*@h 6*@w;
 @moreDetails-section-padding: 4*@h 0*@w 7*@h 0*@w;
 @moreDetails-section-header-borderTop: @border-width solid @borderColor;
-@moreDetails-section-header-padding: 3*@h 2*@w 0 2*@w;
+@moreDetails-section-header-paddingX: 2*@w;
+@moreDetails-section-header-padding: 3*@h @moreDetails-section-header-paddingX 0 @moreDetails-section-header-paddingX;
 @moreDetails-section-body-padding: 0 2*@w 0 2*@w;
 @moreDetails-section-margin: 0 0 3*@h 0;
 @moreDetails-title-padding: 0;
@@ -1028,7 +1044,9 @@
 @table-header-cell-border-top: -1*@h;
 @table-header-fontSize: 18;
 @table-header-cell-height: 4*@h;
-@table-cell-padding: 3*@h 4*@w 3*@h 4*@w;
+@table-cell-paddingX: 4*@w;
+@table-cell-paddingY: 3*@h;
+@table-cell-padding: @table-cell-paddingY @table-cell-paddingX;
 @table-cell-actions-margin: 0*@h 0*@w 0*@h 1em;
 @table-header-cell-paddingX:  4*@w;
 @table-header-cell-padding: 2*@h @table-header-cell-paddingX;

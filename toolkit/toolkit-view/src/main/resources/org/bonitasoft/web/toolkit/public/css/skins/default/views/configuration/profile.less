@@ -1,0 +1,127 @@
+@import "../../skin.config.less";
+.doublesection .body {
+	.fontSize (@header-menu-fontSize);
+	
+	.menuEditor {
+		.menu {
+			position: absolute;
+			width: 100%;
+			.height (@header-menu-height);
+			.verticalGradient (@header-menu-gradientColor1 , @header-menu-gradientPosition1 , @header-menu-gradientColor2 , @header-menu-gradientPosition2);
+		}
+		> .tablesPannel {
+			padding: 0 0 0 (@filtersPanel-width - @moreDetails-paddingLeft - @moreDetails-section-header-paddingX);
+			float: left;
+			position: relative;
+			
+			>.btn-action{
+				margin: @profileMoreDetails-addMenulink-margin;
+			}
+			> .tablePannel {
+				float: left;
+				width: auto;
+				text-align: center;
+				.table .tbody .tr .td{
+					border: none;
+				}
+				> .datatable {
+					width: auto;
+					text-align: center;
+					> .pager {
+						display: none;
+					}
+
+					> .table {
+						width: auto;
+						margin: 0;
+						border: @profileMoreDetails-menuEditor-folder-borderTop;
+						.boxShadow(@dropdown-shadowX , 0 , @dropdown-shadowBlur , @dropdown-shadowColor);
+						.borderRadius(0px);
+						> .thead {
+							display: none;
+						}
+						> .tbody {
+							.tr {
+								color: @header-menu-link-textColorHover;
+								background: @header-submenuCurrent-bgColor;
+								text-align: left;
+								
+								&_last{
+									.td{
+										&_last, &_1{
+											.noBorderRadius();
+										}
+									}
+									
+								}
+								
+								.td{
+									&_1{
+										border: @table-border;
+										border-top: none;
+										border-bottom: none;
+										border-right: none;
+									}
+									&_last{
+										border: @table-border;
+										border-left: none;
+										border-top: none;
+										border-bottom: none;
+										
+									}
+									//.table_view_table .table .tbody .tr_last .td_last
+								}
+								
+								> .td_actions {
+									padding: 0;
+									a {
+										margin: 0;
+										&.deleteProfileEntryLink{
+											display: block;
+											width: @profileMoreDetails-deleteProfileEntryLink-width;
+											.hideText();
+											.bg(@profileMoreDetails-deleteProfileEntryLink-bg);
+											.height(@header-menu-height);
+											width: @profileMoreDetails-deleteProfileEntryLink-width;
+										}
+									}
+								}
+							}
+							.tr_1 { // menu
+								color: @header-menu-link-textColor;
+								text-align: @profileMoreDetails-menuEditor-folder-textAlign;
+								background: transparent;
+								.height(@header-menu-height);
+								> .td {
+									border: none;
+									padding: @profileMoreDetails-menuEditor-folder-padding;
+									.height(@header-menu-height);
+								}
+
+								> .td_actions {
+									padding: 0;
+									
+									a {
+										margin: 0;
+										.pointerAsLink();
+									}
+								}
+							}
+						}
+					}
+				}
+				p.addProfileEntry {
+					clear: both;
+					padding: @profileMoreDetails-linkEditor-padding;
+					color: @header-menu-link-textColorHover;
+					.boxShadow (@dropdown-shadowX , @dropdown-shadowY , @dropdown-shadowBlur , @dropdown-shadowColor);
+					border: @profileMoreDetails-linkEditor-border;
+					text-decoration: underline;
+					text-align: left;
+					.borderRadiusBottom(@defaultRadius);
+				}
+			}
+		}
+	}
+}
+
