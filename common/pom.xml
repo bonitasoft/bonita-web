@@ -12,6 +12,7 @@
 
 	<modules>
 		<module>common-config</module>
+		<module>common-test-toolkit</module>
 		<module>common-server</module>
 	</modules>
 

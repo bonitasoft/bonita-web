@@ -1,16 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>org.bonitasoft.test.toolkit</groupId>
-	<artifactId>bos-test-toolkit</artifactId>
+	
+	<parent>
+		<artifactId>common-parent</artifactId>
+		<groupId>org.bonitasoft.console</groupId>
+		<version>6.1.0-rc-06-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>common-test-toolkit</artifactId>
 	<packaging>jar</packaging>
-	<name>bos-test-toolkit</name>
-	<version>6.1.0-rc-05-SNAPSHOT</version>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bonita.engine.version>6.1.0-rc-04</bonita.engine.version>
-	</properties>
+	<name>common-test-toolkit</name>
 
 	<dependencies>
 		<dependency>
