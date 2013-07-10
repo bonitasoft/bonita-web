@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>bonita-console</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
-		<version>6.1.0-rc-06</version>
+		<version>6.1.0-rc-07-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.console</groupId>
@@ -17,8 +17,8 @@
 	</modules>
 
 	<scm>
-		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-06/common</connection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/tags/bos-web-6.1.0-rc-06/common</url>
+		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/common</connection>
+		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/common</url>
 	</scm>
 
 </project>
