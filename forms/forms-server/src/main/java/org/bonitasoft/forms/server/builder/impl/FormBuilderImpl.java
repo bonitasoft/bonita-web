@@ -937,9 +937,13 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(pagesElement);
         final Element pageElement = this.document.createElement(XMLForms.PAGE);
-        pageElement.setAttribute(XMLForms.ID, pageId);
+        pageElement.setAttribute(XMLForms.ID, escapeSingleQuote(pageId));
         push(pageElement);
         return this;
+    }
+
+    private String escapeSingleQuote(String str) {
+        return str.replaceAll("'", "&apos;");
     }
 
     /**
@@ -971,7 +975,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(entryFormsElement);
         final Element entryFormElement = this.document.createElement(XMLForms.FORM);
-        entryFormElement.setAttribute(XMLForms.ID, formId);
+        entryFormElement.setAttribute(XMLForms.ID, escapeSingleQuote(formId));
         addChild(entryFormElement, XMLForms.FORM_TYPE, FormType.entry.name(), true, true);
         push(entryFormElement);
         return this;
@@ -1005,7 +1009,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(viewFormsElement);
         final Element viewFormElement = this.document.createElement(XMLForms.FORM);
-        viewFormElement.setAttribute(XMLForms.ID, formId);
+        viewFormElement.setAttribute(XMLForms.ID, escapeSingleQuote(formId));
         addChild(viewFormElement, XMLForms.FORM_TYPE, FormType.view.name(), true, true);
         push(viewFormElement);
         return this;
@@ -1174,7 +1178,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(validatorsElement);
         final Element validatorElement = this.document.createElement(XMLForms.VALIDATOR);
-        validatorElement.setAttribute(XMLForms.ID, validatorId);
+        validatorElement.setAttribute(XMLForms.ID, escapeSingleQuote(validatorId));
         addChild(validatorElement, XMLForms.CLASSNAME, className, true, true);
         addChild(validatorElement, XMLForms.STYLE, cssClasses, false, false);
         if (position != null) {
@@ -1244,7 +1248,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(widgetsElement);
         final Element widgetElement = this.document.createElement(XMLForms.WIDGET);
-        widgetElement.setAttribute(XMLForms.ID, widgetId);
+        widgetElement.setAttribute(XMLForms.ID, escapeSingleQuote(widgetId));
         widgetElement.setAttribute(XMLForms.TYPE, widgetType.name());
         push(widgetElement);
         return this;
