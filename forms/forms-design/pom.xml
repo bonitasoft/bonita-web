@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>forms-parent</artifactId>
 		<groupId>org.bonitasoft.forms</groupId>
-		<version>6.1.0-rc-07-SNAPSHOT</version>
+		<version>6.1.0-rc-08-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.forms</groupId>
