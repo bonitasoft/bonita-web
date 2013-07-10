@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -872,9 +873,7 @@ public class FormFieldValuesUtil {
             FileTooBigException {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
 
-        final Map<String, Serializable> evaluatedDisplayExpressions = formServiceProvider.resolveExpressions(
-                new DisplayExpressions(widgets).asList(),
-                context);
+        final Map<String, Serializable> evaluatedDisplayExpressions = resolveDisplayExpressions(widgets, context, formServiceProvider);
         final Map<String, Serializable> evaluatedExpressions = formServiceProvider.resolveExpressions(
                 getExpressionsToEvaluation(widgets, evaluatedDisplayExpressions, context),
                 context);
@@ -886,22 +885,32 @@ public class FormFieldValuesUtil {
         }
     }
 
+    private Map<String, Serializable> resolveDisplayExpressions(final List<FormWidget> widgets, final Map<String, Object> context,
+            final FormServiceProvider formServiceProvider)
+            throws FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException {
+        Map<String, Serializable> resolvedExpressions = formServiceProvider.resolveExpressions(
+                new DisplayExpressions(widgets).asList(),
+                context);
+        return resolvedExpressions != null ? resolvedExpressions : new HashMap<String, Serializable>();
+    }
+
     protected List<Expression> getExpressionsToEvaluation(final List<FormWidget> widgets,
             final Map<String, Serializable> resolvedDisplayExp,
             final Map<String, Object> context) {
         final List<Expression> expressionsToEvaluate = new ArrayList<Expression>();
         for (final FormWidget formWidget : widgets) {
-            if (isAllowed(resolvedDisplayExp, formWidget.getId())) {
+            if (isAuthorized(resolvedDisplayExp, formWidget.getId())) {
                 expressionsToEvaluate.addAll(getWidgetExpressions(formWidget, context));
             }
         }
         return expressionsToEvaluate;
     }
 
-    private Boolean isAllowed(final Map<String, Serializable> resolvedDisplayExp, final String widgetId) {
+    private Boolean isAuthorized(final Map<String, Serializable> resolvedDisplayExp, final String widgetId) {
         String widgetExpressionEntry = new WidgetExpressionEntry(widgetId, ExpressionId.WIDGET_DISPLAY_CONDITION)
                 .toString();
-        return !resolvedDisplayExp.containsKey(widgetExpressionEntry)
+        return resolvedDisplayExp == null
+                || !resolvedDisplayExp.containsKey(widgetExpressionEntry)
                 || Boolean.valueOf(resolvedDisplayExp.get(widgetExpressionEntry).toString());
     }
 
