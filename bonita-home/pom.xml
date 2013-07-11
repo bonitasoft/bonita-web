@@ -150,7 +150,7 @@
 						<configuration>
 							<tasks>
 								<copy todir="${project.build.directory}/bonita-home/bonita" overwrite="true">
-									<fileset dir="${project.basedir}/src/main/resources" />
+									<fileset dir="${project.basedir}/src/main/resources" erroronmissingdir="false"/>
 								</copy>
 							</tasks>
 						</configuration>
