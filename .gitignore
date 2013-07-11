@@ -1,3 +1,9 @@
+# eclipse settings
+*.project
+*.settings
+*.classpath
+
+# target
 bonita-home/target/
 common/common-config/target/
 common/common-server/target/
