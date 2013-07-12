@@ -26,7 +26,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
  */
 public class ProfileEntryItemBuilder extends AbstractProfileEntryBuilder<ProfileEntryItem> {
 
-    private ProfileEntryItemBuilder() {
+    public ProfileEntryItemBuilder() {
         // empty
     }
 

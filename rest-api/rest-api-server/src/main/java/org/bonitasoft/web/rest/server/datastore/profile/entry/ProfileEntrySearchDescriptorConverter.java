@@ -22,30 +22,37 @@ import java.util.Map;
 import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 
 /**
- * @author Vincent Elcrin
+ * @author Paul AMAR
  * 
  */
 public class ProfileEntrySearchDescriptorConverter implements AttributeConverter {
 
-    private static final Map<String, String> mapping = new HashMap<String, String>();
+    private final Map<String, String> mapping;
 
-    static {
+    public ProfileEntrySearchDescriptorConverter() {
+        mapping = createMapping();
+    }
+
+    private Map<String, String> createMapping() {
+        Map<String, String> mapping = new HashMap<String, String>();
         mapping.put(ProfileEntryItem.ATTRIBUTE_ID, ProfileEntrySearchDescriptor.ID);
-        mapping.put(ProfileEntryItem.ATTRIBUTE_INDEX, ProfileEntrySearchDescriptor.INDEX);
         mapping.put(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntrySearchDescriptor.NAME);
         mapping.put(ProfileEntryItem.ATTRIBUTE_PARENT_ID, ProfileEntrySearchDescriptor.PARENT_ID);
+        mapping.put(ProfileEntryItem.ATTRIBUTE_INDEX, ProfileEntrySearchDescriptor.INDEX);
         mapping.put(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, ProfileEntrySearchDescriptor.PROFILE_ID);
+        
+        return mapping;
     }
 
     @Override
     public String convert(String attribute) {
-        String desciptor = mapping.get(attribute);
-        if (attribute == null) {
-            throw new RuntimeException(attribute + " has no valid search descriptor");
-        }
-        return desciptor;
+        return MapUtil.getMandatory(mapping, attribute);
     }
 
+    protected final void extendsMapping(Map<String, String> extension) {
+        mapping.putAll(extension);
+    }
 }
