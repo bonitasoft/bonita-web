@@ -1,0 +1,26 @@
+# eclipse settings
+*.project
+*.settings
+*.classpath
+
+# target
+bonita-home/target/
+common/common-config/target/
+common/common-server/target/
+common/common-test-toolkit/target/
+console/console-config/target/
+console/console-server-impl/target/
+console/console-war/target/
+forms/forms-config/target/
+forms/forms-design/target/
+forms/forms-model/target/
+forms/forms-rpc/target/
+forms/forms-server/target/
+forms/forms-view/target/
+platform/platform-config/target/
+platform/platform-server-impl/target/
+rest-api/rest-api-model/target/
+rest-api/rest-api-server/target/
+toolkit/toolkit-server/target/
+toolkit/toolkit-view/target/
+
