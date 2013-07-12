@@ -6,6 +6,10 @@
 # all .class in toolkit
 *.class
 
+btm1.tlog
+btm2.tlog
+html/
+
 # target
 bonita-home/target/
 common/common-config/target/
