@@ -17,8 +17,8 @@
 	</modules>
 
 	<scm>
-		<developerConnection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk</developerConnection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk</url>
+		<developerConnection>scm:git:git@github.com:bonitasoft/bonita-web</developerConnection>
+		<url>scm:git:git@github.com:bonitasoft/bonita-web</url>
 	</scm>
 
 	<properties>
