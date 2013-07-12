@@ -30,8 +30,4 @@
 		</profile>
 	</profiles>
 
-	<scm>
-		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/console</connection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/console</url>
-	</scm>
 </project>
