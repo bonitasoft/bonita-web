@@ -3,6 +3,9 @@
 *.settings
 *.classpath
 
+# all .class in toolkit
+*.class
+
 # target
 bonita-home/target/
 common/common-config/target/
