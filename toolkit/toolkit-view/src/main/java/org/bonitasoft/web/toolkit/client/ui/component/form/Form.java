@@ -568,6 +568,28 @@ public class Form extends AbstractForm {
      * @param actionHandler
      * @return This function returns the form itself in order to allow cascading calls
      */
+    public Form addDisabledButton(final JsId jsid, final String label, final String tooltip, final Action actionHandler) {
+        if (actionHandler instanceof FormAction) {
+            ((FormAction) actionHandler).setForm(this);
+        }
+
+        FormSubmitButton formSubmitButton = new FormSubmitButton(jsid, label, tooltip, new FormSubmitAction(actionHandler));
+        formSubmitButton.setEnabled(false);
+        super.addAction(formSubmitButton);
+        return this;
+    }
+
+    /**
+     * Add an action to the form
+     * 
+     * @param jsid
+     * @param label
+     *            The label to show in the button
+     * @param tooltip
+     *            The tooltip that will quickly explain the action
+     * @param actionHandler
+     * @return This function returns the form itself in order to allow cascading calls
+     */
     public Form addButton(final JsId jsid, final String label, final String tooltip, final Action actionHandler) {
         if (actionHandler instanceof FormAction) {
             ((FormAction) actionHandler).setForm(this);

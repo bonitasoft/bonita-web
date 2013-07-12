@@ -119,7 +119,9 @@ $(function() {
 		 */
 		var onQueueChanged = function (pluploader) {
 			if(pluploader.files.length > 0) {
+				$('div.alert_message.ERROR').remove();
 				updateUploaderState(true, pluploader.files[0].name, CSS_IS_UPLOADING, pluploader.files[0].name)
+				$("a.installUpload").addClass(" disabled");
 				pluploader.start();
 			}
 		}
@@ -130,6 +132,7 @@ $(function() {
 		var onFileUploaded = function(pluploader, file, response) {
 			$('div.alert_message.ERROR').remove();
 			pluploader.removeFile(file)
+			$("a.installUpload").removeClass(" disabled");
 			updateUploaderState(false, response.response, CSS_IS_DONE)
 		}
 		

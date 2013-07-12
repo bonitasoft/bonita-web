@@ -60,30 +60,30 @@ public class UploadProcessPage extends Page {
         addBody(uploadProcessForm());
     }
 
-	private Form uploadProcessForm() {
-		Form form = new Form();
+    private Form uploadProcessForm() {
+        Form form = new Form();
         form.addEntry(uploadProcessFileUpload());
-        form.addButton(new JsId("installUpload"), _("Install"), _("Install a app"), 
-        		new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback()));
+        form.addDisabledButton(new JsId("installUpload"), _("Install"), _("Install a app"),
+                new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback())).setEnabled(false);
         form.addCancelButton();
         return form;
-	}
+    }
 
-	private FileUpload uploadProcessFileUpload() {
-		FileUpload fileUpload = new FileUpload(GWT.getModuleBaseURL() + "processUpload", new JsId("fileupload"), 
-        		"Business archive", _("A business archive has a .bar extension"));
+    private FileUpload uploadProcessFileUpload() {
+        FileUpload fileUpload = new FileUpload(GWT.getModuleBaseURL() + "processUpload", new JsId("fileupload"),
+                "Business archive", _("A business archive has a .bar extension"));
         fileUpload.addFilter(new BarUploadFilter());
         fileUpload.addValidator(new FileExtensionAllowedValidator("bar"));
         fileUpload.addValidator(new MandatoryValidator());
-		return fileUpload;
-	}
+        return fileUpload;
+    }
 
-	/**
-	 * APICallback for process installation.
-	 *
-	 * Redirect to process more view on installation success
-	 * Show an error pop-up on installation failure
-	 */
+    /**
+     * APICallback for process installation.
+     * 
+     * Redirect to process more view on installation succ
+     * Show an error pop-up on installation failure
+     */
     private final class ProcessInstallCallback extends APICallback {
 
         @Override
