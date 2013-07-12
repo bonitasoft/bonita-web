@@ -15,10 +15,4 @@
 		<module>common-test-toolkit</module>
 		<module>common-server</module>
 	</modules>
-
-	<scm>
-		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/common</connection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/common</url>
-	</scm>
-
 </project>
