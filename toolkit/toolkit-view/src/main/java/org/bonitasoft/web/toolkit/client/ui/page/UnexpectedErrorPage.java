@@ -21,16 +21,15 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ClosePopUpAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
-import org.bonitasoft.web.toolkit.client.ui.component.Textarea;
 
 /**
  * @author Séverin Moussel
  * 
  */
-public class SupportCodePage extends MessagePage {
+public class UnexpectedErrorPage extends MessagePage {
 
-    public SupportCodePage(final String message) {
-        super(TYPE.ERROR, message);
+    public UnexpectedErrorPage() {
+        super(TYPE.ERROR);
     }
 
     @Override
@@ -38,9 +37,8 @@ public class SupportCodePage extends MessagePage {
         super.buildView();
 
         setBody(
-                new Text(
-                        _("The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support and give them the following support code.")),
-                new Textarea().setValue(this.getParameter("message")));
+                new Text(_("The application encountered an unexpected error. Please try again." +
+                		"\nIf the error persists, please contact Bonitasoft support")));
     }
     
     @Override

@@ -20,6 +20,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.toolkit.client.common.exception.KnownException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.ui.page.UnexpectedErrorPage;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
@@ -42,7 +43,7 @@ public class CatchAllExceptionHandler implements UncaughtExceptionHandler {
                 Message.error(_("The application encountered an error."));
             }
         } else {
-            Message.supportCode(e);
+        	ViewController.showPopup(new UnexpectedErrorPage());
         }
     }
 }
