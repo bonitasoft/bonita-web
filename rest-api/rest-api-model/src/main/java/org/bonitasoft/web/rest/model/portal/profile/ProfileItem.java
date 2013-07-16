@@ -24,6 +24,7 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  * @author Julien Mege
  * @author Zhiheng Yang
  * @author Séverin Moussel
+ * @autor Paul Amar
  */
 public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
 
@@ -32,6 +33,8 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
     public static final String ATTRIBUTE_DESCRIPTION = "description";
 
     public static final String FILTER_USER_ID = "user_id";
+    
+    public static final String ATTRIBUTE_IS_DEFAULT = "is_default";
 
     public ProfileItem() {
         super();
@@ -63,6 +66,10 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
     public void setDescription(final String description) {
         setAttribute(ATTRIBUTE_DESCRIPTION, description);
     }
+    
+    public void setIsDefault(final Boolean isDefault) {
+        setAttribute(ATTRIBUTE_IS_DEFAULT, isDefault);
+    }
 
     @Override
     public String getIcon() {
@@ -75,6 +82,10 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
 
     public String getDescription() {
         return getAttributeValue(ATTRIBUTE_DESCRIPTION);
+    }
+    
+    public String isDefault() {
+        return getAttributeValue(ATTRIBUTE_IS_DEFAULT);
     }
 
     @Override

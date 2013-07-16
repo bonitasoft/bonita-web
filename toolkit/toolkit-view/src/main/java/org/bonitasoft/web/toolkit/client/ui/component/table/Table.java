@@ -248,8 +248,8 @@ public class Table extends AbstractTable implements Refreshable {
         }
 
     }
-
-    public Table addLine(String checkboxId, final String className, final Action defaultAction) {
+    
+    public Table addLine(String checkboxId, final String className, final Action defaultAction, Boolean allowGroupedAction) {
         if (checkboxId == null) {
             checkboxId = String.valueOf(this.lines.size() - 1);
         }
@@ -272,11 +272,22 @@ public class Table extends AbstractTable implements Refreshable {
         // If we need checkboxes, we automaticaly had the column
         if (hasGroupedActions()) {
             final XMLAttributes attributes = new XMLAttributes();
-            attributes.add("id", HTML.getUniqueId());
-            this.addCell(new Html(HTML.checkbox("id", checkboxId, this.selectedIds.contains(checkboxId), attributes)));
+            if (allowGroupedAction) {
+                attributes.add("id", HTML.getUniqueId());
+                this.addCell(new Html(HTML.checkbox("id", checkboxId, this.selectedIds.contains(checkboxId), attributes)));
+            } else {
+                attributes.add("class", "emptyCheckBox");
+                this.addCell(new Html(HTML.div()));
+            }
+            
         }
 
         return this;
+        
+    }
+
+    public Table addLine(String checkboxId, final String className, final Action defaultAction) {
+        return addLine(checkboxId, className, defaultAction, true);
     }
 
     public Table addCell(final AbstractComponent... components) {
