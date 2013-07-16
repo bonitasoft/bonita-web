@@ -16,14 +16,11 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.utils;
 
-import static com.google.gwt.query.client.GQuery.$;
-
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.page.MessagePage;
 import org.bonitasoft.web.toolkit.client.ui.page.MessageTyped;
-import org.bonitasoft.web.toolkit.client.ui.page.SupportCodePage;
 
 /**
  * @author Séverin Moussel
@@ -117,15 +114,6 @@ public abstract class Message {
     }
 
     /**
-     * Display a modal message containing a support code
-     * 
-     * @param message
-     */
-    public static void supportCode(final String message) {
-        ViewController.showPopup(new SupportCodePage(message));
-    }
-
-    /**
      * Log the exception's message on the server
      * 
      * @param exception
@@ -133,32 +121,5 @@ public abstract class Message {
 
     public static void log(final Throwable exception) {
         log(JSonSerializer.serialize(exception));
-    }
-
-    /**
-     * Display a modal message containing a support code
-     * 
-     * @param exception
-     */
-    public static void supportCode(final Throwable exception) {
-        String message = exception.getMessage();
-
-        message = message.substring(message.indexOf("<body>"));
-        message = message.replaceAll(
-                "</?((br)|(h[1-6])|(hr)|(li)|(ul)|(p)|(pre))((\\s.*?/?)|(/)|())>",
-                "\n"
-                );
-        message = $(message).text();
-        message = message.replaceAll("\\n+", "\n");
-        message = message.replaceAll("^\\n+", "");
-
-        if (exception.getCause() != null) {
-            message = "Cause : " + exception.getCause().getClass().toString() + "\n" + message;
-        }
-        message = "Exception : " + exception.getClass().toString() + "\n" + message;
-
-        supportCode(message);
-
-        // supportCode(exception.getMessage());
     }
 }

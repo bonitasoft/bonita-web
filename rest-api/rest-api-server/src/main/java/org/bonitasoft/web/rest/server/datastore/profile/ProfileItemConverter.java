@@ -33,6 +33,7 @@ public class ProfileItemConverter extends ItemConverter<ProfileItem, Profile> {
         item.setName(profile.getName());
         item.setDescription(profile.getDescription());
         item.setIcon(profile.getIconPath());
+        item.setIsDefault(profile.isDefault());
         return item;
     }
 

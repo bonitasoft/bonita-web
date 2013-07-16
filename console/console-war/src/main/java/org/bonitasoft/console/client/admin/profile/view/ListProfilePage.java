@@ -40,7 +40,7 @@ public class ListProfilePage extends ItemListingPage<ProfileItem> {
 
     //public static final String EXPORT_REST_API_URL = "../REST/profileImportAndExportAPI/export";
 
-    private static final String TABLE_ALL_PROFILES = "allusers";
+    protected static final String TABLE_ALL_PROFILES = "allusers";
 
     private static final String FILTER_PRIMARY_ALL_PROFILES = "allusersfilter";
 
