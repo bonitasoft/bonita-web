@@ -15,8 +15,4 @@
 		<module>platform-server-impl</module>
 	</modules>
 
-	<scm>
-		<connection>scm:svn:https://rd.svn.bonitasoft.org/bos-web/trunk/platform</connection>
-		<url>https://rd.svn.bonitasoft.org/bos-web/trunk/platform</url>
-	</scm>
 </project>
