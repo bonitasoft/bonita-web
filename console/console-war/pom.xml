@@ -335,7 +335,7 @@
 							</systemProperties>
 							<server>org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher</server>
 							<extraJvmArgs>-XX:MaxPermSize=256m</extraJvmArgs>
-							<runTarget>login.jsp?redirectUrl=console%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997</runTarget>
+							<runTarget>login.jsp?redirectUrl=portal%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997</runTarget>
 							<deploy>${project.build.directory}</deploy>
 						</configuration>
 					</plugin>
