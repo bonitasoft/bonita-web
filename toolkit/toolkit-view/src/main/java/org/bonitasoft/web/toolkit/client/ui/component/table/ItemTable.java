@@ -19,6 +19,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +71,8 @@ public class ItemTable extends AbstractTable implements Refreshable {
     private Integer defaultSelectedLine = null;
 
     private boolean registerRefresh = true;
+    
+    private HashMap<String, String> attributesForGroupedActions = new HashMap<String, String>();
 
     public ItemTable(final ItemDefinition itemDefinition) {
         this(null, itemDefinition);
@@ -204,7 +207,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
         }
 
         // Create the line component
-        this.table.addLine(item.getId().toString(), className, defAction);
+        this.table.addLine(item.getId().toString(), className, defAction, isGroupedActionAllowed(item));
 
         // Fill it with data columns
         addItemCells(item);
@@ -212,6 +215,27 @@ public class ItemTable extends AbstractTable implements Refreshable {
         // Add the actions column
         // this.addItemActions(item);
 
+        return this;
+    }
+
+    private Boolean isGroupedActionAllowed(IItem item) {
+        if (attributesForGroupedActions.isEmpty()) {
+            return true;            
+        } else {
+            Iterator it = attributesForGroupedActions.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                System.out.println(pairs.getKey() + " = " + pairs.getValue());
+                if (item.getAttributeValue(pairs.getKey().toString()).equals(pairs.getValue())) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    
+    public ItemTable addAttributeToCheckForGroupedActions(String attributeName, String value) {
+        attributesForGroupedActions.put(attributeName, value);
         return this;
     }
 
