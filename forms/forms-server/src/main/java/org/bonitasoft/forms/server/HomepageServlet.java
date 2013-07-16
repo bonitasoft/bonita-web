@@ -59,8 +59,6 @@ public class HomepageServlet extends ApplicationResourceServlet {
 
     private static final String DEFAULT_FORM_HOME_PAGE_FILENAME = "BonitaForm.html";
 
-    protected static final String CONSOLE_PREFIX = "/console";
-
     protected static final String HOMEPAGE_SERVLET_ID_IN_PATH = "homepage";
 
     protected static final String DEFAULT_THEME_NAME = "default";
@@ -92,7 +90,7 @@ public class HomepageServlet extends ApplicationResourceServlet {
     }
 
     protected boolean isForm(final String urlPrefix, final String ui) {
-        return urlPrefix.startsWith(CONSOLE_PREFIX) && ui != null && ui.equals("form");
+        return ui != null && ui.equals("form");
     }
 
 }

@@ -88,12 +88,12 @@
 <title><%=_("Bonita Portal")%></title>
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
 <!-- Load LESS CSS -->
-<script type="text/javascript" src="console/scripts/includes/array.prototype.js"></script>
-<link rel="stylesheet/less" type="text/css" href="console/css/styles.less" />
-<script type="text/javascript" src="console/scripts/includes/less.config.js"></script>
-		<script type="text/javascript" src="console/scripts/includes/less-1.3.3.min.js"></script>
+<script type="text/javascript" src="portal/scripts/includes/array.prototype.js"></script>
+<link rel="stylesheet/less" type="text/css" href="portal/css/styles.less" />
+<script type="text/javascript" src="portal/scripts/includes/less.config.js"></script>
+		<script type="text/javascript" src="portal/scripts/includes/less-1.3.3.min.js"></script>
 
-<script type="text/javascript" src="console/scripts/jquery/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="portal/scripts/jquery/jquery-1.6.4.js"></script>
 <script>
 	/* Add url hash to form action url */
 	$(document).ready(function() {
