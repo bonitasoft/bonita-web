@@ -64,7 +64,7 @@ public class UploadProcessPage extends Page {
         Form form = new Form();
         form.addEntry(uploadProcessFileUpload());
         form.addDisabledButton(new JsId("installUpload"), _("Install"), _("Install a app"),
-                new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback())).setEnabled(false);
+                new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback()));
         form.addCancelButton();
         return form;
     }

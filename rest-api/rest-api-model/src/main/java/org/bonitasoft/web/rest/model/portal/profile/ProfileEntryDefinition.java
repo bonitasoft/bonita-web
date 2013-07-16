@@ -33,12 +33,12 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
         return (ProfileEntryDefinition) Definitions.get(TOKEN);
     }
 
-    public static final String TOKEN = "profileentry";
+    public static final String TOKEN = "profileEntry";
 
     /**
      * the URL of profile entries resource
      */
-    protected static final String API_URL = "../API/userXP/profileEntry";
+    protected static final String API_URL = "../API/userXP/" + TOKEN;
 
     @Override
     public String defineToken() {
@@ -59,7 +59,6 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
     protected void defineAttributes() {
         createAttribute(ProfileEntryItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ProfileEntryItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME, ItemAttribute.TYPE.STRING);
         createAttribute(ProfileEntryItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
         createAttribute(ProfileEntryItem.ATTRIBUTE_INDEX, ItemAttribute.TYPE.INTEGER)
                 .isMandatory();

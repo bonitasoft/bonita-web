@@ -26,7 +26,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.VALUE_TYPE;
  */
 public class ProfileEntryItemBuilder extends AbstractProfileEntryBuilder<ProfileEntryItem> {
 
-    private ProfileEntryItemBuilder() {
+    protected ProfileEntryItemBuilder() {
         // empty
     }
 
@@ -51,7 +51,7 @@ public class ProfileEntryItemBuilder extends AbstractProfileEntryBuilder<Profile
     public ProfileEntryItemBuilder from(ProfileEntry profileEntry) {
         id = profileEntry.getId();
         name = profileEntry.getName();
-//        custormName = profileEntry.getName();
+        // custormName = profileEntry.getName();
         profileId = profileEntry.getProfileId();
         index = profileEntry.getIndex();
         type = VALUE_TYPE.valueOf(profileEntry.getType());

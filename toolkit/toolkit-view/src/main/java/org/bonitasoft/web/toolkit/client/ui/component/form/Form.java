@@ -574,7 +574,15 @@ public class Form extends AbstractForm {
         }
 
         FormSubmitButton formSubmitButton = new FormSubmitButton(jsid, label, tooltip, new FormSubmitAction(actionHandler));
-        formSubmitButton.setEnabled(false);
+        super.addAction(formSubmitButton);
+        return this;
+    }
+
+    public Form addDisabledButton(final FormSubmitButton formSubmitButton) {
+        if (formSubmitButton.getAction() instanceof FormAction) {
+            ((FormAction) formSubmitButton.getAction()).setForm(this);
+        }
+
         super.addAction(formSubmitButton);
         return this;
     }

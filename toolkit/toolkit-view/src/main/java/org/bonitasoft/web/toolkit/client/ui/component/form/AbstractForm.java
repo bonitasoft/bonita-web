@@ -501,7 +501,6 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         if (this.defaultAction == null) {
             this.defaultAction = button.getAction();
         }
-
         this.buttons.append(button);
     }
 

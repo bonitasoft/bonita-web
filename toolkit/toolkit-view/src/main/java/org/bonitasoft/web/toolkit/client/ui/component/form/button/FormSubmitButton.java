@@ -32,11 +32,14 @@ public class FormSubmitButton extends FormButton {
     public FormSubmitButton(final JsId jsid, final String label, final String tooltip, final FormSubmitAction action) {
         super(jsid, label, tooltip, action);
     }
-    
+
     @Override
     protected void postProcessHtml() {
         super.postProcessHtml();
         element.addClassName(ButtonAction.CSS_CLASS);
     }
 
+    public void addDisabledClass() {
+        element.addClassName("disabled");
+    }
 }

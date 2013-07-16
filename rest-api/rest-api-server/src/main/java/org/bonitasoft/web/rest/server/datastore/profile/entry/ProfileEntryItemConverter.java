@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile.entry;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
@@ -31,7 +30,7 @@ public class ProfileEntryItemConverter extends ItemConverter<ProfileEntryItem, P
     public ProfileEntryItem convert(ProfileEntry profileEntry) {
         ProfileEntryItem item = new ProfileEntryItem();
         item.setId(profileEntry.getId());
-        setName(item, profileEntry);
+        item.setName(profileEntry.getName());
         item.setProfileId(profileEntry.getProfileId());
         item.setIndex(profileEntry.getIndex());
         item.setType(profileEntry.getType());
@@ -39,14 +38,6 @@ public class ProfileEntryItemConverter extends ItemConverter<ProfileEntryItem, P
         item.setParentId(profileEntry.getParentId());
         item.setPage(profileEntry.getPage());
         return item;
-    }
-
-    private void setName(final ProfileEntryItem result, ProfileEntry profile) {
-        String entryName = profile.getName();
-        result.setName(entryName);
-        if (I18n.isSet(entryName)) {
-            result.setCustomName(entryName);
-        }
     }
 
 }

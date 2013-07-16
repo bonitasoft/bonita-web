@@ -83,7 +83,7 @@ public class APIProfileEntry extends ConsoleAPI<ProfileEntryItem> implements
         return datastore;
     }
 
-    private ProfileEntryEngineClient createProfileEntryEngineClient() {
+    protected ProfileEntryEngineClient createProfileEntryEngineClient() {
         return getEngineClientFactory()
                 .createProfileEntryEngineClient(getEngineSession());
     }

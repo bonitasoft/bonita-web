@@ -71,6 +71,8 @@ public class ItemTable extends AbstractTable implements Refreshable {
 
     private boolean registerRefresh = true;
 
+    protected final HashMap<String, IItem> loadedItems = new HashMap<String, IItem>();
+    
     public ItemTable(final ItemDefinition itemDefinition) {
         this(null, itemDefinition);
     }
@@ -143,6 +145,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
     }
 
     public final ItemTable addItems(final List<IItem> items) {
+        
         if (!this.table.isSaveCheckboxes()) {
             this.table.clearSelectedIds();
         }
@@ -166,12 +169,14 @@ public class ItemTable extends AbstractTable implements Refreshable {
         return this;
     }
 
-    public final ItemTable addItem(final IItem item) {
+    protected final ItemTable addItem(final IItem item) {
         return this.addItem(item, null);
     }
 
-    public ItemTable addItem(final IItem item, final String className) {
-
+    protected ItemTable addItem(final IItem item, final String className) {
+        
+        loadedItems.put(item.getId().toString(), item);
+        
         if (this.actionColumnPosition == -1 && !this.actionSets.isEmpty()) {
             addActionColumn();
         }
@@ -708,6 +713,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
 
     public final ItemTable resetLines() {
         this.table.resetLines();
+        this.loadedItems.clear();
         return this;
     }
 
@@ -748,4 +754,8 @@ public class ItemTable extends AbstractTable implements Refreshable {
         this.table.updateView();
     }
 
+    public IItem getItem(String itemId) {
+       return loadedItems.get(itemId);
+    }
+    
 }
