@@ -54,13 +54,14 @@ public class PlatformTenantListener implements ServletContextListener {
             platformManager = PlatformTenantManager.getInstance();
             platformManager.loginPlatform();
             platformProperties = platformManager.getPlatformProperties();
+            boolean platformCreation = false;
             if (platformProperties.platformCreate()) {
-                platformManager.createPlatform();
+                platformCreation = platformManager.createPlatform();
             }
             if (platformProperties.platformStart()) {
                 platformManager.startPlatform();
             }
-            if (platformProperties.getDefaultTenantId() == null) {
+            if (platformCreation) {
                 initializeTenant();
             }
         } catch (final Throwable e) {
@@ -81,11 +82,10 @@ public class PlatformTenantListener implements ServletContextListener {
      * @throws BonitaException
      */
     protected void initializeTenant() throws Exception {
-        long tenantId = -1;
         try {
             final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
                     TenantsManagementUtils.getTechnicalUserPassword());
-            tenantId = session.getTenantId();
+            final long tenantId = session.getTenantId();
             TenantsManagementUtils.addDirectoryForTenant(tenantId, platformManager.getPlatformSession());
             createDefaultProfiles(session);
         } catch (final NumberFormatException e) {
@@ -106,9 +106,6 @@ public class PlatformTenantListener implements ServletContextListener {
                 LOGGER.log(Level.SEVERE, msg, e);
             }
             throw e;
-        }
-        if (tenantId != -1) {
-            platformProperties.writeProperty(PlatformTenantConfigProperties.PLATFORM_DEFAULT_TENANT_ID, String.valueOf(tenantId));
         }
     }
 
