@@ -65,7 +65,8 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
     }
 
     private ItemDetailsMetadata lastUpdateDate() {
-        return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"), _("The date while the case has been last updated"));
+        return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"),
+        		_("The date while the case has been last updated"));
     }
 
     private ItemDetailsMetadata state() {
@@ -96,7 +97,7 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
 
     @Override
     protected LinkedList<ItemDetailsAction> defineActions(final CaseItem item) {
-        CaseMoreDetailsPage.this.addToolbarLink(newBackButton());
+        addToolbarLink(newBackButton());
         return new LinkedList<ItemDetailsAction>();
     }
 
