@@ -52,7 +52,7 @@ public interface LoginManager {
     /**
      * The default redirect URL.
      */
-    static final String DEFAULT_DIRECT_URL = "console/homepage";
+    static final String DEFAULT_DIRECT_URL = "portal/homepage";
 
     /**
      * the request param for the username
