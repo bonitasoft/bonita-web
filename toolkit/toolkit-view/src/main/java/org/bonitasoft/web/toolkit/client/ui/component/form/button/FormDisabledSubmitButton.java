@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 BonitaSoft S.A.
+ * Copyright (C) 2013 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,30 +16,37 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.form.button;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 import org.bonitasoft.web.toolkit.client.ui.JsId;
-import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form.FormSubmitAction;
 
+import com.google.gwt.query.client.Function;
+import com.google.gwt.user.client.Event;
+
 /**
- * @author Séverin Moussel
+ * @author Rohart Bastien
  * 
  */
-public class FormSubmitButton extends FormButton {
+public class FormDisabledSubmitButton extends FormSubmitButton {
 
-    /**
-     * TODO : refactor FormSubmitButton must extends ButtonAction and implements FormNode
-     */
-    public FormSubmitButton(final JsId jsid, final String label, final String tooltip, final FormSubmitAction action) {
+    public FormDisabledSubmitButton(JsId jsid, String label, String tooltip, FormSubmitAction action) {
         super(jsid, label, tooltip, action);
     }
-    
+
     @Override
     protected void postProcessHtml() {
+        element.addClassName("disabled");
         super.postProcessHtml();
-        element.addClassName(ButtonAction.CSS_CLASS);
-    }
-<<<<<<< HEAD
+        if (isEnabled()) {
+            $(this.element).click(new Function() {
 
-=======
->>>>>>> da4f648... feedback install a process
+                @Override
+                public boolean f(Event e) {
+                    return false;
+                }
+
+            });
+        }
+    }
 }

@@ -34,6 +34,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.event.InputCompleteEvent;
 import org.bonitasoft.web.toolkit.client.ui.component.event.InputCompleteHandler;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormButtonCancel;
+import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormDisabledSubmitButton;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.AutoCompleteEntry;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Checkbox;
@@ -568,6 +569,29 @@ public class Form extends AbstractForm {
      * @param actionHandler
      * @return This function returns the form itself in order to allow cascading calls
      */
+<<<<<<< HEAD
+=======
+    public Form addDisabledButton(final JsId jsid, final String label, final String tooltip, final Action actionHandler) {
+        if (actionHandler instanceof FormAction) {
+            ((FormAction) actionHandler).setForm(this);
+        }
+
+        super.addAction(new FormDisabledSubmitButton(jsid, label, tooltip, new FormSubmitAction(actionHandler)));
+        return this;
+    }
+
+    /**
+     * Add an action to the form
+     * 
+     * @param jsid
+     * @param label
+     *            The label to show in the button
+     * @param tooltip
+     *            The tooltip that will quickly explain the action
+     * @param actionHandler
+     * @return This function returns the form itself in order to allow cascading calls
+     */
+>>>>>>> da4f648... feedback install a process
     public Form addButton(final JsId jsid, final String label, final String tooltip, final Action actionHandler) {
         if (actionHandler instanceof FormAction) {
             ((FormAction) actionHandler).setForm(this);
