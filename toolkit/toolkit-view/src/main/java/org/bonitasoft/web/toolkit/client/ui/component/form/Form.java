@@ -569,8 +569,6 @@ public class Form extends AbstractForm {
      * @param actionHandler
      * @return This function returns the form itself in order to allow cascading calls
      */
-<<<<<<< HEAD
-=======
     public Form addDisabledButton(final JsId jsid, final String label, final String tooltip, final Action actionHandler) {
         if (actionHandler instanceof FormAction) {
             ((FormAction) actionHandler).setForm(this);
@@ -591,7 +589,6 @@ public class Form extends AbstractForm {
      * @param actionHandler
      * @return This function returns the form itself in order to allow cascading calls
      */
->>>>>>> da4f648... feedback install a process
     public Form addButton(final JsId jsid, final String label, final String tooltip, final Action actionHandler) {
         if (actionHandler instanceof FormAction) {
             ((FormAction) actionHandler).setForm(this);
