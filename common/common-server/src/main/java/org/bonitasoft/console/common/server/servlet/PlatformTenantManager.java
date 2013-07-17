@@ -78,11 +78,12 @@ public class PlatformTenantManager {
         }
     }
 
-    public void createPlatform() throws Exception {
+    public boolean createPlatform() throws Exception {
         if (!platformAPI.isPlatformCreated()) {
             platformAPI.createAndInitializePlatform();
-            platformProperties.writeProperty(PlatformTenantConfigProperties.PLATFORM_CREATE, String.valueOf(false));
+            return true;
         }
+        return false;
     }
 
     private void updatePlatform(final String platformState) throws Exception {

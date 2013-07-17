@@ -35,6 +35,7 @@ import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.PlatformAPI;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.api.PlatformLoginAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.platform.PlatformLogoutException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.PlatformSession;
@@ -166,16 +167,14 @@ public class LoginServlet extends HttpServlet {
     protected long getTenantId(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         long tenantId = -1L;
         try {
-            final String tenantIdStr = PropertiesFactory.getPlatformTenantConfigProperties().getDefaultTenantId();
-            if (tenantIdStr != null) {
-                tenantId = Long.parseLong(tenantIdStr);
-            }
-        } catch (final NumberFormatException e) {
-            final String message = "The tenant ID parameter in the configuration file must be an integer.";
+            final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
+                    TenantsManagementUtils.getTechnicalUserPassword());
+            tenantId = session.getTenantId();
+        } catch (final Exception e) {
+            final String message = "Unable to get the default tenant.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
-            throw new ServletException(message, e);
         }
         return tenantId;
     }
