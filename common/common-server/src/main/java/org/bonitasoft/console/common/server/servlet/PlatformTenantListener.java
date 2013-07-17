@@ -88,6 +88,7 @@ public class PlatformTenantListener implements ServletContextListener {
             final long tenantId = session.getTenantId();
             TenantsManagementUtils.addDirectoryForTenant(tenantId, platformManager.getPlatformSession());
             createDefaultProfiles(session);
+            TenantAPIAccessor.getLoginAPI().logout(session);
         } catch (final NumberFormatException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 final String msg = "Error while casting default tenant id";
