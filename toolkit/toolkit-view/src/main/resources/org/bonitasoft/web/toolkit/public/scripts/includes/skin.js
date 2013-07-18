@@ -45,18 +45,7 @@ $(function() {
 					resizeSelect($(e).parent());
 				});
 			});
-			//custom profiles dragndrop
-			var tablePannel = context.parent(".tablePannel");
-			if(tablePannel.length==1){
-				$(".table .tbody", context).sortable({
-					cursor: "n-resize",
-					items: ".tr:not(.tr_1)"
-				});
-				$(tablePannel.parent()).sortable({
-					cursor: "e-resize",
-					items: ".tablePannel"
-				});
-			}
+			
 			
 			
 		}
