@@ -31,4 +31,9 @@ public abstract class FormButton extends Button implements FormNode {
         super(jsid, label, tooltip, action);
     }
 
+    @Override
+    protected void postProcessHtml() {
+        super.postProcessHtml();
+        element.setAttribute("href", "#");
+    }
 }
