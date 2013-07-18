@@ -26,6 +26,7 @@ import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirect
 import org.bonitasoft.console.client.admin.bpm.cases.action.TaskRedirectionAction;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
+import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -145,7 +146,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
-                        new SpanPrepender(_("Preformed by:")));
+                        new ArchivedFlowNodeExecutedByFormatter());
     }
 
     protected void prepareArchivedTasksTable(final ItemTable archivedTasksTable) {
