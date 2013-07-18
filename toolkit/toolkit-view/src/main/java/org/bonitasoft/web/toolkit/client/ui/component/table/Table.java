@@ -259,7 +259,7 @@ public class Table extends AbstractTable implements Refreshable {
             line.addClass(className);
         }
         if (itemIdOnRow) {
-            line.addClass("APPID_" + checkboxId);
+            line.addClass("APIID_" + checkboxId);
         }
 
         if (selectLineOnClick) {

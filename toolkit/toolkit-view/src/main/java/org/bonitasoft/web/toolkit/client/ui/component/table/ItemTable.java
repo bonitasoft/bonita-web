@@ -779,4 +779,9 @@ public class ItemTable extends AbstractTable implements Refreshable {
         this.table.updateView();
     }
 
+    public void setIdOnRow(boolean b) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
