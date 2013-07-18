@@ -20,7 +20,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.LinkedList;
 
-import org.bonitasoft.console.client.admin.bpm.cases.action.DeleteCaseAction;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -98,7 +97,7 @@ public class CaseListingAdminPage extends CaseListingPage {
     private ItemListingTable allCasesAdminTable() {
         return new ItemListingTable(new JsId(TABLE_CASES_ALL), _("All"),
                 buildAllCasesItemTable(CaseDefinition.get(), CaseItem.ATTRIBUTE_ID)
-                        .addGroupedAction(new JsId("delete"), _("Delete"), _("Delete case"), new DeleteCaseAction()),
+                .addGroupedMultipleDeleteAction(_("Delete selected cases"), CaseDefinition.get(), _("case"), _("cases")),
                 new CaseQuickDetailsAdminPage());
     }
 
