@@ -29,8 +29,8 @@ import org.bonitasoft.forms.client.view.controller.FormViewControllerFactory;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.user.User;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
-import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.ClientApplication;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 
@@ -83,6 +83,7 @@ public class ConsoleClient extends ClientApplication {
 
     @Override
     protected void onLoad() {
+        registerJSNIMethods();
 
         // Check if the application called is the forms application
         parseHashParameters();
@@ -93,10 +94,15 @@ public class ConsoleClient extends ClientApplication {
         }
     }
 
-    private void onConsoleLoad() {
+    protected void registerJSNIMethods() {
+
+    }
+
+    protected void onConsoleLoad() {
         if ("true".equals(Session.getParameter("is_technical_user"))) {
             refreshView();
         }
+
         // The login box will initialize the view if the login works well
         ViewController.showView(getLoginBoxView(), "login");
     }

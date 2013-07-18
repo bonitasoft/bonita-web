@@ -127,3 +127,20 @@ $(function() {
 
 
 });
+
+function SortableItemTable() {}
+SortableItemTable.getRow = function (ui){ return ui.item.get(0); }
+SortableItemTable.getNextRow = function(elt){ return $(elt).next(".tr"); }
+
+function DOMUtil() {}
+DOMUtil.getApiid= function(elt){
+	var apiidPrefix = "APPID";
+	classList = elt.className.split(/\s+/);
+	var apiid = null;
+	for (var i = 0; i < classList.length && apiid==null; i++) {
+		if (classList[i].substring(0, apiidPrefix.length) === apiidPrefix) {
+			apiid = classList[i].substring(apiidPrefix.length + 1);
+		}
+	}
+	return apiid;
+}

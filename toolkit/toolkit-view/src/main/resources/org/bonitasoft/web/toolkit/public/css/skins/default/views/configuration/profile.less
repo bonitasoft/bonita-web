@@ -45,7 +45,9 @@
 								color: @header-menu-link-textColorHover;
 								background: @header-submenuCurrent-bgColor;
 								text-align: left;
-								
+								&:hover{
+									cursor: n-resize;
+								}
 								&_last{
 									.td{
 										&_last, &_1{
@@ -91,11 +93,14 @@
 									visibility: visible;
 								}
 							}
-							.tr_1 { // menu
+							.tr.tr_1 { // menu
+								.verticalGradient (@header-menu-gradientColor1 , @header-menu-gradientPosition1 , @header-menu-gradientColor2 , @header-menu-gradientPosition2);
 								color: @header-menu-link-textColor;
 								text-align: @profileMoreDetails-menuEditor-folder-textAlign;
-								background: transparent;
 								.height(@header-menu-height);
+								&:hover{
+									cursor: e-resize;
+								}
 								> .td {
 									border: none;
 									padding: @profileMoreDetails-menuEditor-folder-padding;
