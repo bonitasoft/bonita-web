@@ -77,7 +77,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
     private boolean itemIdOnRow = false;
 
     protected final HashMap<String, IItem> loadedItems = new HashMap<String, IItem>();
-    
+
     public ItemTable(final ItemDefinition itemDefinition) {
         this(null, itemDefinition);
     }
@@ -155,7 +155,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
     }
 
     public final ItemTable addItems(final List<IItem> items) {
-        
+
         if (!this.table.isSaveCheckboxes()) {
             this.table.clearSelectedIds();
         }
@@ -184,9 +184,9 @@ public class ItemTable extends AbstractTable implements Refreshable {
     }
 
     protected ItemTable addItem(final IItem item, final String className) {
-        
+
         loadedItems.put(item.getId().toString(), item);
-        
+
         if (this.actionColumnPosition == -1 && !this.actionSets.isEmpty()) {
             addActionColumn();
         }
@@ -785,16 +785,8 @@ public class ItemTable extends AbstractTable implements Refreshable {
         this.table.updateView();
     }
 
-<<<<<<< HEAD
     public IItem getItem(String itemId) {
-       return loadedItems.get(itemId);
-    }
-    
-=======
-    public void setIdOnRow(boolean b) {
-        // TODO Auto-generated method stub
-        
+        return loadedItems.get(itemId);
     }
 
->>>>>>> WEB-2700
 }
