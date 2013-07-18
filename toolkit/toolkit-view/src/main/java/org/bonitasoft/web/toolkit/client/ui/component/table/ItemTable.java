@@ -230,7 +230,6 @@ public class ItemTable extends AbstractTable implements Refreshable {
             Iterator it = attributesForGroupedActions.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
-                System.out.println(pairs.getKey() + " = " + pairs.getValue());
                 if (item.getAttributeValue(pairs.getKey().toString()).equals(pairs.getValue())) {
                     return false;
                 }

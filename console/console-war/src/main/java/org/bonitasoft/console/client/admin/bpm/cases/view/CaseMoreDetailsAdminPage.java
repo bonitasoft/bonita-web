@@ -123,8 +123,9 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_CASE_ID, item.getId())
                 .addHiddenFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
                 .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
-                .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"))
+                .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE), _("Due date"))
                 .addColumn(new DescriptionAttributeReader(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
+                
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new SpanPrepender(_("Due in:")))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")));
