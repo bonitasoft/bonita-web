@@ -116,7 +116,7 @@ public class Table extends AbstractTable implements Refreshable {
     private int nbLinesByPage = 10;
 
     private boolean showSearch = true;
-    
+
     private boolean selectLineOnClick = true;
 
     private String defaultSearch = "";
@@ -248,7 +248,7 @@ public class Table extends AbstractTable implements Refreshable {
         }
 
     }
-    
+
     public Table addLine(String checkboxId, final String className, final Action defaultAction, Boolean allowGroupedAction) {
         if (checkboxId == null) {
             checkboxId = String.valueOf(this.lines.size() - 1);
@@ -258,14 +258,17 @@ public class Table extends AbstractTable implements Refreshable {
         if (className != null) {
             line.addClass(className);
         }
-        
+        if (itemIdOnRow) {
+            line.addClass("APPID_" + checkboxId);
+        }
+
         if (selectLineOnClick) {
             CheckLineAction action = new CheckLineAction(checkboxId);
             action.setDefaultAction(defaultAction);
             line.setDefaultAction(action);
-        } else {    
+        } else {
             line.setDefaultAction(defaultAction);
-        }    
+        }
 
         this.lines.append(line);
 
@@ -279,11 +282,11 @@ public class Table extends AbstractTable implements Refreshable {
                 attributes.add("class", "emptyCheckBox");
                 this.addCell(new Html(HTML.div()));
             }
-            
+
         }
 
         return this;
-        
+
     }
 
     public Table addLine(String checkboxId, final String className, final Action defaultAction) {
@@ -757,6 +760,8 @@ public class Table extends AbstractTable implements Refreshable {
 
     protected ContainerStyled<TableFilter> filters = new ContainerStyled<TableFilter>();
 
+    private boolean itemIdOnRow = false;
+
     public Table resetFilters() {
         this.filters.empty();
         return this;
@@ -943,7 +948,7 @@ public class Table extends AbstractTable implements Refreshable {
             this.refreshFiller.setRepeatEvery(this.refreshEvery);
         }
     }
-    
+
     public final void setSelectLineOnClick(boolean value) {
         this.selectLineOnClick = value;
     }
@@ -1011,5 +1016,10 @@ public class Table extends AbstractTable implements Refreshable {
 
     private boolean isCheckable(GQuery checkboxes) {
         return checkboxes != null && checkboxes.length() > 0;
+    }
+
+    public void setItemIdOnRow(boolean itemIdOnRow) {
+        this.itemIdOnRow = itemIdOnRow;
+
     }
 }

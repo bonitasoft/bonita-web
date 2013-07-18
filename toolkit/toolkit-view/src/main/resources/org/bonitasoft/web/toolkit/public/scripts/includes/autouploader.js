@@ -116,6 +116,16 @@ $(function() {
 				$('div.alert_message.ERROR').remove();
 				updateUploaderState(true, pluploader.files[0].name,
 						CSS_IS_UPLOADING, pluploader.files[0].name)
+				var cache = document.createElement("div");
+				cache.id="uploadCache";
+				cache.style.position="absolute";
+				cache.style.background="#000000";
+				cache.style.opacity="0.3";
+				cache.style.width="100%";
+				cache.style.height="100%";
+				cache.style.top="0";
+				cache.style.left="0";
+				$('div.fileupload div.input div').append(cache);
 				if (!$("a.installUpload").hasClass("disabled")) {
 					$("a.installUpload").addClass("disabled");
 				}
@@ -130,6 +140,7 @@ $(function() {
 			$('div.alert_message.ERROR').remove();
 			pluploader.removeFile(file)
 			$("a.installUpload").removeClass("disabled");
+			$("#uploadCache").remove();
 			updateUploaderState(false, response.response, CSS_IS_DONE)
 		}
 
