@@ -25,6 +25,8 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirectionAction;
 import org.bonitasoft.console.client.admin.bpm.cases.action.TaskRedirectionAction;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
+import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
+import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.model.bpm.cases.CaseItem;
 import org.bonitasoft.console.client.model.bpm.flownode.ArchivedFlowNodeDefinition;
@@ -141,10 +143,10 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
                 .addColumn(new DescriptionAttributeReader(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
-                .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE, new SpanPrepender(_("Performed on:")))
+                .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
-                        new SpanPrepender(_("Preformed by:")));
+                        new ArchivedFlowNodeExecutedByFormatter());
     }
 
     protected void prepareArchivedTasksTable(final ItemTable archivedTasksTable) {
