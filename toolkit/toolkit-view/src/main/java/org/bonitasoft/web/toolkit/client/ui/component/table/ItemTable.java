@@ -785,8 +785,16 @@ public class ItemTable extends AbstractTable implements Refreshable {
         this.table.updateView();
     }
 
+<<<<<<< HEAD
     public IItem getItem(String itemId) {
        return loadedItems.get(itemId);
     }
     
+=======
+    public void setIdOnRow(boolean b) {
+        // TODO Auto-generated method stub
+        
+    }
+
+>>>>>>> WEB-2700
 }

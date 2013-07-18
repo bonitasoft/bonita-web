@@ -127,14 +127,37 @@ $(function() {
 
 
 });
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function SortableItemTable() {}
-SortableItemTable.getRow = function (ui){ return ui.item.get(0); }
+
+SortableItemTable.getSortedElement = function (ui){ return ui.item.get(0); }
 SortableItemTable.getNextRow = function(elt){ return $(elt).next(".tr"); }
+SortableItemTable.getProfilePageIndex = function(row){ 
+	var rowAPIId = DOMUtil.getAPIid(row);
+	var index = null;
+	var childNodes = $(row).siblings(".tr:not(.tr_1)").addBack();
+	for(var i = 0; i< childNodes.length && index==null; i++){
+		if(rowAPIId ===  DOMUtil.getAPIid(childNodes[i])){
+			index = (i*2)-1;
+		}
+	}
+	return index;
+}
+SortableItemTable.getProfileFolderIndex = function(col){ 
+	var colAPIId = DOMUtil.getAPIid(col);
+	var index = null;
+	var childNodes = $(col).siblings(".tr:not(.tr_1)").addBack();
+	for(var i = 0; i< childNodes.length && index==null; i++){
+		if(colAPIId ===  DOMUtil.getAPIid(childNodes[i])){
+			index = (i*2)-1;
+		}
+	}
+	return index;
+}
 
 function DOMUtil() {}
-DOMUtil.getApiid= function(elt){
-	var apiidPrefix = "APPID";
+DOMUtil.getAPIid= function(elt){
+	var apiidPrefix = "APIID";
 	classList = elt.className.split(/\s+/);
 	var apiid = null;
 	for (var i = 0; i < classList.length && apiid==null; i++) {
