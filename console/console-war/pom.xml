@@ -309,12 +309,6 @@
 				</dependency>
 			</dependencies>
 			<build>
-				<resources>
-					<resource>
-						<directory>src/main/debug</directory>
-						<filtering>true</filtering>
-					</resource>
-				</resources>
 				<plugins>
 					<!-- configure the GWT-Maven plugin -->
 					<plugin>
