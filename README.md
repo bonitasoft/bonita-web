@@ -3,7 +3,7 @@
 ## Structure ##
 
 ### Parent pom.xml ###
-Contains the common mavne configuration such as:
+Contains the common maven configuration such as:
 - the definition of all the dependencies version, e.g., junit.version, bonita.engine.version, gwt.version, ...
 - the maven repositories
 
@@ -79,4 +79,4 @@ For develoment purpose use the *dev* profile (don't compile every gwt permutatio
 ## Execution in hosted mode for dev/debug ##
 In console-war module :
     
-    mvn -Pdev gwt:run *[-Dbonita.home=/path/to/bonita/home]*
+    mvn -Pdev gwt:run [-Dbonita.home=/path/to/bonita/home]
