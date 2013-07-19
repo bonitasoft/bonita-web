@@ -1,5 +1,19 @@
 # Bonita Console #
- 
+
+## Compilation ##
+At root level (same location as the parent pom.xml) :
+    
+    mvn clean install
+    
+For develoment purpose use the *dev* profile (don't compile every gwt permutations)
+    
+    mvn clean install -Pdev
+    
+## Execution in hosted mode for dev/debug ##
+In console-war module :
+    
+    mvn -Pdev gwt:run [-Dbonita.home=/path/to/bonita/home]
+    
 ## Structure ##
 
 ### Parent pom.xml ###
@@ -69,17 +83,3 @@ Contains the server side of rest api
 ### toolkit module ###
 Commons classes for server and client side.
 Will be dispatched in proper modules
-
-## Compilation ##
-At root level (same location as the parent pom.xml) :
-    
-    mvn clean install
-    
-For develoment purpose use the *dev* profile (don't compile every gwt permutations)
-    
-    mvn clean install -Pdev
-    
-## Execution in hosted mode for dev/debug ##
-In console-war module :
-    
-    mvn -Pdev gwt:run [-Dbonita.home=/path/to/bonita/home]
