@@ -9,7 +9,7 @@ $(function() {
 					update: function(event,ui){
 						var row = SortableItemTable.getSortedElement(ui);
 						window.updateIndex(DOMUtil.getAPIid(row), SortableItemTable.getProfilePageIndex(row))
-					},
+					}
 				});
 				
 				tablePannel.parent().sortable({
