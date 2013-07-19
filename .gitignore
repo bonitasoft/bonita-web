@@ -24,3 +24,5 @@ rest-api/rest-api-server/target/
 toolkit/toolkit-server/target/
 toolkit/toolkit-view/target/
 
+# java class
+*.class
