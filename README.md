@@ -17,16 +17,16 @@ Contains the back-end business logic, i.e., the code executed on the server side
 ### common-test-toolkit
 Contains integration tests utils
 
-### Console module ###
+### Console module
 Module containing portal implementation
 
-#### console-config ####
+#### console-config
 Contains the console client configuration to add to BONITA_HOME.
 
-#### console-server-impl:
+#### console-server-impl
 Contains the server side code of portal
 	
-#### console-war:
+#### console-war
 Contains the source code of the client, i.e., the code cross-compiled to javascript and all the resources; 
 Build the portal web application
 		
@@ -36,7 +36,7 @@ Module containing forms implementation
 #### forms-config
 Contains the forms client configuration to add to BONITA_HOME.
 
-### forms-design
+#### forms-design
 // TODO
 
 #### forms-model
@@ -54,7 +54,7 @@ Contains the source code of the client, i.e., the code cross-compiled to javascr
 ### Platform module
 Not yet maintained
 
-### rest-api module ###
+### Rest-api module ###
 Module containing rest api implementation over engine api
 
 #### rest-api-model
@@ -69,11 +69,14 @@ Will be dispatched in proper modules
 
 ## Compilation ##
 At root level (same location as the parent pom.xml) :
+    
     mvn clean install
     
 For develoment purpose use the *dev* profile (don't compile every gwt permutations)
+    
     mvn clean install -Pdev
     
 ## Execution in hosted mode for dev/debug ##
 In console-war module :
-    mvn -Pdev gwt:run
+    
+    mvn -Pdev gwt:run *[-Dbonita.home=/path/to/bonita/home]*
