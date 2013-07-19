@@ -7,6 +7,9 @@ Contains the common maven configuration such as:
 - the definition of all the dependencies version, e.g., junit.version, bonita.engine.version, gwt.version, ...
 - the maven repositories
 
+### Bonita-home module ###
+Aggregate engine bonita home and web config modules to build a usable bonita home folder (available in target/bonita-home-${project.version}/bonita)
+
 ### Common module ###
 ### common-config
 Contains the common client configuration to add to BONITA_HOME.
@@ -63,7 +66,7 @@ Contains the rest api model
 #### rest-api-server
 Contains the server side of rest api
 
-#### toolkit module
+### toolkit module ###
 Commons classes for server and client side.
 Will be dispatched in proper modules
 
