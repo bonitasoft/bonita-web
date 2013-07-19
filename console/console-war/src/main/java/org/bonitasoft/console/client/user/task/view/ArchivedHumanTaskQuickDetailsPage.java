@@ -16,13 +16,13 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
+import static org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder.taskQuickDetailsMetadatas;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
-import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
@@ -32,7 +32,6 @@ import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
-import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 /**
  * @author Séverin Moussel
@@ -61,11 +60,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ArchivedHumanTaskItem task) {
-        final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addAppsName();
-        metadatas.addDueDate(FORMAT.DISPLAY);
-        metadatas.addPriority();
-        return metadatas.build();
+        return taskQuickDetailsMetadatas().build();
     }
 
     @Override

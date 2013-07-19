@@ -23,7 +23,6 @@ import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -85,6 +84,9 @@ public final class ItemTreeTable extends ItemTable {
 
     @Override
     public final ItemTreeTable addItem(final IItem item, final String className) {
+        
+        loadedItems.put(item.getId().toString(), item);
+        
         String tmpClassName = className == null ? "" : className;
 
         insertParentsGroupAction(item);

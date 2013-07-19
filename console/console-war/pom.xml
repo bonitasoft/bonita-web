@@ -309,12 +309,6 @@
 				</dependency>
 			</dependencies>
 			<build>
-				<resources>
-					<resource>
-						<directory>src/main/debug</directory>
-						<filtering>true</filtering>
-					</resource>
-				</resources>
 				<plugins>
 					<!-- configure the GWT-Maven plugin -->
 					<plugin>
@@ -334,11 +328,32 @@
 								<java.compiler>NONE</java.compiler>
 							</systemProperties>
 							<server>org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher</server>
-							<extraJvmArgs>-XX:MaxPermSize=256m</extraJvmArgs>
-							<runTarget>login.jsp?redirectUrl=console%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997</runTarget>
+							<extraJvmArgs>-XX:MaxPermSize=256m -Xms256m -Xmx512m</extraJvmArgs>
+							<runTarget>login.jsp?redirectUrl=portal%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997</runTarget>
 							<deploy>${project.build.directory}</deploy>
 						</configuration>
 					</plugin>
+					
+					<!-- add extra projects sources -->
+					<plugin>
+				         <groupId>org.codehaus.mojo</groupId>
+				         <artifactId>build-helper-maven-plugin</artifactId>
+				         <executions>
+				           <execution>
+				             <id>add-source</id>
+				             <phase>generate-sources</phase>
+				             <goals>
+				               <goal>add-source</goal>
+				             </goals>
+				             <configuration>
+				               <sources>
+				                 <source>../../toolkit/toolkit-view/src/main/java</source>
+				                 <source>../../toolkit/toolkit-view/src/main/resources</source>
+				               </sources>
+				             </configuration>
+				           </execution>
+				         </executions>
+				      </plugin> 
 				</plugins>
 			</build>
 		</profile>

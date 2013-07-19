@@ -242,7 +242,7 @@ public class ViewController {
     }
 
     public static void showPopup(final RawView view) {
-    	DOM.getElementById(ViewController.POPUP_DIV_ID).setInnerHTML("");
+        DOM.getElementById(ViewController.POPUP_DIV_ID).setInnerHTML("");
         ViewController.openPopup();
         addClosePopupAction(view);
         ViewController.showView(view, ViewController.POPUP_DIV_ID);
@@ -253,7 +253,7 @@ public class ViewController {
         popupHeader.setInnerHTML(""); // To remove button repetition after popup re-opening
         popupHeader.appendChild(new Link(new JsId("close_popup"), "Close popup", "Close this popup", view.getClosePopupAction()).getElement());
     }
-    
+
     private RawView createView(final String token) {
         return this.createView(token, new TreeIndexed<String>());
     }

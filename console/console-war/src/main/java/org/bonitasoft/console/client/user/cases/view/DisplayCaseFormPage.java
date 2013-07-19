@@ -20,6 +20,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
@@ -35,11 +36,13 @@ public class DisplayCaseFormPage extends Page {
 
     private final String UUID_SEPERATOR = "--";
     
+    // legacy, needed by ConsoleFactoryClient
     public DisplayCaseFormPage() {
-        // legacy, needed by ConsoleFactoryClient
+    	addClass("moredetails");
     }
     
     public DisplayCaseFormPage(final CaseItem item) {
+    	this();
         setParameters(getItemParams(item));
     }
     
@@ -72,6 +75,9 @@ public class DisplayCaseFormPage extends Page {
         // TODO
        final String frameURL = GWT.getModuleBaseURL() + "homepage?ui=form&locale=" + locale + "#form=" + processName + UUID_SEPERATOR + processVersion + "$recap&mode=form&instance="
                 + caseId + "&recap=true";
+       	
+       	
+       	addToolbarLink(new ButtonBack());
         addBody(new IFrame(frameURL, "100%", "700px"));
     }
     

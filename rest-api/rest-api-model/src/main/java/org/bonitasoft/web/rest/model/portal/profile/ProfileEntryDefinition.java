@@ -59,7 +59,6 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
     protected void defineAttributes() {
         createAttribute(ProfileEntryItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ProfileEntryItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(ProfileEntryItem.ATTRIBUTE_CUSTOM_NAME, ItemAttribute.TYPE.STRING);
         createAttribute(ProfileEntryItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
         createAttribute(ProfileEntryItem.ATTRIBUTE_INDEX, ItemAttribute.TYPE.INTEGER)
                 .isMandatory();

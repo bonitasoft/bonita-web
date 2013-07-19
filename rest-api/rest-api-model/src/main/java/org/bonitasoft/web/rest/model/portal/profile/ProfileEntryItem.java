@@ -47,8 +47,6 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_NAME = "name";
 
-    public static final String ATTRIBUTE_CUSTOM_NAME = "custom_mame";
-
     public static final String ATTRIBUTE_DESCRIPTION = "description";
 
     public static final String ATTRIBUTE_TYPE = "type";
@@ -123,14 +121,6 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
 
     public String getName() {
         return getAttributeValue(ATTRIBUTE_NAME);
-    }
-
-    public void setCustomName(final String name) {
-        setAttribute(ATTRIBUTE_CUSTOM_NAME, name);
-    }
-
-    public String getCustomName() {
-        return getAttributeValue(ATTRIBUTE_CUSTOM_NAME);
     }
 
     public void setDescription(final String description) {

@@ -156,11 +156,6 @@ public class BPMURLSupportFilter implements Filter {
     public static final String FORM_ID_SEPARATOR = "$";
 
     /**
-     * console url prefix
-     */
-    public static final String CONSOLE_PREFIX = "/console";
-
-    /**
      * application url prefix
      */
     public static final String APPLICATION_PREFIX = "/application";

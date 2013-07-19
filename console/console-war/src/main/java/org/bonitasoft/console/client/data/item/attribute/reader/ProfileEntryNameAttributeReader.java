@@ -16,9 +16,12 @@
  */
 package org.bonitasoft.console.client.data.item.attribute.reader;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import java.util.Collections;
 import java.util.List;
 
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.HasDeploys;
@@ -34,21 +37,27 @@ public class ProfileEntryNameAttributeReader extends AbstractAttributeReader imp
      */
     private final String attributeToDeploy;
 
-    private final String dedaultAttributeToRead;
+    private final String defaultDeployedAttributeToRead;
 
-    public ProfileEntryNameAttributeReader(final String attributeToDeploy, final String attributeToRead, final String dedaultAttributeToRead) {
+    public ProfileEntryNameAttributeReader(final String attributeToRead, final String attributeToDeploy, final String defaultDeployedAttributeToRead) {
         super(attributeToRead);
         this.attributeToDeploy = attributeToDeploy;
-        this.dedaultAttributeToRead = dedaultAttributeToRead;
+        this.defaultDeployedAttributeToRead = defaultDeployedAttributeToRead;
     }
 
     @Override
     protected String _read(final IItem item) {
+        final String customName = item.getAttributeValue(leadAttribute);
+        if (!StringUtil.isBlank(customName)) {
+            return _(customName);
+        }
+
         final IItem deployedItem = item.getDeploy(this.attributeToDeploy);
         if (deployedItem == null) {
-            return item.getAttributeValue(dedaultAttributeToRead);
+            return _(item.getAttributeValue(defaultDeployedAttributeToRead));
         }
-        return deployedItem.getAttributeValue(getAttributeToRead());
+
+        return "-";
     }
 
     /*

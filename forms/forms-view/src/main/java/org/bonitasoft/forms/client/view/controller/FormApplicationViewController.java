@@ -59,10 +59,7 @@ import com.google.gwt.user.client.ui.Label;
  */
 public class FormApplicationViewController {
 
-    /**
-     * URL of the userXP
-     */
-    protected static final String DEFAULT_USER_XP_URL = "/bonita/console/homepage";
+    protected static final String DEFAULT_USER_XP_URL = GWT.getModuleBaseURL() + "homepage";
 
     /**
      * The PICTURE_PLACEHOLDER

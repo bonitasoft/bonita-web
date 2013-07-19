@@ -71,11 +71,20 @@ public class ItemTable extends AbstractTable implements Refreshable {
     private Integer defaultSelectedLine = null;
 
     private boolean registerRefresh = true;
-    
+
     private HashMap<String, String> attributesForGroupedActions = new HashMap<String, String>();
+
+    private boolean itemIdOnRow = false;
+
+    protected final HashMap<String, IItem> loadedItems = new HashMap<String, IItem>();
 
     public ItemTable(final ItemDefinition itemDefinition) {
         this(null, itemDefinition);
+    }
+
+    public ItemTable(final ItemDefinition itemDefinition, boolean itemIdOnRow) {
+        this(null, itemDefinition);
+        this.itemIdOnRow = itemIdOnRow;
     }
 
     public ItemTable(final JsId jsid, final ItemDefinition itemDefinition) {
@@ -146,6 +155,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
     }
 
     public final ItemTable addItems(final List<IItem> items) {
+
         if (!this.table.isSaveCheckboxes()) {
             this.table.clearSelectedIds();
         }
@@ -169,11 +179,13 @@ public class ItemTable extends AbstractTable implements Refreshable {
         return this;
     }
 
-    public final ItemTable addItem(final IItem item) {
+    protected final ItemTable addItem(final IItem item) {
         return this.addItem(item, null);
     }
 
-    public ItemTable addItem(final IItem item, final String className) {
+    protected ItemTable addItem(final IItem item, final String className) {
+
+        loadedItems.put(item.getId().toString(), item);
 
         if (this.actionColumnPosition == -1 && !this.actionSets.isEmpty()) {
             addActionColumn();
@@ -207,6 +219,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
         }
 
         // Create the line component
+        this.table.setItemIdOnRow(this.itemIdOnRow);
         this.table.addLine(item.getId().toString(), className, defAction, isGroupedActionAllowed(item));
 
         // Fill it with data columns
@@ -220,12 +233,11 @@ public class ItemTable extends AbstractTable implements Refreshable {
 
     private Boolean isGroupedActionAllowed(IItem item) {
         if (attributesForGroupedActions.isEmpty()) {
-            return true;            
+            return true;
         } else {
             Iterator it = attributesForGroupedActions.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
-                System.out.println(pairs.getKey() + " = " + pairs.getValue());
                 if (item.getAttributeValue(pairs.getKey().toString()).equals(pairs.getValue())) {
                     return false;
                 }
@@ -233,7 +245,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
             return true;
         }
     }
-    
+
     public ItemTable addAttributeToCheckForGroupedActions(String attributeName, String value) {
         attributesForGroupedActions.put(attributeName, value);
         return this;
@@ -732,6 +744,7 @@ public class ItemTable extends AbstractTable implements Refreshable {
 
     public final ItemTable resetLines() {
         this.table.resetLines();
+        this.loadedItems.clear();
         return this;
     }
 
@@ -770,6 +783,10 @@ public class ItemTable extends AbstractTable implements Refreshable {
 
     public void updateView() {
         this.table.updateView();
+    }
+
+    public IItem getItem(String itemId) {
+        return loadedItems.get(itemId);
     }
 
 }

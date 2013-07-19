@@ -38,7 +38,6 @@ public class ListProfilePage extends ItemListingPage<ProfileItem> {
 
     public static final String TOKEN = "profilelisting";
 
-    //public static final String EXPORT_REST_API_URL = "../REST/profileImportAndExportAPI/export";
 
     protected static final String TABLE_ALL_PROFILES = "allusers";
 
@@ -102,7 +101,7 @@ public class ListProfilePage extends ItemListingPage<ProfileItem> {
                 .addCellFormatter(ProfileItem.ATTRIBUTE_DESCRIPTION, new I18NCellFormatter())
                 .setShowSearch(false);
     }
-    
+
     protected ProfileQuickDetailsPage getItemQuickDetailPage() {
         return new ProfileQuickDetailsPage();
     }

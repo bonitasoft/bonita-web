@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.data.item.attribute.reader.ProfileEntryNameAttributeReader;
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -85,7 +86,7 @@ public class MenuListCreator {
         saveFirstPageMet(entry);
         return new MenuLink(
                 createJsId(entry),
-                getLinkName(entry),
+                _(getLinkName(entry)),
                 _(entry.getDescription()),
                 entry.getPage());
     }
@@ -126,20 +127,10 @@ public class MenuListCreator {
     }
 
     private String getLinkName(final ProfileEntryItem entry) {
-        /* TODO for custum Page, activate the custom page name */
-        // if (!StringUtil.isBlank(entry.getName())) {
-        // return entry.getName();
-        // } else {
-        if (entry.getDeploy(ProfileEntryItem.ATTRIBUTE_PAGE) != null) {
-            String name = entry.getDeploy(ProfileEntryItem.ATTRIBUTE_PAGE).getAttributeValue(BonitaPageItem.ATTRIBUTE_MENU_NAME);
-            if (!StringUtil.isBlank(name)) {
-                return _(name);
-            } else {
-                return "";
-            }
+        if (!StringUtil.isBlank(entry.getName())) {
+            return entry.getName();
         }
-        // }
-
-        return "";
+        return new ProfileEntryNameAttributeReader(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntryItem.ATTRIBUTE_PAGE, BonitaPageItem.ATTRIBUTE_MENU_NAME)
+                .read(entry);
     }
 }
