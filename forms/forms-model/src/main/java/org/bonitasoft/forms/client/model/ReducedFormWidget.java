@@ -113,7 +113,7 @@ public class ReducedFormWidget implements Serializable, Comparable<ReducedFormWi
     /**
      * initial value of the field interpreted
      */
-    private FormFieldValue initialFieldValue;
+    private FormFieldValue initialFieldValue = new FormFieldValue();
 
     /**
      * List of validators to apply to the field
