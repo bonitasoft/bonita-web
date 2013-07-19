@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.bonitasoft.console</groupId>
 		<artifactId>bonita-console</artifactId>
-		<version>6.1.0-rc-09</version>
+		<version>6.1.0-rc-10-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>bonita-home</artifactId>
