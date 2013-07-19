@@ -1,6 +1,6 @@
 # Console war #
 
-Bonita web main webapp
+Bonita web main webapp.  
 Build a webapp containing bonita portal and bonita forms
 
 ## Launch dev mode ##
