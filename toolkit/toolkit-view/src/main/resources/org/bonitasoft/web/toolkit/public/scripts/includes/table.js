@@ -146,7 +146,7 @@ SortableItemTable.getProfilePageIndex = function(row){
 SortableItemTable.getProfileFolderIndex = function(col){ 
 	var colAPIId = DOMUtil.getAPIid(col);
 	var index = null;
-	var childNodes = $(col).siblings(".tr:not(.tr_1)").addBack();
+	var childNodes = $(col).siblings(".tablePannel").addBack();
 	for(var i = 0; i< childNodes.length && index==null; i++){
 		if(colAPIId ===  DOMUtil.getAPIid(childNodes[i])){
 			index = (i*2)-1;
