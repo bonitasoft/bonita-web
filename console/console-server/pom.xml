@@ -7,7 +7,7 @@
 		<version>6.1.0-rc-10-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>console-server-impl</artifactId>
+	<artifactId>console-server</artifactId>
 	<name>console server implementation</name>
 
 	<dependencies>
