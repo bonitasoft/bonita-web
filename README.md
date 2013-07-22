@@ -40,7 +40,7 @@ Module containing portal implementation
 #### console-config
 Contains the console client configuration to add to BONITA_HOME.
 
-#### console-server-impl
+#### console-server
 Contains the server side code of portal
 	
 #### console-war
