@@ -40,6 +40,9 @@
 				
 				&.available, &.enabledprocesses {
 					.bgFilter(@filtersPanel-filters-bgAvailable);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgAvailable);
+                    }
 				}
 				&.unassigned{
 					.bgSubFilter(@filtersPanel-filters-bgUnassigned);
@@ -87,9 +90,8 @@
 					.bgFilter("filters-reporting.png");
 				}
 				&:hover{
-					background-color: @filtersPanel-filterHover-bgColor !important;
+					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1,@header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
-				
 			}
 			a.current{
 				&.available, &.enabledprocesses {

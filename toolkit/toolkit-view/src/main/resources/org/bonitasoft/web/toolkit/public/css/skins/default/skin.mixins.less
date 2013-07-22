@@ -126,6 +126,14 @@
 	.fontSize(@filtersPanel-subfilters-fontSize);
 	.bgFilter(@bg, @bgColor, @bgLeft);
 }
+.bgHoverFilter(@bg, @bgLeft: @filtersPanel-filters-currentLine-backgroundLeft, @bgTop: @filtersPanel-filters-currentLine-backgroundTop){
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
+}
+.bgHoverSubFilter(@bg, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft,  @bgTop: @filtersPanel-filters-currentLine-backgroundTop){
+    padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
+	.fontSize(@filtersPanel-subfilters-fontSize);
+	background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
+}
 .bgCurrentFilter(@bg, @bgColor: @filtersPanel-filterHover-bgColor){
 	.bgFilter(@bg,@bgColor);
 }
