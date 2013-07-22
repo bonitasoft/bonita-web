@@ -12,7 +12,7 @@
 
 	<modules>
 		<module>platform-config</module>
-		<module>platform-server-impl</module>
+		<module>platform-server</module>
 	</modules>
 
 </project>
