@@ -29,7 +29,7 @@ class AbstractAPIRequest extends QueuableRequest {
 
     protected final ItemDefinition<?> itemDefinition;
 
-    public AbstractAPIRequest(final ItemDefinition<?> itemDefinition) {
+    public AbstractAPIRequest(final ItemDefinition itemDefinition) {
         super();
         this.itemDefinition = itemDefinition;
     }
@@ -43,7 +43,7 @@ class AbstractAPIRequest extends QueuableRequest {
     /**
      * @return the itemDefinition
      */
-    public ItemDefinition<?> getItemDefinition() {
+    public ItemDefinition getItemDefinition() {
         return this.itemDefinition;
     }
 
