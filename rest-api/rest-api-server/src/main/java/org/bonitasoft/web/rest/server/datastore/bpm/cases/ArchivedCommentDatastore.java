@@ -87,7 +87,7 @@ public class ArchivedCommentDatastore extends CommonDatastore<ArchivedCommentIte
             }
 
             return new ItemSearchResult<ArchivedCommentItem>(page, resultsByPage,
-                    archivedCommentList.size(), archivedCommentList);
+                    result.getCount(), archivedCommentList);
 
         } catch (final InvalidSessionException e) {
             throw new APISessionInvalidException(e);

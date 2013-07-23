@@ -12,7 +12,7 @@
 
 	<modules>
 		<module>console-config</module>
-		<module>console-server-impl</module>
+		<module>console-server</module>
 	</modules>
 
 	<profiles>

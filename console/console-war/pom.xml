@@ -63,7 +63,7 @@
 		<!-- Runtime dependencies -->
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-server-impl</artifactId>
+			<artifactId>console-server</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>
 		</dependency>
