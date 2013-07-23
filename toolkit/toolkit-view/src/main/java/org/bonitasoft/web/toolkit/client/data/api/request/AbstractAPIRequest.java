@@ -27,7 +27,7 @@ class AbstractAPIRequest extends QueuableRequest {
 
     protected APICallback callback;
 
-    protected final ItemDefinition itemDefinition;
+    protected final ItemDefinition<?> itemDefinition;
 
     public AbstractAPIRequest(final ItemDefinition itemDefinition) {
         super();

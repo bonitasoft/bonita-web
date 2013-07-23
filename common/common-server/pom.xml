@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>common-parent</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
-		<version>6.1.0-rc-09-SNAPSHOT</version>
+		<version>6.1.0-rc-11-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>common-server</artifactId>

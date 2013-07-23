@@ -1,18 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<artifactId>platform-parent</artifactId>
-		<groupId>org.bonitasoft.platform</groupId>
-		<version>6.1.0-rc-09-SNAPSHOT</version>
-	</parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.bonitasoft.platform</groupId>
-	<artifactId>platform-server-impl</artifactId>
-	<name>platform server implementation</name>
-	
+
+	<parent>
+		<groupId>org.bonitasoft.console</groupId>
+		<artifactId>console-parent</artifactId>
+		<version>6.1.0-rc-11-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>console-server</artifactId>
+	<name>console server implementation</name>
+
 	<dependencies>
 		<dependency>
-			<groupId>org.bonitasoft.platform</groupId>
-			<artifactId>platform-config</artifactId>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-config</artifactId>
 			<version>${project.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
@@ -33,13 +34,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-server</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.bonitasoft.web</groupId>
+			<artifactId>theme-builder</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.web</groupId>
-			<artifactId>bonita-rest-model</artifactId>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -52,8 +52,13 @@
 			<artifactId>bonita-client</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>		 
+			<groupId>org.bonitasoft.engine</groupId>
+			<artifactId>bonita-server</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 		
 		<!-- TESTS -->
@@ -64,9 +69,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.engine</groupId>
-			<artifactId>bonita-server</artifactId>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>common-server</artifactId>
+			<version>${project.version}</version>
 			<scope>test</scope>
+			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -89,17 +96,17 @@
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
-			<version>1.5.5</version>
+			<version>1.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.engine</groupId>
+			<artifactId>bonita-home</artifactId>
+			<type>zip</type>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -138,7 +145,6 @@
 									<artifactId>bonita-home</artifactId>
 									<type>zip</type>
 									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/bonita</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 							<outputDirectory>
@@ -163,8 +169,8 @@
                                     <excludes>META*/**</excludes>
                                 </artifactItem>
 								<artifactItem>
-									<groupId>org.bonitasoft.platform</groupId>
-									<artifactId>platform-config</artifactId>
+									<groupId>org.bonitasoft.console</groupId>
+									<artifactId>console-config</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
 									<overWrite>true</overWrite>
@@ -176,10 +182,8 @@
 							</outputDirectory>
 						</configuration>
 					</execution>
-
 				</executions>
 			</plugin>
 		</plugins>
-
 	</build>
 </project>

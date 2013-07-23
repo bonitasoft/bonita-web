@@ -125,7 +125,7 @@ $(function() {
 				cache.style.height="100%";
 				cache.style.top="0";
 				cache.style.left="0";
-				$('div.fileupload div.input div').append(cache);
+				$('div.page_processupload div.fileupload div.input div#uploader').append(cache);
 				if (!$("a.installUpload").hasClass("disabled")) {
 					$("a.installUpload").addClass("disabled");
 				}

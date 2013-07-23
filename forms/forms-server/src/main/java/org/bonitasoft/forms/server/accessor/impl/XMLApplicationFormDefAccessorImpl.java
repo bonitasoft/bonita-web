@@ -159,7 +159,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
             if (pageNodes != null) {
                 for (int i = 0; i < pageNodes.getLength(); i++) {
                     final String id = getStringByXpath(pageNodes.item(i), "@" + XMLForms.ID);
-                    pages.add(id);
+                    pages.add(unescapeSingleQuote(id));
                 }
             }
         }
@@ -249,7 +249,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
      * @return the {@link Node} for the page
      */
     protected Node getPageNode(final String pageId) {
-        final String xpath = getPageXpath(pageId);
+        final String xpath = getPageXpath(escapeSingleQuote(pageId));
         return getNodeByXpath(formNode, xpath);
     }
 
@@ -280,7 +280,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
      * @return the {@link Node} for the page
      */
     protected Node getFormNode(final String formId) {
-        final String xpath = getFormPageXpath(formId);
+        final String xpath = getFormPageXpath(escapeSingleQuote(formId));
         return getNodeByXpath(document, xpath);
     }
 

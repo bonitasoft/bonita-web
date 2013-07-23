@@ -53,8 +53,8 @@ public class ProfileEntryNameAttributeReader extends AbstractAttributeReader imp
         }
 
         final IItem deployedItem = item.getDeploy(this.attributeToDeploy);
-        if (deployedItem == null) {
-            return _(item.getAttributeValue(defaultDeployedAttributeToRead));
+        if (deployedItem != null) {
+            return _(deployedItem.getAttributeValue(defaultDeployedAttributeToRead));
         }
 
         return "-";

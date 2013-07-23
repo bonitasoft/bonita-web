@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>console-parent</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
-		<version>6.1.0-rc-09-SNAPSHOT</version>
+		<version>6.1.0-rc-11-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>console-war</artifactId>
@@ -63,7 +63,7 @@
 		<!-- Runtime dependencies -->
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-server-impl</artifactId>
+			<artifactId>console-server</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>
 		</dependency>
@@ -308,6 +308,10 @@
 					<version>1.3.170</version>
 				</dependency>
 			</dependencies>
+			
+			<properties>
+                 <bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
+            </properties>
 			<build>
 				<plugins>
 					<!-- configure the GWT-Maven plugin -->
@@ -323,12 +327,12 @@
 							<module>org.bonitasoft.console.LightBonitaConsole</module>
 							<!-- configuration for gwt:run and gwt:debug -->
 							<systemProperties>
-								<bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
+								<bonita.home>${bonita.home}</bonita.home>
 								<build.compiler>org.bonitasoft.tools.gwt.JDTCompiler</build.compiler>
 								<java.compiler>NONE</java.compiler>
 							</systemProperties>
 							<server>org.bonitasoft.tools.gwt.jetty.BonitaJettyLauncher</server>
-							<extraJvmArgs>-XX:MaxPermSize=256m</extraJvmArgs>
+							<extraJvmArgs>-XX:MaxPermSize=256m -Xms256m -Xmx512m</extraJvmArgs>
 							<runTarget>login.jsp?redirectUrl=portal%2Fhomepage%3Fgwt.codesvr%3D127.0.0.1%3A9997</runTarget>
 							<deploy>${project.build.directory}</deploy>
 						</configuration>

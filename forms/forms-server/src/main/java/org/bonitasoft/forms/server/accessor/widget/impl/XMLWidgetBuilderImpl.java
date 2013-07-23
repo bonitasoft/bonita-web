@@ -430,7 +430,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
         final List<FormAction> actions = new ArrayList<FormAction>();
 
-        final String xpath = getActionsXpath(pageId);
+        final String xpath = getActionsXpath(escapeSingleQuote(pageId));
         final NodeList actionNodes = getNodeListByXpath(parentNode, xpath);
         if (actionNodes == null) {
             if (LOGGER.isLoggable(Level.SEVERE)) {

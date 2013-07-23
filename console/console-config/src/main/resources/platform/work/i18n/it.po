@@ -1473,7 +1473,7 @@ msgstr "Questa categoria non è stata trovata o questo campo è obbligatorio"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:60
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/DeleteProfileMemberPage.java:64
 msgid "Remove"
-msgstr "Remove"
+msgstr "Rimuovi"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:60
 msgid "Remove this category"
@@ -2129,7 +2129,7 @@ msgstr "Logout"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:203
 msgid "Language"
-msgstr "Language"
+msgstr "Lingua"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:208
 msgid "About"
