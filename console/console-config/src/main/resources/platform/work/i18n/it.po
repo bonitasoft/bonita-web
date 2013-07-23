@@ -2129,7 +2129,7 @@ msgstr "Logout"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:203
 msgid "Language"
-msgstr "Language"
+msgstr "Lingua"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:208
 msgid "About"
