@@ -68,7 +68,7 @@ $(function() {
 				;
 			}
 		});
-		$(".formentry.select .input select, , #report-form .input select", forms).each(function(i,e){
+		$(".formentry.select .input select , #report-form .input select", forms).each(function(i,e){
 			$(e).change(function(e){
 				try{
 					resizeSelect($(e).parent());

@@ -132,26 +132,62 @@ function SortableItemTable() {}
 
 SortableItemTable.getSortedElement = function (ui){ return ui.item.get(0); }
 SortableItemTable.getNextRow = function(elt){ return $(elt).next(".tr"); }
-SortableItemTable.getProfilePageIndex = function(row){ 
-	var rowAPIId = DOMUtil.getAPIid(row);
+
+SortableItemTable.generateIndex = function(elt, childNodes, initialDomIndex){ 
+	var APIid = DOMUtil.getAPIid(elt);
 	var index = null;
-	var childNodes = $(row).siblings(".tr:not(.tr_1)").addBack();
 	for(var i = 0; i< childNodes.length && index==null; i++){
-		if(rowAPIId ===  DOMUtil.getAPIid(childNodes[i])){
-			index = (i*2)-1;
+		if(APIid ===  DOMUtil.getAPIid(childNodes[i])){
+			if(initialDomIndex < i){
+				index = SortableItemTable.shiftDown(i);
+			}else{
+				index = SortableItemTable.shiftUp(i);
+			}
 		}
 	}
 	return index;
 }
-SortableItemTable.getProfileFolderIndex = function(col){ 
-	var colAPIId = DOMUtil.getAPIid(col);
-	var index = null;
+
+SortableItemTable.getProfilePageIndex = function(row, initialDomIndex){ 
+	var childNodes = $(row).siblings(".tr:not(.tr_1)").addBack();
+	SortableItemTable.generateIndex(row, childNodes, initialDomIndex);
+	return index;
+}
+
+SortableItemTable.getProfileFolderIndex = function(col, initialDomIndex){ 
 	var childNodes = $(col).siblings(".tablePannel").addBack();
+	/*var index = null;
 	for(var i = 0; i< childNodes.length && index==null; i++){
 		if(colAPIId ===  DOMUtil.getAPIid(childNodes[i])){
-			index = (i*2)-1;
+			if(initialDomIndex < i){
+				index = SortableItemTable.shiftDown(i);
+			}else{
+				index = SortableItemTable.shiftUp(i);
+			}
 		}
 	}
+	return index;*/
+	return SortableItemTable.generateIndex(col, childNodes, initialDomIndex);
+}
+
+SortableItemTable.getInitialProfileFolderDomIndex = function(col){ 
+	var colAPIId = DOMUtil.getAPIid(col);
+	var childNodes = $(col).siblings(".tablePannel").addBack();
+	for(var i = 0; i< childNodes.length; i++){
+		if(colAPIId ===  DOMUtil.getAPIid(childNodes[i])){
+			return i;
+		}
+	}
+	return null;
+}
+
+
+SortableItemTable.shiftUp = function(i){ 
+	index = i == 0 ? -1 : ((i-1)*2)+1;
+	return index;
+}
+SortableItemTable.shiftDown = function(i){ 
+	index = i == 0 ? -1 : (i*2)+1;
 	return index;
 }
 
