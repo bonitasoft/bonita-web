@@ -25,6 +25,11 @@ package org.bonitasoft.forms.server.constants;
 public final class XMLForms {
 
     /**
+     * Single quote escape character form XML attribute values
+     */
+    public static final String SINGLE_QUOTE_ESCAPE = "&apos;";
+
+    /**
      * the forms definition element name
      */
     public static final String FORMS_DEFINITION = "forms-definition";
