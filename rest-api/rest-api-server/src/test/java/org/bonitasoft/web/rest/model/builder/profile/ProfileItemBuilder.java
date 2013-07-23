@@ -30,6 +30,7 @@ public class ProfileItemBuilder {
     protected String name = "aName";
     protected String description = "aDescription";
     protected String icon = "anIcon";
+    protected boolean isDefault = false;
 
     public static ProfileItemBuilder aProfileItem() {
         return new ProfileItemBuilder();
@@ -41,6 +42,7 @@ public class ProfileItemBuilder {
         item.setName(name);
         item.setDescription(description);
         item.setIcon(icon);
+        item.setIsDefault(isDefault);
         return item;
     }
     
@@ -48,6 +50,7 @@ public class ProfileItemBuilder {
     	ProfileImpl profile = new ProfileImpl(name);
     	profile.setDescription(description);
     	profile.setIconPath(icon);
+    	profile.setDefault(isDefault);
     	return profile;
     }
     
@@ -56,6 +59,7 @@ public class ProfileItemBuilder {
         name = profile.getName();
         description = profile.getDescription();
         icon = profile.getIconPath();
+        isDefault = profile.isDefault();
         return this;
     }
 
@@ -66,6 +70,11 @@ public class ProfileItemBuilder {
 
     public ProfileItemBuilder withDescription(String description) {
         this.description = description;
+        return this;
+    }
+    
+    public ProfileItemBuilder isDefault(boolean isDefault) {
+        this.isDefault = isDefault;
         return this;
     }
 }
