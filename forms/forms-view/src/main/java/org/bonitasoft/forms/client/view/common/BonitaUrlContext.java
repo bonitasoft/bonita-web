@@ -5,16 +5,13 @@ import java.util.Map;
 public class BonitaUrlContext {
 
     private Map<String, Object> hashParameters;
-    private URLUtils urlUtils;
 
-    private BonitaUrlContext(URLUtils urlUtils, Map<String, Object> hashParameters) {
-        this.urlUtils = urlUtils;
+    private BonitaUrlContext(Map<String, Object> hashParameters) {
         this.hashParameters = hashParameters;
     }
 
     public static BonitaUrlContext get() {
-        URLUtils utils = URLUtilsFactory.getInstance();
-        return new BonitaUrlContext(utils, utils.getHashParameters());
+        return new BonitaUrlContext(URLUtilsFactory.getInstance().getHashParameters());
     }
     
     public Map<String, Object> getHashParameters() {
