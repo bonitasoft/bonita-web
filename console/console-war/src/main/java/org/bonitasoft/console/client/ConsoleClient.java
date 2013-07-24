@@ -48,10 +48,6 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class ConsoleClient extends ClientApplication {
 
-    protected boolean myAutoLogin = false;
-
-    protected boolean themeLoaded = false;
-
     protected static final String CONSOLE_STATIC_CONTENT_ELEMENT_ID = "static_console";
 
     private final String CONSOLE_HEADER = "console_header";
@@ -115,10 +111,7 @@ public class ConsoleClient extends ClientApplication {
         if (RootPanel.get(CONSOLE_HEADER) != null) {
             RootPanel.get(CONSOLE_HEADER).setVisible(false);
         }
-        final String autoLoginStr = Window.Location.getParameter(URLUtils.AUTO_LOGIN_PARAM);
-        if (autoLoginStr != null) {
-            myAutoLogin = Boolean.parseBoolean(autoLoginStr);
-        }
+
         final String locale = urlUtils.getLocale();
         urlUtils.saveLocale(locale);
 
