@@ -633,20 +633,6 @@ public class URLUtils {
     }
 
     /**
-     * Retrieve the form ID and URL decode it
-     * 
-     * @return the form ID
-     */
-    public String getFormID() {
-        String formID = null;
-        final String encodedFormParam = getHashParameter(FORM_ID);
-        if (encodedFormParam != null) {
-            formID = URL.decodeQueryString(encodedFormParam);
-        }
-        return formID;
-    }
-
-    /**
      * @param applicationURL
      * @param urlContext
      * @return

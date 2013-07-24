@@ -22,7 +22,7 @@ public class BonitaUrlContext {
     }
     
     public String getFormId() {
-        return urlUtils.getFormID();
+        return (String) hashParameters.get(URLUtils.FORM_ID);
     }
     
     public String getApplicationMode() {
