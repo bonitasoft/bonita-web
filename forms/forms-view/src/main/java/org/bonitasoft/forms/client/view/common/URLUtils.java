@@ -295,47 +295,6 @@ public class URLUtils {
     }
 
     /**
-     * 
-     * @return the locale for form
-     */
-    public String getLocaleForForm() {
-        String localeStr = null;
-        localeStr = Window.Location.getParameter(FORM_LOCALE);
-        final String formLocaleInCookie = Cookies.getCookie(FORM_LOCALE_COOKIE_NAME);
-        if (localeStr == null) {
-            if (formLocaleInCookie == null) {
-                localeStr = Window.Location.getParameter(LOCALE_PARAM);
-            } else {
-                final String currentLocale = Window.Location.getParameter(LOCALE_PARAM);
-                if (!DEFAULT_GWT_LOCALE_NAME.equalsIgnoreCase(currentLocale)) {
-                    localeStr = Window.Location.getParameter(LOCALE_PARAM);
-                }
-            }
-        }
-        if (localeStr == null) {
-            localeStr = formLocaleInCookie;
-        }
-        if (localeStr == null || localeStr.length() == 0) {
-            localeStr = LocaleInfo.getCurrentLocale().getLocaleName();
-        }
-        if (DEFAULT_GWT_LOCALE_NAME.equals(localeStr)) {
-            localeStr = DEFAULT_LOCALE;
-        }
-
-        return localeStr;
-
-    }
-
-    /**
-     * Retrieve the URL and remove the hash
-     * 
-     * @return the new url to set
-     */
-    public String removeHashFromUrl() {
-        return rebuildUrl(Window.Location.getPath(), Window.Location.getParameterMap(), null, null, null, null, null);
-    }
-
-    /**
      * Retrieve the url and rebuild it removing the required parameters and adding the provided parameters. If a parameter to add if already in the URL it needs
      * to be removed first
      * 
@@ -471,60 +430,6 @@ public class URLUtils {
     }
 
     /**
-     * Elaborate the redirection URL for a given task
-     * 
-     * @param applicationURL
-     *            the application URL to redirect to
-     * @param newTaskUUIDStr
-     *            the task UUID as a string
-     * @param hashParamsToAdd
-     * @return the redirection URL
-     */
-    public String getTaskRedirectionUrl(final String applicationURL, final String newTaskUUIDStr, final Map<String, String> hashParamsToAdd) {
-        final StringBuilder url = new StringBuilder(applicationURL);
-        url.append("?");
-        url.append(URLUtils.LOCALE_PARAM);
-        url.append("=");
-        url.append(getLocale());
-        url.append("#");
-        url.append(URLUtils.TASK_ID_PARAM);
-        url.append("=");
-        url.append(newTaskUUIDStr);
-        final String viewMode = getHashParameter(URLUtils.VIEW_MODE_PARAM);
-        if (viewMode != null) {
-            url.append(HASH_PARAMETERS_SEPARATOR);
-            url.append(URLUtils.VIEW_MODE_PARAM);
-            url.append("=");
-            url.append(viewMode);
-        }
-        if (hashParamsToAdd != null && !hashParamsToAdd.isEmpty()) {
-            for (final Entry<String, String> urlParamEntry : hashParamsToAdd.entrySet()) {
-                url.append(HASH_PARAMETERS_SEPARATOR);
-                url.append(urlParamEntry.getKey());
-                url.append("=");
-                url.append(urlParamEntry.getValue());
-            }
-        }
-        return url.toString();
-    }
-
-    /**
-     * Elaborate the redirection URL hash for a given task
-     * 
-     * @param newTaskUUIDStr
-     *            the task UUID as a string
-     * @return
-     */
-    public String getTaskRedirectionHash(final String newTaskUUIDStr) {
-        String hash = URLUtils.TASK_ID_PARAM + "=" + newTaskUUIDStr;
-        final String viewMode = getHashParameter(URLUtils.VIEW_MODE_PARAM);
-        if (viewMode != null) {
-            hash += HASH_PARAMETERS_SEPARATOR + URLUtils.VIEW_MODE_PARAM + "=" + viewMode;
-        }
-        return hash;
-    }
-
-    /**
      * change the form frame URL
      * this method is meant to be called in the form frame (not in the application/console window)
      * TODO do not call this method in case there is no app redirection (all in the bar)
@@ -611,13 +516,6 @@ public class URLUtils {
         Cookies.setCookie(BOS_LOCALE_COOKIE_NAME, localeName, theExpirationTime);
     }
 
-    public void saveLocaleForForm(final String localeName) {
-        final Date now = new Date();
-        // Expiration in 120 days.
-        final Date theExpirationTime = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 120);
-        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, localeName, theExpirationTime);
-    }
-
     public String getAttachmentURL(final String servletURL, final String formID, final Map<String, Object> contextMap, final boolean isArchived,
             final long documentId, final String fileName) {
         final StringBuilder urlParams = new StringBuilder();
@@ -699,39 +597,6 @@ public class URLUtils {
             parametersMap.put(name, value);
         }
         return parametersMap;
-    }
-
-    public String rebuildHash(final List<String> hashParamsToRemove, final Map<String, String> hashParamsToAdd) {
-        final String hash = History.getToken();
-        final StringBuilder hashParams = new StringBuilder();
-        if (hash != null) {
-            final Map<String, String> hashParameters = getHashParameters(hash);
-            for (final Entry<String, String> hashParamEntry : hashParameters.entrySet()) {
-                if (hashParamsToRemove == null || !hashParamsToRemove.contains(hashParamEntry.getKey())) {
-                    if (hashParams.length() > 0) {
-                        hashParams.append("&");
-                    }
-                    hashParams.append(hashParamEntry.getKey());
-                    if (hashParamEntry.getValue() != null) {
-                        hashParams.append("=");
-                        hashParams.append(hashParamEntry.getValue());
-                    }
-                }
-            }
-        }
-        if (hashParamsToAdd != null && !hashParamsToAdd.isEmpty()) {
-            for (final Entry<String, String> hashParamEntry : hashParamsToAdd.entrySet()) {
-                if (hashParams.length() > 0) {
-                    hashParams.append("&");
-                }
-                hashParams.append(hashParamEntry.getKey());
-                if (hashParamEntry.getValue() != null) {
-                    hashParams.append("=");
-                    hashParams.append(hashParamEntry.getValue());
-                }
-            }
-        }
-        return hashParams.toString();
     }
 
     /**
