@@ -1,12 +1,13 @@
 package org.bonitasoft.forms.client.view.common;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BonitaUrlContext {
 
-    private Map<String, Object> hashParameters;
+    private Map<String, String> hashParameters;
 
-    private BonitaUrlContext(Map<String, Object> hashParameters) {
+    private BonitaUrlContext(Map<String, String> hashParameters) {
         this.hashParameters = hashParameters;
     }
 
@@ -14,20 +15,26 @@ public class BonitaUrlContext {
         return new BonitaUrlContext(URLUtilsFactory.getInstance().getHashParameters());
     }
     
+    // Need to be converted in Map<String, Object> for FormViewController methods
+    // TODO refactor FormViewController
     public Map<String, Object> getHashParameters() {
-        return hashParameters;
+        HashMap<String, Object> hash = new HashMap<String, Object>();
+        for (String key : hashParameters.keySet()) {
+            hash.put(key, hashParameters.get(key));
+        }
+        return hash;
     }
     
     public String getFormId() {
-        return (String) hashParameters.get(URLUtils.FORM_ID);
+        return hashParameters.get(URLUtils.FORM_ID);
     }
     
     public String getApplicationMode() {
-        return (String) hashParameters.get(URLUtils.VIEW_MODE_PARAM);
+        return hashParameters.get(URLUtils.VIEW_MODE_PARAM);
     }
     
     public String getThemeName() {
-        return (String) hashParameters.get(URLUtils.THEME);
+        return hashParameters.get(URLUtils.THEME);
     }
 
     public boolean isFormApplicationMode() {
