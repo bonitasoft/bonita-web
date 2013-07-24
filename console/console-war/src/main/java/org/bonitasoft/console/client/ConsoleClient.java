@@ -17,7 +17,6 @@ package org.bonitasoft.console.client;
 import org.bonitasoft.console.client.menu.view.LoginBox;
 import org.bonitasoft.forms.client.FormsApplicationLoader;
 import org.bonitasoft.forms.client.view.common.BonitaUrlContext;
-import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
@@ -32,27 +31,11 @@ import org.bonitasoft.web.toolkit.client.ViewController;
 public class ConsoleClient extends ClientApplication {
 
     @Override
-    public ApplicationFactoryClient defineApplicationFactoryClient() {
-        return new ConsoleFactoryClient();
-    }
-
-    @Override
-    public ItemDefinitionFactory defineApplicationFactoryCommon() {
-        return new ModelFactory();
-    }
-
-    @Override
-    protected void onBeforeLoad() {
-        // new JavaScripts(ConsoleJsResources.asList()).inject();
-    }
-
-    @Override
     protected void onLoad() {
         registerJSNIMethods();
-
-        // Check if the application called is the forms application
+    
         BonitaUrlContext bonitaUrlContext = BonitaUrlContext.get();
-        if (URLUtils.FORM_ONLY_APPLICATION_MODE.equals(bonitaUrlContext.getApplicationMode()) || URLUtils.FULL_FORM_APPLICATION_MODE.equals(bonitaUrlContext.getApplicationMode())) {
+        if (bonitaUrlContext.isFormApplicationMode()) {
             new FormsApplicationLoader(URLUtilsFactory.getInstance(), bonitaUrlContext).load();
         } else {
             onConsoleLoad();
@@ -60,19 +43,29 @@ public class ConsoleClient extends ClientApplication {
     }
 
     protected void registerJSNIMethods() {
-
+    
     }
 
     protected void onConsoleLoad() {
         if ("true".equals(Session.getParameter("is_technical_user"))) {
             refreshView();
         }
-
+    
         // The login box will initialize the view if the login works well
         ViewController.showView(getLoginBoxView(), "login");
     }
 
     protected LoginBox getLoginBoxView() {
         return new LoginBox();
+    }
+
+    @Override
+    public ApplicationFactoryClient defineApplicationFactoryClient() {
+        return new ConsoleFactoryClient();
+    }
+
+    @Override
+    public ItemDefinitionFactory defineApplicationFactoryCommon() {
+        return new ModelFactory();
     }
 }

@@ -79,8 +79,7 @@ public class FormsApplicationLoader {
                     FormsApplicationLoader.this.createApplicationView(aUser);
                 }
             });
-            final boolean isTodolist = Boolean.valueOf((String) bonitaUrlContext.getHashParameters().get(URLUtils.TODOLIST_PARAM));
-            if (isTodolist) {
+            if (bonitaUrlContext.isTodoList()) {
                 final GetAnyTodolistFormHandler getAnyTodolistFormHandler = new GetAnyTodolistFormHandler();
                 RpcFormsServices.getFormsService().getAnyTodoListForm(bonitaUrlContext.getHashParameters(), getAnyTodolistFormHandler);
 
@@ -94,7 +93,7 @@ public class FormsApplicationLoader {
     
     protected void createApplicationView(final User aUser) {
         DOMUtils.getInstance().cleanBody(CONSOLE_STATIC_CONTENT_ELEMENT_ID);
-        if (URLUtils.FULL_FORM_APPLICATION_MODE.equals(bonitaUrlContext.getApplicationMode())) {
+        if (bonitaUrlContext.isFormFullPageApplicationMode()) {
             FormViewControllerFactory.getFormApplicationViewController(bonitaUrlContext.getFormId(), bonitaUrlContext.getHashParameters(), aUser).createInitialView(DOMUtils.DEFAULT_FORM_ELEMENT_ID);
         } else {
             FormViewControllerFactory.getFormApplicationViewController(bonitaUrlContext.getFormId(), bonitaUrlContext.getHashParameters(), aUser).createFormInitialView();
@@ -111,7 +110,7 @@ public class FormsApplicationLoader {
             String urlString = null;
             String themeName = (String) newUrlContext.get(URLUtils.THEME);
             if (themeName == null || themeName.isEmpty()) {
-                themeName = (String) FormsApplicationLoader.this.bonitaUrlContext.getHashParameters().get(URLUtils.THEME);
+                themeName = bonitaUrlContext.getThemeName();
             }
             final Map<String, String> paramsToAdd = new HashMap<String, String>();
             paramsToAdd.put(URLUtils.THEME, themeName);
@@ -143,6 +142,5 @@ public class FormsApplicationLoader {
             final String urlString = urlUtils.rebuildUrl(null, paramsToAdd, hashParamsToRemove, null);
             urlUtils.windowRedirect(urlString);
         }
-
     }
 }

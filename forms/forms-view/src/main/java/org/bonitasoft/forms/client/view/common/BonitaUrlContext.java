@@ -4,20 +4,21 @@ import java.util.Map;
 
 public class BonitaUrlContext {
 
-    private Map<String, Object> urlContext;
+    private Map<String, Object> hashParameters;
     private URLUtils urlUtils;
 
-    private BonitaUrlContext(URLUtils urlUtils) {
+    private BonitaUrlContext(URLUtils urlUtils, Map<String, Object> hashParameters) {
         this.urlUtils = urlUtils;
-        urlContext = urlUtils.getHashParameters();
+        this.hashParameters = hashParameters;
     }
 
     public static BonitaUrlContext get() {
-        return new BonitaUrlContext(URLUtilsFactory.getInstance());
+        URLUtils utils = URLUtilsFactory.getInstance();
+        return new BonitaUrlContext(utils, utils.getHashParameters());
     }
     
     public Map<String, Object> getHashParameters() {
-        return urlContext;
+        return hashParameters;
     }
     
     public String getFormId() {
@@ -25,6 +26,26 @@ public class BonitaUrlContext {
     }
     
     public String getApplicationMode() {
-        return (String) urlContext.get(URLUtils.VIEW_MODE_PARAM);
+        return (String) hashParameters.get(URLUtils.VIEW_MODE_PARAM);
+    }
+    
+    public String getThemeName() {
+        return (String) hashParameters.get(URLUtils.THEME);
+    }
+
+    public boolean isFormApplicationMode() {
+        return isFormInPortalApplicationMode() || isFormFullPageApplicationMode();
+    }
+    
+    public boolean isFormInPortalApplicationMode() {
+        return URLUtils.FORM_ONLY_APPLICATION_MODE.equals(getApplicationMode());
+    }
+    
+    public boolean isFormFullPageApplicationMode() {
+        return URLUtils.FULL_FORM_APPLICATION_MODE.equals(getApplicationMode());
+    }
+    
+    public boolean isTodoList() {
+        return Boolean.valueOf((String) hashParameters.get(URLUtils.TODOLIST_PARAM));
     }
 }
