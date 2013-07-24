@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.menu.view.LoginBox;
 import org.bonitasoft.forms.client.view.FormsAsyncCallback;
+import org.bonitasoft.forms.client.view.common.BonitaUrlContext;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
@@ -49,12 +50,6 @@ public class ConsoleClient extends ClientApplication {
 
     protected boolean myAutoLogin = false;
 
-    protected String formID;
-
-    protected Map<String, Object> urlContext;
-
-    protected String myApplicationMode;
-
     protected boolean themeLoaded = false;
 
     protected static final String CONSOLE_STATIC_CONTENT_ELEMENT_ID = "static_console";
@@ -65,6 +60,8 @@ public class ConsoleClient extends ClientApplication {
      * Utility Class form DOM manipulation
      */
     protected URLUtils urlUtils = URLUtilsFactory.getInstance();
+
+    private BonitaUrlContext bonitaUrlContext;
 
     @Override
     public ApplicationFactoryClient defineApplicationFactoryClient() {
@@ -86,8 +83,8 @@ public class ConsoleClient extends ClientApplication {
         registerJSNIMethods();
 
         // Check if the application called is the forms application
-        parseHashParameters();
-        if (URLUtils.FORM_ONLY_APPLICATION_MODE.equals(myApplicationMode) || URLUtils.FULL_FORM_APPLICATION_MODE.equals(myApplicationMode)) {
+        bonitaUrlContext = BonitaUrlContext.get();
+        if (URLUtils.FORM_ONLY_APPLICATION_MODE.equals(bonitaUrlContext.getApplicationMode()) || URLUtils.FULL_FORM_APPLICATION_MODE.equals(bonitaUrlContext.getApplicationMode())) {
             onFormsLoad();
         } else {
             onConsoleLoad();
@@ -159,17 +156,11 @@ public class ConsoleClient extends ClientApplication {
      */
     protected void createApplicationView(final User aUser) {
         DOMUtils.getInstance().cleanBody(CONSOLE_STATIC_CONTENT_ELEMENT_ID);
-        if (URLUtils.FULL_FORM_APPLICATION_MODE.equals(myApplicationMode)) {
-            FormViewControllerFactory.getFormApplicationViewController(formID, urlContext, aUser).createInitialView(DOMUtils.DEFAULT_FORM_ELEMENT_ID);
+        if (URLUtils.FULL_FORM_APPLICATION_MODE.equals(bonitaUrlContext.getApplicationMode())) {
+            FormViewControllerFactory.getFormApplicationViewController(bonitaUrlContext.getFormId(), bonitaUrlContext.getHashParameters(), aUser).createInitialView(DOMUtils.DEFAULT_FORM_ELEMENT_ID);
         } else {
-            FormViewControllerFactory.getFormApplicationViewController(formID, urlContext, aUser).createFormInitialView();
+            FormViewControllerFactory.getFormApplicationViewController(bonitaUrlContext.getFormId(), bonitaUrlContext.getHashParameters(), aUser).createFormInitialView();
         }
-    }
-
-    protected final void parseHashParameters() {
-        formID = urlUtils.getFormID();
-        urlContext = urlUtils.getHashParameters();
-        myApplicationMode = (String) urlContext.get(URLUtils.VIEW_MODE_PARAM);
     }
 
     private void loadFormView(final User aUser) {
@@ -178,14 +169,14 @@ public class ConsoleClient extends ClientApplication {
 
                 @Override
                 public void onValueChange(final ValueChangeEvent<String> event) {
-                    ConsoleClient.this.parseHashParameters();
+                    ConsoleClient.this.bonitaUrlContext = BonitaUrlContext.get();
                     ConsoleClient.this.createApplicationView(aUser);
                 }
             });
-            final boolean isTodolist = Boolean.valueOf((String) urlContext.get(URLUtils.TODOLIST_PARAM));
+            final boolean isTodolist = Boolean.valueOf((String) bonitaUrlContext.getHashParameters().get(URLUtils.TODOLIST_PARAM));
             if (isTodolist) {
                 final GetAnyTodolistFormHandler getAnyTodolistFormHandler = new GetAnyTodolistFormHandler();
-                RpcFormsServices.getFormsService().getAnyTodoListForm(urlContext, getAnyTodolistFormHandler);
+                RpcFormsServices.getFormsService().getAnyTodoListForm(bonitaUrlContext.getHashParameters(), getAnyTodolistFormHandler);
 
             } else {
                 createApplicationView(aUser);
@@ -205,7 +196,7 @@ public class ConsoleClient extends ClientApplication {
             String urlString = null;
             String themeName = (String) newUrlContext.get(URLUtils.THEME);
             if (themeName == null || themeName.isEmpty()) {
-                themeName = (String) urlContext.get(URLUtils.THEME);
+                themeName = (String) ConsoleClient.this.bonitaUrlContext.getHashParameters().get(URLUtils.THEME);
             }
             final Map<String, String> paramsToAdd = new HashMap<String, String>();
             paramsToAdd.put(URLUtils.THEME, themeName);
