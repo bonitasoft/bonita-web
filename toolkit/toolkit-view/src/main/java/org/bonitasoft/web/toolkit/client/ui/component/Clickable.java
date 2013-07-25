@@ -127,6 +127,14 @@ public abstract class Clickable extends Component {
     @Override
     protected void postProcessHtml() {
         if (isEnabled()) {
+            $(this.element).dblclick(new Function() {
+
+                @Override
+                public boolean f(final Event e) {
+                    Clickable.this.setAction(null);
+                    return false;
+                }
+            });
             $(this.element).click(new Function() {
 
                 @Override
@@ -134,6 +142,7 @@ public abstract class Clickable extends Component {
 
                     if (Clickable.this.action != null && isEnabled()) {
                         Clickable.this.action.execute();
+                        Clickable.this.setAction(null);
                         // re introduce native gwt event mechanism!
                         DomEvent.fireNativeEvent(e, Clickable.this);
                     }

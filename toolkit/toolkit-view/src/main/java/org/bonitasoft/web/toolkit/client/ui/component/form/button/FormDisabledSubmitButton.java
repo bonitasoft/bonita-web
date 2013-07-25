@@ -16,13 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.form.button;
 
-import static com.google.gwt.query.client.GQuery.$;
-
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form.FormSubmitAction;
-
-import com.google.gwt.query.client.Function;
-import com.google.gwt.user.client.Event;
 
 /**
  * @author Rohart Bastien
@@ -38,15 +33,5 @@ public class FormDisabledSubmitButton extends FormSubmitButton {
     protected void postProcessHtml() {
         element.addClassName("disabled");
         super.postProcessHtml();
-        if (isEnabled()) {
-            $(this.element).click(new Function() {
-
-                @Override
-                public boolean f(Event e) {
-                    return false;
-                }
-
-            });
-        }
     }
 }
