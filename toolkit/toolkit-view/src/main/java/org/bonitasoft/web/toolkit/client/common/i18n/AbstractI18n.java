@@ -513,7 +513,7 @@ public abstract class AbstractI18n {
         locales.put("it", "Italiano");
         locales.put("de_DE", "Deutsch (Deutschland)");
         locales.put("de", "Deutsch");
-//        locales.put("pt_BR", "português do Brasil");
+        // locales.put("pt_BR", "português do Brasil");
         locales.put("pt_BR", "Português (Brasil)");
         locales.put("aa_DJ", "Qafar (Yabuuti)");
         locales.put("aa_ER_SAAHO", "Qafar - Eretria (Saho)");
@@ -1088,27 +1088,27 @@ public abstract class AbstractI18n {
     }
 
     public static String _(final String string) {
-        return I18N_instance.getText(string);
+        return string.isEmpty() ? "" : I18N_instance.getText(string);
     }
 
     public static String _(final String string, final LOCALE locale) {
-        return I18N_instance.getText(string, locale);
+        return string.isEmpty() ? "" : I18N_instance.getText(string, locale);
     }
 
     public static String _(final String string, final Arg... args) {
-        return I18N_instance.getText(string, args);
+        return string.isEmpty() ? "" : I18N_instance.getText(string, args);
     }
 
     public static String _(final String string, final LOCALE locale, final Arg... args) {
-        return I18N_instance.getText(string, locale, args);
+        return string.isEmpty() ? "" : I18N_instance.getText(string, locale, args);
     }
 
     public static String _(final String string, final IItem item) {
-        return I18N_instance.getText(string, item);
+        return string.isEmpty() ? "" : I18N_instance.getText(string, item);
     }
 
     public static String _(final String string, final LOCALE locale, final IItem item) {
-        return I18N_instance.getText(string, locale, item);
+        return string.isEmpty() ? "" : I18N_instance.getText(string, locale, item);
     }
 
 }
