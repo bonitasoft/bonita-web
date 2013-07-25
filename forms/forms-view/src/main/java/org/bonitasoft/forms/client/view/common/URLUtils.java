@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
@@ -480,16 +481,8 @@ public class URLUtils {
     }
 
     public String getHashParameter(final String hashParameterName) {
-        final String hash = History.getToken();
-        final String[] parameters = hash.split(HASH_PARAMETERS_SEPARATOR);
-        for (final String parameter : parameters) {
-            final String[] parameterEntry = parameter.split("=");
-            final String name = parameterEntry[0];
-            if (hashParameterName.equals(name) && parameterEntry.length > 0) {
-                return URL.decodeQueryString(parameterEntry[1]);
-            }
-        }
-        return null;
+        Map<String, String> hashParameters = getHashParameters();
+        return hashParameters.get(hashParameterName);
     }
 
     /**
@@ -508,7 +501,7 @@ public class URLUtils {
      *            hash
      * @return Parameters Map of given hash String
      */
-    public Map<String, String> getHashParameters(final String hash) {
+    private Map<String, String> getHashParameters(final String hash) {
         final Map<String, String> parametersMap = new HashMap<String, String>();
         final String[] parameters = hash.split(HASH_PARAMETERS_SEPARATOR);
         for (final String parameter : parameters) {
