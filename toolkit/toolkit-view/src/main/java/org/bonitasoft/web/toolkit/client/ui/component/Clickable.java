@@ -127,13 +127,22 @@ public abstract class Clickable extends Component {
     @Override
     protected void postProcessHtml() {
         if (isEnabled()) {
+            /* Remove dblclick for unable deploy the same process twice */
+            // $(this.element).dblclick(new Function() {
+            //
+            // @Override
+            // public boolean f(final Event e) {
+            // Clickable.this.setAction(null);
+            // return false;
+            // }
+            // });
             $(this.element).click(new Function() {
 
                 @Override
                 public boolean f(final Event e) {
-
                     if (Clickable.this.action != null && isEnabled()) {
                         Clickable.this.action.execute();
+                        // Clickable.this.setAction(null);
                         // re introduce native gwt event mechanism!
                         DomEvent.fireNativeEvent(e, Clickable.this);
                     }
