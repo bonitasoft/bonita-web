@@ -12,7 +12,7 @@ $(function() {
 					},
 					start: function(event, ui){
 						var row = SortableItemTable.getSortedElement(ui);
-						initialDomPageIndex = SortableItemTable.getInitialProfileFolderDomIndex(row);
+						initialDomPageIndex = SortableItemTable.getInitialProfilePageDomIndex(row);
 					}
 					
 				});

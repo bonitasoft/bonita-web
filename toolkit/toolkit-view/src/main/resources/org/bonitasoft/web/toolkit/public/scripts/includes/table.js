@@ -156,31 +156,27 @@ SortableItemTable.getProfilePageIndex = function(row, initialDomIndex){
 
 SortableItemTable.getProfileFolderIndex = function(col, initialDomIndex){ 
 	var childNodes = $(col).siblings(".tablePannel").addBack();
-	/*var index = null;
-	for(var i = 0; i< childNodes.length && index==null; i++){
-		if(colAPIId ===  DOMUtil.getAPIid(childNodes[i])){
-			if(initialDomIndex < i){
-				index = SortableItemTable.shiftDown(i);
-			}else{
-				index = SortableItemTable.shiftUp(i);
-			}
-		}
-	}
-	return index;*/
 	return SortableItemTable.generateIndex(col, childNodes, initialDomIndex);
 }
 
 SortableItemTable.getInitialProfileFolderDomIndex = function(col){ 
 	var colAPIId = DOMUtil.getAPIid(col);
 	var childNodes = $(col).siblings(".tablePannel").addBack();
+	SortableItemTable.getProfileDomFromChildnodes(childNodes, colAPIId);
+}
+SortableItemTable.getProfileDomFromChildnodes = function(childNodes, searchedAPIID){
 	for(var i = 0; i< childNodes.length; i++){
-		if(colAPIId ===  DOMUtil.getAPIid(childNodes[i])){
+		if(searchedAPIID ===  DOMUtil.getAPIid(childNodes[i])){
 			return i;
 		}
 	}
 	return null;
 }
-
+SortableItemTable.getInitialProfilePageDomIndex = function(col){ 
+	var colAPIId = DOMUtil.getAPIid(col);
+	var childNodes = $(col).siblings(".tr:not(.tr_1)").addBack();
+	return SortableItemTable.getProfileDomFromChildnodes(childNodes, colAPIId);
+}
 
 SortableItemTable.shiftUp = function(i){ 
 	index = i == 0 ? -1 : ((i-1)*2)+1;
