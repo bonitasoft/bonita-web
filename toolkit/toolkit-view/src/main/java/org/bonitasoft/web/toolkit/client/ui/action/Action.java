@@ -32,6 +32,8 @@ import com.google.gwt.user.client.Window;
  */
 public abstract class Action extends Callable implements EventListener, Cloneable {
 
+    public boolean isStarted = false;
+
     protected Action onStart = null;
 
     protected Action onFinish = null;
@@ -59,6 +61,14 @@ public abstract class Action extends Callable implements EventListener, Cloneabl
 
     public Action(final Arg... parameters) {
         this.setParameters(parameters);
+    }
+
+    public void setStarted(boolean isStarted) {
+        this.isStarted = isStarted;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

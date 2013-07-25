@@ -540,9 +540,10 @@ public class Form extends AbstractForm {
 
         @Override
         public void execute() {
-            if (isUploadFinished(Form.this.getElement())) {
+            if (isUploadFinished(Form.this.getElement()) && !action.isStarted()) {
                 try {
                     validate();
+                    action.setStarted(true);
                     this.action.execute();
                 } catch (ValidationException e) {
                     for (final ValidationError error : e.getErrors()) {
