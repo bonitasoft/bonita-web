@@ -406,10 +406,10 @@ public class URLUtils {
                     if (hashParams.length() > 0) {
                         hashParams.append("&");
                     }
-                    hashParams.append(hashParamEntry.getKey());
+                    hashParams.append(URL.encodeQueryString(hashParamEntry.getKey()));
                     if (hashParamEntry.getValue() != null) {
                         hashParams.append("=");
-                        hashParams.append(hashParamEntry.getValue());
+                        hashParams.append(URL.encodeQueryString(hashParamEntry.getValue()));
                     }
                 }
             }
@@ -419,10 +419,10 @@ public class URLUtils {
                 if (hashParams.length() > 0) {
                     hashParams.append("&");
                 }
-                hashParams.append(hashParamEntry.getKey());
+                hashParams.append(URL.encodeQueryString(hashParamEntry.getKey()));
                 if (hashParamEntry.getValue() != null) {
                     hashParams.append("=");
-                    hashParams.append(hashParamEntry.getValue());
+                    hashParams.append(URL.encodeQueryString(hashParamEntry.getValue()));
                 }
             }
         }
@@ -486,7 +486,7 @@ public class URLUtils {
             final String[] parameterEntry = parameter.split("=");
             final String name = parameterEntry[0];
             if (hashParameterName.equals(name) && parameterEntry.length > 0) {
-                return parameterEntry[1];
+                return URL.decodeQueryString(parameterEntry[1]);
             }
         }
         return null;
@@ -496,7 +496,10 @@ public class URLUtils {
      * @return Current URL hash Parameters Map
      */
     public Map<String, String> getHashParameters() {
-        String hash = History.getToken();
+        String hash = Window.Location.getHash();
+        if (hash != null && hash.startsWith("#")) {
+            hash = hash.substring(1);
+        }
         return getHashParameters(hash);
     }
 
@@ -542,7 +545,7 @@ public class URLUtils {
             final Entry<String, Object> entry = it.next();
             final String key = entry.getKey();
             final String value = entry.getValue().toString();
-            url.append(key + "=" + value);
+            url.append(key + "=" + URL.encodeQueryString(value));
             if (i < size - 1) {
                 url.append("&");
             }
@@ -562,7 +565,7 @@ public class URLUtils {
             final Entry<String, Object> entry = it.next();
             final String key = entry.getKey();
             final String value = entry.getValue().toString();
-            hashBuilder.append(key + "=" + value);
+            hashBuilder.append(key + "=" + URL.encodeQueryString(value));
             if (i < size - 1) {
                 hashBuilder.append("&");
             }
@@ -577,10 +580,10 @@ public class URLUtils {
             theURL.append("?" + BODY_CONTENT_ID + "=").append(URL.encodeQueryString(bodyContentId));
             theURL.append("&" + IS_PAGE_LAYOUT + "=").append(isPageLayout);
             if (formID != null) {
-                theURL.append("&" + FORM_ID + "=").append(formID);
+                theURL.append("&" + FORM_ID + "=").append(URL.encodeQueryString(formID));
             }
             if (taskId != null) {
-                theURL.append("&" + TASK_ID_PARAM + "=").append(taskId);
+                theURL.append("&" + TASK_ID_PARAM + "=").append(URL.encodeQueryString(taskId));
             }
         } else {
             return null;
