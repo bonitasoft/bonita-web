@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -52,6 +53,14 @@ public class EngineAPIAccessor {
             return TenantAPIAccessor.getProcessAPI(session);
         } catch (Exception e) {
             throw new APIException("Error when getting engine process API", e);
+        }
+    }
+    
+    public IdentityAPI getIdentityAPI(APISession session) {
+        try {
+            return TenantAPIAccessor.getIdentityAPI(session);
+        } catch (Exception e) {
+            throw new APIException("Error when getting engine identity API", e);
         }
     }
 }

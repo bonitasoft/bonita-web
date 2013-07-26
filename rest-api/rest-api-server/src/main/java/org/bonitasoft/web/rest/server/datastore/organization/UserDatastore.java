@@ -14,16 +14,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
-import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
@@ -31,149 +27,72 @@ import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.Sort;
 import org.bonitasoft.web.rest.server.datastore.Sorts;
+import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
+import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
- * @author Séverin Moussel
+ * @author Séverin Moussel, Colin PUY
  */
-public class UserDatastore extends CommonDatastore<UserItem, User>
-        implements DatastoreHasGet<UserItem> {
+public class UserDatastore extends CommonDatastore<UserItem, User> implements DatastoreHasGet<UserItem> {
 
+    private EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
+    
     public UserDatastore(final APISession engineSession) {
         super(engineSession);
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // C.R.U.D.
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public UserItem add(final UserItem user) {
-        try {
-            UserCreator userCreator = convertConsoleToEngineItem(user);
-            final User result = getIdentityAPI().createUser(userCreator);
-            return convertEngineToConsoleItem(result);
-        } catch (final AlreadyExistsException e) {
-            String message = _("Can't create user. User '%userName%' already exists", new Arg("userName", user.getUserName()));
-            throw new APIForbiddenException(message, e);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        UserCreator userCreator = new UserCreatorConverter().convert(user);
+        User createdUser = getUserEngineClient().create(userCreator);
+        return convertEngineToConsoleItem(createdUser);
     }
 
     public UserItem update(final APIID id, final Map<String, String> attributes) {
-        try {
-            final UserUpdater userUpdater = new UserUpdater();
-
-            if (attributes.containsKey(UserItem.ATTRIBUTE_FIRSTNAME)) {
-                userUpdater.setFirstName(attributes.get(UserItem.ATTRIBUTE_FIRSTNAME));
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_LASTNAME)) {
-                userUpdater.setLastName(attributes.get(UserItem.ATTRIBUTE_LASTNAME));
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_PASSWORD)) {
-                userUpdater.setPassword(attributes.get(UserItem.ATTRIBUTE_PASSWORD));
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_USERNAME)) {
-                userUpdater.setUserName(attributes.get(UserItem.ATTRIBUTE_USERNAME));
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_MANAGER_ID)) {
-                Long managerId = getManagerId(attributes);
-                userUpdater.setManagerId(managerId);
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_ICON)) {
-                userUpdater.setIconPath(attributes.get(UserItem.ATTRIBUTE_ICON));
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_TITLE)) {
-                userUpdater.setTitle(attributes.get(UserItem.ATTRIBUTE_TITLE));
-            }
-            if (attributes.containsKey(UserItem.ATTRIBUTE_JOB_TITLE)) {
-                userUpdater.setJobTitle(attributes.get(UserItem.ATTRIBUTE_JOB_TITLE));
-            }
-
-            final User result = getIdentityAPI().updateUser(id.toLong(), userUpdater);
-            return convertEngineToConsoleItem(result);
-
-        } catch (final InvalidSessionException e) {
-            throw new APISessionInvalidException(e);
-        } catch (final Throwable e) {
-            throw new APIException(e);
-        }
+        UserUpdater userUpdater = new UserUpdaterConverter().convert(attributes);
+        User user = getUserEngineClient().update(id.toLong(), userUpdater);
+        return convertEngineToConsoleItem(user);
     }
-
-    private Long getManagerId(final Map<String, String> attributes) {
-        try {
-            return Long.valueOf(attributes.get(UserItem.ATTRIBUTE_MANAGER_ID));
-        } catch (NumberFormatException e) {
-            return 0L;
-        }
-    }
-
+    
     public UserItem get(final APIID id) {
-        try {
-            final User result = getIdentityAPI().getUser(id.toLong());
-
-            return convertEngineToConsoleItem(result);
-        } catch (final NotFoundException e) {
-            return null;
-        } catch (final InvalidSessionException e) {
-            throw new APISessionInvalidException(e);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-
+        User user = getUserEngineClient().get(id.toLong());
+        return convertEngineToConsoleItem(user);
     }
 
-    /**
-     * Search for users
-     * 
-     * @param page
-     *            The page to display
-     * @param resultsByPage
-     *            The number of results by page
-     * @param search
-     *            Search terms
-     * @param filters
-     *            The filters to apply. There will be an AND operand between filters.
-     * @param orders
-     *            The order to apply to the search
-     * @return This method returns an ItemSearch result containing the returned data and information about the total possible results.
-     */
-    public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
-            final String orders) {
+    public void delete(final List<APIID> ids) {
+        getUserEngineClient().delete(APIID.toLongList(ids));
+    }
+
+    // protected for tests
+    protected UserEngineClient getUserEngineClient() {
+        return engineClientFactory.createUserEngineClient(getEngineSession());
+    }
+    
+    public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
+            final Map<String, String> filters, final String orders) {
 
         SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, null, null);
         addSorts(builder, orders);
         addSearchTerm(builder, search);
         addFilters(builder, filters);
 
-        try {
-            SearchResult<User> engineSearchResults;
-            engineSearchResults = getIdentityAPI().searchUsers(builder.done());
-            final List<UserItem> consoleSearchResults = new ArrayList<UserItem>();
-            for (final User engineItem : engineSearchResults.getResult()) {
-                consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
-            }
-
-            return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
-
-        } catch (final InvalidSessionException e) {
-            throw new APISessionInvalidException(e);
-        } catch (final Exception e) {
-            throw new APIException(e);
+        SearchResult<User> engineSearchResults;
+        engineSearchResults = getUserEngineClient().search(builder.done());
+        final List<UserItem> consoleSearchResults = new ArrayList<UserItem>();
+        for (final User engineItem : engineSearchResults.getResult()) {
+            consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
         }
 
+        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
     }
 
     private void addFilters(SearchOptionsBuilder builder, final Map<String, String> filters) {
@@ -202,49 +121,6 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         for (Sort sort : sorts) {
             builder.sort(sort.getField(), sort.getOrder());
         }
-    }
-
-    /**
-     * Delete users
-     * 
-     * @param ids
-     */
-    public void delete(final List<APIID> ids) {
-        try {
-            getIdentityAPI().deleteUsers(APIID.toLongList(ids));
-        } catch (final InvalidSessionException e) {
-            throw new APISessionInvalidException(e);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONVERTS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected final UserCreator convertConsoleToEngineItem(final UserItem user) {
-        if (user == null) {
-            return null;
-        }
-
-        final UserCreator userCreator = new UserCreator(user.getUserName(), user.getPassword())
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setTitle(user.getTitle())
-                .setIconPath(user.getIcon())
-                .setJobTitle(user.getJobTitle());
-
-        final APIID managerId = user.getManagerId();
-        if (managerId != null) {
-            userCreator.setManagerUserId(managerId.toLong());
-        }
-        return userCreator;
-    }
-
-    // TODO remove while Tests have been migrated to new API
-    public UserItem convertEngineToConsoleItem2(final User user) {
-        return convertEngineToConsoleItem(user);
     }
 
     @Override
