@@ -22,6 +22,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.users.action.ChangeUsersStateAction;
+import org.bonitasoft.console.client.admin.organization.users.action.ChangeUsersStateAction.STATE;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -31,6 +33,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
@@ -47,9 +50,11 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
     
     public static final String TOKEN = "userlistingadmin";
 
-    private static final String TABLE_ALL_USERS = "allusers";
+    private static final String TABLE_ENABLED_USERS = "enabledusers";
+    private static final String TABLE_DISABLED_USERS = "disabledusers";
     
-    private static final String FILTER_PRIMARY_ALL_USERS = "allusersfilter";
+    private static final String FILTER_PRIMARY_ENABLED_USERS = "enabledusers";
+    private static final String FILTER_PRIMARY_DISABLED_USERS = "disabledusers";
 
     @Override
     public void defineTitle() {
@@ -68,9 +73,20 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
 
     @Override
     protected LinkedList<ItemListingFilter> definePrimaryFilters() {
-        final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
-        filters.add(new ItemListingFilter(FILTER_PRIMARY_ALL_USERS, _("All"), _("All Users"), TABLE_ALL_USERS));
+        LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
+        filters.add(enabledUsersFilter());
+        filters.add(disabledUsersFilter());
         return filters;
+    }
+
+    private ItemListingFilter disabledUsersFilter() {
+        return new ItemListingFilter(FILTER_PRIMARY_DISABLED_USERS, _("Disabled"), _("Disabled Users"), TABLE_DISABLED_USERS)
+            .addFilter(UserItem.ATTRIBUTE_ENABLED, "false");
+    }
+
+    private ItemListingFilter enabledUsersFilter() {
+        return new ItemListingFilter(FILTER_PRIMARY_ENABLED_USERS, _("Enabled"), _("Enabled Users"), TABLE_ENABLED_USERS)
+            .addFilter(UserItem.ATTRIBUTE_ENABLED, "true");
     }
 
     @Override
@@ -81,12 +97,29 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
     @Override
     protected LinkedList<ItemListingTable> defineTables() {
         final LinkedList<ItemListingTable> tables = new LinkedList<ItemListingTable>();
-        tables.add(allUserTable());
+        tables.add(enabledUserTable());
+        tables.add(disabledUserTable());
         return tables;
     }
 
-    protected ItemListingTable allUserTable() {
-        return new ItemListingTable(new JsId(TABLE_ALL_USERS), _("Enabled"), itemTable(), getItemQuickDetailPage());
+    protected ItemListingTable enabledUserTable() {
+        ItemTable itemTable = itemTable();
+        itemTable.addGroupedAction(disableButton());
+        return new ItemListingTable(new JsId(TABLE_ENABLED_USERS), _("Users"), itemTable, getItemQuickDetailPage());
+    }
+    
+    private ItemListingTable disabledUserTable() {
+        ItemTable itemTable = itemTable();
+        itemTable.addGroupedAction(enableButton());
+        return new ItemListingTable(new JsId(TABLE_DISABLED_USERS), _("Users"), itemTable, getItemQuickDetailPage());
+    }
+
+    private ButtonAction enableButton() {
+        return new ButtonAction(_("Enable"), _("Enable selected users"), new ChangeUsersStateAction(STATE.ENABLED));
+    }
+    
+    private ButtonAction disableButton() {
+        return new ButtonAction(_("Disable"), _("Disable selected users"), new ChangeUsersStateAction(STATE.DISABLED));
     }
 
     protected ItemTable itemTable() {
