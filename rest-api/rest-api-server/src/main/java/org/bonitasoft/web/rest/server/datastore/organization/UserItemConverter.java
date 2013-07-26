@@ -34,6 +34,7 @@ public class UserItemConverter extends ItemConverter<UserItem, User> {
         result.setPassword(user.getPassword());
         result.setUserName(user.getUserName());
         result.setManagerId(user.getManagerUserId());
+        result.setEnabled(user.isEnabled());
 
         // Add default icon if icon if empty
         final String iconPath = user.getIconPath();
@@ -46,7 +47,6 @@ public class UserItemConverter extends ItemConverter<UserItem, User> {
         result.setTitle(user.getTitle());
         result.setJobTitle(user.getJobTitle());
 
-        result.setState(UserItem.VALUE_ACTIVATION_STATE_ENABLED);
 
         return result;
     }

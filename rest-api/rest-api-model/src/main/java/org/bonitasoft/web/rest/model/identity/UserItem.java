@@ -40,7 +40,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
     public static final String ATTRIBUTE_LAST_CONNECTION_DATE = "last_connection";
     public static final String ATTRIBUTE_TITLE = "title";
     public static final String ATTRIBUTE_JOB_TITLE = "job_title";
-    public static final String ATTRIBUTE_STATE = "user_state";
     public static final String ATTRIBUTE_ENABLED = "enabled";
 
     public static final String VALUE_ACTIVATION_STATE_DISABLED = "DISABLED";
@@ -105,10 +104,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
         return this.getAttributeValueAsDate(ATTRIBUTE_LAST_UPDATE_DATE);
     }
 
-    public String getState() {
-        return this.getAttributeValue(ATTRIBUTE_STATE);
-    }
-
     public String getLastConnectionDate() {
         return this.getAttributeValue(ATTRIBUTE_LAST_CONNECTION_DATE);
     }
@@ -165,10 +160,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
 
     public void setManagerId(final APIID id) {
         setAttribute(ATTRIBUTE_MANAGER_ID, id);
-    }
-
-    public void setState(final String state) {
-        this.setAttribute(ATTRIBUTE_STATE, state);
     }
 
     @Override
