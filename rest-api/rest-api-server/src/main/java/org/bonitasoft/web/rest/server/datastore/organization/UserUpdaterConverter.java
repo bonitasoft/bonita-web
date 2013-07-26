@@ -49,6 +49,9 @@ public class UserUpdaterConverter {
         if (attributes.containsKey(UserItem.ATTRIBUTE_JOB_TITLE)) {
             userUpdater.setJobTitle(attributes.get(UserItem.ATTRIBUTE_JOB_TITLE));
         }
+        if (attributes.containsKey(UserItem.ATTRIBUTE_ENABLED)) {
+            userUpdater.setEnabled("true".equals(attributes.get(UserItem.ATTRIBUTE_ENABLED)));
+        }
         return userUpdater;
     }
     

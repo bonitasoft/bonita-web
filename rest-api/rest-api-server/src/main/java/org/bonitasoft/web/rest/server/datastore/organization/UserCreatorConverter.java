@@ -16,7 +16,8 @@ public class UserCreatorConverter {
                 .setLastName(user.getLastName())
                 .setTitle(user.getTitle())
                 .setIconPath(user.getIcon())
-                .setJobTitle(user.getJobTitle());
+                .setJobTitle(user.getJobTitle())
+                .setEnabled(user.isEnabled());
 
         final APIID managerId = user.getManagerId();
         if (managerId != null) {
