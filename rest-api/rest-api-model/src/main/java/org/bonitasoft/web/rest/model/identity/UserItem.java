@@ -42,9 +42,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
     public static final String ATTRIBUTE_JOB_TITLE = "job_title";
     public static final String ATTRIBUTE_ENABLED = "enabled";
 
-    public static final String VALUE_ACTIVATION_STATE_DISABLED = "DISABLED";
-    public static final String VALUE_ACTIVATION_STATE_ENABLED = "ENABLED";
-    
     public static final String FILTER_ROLE_ID = "role_id";
     public static final String FILTER_GROUP_ID = "group_id";
     public static final String FILTER_PROFILE_ID = "profile_id";
