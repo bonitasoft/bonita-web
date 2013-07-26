@@ -63,10 +63,6 @@ public abstract class Action extends Callable implements EventListener, Cloneabl
         this.setParameters(parameters);
     }
 
-    public void setStarted(boolean isStarted) {
-        this.isStarted = isStarted;
-    }
-
     public boolean isStarted() {
         return isStarted;
     }
