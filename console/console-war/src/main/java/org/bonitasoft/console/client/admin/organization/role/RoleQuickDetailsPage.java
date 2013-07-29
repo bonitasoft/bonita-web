@@ -22,6 +22,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.users.section.UsersListSection;
 import org.bonitasoft.console.client.common.metadata.RoleMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
@@ -71,7 +72,7 @@ public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
 
     @Override
     protected void buildBody(RoleItem item) {
-        addBody(new UsersMappingSection(item));
+        addBody(new UsersListSection(item));
     }
 
     @Override

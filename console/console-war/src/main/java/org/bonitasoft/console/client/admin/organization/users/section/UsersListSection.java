@@ -14,34 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.organization.role;
+package org.bonitasoft.console.client.admin.organization.users.section;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.organization.users.action.ShowUserMoreDetailAction;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 
-public class UsersMappingSection extends Section {
+public class UsersListSection extends Section {
 
-    public UsersMappingSection(RoleItem role) {
+    public UsersListSection(RoleItem role) {
         super(_("List of users"));
         addClass("usersmapping");
-        ItemTable addColumn = new ItemTable(Definitions.get(UserDefinition.TOKEN))
-        .addHiddenFilter(UserItem.FILTER_ROLE_ID, role.getId().toString())
-        .addColumn(UserItem.ATTRIBUTE_ICON, _("Icon"))
-        .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("First name"), true)
-        .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Last name"), true)
-        .setView(VIEW_TYPE.VIEW_LIST);
-        
-        addColumn.setDefaultAction(new RedirectionAction(UserMoreDetailsAdminPage.TOKEN));
-        addBody(addColumn);
+        addBody(usersList(role));
     }
 
+    private ItemTable usersList(RoleItem role) {
+       return new ItemTable(Definitions.get(UserDefinition.TOKEN))
+            .addHiddenFilter(UserItem.FILTER_ROLE_ID, role.getId().toString())
+            .addColumn(UserItem.ATTRIBUTE_ICON, _("Icon"))
+            .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("First name"), true)
+            .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Last name"), true)
+            .setView(VIEW_TYPE.VIEW_LIST)
+            .setDefaultAction(new ShowUserMoreDetailAction());
+    }
 }
