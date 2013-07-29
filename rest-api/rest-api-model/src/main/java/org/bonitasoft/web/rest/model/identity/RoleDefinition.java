@@ -18,7 +18,6 @@ package org.bonitasoft.web.rest.model.identity;
 
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -26,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  * @author Yongtao Guo
  * 
  */
-public class RoleDefinition extends ItemDefinition {
+public class RoleDefinition extends ItemDefinition<RoleItem> {
 
     /**
      * Singleton
@@ -77,7 +76,7 @@ public class RoleDefinition extends ItemDefinition {
     }
 
     @Override
-    public IItem _createItem() {
+    public RoleItem _createItem() {
         return new RoleItem();
     }
 

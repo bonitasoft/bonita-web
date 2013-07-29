@@ -37,12 +37,7 @@ public class AddRolePage extends Page {
 
     @Override
     public void defineTitle() {
-        this.setTitle(_("Create a role"));
-    }
-
-    @Override
-    public String defineToken() {
-        return TOKEN;
+        setTitle(_("Create a role"));
     }
 
     @Override
@@ -51,16 +46,22 @@ public class AddRolePage extends Page {
     }
 
     private Form addRoleForm() {
-        final ItemDefinition roleDefinition = RoleDefinition.get();
-        return new Form()
+        final ItemDefinition<RoleItem> roleDefinition = RoleDefinition.get();
+        Form form = new Form()
                 .addItemAttributeEntry(roleDefinition.getAttribute(RoleItem.ATTRIBUTE_ICON), "Avatar", _("Select an avatar for this role"))
                 .addItemAttributeEntry(roleDefinition.getAttribute(RoleItem.ATTRIBUTE_NAME), _("Name"), _("Enter the name of this role"))
-                .addItemAttributeEntry(roleDefinition.getAttribute(RoleItem.ATTRIBUTE_DISPLAY_NAME), _("Display name"),
-                        _("Enter the display name of this role"))
+                .addItemAttributeEntry(roleDefinition.getAttribute(RoleItem.ATTRIBUTE_DISPLAY_NAME), _("Display name"), _("Enter the display name of this role"))
                 .addItemAttributeEntry(roleDefinition.getAttribute(RoleItem.ATTRIBUTE_DESCRIPTION), _("Description"), _("Enter the description of this role"))
-                .addValidator(new JsId(RoleItem.ATTRIBUTE_NAME), new MandatoryValidator())
                 .addButton(new JsId("create"), _("Create"), _("Create this role"), new AddItemFormAction<RoleItem>(roleDefinition))
                 .addCancelButton();
+        
+        form.getEntry(new JsId(RoleItem.ATTRIBUTE_NAME)).addValidator(new MandatoryValidator());
+        return form;
+    }
+
+    @Override
+    public String defineToken() {
+        return TOKEN;
     }
 
 }
