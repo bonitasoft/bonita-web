@@ -15,6 +15,7 @@ import org.bonitasoft.console.client.admin.organization.group.view.GroupQuickDet
 import org.bonitasoft.console.client.admin.organization.role.AddRolePage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleQuickDetailsPage;
+import org.bonitasoft.console.client.admin.organization.role.UpdateRolePage;
 import org.bonitasoft.console.client.admin.organization.users.view.AddMembershipPage;
 import org.bonitasoft.console.client.admin.organization.users.view.DeleteMembershipPage;
 import org.bonitasoft.console.client.admin.organization.users.view.ListMembershipPage;
@@ -135,6 +136,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new RoleQuickDetailsPage();
         } else if (AddRolePage.TOKEN.equals(token)) {
             return new AddRolePage();
+        } else if (UpdateRolePage.TOKEN.equals(token)) {
+            return new UpdateRolePage();
         } else if (AddGroupPage.TOKEN.equals(token)) {
             return new AddGroupPage();
         } else if (ListProcessActorUserPage.TOKEN.equals(token)) {

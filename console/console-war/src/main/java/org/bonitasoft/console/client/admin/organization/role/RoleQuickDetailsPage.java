@@ -27,10 +27,12 @@ import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
+import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
-import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -53,10 +55,15 @@ public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
     }
 
     @Override
-    protected LinkedList<ItemDetailsAction> defineActions(RoleItem item) {
-        return null;
+    protected void buildToolbar(RoleItem role) {
+        addToolbarLink(editButton(role));
     }
 
+    private ButtonAction editButton(RoleItem role) {
+        return new ButtonAction(_("Edit"), _("Edit a role"), 
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new UpdateRolePage(role))));
+    }
+    
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(RoleItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
