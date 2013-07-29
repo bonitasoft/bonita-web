@@ -134,6 +134,18 @@
                         .bgHoverFilter("filters-reporting.png");
                     }
 				}
+				&.enabledusers{
+                    .bgFilter("filters-human.png");
+                    &:hover{
+                        .bgHoverFilter("filters-human.png");
+                    }
+                }
+                &.disabledusers{
+                    .bgFilter("filters-human.png");
+                    &:hover{
+                        .bgHoverFilter("filters-human.png");
+                    }
+                }
 				&:hover{
 					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1,@header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
@@ -187,6 +199,12 @@
 				&.reports{
 					.bgFilter("filters-reporting-selected.png");
 				}
+				&.enabledusers{
+                    .bgFilter("filters-human-selected.png");
+                }
+                &.disabledusers{
+                    .bgFilter("filters-human-selected.png");
+                }
 				&:hover{
 					background-color: @filtersPanel-filterHover-bgColor !important;
 				}
