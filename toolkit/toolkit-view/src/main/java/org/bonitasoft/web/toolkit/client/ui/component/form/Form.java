@@ -543,6 +543,8 @@ public class Form extends AbstractForm {
             if (isUploadFinished(Form.this.getElement())) {
                 try {
                     validate();
+                    // TODO find a better way to unactivate the double click
+                    // action.setStarted(true);
                     this.action.execute();
                 } catch (ValidationException e) {
                     for (final ValidationError error : e.getErrors()) {
