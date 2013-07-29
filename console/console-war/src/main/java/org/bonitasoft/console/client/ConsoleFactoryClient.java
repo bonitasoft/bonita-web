@@ -12,9 +12,9 @@ import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPa
 import org.bonitasoft.console.client.admin.organization.group.view.AddGroupPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.organization.role.view.AddRolePage;
-import org.bonitasoft.console.client.admin.organization.role.view.RoleListingPage;
-import org.bonitasoft.console.client.admin.organization.role.view.RoleQuickDetailsPage;
+import org.bonitasoft.console.client.admin.organization.role.AddRolePage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleQuickDetailsPage;
 import org.bonitasoft.console.client.admin.organization.users.view.AddMembershipPage;
 import org.bonitasoft.console.client.admin.organization.users.view.DeleteMembershipPage;
 import org.bonitasoft.console.client.admin.organization.users.view.ListMembershipPage;

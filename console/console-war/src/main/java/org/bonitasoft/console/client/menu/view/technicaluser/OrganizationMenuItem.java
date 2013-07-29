@@ -19,7 +19,7 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
-import org.bonitasoft.console.client.admin.organization.role.view.RoleListingPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
