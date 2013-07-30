@@ -40,56 +40,103 @@
 				
 				&.available, &.enabledprocesses {
 					.bgFilter(@filtersPanel-filters-bgAvailable);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgAvailable);
+                    }
 				}
 				&.unassigned{
 					.bgSubFilter(@filtersPanel-filters-bgUnassigned);
+                    &:hover{
+                        .bgHoverSubFilter(@filtersPanel-filters-bgUnassigned);
+                    }
 				}
 				&.disabledprocesses{
-					.bgFilter(@filtersPanel-filters-bgUnassigned);
+				    .bgFilter(@filtersPanel-filters-bgUnassigned);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgUnassigned);
+                    }
 				}
 				&.resolvedprocesses {
 					.bgSubFilter("filters-resolved.png");
+                    &:hover{
+                        .bgHoverSubFilter("filters-resolved.png");
+                    }
 				}
 				&.unresolvedprocesses {
 					.bgSubFilter("filters-unresolved.png");
+                    &:hover{
+                        .bgHoverSubFilter("filters-unresolved.png");
+                    }
 				}
 				&.assigned{
 					.bgSubFilter(@filtersPanel-filters-bgAssigned);
+                    &:hover{
+                        .bgHoverSubFilter(@filtersPanel-filters-bgAssigned);
+                    }
 				}
 				&.ignored{
 					.bgFilter(@filtersPanel-filters-bgIgnored);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgIgnored);
+                    }
 				}
 				&.performed{
 					.bgFilter(@filtersPanel-filters-bgPerformed);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgPerformed);
+                    }
 				}
 				&.mycases{
 					.bgFilter(@filtersPanel-filters-bgMyCases);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgMyCases);
+                    }
 				}
 				&.workedoncases, &.openedcases{
 					.bgFilter(@filtersPanel-filters-bgWorkedOn);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgWorkedOn);
+                    }
 				}
 				&.archivedcases{
 					.bgFilter(@filtersPanel-filters-bgArchived);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgArchived);
+                    }
 				}
 				&.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all {
 					.bgFilter(@filtersPanel-filters-bgAll);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgAll);
+                    }
 				}
 				&.humantask{
 					.bgFilter(@filtersPanel-filters-bgHumanTask);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgHumanTask);
+                    }
 				}
 				&.failed{
 					.bgFilter(@filtersPanel-filters-bgFailed);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgFailed);
+                    }
 				}
 				&.monitoring{
 					.bgFilter("filters-monitoring.png");
+                    &:hover{
+                        .bgHoverFilter("filters-monitoring.png");
+                    }
 				}
 				&.reports{
 					.bgFilter("filters-reporting.png");
+                    &:hover{
+                        .bgHoverFilter("filters-reporting.png");
+                    }
 				}
 				&:hover{
-					background-color: @filtersPanel-filterHover-bgColor !important;
+					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1,@header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
-				
 			}
 			a.current{
 				&.available, &.enabledprocesses {
