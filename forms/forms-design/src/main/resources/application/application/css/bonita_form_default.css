@@ -453,6 +453,7 @@ div#bonita-object-area-description {
 	-webkit-box-shadow: 1px 1px 8px #d0d0d0;
 	border: 1px solid #a9a9a9;
 	-moz-box-shadow: 1px 1px 8px #d0d0d0;
+	z-index: 9999;
 }
 
 .dateBoxPopup .datePickerDays .datePickerDay {
