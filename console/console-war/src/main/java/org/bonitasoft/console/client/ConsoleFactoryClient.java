@@ -9,6 +9,7 @@ import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTask
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPage;
+import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.console.client.admin.organization.group.view.AddGroupPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupQuickDetailsAdminPage;
@@ -105,7 +106,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // return new ListGroupPage();
         } else if (DisplayCaseFormPage.TOKEN.equals(token)) {
             return new DisplayCaseFormPage();
-        
+        } else if (OrganizationImportAndExportPage.TOKEN.equals(token)) {
+            return new OrganizationImportAndExportPage();
         } else if (ListMembershipPage.TOKEN.equals(token)) {
             return new ListMembershipPage();
         } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token)) {
