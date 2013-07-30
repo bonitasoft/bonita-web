@@ -3,6 +3,7 @@
 	.fontSize (@header-menu-fontSize);
 	
 	.menuEditor {
+		overflow-x: auto;
 		.menu {
 			position: absolute;
 			width: 100%;
@@ -10,7 +11,7 @@
 			.verticalGradient (@header-menu-gradientColor1 , @header-menu-gradientPosition1 , @header-menu-gradientColor2 , @header-menu-gradientPosition2);
 		}
 		> .tablesPannel {
-			padding: 0 0 0 (@filtersPanel-width - @moreDetails-paddingLeft - @moreDetails-section-header-paddingX);
+			padding:@profileMoreDetails-menuEditor-padding;
 			float: left;
 			position: relative;
 			
