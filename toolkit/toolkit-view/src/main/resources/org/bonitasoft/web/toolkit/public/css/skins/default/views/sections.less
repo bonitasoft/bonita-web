@@ -110,3 +110,27 @@
 		}
 	}
 }
+
+// ****************************************************//
+//                  USERS MAPPING SECTION
+// ****************************************************//
+.section.usersmapping {
+	.datatable { 
+	   .td {
+	       float: none;
+	       vertical-align: middle;
+	   }
+	   .td_firstname {
+	       width: 150px;
+	   }
+	   .tr {
+	       padding: 5px 0 2px 2*@w;
+	       .pointerAsLink();
+            border: 1px solid transparent;
+           .borderRadius(5px);
+	       &:hover {
+                .sectionTableLineHover();
+           }
+        }
+	}
+}

@@ -22,15 +22,13 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.users.section.UsersListSection;
 import org.bonitasoft.console.client.common.metadata.RoleMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
-import org.bonitasoft.web.toolkit.client.ui.component.Definition;
-import org.bonitasoft.web.toolkit.client.ui.component.Section;
-import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
@@ -74,15 +72,7 @@ public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
 
     @Override
     protected void buildBody(RoleItem item) {
-        addBody(technicalInformationsSection(item));
-    }
-
-    private Section technicalInformationsSection(RoleItem item) {
-        return new Section(_("Technical informations")).addBody(numberOfUsersDefinition(item));
-    }
-
-    private Definition numberOfUsersDefinition(RoleItem item) {
-        return new Definition(_("Number of users : "), new Text(String.valueOf(item.getNumberOfUsers())));
+        addBody(new UsersListSection(item));
     }
 
     @Override
