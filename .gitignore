@@ -10,5 +10,4 @@ target/
 btm1.tlog
 btm2.tlog
 
-# all .class in toolkit
 *.class

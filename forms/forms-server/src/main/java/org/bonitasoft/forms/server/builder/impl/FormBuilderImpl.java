@@ -942,10 +942,6 @@ public class FormBuilderImpl implements IFormBuilder {
         return this;
     }
 
-    private String escapeSingleQuote(String str) {
-        return str.replaceAll("'", "&apos;");
-    }
-
     /**
      * Add an entry form on an application
      * If an application has no entry form, it means that it hasn't been defined,
@@ -1178,7 +1174,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(validatorsElement);
         final Element validatorElement = this.document.createElement(XMLForms.VALIDATOR);
-        validatorElement.setAttribute(XMLForms.ID, escapeSingleQuote(validatorId));
+        validatorElement.setAttribute(XMLForms.ID, validatorId);
         addChild(validatorElement, XMLForms.CLASSNAME, className, true, true);
         addChild(validatorElement, XMLForms.STYLE, cssClasses, false, false);
         if (position != null) {
@@ -1248,7 +1244,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         push(widgetsElement);
         final Element widgetElement = this.document.createElement(XMLForms.WIDGET);
-        widgetElement.setAttribute(XMLForms.ID, escapeSingleQuote(widgetId));
+        widgetElement.setAttribute(XMLForms.ID, widgetId);
         widgetElement.setAttribute(XMLForms.TYPE, widgetType.name());
         push(widgetElement);
         return this;
@@ -2440,6 +2436,10 @@ public class FormBuilderImpl implements IFormBuilder {
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         return this;
+    }
+
+    protected String escapeSingleQuote(final String str) {
+        return str.replaceAll("'", XMLForms.SINGLE_QUOTE_ESCAPE);
     }
 
     /**

@@ -24,6 +24,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.bonitasoft.forms.server.constants.XMLForms;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -135,5 +136,13 @@ public abstract class XPathUtil {
             return Boolean.valueOf(node.getTextContent());
         }
         return false;
+    }
+
+    protected String unescapeSingleQuote(final String str) {
+        return str.replaceAll(XMLForms.SINGLE_QUOTE_ESCAPE, "'");
+    }
+
+    protected String escapeSingleQuote(final String str) {
+        return str.replaceAll("'", XMLForms.SINGLE_QUOTE_ESCAPE);
     }
 }

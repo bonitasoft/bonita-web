@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.organization.role.view;
+package org.bonitasoft.console.client.admin.organization.role;
 
 import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
@@ -26,8 +26,8 @@ import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.ItemHasDualNameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
-import org.bonitasoft.web.toolkit.client.ui.action.popup.PopupAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -51,12 +51,18 @@ public class RoleListingPage extends ItemListingPage<RoleItem> {
     private static final String FILTER_PRIMARY_ALL_ROLES = "allrolesfilter";
 
     @Override
+    public void defineTitle() {
+        this.setTitle(_("Roles"));
+    }
+
+    @Override
     protected List<Clickable> defineFilterPanelActions() {
         return asList(addRoleLink());
     }
 
     private Clickable addRoleLink() {
-        return new Link(_("Create a role"), _("Opens a popup to create a role"), new CheckValidSessionBeforeAction(new PopupAction(AddRolePage.TOKEN)));
+        return new Link(_("Create a role"), _("Opens a popup to create a role"), 
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new AddRolePage())));
     }
 
     @Override
@@ -64,16 +70,6 @@ public class RoleListingPage extends ItemListingPage<RoleItem> {
         final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
         filters.add(new ItemListingFilter(FILTER_PRIMARY_ALL_ROLES, _("All"), _("All Roles"), TABLE_ALL_ROLES));
         return filters;
-    }
-
-    @Override
-    protected ItemListingResourceFilter defineResourceFilters() {
-        return null;
-    }
-
-    @Override
-    protected ItemListingSort defineDefaultSort() {
-        return new ItemListingSort(RoleItem.ATTRIBUTE_NAME, true);
     }
 
     @Override
@@ -97,8 +93,13 @@ public class RoleListingPage extends ItemListingPage<RoleItem> {
     }
 
     @Override
-    public void defineTitle() {
-        this.setTitle(_("Roles"));
+    protected ItemListingResourceFilter defineResourceFilters() {
+        return null;
+    }
+
+    @Override
+    protected ItemListingSort defineDefaultSort() {
+        return new ItemListingSort(RoleItem.ATTRIBUTE_NAME, true);
     }
 
     @Override

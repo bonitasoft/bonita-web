@@ -4,7 +4,7 @@
 	<artifactId>bonita-console</artifactId>
 	<name>bonita console</name>
 	<packaging>pom</packaging>
-	<version>6.1.0-rc-11-SNAPSHOT</version>
+	<version>6.1.0-SNAPSHOT</version>
 
 	<modules>
 		<module>toolkit</module>
@@ -22,7 +22,7 @@
 	</scm>
 
 	<properties>
-		<bonita.engine.version>6.1.0-rc-05</bonita.engine.version>
+		<bonita.engine.version>6.1.0-SNAPSHOT</bonita.engine.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
@@ -33,10 +33,6 @@
 			gwt.version and gwtVersion properties. Of course the two properties refer 
 			to the same value. -->
 		<gwtVersion>${gwt.version}</gwtVersion>
-		<!-- Properties to enable sonar code coverage analysis -->
-		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>${user.home}/jacoco-bos-web.exec</sonar.jacoco.reportPath>
 	</properties>
 
 	<dependencyManagement>
@@ -332,11 +328,6 @@
 					<version>2.4</version>
 				</plugin>
 				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.6.0.201210061924</version>
-				</plugin>
-				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
 					<version>1.0.0</version>
@@ -377,19 +368,6 @@
 										<versionRange>[1.0,)</versionRange>
 										<goals>
 											<goal>enforce</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.jacoco</groupId>
-										<artifactId>jacoco-maven-plugin</artifactId>
-										<versionRange>[0.6,)</versionRange>
-										<goals>
-											<goal>prepare-agent</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -461,24 +439,6 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<configuration>
-					<includes>
-						<include>org.bonitasoft.*</include>
-					</includes>
-					<destFile>${sonar.jacoco.reportPath}</destFile>
-				</configuration>
-				<executions>
-					<execution>
-						<id>pre-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

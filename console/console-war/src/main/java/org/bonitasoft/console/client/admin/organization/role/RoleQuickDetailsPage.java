@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.organization.role.view;
+package org.bonitasoft.console.client.admin.organization.role;
 
 import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
@@ -22,15 +22,16 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.common.metadata.RoleMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
+import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
-import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -53,32 +54,22 @@ public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
     }
 
     @Override
-    protected LinkedList<ItemDetailsAction> defineActions(RoleItem item) {
-        return null;
+    protected void buildToolbar(RoleItem role) {
+        addToolbarLink(editButton(role));
     }
 
+    private ButtonAction editButton(RoleItem role) {
+        return new ButtonAction(_("Edit"), _("Edit a role"), 
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new UpdateRolePage(role))));
+    }
+    
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(RoleItem item) {
-        final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
-        metadatas.add(name());
-        metadatas.add(creationDate());
-        metadatas.add(lastUpdateDate());
-        return metadatas;
-    }
-
-    private ItemDetailsMetadata name() {
-        return new ItemDetailsMetadata(new AttributeReader(RoleItem.ATTRIBUTE_NAME),
-                _("Name"), _("Name of the role"));
-    }
-
-    private ItemDetailsMetadata creationDate() {
-        return new ItemDetailsMetadata(new DateAttributeReader(RoleItem.ATTRIBUTE_CREATION_DATE),
-                _("Creation date"), _("The date of the creation of the group"));
-    }
-
-    private ItemDetailsMetadata lastUpdateDate() {
-        return new ItemDetailsMetadata(new DateAttributeReader(RoleItem.ATTRIBUTE_LAST_UPDATE_DATE),
-                _("Last update"), _("The date of the last update of the group"));
+        RoleMetadataBuilder metadatas = new RoleMetadataBuilder();
+        metadatas.addName();
+        metadatas.addCreationDate();
+        metadatas.addLastUpdateDate();
+        return metadatas.build();
     }
 
     @Override
@@ -87,8 +78,7 @@ public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
     }
 
     private Section technicalInformationsSection(RoleItem item) {
-        return new Section(_("Technical informations"))
-                .addBody(numberOfUsersDefinition(item));
+        return new Section(_("Technical informations")).addBody(numberOfUsersDefinition(item));
     }
 
     private Definition numberOfUsersDefinition(RoleItem item) {
