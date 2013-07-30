@@ -4,6 +4,9 @@
 *.classpath
 target/
 
+# intellij settings
+*.iml
+
 btm1.tlog
 btm2.tlog
 
