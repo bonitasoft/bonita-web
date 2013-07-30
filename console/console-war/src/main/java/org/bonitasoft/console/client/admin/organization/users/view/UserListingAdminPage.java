@@ -80,12 +80,12 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
     }
 
     private ItemListingFilter disabledUsersFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_DISABLED_USERS, _("Disabled"), _("Disabled Users"), TABLE_DISABLED_USERS)
+        return new ItemListingFilter(FILTER_PRIMARY_DISABLED_USERS, _("Inactive"), _("Inactive Users"), TABLE_DISABLED_USERS)
             .addFilter(UserItem.ATTRIBUTE_ENABLED, "false");
     }
 
     private ItemListingFilter enabledUsersFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_ENABLED_USERS, _("Enabled"), _("Enabled Users"), TABLE_ENABLED_USERS)
+        return new ItemListingFilter(FILTER_PRIMARY_ENABLED_USERS, _("Active"), _("Active Users"), TABLE_ENABLED_USERS)
             .addFilter(UserItem.ATTRIBUTE_ENABLED, "true");
     }
 
@@ -115,11 +115,11 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
     }
 
     private ButtonAction enableButton() {
-        return new ButtonAction(_("Enable"), _("Enable selected users"), new ChangeUsersStateAction(STATE.ENABLED));
+        return new ButtonAction(_("Activate"), _("Activate selected users"), new ChangeUsersStateAction(STATE.ENABLED));
     }
     
     private ButtonAction disableButton() {
-        return new ButtonAction(_("Disable"), _("Disable selected users"), new ChangeUsersStateAction(STATE.DISABLED));
+        return new ButtonAction(_("Deactivate"), _("Deactivate selected users"), new ChangeUsersStateAction(STATE.DISABLED));
     }
 
     protected ItemTable itemTable() {
