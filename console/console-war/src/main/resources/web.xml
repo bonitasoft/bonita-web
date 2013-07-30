@@ -207,7 +207,10 @@
 		<servlet-name>logoutService</servlet-name>
 		<servlet-class>org.bonitasoft.console.common.server.login.servlet.LogoutServlet</servlet-class>
 	</servlet>
-
+    <servlet>
+        <servlet-name>exportOrganizationServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.server.servlet.OrganizationExportServlet</servlet-class>
+    </servlet>
 	<servlet>
 		<servlet-name>org.bonitasoft.forms.server.FormsServletconsole/formsservice</servlet-name>
 		<servlet-class>org.bonitasoft.forms.server.FormsServlet</servlet-class>
@@ -234,6 +237,10 @@
 		<servlet-name>formsDocumentImage</servlet-name>
 		<servlet-class>org.bonitasoft.forms.server.DocumentImageServlet</servlet-class>
 	</servlet>
+	<servlet-mapping>
+        <servlet-name>exportOrganizationServlet</servlet-name>
+        <url-pattern>/portal/exportOrganization</url-pattern>
+    </servlet-mapping>
 	<servlet>
 		<servlet-name>exportProcessActorsServlet</servlet-name>
 		<servlet-class>org.bonitasoft.console.server.servlet.ProcessActorsExportServlet</servlet-class>
