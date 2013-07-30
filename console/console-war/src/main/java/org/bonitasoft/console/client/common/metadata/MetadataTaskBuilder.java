@@ -18,8 +18,6 @@ package org.bonitasoft.console.client.common.metadata;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.LinkedList;
-
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
@@ -40,14 +38,14 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class MetadataTaskBuilder extends MetadataBuilder {
 
-	public static MetadataTaskBuilder taskQuickDetailsMetadatas() {
-		MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+    public static MetadataTaskBuilder taskQuickDetailsMetadatas() {
+        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addDueDate(FORMAT.DISPLAY_RELATIVE);
         metadatas.addPriority();
         return metadatas;
-	}
-	
+    }
+
     public void addAppsName() {
         add(createMetaAppsName());
     }
@@ -117,7 +115,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     private ItemDetailsMetadata createMetaAssignTo() {
         return new ItemDetailsMetadata(
                 new DeployedJsId(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, UserItem.ATTRIBUTE_FIRSTNAME, UserItem.ATTRIBUTE_LASTNAME),
-                new DeployedUserReader(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID),
+                new DeployedUserReader(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).setDefaultValue(_("Unassigned")),
                 _("Assigned to"),
                 _("The user name of the user to which the task is assigned"));
     }

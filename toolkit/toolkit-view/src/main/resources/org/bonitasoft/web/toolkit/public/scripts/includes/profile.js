@@ -16,8 +16,12 @@ $(function() {
 					}
 					
 				});
-				
-				tablePannel.parent().sortable({
+				var tablePannels = tablePannel.parent();
+				tablesPannelWidth += tablePannel.width();
+				var addButton = $("#btn-addprofileentry");
+				var addButtonWidth = $("#btn-addprofileentry").outerWidth(true);
+				tablePannels.css("width", (tablesPannelWidth+addButtonWidth)+"px");
+				tablePannels.parent().sortable({
 					cursor: "e-resize",
 					items: ".tablePannel",
 					update: function(event,ui){
@@ -36,3 +40,4 @@ $(function() {
 });
 var initialDomFolderIndex;
 var initialDomPageIndex;
+var tablesPannelWidth = 0;

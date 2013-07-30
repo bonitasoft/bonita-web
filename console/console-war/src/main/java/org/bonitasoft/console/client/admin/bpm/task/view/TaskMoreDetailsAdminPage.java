@@ -179,9 +179,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         metadatas.addCaseId();
         metadatas.addState();
         metadatas.addPriority();
-        if (isAssigned(task)) {
-            metadatas.addAssignedTo();
-        }
+        metadatas.addAssignedTo();
         if (isArchived()) {
             metadatas.addExecutedBy();
         }
