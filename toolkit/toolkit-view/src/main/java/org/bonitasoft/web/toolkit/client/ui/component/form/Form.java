@@ -540,10 +540,11 @@ public class Form extends AbstractForm {
 
         @Override
         public void execute() {
-            if (isUploadFinished(Form.this.getElement()) && !action.isStarted()) {
+            if (isUploadFinished(Form.this.getElement())) {
                 try {
                     validate();
-                    action.setStarted(true);
+                    // TODO find a better way to unactivate the double click
+                    // action.setStarted(true);
                     this.action.execute();
                 } catch (ValidationException e) {
                     for (final ValidationError error : e.getErrors()) {
@@ -1103,7 +1104,7 @@ public class Form extends AbstractForm {
 
     /**
      * @Deprecated
-     *             Use {@link ValuedFormEntry#addValidator(Validator)}
+     *             Use {@link ValuedFormEntry#addValidator(Validator)} i.e. form.getEntry(jsId).addValidator
      */
     @Deprecated
     @Override
