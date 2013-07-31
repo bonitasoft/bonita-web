@@ -87,6 +87,13 @@
             <type>link</type>
             <page>rolelistingadmin</page>
           </profileEntry>
+          <profileEntry name="Import / Export">
+            <parentName>Organization</parentName>
+            <index>6</index>
+            <description>Import / Export an final organization</description>
+            <type>link</type>
+            <page>importexportorganization</page>
+          </profileEntry>
         </childrenEntries>
       </parentProfileEntry>  
       <parentProfileEntry name="Configuration">

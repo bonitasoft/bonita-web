@@ -59,6 +59,9 @@ public class DeployedUserReader extends UserAttributeReader implements HasDeploy
         if ("0".equals(userId)) {
             return createSystemUser();
         } else if (item.getDeploy(attributeToRead) == null) {
+            if ("".equals(userId) && !"".equals(this.getDefaultValue())) {
+                return createDefaultValueUser();
+            }
             return createDeletedUser();
         } else {
             return new UserItem(item.getDeploy(attributeToRead));
@@ -76,6 +79,12 @@ public class DeployedUserReader extends UserAttributeReader implements HasDeploy
         final UserItem user = new UserItem();
         user.setUserName(_("deleted"));
         user.setFirstName(_("Deleted"));
+        return user;
+    }
+
+    private UserItem createDefaultValueUser() {
+        final UserItem user = new UserItem();
+        user.setFirstName(this.getDefaultValue());
         return user;
     }
 
