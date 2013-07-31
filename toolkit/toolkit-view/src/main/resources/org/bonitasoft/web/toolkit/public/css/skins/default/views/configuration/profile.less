@@ -2,16 +2,22 @@
 .doublesection .body {
 	.fontSize (@header-menu-fontSize);
 	
+	.menuOptions {
+		display: inline-block;
+		width: (@filtersPanel-width - @moreDetails-paddingLeft - @moreDetails-section-header-paddingX);
+	}
 	.menuEditor {
 		overflow-x: auto;
+		display: inline-block;
 		.menu {
 			position: absolute;
 			width: 100%;
 			.height (@header-menu-height);
 			.verticalGradient (@header-menu-gradientColor1 , @header-menu-gradientPosition1 , @header-menu-gradientColor2 , @header-menu-gradientPosition2);
 		}
+		
 		> .tablesPannel {
-			padding:@profileMoreDetails-menuEditor-padding;
+			//padding:@profileMoreDetails-menuEditor-padding;
 			float: left;
 			position: relative;
 			
@@ -28,6 +34,11 @@
 				> .datatable {
 					width: auto;
 					text-align: center;
+					
+					&.resetOption{
+						height: (@header-menu-height);
+					}
+					
 					> .pager {
 						display: none;
 					}
@@ -120,7 +131,7 @@
 						}
 					}
 				}
-				p.addProfileEntry {
+				p.addProfileEntry, p.resetMenuButton {
 					clear: both;
 					padding: @profileMoreDetails-linkEditor-padding;
 					color: @header-menu-link-textColorHover;
@@ -136,3 +147,8 @@
 	}
 }
 
+.page_resetMenuPopupPage {
+	.resetMenuButtons {
+		text-align:center;
+	}
+}
