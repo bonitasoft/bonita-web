@@ -125,7 +125,21 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
             updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_PATH));
         }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
-            updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID));
+            try {
+                Group group = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(Long.parseLong(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)));
+                if (group.getParentPath() == null) {
+                    updater.updateParentPath("/"+group.getName());
+                } else {
+                    updater.updateParentPath(group.getParentPath()+"/"+group.getName());
+                }
+            } catch (GroupNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (final Exception e) {
+                throw new APIException(e);
+            }
+          
+
         }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_ICON)) {
             updater.updateIconPath(attributes.get(GroupItem.ATTRIBUTE_ICON));
@@ -183,7 +197,6 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         groupItem.setLastUpdateDate(group.getLastUpdate());
         groupItem.setName(group.getName());
         groupItem.setParentPath(group.getParentPath());
-        groupItem.setParentGroupId(group.getPath());
         return groupItem;
     }
 

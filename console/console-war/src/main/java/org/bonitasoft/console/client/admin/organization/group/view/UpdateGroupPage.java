@@ -18,20 +18,13 @@ package org.bonitasoft.console.client.admin.organization.group.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
-import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
-import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
-import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
-import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
-import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
-import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
@@ -89,7 +82,6 @@ public class UpdateGroupPage extends Page {
         return form;
     }
 
-
     @Override
     public String defineToken() {
         return TOKEN;
@@ -110,7 +102,11 @@ public class UpdateGroupPage extends Page {
     
         @Override
         protected void getData(final APICallback callback) {
-            GroupDefinition.get().getAPICaller().get(groupId, callback);
+            ArrayList<String> deploys = new ArrayList<String>();
+            deploys.add(GroupItem.ATTRIBUTE_PARENT_GROUP_ID);
+            
+            GroupDefinition.get().getAPICaller().get(groupId, deploys, callback);
         }
+       
     }
 }
