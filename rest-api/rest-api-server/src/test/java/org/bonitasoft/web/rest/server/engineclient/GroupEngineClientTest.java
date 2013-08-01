@@ -34,6 +34,7 @@ import org.bonitasoft.engine.api.GroupAPI;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.Group;
+import org.bonitasoft.engine.identity.GroupCreator;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.web.rest.server.APITestWithMock;
@@ -121,11 +122,20 @@ public class GroupEngineClientTest extends APITestWithMock {
     @Test
     public void getPath_return_the_group_path_for_the_specified_group_id() throws Exception {
         Group group = mock(Group.class);
-        when(group.getPath()).thenReturn("/expeted/group/path");
+        when(group.getPath()).thenReturn("/expected/group/path");
         when(groupAPI.getGroup(1L)).thenReturn(group);
         
         String groupPath = groupEngineClient.getPath("1");
         
-        assertThat(groupPath, is("/expeted/group/path"));
+        assertThat(groupPath, is("/expected/group/path"));
+    }
+
+    @Test
+    public void create_create_a_group_in_engine_repository() throws Exception {
+        GroupCreator creator = new GroupCreator("aName");
+        
+        groupEngineClient.create(creator);
+        
+        verify(groupAPI).createGroup(creator);
     }
 }

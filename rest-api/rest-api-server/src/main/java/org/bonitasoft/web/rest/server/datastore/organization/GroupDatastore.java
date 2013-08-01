@@ -109,8 +109,9 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     public GroupItem add(final GroupItem group) {
+        GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group);
         try {
-            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).createGroup(createGroupCreator(group));
+            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).createGroup(creator);
             return new GroupItemConverter().convert(result);
         } catch (final AlreadyExistsException e) {
             String message = _("Can't create group. Group '%groupName%' already exists", new Arg("groupName", group.getName()));

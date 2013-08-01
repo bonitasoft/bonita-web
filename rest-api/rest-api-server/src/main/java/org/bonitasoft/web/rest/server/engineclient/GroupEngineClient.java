@@ -22,12 +22,17 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.List;
 
 import org.bonitasoft.engine.api.GroupAPI;
+import org.bonitasoft.engine.exception.AlreadyExistsException;
+import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.Group;
+import org.bonitasoft.engine.identity.GroupCreator;
+import org.bonitasoft.engine.identity.GroupCreator.GroupField;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -81,6 +86,17 @@ public class GroupEngineClient {
             throw new APIException(_("Can't update group. Group not found"));
         } catch (UpdateException e) {
             throw new APIException(_("Error when updating group"), e);
+        }
+    }
+    
+    public Group create(GroupCreator groupCreator) {
+        try {
+            return groupAPI.createGroup(groupCreator);
+        } catch (AlreadyExistsException e) {
+            throw new APIForbiddenException(_("Can't create group. Group '%groupName%' already exists", 
+                    new Arg("groupName", groupCreator.getFields().get(GroupField.NAME))));
+        } catch (CreationException e) {
+            throw new APIException(_("Error when creating group"), e);
         }
     }
 }
