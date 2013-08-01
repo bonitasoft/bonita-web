@@ -11,6 +11,8 @@ package org.bonitasoft.web.rest.server.datastore.profile;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
 
 /**
@@ -21,18 +23,18 @@ public class PageLister {
 
     protected final static List<BonitaPageItem> pages = new ArrayList<BonitaPageItem>();
     static {
-        pages.add(new BonitaPageItem("tasklistinguser", "visualize & do tasks", "", "Tasks"));
-        pages.add(new BonitaPageItem("tasklistingadmin", "manage tasks", "", "Tasks"));
-        pages.add(new BonitaPageItem("caselistinguser", "visualize cases", "", "Cases"));
-        pages.add(new BonitaPageItem("caselistingadmin", "manage cases", "", "Cases"));
-        pages.add(new BonitaPageItem("processlistinguser", "visualize & start apps", "", "Apps"));
-        pages.add(new BonitaPageItem("processlistingadmin", "manage apps", "", "Apps"));
-        pages.add(new BonitaPageItem("userlistingadmin", "manage users", "", "Users"));
-        pages.add(new BonitaPageItem("grouplistingadmin", "manage groups", "", "Groups"));
-        pages.add(new BonitaPageItem("rolelistingadmin", "manage roles", "", "Roles"));
-        pages.add(new BonitaPageItem("importexportorganization", "import/export organization", "", "Import/Export"));
-        pages.add(new BonitaPageItem("profilelisting", "user privilage settings", "", "User rights"));
-        pages.add(new BonitaPageItem("reportlistingadminext", "Monitoring", "", "Analytics"));
+        pages.add(new BonitaPageItem("tasklistinguser", _("visualize & do tasks"), "", _("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingadmin", _("manage tasks"), "", _("Tasks")));
+        pages.add(new BonitaPageItem("caselistinguser", _("visualize cases"), "", _("Cases")));
+        pages.add(new BonitaPageItem("caselistingadmin", _("manage cases"), "", _("Cases")));
+        pages.add(new BonitaPageItem("processlistinguser", _("visualize & start apps"), "", _("Apps")));
+        pages.add(new BonitaPageItem("processlistingadmin", _("manage apps"), "", _("Apps")));
+        pages.add(new BonitaPageItem("userlistingadmin", _("manage users"), "", _("Users")));
+        pages.add(new BonitaPageItem("grouplistingadmin", _("manage groups"), "", _("Groups")));
+        pages.add(new BonitaPageItem("rolelistingadmin", _("manage roles"), "", _("Roles")));
+        pages.add(new BonitaPageItem("importexportorganization", _("import/export organization"), "", _("Import/Export")));
+        pages.add(new BonitaPageItem("profilelisting", _("user privilage settings"), "", _("User rights")));
+        pages.add(new BonitaPageItem("reportlistingadminext", _("Monitoring"), "", _("Analytics")));
     }
 
     public List<BonitaPageItem> getPages() {
