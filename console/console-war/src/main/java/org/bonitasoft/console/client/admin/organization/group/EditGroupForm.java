@@ -19,13 +19,18 @@ package org.bonitasoft.console.client.admin.organization.group;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
+import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
+import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
 
 /**
  * @author Colin PUY
@@ -42,5 +47,31 @@ public class EditGroupForm extends Form {
         addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_DESCRIPTION), _("Description"), _("Enter the description of this group"));
         
         getEntry(new JsId(RoleItem.ATTRIBUTE_NAME)).addValidator(new MandatoryValidator());
+    }
+    
+    public EditGroupForm addGroupFiller(String groupId) {
+        addFiller(new EditGroupFormFiller(groupId));
+        return this;
+    }
+    
+    /**
+     * EditGroup form filler
+     *  
+     *  fill form fields with group values
+     *  use it like this : editGroupForm.addFiller(new EditGroupFormFiller(itemId));
+     */
+    private class EditGroupFormFiller extends FormFiller {
+    
+        private final String groupId;
+    
+        private EditGroupFormFiller(String groupId) {
+            this.groupId = groupId;
+        }
+    
+        @Override
+        protected void getData(final APICallback callback) {
+            List<String> deploys = Arrays.asList(GroupItem.ATTRIBUTE_PARENT_GROUP_ID);
+            GroupDefinition.get().getAPICaller().get(groupId, deploys, callback);
+        }
     }
 }

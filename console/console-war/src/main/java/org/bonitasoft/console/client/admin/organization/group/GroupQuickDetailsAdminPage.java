@@ -54,9 +54,9 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
     }
 
     @Override
-    protected void buildToolbar(GroupItem item) {
+    protected void buildToolbar(GroupItem group) {
         addToolbarLink(new EditButton(_("Show more details about this user"), 
-                new CheckValidSessionBeforeAction(new ActionShowPopup(new UpdateGroupPage(item.getId())))));
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new UpdateGroupPage(group)))));
     }
 
     @Override
