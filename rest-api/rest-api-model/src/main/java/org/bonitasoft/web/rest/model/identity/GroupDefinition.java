@@ -18,7 +18,6 @@ package org.bonitasoft.web.rest.model.identity;
 
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -26,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  * @author Yongtao Guo
  * 
  */
-public class GroupDefinition extends ItemDefinition {
+public class GroupDefinition extends ItemDefinition<GroupItem> {
 
     /**
      * Singleton
@@ -72,7 +71,7 @@ public class GroupDefinition extends ItemDefinition {
     }
 
     @Override
-    public IItem _createItem() {
+    public GroupItem _createItem() {
         return new GroupItem();
     }
 

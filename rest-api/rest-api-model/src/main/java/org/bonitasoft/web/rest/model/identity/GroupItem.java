@@ -63,7 +63,7 @@ public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId,
     // GETTERS
 
     @Override
-    public ItemDefinition getItemDefinition() {
+    public ItemDefinition<GroupItem> getItemDefinition() {
         return new GroupDefinition();
     }
 
