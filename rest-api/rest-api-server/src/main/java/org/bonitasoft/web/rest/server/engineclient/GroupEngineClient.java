@@ -17,12 +17,13 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import org.bonitasoft.engine.api.GroupAPI;
-import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
  * @author Paul AMAR
@@ -30,17 +31,17 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
  */
 public class GroupEngineClient {
 
-    private ProcessAPI processAPI;
+    private GroupAPI groupAPI;
 
-    protected GroupEngineClient(ProcessAPI processAPI) {
-        this.processAPI = processAPI;
+    protected GroupEngineClient(GroupAPI groupAPI) {
+        this.groupAPI = groupAPI;
     }
 
     public Group get(Long groupId) {
         try {
-            return ((GroupAPI) processAPI).getGroup(groupId);
+            return groupAPI.getGroup(groupId);
         } catch (GroupNotFoundException e) {
-            throw new APIException(I18n._("Group not found"));
+            throw new APIException(_("Unable to find group %groupId%", new Arg("groupId", groupId)));
         }
     }
 }

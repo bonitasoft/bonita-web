@@ -59,7 +59,7 @@ public class EngineClientFactory {
     }
     
     public GroupEngineClient createGroupEngineClient(APISession session) {
-        return new GroupEngineClient(apiAccessor.getProcessAPI(session));
+        return new GroupEngineClient(apiAccessor.getGroupAPI(session));
     }
     
 }

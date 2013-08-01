@@ -36,6 +36,9 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
+import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.GroupEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -58,6 +61,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         DatastoreHasGet<GroupItem>,
         DatastoreHasSearch<GroupItem>, DatastoreHasDelete {
 
+    private EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
+    
     /**
      * Default Constructor.
      * 
@@ -67,6 +72,10 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         super(engineSession);
     }
 
+    private GroupEngineClient getGroupEngineClient() {
+        return engineClientFactory.createGroupEngineClient(getEngineSession()); 
+    }
+    
     /*
      * Delete group(s)
      */
@@ -107,12 +116,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     public GroupItem get(final APIID id) {
-        try {
-            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(id.toLong());
-            return convertEngineToConsoleItem(result);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        Group result = getGroupEngineClient().get(id.toLong());
+        return convertEngineToConsoleItem(result);
     }
 
     @Override
@@ -125,15 +130,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
             updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_PATH));
         }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
-            try {
-                Group group = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(Long.parseLong(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)));
-                updater.updateParentPath(group.getPath());
-            } catch (GroupNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
+            Group group = getGroupEngineClient().get(Long.parseLong(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)));
+            updater.updateParentPath(group.getPath());
         }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_ICON)) {
             updater.updateIconPath(attributes.get(GroupItem.ATTRIBUTE_ICON));
@@ -215,15 +213,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         }
         
         if (!isBlank(item.getParentGroupId())) {
-            try {
-                Group group = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(Long.parseLong(item.getParentGroupId()));
-                builder.setParentPath(group.getPath());
-            } catch (GroupNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
+            Group group = getGroupEngineClient().get(Long.parseLong(item.getParentGroupId()));
+            builder.setParentPath(group.getPath());
         }
         return builder;
     }
