@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.bonitasoft.engine.api.GroupAPI;
 import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupUpdater;
@@ -101,6 +102,13 @@ public class GroupEngineClientTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void update_throw_APIException_if_group_not_exists_in_engine_repository() throws Exception {
         when(groupAPI.updateGroup(eq(1L), any(GroupUpdater.class))).thenThrow(new GroupNotFoundException(new Exception()));
+        
+        groupEngineClient.update(1L, new GroupUpdater());
+    }
+    
+    @Test(expected = APIException.class)
+    public void update_throw_APIException_if_an_exception_occurs_when_updating_in_engine_repository() throws Exception {
+        when(groupAPI.updateGroup(eq(1L), any(GroupUpdater.class))).thenThrow(new UpdateException(""));
         
         groupEngineClient.update(1L, new GroupUpdater());
     }
