@@ -21,7 +21,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.common.component.button.EditButton;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -31,6 +30,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -55,7 +55,7 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
 
     @Override
     protected void buildToolbar(GroupItem group) {
-        addToolbarLink(new EditButton(_("Show more details about this user"), 
+        addToolbarLink(new ButtonAction(_("Edit"), _("Edit this group"),
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new UpdateGroupPage(group)))));
     }
 
