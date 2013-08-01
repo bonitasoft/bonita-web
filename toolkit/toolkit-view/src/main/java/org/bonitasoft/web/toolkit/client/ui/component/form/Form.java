@@ -1104,7 +1104,7 @@ public class Form extends AbstractForm {
 
     /**
      * @Deprecated
-     *             Use {@link ValuedFormEntry#addValidator(Validator)}
+     *             Use {@link ValuedFormEntry#addValidator(Validator)} i.e. form.getEntry(jsId).addValidator
      */
     @Deprecated
     @Override

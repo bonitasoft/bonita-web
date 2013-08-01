@@ -381,7 +381,7 @@ public class PageflowViewController {
         this.mandatoryFieldLabel = mandatoryFieldLabel;
     }
 
-    private void redirectToConfirmationPage(final ConfirmationPageHandler confirmationPageHandler) {
+    protected void redirectToConfirmationPage(final ConfirmationPageHandler confirmationPageHandler) {
         formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, confirmationPageHandler);
     }
 

@@ -18,8 +18,9 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
-import org.bonitasoft.console.client.admin.organization.role.view.RoleListingPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
@@ -35,6 +36,7 @@ public class OrganizationMenuItem extends MenuFolder {
         addMenuItem(new MenuLink(_("Users"), _("Show the user list"), UserListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(_("Groups"), _("Show the group list"), GroupListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(_("Roles"), _("Show the role list"), RoleListingPage.TOKEN));
+        addMenuItem(new MenuLink(_("Import / Export"), _("Import or export data"), OrganizationImportAndExportPage.TOKEN));
     }
 
 }
