@@ -20,8 +20,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
@@ -33,16 +31,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
  */
 public class AddGroupPage extends Page {
 
-    public static final String TOKEN = "addGroup";
+    public static final String TOKEN = "addgroup";
 
     @Override
     public void defineTitle() {
         this.setTitle(_("Create a group"));
-    }
-
-    @Override
-    public String defineToken() {
-        return TOKEN;
     }
 
     @Override
@@ -51,20 +44,13 @@ public class AddGroupPage extends Page {
     }
 
     private Form addGroupForm() {
-        final ItemDefinition groupDefinition = GroupDefinition.get();
-        return new Form() 
-                .addItemAttributeEntry(groupDefinition.getAttribute(GroupItem.ATTRIBUTE_ICON), "Avatar", _("Select an avatar for this group"))
-                .addItemAttributeEntry(groupDefinition.getAttribute(GroupItem.ATTRIBUTE_NAME), _("Name"), _("Enter the name of this group"))
-                .addItemAttributeEntry(groupDefinition.getAttribute(GroupItem.ATTRIBUTE_DISPLAY_NAME), _("Display name"),
-                        _("Enter the display name of this group"))
-                .addAutoCompleteEntry(new JsId(GroupItem.ATTRIBUTE_PARENT_GROUP_ID), _("Parent Group"), _("Select the parent group"), groupDefinition,
-                        GroupItem.ATTRIBUTE_NAME, GroupItem.ATTRIBUTE_ID)
-                .addItemAttributeEntry(groupDefinition.getAttribute(GroupItem.ATTRIBUTE_DESCRIPTION), _("Description"),
-                        _("Enter the description of this group"))
-                .addValidator(new JsId(GroupItem.ATTRIBUTE_NAME), new MandatoryValidator())
-                .addButton(new JsId("create"), _("Create"), _("Create this group"), new AddItemFormAction<GroupItem>(groupDefinition))
-                .addCancelButton();
-
+        return new EditGroupForm()
+            .addButton(new JsId("create"), _("Create"), _("Create this group"), new AddItemFormAction<GroupItem>(GroupDefinition.get()))
+            .addCancelButton();
     }
 
+    @Override
+    public String defineToken() {
+        return TOKEN;
+    }
 }
