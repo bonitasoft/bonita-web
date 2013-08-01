@@ -16,15 +16,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
 
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCreator;
 import org.bonitasoft.engine.identity.GroupSearchDescriptor;
@@ -45,8 +42,6 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -110,20 +105,9 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
     @Override
     public GroupItem add(final GroupItem group) {
         GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group);
-        try {
-            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).createGroup(creator);
-            return new GroupItemConverter().convert(result);
-        } catch (final AlreadyExistsException e) {
-            String message = _("Can't create group. Group '%groupName%' already exists", new Arg("groupName", group.getName()));
-            throw new APIForbiddenException(message, e);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        Group result = getGroupEngineClient().create(creator);
+        return new GroupItemConverter().convert(result);
     }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // COUNTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Long getNumberOfUsers(final APIID groupId) {
         try {
@@ -133,39 +117,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         }
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONVERTS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     protected GroupItem convertEngineToConsoleItem(final Group group) {
        throw new RuntimeException("Unimplemented method");
-    }
-
-    protected final GroupCreator createGroupCreator(final GroupItem item) {
-        if (item == null) {
-            return null;
-        }
-
-        GroupCreator builder = new GroupCreator(item.getName());
-
-        if (!isBlank(item.getDescription())) {
-            builder.setDescription(item.getDescription());
-        }
-
-        if (!isBlank(item.getDisplayName())) {
-            builder.setDisplayName(item.getDisplayName());
-        }
-
-        if (!isBlank(item.getIcon())) {
-            builder.setIconName(item.getIcon());
-            builder.setIconPath(item.getIcon());
-        }
-        
-        if (!isBlank(item.getParentGroupId())) {
-            Group group = getGroupEngineClient().get(Long.parseLong(item.getParentGroupId()));
-            builder.setParentPath(group.getPath());
-        }
-        return builder;
     }
 }
