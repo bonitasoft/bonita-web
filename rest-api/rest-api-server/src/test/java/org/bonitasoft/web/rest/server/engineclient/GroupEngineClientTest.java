@@ -18,7 +18,12 @@
 package org.bonitasoft.web.rest.server.engineclient;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -27,7 +32,9 @@ import java.util.List;
 
 import org.bonitasoft.engine.api.GroupAPI;
 import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
+import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -82,4 +89,35 @@ public class GroupEngineClientTest extends APITestWithMock {
         groupEngineClient.delete(groupIds);
     }
 
+    @Test
+    public void update_update_a_group_in_engine_repository() throws Exception {
+        GroupUpdater groupUpdater = new GroupUpdater();
+        
+        groupEngineClient.update(1L, groupUpdater);
+        
+        verify(groupAPI).updateGroup(1L, groupUpdater);
+    }
+    
+    @Test(expected = APIException.class)
+    public void update_throw_APIException_if_group_not_exists_in_engine_repository() throws Exception {
+        when(groupAPI.updateGroup(eq(1L), any(GroupUpdater.class))).thenThrow(new GroupNotFoundException(new Exception()));
+        
+        groupEngineClient.update(1L, new GroupUpdater());
+    }
+
+    @Test(expected = APIException.class)
+    public void getPath_throw_APIexception_if_groupId_is_not_a_number() throws Exception {
+        groupEngineClient.getPath("notANumber");
+    }
+    
+    @Test
+    public void getPath_return_the_group_path_for_the_specified_group_id() throws Exception {
+        Group group = mock(Group.class);
+        when(group.getPath()).thenReturn("/expeted/group/path");
+        when(groupAPI.getGroup(1L)).thenReturn(group);
+        
+        String groupPath = groupEngineClient.getPath("1");
+        
+        assertThat(groupPath, is("/expeted/group/path"));
+    }
 }

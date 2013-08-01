@@ -23,8 +23,10 @@ import java.util.List;
 
 import org.bonitasoft.engine.api.GroupAPI;
 import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
+import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
@@ -48,11 +50,37 @@ public class GroupEngineClient {
         }
     }
     
+    public String getPath(String groupId) {
+        try {
+            return groupAPI.getGroup(parseId(groupId)).getPath();
+        } catch (GroupNotFoundException e) {
+            throw new APIException(_("Unable to get group path, group not found"));
+        }
+    }
+    
+    private long parseId(String groupId) {
+        try {
+            return Long.parseLong(groupId);
+        } catch (NumberFormatException e) {
+            throw new APIException("Illegal argument, groupId must be a number");
+        }
+    }
+    
     public void delete(List<Long> groupIds) {
         try {
             groupAPI.deleteGroups(groupIds);
         } catch (DeletionException e) {
             throw new APIException(_("Error when deleting groups"), e);
+        }
+    }
+    
+    public Group update(long groupId, GroupUpdater groupUpdater) {
+        try {
+            return groupAPI.updateGroup(groupId, groupUpdater);
+        } catch (GroupNotFoundException e) {
+            throw new APIException(_("Can't update group. Group not found"));
+        } catch (UpdateException e) {
+            throw new APIException(_("Error when updating group"), e);
         }
     }
 }

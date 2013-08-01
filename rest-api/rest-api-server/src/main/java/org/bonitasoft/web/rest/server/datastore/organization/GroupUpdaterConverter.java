@@ -19,7 +19,6 @@ package org.bonitasoft.web.rest.server.datastore.organization;
 
 import java.util.Map;
 
-import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.engineclient.GroupEngineClient;
@@ -41,19 +40,27 @@ public class GroupUpdaterConverter {
         if (attributes.containsKey(GroupItem.ATTRIBUTE_DESCRIPTION)) {
             updater.updateDescription(attributes.get(GroupItem.ATTRIBUTE_DESCRIPTION));
         }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_PATH)) {
-            updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_PATH));
-        }
-        if (!MapUtil.isBlank(attributes, GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
-            Group group = groupEngineClient.get(Long.parseLong(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)));
-            updater.updateParentPath(group.getPath());
-        }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_ICON)) {
             updater.updateIconPath(attributes.get(GroupItem.ATTRIBUTE_ICON));
         }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_NAME)) {
+        if (!MapUtil.isBlank(attributes, GroupItem.ATTRIBUTE_NAME)) {
             updater.updateName(attributes.get(GroupItem.ATTRIBUTE_NAME));
         }
+        if (attributes.containsKey(GroupItem.ATTRIBUTE_DISPLAY_NAME)) {
+            updater.updateDisplayName(attributes.get(GroupItem.ATTRIBUTE_DISPLAY_NAME));
+        }
+        if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
+            String parentGroupPath = getParentGroupPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID));
+            updater.updateParentPath(parentGroupPath);
+        }
         return updater;
+    }
+
+    private String getParentGroupPath(String groupId) {
+        if (groupId.isEmpty()) {
+            return "";
+        } else {
+            return groupEngineClient.getPath(groupId);
+        }
     }
 }

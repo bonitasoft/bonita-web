@@ -102,8 +102,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     public GroupItem update(final APIID id, final Map<String, String> attributes) {
-        GroupUpdaterConverter updaterConverter = new GroupUpdaterConverter(getGroupEngineClient());
-        GroupUpdater updater = updaterConverter.convert(attributes);
+        GroupUpdater updater = new GroupUpdaterConverter(getGroupEngineClient()).convert(attributes);
 
         try {
             final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).updateGroup(id.toLong(), updater);
