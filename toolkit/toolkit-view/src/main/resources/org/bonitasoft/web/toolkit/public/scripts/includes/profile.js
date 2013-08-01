@@ -18,7 +18,7 @@ $(function() {
 				});
 				var addButton = $("#btn-addprofileentry");
 				var tablePannels = tablePannel.parent();
-				tablesPannelWidth += tablePannel.width();
+				tablesPannelWidth +=tablePannel.width();
 				var addButtonWidth = $("#btn-addprofileentry").outerWidth(true);
 				tablePannels.css("width", (tablesPannelWidth+addButtonWidth*2)+"px");
 				tablePannels.parent().sortable({
@@ -39,6 +39,10 @@ $(function() {
 		}
 	});
 });
+//JSNI method
+function initMenuWidth(){
+	tablesPannelWidth = 0;
+}
 var initialDomFolderIndex;
 var initialDomPageIndex;
 var tablesPannelWidth = 0;
