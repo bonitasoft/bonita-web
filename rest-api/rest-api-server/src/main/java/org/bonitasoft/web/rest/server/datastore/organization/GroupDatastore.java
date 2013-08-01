@@ -102,12 +102,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
             SearchResult<Group> engineSearchResults;
             engineSearchResults = TenantAPIAccessor.getIdentityAPI(getEngineSession()).searchGroups(builder.done());
 
-            final List<GroupItem> consoleSearchResults = new ArrayList<GroupItem>();
-            for (final Group engineItem : engineSearchResults.getResult()) {
-                consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
-            }
-
-            return new ItemSearchResult<GroupItem>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
+            return new ItemSearchResult<GroupItem>(page, resultsByPage, engineSearchResults.getCount(), 
+                    new GroupItemConverter().convert(engineSearchResults.getResult()));
 
         } catch (final Exception e) {
             throw new APIException(e);
@@ -117,7 +113,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
     @Override
     public GroupItem get(final APIID id) {
         Group result = getGroupEngineClient().get(id.toLong());
-        return convertEngineToConsoleItem(result);
+        return new GroupItemConverter().convert(result);
     }
 
     @Override
@@ -142,7 +138,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
         try {
             final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).updateGroup(id.toLong(), updater);
-            return convertEngineToConsoleItem(result);
+            return new GroupItemConverter().convert(result);
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -152,7 +148,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
     public GroupItem add(final GroupItem group) {
         try {
             final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).createGroup(createGroupCreator(group));
-            return convertEngineToConsoleItem(result);
+            return new GroupItemConverter().convert(result);
         } catch (final AlreadyExistsException e) {
             String message = _("Can't create group. Group '%groupName%' already exists", new Arg("groupName", group.getName()));
             throw new APIForbiddenException(message, e);
@@ -179,17 +175,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     protected GroupItem convertEngineToConsoleItem(final Group group) {
-        final GroupItem groupItem = new GroupItem();
-        groupItem.setCreatedByUserId(group.getCreatedBy());
-        groupItem.setCreationDate(group.getCreationDate());
-        groupItem.setDescription(group.getDescription());
-        groupItem.setDisplayName(group.getDisplayName());
-        groupItem.setIcon(group.getIconPath());
-        groupItem.setId(group.getId());
-        groupItem.setLastUpdateDate(group.getLastUpdate());
-        groupItem.setName(group.getName());
-        groupItem.setParentPath(group.getParentPath());
-        return groupItem;
+       throw new RuntimeException("Unimplemented method");
     }
 
     protected final GroupCreator createGroupCreator(final GroupItem item) {
