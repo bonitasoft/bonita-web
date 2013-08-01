@@ -19,20 +19,79 @@ package org.bonitasoft.console.client.admin.organization.group.view;
 import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.web.rest.model.identity.GroupDefinition;
+import org.bonitasoft.web.rest.model.identity.GroupItem;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
-import org.bonitasoft.web.toolkit.client.ui.action.popup.PopupAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
+import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingSort;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTable;
 
 /**
  * @author Julien Mege
  * 
  */
-public class GroupListingAdminPage extends GroupListingPage {
+public class GroupListingAdminPage extends ItemListingPage<GroupItem> {
 
     public static final String TOKEN = "grouplistingadmin";
+
+    private static final String TABLE_ALL_GROUPS = "allgroups";
+
+    private static final String FILTER_PRIMARY_ALL_GROUPS = "allgroupsfilter";
+
+    @Override
+    public void defineTitle() {
+        this.setTitle(_("Groups"));
+    }
+
+    @Override
+    protected LinkedList<ItemListingFilter> definePrimaryFilters() {
+        final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
+        filters.add(allFilter());
+        return filters;
+    }
+
+    private ItemListingFilter allFilter() {
+        return new ItemListingFilter(FILTER_PRIMARY_ALL_GROUPS, _("All"), _("All Groups"), TABLE_ALL_GROUPS);
+    }
+
+    @Override
+    protected ItemListingResourceFilter defineResourceFilters() {
+        return null;
+    }
+
+    @Override
+    protected ItemListingSort defineDefaultSort() {
+        return new ItemListingSort(GroupItem.ATTRIBUTE_DISPLAY_NAME, true);
+    }
+
+    @Override
+    protected LinkedList<ItemListingTable> defineTables() {
+        final LinkedList<ItemListingTable> tables = new LinkedList<ItemListingTable>();
+        tables.add(allGroupTable());
+        return tables;
+    }
+
+    protected ItemListingTable allGroupTable() {
+        return new ItemListingTable(new JsId(TABLE_ALL_GROUPS), _("All groups"), itemTable(), new GroupQuickDetailsAdminPage());
+    }
+
+    protected ItemTable itemTable() {
+        return new ItemTable(GroupDefinition.get())
+                .addColumn(GroupItem.ATTRIBUTE_ICON, _("Icon"))
+                .addColumn(GroupItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+                .addColumn(GroupItem.ATTRIBUTE_CREATION_DATE, _("Creation date"), false)
+                .addGroupedMultipleDeleteAction(_("Delete selected groups"), GroupDefinition.get(), _("group"), _("groups"));
+    }
 
     @Override
     protected List<Clickable> defineFilterPanelActions() {
@@ -40,12 +99,8 @@ public class GroupListingAdminPage extends GroupListingPage {
     }
 
     private Clickable addGroupLink() {
-        return new Link(_("Create a group"), _("Opens a popup to create a group"), new CheckValidSessionBeforeAction(new PopupAction(AddGroupPage.TOKEN)));
-    }
-
-    @Override
-    protected GroupQuickDetailsPage getItemQuickDetailPage() {
-        return new GroupQuickDetailsAdminPage();
+        return new Link(_("Create a group"), _("Opens a popup to create a group"), 
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new AddGroupPage())));
     }
 
     @Override
