@@ -17,11 +17,16 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.List;
+
 import org.bonitasoft.engine.api.GroupAPI;
+import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -29,8 +34,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-
-
+/**
+ * @author Colin PUY
+ */
 public class GroupEngineClientTest extends APITestWithMock {
 
     @Mock
@@ -57,6 +63,23 @@ public class GroupEngineClientTest extends APITestWithMock {
         when(groupAPI.getGroup(1L)).thenThrow(new GroupNotFoundException(new Exception()));
         
         groupEngineClient.get(1L);
+    }
+    
+    @Test
+    public void delete_delete_groups_in_engine_repository() throws Exception {
+        List<Long> groupIds = asList(1L, 2L);
+        
+        groupEngineClient.delete(groupIds);
+        
+        verify(groupAPI).deleteGroups(groupIds);
+    }
+    
+    @Test(expected = APIException.class)
+    public void delete_throw_APIException_if_an_error_occurs_when_deleting_groups_in_engine_repository() throws Exception {
+        List<Long> groupIds = asList(1L, 2L);
+        doThrow(new DeletionException("error")).when(groupAPI).deleteGroups(groupIds);
+        
+        groupEngineClient.delete(groupIds);
     }
 
 }

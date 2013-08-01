@@ -18,17 +18,15 @@ package org.bonitasoft.web.rest.server.datastore.organization;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
+import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCreator;
-import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupSearchDescriptor;
 import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
@@ -63,11 +61,6 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     private EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
     
-    /**
-     * Default Constructor.
-     * 
-     * @param engineSession
-     */
     public GroupDatastore(final APISession engineSession) {
         super(engineSession);
     }
@@ -76,18 +69,9 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         return engineClientFactory.createGroupEngineClient(getEngineSession()); 
     }
     
-    /*
-     * Delete group(s)
-     */
     @Override
     public void delete(final List<APIID> ids) {
-        try {
-            final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getEngineSession());
-            identityAPI.deleteGroups(APIID.toLongList(ids));
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-
+        getGroupEngineClient().delete(toLongList(ids));
     }
 
     @Override

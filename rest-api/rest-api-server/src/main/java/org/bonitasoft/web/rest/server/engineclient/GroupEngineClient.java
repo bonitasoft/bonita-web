@@ -19,7 +19,10 @@ package org.bonitasoft.web.rest.server.engineclient;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.List;
+
 import org.bonitasoft.engine.api.GroupAPI;
+import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -42,6 +45,14 @@ public class GroupEngineClient {
             return groupAPI.getGroup(groupId);
         } catch (GroupNotFoundException e) {
             throw new APIException(_("Unable to find group %groupId%", new Arg("groupId", groupId)));
+        }
+    }
+    
+    public void delete(List<Long> groupIds) {
+        try {
+            groupAPI.deleteGroups(groupIds);
+        } catch (DeletionException e) {
+            throw new APIException(_("Error when deleting groups"), e);
         }
     }
 }
