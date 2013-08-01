@@ -41,4 +41,4 @@ $(function() {
 });
 var initialDomFolderIndex;
 var initialDomPageIndex;
-var tablesPannelWidth = $(".tablePannels").width();
+var tablesPannelWidth = 0;
