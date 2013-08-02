@@ -21,6 +21,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.users.section.UsersListSection;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -90,6 +91,8 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
         addBody(new Section(_("Technical details"))
                 .addBody(new Definition(_("Number of users: "), "%%", nbOfUser))
                 .addBody(new Definition(_("Parent group: "), "%%", parentGroup)));
+        
+        addBody(new UsersListSection().filterByGroup(group));
     }
 
     @Override
