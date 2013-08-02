@@ -89,10 +89,11 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
         }
 
         addBody(new Section(_("Technical details"))
-                .addBody(new Definition(_("Number of users: "), "%%", nbOfUser))
+                .addBody(new Definition(_("Number of direct users: "), "%%", nbOfUser))
                 .addBody(new Definition(_("Parent group: "), "%%", parentGroup)));
         
         addBody(new UsersListSection(_("Direct users")).filterByGroup(group));
+        addBody(new SubGroupSection(group));
     }
 
     @Override
@@ -106,5 +107,4 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
     public String defineToken() {
         return TOKEN;
     }
-
 }

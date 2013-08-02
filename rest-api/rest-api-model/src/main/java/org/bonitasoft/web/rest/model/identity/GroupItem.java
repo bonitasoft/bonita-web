@@ -35,6 +35,11 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  */
 public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId, ItemHasCreator, ItemHasLastUpdateDate, ItemHasIcon {
 
+    public static String ATTRIBUTE_DESCRIPTION = "description";
+    public static String ATTRIBUTE_PATH ="path";
+    public static String ATTRIBUTE_PARENT_PATH = "parent_path";
+    public static String ATTRIBUTE_PARENT_GROUP_ID ="parent_group_id";
+    
     public GroupItem() {
         super();
     }
@@ -42,13 +47,6 @@ public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId,
     public GroupItem(final IItem item) {
         super(item);
     }
-
-    public static String ATTRIBUTE_DESCRIPTION = "description";
-
-    public static String ATTRIBUTE_PARENT_PATH = "parent_path";
-    
-    public static String ATTRIBUTE_PARENT_GROUP_ID ="parent_group_id";
-    
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COUNTERS
@@ -112,6 +110,10 @@ public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId,
 
     public String getParentPath() {
         return getAttributeValue(ATTRIBUTE_PARENT_PATH);
+    }
+    
+    public String getPath() {
+        return getAttributeValue(ATTRIBUTE_PATH);
     }
     
     public String getParentGroupId() {
@@ -190,6 +192,10 @@ public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId,
 
     public void setParentPath(final String parentPath) {
         this.setAttribute(ATTRIBUTE_PARENT_PATH, parentPath);
+    }
+    
+    public void setPath(final String parentPath) {
+        this.setAttribute(ATTRIBUTE_PATH, parentPath);
     }
     
     public void setParentGroupId(final String parentGroupId) {

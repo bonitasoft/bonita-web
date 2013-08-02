@@ -18,6 +18,7 @@ public class GroupItemConverter extends ItemConverter<GroupItem, Group> {
         groupItem.setLastUpdateDate(group.getLastUpdate());
         groupItem.setName(group.getName());
         groupItem.setParentPath(group.getParentPath());
+        groupItem.setPath(group.getPath());
         return groupItem;
     }
 
