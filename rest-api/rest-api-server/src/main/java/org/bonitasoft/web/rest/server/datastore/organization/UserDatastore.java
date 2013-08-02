@@ -26,6 +26,7 @@ import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
+import org.bonitasoft.engine.identity.UserCriterion;
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
@@ -160,6 +161,18 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
         try {
             SearchResult<User> engineSearchResults;
+            
+            if (filters.containsKey(UserItem.FILTER_GROUP_ID)) {
+                List<User> users =  getIdentityAPI().getUsersInGroup(Long.valueOf(filters.get(UserItem.FILTER_GROUP_ID)), 
+                        SearchOptionsBuilderUtil.computeIndex(page, resultsByPage), resultsByPage, UserCriterion.LAST_NAME_ASC);
+                
+                final List<UserItem> consoleSearchResults = new ArrayList<UserItem>();
+                for (final User engineItem : users) {
+                    consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
+                }
+                return new ItemSearchResult<UserItem>(page, resultsByPage, consoleSearchResults.size(), consoleSearchResults);
+            }
+            
             engineSearchResults = getIdentityAPI().searchUsers(builder.done());
             final List<UserItem> consoleSearchResults = new ArrayList<UserItem>();
             for (final User engineItem : engineSearchResults.getResult()) {
@@ -182,7 +195,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         addFilterToSearchBuilder(filters, builder, UserItem.ATTRIBUTE_USERNAME, UserSearchDescriptor.USER_NAME);
         addFilterToSearchBuilder(filters, builder, UserItem.ATTRIBUTE_MANAGER_ID, UserSearchDescriptor.MANAGER_USER_ID);
         addFilterToSearchBuilder(filters, builder, UserItem.FILTER_ROLE_ID, UserSearchDescriptor.ROLE_ID);
-        addFilterToSearchBuilder(filters, builder, UserItem.FILTER_GROUP_ID, UserSearchDescriptor.GROUP_ID);
+//        addFilterToSearchBuilder(filters, builder, UserItem.FILTER_GROUP_ID, UserSearchDescriptor.GROUP_ID);
     }
 
     private void addSearchTerm(final SearchOptionsBuilder builder, final String search) {

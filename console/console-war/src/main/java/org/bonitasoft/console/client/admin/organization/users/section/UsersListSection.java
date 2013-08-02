@@ -32,8 +32,8 @@ public class UsersListSection extends Section {
 
     private ItemTable usersTable;
 
-    public UsersListSection() {
-        super(_("List of users"));
+    public UsersListSection(String title) {
+        super(title);
         addClass("usersmapping");
         
         usersTable = buildUsersTable();

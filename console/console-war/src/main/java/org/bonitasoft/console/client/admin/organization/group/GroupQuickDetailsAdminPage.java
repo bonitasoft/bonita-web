@@ -92,7 +92,7 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
                 .addBody(new Definition(_("Number of users: "), "%%", nbOfUser))
                 .addBody(new Definition(_("Parent group: "), "%%", parentGroup)));
         
-        addBody(new UsersListSection().filterByGroup(group));
+        addBody(new UsersListSection(_("Direct users")).filterByGroup(group));
     }
 
     @Override
