@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2012 BonitaSoft S.A.
+ * 
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,19 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.organization.group.view;
-
+package org.bonitasoft.web.toolkit.client.data.item.attribute.reader;
 
 /**
- * @author Julien Mege
+ * Read an attribute and return defaultValue if attribute is empty
+ * 
+ * @author Colin PUY
  */
-public class GroupQuickDetailsAdminPage extends GroupQuickDetailsPage {
+public class DefaultValueAttributeReader extends AttributeReader {
 
-    public static final String TOKEN = "groupquickdetailsadmin";
-
-    @Override
-    public String defineToken() {
-        return TOKEN;
+    public DefaultValueAttributeReader(String attributeToRead, String defaultValue) {
+        super(attributeToRead);
+        setDefaultValue(defaultValue);
     }
-
 }
