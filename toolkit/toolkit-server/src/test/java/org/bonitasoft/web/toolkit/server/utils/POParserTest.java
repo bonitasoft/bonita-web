@@ -34,7 +34,7 @@ public class POParserTest {
 
     @Before
     public void setUp() {
-        i18n = POParser.parse(new File("src/test/resources/en.po"));
+        i18n = POParser.parse(new File("src/test/resources/test.po"));
     }
 
     @Test
