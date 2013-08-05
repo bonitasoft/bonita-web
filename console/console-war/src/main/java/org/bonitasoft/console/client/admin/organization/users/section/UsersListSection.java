@@ -58,4 +58,9 @@ public class UsersListSection extends Section {
         usersTable.addHiddenFilter(UserItem.FILTER_ROLE_ID, role.getId().toString());
         return this;
     }
+    
+    public UsersListSection setNbLinesByPage(int nbLines) {
+        usersTable.setNbLinesByPage(nbLines);
+        return this;
+    }
 }

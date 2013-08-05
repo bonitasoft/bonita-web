@@ -85,7 +85,7 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
 
     @Override
     protected void buildBody(final GroupItem group) {
-        addBody(new UsersListSection(_("Direct users")).filterByGroup(group));
+        addBody(new UsersListSection(_("Direct users")).filterByGroup(group).setNbLinesByPage(5));
         addBody(new SubGroupSection(group));
     }
 
