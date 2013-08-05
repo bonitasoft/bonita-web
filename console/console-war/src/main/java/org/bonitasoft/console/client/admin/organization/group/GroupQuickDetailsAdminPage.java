@@ -27,10 +27,9 @@ import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DefaultValueAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
-import org.bonitasoft.web.toolkit.client.ui.component.Definition;
-import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
@@ -63,35 +62,29 @@ public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final GroupItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
+        metadatas.add(parentGroup());
         metadatas.add(creationDate());
         metadatas.add(lastUpdateDate());
         return metadatas;
     }
 
     protected ItemDetailsMetadata creationDate() {
-        return new ItemDetailsMetadata(
-                new DateAttributeReader(GroupItem.ATTRIBUTE_CREATION_DATE),
+        return new ItemDetailsMetadata(new DateAttributeReader(GroupItem.ATTRIBUTE_CREATION_DATE),
                 _("Creation date"), _("The date of the group creation"));
     }
 
     protected ItemDetailsMetadata lastUpdateDate() {
-        return new ItemDetailsMetadata(
-                new DateAttributeReader(GroupItem.ATTRIBUTE_LAST_UPDATE_DATE),
-                _("Last update"), _("The date of the last update of the user"));
+        return new ItemDetailsMetadata(new DateAttributeReader(GroupItem.ATTRIBUTE_LAST_UPDATE_DATE),
+                _("Last update"), _("The date of the last update of the group"));
+    }
+    
+    private ItemDetailsMetadata parentGroup() {
+        return new ItemDetailsMetadata(new DefaultValueAttributeReader(GroupItem.ATTRIBUTE_PARENT_PATH, _("N/A")),
+                _("Parent group"), _("The group parent path"));
     }
 
     @Override
     protected void buildBody(final GroupItem group) {
-        final String nbOfUser = group.getAttributeValue(GroupItem.COUNTER_NUMBER_OF_USERS);
-        String parentGroup = group.getParentPath();
-        if (StringUtil.isBlank(parentGroup)) {
-            parentGroup = _("N/A");
-        }
-
-        addBody(new Section(_("Technical details"))
-                .addBody(new Definition(_("Number of direct users: "), "%%", nbOfUser))
-                .addBody(new Definition(_("Parent group: "), "%%", parentGroup)));
-        
         addBody(new UsersListSection(_("Direct users")).filterByGroup(group));
         addBody(new SubGroupSection(group));
     }
