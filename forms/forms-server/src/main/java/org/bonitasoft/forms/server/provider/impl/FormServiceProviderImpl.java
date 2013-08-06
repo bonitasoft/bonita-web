@@ -303,17 +303,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
             throw new NoCredentialsInSessionException(message);
         }
-        final String currentProductVersion = FormBuilderImpl.PRODUCT_VERSION;
-        if (productVersion != null) {
-            if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0])
-                    || migrationProductVersion != null && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
-                final String message = "The migration product version not identical with current product version.";
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, message);
-                }
-                throw new MigrationProductVersionNotIdenticalException(message);
-            }
-        }
+        // No migration to perform in 6.1 since the forms.xml model didn't change between 6.0 and 6.1
+        // if the model changes in a later version, restore this check and provide the migration scripts in the distribution 
+//        final String currentProductVersion = FormBuilderImpl.PRODUCT_VERSION;
+//        if (productVersion != null) {
+//            if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0])
+//                    || migrationProductVersion != null && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
+//                final String message = "The migration product version not identical with current product version.";
+//                if (LOGGER.isLoggable(Level.WARNING)) {
+//                    LOGGER.log(Level.WARNING, message);
+//                }
+//                throw new MigrationProductVersionNotIdenticalException(message);
+//            }
+//        }
         if (permissions != null) {
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
             final APISession session = getAPISessionFromContext(context);
