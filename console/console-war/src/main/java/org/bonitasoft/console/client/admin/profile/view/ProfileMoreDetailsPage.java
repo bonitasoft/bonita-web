@@ -10,14 +10,17 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
+import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
@@ -56,7 +59,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     @Override
     protected void defineTitle(final ProfileItem item) {
         setTitle(_(item.getName()));
-        // addDescription(StringUtil.isBlank(item.getDescription()) ? _("No description.") : item.getDescription());
+        addDescription(StringUtil.isBlank(item.getDescription()) ? _("No description.") : _(item.getDescription()));
     }
 
     @Override

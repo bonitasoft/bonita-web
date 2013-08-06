@@ -10,9 +10,10 @@ import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
-import org.bonitasoft.console.client.admin.organization.group.view.AddGroupPage;
-import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
-import org.bonitasoft.console.client.admin.organization.group.view.GroupQuickDetailsAdminPage;
+import org.bonitasoft.console.client.admin.organization.group.AddGroupPage;
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.group.GroupQuickDetailsAdminPage;
+import org.bonitasoft.console.client.admin.organization.group.UpdateGroupPage;
 import org.bonitasoft.console.client.admin.organization.role.AddRolePage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleQuickDetailsPage;
@@ -142,6 +143,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new UpdateRolePage();
         } else if (AddGroupPage.TOKEN.equals(token)) {
             return new AddGroupPage();
+        } else if (UpdateGroupPage.TOKEN.equals(token)) {
+            return new UpdateGroupPage();
         } else if (ListProcessActorUserPage.TOKEN.equals(token)) {
             return new ListProcessActorUserPage();
         } else if (ListProcessActorGroupPage.TOKEN.equals(token)) {

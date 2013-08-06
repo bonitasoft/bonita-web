@@ -93,6 +93,36 @@
 	// main menu
 	//-------------------------------------------------------------------------
 	#menu{
+		>div >ul.dropdownmenu.notCustom >li{
+			 &.current, &.current:hover {
+				a{
+					&.tasklistinguser{
+						.bg(@header-menu-link-tasksSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
+					}
+					&.caselistinguser{
+						.bg(@header-menu-link-casesSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
+					}
+					&.processlistinguser{
+						.bg(@header-menu-link-appsSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
+					}
+				}
+			}
+			a{
+				&.tasklistinguser{
+					.bg(@header-menu-link-tasks-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
+				}
+				&.caselistinguser{
+					.bg(@header-menu-link-cases-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
+				}
+				&.processlistinguser{
+					.bg(@header-menu-link-apps-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
+				}
+			}
+		}
+	}
+	
+	
+	#menu{
 		font-family: @header-menu-font; 
 		.fontSize(@header-menu-fontSize);
 		.height(@header-menu-height);
@@ -120,15 +150,7 @@
 						a{
 							border: none;
 							color: @header-menu-link-textColorHover;
-							&.tasklistinguser{
-								.bg(@header-menu-link-tasksSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
-							}
-							&.caselistinguser{
-								.bg(@header-menu-link-casesSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
-							}
-							&.processlistinguser{
-								.bg(@header-menu-link-appsSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
-							}
+							
 							border: none !important;
 							&:after, &:before{
 								display: none;
@@ -189,15 +211,6 @@
 						color: @header-menu-link-textColor;
 						text-align: @header-menu-link-textAlign;
 						padding: @header-menu-link-padding;
-						&.tasklistinguser{
-							.bg(@header-menu-link-tasks-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
-						}
-						&.caselistinguser{
-							.bg(@header-menu-link-cases-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
-						}
-						&.processlistinguser{
-							.bg(@header-menu-link-apps-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
-						}
 					}
 					ul{
 						margin-top: @header-menu-submenu-marginTop;

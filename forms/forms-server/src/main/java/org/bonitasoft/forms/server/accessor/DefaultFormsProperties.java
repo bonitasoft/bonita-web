@@ -206,7 +206,7 @@ public class DefaultFormsProperties {
         }
     }
 
-    public String getUserXPURL() {
+    public String getPortalURL() {
         return this.defaultProperties.getProperty("forms.user-xp.url");
     }
 

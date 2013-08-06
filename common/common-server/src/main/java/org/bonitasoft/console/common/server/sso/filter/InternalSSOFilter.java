@@ -37,7 +37,7 @@ import org.bonitasoft.engine.session.APISession;
 /**
  * @author Yongtao Guo
  */
-public class SSOFilter implements Filter {
+public class InternalSSOFilter implements Filter {
 
     /**
      * the URL param for the encrypted credentials
@@ -57,7 +57,7 @@ public class SSOFilter implements Filter {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(SSOFilter.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(InternalSSOFilter.class.getName());
 
     /**
      * (non-Javadoc)

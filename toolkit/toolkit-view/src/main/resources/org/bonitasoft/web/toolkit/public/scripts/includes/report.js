@@ -28,17 +28,21 @@ function removeReportStyle(){
 }
 function reportDateRangePicker(localeDateFormat, prefix){
 	$(".ui-daterangepickercontain").remove();
-	$('#'+prefix+'from, #'+prefix+'to').daterangepicker({
-		presetRanges: localeRange,
-		presets: localePresets,
-		dateFormat: localeDateFormat, 
-		constrainDates: true,
-		onClose: function() {
-			$(".ui-daterangepickercontain").remove();
-			 setTimeout(function(){$('#report-form').submit();},500);
-		}
-	
-	}).addClass("dateRangePickers");
+	try{
+		$('#'+prefix+'from, #'+prefix+'to').daterangepicker({
+			presetRanges: localeRange,
+			presets: localePresets,
+			dateFormat: localeDateFormat, 
+			constrainDates: true,
+			onClose: function() {
+				$(".ui-daterangepickercontain").remove();
+				 setTimeout(function(){$('#report-form').submit();},500);
+			}
+		
+		}).addClass("dateRangePickers");
+	} catch(err){
+		
+	}
 	$("#report-form select").attr("onchange", "refreshReport(this.form, \""+localeDateFormat+"\", \""+prefix+"\")");
 }
 
@@ -77,22 +81,30 @@ function refreshReport(e, localeDateFormat, prefix){
 	
 	var urlRefresh = reportForm.attr("action");
 	
-	var toDate = $('#'+prefix+'to', reportForm);
-	var fromDate = $('#'+prefix+'from', reportForm);
-	
-	var toDateVal = toDate.val();
-	var fromDateVal = fromDate.val();
-	
-	var toDateObj =  Date.parseExact(toDateVal, parseLocale);
-	var fromDateObj = Date.parseExact(fromDateVal, parseLocale);
-	
-	fromDate.val(fromDateObj.getTime());// 00:00:00
-	toDate.val(toDateObj.getTime()+(24*3600*1000)-1000);// 23:59:59
+	try{
+		var toDate = $('#'+prefix+'to', reportForm);
+		var fromDate = $('#'+prefix+'from', reportForm);
+		
+		var toDateVal = toDate.val();
+		var fromDateVal = fromDate.val();
+		
+		var toDateObj =  Date.parseExact(toDateVal, parseLocale);
+		var fromDateObj = Date.parseExact(fromDateVal, parseLocale);
+		
+		fromDate.val(fromDateObj.getTime());// 00:00:00
+		toDate.val(toDateObj.getTime()+(24*3600*1000)-1000);// 23:59:59
+	} catch(err){
+		
+	}
 	
 	var params = reportForm.serialize();
 	
-	toDate.val(toDateVal);
-	fromDate.val(fromDateVal);
+	try{
+		toDate.val(toDateVal);
+		fromDate.val(fromDateVal);
+	} catch(err){
+		
+	}
 	
 	$.ajax({
 		beforeSend: function() {

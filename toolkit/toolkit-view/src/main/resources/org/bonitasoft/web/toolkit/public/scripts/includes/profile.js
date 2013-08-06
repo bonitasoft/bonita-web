@@ -16,11 +16,11 @@ $(function() {
 					}
 					
 				});
-				var tablePannels = tablePannel.parent();
-				tablesPannelWidth += tablePannel.width();
 				var addButton = $("#btn-addprofileentry");
+				var tablePannels = tablePannel.parent();
+				tablesPannelWidth +=tablePannel.width();
 				var addButtonWidth = $("#btn-addprofileentry").outerWidth(true);
-				tablePannels.css("width", (tablesPannelWidth+addButtonWidth)+"px");
+				tablePannels.css("width", (tablesPannelWidth+addButtonWidth*2)+"px");
 				tablePannels.parent().sortable({
 					cursor: "e-resize",
 					items: ".tablePannel",
@@ -35,9 +35,14 @@ $(function() {
 					}
 				});
 			}
+			
 		}
 	});
 });
+//JSNI method
+function initMenuWidth(){
+	tablesPannelWidth = 0;
+}
 var initialDomFolderIndex;
 var initialDomPageIndex;
 var tablesPannelWidth = 0;

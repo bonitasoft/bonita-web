@@ -22,8 +22,8 @@
 	</filter>
 	<!-- SSO filter -->
 	<filter>
-		<filter-name>SSOFilter</filter-name>
-		<filter-class>org.bonitasoft.console.common.server.sso.filter.SSOFilter</filter-class>
+		<filter-name>InternalSSOFilter</filter-name>
+		<filter-class>org.bonitasoft.console.common.server.sso.filter.InternalSSOFilter</filter-class>
 	</filter>
 	<!-- Cache Filter -->
 	<filter>
@@ -95,11 +95,11 @@
 		<url-pattern>/API/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>SSOFilter</filter-name>
+		<filter-name>InternalSSOFilter</filter-name>
 		<url-pattern>/portal/BonitaConsole.html</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>SSOFilter</filter-name>
+		<filter-name>InternalSSOFilter</filter-name>
 		<url-pattern>/portal/homepage</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

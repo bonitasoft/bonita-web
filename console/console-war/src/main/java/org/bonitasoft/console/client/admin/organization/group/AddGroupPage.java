@@ -14,39 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.organization.group.action;
+package org.bonitasoft.console.client.admin.organization.group;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
-
-import com.google.gwt.user.client.Window;
+import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 
 /**
- * @author Gai Cuisha
+ * @author Julien Mege
  * 
  */
-public class AddGroupFormAction extends AddItemFormAction<GroupItem> {
+public class AddGroupPage extends Page {
 
-    /**
-     * Default Constructor.
-     * 
-     * @param itemDefinition
-     */
-    public AddGroupFormAction(final ItemDefinition itemDefinition) {
-        super(itemDefinition);
+    public static final String TOKEN = "addgroup";
+
+    @Override
+    public void defineTitle() {
+        this.setTitle(_("Create a group"));
     }
 
     @Override
-    public void execute() {
-        final String groupName = this.getParameter(new JsId(GroupItem.ATTRIBUTE_NAME));
-        if (groupName == null || groupName.isEmpty()) {
-            Window.alert(_("Enter the name of this group"));
-        } else {
-            super.execute();
-        }
+    public void buildView() {
+        addBody(addGroupForm());
+    }
+
+    private Form addGroupForm() {
+        return new EditGroupForm()
+            .addButton(new JsId("create"), _("Create"), _("Create this group"), new AddItemFormAction<GroupItem>(GroupDefinition.get()))
+            .addCancelButton();
+    }
+
+    @Override
+    public String defineToken() {
+        return TOKEN;
     }
 }
