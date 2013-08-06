@@ -128,7 +128,7 @@
 						}
 					}
 				}
-				p.addProfileEntry, p.resetMenuButton {
+				p.addProfileEntry, p.addProfileEntryDisabled {
 					clear: both;
 					padding: @profileMoreDetails-linkEditor-padding;
 					color: @header-menu-link-textColorHover;
@@ -138,6 +138,11 @@
 					text-align: left;
 					.borderRadiusBottom(@defaultRadius);
 					background: @profileMoreDetails-linkEditor-bg;
+				}
+				p.addProfileEntryDisabled{
+					color: @header-menu-link-disabled-color;
+					pointer-events: none;
+   					cursor: default;
 				}
 			}
 		}
