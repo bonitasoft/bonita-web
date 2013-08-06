@@ -33,7 +33,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("grouplistingadmin", _("manage groups"), "", _("Groups")));
         pages.add(new BonitaPageItem("rolelistingadmin", _("manage roles"), "", _("Roles")));
         pages.add(new BonitaPageItem("importexportorganization", _("import/export organization"), "", _("Import/Export")));
-        pages.add(new BonitaPageItem("profilelisting", _("user privilage settings"), "", _("User rights")));
+        pages.add(new BonitaPageItem("profilelisting", _("user privilege settings"), "", _("User rights")));
         pages.add(new BonitaPageItem("reportlistingadminext", _("Monitoring"), "", _("Analytics")));
     }
 
