@@ -125,6 +125,7 @@ class ConfirmationPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
         formsTemplateUtils.insertInElement(applicationHTMLPanel, CONFIRM_MESSAGE_ELEMENT_ID, confirmMessage);
         final TodoListTaskWidget taskListWidget = new TodoListTaskWidget(applicationHTMLPanel, elementId, getCurrentPageHTMLPanel(), formId, urlContext);
         pageHTMLPanel.add(taskListWidget, CONFIRM_TODOLIST_ELEMENT_ID);
+        formsTemplateUtils.hideLoading();
         if (onloadAttributeValue != null) {
             formsTemplateUtils.javascriptEval(onloadAttributeValue);
         }

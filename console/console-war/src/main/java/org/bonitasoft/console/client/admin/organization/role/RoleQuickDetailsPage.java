@@ -71,8 +71,8 @@ public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
     }
 
     @Override
-    protected void buildBody(RoleItem item) {
-        addBody(new UsersListSection(item));
+    protected void buildBody(RoleItem role) {
+        addBody(new UsersListSection(_("Users")).filterByRole(role));
     }
 
     @Override
