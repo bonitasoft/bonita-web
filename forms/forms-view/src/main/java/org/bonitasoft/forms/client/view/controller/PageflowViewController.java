@@ -276,6 +276,7 @@ public class PageflowViewController {
     }
 
     protected void addStartProcessInstanceContainer(final FlowPanel buttonContainer) {
+        domUtils.hideLoading();
         if (applicationHTMLPanel != null) {
             applicationHTMLPanel.add(buttonContainer, DOMUtils.DEFAULT_FORM_ELEMENT_ID);
         } else {

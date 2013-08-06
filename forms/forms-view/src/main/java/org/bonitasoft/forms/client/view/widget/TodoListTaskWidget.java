@@ -191,17 +191,18 @@ public class TodoListTaskWidget extends Composite {
     private Label createTaskLink(final String nextTaskName, final FormURLComponents nextFormURL) {
         Label link = new Label(nextTaskName);
         link.addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
-                redirectToNextTaskForm(nextFormURL);               
+                redirectToNextTaskForm(nextFormURL);
             }
-        });     
+        });
         link.setStyleName(AVAILABLE_TASK_LINK_CSS_CLASS);
         return link;
     }
 
     private void redirectToNextTaskForm(final FormURLComponents nextFormURL) {
-        // RPC call to figure out if the session is still active 
+        // RPC call to figure out if the session is still active
         getFormService().getLoggedInUser(new AsyncCallback<User>() {
 
             @Override
@@ -216,13 +217,14 @@ public class TodoListTaskWidget extends Composite {
                 } catch (SessionTimeoutException e) {
                     handleSessionTimeout(nextFormURL);
                 } catch (Throwable e) {
-                    GWT.log(e.getMessage(),e);
+                    GWT.log(e.getMessage(), e);
                 }
-              
-            }});
+
+            }
+        });
 
     }
-    
+
     /**
      * @param nextFormURL
      */
@@ -242,12 +244,13 @@ public class TodoListTaskWidget extends Composite {
             final String hash = urlUtils.getFormRedirectionHash(urlContext);
             History.newItem(hash);
         }
+        DOMUtils.getInstance().displayLoading();
     }
-    
+
     protected void handleSessionTimeout(final FormURLComponents nextFormURL) {
         DOMUtils domUtils = DOMUtils.getInstance();
         String url = urlUtils.removeURLparameters(Window.Location.getHref());
-        if(!domUtils.isPageInFrame()) {
+        if (!domUtils.isPageInFrame()) {
             url += "?redirectUrl=" + URL.encodeQueryString(getUrlToNextTaskForm(nextFormURL));
         }
         urlUtils.parentFrameRedirect(url);
@@ -262,16 +265,16 @@ public class TodoListTaskWidget extends Composite {
         changeUrlContextSafely(nextFormURL.getUrlContext());
         urlContext.put(URLUtils.ASSIGN_TASK, true);
 
-        String applicationURL = nextFormURL.getApplicationURL();      
+        String applicationURL = nextFormURL.getApplicationURL();
         if (applicationURL != null) {
-            applicationURL = GWT.getModuleBaseURL() + applicationURL; 
-        }else{
+            applicationURL = GWT.getModuleBaseURL() + applicationURL;
+        } else {
             applicationURL = urlUtils.removeURLparameters(Window.Location.getHref());
         }
-        
+
         return urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
     }
-        
+
     private void changeUrlContextSafely(final Map<String, Object> urlContextMap) {
         if (urlContextMap != null) {
             urlContext.clear();
