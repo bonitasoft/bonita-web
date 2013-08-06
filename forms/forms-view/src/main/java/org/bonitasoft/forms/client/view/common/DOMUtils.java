@@ -571,4 +571,28 @@ public class DOMUtils {
         return "Microsoft Internet Explorer".equals(Window.Navigator.getAppName());
     }
 
+    /**
+     * Hide loading
+     */
+    public void hideLoading() {
+        final Element loadingElement = DOM.getElementById("loading");
+        if (loadingElement != null) {
+            loadingElement.getStyle().setProperty("display", "none");
+        }
+    }
+
+    /**
+     * Display a message to let the user know that the data are not yet
+     * available.
+     */
+    public void displayLoading() {
+        // Show the loading message and display the GUI.
+        Element theElement;
+        theElement = DOM.getElementById("loading");
+        if (theElement != null) {
+            theElement.getStyle().setProperty("display", "block");
+            theElement.getStyle().setProperty("zIndex", "999");
+        }
+    }
+
 }

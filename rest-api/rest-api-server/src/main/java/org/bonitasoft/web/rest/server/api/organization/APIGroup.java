@@ -22,9 +22,6 @@ import java.util.Map;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCriterion;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
@@ -40,7 +37,6 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
@@ -58,8 +54,8 @@ public class APIGroup extends ConsoleAPI<GroupItem> implements
     private static final String GROUPS_ICON_FOLDER_PATH = "/" + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME;
 
     @Override
-    protected ItemDefinition defineItemDefinition() {
-        return Definitions.get(GroupDefinition.TOKEN);
+    protected ItemDefinition<GroupItem> defineItemDefinition() {
+        return GroupDefinition.get();
     }
 
     @Override
@@ -95,7 +91,7 @@ public class APIGroup extends ConsoleAPI<GroupItem> implements
 
     @Override
     protected void fillDeploys(final GroupItem item, final List<String> deploys) {
-        if (deploys.contains(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
+        if (deploys.contains(GroupItem.ATTRIBUTE_PARENT_GROUP_ID) && item.getParentPath() != null && !item.getParentPath().isEmpty()) {
             try {
                 Group parentGroup = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroupByPath(item.getParentPath());
                 item.setParentGroupId(String.valueOf(parentGroup.getId()));

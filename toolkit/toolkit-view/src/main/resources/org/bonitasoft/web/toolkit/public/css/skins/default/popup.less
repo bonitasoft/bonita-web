@@ -11,6 +11,7 @@
 		background: @popup-bgColor;
 		background-clip: content-box;
 		position: relative;
+        min-width: 500px;
 		.boxShadow(@popup-shadowX, @popup-shadowY, @popup-shadowBlur, @popup-shadowColor);
 		display: inline-block;
 		max-width: @popup-maxWidth;
@@ -89,8 +90,13 @@
                 .pages_added .pager{
                     display: none;
                 }
-                .pages_added .table .thead .tr .th_2{
-                    padding-right: 30px;
+                .pages_added .table .thead .tr .th_1{
+                    width: 180px;
+                    min-width: 100px;
+                }
+                .pages_to_add .table .thead .tr .th_2{
+                    width: 120px;
+                    min-width: 80px;
                 }
             }    
         }
