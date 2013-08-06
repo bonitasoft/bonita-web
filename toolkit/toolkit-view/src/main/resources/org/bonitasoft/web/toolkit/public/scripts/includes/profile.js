@@ -16,8 +16,12 @@ $(function() {
 					}
 					
 				});
-				
-				tablePannel.parent().sortable({
+				var addButton = $("#btn-addprofileentry");
+				var tablePannels = tablePannel.parent();
+				tablesPannelWidth += tablePannel.width();
+				var addButtonWidth = $("#btn-addprofileentry").outerWidth(true);
+				tablePannels.css("width", (tablesPannelWidth+addButtonWidth*2)+"px");
+				tablePannels.parent().sortable({
 					cursor: "e-resize",
 					items: ".tablePannel",
 					update: function(event,ui){
@@ -31,8 +35,10 @@ $(function() {
 					}
 				});
 			}
+			
 		}
 	});
 });
 var initialDomFolderIndex;
 var initialDomPageIndex;
+var tablesPannelWidth = $(".tablePannels").width();

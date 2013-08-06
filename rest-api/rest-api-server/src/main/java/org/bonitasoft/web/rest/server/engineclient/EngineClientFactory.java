@@ -57,4 +57,9 @@ public class EngineClientFactory {
     public ActivityEngineClient createActivityEngineClient(APISession session) {
         return new ActivityEngineClient(apiAccessor.getProcessAPI(session));
     }
+    
+    public GroupEngineClient createGroupEngineClient(APISession session) {
+        return new GroupEngineClient(apiAccessor.getProcessAPI(session));
+    }
+    
 }

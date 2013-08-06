@@ -21,7 +21,13 @@ import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCriterion;
+import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -89,6 +95,18 @@ public class APIGroup extends ConsoleAPI<GroupItem> implements
 
     @Override
     protected void fillDeploys(final GroupItem item, final List<String> deploys) {
+        if (deploys.contains(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
+            try {
+                Group parentGroup = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroupByPath(item.getParentPath());
+                item.setParentGroupId(String.valueOf(parentGroup.getId()));
+            } catch (GroupNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

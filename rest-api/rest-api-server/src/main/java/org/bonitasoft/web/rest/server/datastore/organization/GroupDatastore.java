@@ -125,7 +125,15 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
             updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_PATH));
         }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
-            updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID));
+            try {
+                Group group = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(Long.parseLong(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)));
+                updater.updateParentPath(group.getPath());
+            } catch (GroupNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (final Exception e) {
+                throw new APIException(e);
+            }
         }
         if (attributes.containsKey(GroupItem.ATTRIBUTE_ICON)) {
             updater.updateIconPath(attributes.get(GroupItem.ATTRIBUTE_ICON));
@@ -183,7 +191,6 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         groupItem.setLastUpdateDate(group.getLastUpdate());
         groupItem.setName(group.getName());
         groupItem.setParentPath(group.getParentPath());
-        groupItem.setParentGroupId(group.getPath());
         return groupItem;
     }
 
@@ -210,11 +217,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         if (!isBlank(item.getParentGroupId())) {
             try {
                 Group group = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(Long.parseLong(item.getParentGroupId()));
-                if (group.getParentPath() == null) {
-                    builder.setParentPath("/"+group.getName());
-                } else {
-                    builder.setParentPath(group.getParentPath()+"/"+group.getName());
-                }
+                builder.setParentPath(group.getPath());
             } catch (GroupNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -222,7 +225,6 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
                 throw new APIException(e);
             }
         }
-
         return builder;
     }
 }

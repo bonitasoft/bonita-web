@@ -9,9 +9,11 @@ import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTask
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPage;
+import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.console.client.admin.organization.group.view.AddGroupPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.group.view.GroupQuickDetailsAdminPage;
+import org.bonitasoft.console.client.admin.organization.group.view.UpdateGroupPage;
 import org.bonitasoft.console.client.admin.organization.role.AddRolePage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleQuickDetailsPage;
@@ -105,7 +107,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // return new ListGroupPage();
         } else if (DisplayCaseFormPage.TOKEN.equals(token)) {
             return new DisplayCaseFormPage();
-        
+        } else if (OrganizationImportAndExportPage.TOKEN.equals(token)) {
+            return new OrganizationImportAndExportPage();
         } else if (ListMembershipPage.TOKEN.equals(token)) {
             return new ListMembershipPage();
         } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token)) {
@@ -140,6 +143,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new UpdateRolePage();
         } else if (AddGroupPage.TOKEN.equals(token)) {
             return new AddGroupPage();
+        } else if (UpdateGroupPage.TOKEN.equals(token)) {
+            return new UpdateGroupPage();
         } else if (ListProcessActorUserPage.TOKEN.equals(token)) {
             return new ListProcessActorUserPage();
         } else if (ListProcessActorGroupPage.TOKEN.equals(token)) {
