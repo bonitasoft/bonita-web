@@ -220,7 +220,7 @@ public class TestFormBuilderImpl extends FormsTestCase {
         inputStream.close();
         final XMLApplicationConfigDefAccessorImpl applicationConfigDefAccessor = new XMLApplicationConfigDefAccessorImpl(1, document);
         Assert.assertEquals("resources/application/BonitaApplication.html", applicationConfigDefAccessor.getHomePage());
-        Assert.assertEquals("6.0", applicationConfigDefAccessor.getMigrationProductVersion());
+        Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, applicationConfigDefAccessor.getMigrationProductVersion());
         Assert.assertEquals("process label with accents éèà", applicationConfigDefAccessor.getApplicationLabelExpression().getContent());
         Assert.assertEquals("/process-template.html", applicationConfigDefAccessor.getApplicationLayout());
         Assert.assertEquals("/process-error-template.html", applicationConfigDefAccessor.getApplicationErrorTemplate());
