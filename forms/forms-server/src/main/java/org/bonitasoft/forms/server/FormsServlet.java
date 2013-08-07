@@ -604,10 +604,18 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     protected void setFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
             final Map<String, Serializable> transientDataContext, final Map<String, Object> context) {
 
-        final HttpServletRequest request = getThreadLocalRequest();
-        final HttpSession session = request.getSession();
-        formServiceProvider.storeFormTransientDataContext(session, TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, transientDataContext, context);
+        formServiceProvider.storeFormTransientDataContext(getSession(), 
+        		TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, 
+        		transientDataContext, 
+        		context);
     }
+
+    /*
+     * Code smell. Shouldn't be protected but avoid npe during tests. 
+     */
+	protected HttpSession getSession() {
+		return getThreadLocalRequest().getSession();
+	}
 
     /**
      * Get the transient data context for the current page flow displayed from the session

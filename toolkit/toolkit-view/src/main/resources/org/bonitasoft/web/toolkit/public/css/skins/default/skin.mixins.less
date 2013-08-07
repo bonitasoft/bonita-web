@@ -35,7 +35,7 @@
 	.stroke(1px, lighten(@txtColor, 100% - lightness(@txtColor)));
 }
 
-.pagerButton(@btnColor, @btnImage){
+.pagerButton(@btnColor, @btnImage, @btnImageDisable){
 	outline-color: lighten(@btnColor, 10%);
 	border: @button-pager-border;
 	.hideText();
@@ -47,10 +47,9 @@
 		border: @button-pager-borderHover;
 	}
 	&.disable {
-		border: @button-pager-border;
-		&:hover{
-			cursor: not-allowed;
-		}
+		border: @button-pager-border-disable;
+		.bg( @btnImageDisable, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
+		cursor: default;
 	}
 	+ a{
 		margin: @button-pager-marginBetween;
