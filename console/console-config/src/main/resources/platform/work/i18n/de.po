@@ -1,7 +1,7 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-60\n"
-"POT-Creation-Date: 2013-06-18 18:28+0100\n"
-"PO-Revision-Date: 2013-06-27 10:40-0400\n"
+"POT-Creation-Date: 2013-08-01 11:17+0100\n"
+"PO-Revision-Date: 2013-08-05 10:39-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,68 +19,145 @@ msgstr "Project-Id-Version: bonita-bpm-60\n"
 "X-Poedit-SearchPath-3: toolkit\n"
 "X-Poedit-SearchPath-4: rest-api\n"
 
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/login/impl/oauth/LinkedInConsumer.java:57
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/widget/ConverterToComponents.java:348
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/widget/ConverterToComponents.java:355
-msgid "id"
-msgstr "ID"
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:32
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:36
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:64
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
+msgid "Cases"
+msgstr "Fälle"
 
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/BonitaReportEngineContext.java:72
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/BonitaReportEngineContext.java:76
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/BonitaSystem.java:77
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportMoreDetailsAdminPage.java:123
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/chart/SerieChart.java:326
-msgid "mm/dd/yy"
-msgstr "dd/mm/yyyy"
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:73
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:111
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:96
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:61
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:180
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
+msgid "Apps"
+msgstr "Apps"
 
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/BonitaSystem.java:59
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/utils/DateFormat.java:55
-msgid "MM/dd/yyyy"
-msgstr "dd/MM/yyyy"
-
-#: console/console-reporting/src/main/java/org/bonitasoft/reporting/utils/widget/ConverterToComponents.java:346
-msgid "label"
-msgstr "Label"
-
-#: console/console-server-impl/src/main/java/org/bonitasoft/console/server/service/OrganizationImportService.java:55
-msgid "Can't import organization. Please check that your file is well-formed"
-msgstr "Organisation kann nicht importiert werden. Bitte überprüfen Sie, ob Ihre Datei richtig ist"
-
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:36
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:44
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:118
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:120
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:119
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:98
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:82
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:36
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
 msgid "Tasks"
 msgstr "Aufgaben"
 
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:42
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:35
+msgid "Directory"
+msgstr "Verzeichnis"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:44
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:95
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
+msgid "Users"
+msgstr "Benutzer"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:46
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupListingPage.java:92
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
+msgid "Groups"
+msgstr "Gruppen"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:48
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:55
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:92
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
+msgid "Roles"
+msgstr "Rollen"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:50
+msgid "Organization"
+msgstr "Organisation"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
+msgid "Apps management"
+msgstr "App-Verwaltung"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:54
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:45
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:33
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:56
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
+msgid "User rights"
+msgstr "Benutzerrechte"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:37
+msgid "Analytics"
+msgstr "Analytics"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:60
+msgid "Reports"
+msgstr "Berichte"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
+#: console/console-war/src/main/webapp/login.jsp:121
+#: console/console-war/src/main/webapp/login.jsp:124
+#: console/console-war/target/console-war-6.1.0-SNAPSHOT/login.jsp:121
+#: console/console-war/target/console-war-6.1.0-SNAPSHOT/login.jsp:124
+msgid "User"
+msgstr "Benutzer"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:25
+msgid "The user can view and perform tasks and can start a new case of an app."
+msgstr "Der Benutzer kann Aufgaben ausführen und anzeigen und eine neue App-Instanz starten."
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:30
+msgid "Administrator"
+msgstr "Administrator"
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:32
+msgid "The administrator can install an app, manage the organization, and handle some errors (for example, by replaying a task)."
+msgstr "Der Administrator kann eine App installieren,  die Organisation verwalten und einige Fehler (z. B. durch die Wiederholung einer Aufgabe) bearbeiten."
+
+#: common/common-server/src/main/java/org/bonitasoft/console/common/server/login/impl/oauth/LinkedInConsumer.java:57
+msgid "id"
+msgstr "ID"
+
+#: console/console-server/src/main/java/org/bonitasoft/console/server/service/OrganizationImportService.java:55
+msgid "Can't import organization. Please check that your file is well-formed"
+msgstr "Organisation kann nicht importiert werden. Bitte überprüfen Sie, ob Ihre Datei richtig ist"
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:63
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:147
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:125
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:138
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:127
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:141
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:32
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/EditCaseVariablePopUp.java:78
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:66
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:67
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceSectionSnippet.java:56
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:141
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:161
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:186
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportListingAdminPage.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/AddGroupPage.java:57
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupListingPage.java:81
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:57
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:93
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:71
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:179
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:33
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:89
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:178
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:51
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:55
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CreateCategoryAndAddToProcessPage.java:72
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/EditProfilePage.java:72
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:99
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:98
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/theme/view/ListThemePage.java:70
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:34
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:112
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:127
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:145
@@ -99,16 +176,15 @@ msgstr "Archivierungsdatum"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:65
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:150
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:127
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:142
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportListingAdminPage.java:79
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:129
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:145
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/AddGroupPage.java:62
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:60
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:187
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:195
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:35
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:186
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:194
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CreateCategoryAndAddToProcessPage.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/EditProfilePage.java:73
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:100
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:99
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:115
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:129
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:148
@@ -118,8 +194,8 @@ msgstr "Beschreibung"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:67
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:151
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:128
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:143
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:131
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:146
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:130
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:150
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedTasksSection.java:62
@@ -128,8 +204,8 @@ msgstr "Name der Aufgabe:"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:69
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:154
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:130
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:145
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:133
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:148
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:132
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:152
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedTasksSection.java:63
@@ -229,7 +305,7 @@ msgid "Update date"
 msgstr "Aktualisierungsdatum"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:149
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:128
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:136
 msgid "Executed by"
 msgstr "Ausgeführt von"
 
@@ -250,26 +326,25 @@ msgid "Case id: "
 msgstr "Fall-ID: "
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedCaseMoreDetailsAdminPage.java:94
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:69
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:71
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:92
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:93
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:94
 msgid "Overview"
 msgstr "Übersicht"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedCaseMoreDetailsAdminPage.java:94
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:69
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:71
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:92
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:93
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:94
 msgid "Display the case form"
 msgstr "Anzeigen des Fall-Formulars"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedCaseQuickDetailsAdminPage.java:76
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskQuickDetailsAdminPage.java:77
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:59
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskQuickDetailsAdminPage.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileQuickDetailsPage.java:55
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/component/button/MoreButton.java:32
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:77
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:55
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:54
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:87
 msgid "More"
 msgstr "Mehr"
@@ -281,135 +356,112 @@ msgstr "Mehr"
 msgid "Getting more information about the specified case"
 msgstr "Mehr Informationen über den spezifischen Fall erhalten"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:57
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:56
 msgid "Opened"
 msgstr "Geöffnet"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:57
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:56
 msgid "Cases "
 msgstr "Fälle "
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:68
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:67
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:93
 msgid "Archived"
 msgstr "Archiviert"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:68
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:67
 msgid "Cases started or worked on by someone"
 msgstr "Fälle, mit denen begonnen wurde oder an denen gearbeitet wird"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:74
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:111
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:88
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:61
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:180
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:34
-msgid "Apps"
-msgstr "Apps"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:99
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:98
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:136
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:182
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportListingAdminPage.java:76
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupListingPage.java:48
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:65
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:71
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:50
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:50
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:49
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:109
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:111
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:126
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:528
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:546
 msgid "All"
 msgstr "Alle"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:101
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:60
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:115
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:127
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:107
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/DeleteActorMemberPage.java:59
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/DeleteActorMemberPage.java:60
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/view/DeleteItemPage.java:93
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:575
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:581
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableActionSet.java:280
-msgid "Delete"
-msgstr "Löschen"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:100
+#, fuzzy
+msgid "Delete selected cases"
+msgstr "Löschen der ausgewählten Fälle"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:101
-msgid "Delete case"
-msgstr "Fall löschen"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:100
+#, fuzzy
+msgid "case"
+msgstr "Fall"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:99
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:67
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:100
+#, fuzzy
+msgid "cases"
+msgstr "Fälle"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:101
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:68
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceSectionSnippet.java:57
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:119
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:157
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:144
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:159
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:182
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:181
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:70
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:82
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:72
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:90
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:73
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:72
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/MyCasesSnippet.java:74
 msgid "State"
 msgstr "Status"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:99
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:72
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:101
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:73
 msgid "The current state of the case"
 msgstr "Aktueller Status des Falls"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:103
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:105
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:79
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:68
 msgid "Last updated"
 msgstr "Letztes Update"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:103
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:105
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:80
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:68
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:69
 msgid "The date while the case has been last updated"
 msgstr "Datum des letzten Fall-Updates"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:126
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:128
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:144
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:163
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:135
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:143
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:128
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:144
 msgid "Due date"
 msgstr "Fällig am"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:129
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:132
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:131
 msgid "Due in:"
 msgstr "Fällig in:"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:139
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:142
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:189
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:156
 msgid "Performed date"
 msgstr "Ausführungsdatum"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:140
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:143
 msgid "Preformed by"
 msgstr "Ausgeführt von"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:144
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeDateFormatter.java:40
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:67
-msgid "Performed on:"
-msgstr "Ausgeführt am:"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:147
-msgid "Preformed by:"
-msgstr "Ausgeführt von:"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:159
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:162
 #, fuzzy
 msgid "Closed tasks"
 msgstr "Beendete Aufgaben"
@@ -430,6 +482,7 @@ msgstr "Wert"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:43
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/EditCaseVariablePopUp.java:89
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:60
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/view/EditItemPage.java:47
 msgid "Edit"
 msgstr "Bearbeiten"
@@ -462,7 +515,7 @@ msgstr "Typ der Variable"
 msgid "Edit this value"
 msgstr "Diesen Wert editieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:46
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:47
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceSectionSnippet.java:46
 msgid "Connectors"
 msgstr "Konnektoren"
@@ -509,7 +562,7 @@ msgstr "Ausgeführt"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:140
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:160
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:185
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:104
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:112
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:142
 msgid "Priority"
 msgstr "Priorität"
@@ -518,7 +571,7 @@ msgstr "Priorität"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:162
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:187
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:69
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:68
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:145
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:157
 msgid "App"
@@ -528,11 +581,12 @@ msgstr "App"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:164
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:188
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupListingPage.java:80
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:92
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:88
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:41
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:82
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddGroupToProfileMemberPage.java:95
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddRoleToProfileMemberPage.java:96
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:98
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:97
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/component/snippet/CommentSectionSnippet.java:139
 msgid "Icon"
 msgstr "Symbol"
@@ -567,15 +621,17 @@ msgstr "Diese Aufgabe überspringen"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:165
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupQuickDetailsPage.java:70
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:52
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:51
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/AbstractProfileDetailsPage.java:40
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:62
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileQuickDetailsPage.java:43
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/reader/DescriptionAttributeReader.java:31
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/reader/DescriptionAttributeReader.java:37
 msgid "No description."
 msgstr "Keine Beschreibung."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskQuickDetailsAdminPage.java:77
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:55
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskQuickDetailsAdminPage.java:78
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:54
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:42
 msgid "Show more details about this task"
 msgstr "Weitere Details über diese Aufgabe anzeigen"
@@ -588,67 +644,68 @@ msgstr "Bereit seit %task_last_update%"
 msgid "Failed on %task_last_update% by %executed_by%"
 msgstr "Fehlgeschlagen am %task_last_update% von %executed_by%"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportListingAdminPage.java:58
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportListingAdminPage.java:90
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:60
-msgid "Reports"
-msgstr "Berichte"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:49
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
+msgid "Import / Export"
+msgstr "Import / Export"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportListingAdminPage.java:58
-msgid "Display a summary of all reports"
-msgstr "Zeigt eine Übersicht aller Berichte"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:59
+msgid "Import an existing organization"
+msgstr "Vorhandene Organisation importieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportMoreDetailsAdminPage.java:79
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:104
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/button/ButtonBack.java:35
-msgid "Back"
-msgstr "Zurück"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:68
+msgid "This will import a file containing your whole organization data."
+msgstr "Importiert eine Datei mit den Daten der gesamten Organisation."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportMoreDetailsAdminPage.java:80
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:104
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/button/ButtonBack.java:35
-msgid "Go back to previous view"
-msgstr "Zurück zur vorherigen Ansicht"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:69
+msgid "Be careful, your organization will be merged with existing data."
+msgstr "Achtung, bitte beachten Sie, dass Ihre Organisation mit vorhandenen Daten zusammengeführt wird."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:60
-msgid "Show more details about this report"
-msgstr "Weitere Details zu diesem Bericht anzeigen"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:70
+msgid "In case of merge, the priority is given to the file"
+msgstr "Im Konfliktfall wird die importierte Datei bevorzugt."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:79
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:193
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:69
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:61
-msgid "Installed on"
-msgstr "Installiert am"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:80
-msgid "The date when this report has been installed"
-msgstr "Das Installationsdatum dieses Berichts"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:86
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/theme/view/ListThemePage.java:72
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:79
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:64
-msgid "Installed by"
-msgstr "Installiert von"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:87
-msgid "Name of the user who install this report"
-msgstr "Name des Benutzers, der diesen Bericht installiert hat"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:105
-msgid "Report's screenshot"
-msgstr "Screenshot für Berichte"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:108
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:109
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:78
 #, fuzzy
-msgid "Go to more details report view"
-msgstr "Gehen Sie zur detaillierten Seite der Berichte"
+msgid "Organisation file"
+msgstr "Organisationsdatei"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/monitoring/report/view/ReportQuickDetailsAdminPage.java:115
-msgid "Screen shot"
-msgstr "Screenshot"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:78
+msgid "Please choose a file to import"
+msgstr "Bitte wählen Sie eine zu importierende Datei"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:82
+#, fuzzy
+msgid "Please select a file first"
+msgstr "Bitte wählen Sie zuerst eine Datei"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:85
+#, fuzzy
+msgid "Import"
+msgstr "Importieren"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:90
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:106
+msgid "Export the installed organization"
+msgstr "Installierte Organisation exportieren"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:99
+msgid "This will export a file containing your whole organization data. "
+msgstr "Importiert eine Datei mit den Daten der gesamten Organisation. "
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:100
+msgid "Data included are : Users, groups and roles"
+msgstr "Enthaltene Daten: Benutzer, Gruppen und Rollen"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:106
+#, fuzzy
+msgid "Export"
+msgstr "Exportieren"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:114
+#, fuzzy
+msgid "Warning:"
+msgstr "Warnung:"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/action/AddGroupFormAction.java:47
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/AddGroupPage.java:57
@@ -665,7 +722,7 @@ msgid "Select an avatar for this group"
 msgstr "Wählen Sie einen Avatar für diese Gruppe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/AddGroupPage.java:58
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:58
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:34
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:59
 msgid "Display name"
 msgstr "Name"
@@ -687,7 +744,7 @@ msgid "Enter the description of this group"
 msgstr "Beschreibung für diese Gruppe eingeben"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/AddGroupPage.java:65
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:62
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/AddRolePage.java:48
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:62
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:75
 msgid "Create"
@@ -711,8 +768,8 @@ msgstr "Alle Gruppen"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupListingPage.java:82
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupQuickDetailsPage.java:57
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:94
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:76
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:90
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:43
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:69
 msgid "Creation date"
 msgstr "Erstellt am"
@@ -729,18 +786,12 @@ msgstr "Gruppe"
 msgid "groups"
 msgstr "Gruppen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupListingPage.java:92
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:46
-msgid "Groups"
-msgstr "Gruppen"
-
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupQuickDetailsPage.java:57
 msgid "The date of the group creation"
 msgstr "Das Erstellungsdatum der Gruppe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/view/GroupQuickDetailsPage.java:63
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:81
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:52
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:61
 msgid "Last update"
 msgstr "Letztes Update"
@@ -762,46 +813,45 @@ msgstr "Anzahl der Benutzer: "
 msgid "Parent group: "
 msgstr "Übergeordnete Gruppe: "
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/action/AddRoleFormAction.java:47
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:57
-msgid "Enter the name of this role"
-msgstr "Geben Sie den Namen dieser Rolle ein"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:40
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:59
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/AddRolePage.java:38
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:64
 msgid "Create a role"
 msgstr "Rolle erstellen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:56
-msgid "Select an avatar for this role"
-msgstr "Wählen Sie einen Avatar für diese Rolle"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:59
-msgid "Enter the display name of this role"
-msgstr "Geben Sie den Anzeigenamen dieser Rolle ein"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:60
-msgid "Enter the description of this role"
-msgstr "Geben Sie die Beschreibung dieser Rolle ein"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/AddRolePage.java:62
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/AddRolePage.java:48
 msgid "Create this role"
 msgstr "Diese Rolle erstellen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:59
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:32
+msgid "Select an avatar for this role"
+msgstr "Wählen Sie einen Avatar für diese Rolle"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:33
+msgid "Enter the name of this role"
+msgstr "Geben Sie den Namen dieser Rolle ein"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:34
+msgid "Enter the display name of this role"
+msgstr "Geben Sie den Anzeigenamen dieser Rolle ein"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:35
+msgid "Enter the description of this role"
+msgstr "Geben Sie die Beschreibung dieser Rolle ein"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:64
 msgid "Opens a popup to create a role"
 msgstr "Öffnet ein Pop-up zum Erstellen einer Rolle"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:65
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:71
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:83
 msgid "All Roles"
 msgstr "Alle Rollen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:96
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:92
 msgid "Delete selected roles"
 msgstr "Gewählte Rollen löschen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:96
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:92
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AddMembershipPage.java:81
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserQuickDetailsPage.java:101
@@ -809,50 +859,38 @@ msgstr "Gewählte Rollen löschen"
 msgid "Role"
 msgstr "Rolle"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:96
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleListingPage.java:101
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:48
-msgid "Roles"
-msgstr "Rollen"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:60
+#, fuzzy
+msgid "Edit a role"
+msgstr "Bearbeiten Sie eine Rolle"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:71
-msgid "Name of the role"
-msgstr "Name der Rolle"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:50
+#, fuzzy
+msgid "Update a role"
+msgstr "Aktualisieren einer Rolle"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:76
-msgid "The date of the creation of the group"
-msgstr "Erstellungsdatum der Gruppe"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:62
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:255
+msgid "Save"
+msgstr "Speichern"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:81
-msgid "The date of the last update of the group"
-msgstr "Das Datum des letzten Updates der Gruppe"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:90
-msgid "Technical informations"
-msgstr "Technische Informationen"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/view/RoleQuickDetailsPage.java:95
-msgid "Number of users : "
-msgstr "Anzahl der Benutzer: "
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:62
+#, fuzzy
+msgid "Update this role"
+msgstr "Aktualisieren Sie diese Rolle"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:56
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:45
 msgid "Passwords don't match"
 msgstr "Passworte stimmen nicht überein"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:50
-msgid "All Users"
-msgstr "Alle Benutzer"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:33
+#, fuzzy
+msgid "List of users"
+msgstr "Liste der Benutzer"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:77
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:93
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:146
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:155
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:92
-msgid "Enabled"
-msgstr "Aktiviert"
-
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:42
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:55
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:177
@@ -860,12 +898,25 @@ msgstr "Aktiviert"
 msgid "First name"
 msgstr "Vorname"
 
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:43
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:84
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:56
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:178
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:51
 msgid "Last name"
 msgstr "Nachname"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:50
+msgid "All Users"
+msgstr "Alle Benutzer"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:145
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:154
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:91
+msgid "Enabled"
+msgstr "Aktiviert"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:85
 msgid "Last login date"
@@ -876,12 +927,6 @@ msgstr "Letztes Login"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:115
 msgid "Job title"
 msgstr "Stellenbezeichnung"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:95
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:35
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:44
-msgid "Users"
-msgstr "Benutzer"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AddMembershipPage.java:60
 msgid "Add a membership to %user%"
@@ -933,6 +978,19 @@ msgstr "Löschen bestätigen?"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:59
 msgid "Are you sure you want to delete this membership ?"
 msgstr "Möchten Sie diese Zugehörigkeit wirklich löschen?"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:60
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:115
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:127
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:107
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/DeleteActorMemberPage.java:59
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/DeleteActorMemberPage.java:60
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/view/DeleteItemPage.java:93
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:611
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:617
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableActionSet.java:280
+msgid "Delete"
+msgstr "Löschen"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:60
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:115
@@ -1040,11 +1098,6 @@ msgstr "Avatar"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:76
 msgid "Select an avatar for this user"
 msgstr "Wählen Sie einen Avatar für diesen Benutzer"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:255
-msgid "Save"
-msgstr "Speichern"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
 msgid "Save this user modifications"
@@ -1276,92 +1329,92 @@ msgstr "%rolename% von %groupname%"
 msgid "Delete the app %app_name%?"
 msgstr "Löschen der App %app_name%?"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:78
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
 msgid "Install new apps"
 msgstr "Apps installieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:78
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
 msgid "Opens a popup to install an app"
 msgstr "Öffnet ein Pop-up zum Installieren einer App"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:93
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
 msgid "Enabled Apps"
 msgstr "Aktivierte Apps"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:98
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:161
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:97
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:160
 msgid "Disabled"
 msgstr "Deaktiviert"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:98
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:97
 msgid "Disabled Apps"
 msgstr "Deaktivierte Apps"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:103
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:81
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:87
 msgid "Resolved"
 msgstr "Gelöst"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:103
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:102
 msgid "Resolved Apps"
 msgstr "Apps geklärt"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:109
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:108
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:81
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:87
 msgid "Unresolved"
 msgstr "Ungelöst"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:109
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:108
 msgid "Unresolved Apps"
 msgstr "Apps nicht geklärt"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:125
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:124
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:44
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:97
 msgid "Categories"
 msgstr "Kategorien"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:149
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:148
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:128
 msgid "Disable"
 msgstr "Deaktivieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:149
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:148
 msgid "Disable selected apps"
 msgstr "Ausgewählte Apps deaktivieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:124
 msgid "Enable"
 msgstr "Aktivieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
 msgid "Enable selected apps"
 msgstr "Ausgewählte Apps aktivieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:165
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:173
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:172
 msgid "Delete selected apps"
 msgstr "Ausgewählte Apps löschen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:165
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:173
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:172
 #, fuzzy
 msgid "app"
 msgstr "App"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:165
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:173
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:172
 msgid "apps"
 msgstr "Apps"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:170
 msgid "Deletable"
 msgstr "Löschbar"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:180
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:179
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/connector/ConnectorSection.java:56
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:37
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/system/view/PopupAboutPage.java:40
@@ -1369,6 +1422,12 @@ msgstr "Löschbar"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:60
 msgid "Version"
 msgstr "Version"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:192
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:69
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:61
+msgid "Installed on"
+msgstr "Installiert am"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:107
 msgid "Delete this app"
@@ -1411,39 +1470,25 @@ msgstr "Wählen Sie einen Benutzer für das Starten der App %app_name% %app_vers
 msgid "The openned case will be marked as started by him."
 msgstr "Der geöffnete Fall wird von diesem Benutzer gekennzeichnet und gestartet."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:58
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:49
 msgid "Install an app"
 msgstr "App installieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:68
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:59
 msgid "Browse your computer and select the business archive containing the app definition to install."
 msgstr "Durchsuchen Sie Ihren Computer und wählen Sie das Geschäftsarchiv, das die zu installierende App-Definition enthält."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:71
-msgid "A business archive has a .bar extension"
-msgstr "Ein Business-Archiv hat eine .bar-Erweiterung"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:66
 msgid "Install"
 msgstr "Installieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:66
 msgid "Install a app"
 msgstr "App installieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:103
-msgid "The archive file can't be read. This can be due to a corrupted file or a file created with another version of Bonita."
-msgstr "Die Archivdatei kann nicht gelesen werden. Dies kann auf eine beschädigte Datei zurückzuführen sein oder darauf, dass eine Datei mit einer anderen Version von Bonita erstellt wurde."
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:106
-msgid "This app has already been installed."
-msgstr "Diese App wurde schon installiert."
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:36
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:64
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:32
-msgid "Cases"
-msgstr "Fälle"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:74
+msgid "A business archive has a .bar extension"
+msgstr "Ein Business-Archiv hat eine .bar-Erweiterung"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:50
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:118
@@ -1517,12 +1562,6 @@ msgstr "Entfernen bestätigen"
 msgid "Are you sure you want to remove category '%categoryName%' from app '%appName%' ?"
 msgstr "Möchten Sie die Kategorie '%categoryName%' in der App '%appName%'  wirklich entfernen?"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:45
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:33
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:54
-msgid "Configuration"
-msgstr "Konfiguration"
-
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:82
 msgid "Actors: %ok_ko%"
 msgstr "Akteure: %ok_ko%"
@@ -1553,7 +1592,7 @@ msgstr "Benutzer(%nb_user%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:91
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:71
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:109
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:112
 msgid "Add a user"
 msgstr "Benutzer hinzufügen"
 
@@ -1563,7 +1602,7 @@ msgstr "Gruppe(%nb_group%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:97
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorGroupPage.java:69
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:142
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:145
 msgid "Add a group"
 msgstr "Gruppe hinzufügen"
 
@@ -1573,7 +1612,7 @@ msgstr "Rolle(%nb_role%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:103
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorRolePage.java:68
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:175
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:178
 msgid "Add a role"
 msgstr "Rolle hinzufügen"
 
@@ -1583,7 +1622,7 @@ msgstr "Zugehörigkeit(%nb_membership%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:109
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMembershipPage.java:53
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:208
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:211
 msgid "Add a membership"
 msgstr "Hinzufügen einer Zugehörigkeit"
 
@@ -1596,10 +1635,10 @@ msgid "add"
 msgstr "Hinzufügen"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:50
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:90
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:124
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:157
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:190
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:93
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:127
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:160
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:193
 msgid "Member"
 msgstr "Mitglied"
 
@@ -1748,41 +1787,41 @@ msgstr "Diesem Profil ausgewählte(n) Benutzer hinzufügen"
 msgid "%% Edit profile"
 msgstr "%% Profil editieren"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:50
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:49
 msgid "All Profiles"
 msgstr "Alle Profile"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:56
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ListProfilePage.java:55
 msgid "Manage profiles"
 msgstr "Profile verwalten"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:80
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:83
 msgid "Users mapping"
 msgstr "Benutzer-Mapping"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:102
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:129
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:162
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:195
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:105
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:165
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:198
 msgid "remove"
 msgstr "Entfernen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:102
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:129
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:162
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:195
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:105
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:165
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:198
 msgid "Delete this member"
 msgstr "Mitglied löschen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:118
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:121
 msgid "Groups mapping"
 msgstr "Gruppen-Mapping"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:151
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:154
 msgid "Roles mapping"
 msgstr "Rollen-Mapping"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:184
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:187
 msgid "Memberships mapping"
 msgstr "Zugehörigkeits-Mapping"
 
@@ -1822,6 +1861,12 @@ msgstr "Look-and-Feel"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/theme/view/ListThemePage.java:71
 msgid "Author"
 msgstr "Autor"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/theme/view/ListThemePage.java:72
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:79
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:64
+msgid "Installed by"
+msgstr "Installiert von"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/theme/view/ListThemePage.java:73
 msgid "Installed date"
@@ -1881,8 +1926,23 @@ msgstr "Post-Zeit"
 msgid "Aborted on:"
 msgstr "Abgebrochen am:"
 
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeDateFormatter.java:40
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:67
+msgid "Performed on:"
+msgstr "Ausgeführt am:"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:38
+#, fuzzy
+msgid "Aborted by:"
+msgstr "Abgebrochen durch:"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:40
+#, fuzzy
+msgid "Performed by:"
+msgstr "Durchgeführt von:"
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:41
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:95
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:103
 msgid "Apps version"
 msgstr "Apps-Version"
 
@@ -1890,66 +1950,71 @@ msgstr "Apps-Version"
 msgid "The state of the case"
 msgstr "Der Zustand des Falls"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:82
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:90
 msgid "The state of the task"
 msgstr "Der Zustand der Aufgabe"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:89
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:97
 msgid "The app responsible of the creation of this task"
 msgstr "Die App, aus der die Aufgabe stammt"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:96
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:104
 msgid "Version of the app"
 msgstr "Version der App"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:100
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:108
 msgid "Case"
 msgstr "Fall"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:100
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:108
 msgid "The id of the related case"
 msgstr "Der ID des Falls"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:104
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:112
 msgid "The priority of the task"
 msgstr "Die Priorität der Aufgabe"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:111
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:118
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:109
+msgid "Unassigned"
+msgstr "Nicht zugewiesen"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:119
 msgid "Assigned to"
 msgstr "Zugewiesen zu"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:112
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:120
 msgid "The user name of the user to which the task is assigned"
 msgstr "Der Benutzername des Benutzers, dem die Aufgabe zugewiesen ist"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:116
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:121
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:124
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:129
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:83
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:482
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:500
 msgid "No data"
 msgstr "Keine Daten"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:117
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:125
 msgid "Last update date"
 msgstr "Letztes Update-Datum"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:117
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:125
 msgid "The date of the last modification"
 msgstr "Das Datum der letzten Änderung"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:122
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:130
 msgid "Assigned date"
 msgstr "Zugewiesenes Datum"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:123
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:131
 msgid "The date when while the task has been assigned"
 msgstr "Das Datum der Zuweisung der Aufgabe"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:129
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:137
 msgid "Name of the user which last executed this task"
 msgstr "Name des Benutzers, der diese Aufgabe zuletzt ausgeführt hat"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:136
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:144
 msgid "The date while the task must be finished"
 msgstr "Das Datum, an dem die Aufgabe beendet sein muss"
 
@@ -1991,6 +2056,18 @@ msgstr "Das Datum, an dem diese App installiert wurde"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:79
 msgid "The user that has uploaded this app"
 msgstr "Der Benutzer, der diese App hochgeladen hat"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:34
+msgid "Name of the role"
+msgstr "Name der Rolle"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:43
+msgid "The date of the creation of the group"
+msgstr "Erstellungsdatum der Gruppe"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:52
+msgid "The date of the last update of the group"
+msgstr "Das Datum des letzten Updates der Gruppe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:43
 msgid "First name of the user"
@@ -2086,19 +2163,19 @@ msgstr "Benkutzer wählen"
 msgid "Select a user by typing a part of his name."
 msgstr "Wählen Sie einen Benutzer, indem Sie einen Teil des Namens eingeben."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:70
+#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:73
 msgid "system"
 msgstr "System"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:71
+#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:74
 msgid "System"
 msgstr "System"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:80
 msgid "deleted"
 msgstr "gelöscht"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:78
+#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:81
 msgid "Deleted"
 msgstr "Gelöscht"
 
@@ -2147,27 +2224,21 @@ msgstr "Warnung: Sie sind als technischer Benutzer eingeloggt. Dieser Benutzer h
 msgid "Select profile"
 msgstr "Wählen Sie ein Profil"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:34
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:42
-msgid "Directory"
-msgstr "Verzeichnis"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:35
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
 msgid "Show the user list"
 msgstr "Anzeigen der Benutzerliste"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
 msgid "Show the group list"
 msgstr "Anzeigen der Gruppenliste"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
 msgid "Show the role list"
 msgstr "Anzeigen der Rollenliste"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:56
-msgid "User rights"
-msgstr "Benutzerrechte"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
+msgid "Import or export data"
+msgstr "Daten importieren oder exportieren"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
 msgid "Show all profiles of portal"
@@ -2216,7 +2287,17 @@ msgstr "App-Name"
 msgid "Start date"
 msgstr "Startdatum"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:70
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:105
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/button/ButtonBack.java:35
+msgid "Back"
+msgstr "Zurück"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:105
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/button/ButtonBack.java:35
+msgid "Go back to previous view"
+msgstr "Zurück zur vorherigen Ansicht"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:73
 msgid "Display a case form of app %app_name%"
 msgstr "Anzeigen eines Fallformulars der App %app_name%"
 
@@ -2300,10 +2381,6 @@ msgstr "Weisen Sie mir diese Aufgabe zu. Andere zugelassene Benutzer sehen sie n
 msgid "Available"
 msgstr "Verfügbar"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:109
-msgid "Unassigned"
-msgstr "Nicht zugewiesen"
-
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:120
 msgid "Assigned to me"
 msgstr "Mir zugewiesen"
@@ -2356,7 +2433,7 @@ msgstr "Ausgeblendet"
 msgid "Display tasks I'm ignoring"
 msgstr "Maskierte Aufgaben anzeigen"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/CatchAllExceptionHandler.java:42
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/CatchAllExceptionHandler.java:43
 msgid "The application encountered an error."
 msgstr "In der Anwendung ist ein Fehler aufgetreten."
 
@@ -2527,11 +2604,15 @@ msgstr "Dieser %item_name% wird endgültig gelöscht."
 msgid "mm/dd/yyyy"
 msgstr "dd/mm/yyyy"
 
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/chart/SerieChart.java:326
+msgid "mm/dd/yy"
+msgstr "dd/mm/yyyy"
+
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/chart/SerieChart.java:364
 msgid "mm/dd/yyyy hh:MM:ss"
 msgstr "dd/mm/yyyy hh:MM:ss"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/AbstractForm.java:654
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/AbstractForm.java:653
 msgid "this field"
 msgstr "Dieses Feld"
 
@@ -2643,7 +2724,7 @@ msgstr "%resource_name% löschen"
 msgid "Confirm deletion"
 msgstr "Löschen bestätigen"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:631
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:667
 msgid "actions"
 msgstr "Aktionen"
 
@@ -2659,11 +2740,11 @@ msgstr "Die Elemente, die Sie versuchen anzuzeigen, können aufgrund eines Serve
 msgid "The elements you try to display can't be retrieved due to a connection problem."
 msgstr "Die Elemente, die Sie versuchen anzuzeigen, können aufgrund eines Verbindungsproblems nicht aufgerufen werden."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTreeTable.java:140
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTreeTable.java:142
 msgid "Move this element before the previous one"
 msgstr "Verschieben Sie dieses Element vor das vorhergehende"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTreeTable.java:157
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTreeTable.java:159
 msgid "Move this element after the next one"
 msgstr "Verschieben Sie dieses Element hinter das nächste"
 
@@ -2679,12 +2760,12 @@ msgstr "%start_result% - %end_result% von %total_results%"
 msgid "Go to page %pagenumber%"
 msgstr "Gehe zu Seite %pagenumber%"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:420
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:744
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:438
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:630
 msgid "Search"
 msgstr "Suche"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:420
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:438
 msgid "Type to search"
 msgstr "Typ suchen"
 
@@ -2758,33 +2839,38 @@ msgstr "Diese Aktion bestätigen"
 msgid "Cancel this action"
 msgstr "Diese Aktion abbrechen"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/SupportCodePage.java:42
-msgid "The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support and give them the following support code."
-msgstr "In der Applikation ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.\nWenn der Fehler erneut auftritt, kontaktieren Sie bitte den Bonitasoft Support und geben Sie dort den folgenden Support-Code an."
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/UnexpectedErrorPage.java:40
+#, fuzzy
+msgid "The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support"
+msgstr "In der Anwendung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.\nWenn der Fehler weiterhin auftritt, kontaktieren Sie bitte den Bonitasoft Support"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:698
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:584
 msgid "ascending"
 msgstr "aufsteigend"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:705
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:591
 msgid "descending"
 msgstr "absteigend"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:728
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:614
 msgid "Sort by"
 msgstr "Sortieren nach"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:743
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:629
 msgid "Enter the text to search for"
 msgstr "Geben Sie den Suchtext ein"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:743
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:629
 msgid "Search..."
 msgstr "Suche..."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:744
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:630
 msgid "Update this page using the defined serach query"
 msgstr "Aktualisieren dieser Seite  durch Benutzen der definierten Abfrage"
+
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/utils/DateFormat.java:55
+msgid "MM/dd/yyyy"
+msgstr "dd/MM/yyyy"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/utils/DateFormat.java:56
 msgid "MM/dd/yyyy 'at' HH:mm"
@@ -2826,23 +2912,23 @@ msgstr "Vor %time%"
 msgid "in %time%"
 msgstr "in %time%"
 
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/api/model/bpm/flownode/PriorityModifier.java:41
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:41
 msgid "Highest"
 msgstr "Höchste"
 
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/api/model/bpm/flownode/PriorityModifier.java:43
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:43
 msgid "High"
 msgstr "Hoch"
 
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/api/model/bpm/flownode/PriorityModifier.java:45
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:45
 msgid "Normal"
 msgstr "Normal"
 
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/api/model/bpm/flownode/PriorityModifier.java:47
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:47
 msgid "Low"
 msgstr "Niedrig"
 
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/api/model/bpm/flownode/PriorityModifier.java:49
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:49
 msgid "Lowest"
 msgstr "Niedrigste"
 
@@ -2875,30 +2961,30 @@ msgid "This category has already been added to this apps"
 msgstr "Diese Kategorie wurde der App hinzugefügt"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:38
-msgid "case_list"
+msgid "Case list"
 msgstr "Fall-Liste"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:39
-msgid "This report, display the list of cases available in the different status (open or closed) for a given period and/or apps. \nYou can access the portail, by clicking on the link in the below table."
-msgstr "Dieser Bericht zeigt die Liste der verfügbaren Fälle im jeweiligen Status (offen oder beendet) für einen gegebenen Zeitraum und/oder für eine App an."
+msgid "This report, display the list of cases available in the different status (open or closed) for a given period and/or apps. You can access the portail, by clicking on the link in the below table."
+msgstr "Dieser Bericht zeigt die Liste der verfügbaren Fälle im jeweiligen Status (offen oder beendet) für einen gegebenen Zeitraum und/oder für eine App an.\n"
 "Sie haben Zugriff aufs Portal, indem Sie den Link unten in der Tabelle anklicken."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:42
-msgid "case_avg_time"
+msgid "Case average time"
 msgstr "Durchschnittszeit für Fall-Lösung"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:43
-msgid "This report, display the average time to close a case. 2 data are available, 1 for the mean and one for the median for a given period and/or apps. \nYou can access the portal, by clicking on the link in the below table."
-msgstr "Dieser Bericht zeigt die Durchschnittszeit bis zum Beenden eines Falls an. 2 Daten sind verfügbar, 1 für den Durchschnitt und 1 für den Median, für einen gegebenen Zeitraum und/oder App."
+msgid "This report, display the average time to close a case. 2 data are available, 1 for the mean and one for the median for a given period and/or apps. You can access the portal, by clicking on the link in the below table."
+msgstr "Dieser Bericht zeigt die Durchschnittszeit bis zum Beenden eines Falls an. 2 Daten sind verfügbar, 1 für den Durchschnitt und 1 für den Median, für einen gegebenen Zeitraum und/oder App.\n"
 "Sie haben Zugriff aufs Portal, indem Sie den Link unten in der Tabelle anklicken."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:46
-msgid "task_list"
+msgid "Task list"
 msgstr "Aufgabenliste"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/monitoring/report/DefaultReports.java:47
-msgid "This report, display the list of human tasks available in the different status (opened, failed or closed) for a given period and/or apps. \nYou can access the portail, by clicking on the link in the below table."
-msgstr "Dieser Bericht zeigt die Liste der verfügbaren menschlichen Aufgaben im jeweiligen Status (offen, fehlgeschlagen oder beendet) für einen gegebenen Zeitraum und/oder für eine App an."
+msgid "This report, display the list of human tasks available in the different status (opened, failed or closed) for a given period and/or apps. You can access the portail, by clicking on the link in the below table."
+msgstr "Dieser Bericht zeigt die Liste der verfügbaren menschlichen Aufgaben im jeweiligen Status (offen, fehlgeschlagen oder beendet) für einen gegebenen Zeitraum und/oder für eine App an.\n"
 "Sie haben Zugriff aufs Portal, indem Sie den Link unten in der Tabelle anklicken."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/GroupDatastore.java:151
@@ -2917,37 +3003,65 @@ msgstr "Rolle kann nicht erstellt werden. Rolle '%roleName%' existiert schon"
 msgid "Can't create user. User '%userName%' already exists"
 msgstr "Benutzer kann nicht erstellt werden. Benutzer '%userName%' existiert schon"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:50
-msgid "Organization"
-msgstr "Organisation"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
+#, fuzzy
+msgid "visualize & do tasks"
+msgstr "Visualisieren & Aufgaben ausführen"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:52
-msgid "Apps management"
-msgstr "App-Verwaltung"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
+#, fuzzy
+msgid "manage tasks"
+msgstr "Verwalten von Aufgaben"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileEntriesI18N.java:58
-msgid "Analytics"
-msgstr "Analytics"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
+msgid "visualize cases"
+msgstr "Fälle visualisieren"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileTypesI18N.java:23
-#: console/console-war/src/main/webapp/login.jsp:121
-#: console/console-war/src/main/webapp/login.jsp:124
-#: console/console-war/target/console-war-6.1.0-SNAPSHOT/login.jsp:121
-#: console/console-war/target/console-war-6.1.0-SNAPSHOT/login.jsp:124
-msgid "User"
-msgstr "Benutzer"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
+#, fuzzy
+msgid "manage cases"
+msgstr "Verwalten von Fällen"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileTypesI18N.java:25
-msgid "The user can view and perform tasks and can start a new case of an app."
-msgstr "Der Benutzer kann Aufgaben ausführen und anzeigen und eine neue App-Instanz starten."
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
+#, fuzzy
+msgid "visualize & start apps"
+msgstr "Visualisieren & starten von Apps"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileTypesI18N.java:30
-msgid "Administrator"
-msgstr "Administrator"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
+#, fuzzy
+msgid "manage apps"
+msgstr "Apps verwalten"
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/entry/ProfileTypesI18N.java:32
-msgid "The administrator can install an app, manage the organization, and handle some errors (for example, by replaying a task)."
-msgstr "Der Administrator kann eine App installieren,  die Organisation verwalten und einige Fehler (z. B. durch die Wiederholung einer Aufgabe) bearbeiten."
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
+#, fuzzy
+msgid "manage users"
+msgstr "Verwalten von Benutzern"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
+#, fuzzy
+msgid "manage groups"
+msgstr "Verwalten von Gruppen"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
+#, fuzzy
+msgid "manage roles"
+msgstr "Verwalten von Rollen"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
+msgid "import/export organization"
+msgstr "Import/Export Organisation"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
+msgid "Import/Export"
+msgstr "Import/Export"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
+msgid "user privilage settings"
+msgstr "Einstellungen der Benutzerrechte"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:37
+msgid "Monitoring"
+msgstr "Monitoring"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:73
 msgid "Apps %appName% in version %version% already exists"
