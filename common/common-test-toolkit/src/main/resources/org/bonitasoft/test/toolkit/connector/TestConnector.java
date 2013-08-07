@@ -1,8 +1,8 @@
 package org.bonitasoft.test.toolkit.connector;
 
 import org.bonitasoft.engine.connector.AbstractConnector;
-import org.bonitasoft.engine.exception.ConnectorException;
-import org.bonitasoft.engine.exception.ConnectorValidationException;
+import org.bonitasoft.engine.connector.ConnectorException;
+import org.bonitasoft.engine.connector.ConnectorValidationException;
 
 /**
  * @author Colin PUY
