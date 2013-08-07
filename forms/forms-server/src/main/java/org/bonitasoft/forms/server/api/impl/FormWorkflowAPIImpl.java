@@ -408,9 +408,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             }
         } else {
             final ArchivedFlowNodeInstance archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(activityInstanceID);
-            if (isHumanTask(archivedFlowNodeInstance)) {
-                return ActivityEditState.NOT_EDITABLE;
-            }
             activityInstanceState = archivedFlowNodeInstance.getState();
         }
 
@@ -726,7 +723,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     }
 
     private boolean isHumanTask(final ArchivedFlowNodeInstance archivedActivityInstance) {
-        return !FlowNodeType.USER_TASK.equals(archivedActivityInstance.getType()) && !FlowNodeType.HUMAN_TASK.equals(archivedActivityInstance.getType());
+        return FlowNodeType.USER_TASK.equals(archivedActivityInstance.getType()) || FlowNodeType.MANUAL_TASK.equals(archivedActivityInstance.getType())
+                || FlowNodeType.HUMAN_TASK.equals(archivedActivityInstance.getType());
     }
 
     /**
