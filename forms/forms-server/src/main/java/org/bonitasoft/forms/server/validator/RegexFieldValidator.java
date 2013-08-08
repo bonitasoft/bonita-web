@@ -5,14 +5,14 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.forms.server.validator;
 
@@ -24,7 +24,7 @@ import org.bonitasoft.forms.client.model.FormFieldValue;
 
 /**
  * @author Anthony Birembaut
- *
+ * 
  */
 public class RegexFieldValidator extends AbstractFormValidator implements IFormFieldValidator {
 
@@ -33,16 +33,17 @@ public class RegexFieldValidator extends AbstractFormValidator implements IFormF
      */
     private static Logger LOGGER = Logger.getLogger(RegexFieldValidator.class.getName());
 
-
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean validate(final FormFieldValue fieldInput, final Locale locale) {
-        if (fieldInput.getValue() instanceof String) {
-            final String fieldValue = (String)fieldInput.getValue();
+
+        if (fieldInput.getValue() != null) {
+            final String fieldValue = fieldInput.getValue().toString();
             final String regex = getParameter().getContent();
             if (regex != null) {
-                if (fieldValue != null && fieldValue.matches(regex)) {
+                if (fieldValue.matches(regex)) {
                     return true;
                 }
             } else {
@@ -54,10 +55,11 @@ public class RegexFieldValidator extends AbstractFormValidator implements IFormF
         }
         return false;
     }
-    
+
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDisplayName() {
         return "Regex validator";
     }
