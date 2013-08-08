@@ -20,10 +20,12 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
+import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.form.UpdateItemFormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text;
 
 /**
  * @author Paul AMAR
@@ -58,6 +60,11 @@ public class UpdateGroupPage extends Page {
         form.addGroupFiller(groupId);
         form.addButton(new JsId("save"), _("Save"), _("Save this group changes"), new UpdateItemFormAction<GroupItem>(GroupDefinition.get()));
         form.addCancelButton();
+        
+        // disable name since we cannot update it beacause sub group parent path is not updated.
+        // see WEB-2889
+        ((Text) form.getEntry(new JsId(RoleItem.ATTRIBUTE_NAME))).setEnabled(false);
+        
         return form;
     }
 

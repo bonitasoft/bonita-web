@@ -77,6 +77,9 @@ public abstract class Input extends FormEntry {
         input.setAttribute("type", getInputType());
         input.setAttribute("name", getJsId().toString());
         input.setAttribute("title", this.tooltip);
+        if (!isEnabled()) {
+            input.setAttribute("disabled", "disabled");
+        }
         input.setId(uid);
         return input;
     }
