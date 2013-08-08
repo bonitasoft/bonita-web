@@ -25,6 +25,7 @@ import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 
@@ -55,6 +56,7 @@ public final class ChangeProfileAction extends Action {
 
     @Override
     public void execute() {
+        ViewController.showView(BlankPage.TOKEN);
         Loader.showLoader(Loader.POSITION.MAIN_VIEW);
 
         if (this.menu != null) {
