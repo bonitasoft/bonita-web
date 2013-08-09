@@ -1150,7 +1150,8 @@ public class FormPagesViewController {
                         }
                     }
                 }
-            } else if (isCurrentPageValid) {
+            }
+            if (isCurrentPageValid) {
                 if (!pageValidators.isEmpty()) {
                     // once the fields validation is over perform the page validation
                     cleanValidatorsMessages(pageValidators);
