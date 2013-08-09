@@ -18,7 +18,9 @@ package org.bonitasoft.console.client.user.cases.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
@@ -46,6 +48,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
 public class CaseListingPage extends ItemListingPage<CaseItem> implements PluginCase {
 
     public static final String TOKEN = "caselistinguser";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+    }
 
     protected static final String TABLE_CASES_ALL = "allcases";
 

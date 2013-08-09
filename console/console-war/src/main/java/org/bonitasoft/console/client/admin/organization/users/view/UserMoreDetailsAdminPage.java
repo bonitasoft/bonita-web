@@ -51,6 +51,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     public static final String TOKEN = "usermoredetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+    }
 
     public UserMoreDetailsAdminPage() {
         addClass(CssClass.MORE_DETAILS);
