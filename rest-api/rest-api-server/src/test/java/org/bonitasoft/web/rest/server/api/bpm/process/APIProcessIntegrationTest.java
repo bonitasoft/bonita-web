@@ -73,7 +73,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
     public void testUpdateProcessItem() throws Exception {
         final APIID processDefinitionId = APIID.makeAPIID(TestProcessFactory.getDefaultHumanTaskProcess()
                 .addActor(getInitiator())
-                .setEnable(true)
+                .enable()
                 .getId());
 
         // assert process is well enabled
@@ -121,7 +121,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
     public void testSearchProcessItemForUser() throws Exception {
         final APIID processDefinitionId = APIID.makeAPIID(TestProcessFactory.getDefaultHumanTaskProcess()
                 .addActor(getInitiator())
-                .setEnable(true)
+                .enable()
                 .getId());
 
         // Set the filters
