@@ -130,7 +130,7 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
         String result = api.getProductVersion(context);
         Assert.assertNotNull(result);
-        Assert.assertEquals("6.0", result);
+        Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, result);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
         String result = api.getMigrationProductVersion(formID, context);
         Assert.assertNotNull(result);
-        Assert.assertEquals("6.0", result);
+        Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, result);
     }
 
     @Test

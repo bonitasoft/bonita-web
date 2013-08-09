@@ -946,13 +946,15 @@ public class FormPagesViewController {
             formsServiceAsync.validateFormFields(formID, urlContext, validators, widgetValues, submitButtonId,
                     new FormFieldValidatorHandler(
                             actionAfterValidation, formPage.getPageValidators(), formPage.getPageValidatorsId()));
-        } else if (!pageValidators.isEmpty()) {
-            cleanValidatorsMessages(pageValidators);
-            formsServiceAsync.validateFormPage(formID, urlContext, formPage.getPageValidatorsId(), widgetValues, submitButtonId,
-                    new FormPageValidatorHandler(
-                            actionAfterValidation));
         } else if (isCurrentPageValid) {
-            submitForm(actionAfterValidation);
+            if (!pageValidators.isEmpty()) {
+                cleanValidatorsMessages(pageValidators);
+                formsServiceAsync.validateFormPage(formID, urlContext, formPage.getPageValidatorsId(), widgetValues, submitButtonId,
+                        new FormPageValidatorHandler(
+                                actionAfterValidation));
+            } else {
+                submitForm(actionAfterValidation);
+            }
         } else {
             resizeFrame();
             enableButton(pressedButton);
@@ -1148,16 +1150,17 @@ public class FormPagesViewController {
                         }
                     }
                 }
-            }
-            // once the fields validation is over perform the page validation
-            if (!pageValidators.isEmpty()) {
-                cleanValidatorsMessages(pageValidators);
-                final String submitButtonId = pressedButton.getElement().getParentElement().getParentElement().getId();
-                formsServiceAsync.validateFormPage(formID, urlContext,
-                        pageValidatorsId, widgetValues, submitButtonId, new FormPageValidatorHandler(
-                                actionAfterValidation));
             } else if (isCurrentPageValid) {
-                submitForm(actionAfterValidation);
+                if (!pageValidators.isEmpty()) {
+                    // once the fields validation is over perform the page validation
+                    cleanValidatorsMessages(pageValidators);
+                    final String submitButtonId = pressedButton.getElement().getParentElement().getParentElement().getId();
+                    formsServiceAsync.validateFormPage(formID, urlContext,
+                            pageValidatorsId, widgetValues, submitButtonId, new FormPageValidatorHandler(
+                                    actionAfterValidation));
+                } else {
+                    submitForm(actionAfterValidation);
+                }
             } else {
                 resizeFrame();
                 enableButton(pressedButton);
@@ -1211,13 +1214,10 @@ public class FormPagesViewController {
                         Window.alert("An element with id " + validatorId + " is missing from the page template.");
                     }
                 }
-            }
-            // action
-            if (isCurrentPageValid) {
-                submitForm(actionAfterValidation);
-            } else {
                 resizeFrame();
                 enableButton(pressedButton);
+            } else {
+                submitForm(actionAfterValidation);
             }
         }
 
