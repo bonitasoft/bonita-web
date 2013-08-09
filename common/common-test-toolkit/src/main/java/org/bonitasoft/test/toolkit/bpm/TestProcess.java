@@ -165,14 +165,6 @@ public class TestProcess {
         }
     }
 
-    public TestProcess enable() {
-        return setEnable(getSession(), true);
-    }
-
-    public TestProcess disable() {
-        return setEnable(getSession(), false);
-    }
-
     /**
      * Set process enablement
      * 
@@ -204,6 +196,14 @@ public class TestProcess {
         } catch (Exception e) {
             throw new TestToolkitException("Can't disable process <" + this.processDefinition.getId() + ">", e);
         }
+    }
+
+    public TestProcess setEnable(final TestUser initiator, final boolean enabled) {
+        return setEnable(initiator.getSession(), enabled);
+    }
+
+    public TestProcess setEnable(final boolean enabled) {
+        return setEnable(TestToolkitCtx.getInstance().getInitiator(), enabled);
     }
 
     /**

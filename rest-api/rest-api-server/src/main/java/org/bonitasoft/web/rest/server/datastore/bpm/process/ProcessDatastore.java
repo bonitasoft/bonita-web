@@ -138,7 +138,7 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
     @Override
     public void delete(final List<APIID> ids) {
         ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
-        engineClient.deleteDisabledProcesses(APIID.toLongList(ids));
+        engineClient.deleteProcesses(APIID.toLongList(ids));
     }
     
     @Override

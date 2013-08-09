@@ -29,7 +29,6 @@ import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
-import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
@@ -48,8 +47,6 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
  */
 public class ProcessEngineClient {
 
-    private static int DELETE_PROCESS_BUNCH_SIZE = 100;
-    
     protected ProcessAPI processAPI;
     
     public ProcessEngineClient(ProcessAPI processAPI) {
@@ -106,36 +103,12 @@ public class ProcessEngineClient {
         }
     }
     
-    public void deleteDisabledProcesses(List<Long> processIds) {
+    public void deleteProcesses(List<Long> processIds) {
         try {
-            for (Long id : processIds) {
-                deleteProcessInstancesByBunch(id, DELETE_PROCESS_BUNCH_SIZE);
-                deleteArchivedProcessInstancesByBunch(id, DELETE_PROCESS_BUNCH_SIZE);
-                processAPI.deleteProcessDefinition(id);
-            }
-        } catch (DeletionException e) {
+            processAPI.deleteProcesses(processIds);
+        } catch (Exception e) {
             throw new APIException("Error when deleting processe(s) " + processIds, e);
         }
-    }
-
-    /**
-     * Delete archived process instances by bunch for a given processId
-     */
-    public void deleteArchivedProcessInstancesByBunch(long processId, int bunchSize) throws DeletionException {
-        long numberOfDeletedArchivedProcessInstances = 0;
-        do {
-            numberOfDeletedArchivedProcessInstances = processAPI.deleteArchivedProcessInstances(processId, 0, bunchSize);
-        } while (numberOfDeletedArchivedProcessInstances >= bunchSize);
-    }
-
-    /**
-     * Delete process instances by bunch for a given processId
-     */
-    public void deleteProcessInstancesByBunch(long processId, int bunchSize) throws DeletionException {
-        long numberOfDeletedProcessInstances = 0;
-        do {
-            numberOfDeletedProcessInstances = processAPI.deleteProcessInstances(processId, 0, bunchSize);
-        } while (numberOfDeletedProcessInstances >= bunchSize);
     }
     
     public SearchResult<ProcessDeploymentInfo> searchProcessDefinitions(SearchOptions searchOptions) {

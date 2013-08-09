@@ -21,11 +21,7 @@ import org.bonitasoft.engine.bpm.flownode.ActivityStates;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -206,22 +202,6 @@ public class TestCase {
         return execute(TestToolkitCtx.getInstance().getInitiator());
     }
 
-    public void archive() throws ProcessInstanceNotFoundException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, InterruptedException {
-        TestUser user = TestToolkitCtx.getInstance().getInitiator();
-        APISession session = user.getSession();
-        try {
-            while(true) {
-                final TestHumanTask nextActivityInstance = getNextHumanTask(session);
-                if (nextActivityInstance != null) {
-                    nextActivityInstance.assignTo(user).execute(session);
-                }
-                Thread.sleep(SLEEP_TIME_MS);
-            }
-        } catch (NoActivityLeftException e) {
-            // no more activity, finished
-        }
-    }
-    
     // ///////////////////////////////////////////////////////////////////
     // / Comments
     // ///////////////////////////////////////////////////////////////////
