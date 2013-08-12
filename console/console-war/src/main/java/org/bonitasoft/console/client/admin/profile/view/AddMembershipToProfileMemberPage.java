@@ -33,7 +33,7 @@ public class AddMembershipToProfileMemberPage extends Page {
      * 
      */
     private static final String PARAMETER_PROFILE_ID = "profileId";
-
+    
     /**
      * the token of this page
      */
@@ -42,9 +42,9 @@ public class AddMembershipToProfileMemberPage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
     
     static {
-        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(ListProfilePage.TOKEN);
     }
-
+    
     public AddMembershipToProfileMemberPage() {
     }
 

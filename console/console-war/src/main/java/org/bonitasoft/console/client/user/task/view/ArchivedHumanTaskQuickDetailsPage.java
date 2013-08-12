@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.user.task.view;
 import static org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder.taskQuickDetailsMetadatas;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,7 +40,13 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
  */
 public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<ArchivedHumanTaskItem> implements PluginTask {
 
-    public static final String TOKEN = "archivedtaskquickdetails";
+    public static final String TOKEN = "archivedtaskquickdetails";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+    }
 
     public ArchivedHumanTaskQuickDetailsPage() {
         super(ArchivedHumanTaskDefinition.get());

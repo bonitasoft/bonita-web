@@ -18,6 +18,9 @@ package org.bonitasoft.console.client.admin.organization.group;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -32,6 +35,12 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 public class AddGroupPage extends Page {
 
     public static final String TOKEN = "addgroup";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+    }
 
     @Override
     public void defineTitle() {

@@ -18,6 +18,9 @@ package org.bonitasoft.console.client.admin.bpm.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.console.client.admin.bpm.task.action.AssignTaskAndHistoryBackAction;
 import org.bonitasoft.console.client.common.view.SelectUserAndDoPage;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -29,7 +32,13 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
  */
 public class SelectUserAndAssignTaskPage extends SelectUserAndDoPage {
 
-    public static final String TOKEN = "assignTaskTo";
+    public static final String TOKEN = "assignTaskTo";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+    }
 
     @Override
     public String defineToken() {

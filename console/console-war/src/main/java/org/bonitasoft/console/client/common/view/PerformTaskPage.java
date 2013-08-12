@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.common.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,7 +46,13 @@ import com.google.gwt.http.client.URL;
  */
 public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
-    public final static String TOKEN = "performTask";
+    public final static String TOKEN = "performTask";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+    }
 
     public static final String PARAMETER_USER_ID = "userid";
 

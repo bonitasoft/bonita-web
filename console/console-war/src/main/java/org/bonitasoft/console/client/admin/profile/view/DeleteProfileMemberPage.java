@@ -16,6 +16,9 @@ package org.bonitasoft.console.client.admin.profile.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.console.client.admin.profile.action.DeleteProfileMemberAction;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -28,7 +31,13 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
  */
 public class DeleteProfileMemberPage extends Page {
 
-    public final static String TOKEN = "deleteProfileMemberpage";
+    public final static String TOKEN = "deleteProfileMemberpage";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ListProfilePage.TOKEN);
+    }
 
     public final static String PARAMETER_PROFILE_ID = "profileId";
 

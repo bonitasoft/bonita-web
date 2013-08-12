@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.formatter.PriorityCssCellFormatter;
+import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
 import org.bonitasoft.console.client.common.formatter.OverdueDateCellFormatter;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -64,7 +65,13 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
-    public static final String TOKEN = "tasklistingadmin";
+    public static final String TOKEN = "tasklistingadmin";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+    }
 
     public static final String TABLE_ALL = "all";
 

@@ -57,7 +57,13 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNodeItem> {
 
-    public final static String TOKEN = "taskmoredetailsadmin";
+    public final static String TOKEN = "taskmoredetailsadmin";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+    }
 
     /**
      * Default Constructor.

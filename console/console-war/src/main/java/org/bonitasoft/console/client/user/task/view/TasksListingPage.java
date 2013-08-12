@@ -18,8 +18,11 @@ package org.bonitasoft.console.client.user.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.common.formatter.OverdueDateCellFormatter;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
@@ -53,7 +56,13 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
  */
 public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements PluginTask {
 
-    public static final String TOKEN = "tasklistinguser";
+    public static final String TOKEN = "tasklistinguser";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+    }
 
     private static String TABLE_AVAILABLE = "available";
 

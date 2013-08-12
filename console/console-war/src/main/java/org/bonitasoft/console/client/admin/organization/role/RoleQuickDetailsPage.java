@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.admin.organization.role;
 import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +41,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class RoleQuickDetailsPage extends ItemQuickDetailsPage<RoleItem> {
 
     public static final String TOKEN = "rolequickdetails";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(RoleListingPage.TOKEN);
+    }
 
     public RoleQuickDetailsPage() {
         super(RoleDefinition.get());

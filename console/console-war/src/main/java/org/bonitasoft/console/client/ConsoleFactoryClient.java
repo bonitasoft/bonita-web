@@ -102,7 +102,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
 
-            // Admin page
+        // Manage Cases pages
         } else if (CaseListingAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new CaseListingAdminPage();
         } else if (CaseQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
@@ -117,10 +117,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // return new ListGroupPage();
         } else if (DisplayCaseFormPage.TOKEN.equals(token) && isUserAuthorized(DisplayCaseFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new DisplayCaseFormPage();
-            
+        
+        // Import export organization page    
         } else if (OrganizationImportAndExportPage.TOKEN.equals(token) && isUserAuthorized(OrganizationImportAndExportPage.PRIVILEGES, currentUserAccessRights)) {
             return new OrganizationImportAndExportPage();
             
+        // Manage Users pages    
         } else if (UserListingAdminPage.TOKEN.equals(token) && isUserAuthorized(UserListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new UserListingAdminPage();
         } else if (UserQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(UserQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
@@ -131,97 +133,100 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new UserMoreDetailsAdminPage();
         } else if (PopupAddUserPage.TOKEN.equals(token) && isUserAuthorized(PopupAddUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new PopupAddUserPage();
-        } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
-            return new AddMembershipToProfileMemberPage();
         } else if (AddMembershipPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddMembershipPage();
         } else if (DeleteMembershipPage.TOKEN.equals(token) && isUserAuthorized(DeleteMembershipPage.PRIVILEGES, currentUserAccessRights)) {
             return new DeleteMembershipPage();
         } else if (ListMembershipPage.TOKEN.equals(token) && isUserAuthorized(ListMembershipPage.PRIVILEGES, currentUserAccessRights)) {
             return new ListMembershipPage();
-            
-        } else if (ProcessListingAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProcessListingAdminPage();
-        } else if (ProcessQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProcessQuickDetailsAdminPage();
-        
-            
-        } else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
-            return new StartProcessOnBehalfPage();
-            
-        } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new UploadProcessPage();
-            
-        } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new CreateCategoryAndAddToProcessPage();
-        } else if (AddProcessCategoryPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new AddProcessCategoryPage();
-        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProcessMoreDetailsAdminPage();
-        } else if (UpdateUserPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (UpdateUserPage.TOKEN.equals(token) && isUserAuthorized(UpdateUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new UpdateUserPage();
-        } else if (RoleListingPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights) ) {
-            return new RoleListingPage();
-        } else if (RoleQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new RoleQuickDetailsPage();
-        } else if (AddRolePage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new AddRolePage();
-        } else if (UpdateRolePage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new UpdateRolePage();
-        } else if (AddGroupPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new AddGroupPage();
-        } else if (UpdateGroupPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new UpdateGroupPage();
-        } else if (ListProcessActorUserPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+            
+        // Manage Apps pages    
+        } else if (ProcessListingAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessListingAdminPage();
+        } else if (ProcessQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessQuickDetailsAdminPage();
+        /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+            return new StartProcessOnBehalfPage();*/
+        } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, currentUserAccessRights)) {
+            return new UploadProcessPage();
+        } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token) && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, currentUserAccessRights)) {
+            return new CreateCategoryAndAddToProcessPage();
+        } else if (AddProcessCategoryPage.TOKEN.equals(token) && isUserAuthorized(AddProcessCategoryPage.PRIVILEGES, currentUserAccessRights)) {
+            return new AddProcessCategoryPage();
+        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessMoreDetailsAdminPage();
+        } else if (ListProcessActorUserPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProcessActorUserPage();
-        } else if (ListProcessActorGroupPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (ListProcessActorGroupPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorGroupPage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProcessActorGroupPage();
-        } else if (ListProcessActorRolePage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (ListProcessActorRolePage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorRolePage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProcessActorRolePage();
-        } else if (ListProcessActorMembershipPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (ListProcessActorMembershipPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorMembershipPage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProcessActorMembershipPage();
+        } else if (SelectMembershipForActorPage.TOKEN.equals(token) && isUserAuthorized(SelectMembershipForActorPage.PRIVILEGES, currentUserAccessRights)) {
+            return new SelectMembershipForActorPage();
+        } else if (SelectUserForActorPage.TOKEN.equals(token) && isUserAuthorized(SelectUserForActorPage.PRIVILEGES, currentUserAccessRights)) {
+            return new SelectUserForActorPage();
+        } else if (SelectGroupForActorPage.TOKEN.equals(token) && isUserAuthorized(SelectGroupForActorPage.PRIVILEGES, currentUserAccessRights)) {
+            return new SelectGroupForActorPage();
+        } else if (SelectRoleForActorPage.TOKEN.equals(token) && isUserAuthorized(SelectRoleForActorPage.PRIVILEGES, currentUserAccessRights)) {
+            return new SelectRoleForActorPage();
+            
+        // Manage Roles pages    
+        } else if (RoleListingPage.TOKEN.equals(token) && isUserAuthorized(RoleListingPage.PRIVILEGES, currentUserAccessRights) ) {
+            return new RoleListingPage();
+        } else if (RoleQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(RoleQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new RoleQuickDetailsPage();
+        } else if (AddRolePage.TOKEN.equals(token) && isUserAuthorized(AddRolePage.PRIVILEGES, currentUserAccessRights)) {
+            return new AddRolePage();
+        } else if (UpdateRolePage.TOKEN.equals(token) && isUserAuthorized(UpdateRolePage.PRIVILEGES, currentUserAccessRights)) {
+            return new UpdateRolePage();
+            
+        // Manage Groups pages        
+        } else if (GroupListingAdminPage.TOKEN.equals(token) && isUserAuthorized(GroupListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new GroupListingAdminPage();
+        } else if (GroupQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(GroupQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new GroupQuickDetailsAdminPage();
+        } else if (AddGroupPage.TOKEN.equals(token) && isUserAuthorized(AddGroupPage.PRIVILEGES, currentUserAccessRights)) {
+            return new AddGroupPage();
+        } else if (UpdateGroupPage.TOKEN.equals(token) && isUserAuthorized(UpdateGroupPage.PRIVILEGES, currentUserAccessRights)) {
+            return new UpdateGroupPage();
         
-        } else if (ProfileMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProfileMoreDetailsPage();
-        } else if (ProfileQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProfileQuickDetailsPage();
-        } else if (ListProfilePage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        // User Privileges settings pages
+        } else if (ListProfilePage.TOKEN.equals(token) && isUserAuthorized(ListProfilePage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProfilePage();
-        
-        } else if (EditProfilePage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (ProfileMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProfileMoreDetailsPage();
+        } else if (ProfileQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProfileQuickDetailsPage();
+        } else if (EditProfilePage.TOKEN.equals(token) && isUserAuthorized(EditProfilePage.PRIVILEGES, currentUserAccessRights)) {
             return new EditProfilePage();
-        } else if (AddGroupToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (AddGroupToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddGroupToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddGroupToProfileMemberPage();
-        } else if (AddRoleToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (AddRoleToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddRoleToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddRoleToProfileMemberPage();
-        } else if (AddUserToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (AddUserToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddUserToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddUserToProfileMemberPage();
+        } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
+            return new AddMembershipToProfileMemberPage();
+        } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(DeleteProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
+            return new DeleteProfileMemberPage();
+            
             
         } else if (DeleteActorMemberPage.TOKEN.equals(token)) {
             return new DeleteActorMemberPage();
         
-        } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new DeleteProfileMemberPage();
-        
-                   
-        } else if (TaskListingAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        // Manage Tasks pages           
+        } else if (TaskListingAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskListingAdminPage();
-        } else if (SelectUserAndAssignTaskPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (SelectUserAndAssignTaskPage.TOKEN.equals(token) && isUserAuthorized(SelectUserAndAssignTaskPage.PRIVILEGES, currentUserAccessRights)) {
             return new SelectUserAndAssignTaskPage();
-        } else if (TaskQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (TaskQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskQuickDetailsAdminPage();
-        } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskMoreDetailsAdminPage();
-        
-       
-        } else if (SelectMembershipForActorPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new SelectMembershipForActorPage();
-        } else if (SelectUserForActorPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new SelectUserForActorPage();
-        } else if (SelectGroupForActorPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new SelectGroupForActorPage();
-        } else if (SelectRoleForActorPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new SelectRoleForActorPage();
         
         /* THEME pages
         } else if (ListThemePage.TOKEN.equals(token)) {
@@ -232,41 +237,41 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new EditThemePage();
         */
             
-        } else if (GroupListingAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new GroupListingAdminPage();
-        } else if (GroupQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new GroupQuickDetailsAdminPage();
-
-        } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights) ) {
+        // Visualize & do tasks   
+        } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights) ) {
             return new TasksListingPage();
-        } else if (CaseListingPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new CaseListingPage();
-        } else if (ProcessListingPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProcessListingPage();
-        } else if (HumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (HumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new HumanTaskQuickDetailsPage();
-        } else if (ArchivedHumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ArchivedHumanTaskQuickDetailsPage();
-        } else if (ArchivedHumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ArchivedHumanTaskMoreDetailsPage();
-        } else if (HumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (HumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new HumanTaskMoreDetailsPage();
-        } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProcessQuickDetailsPage();
-        } else if (ProcessMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ProcessMoreDetailsPage();
-        } else if (CaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new CaseQuickDetailsPage();
-        } else if (ArchivedCaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ArchivedCaseQuickDetailsPage();
-        } else if (ArchivedCaseMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new ArchivedCaseMoreDetailsPage();
-        } else if (PerformTaskPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        } else if (ArchivedHumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedHumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ArchivedHumanTaskQuickDetailsPage();
+        } else if (ArchivedHumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedHumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ArchivedHumanTaskMoreDetailsPage();
+        } else if (PerformTaskPage.TOKEN.equals(token) && isUserAuthorized(PerformTaskPage.PRIVILEGES, currentUserAccessRights)) {
             return new PerformTaskPage();
-        } else if (CaseMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
-            return new CaseMoreDetailsPage();
-        } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(token, currentUserAccessRights)) {
+        
+        // Visualize & Start Apps      
+        } else if (ProcessListingPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessListingPage();
+        } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessQuickDetailsPage();
+        } else if (ProcessMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessMoreDetailsPage();
+        } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(StartProcessFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new StartProcessFormPage();
+        
+        // Visualize Cases    
+        } else if (CaseListingPage.TOKEN.equals(token) && isUserAuthorized(CaseListingPage.PRIVILEGES, currentUserAccessRights)) {
+            return new CaseListingPage();
+        } else if (CaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new CaseQuickDetailsPage();
+        } else if (ArchivedCaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedCaseQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ArchivedCaseQuickDetailsPage();
+        } else if (ArchivedCaseMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedCaseMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ArchivedCaseMoreDetailsPage();
+        } else if (CaseMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(CaseMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+            return new CaseMoreDetailsPage();
             
         }  else if (TechnicalUserWarningView.TOKEN.equals(token) ) {
             return new TechnicalUserWarningView();
