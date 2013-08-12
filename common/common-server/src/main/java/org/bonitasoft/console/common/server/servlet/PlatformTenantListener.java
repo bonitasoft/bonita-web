@@ -35,7 +35,7 @@ import org.bonitasoft.engine.identity.ImportPolicy;
 import org.bonitasoft.engine.session.APISession;
 
 /**
- * @author Zhiheng Yang
+ * @author Zhiheng Yang, Anthony Birembaut
  */
 public class PlatformTenantListener implements ServletContextListener {
 
