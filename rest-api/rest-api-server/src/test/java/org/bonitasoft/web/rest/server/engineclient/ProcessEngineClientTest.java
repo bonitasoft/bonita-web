@@ -17,15 +17,19 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 
 /**
  * @author Colin PUY
@@ -33,34 +37,39 @@ import static org.mockito.Mockito.*;
 public class ProcessEngineClientTest extends APITestWithMock {
 
     private static Integer BUNCH_SIZE = 10;
-    
+
     @Mock
     private ProcessAPI processAPI;
+
     private ProcessEngineClient processEngineClient;
-    
+
     @Before
     public void setUp() {
         initMocks(this);
         processEngineClient = new ProcessEngineClient(processAPI);
     }
-    
+
     @Test
     public void deleteArchivedProcessInstancesByBunch_delete_archived_processes_instances_by_bunch() throws Exception {
         when(processAPI.deleteArchivedProcessInstances(1L, 0, BUNCH_SIZE))
-            .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
-        
-        processEngineClient.deleteArchivedProcessInstancesByBunch(1L, 10);
-        
+                .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
+
+        final List<Long> processList = new ArrayList<Long>();
+        processList.add(1L);
+        processEngineClient.deleteArchivedProcessInstancesByBunch(1L, 10, processList);
+
         verify(processAPI, times(3)).deleteArchivedProcessInstances(1L, 0, 10);
     }
-    
+
     @Test
     public void deleteProcessInstancesByBunch_delete_archived_processes_instances_by_bunch() throws Exception {
         when(processAPI.deleteProcessInstances(1L, 0, BUNCH_SIZE))
-            .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
-        
-        processEngineClient.deleteProcessInstancesByBunch(1L, 10);
-        
+                .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
+
+        final List<Long> processList = new ArrayList<Long>();
+        processList.add(1L);
+        processEngineClient.deleteProcessInstancesByBunch(1L, 10, processList);
+
         verify(processAPI, times(3)).deleteProcessInstances(1L, 0, 10);
     }
 
