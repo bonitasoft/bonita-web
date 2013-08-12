@@ -5,7 +5,6 @@ import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetai
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.bpm.cases.view.DeleteCasePopup;
 import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTaskPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
@@ -100,8 +99,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new CaseQuickDetailsAdminPage();
         } else if (CaseMoreDetailsAdminPage.TOKEN.equals(token)) {
             return new CaseMoreDetailsAdminPage();
-        } else if (DeleteCasePopup.TOKEN.equals(token)) {
-            return new DeleteCasePopup();
         } else if (ArchivedCaseQuickDetailsAdminPage.TOKEN.equals(token)) {
             return new ArchivedCaseQuickDetailsAdminPage();
         } else if (ArchivedCaseMoreDetailsAdminPage.TOKEN.equals(token)) {
