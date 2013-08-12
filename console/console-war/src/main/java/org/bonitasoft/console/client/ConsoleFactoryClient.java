@@ -288,12 +288,14 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
     private boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
        
-        if (accessRights.contains(privileges)) {
-            return true;
-        }
-        
-        
+        for (String privilege: privileges) {
+            
+            if (accessRights.contains(privilege)) {
+                return true;
+            }
+            
+        }      
        
-        return accessRights.contains(privileges);
+        return false;
     }
 }
