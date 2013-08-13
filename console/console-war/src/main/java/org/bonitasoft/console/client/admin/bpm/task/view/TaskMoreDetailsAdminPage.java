@@ -139,7 +139,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                ViewController.refreshCurrentPage();
+                TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
+                taskListingAdminPage.selectResourceFilter(APIID.makeAPIID(TaskListingAdminPage.FILTER_PRIMARY_FAILED));
+                ViewController.showView(taskListingAdminPage);
             }
 
             @Override
