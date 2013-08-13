@@ -42,7 +42,12 @@ public class StandardLoginManagerImpl implements LoginManager {
 
     @Override
     public void login(final HttpServletRequestAccessor request, Credentials credentials) throws LoginFailedException {
-        User user = new User(request.getUsername(), "en");
+        String local = DEFAULT_LOCALE;
+        if (request.getParameterMap().get("_l") != null
+                && request.getParameterMap().get("_l").length >= 0) {
+            local = request.getParameterMap().get("_l")[0];
+        }
+        final User user = new User(request.getUsername(), local);
         APISession session = getUserLogger().doLogin(credentials);
         user.setUseCredentialTransmission(useCredentialsTransmission(session));
         SessionUtil.sessionLogin(user, session, request.getHttpSession());
