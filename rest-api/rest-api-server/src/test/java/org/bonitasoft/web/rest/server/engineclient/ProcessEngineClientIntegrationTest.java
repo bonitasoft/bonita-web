@@ -30,7 +30,6 @@ import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.junit.Test;
 
 /**
@@ -51,10 +50,10 @@ public class ProcessEngineClientIntegrationTest extends AbstractConsoleTest {
         return TestUserFactory.getJohnCarpenter();
     }
 
-    private ProcessDefinition getProcessDefinition(long processId) throws Exception {
+    private ProcessDefinition getProcessDefinition(final long processId) throws Exception {
         try {
             return TenantAPIAccessor.getProcessAPI(getInitiator().getSession()).getProcessDefinition(processId);
-        } catch (ProcessDefinitionNotFoundException e) {
+        } catch (final ProcessDefinitionNotFoundException e) {
             return null;
         }
     }
@@ -63,7 +62,7 @@ public class ProcessEngineClientIntegrationTest extends AbstractConsoleTest {
     public void testCountResolvedProcesses() throws Exception {
         create2resolvedProcesses();
 
-        long resolvedProcesses = processEngineClient.countResolvedProcesses();
+        final long resolvedProcesses = processEngineClient.countResolvedProcesses();
 
         assertEquals(2L, resolvedProcesses);
     }
@@ -75,28 +74,30 @@ public class ProcessEngineClientIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testDeleteProcesses() throws Exception {
-        TestProcess deployedProcess = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator());
+        final TestProcess deployedProcess = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator());
 
-        processEngineClient.deleteProcesses(asList(deployedProcess.getId()));
+        processEngineClient.deleteDisabledProcesses(asList(deployedProcess.getId()));
 
         assertNull(getProcessDefinition(deployedProcess.getId()));
     }
-    
-    @Test public void 
-    getProcessDeploymentInfo_return_null_if_process_is_not_found() throws Exception {
-        long unknownProcessId = 1L;
-        
-        ProcessDeploymentInfo processDeploymentInfo = processEngineClient.getProcessDeploymentInfo(unknownProcessId);
-        
+
+    @Test
+    public void
+            getProcessDeploymentInfo_return_null_if_process_is_not_found() throws Exception {
+        final long unknownProcessId = 1L;
+
+        final ProcessDeploymentInfo processDeploymentInfo = processEngineClient.getProcessDeploymentInfo(unknownProcessId);
+
         assertNull(processDeploymentInfo);
     }
-    
-    @Test public void 
-    getProcessDeploymentInfo_return_info_if_process_is_found() throws Exception {
-        TestProcess deployedProcess = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator());
-        
-        ProcessDeploymentInfo processDeploymentInfo = processEngineClient.getProcessDeploymentInfo(deployedProcess.getId());
-        
+
+    @Test
+    public void
+            getProcessDeploymentInfo_return_info_if_process_is_found() throws Exception {
+        final TestProcess deployedProcess = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator());
+
+        final ProcessDeploymentInfo processDeploymentInfo = processEngineClient.getProcessDeploymentInfo(deployedProcess.getId());
+
         assertNotNull(processDeploymentInfo);
     }
 }
