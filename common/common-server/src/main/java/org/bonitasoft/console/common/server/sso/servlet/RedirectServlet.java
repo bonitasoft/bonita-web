@@ -53,16 +53,6 @@ public class RedirectServlet extends HttpServlet {
     protected static final String REDIRECT_URL_PARAM = "url";
 
     /**
-     * the URL param for thelocale to use
-     */
-    protected static final String LOCALE_URL_PARAM = "locale";
-
-    /**
-     * default locale
-     */
-    protected static final String DEFAULT_LOCALE = "en";
-
-    /**
      * the URL param for the encrypted credentials
      */
     protected static final String USER_TOKEN_PARAM = "token";

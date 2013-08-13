@@ -27,6 +27,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -51,7 +52,13 @@ public class UploadProcessPage extends Page {
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
     }
-    
+
+    private HttpCallback httpCallback;
+
+    public UploadProcessPage() {
+        setCallBack(new ProcessInstallCallback());
+    }
+
     @Override
     public void defineTitle() {
         this.setTitle(_("Install an app"));
@@ -72,9 +79,17 @@ public class UploadProcessPage extends Page {
         Form form = new Form();
         form.addEntry(uploadProcessFileUpload());
         form.addDisabledButton(new JsId("installUpload"), _("Install"), _("Install a app"),
-                new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback()));
+                new SendFormAction(ProcessDefinition.get().getAPIUrl(), getCallBack()));
         form.addCancelButton();
         return form;
+    }
+
+    private HttpCallback getCallBack() {
+        return httpCallback;
+    }
+
+    public void setCallBack(HttpCallback callBack) {
+        httpCallback = callBack;
     }
 
     private FileUpload uploadProcessFileUpload() {

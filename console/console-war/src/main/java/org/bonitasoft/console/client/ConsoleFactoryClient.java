@@ -272,8 +272,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ArchivedCaseMoreDetailsPage();
         } else if (CaseMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(CaseMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new CaseMoreDetailsPage();
-            
-        }  else if (TechnicalUserWarningView.TOKEN.equals(token) ) {
+        } else if (StartProcessFormPage.TOKEN.equals(token)) {
+            return new StartProcessFormPage();
+        } else if (TechnicalUserWarningView.TOKEN.equals(token)) {
             return new TechnicalUserWarningView();
             // System
         } else if (PopupAboutPage.TOKEN.equals(token)) {
