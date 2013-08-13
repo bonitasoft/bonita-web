@@ -62,6 +62,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     
     static {
         PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN); //FIX ME: we should create a humantaskmoredetails admin page so ill never need this
     }
 
     private static String TABLE_AVAILABLE = "available";
