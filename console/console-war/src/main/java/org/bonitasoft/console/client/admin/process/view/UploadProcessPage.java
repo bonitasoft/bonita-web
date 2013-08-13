@@ -59,12 +59,6 @@ public class UploadProcessPage extends Page {
         setCallBack(new ProcessInstallCallback());
     }
 
-    private HttpCallback httpCallback;
-
-    public UploadProcessPage() {
-        setCallBack(new ProcessInstallCallback());
-    }
-
     @Override
     public void defineTitle() {
         this.setTitle(_("Install an app"));
