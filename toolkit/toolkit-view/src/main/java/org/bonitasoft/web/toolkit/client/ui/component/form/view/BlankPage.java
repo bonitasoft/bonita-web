@@ -25,6 +25,10 @@ public class BlankPage extends Page {
 
     public final static String TOKEN = "blankpage";
 
+    public BlankPage() {
+        addClass("emptyPage");
+    }
+
     @Override
     public String defineToken() {
         return TOKEN;
@@ -38,5 +42,4 @@ public class BlankPage extends Page {
     @Override
     public void buildView() {
     }
-
 }

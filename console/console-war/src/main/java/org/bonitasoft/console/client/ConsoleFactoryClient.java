@@ -240,7 +240,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new CaseMoreDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token)) {
             return new StartProcessFormPage();
-        }  else if (TechnicalUserWarningView.TOKEN.equals(token)) {
+        } else if (TechnicalUserWarningView.TOKEN.equals(token)) {
             return new TechnicalUserWarningView();
             // System
         } else if (PopupAboutPage.TOKEN.equals(token)) {

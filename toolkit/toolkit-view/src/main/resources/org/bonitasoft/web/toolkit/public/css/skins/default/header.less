@@ -126,6 +126,10 @@
 		font-family: @header-menu-font; 
 		.fontSize(@header-menu-fontSize);
 		.height(@header-menu-height);
+        div{
+            width: 100%;
+            .height(@header-menu-height);
+        }
 		>div{
 			.clearFix();
 			.verticalGradient(@header-menu-gradientColor1, @header-menu-gradientPosition1, @header-menu-gradientColor2, @header-menu-gradientPosition2);
