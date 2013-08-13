@@ -44,6 +44,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class ArchivedCaseMoreDetailsAdminPage extends ItemQuickDetailsPage<ArchivedCaseItem> {
 
     public static final String TOKEN = "archivedcasemoredetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+    }
 
     public ArchivedCaseMoreDetailsAdminPage(final ArchivedCaseItem archivedCase) {
         this();

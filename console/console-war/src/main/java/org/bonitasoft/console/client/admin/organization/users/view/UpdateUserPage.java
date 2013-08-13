@@ -18,7 +18,9 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
@@ -45,6 +47,12 @@ import com.google.gwt.core.client.GWT;
 public class UpdateUserPage extends Page {
 
     public static final String TOKEN = "updateuser";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+    }
 
     private static final String PARAMETER_USER_ID = "id";
 

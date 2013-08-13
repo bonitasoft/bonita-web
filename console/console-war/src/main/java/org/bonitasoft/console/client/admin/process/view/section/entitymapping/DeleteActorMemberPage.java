@@ -56,8 +56,8 @@ public class DeleteActorMemberPage extends Page {
     }
 
     public static Form createDeleteForm(final Action okAction, final Action cancelAction) {
-        final Form form = new Form(new JsId("deleteForm")).addButton(new JsId("deleteActionForm"), _("Delete"),
-                _("Delete"), okAction).addButton(new JsId("cancelActionForm"), _("Cancel"),
+        final Form form = new Form(new JsId("deleteForm")).addButton(new JsId("deleteActionForm"), _("Remove"),
+                _("Remove"), okAction).addButton(new JsId("cancelActionForm"), _("Cancel"),
                 _("Cancel"), cancelAction);
 
         return form;

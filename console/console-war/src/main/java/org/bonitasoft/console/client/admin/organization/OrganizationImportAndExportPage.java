@@ -18,6 +18,10 @@ package org.bonitasoft.console.client.admin.organization;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -43,6 +47,12 @@ import com.google.gwt.core.client.GWT;
 public class OrganizationImportAndExportPage extends Page {
 
     public static final String TOKEN = "importexportorganization";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(OrganizationImportAndExportPage.TOKEN);
+    }
 
     @Override
     public void defineTitle() {

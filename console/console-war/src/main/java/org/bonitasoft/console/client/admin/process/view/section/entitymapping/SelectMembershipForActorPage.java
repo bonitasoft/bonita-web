@@ -18,8 +18,11 @@ package org.bonitasoft.console.client.admin.process.view.section.entitymapping;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.view.SelectMembershipAndDoPageOnItem;
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
@@ -39,6 +42,12 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 public class SelectMembershipForActorPage extends SelectMembershipAndDoPageOnItem<ActorItem> {
 
     public static final String TOKEN = "selectmembershipforactor";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+    }
 
     public SelectMembershipForActorPage(final APIID itemId) {
         super(itemId, ActorDefinition.get());

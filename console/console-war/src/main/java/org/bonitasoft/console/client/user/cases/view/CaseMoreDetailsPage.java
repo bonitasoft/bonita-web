@@ -18,7 +18,9 @@ package org.bonitasoft.console.client.user.cases.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -41,6 +43,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginCase {
 
     public static final String TOKEN = "casemoredetails";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+    }
 
     public CaseMoreDetailsPage() {
         addClass(CssClass.MORE_DETAILS);
