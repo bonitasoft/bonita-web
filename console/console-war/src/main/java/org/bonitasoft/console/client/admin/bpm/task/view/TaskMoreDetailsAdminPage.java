@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.TaskSkipAction;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
@@ -63,6 +64,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
     }
 
     /**

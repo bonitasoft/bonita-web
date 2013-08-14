@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
+import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
@@ -54,6 +56,8 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
     static {
         PRIVILEGES.add(TasksListingPage.TOKEN);
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
     }
 
     public HumanTaskMoreDetailsPage() {
