@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
@@ -52,6 +54,8 @@ public class UpdateUserPage extends Page {
     
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+        PRIVILEGES.add(RoleListingPage.TOKEN);
     }
 
     private static final String PARAMETER_USER_ID = "id";

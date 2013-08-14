@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.Session;
@@ -42,6 +44,8 @@ public class DisplayCaseFormPage extends Page {
     static {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
     }
 
     private final String UUID_SEPERATOR = "--";

@@ -36,8 +36,8 @@ public class TaskRedirectionAction extends ItemTableActionSet<FlowNodeItem> {
     @Override
     protected void defineActions(FlowNodeItem flowNode) {
         addAction(new ItemTableAction("", "",
-                new ActionShowView(createView(flowNode.getId())),
-                true));
+                new ActionShowView(createView(flowNode.getId()))),
+                true);
     }
 
     private TaskMoreDetailsAdminPage createView(APIID apiid) {

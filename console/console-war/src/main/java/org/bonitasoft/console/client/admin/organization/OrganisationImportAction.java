@@ -16,14 +16,52 @@
  */
 package org.bonitasoft.console.client.admin.organization;
 
+import java.util.Map;
+
+import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
+import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.action.ClosePopUpAction;
 import org.bonitasoft.web.toolkit.client.ui.action.form.SendFormAction;
+import org.bonitasoft.web.toolkit.client.ui.component.Button;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 
 public class OrganisationImportAction extends SendFormAction {
 
     private static final String IMPORT_REST_API_URL = "../services/organization/import";
     
+    private final static HttpCallback callBack = new HttpCallback() {
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            ViewController.getInstance().showPopup(new Page() {
+                
+                @Override
+                public String defineToken() {
+                    return "confirmationpopup";
+                }
+                
+                @Override
+                public void buildView() {
+                    addBody(new Paragraph("Organization succesfully imported."));
+                    addBody(new Button("OK", "ok", new ClosePopUpAction()));
+                    
+                }
+
+                @Override
+                public void defineTitle() {
+                    this.setTitle("Info");
+                    
+                }
+            });
+        }
+
+    };
+
     public OrganisationImportAction() {
-        super(IMPORT_REST_API_URL);
+        super(IMPORT_REST_API_URL, callBack);
     }
+    
+    
 
 }

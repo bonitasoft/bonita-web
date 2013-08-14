@@ -21,6 +21,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.AddMembershipAction;
 import org.bonitasoft.console.client.common.identity.view.PageOnUserItem;
 import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
@@ -50,6 +52,8 @@ public class AddMembershipPage extends PageOnUserItem {
     
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+        PRIVILEGES.add(RoleListingPage.TOKEN);
     }
 
     public AddMembershipPage() {
