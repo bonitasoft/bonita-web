@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.admin.organization.group;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,6 +42,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class GroupQuickDetailsAdminPage extends ItemQuickDetailsPage<GroupItem> {
 
     public static final String TOKEN = "groupquickdetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+    }
 
     public GroupQuickDetailsAdminPage() {
         super(Definitions.get(GroupDefinition.TOKEN));

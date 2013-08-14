@@ -18,10 +18,13 @@ package org.bonitasoft.console.client.user.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
@@ -34,7 +37,13 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
  */
 public class ProcessMoreDetailsPage extends ProcessQuickDetailsPage implements PluginProcess {
 
-    public final static String TOKEN = "processmoredetails";
+    public final static String TOKEN = "processmoredetails";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+    }
 
     /**
      * Default Constructor.

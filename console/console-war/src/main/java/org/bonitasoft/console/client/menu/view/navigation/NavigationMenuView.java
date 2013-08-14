@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.console.client.menu.view.navigation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
@@ -97,10 +99,23 @@ public class NavigationMenuView extends RawView {
     }
 
     private void updateNavigationMenu(final List<ProfileEntryItem> items) {
+        updateMenuItems(items);
         navigationMenu.addItems(menuListCreator.asList(items));
         listenViewChangeEvent(selectMenuOnChange());
         updateUI();
         navigationMenu.select(ViewController.getInstance().getCurrentPageToken());
+    }
+
+
+    private void updateMenuItems(List<ProfileEntryItem> items) {
+        List<String> availableTokens = new ArrayList<String>();
+        for (ProfileEntryItem item: items) {
+            String pageToken = item.getPage();
+            if (pageToken != null) {
+                availableTokens.add(pageToken);
+            }
+        }
+        Session.addParameter("conf", availableTokens);
     }
 
     private List<ProfileEntryItem> parseProfileEntries(final String response) {

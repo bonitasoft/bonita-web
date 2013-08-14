@@ -18,7 +18,9 @@ package org.bonitasoft.console.client.admin.bpm.cases.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
@@ -42,6 +44,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
 public class CaseListingAdminPage extends CaseListingPage {
 
     public static final String TOKEN = "caselistingadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+    }
 
     public static final String FILTER_PRIMARY_OPENED_CASES = "openedcases";
 

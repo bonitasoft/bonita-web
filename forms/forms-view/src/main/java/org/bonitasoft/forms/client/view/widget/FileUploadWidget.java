@@ -419,14 +419,14 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         String displayedValue = null;
         if (FileWidgetInputType.ALL.equals(fileWidgetInputType)) {
             if (FILE_DOCUMENT_TYPE.equals(radioButtonGroupWidget.getValue())) {
-                if (fileDownloadWidget.isVisible()) {
+                if (uploadedFilePath != null) {
                     displayedValue = fileDownloadWidget.getDisplayedValue();
                 }
             } else {
                 displayedValue = urlTextBox.getValue();
             }
         } else if (FileWidgetInputType.FILE.equals(fileWidgetInputType)) {
-            if (fileDownloadWidget.isVisible()) {
+            if (uploadedFilePath != null) {
                 displayedValue = fileDownloadWidget.getDisplayedValue();
             }
         } else {

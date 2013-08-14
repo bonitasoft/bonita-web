@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
@@ -43,7 +44,13 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
  */
 public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> implements PluginProcess {
 
-    public static String TOKEN = "processquickdetails";
+    public static String TOKEN = "processquickdetails";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+    }
 
     public ProcessQuickDetailsPage() {
         super(ProcessDefinition.get());

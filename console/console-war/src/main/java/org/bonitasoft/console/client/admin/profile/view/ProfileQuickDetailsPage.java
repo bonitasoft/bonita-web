@@ -2,6 +2,7 @@ package org.bonitasoft.console.client.admin.profile.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,12 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
 
     public static final String TOKEN = "profilequickdetails";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ListProfilePage.TOKEN);
+    }
 
 
     @Override

@@ -18,6 +18,8 @@ package org.bonitasoft.console.client.admin.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
@@ -44,6 +46,12 @@ import com.google.gwt.core.client.GWT;
 public class UploadProcessPage extends Page {
 
     public static final String TOKEN = "processupload";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+    }
 
     private HttpCallback httpCallback;
 
