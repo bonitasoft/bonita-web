@@ -141,7 +141,7 @@
 		</div>
 	</div>
 	<div class="footer" id="footer">
-		BonitaSoft © 2013 All rights reserved.
+		Bonitasoft © 2013 All rights reserved.
 	</div>
 </body>
 </html>

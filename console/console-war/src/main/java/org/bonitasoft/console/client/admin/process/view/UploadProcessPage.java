@@ -18,6 +18,8 @@ package org.bonitasoft.console.client.admin.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
@@ -25,6 +27,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -43,6 +46,18 @@ import com.google.gwt.core.client.GWT;
 public class UploadProcessPage extends Page {
 
     public static final String TOKEN = "processupload";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+    }
+
+    private HttpCallback httpCallback;
+
+    public UploadProcessPage() {
+        setCallBack(new ProcessInstallCallback());
+    }
 
     @Override
     public void defineTitle() {
@@ -64,9 +79,17 @@ public class UploadProcessPage extends Page {
         Form form = new Form();
         form.addEntry(uploadProcessFileUpload());
         form.addDisabledButton(new JsId("installUpload"), _("Install"), _("Install a app"),
-                new SendFormAction(ProcessDefinition.get().getAPIUrl(), new ProcessInstallCallback()));
+                new SendFormAction(ProcessDefinition.get().getAPIUrl(), getCallBack()));
         form.addCancelButton();
         return form;
+    }
+
+    private HttpCallback getCallBack() {
+        return httpCallback;
+    }
+
+    public void setCallBack(HttpCallback callBack) {
+        httpCallback = callBack;
     }
 
     private FileUpload uploadProcessFileUpload() {

@@ -19,9 +19,11 @@ package org.bonitasoft.console.client.admin.organization.group;
 import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -43,6 +45,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
 public class GroupListingAdminPage extends ItemListingPage<GroupItem> {
 
     public static final String TOKEN = "grouplistingadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+    }
 
     private static final String TABLE_ALL_GROUPS = "allgroups";
 

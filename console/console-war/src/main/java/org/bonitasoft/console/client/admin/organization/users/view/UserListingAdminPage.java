@@ -19,8 +19,10 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
@@ -33,6 +35,12 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 public class UserListingAdminPage extends AbstractUserListingPage {
 
     public static final String TOKEN = "userlistingadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+    }
 
     @Override
     protected List<Clickable> defineFilterPanelActions() {

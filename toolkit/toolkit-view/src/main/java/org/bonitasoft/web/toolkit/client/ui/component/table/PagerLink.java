@@ -64,6 +64,7 @@ class PagerLink extends Link {
         super(label, _("Go to page %pagenumber%", new Arg("pagenumber", number)), active ? new PagerAction(table, number) : null);
         this.active = active;
         this.current = current;
+        setEnabled(active);
     }
 
     @Override

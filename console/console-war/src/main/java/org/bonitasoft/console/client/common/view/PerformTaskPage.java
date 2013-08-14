@@ -18,9 +18,11 @@ package org.bonitasoft.console.client.common.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.user.task.model.TaskAPI;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
@@ -45,7 +47,14 @@ import com.google.gwt.http.client.URL;
  */
 public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
-    public final static String TOKEN = "performTask";
+    public final static String TOKEN = "performTask";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN); //FIX ME: we should create a humantaskmoredetails admin page so ill never need this
+    }
 
     public static final String PARAMETER_USER_ID = "userid";
 

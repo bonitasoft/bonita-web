@@ -18,6 +18,9 @@ package org.bonitasoft.console.client.user.cases.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
@@ -36,6 +39,12 @@ import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction
 public class CaseQuickDetailsPage extends AbstractCaseQuickDetailsPage<CaseItem> implements PluginCase {
 
     public static String TOKEN = "casequickdetails";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+    }
 
     public CaseQuickDetailsPage() {
         super(false);

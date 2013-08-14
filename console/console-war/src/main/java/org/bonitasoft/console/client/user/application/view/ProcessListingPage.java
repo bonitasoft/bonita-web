@@ -18,10 +18,13 @@ package org.bonitasoft.console.client.user.application.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.console.client.user.task.view.PluginProcess;
 import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
+import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
@@ -46,7 +49,13 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
 
 public class ProcessListingPage extends ItemListingPage<ProcessItem> implements PluginProcess {
 
-    public static final String TOKEN = "processlistinguser";
+    public static final String TOKEN = "processlistinguser";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+    }
 
     private static String TABLE_ALL = "all";
 

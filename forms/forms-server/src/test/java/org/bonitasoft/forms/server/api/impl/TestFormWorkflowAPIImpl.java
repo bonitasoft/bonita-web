@@ -40,7 +40,7 @@ import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
@@ -812,7 +812,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                final SearchOptions searchOptions = new SearchOptionsBuilder(0, 10).filter(ActivityInstanceSearchDescriptor.PROCESS_INSTANCE_ID,
+                final SearchOptions searchOptions = new SearchOptionsBuilder(0, 10).filter(ArchivedHumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID,
                         task.getHumanTaskInstance().getParentProcessInstanceId()).done();
                 return processAPI.searchArchivedHumanTasks(searchOptions).getCount() == 1;
             }

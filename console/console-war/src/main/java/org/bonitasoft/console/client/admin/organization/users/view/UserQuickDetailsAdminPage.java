@@ -19,7 +19,9 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
@@ -37,6 +39,12 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 public class UserQuickDetailsAdminPage extends UserQuickDetailsPage {
 
     public static final String TOKEN = "userquickdetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+    }
 
     @Override
     public String defineToken() {

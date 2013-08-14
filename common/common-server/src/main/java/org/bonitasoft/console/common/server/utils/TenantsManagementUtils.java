@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.servlet.PlatformTenantManager;
 import org.bonitasoft.engine.api.ProfileAPI;
@@ -55,7 +56,6 @@ public class TenantsManagementUtils {
      * The command name for the profiles check
      */
     protected static final String GET_PROFILES_FOR_USER = "getProfilesForUser";
-
 
     /**
      * Copy file
@@ -149,43 +149,47 @@ public class TenantsManagementUtils {
     /**
      * Check for user's pofile
      */
-    public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException, 
-        BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+    public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException,
+            BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return !getUserProfiles(apiSession).isEmpty();
     }
 
-    private static List<Profile> getUserProfiles(APISession session) throws InvalidSessionException, NotFoundException, 
-        BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException  {
+    private static List<Profile> getUserProfiles(final APISession session) throws InvalidSessionException, NotFoundException,
+            BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return getProfileApi(session).getProfilesForUser(session.getUserId());
     }
 
-    private static ProfileAPI getProfileApi(APISession session) throws InvalidSessionException, BonitaHomeNotSetException, 
-        ServerAPIException, UnknownAPITypeException {
+    private static ProfileAPI getProfileApi(final APISession session) throws InvalidSessionException, BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getProfileAPI(session);
     }
 
     /**
      * copy the tenant template directory
      * 
-     * @return created tenant directory
+     * @return true if the tenant directory was created
      * @param tenantId
      * @param session
      *            the platform session
      * @throws IOException
      * @throws BonitaException
      */
-    public static synchronized File addDirectoryForTenant(final long tenantId, final PlatformSession session) throws IOException, BonitaException {
+    public static synchronized boolean addDirectoryForTenant(final long tenantId, final PlatformSession session) throws IOException, BonitaException {
         // add tenant folder
-        final String targetDir = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
-        final String sourceDir = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
+        final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
+        final String sourceDirPath = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
         // copy configuration files
-        try {
-            copyDirectory(sourceDir, targetDir);
-        } catch (final IOException e) {
-            deleteDirectory(targetDir);
-            throw e;
+        final File targetDir = new File(targetDirPath + File.separator + WebBonitaConstants.workFolderName);
+        if (!targetDir.exists()) {
+            try {
+                copyDirectory(sourceDirPath, targetDirPath);
+                return true;
+            } catch (final IOException e) {
+                deleteDirectory(targetDirPath);
+                throw e;
+            }
         }
-        return new File(targetDir);
+        return false;
     }
 
     /**

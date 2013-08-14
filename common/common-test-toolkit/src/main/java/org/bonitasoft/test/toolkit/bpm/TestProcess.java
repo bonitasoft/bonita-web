@@ -172,7 +172,7 @@ public class TestProcess {
      * @param enabled
      * @return
      */
-    private TestProcess setEnable(final APISession apiSession, final boolean enabled) {
+    protected TestProcess setEnable(final APISession apiSession, final boolean enabled) {
         if (enabled && !this.enabled) {
             enableProcess(apiSession);
         } else if (!enabled && this.enabled) {

@@ -18,6 +18,9 @@ package org.bonitasoft.console.client.admin.organization.role;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -32,6 +35,12 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 public class AddRolePage extends Page {
 
     public static final String TOKEN = "addrole";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(RoleListingPage.TOKEN);
+    }
 
     @Override
     public void defineTitle() {

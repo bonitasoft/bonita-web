@@ -40,6 +40,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class ArchivedCaseQuickDetailsPage extends ItemQuickDetailsPage<ArchivedCaseItem> implements PluginCase {
 
     public static String TOKEN = "archivedcasequickdetails";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+    }
 
     public ArchivedCaseQuickDetailsPage() {
         super(ArchivedCaseDefinition.get());

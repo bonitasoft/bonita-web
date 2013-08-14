@@ -35,7 +35,7 @@ import org.bonitasoft.engine.identity.ImportPolicy;
 import org.bonitasoft.engine.session.APISession;
 
 /**
- * @author Zhiheng Yang
+ * @author Zhiheng Yang, Anthony Birembaut
  */
 public class PlatformTenantListener implements ServletContextListener {
 
@@ -54,16 +54,13 @@ public class PlatformTenantListener implements ServletContextListener {
             platformManager = PlatformTenantManager.getInstance();
             platformManager.loginPlatform();
             platformProperties = platformManager.getPlatformProperties();
-            boolean platformCreation = false;
             if (platformProperties.platformCreate()) {
-                platformCreation = platformManager.createPlatform();
+                platformManager.createPlatform();
             }
             if (platformProperties.platformStart()) {
                 platformManager.startPlatform();
             }
-            if (platformCreation) {
-                initializeTenant();
-            }
+            initializeDefaultTenant();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 final String msg = "Error while starting the platform and tenant";
@@ -81,13 +78,15 @@ public class PlatformTenantListener implements ServletContextListener {
      * @throws IOException
      * @throws BonitaException
      */
-    protected void initializeTenant() throws Exception {
+    protected void initializeDefaultTenant() throws Exception {
         try {
             final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
                     TenantsManagementUtils.getTechnicalUserPassword());
             final long tenantId = session.getTenantId();
-            TenantsManagementUtils.addDirectoryForTenant(tenantId, platformManager.getPlatformSession());
-            createDefaultProfiles(session);
+            final boolean wasDirectoryCreated = TenantsManagementUtils.addDirectoryForTenant(tenantId, platformManager.getPlatformSession());
+            if (wasDirectoryCreated) {
+                createDefaultProfiles(session);
+            }
             TenantAPIAccessor.getLoginAPI().logout(session);
         } catch (final NumberFormatException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {

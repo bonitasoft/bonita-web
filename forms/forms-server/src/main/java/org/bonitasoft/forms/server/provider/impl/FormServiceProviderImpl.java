@@ -82,7 +82,6 @@ import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormValidationAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
-import org.bonitasoft.forms.server.builder.impl.FormBuilderImpl;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
@@ -303,17 +302,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
             throw new NoCredentialsInSessionException(message);
         }
-        final String currentProductVersion = FormBuilderImpl.PRODUCT_VERSION;
-        if (productVersion != null) {
-            if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0])
-                    || migrationProductVersion != null && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
-                final String message = "The migration product version not identical with current product version.";
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, message);
-                }
-                throw new MigrationProductVersionNotIdenticalException(message);
-            }
-        }
+        // No migration to perform in 6.1 since the forms.xml model didn't change between 6.0 and 6.1
+        // if the model changes in a later version, restore this check and provide the migration scripts in the distribution
+        // final String currentProductVersion = FormBuilderImpl.PRODUCT_VERSION;
+        // if (productVersion != null) {
+        // if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0])
+        // || migrationProductVersion != null && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
+        // final String message = "The migration product version not identical with current product version.";
+        // if (LOGGER.isLoggable(Level.WARNING)) {
+        // LOGGER.log(Level.WARNING, message);
+        // }
+        // throw new MigrationProductVersionNotIdenticalException(message);
+        // }
+        // }
         if (permissions != null) {
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
             final APISession session = getAPISessionFromContext(context);
@@ -707,7 +708,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
             final APISession session = getAPISessionFromContext(context);
             final Map<String, FormFieldValue> fieldValues = convertFormFieldValues((Map<String, FormFieldValue>) context
-                    .get(FormServiceProviderUtil.FIELD_VALUES));
+                    .get(FormServiceProviderUtil.FIELD_VALUES), true);
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
             try {
                 final Map<String, Object> urlContext = getUrlContext(context);
@@ -991,7 +992,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
         final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
         final APISession session = getAPISessionFromContext(context);
-        final Map<String, FormFieldValue> fieldValues = convertFormFieldValues((Map<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES));
+        final Map<String, FormFieldValue> fieldValues = convertFormFieldValues((Map<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES),
+                true);
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
         if (context.get(FormServiceProviderUtil.SUBMIT_BUTTON_ID) != null) {
             submitButtonId = (String) context.get(FormServiceProviderUtil.SUBMIT_BUTTON_ID);
@@ -1071,14 +1073,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * Convert type of all fields contains in formFieldValues
      * 
      * @param formFieldValues
+     * @param throwException
      * @return
      * @throws FileTooBigException
      * @throws IOException
      */
-    protected Map<String, FormFieldValue> convertFormFieldValues(final Map<String, FormFieldValue> formFieldValues) {
+    protected Map<String, FormFieldValue> convertFormFieldValues(final Map<String, FormFieldValue> formFieldValues, final boolean throwException) {
         if (formFieldValues != null && !formFieldValues.isEmpty()) {
             for (final FormFieldValue formFieldValue : formFieldValues.values()) {
-                convertValueType(formFieldValue);
+                convertValueType(formFieldValue, throwException);
             }
         }
         return formFieldValues;
@@ -1088,34 +1091,42 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * Convert type if a working modifier is found in {@link FormFieldValue}
      * 
      * @param formFieldValue
+     * @param throwException
      * @return
      */
-    protected FormFieldValue convertValueType(final FormFieldValue formFieldValue) {
-        Serializable convertedObj = null;
-        final String valueAsString = formFieldValue.getValue() == null ? "" : String.valueOf(formFieldValue.getValue());
+    protected FormFieldValue convertValueType(final FormFieldValue formFieldValue, final boolean throwException) {
         final String modifier = formFieldValue.getModifier();
 
         if (!isStringEmptyOrBlank(modifier)) {
-            if (Boolean.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? false : Boolean.valueOf(valueAsString);
-            } else if (Long.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Long.valueOf(valueAsString);
-            } else if (Double.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Double.valueOf(valueAsString);
-            } else if (Integer.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Integer.valueOf(valueAsString);
-            } else if (Float.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Float.valueOf(valueAsString);
-            } else if (Short.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Short.valueOf(valueAsString);
-            } else if (Character.class.getName().equals(modifier)) {
-                convertedObj = isStringEmptyOrBlank(valueAsString) ? Character.valueOf(' ') : Character.valueOf(valueAsString.charAt(0));
-            } else if (String.class.getName().equals(modifier)) {
-                convertedObj = valueAsString;
-            } else {
-                final String message = "Type " + modifier + " is not handled.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message);
+            Serializable convertedObj = null;
+            final String valueAsString = formFieldValue.getValue() == null ? "" : String.valueOf(formFieldValue.getValue());
+            try {
+                if (Boolean.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? false : Boolean.valueOf(valueAsString);
+                } else if (Long.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Long.valueOf(valueAsString);
+                } else if (Double.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Double.valueOf(valueAsString);
+                } else if (Integer.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Integer.valueOf(valueAsString);
+                } else if (Float.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Float.valueOf(valueAsString);
+                } else if (Short.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? DEFAULT_NUM_VALUE : Short.valueOf(valueAsString);
+                } else if (Character.class.getName().equals(modifier)) {
+                    convertedObj = isStringEmptyOrBlank(valueAsString) ? Character.valueOf(' ') : Character.valueOf(valueAsString.charAt(0));
+                } else if (String.class.getName().equals(modifier)) {
+                    convertedObj = valueAsString;
+                } else {
+                    final String message = "Type " + modifier + " is not handled.";
+                    if (LOGGER.isLoggable(Level.SEVERE)) {
+                        LOGGER.log(Level.SEVERE, message);
+                    }
+                }
+            } catch (final IllegalArgumentException e) {
+                // if no exception is requested, the value of the field is not converted
+                if (throwException) {
+                    throw e;
                 }
             }
             if (convertedObj != null) {
@@ -1398,6 +1409,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         final IFormValidationAPI validationAPI = FormAPIFactory.getFormValidationAPI();
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
         List<FormValidator> nonCompliantFieldValidators = null;
+        convertValueType(fieldValue, false);
         try {
             final APISession session = getAPISessionFromContext(context);
             final Map<String, Object> urlContext = getUrlContext(context);
@@ -1489,7 +1501,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
         List<FormValidator> nonCompliantFieldValidators = null;
         final APISession session = getAPISessionFromContext(context);
-        convertFormFieldValues(fields);
+        convertFormFieldValues(fields, false);
         try {
             final Map<String, Object> urlContext = getUrlContext(context);
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
@@ -1849,17 +1861,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             org.bonitasoft.engine.bpm.document.Document.class.getName(), null, null);
                     final Serializable evaluationResult = resolveExpression(documentExpression, context);
                     final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult;
-                    if (document.hasContent()) {
-                        documentValue = document.getContentFileName();
-                        valueType = File.class.getName();
-                    } else {
-                        documentValue = document.getUrl();
-                        valueType = String.class.getName();
-                    }
-                    documentId = document.getId();
-                    documentName = document.getName();
-                    if (LOGGER.isLoggable(Level.FINE)) {
-                        LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                    if (document != null) {
+                        if (document.hasContent()) {
+                            documentValue = document.getContentFileName();
+                            valueType = File.class.getName();
+                        } else {
+                            documentValue = document.getUrl();
+                            valueType = String.class.getName();
+                        }
+                        documentId = document.getId();
+                        documentName = document.getName();
+                        if (LOGGER.isLoggable(Level.FINE)) {
+                            LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                        }
                     }
                 } catch (final FormNotFoundException e) {
                     final String message = "Error while trying to retrieve the document " + documentName;

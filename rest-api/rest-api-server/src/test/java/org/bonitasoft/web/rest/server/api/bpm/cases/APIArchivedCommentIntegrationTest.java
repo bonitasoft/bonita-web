@@ -38,29 +38,12 @@ public class APIArchivedCommentIntegrationTest extends AbstractConsoleTest {
 
     private APIArchivedComment apiArchivedComment;
 
-    private TestCase monTest;
-
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.console.server.AbstractJUnitWebTest#webTestSetUp()
-     */
     @Override
     public void consoleTestSetUp() throws Exception {
         this.apiArchivedComment = new APIArchivedComment();
-        this.apiArchivedComment.setCaller(getAPICaller(TestUserFactory.getJohnCarpenter().getSession(),
-                "API/bpm/archivedComment"));
-
-        this.monTest = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).startCase();
-        this.monTest.getNextHumanTask().assignTo(getInitiator());
-        this.monTest.addComments(getInitiator(), 12, "mon Commentaire");
-
-        this.monTest.execute().execute();
+        this.apiArchivedComment.setCaller(getAPICaller(TestUserFactory.getJohnCarpenter().getSession(), "API/bpm/archivedComment"));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.test.toolkit.AbstractJUnitTest#getInitiator()
-     */
     @Override
     protected TestUser getInitiator() {
         return TestUserFactory.getJohnCarpenter();
@@ -68,11 +51,15 @@ public class APIArchivedCommentIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testSearch() throws Exception {
+        TestCase aCase = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).startCase();
+        aCase.getNextHumanTask().assignTo(getInitiator());
+        aCase.addComments(getInitiator(), 12, "mon Commentaire");
+        aCase.execute();
 
-        // ProblÃ¨me de user ? => non ?
-        final ItemSearchResult<ArchivedCommentItem> mesResultats = this.apiArchivedComment.search(0, 12, "", "", new HashMap<String, String>());
+        final ItemSearchResult<ArchivedCommentItem> mesResultats = 
+                this.apiArchivedComment.search(0, 12, "", "", new HashMap<String, String>());
+        
         assertEquals(mesResultats.getLength(), 12);
-
     }
 
 }

@@ -57,7 +57,13 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNodeItem> {
 
-    public final static String TOKEN = "taskmoredetailsadmin";
+    public final static String TOKEN = "taskmoredetailsadmin";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+    }
 
     /**
      * Default Constructor.
@@ -139,7 +145,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                ViewController.refreshCurrentPage();
+                TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
+                taskListingAdminPage.selectResourceFilter(APIID.makeAPIID(TaskListingAdminPage.FILTER_PRIMARY_FAILED));
+                ViewController.showView(taskListingAdminPage);
             }
 
             @Override

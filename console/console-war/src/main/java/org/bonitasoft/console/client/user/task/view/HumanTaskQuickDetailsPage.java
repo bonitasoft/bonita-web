@@ -18,8 +18,11 @@ package org.bonitasoft.console.client.user.task.view;
 
 import static org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder.taskQuickDetailsMetadatas;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
@@ -37,7 +40,14 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
  */
 public class HumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<HumanTaskItem> implements PluginTask {
 
-    public static final String TOKEN = "taskquickdetails";
+    public static final String TOKEN = "taskquickdetails";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN); //FIX ME: we should create a humantaskmoredetails admin page so ill never need this
+    }
 
     public HumanTaskQuickDetailsPage() {
         super(Definitions.get(HumanTaskDefinition.TOKEN));

@@ -55,8 +55,7 @@ public abstract class Page extends View {
         super();
 
         // FIXME dont set footer when it is a quickdetails page
-        final Text footerTxt = new Text(_("%companyname% © %year% %All rights reserved%.",
-                new Arg("companyname", _("BonitaSoft")),
+        final Text footerTxt = new Text(_("Bonitasoft © %year% %All rights reserved%.",
                 new Arg("year", getYear()),
                 new Arg("All rights reserved", _("All rights reserved"))
                 ));

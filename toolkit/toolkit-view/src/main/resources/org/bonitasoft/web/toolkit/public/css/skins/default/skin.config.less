@@ -89,13 +89,16 @@
 @pager-padding: 1*@h 5*@w 3*@h 0;
 @button-pager-marginBetween: 0 0 0 1*@w;
 @button-pager-border: @border-width solid #c2c2c2;
+@button-pager-border-disable: @border-width solid #DCDCDC;
 @button-pager-borderHover:@border-width solid #666666;
 @button-pager-width: 5*@w;
 @button-pager-height: 5*@h;
 @button-pager-bgX: center;
 @button-pager-bgY: center;
 @button-pager-nextBg: "pager-next.png";
+@button-pager-nextBg-disable: "pager-next-disable.png";
 @button-pager-previousBg: "pager-previous.png";
+@button-pager-previousBg-disable: "pager-previous-disable.png";
 @button-pager-bgColor: #fff;
 @button-pager-margin: 0 0 0 1*@w;
 @pager-resultsCount-padding: 2*@w;
@@ -193,7 +196,7 @@
 @header-menu-link-padding: @header-menu-link-paddingY @header-menu-link-paddingX;
 @header-menuEditor-actionLink-width: 4*@w;
 @header-menuEditor-link-padding: @header-menu-link-paddingY @header-menu-link-paddingX @header-menu-link-paddingY (@header-menu-link-paddingX - @header-menuEditor-actionLink-width);
-
+@header-menu-link-disabled-color: #A0A0A0;
 
 @header-menu-link-borderWidth: @border-width;
 @header-menu-link-borderLeft: @header-menu-link-borderWidth solid darken(@mainAccentColor, 7%);
@@ -346,6 +349,17 @@
 @filtersPanel-filters-paddingLeft: 11*@w;
 @filtersPanel-subfilters-paddingLeft: 14*@w;
 @filtersPanel-filters-paddingRight: 3*@w;
+
+@filtersPanel-filters-users-tasks-todo: "filters-users-tasks-todo.png";
+@filtersPanel-filters-users-tasks-todo-selected: "filters-users-tasks-todo-selected.png";
+@filtersPanel-filters-users-tasks-available: "filters-users-tasks-available.png";
+@filtersPanel-filters-users-tasks-available-selected: "filters-users-tasks-available-selected.png";
+@filtersPanel-filters-users-tasks-mytasks: "filters-users-tasks-mytasks.png";
+@filtersPanel-filters-users-tasks-mytasks-selected: "filters-users-tasks-mytasks-selected.png";
+@filtersPanel-filters-users-tasks-hidden: "filters-users-tasks-hidden.png";
+@filtersPanel-filters-users-tasks-hidden-selected: "filters-users-tasks-hidden-selected.png";
+@filtersPanel-filters-users-tasks-performed: "filters-users-tasks-performed.png";
+@filtersPanel-filters-users-tasks-performed-selected: "filters-users-tasks-performed-selected.png";
 
 @filtersPanel-filters-bgAvailable: "filters-available.png";
 @filtersPanel-filters-bgAvailableSelected: "filters-available-selected.png";

@@ -18,6 +18,8 @@ package org.bonitasoft.console.client.admin.profile.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
@@ -43,6 +45,12 @@ import com.google.gwt.core.client.GWT;
 public class EditProfilePage extends Page {
 
     public static final String TOKEN = "EditProfile";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ListProfilePage.TOKEN);
+    }
 
     private static final String ICON_URL = "themeResource?theme=default&location=images/profile.png";
 

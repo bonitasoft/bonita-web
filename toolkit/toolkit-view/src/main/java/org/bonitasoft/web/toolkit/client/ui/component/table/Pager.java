@@ -67,12 +67,12 @@ class Pager extends Component {
     }
 
     private void feedPagerPanel() {
-        int start_page = this.currentPage;
-        int end_page = this.currentPage;
+        int startPage = this.currentPage;
+        int endPage = this.currentPage;
         int pagesBefore = 0;
         int pagesAfter = 0;
 
-        if (this.currentPage <= 0) {
+        if (this.currentPage <= 0 || nbResults == 0) {
             return;
         }
 
@@ -91,8 +91,8 @@ class Pager extends Component {
         }
 
         // First and last page number to display
-        start_page = this.currentPage - pagesBefore;
-        end_page = this.currentPage + pagesAfter;
+        startPage = this.currentPage - pagesBefore;
+        endPage = this.currentPage + pagesAfter;
 
         // PAGE COUNT
         this.pagerPanel.append(
@@ -105,41 +105,62 @@ class Pager extends Component {
                 );
 
         // FIRST PAGE
-        // this.pagerPanel.append(new PagerLink(this.table, 1, _("First"), this.currentPage > 1).addClass("first"));
+        // this.pagerPanel.append(new PagerLink(this.table, 1, _("First"), needPreviousBtn).addClass("first"));
 
         // RESULTS COUNT
-        this.pagerPanel.append(
-                new Text(
-                        _("%start_result% - %end_result% of %total_results%",
-                                new Arg("start_result", this.nbResults <= 0 ? 0 : (this.currentPage - 1) * this.nbResultsByPage + 1),
-                                new Arg("end_result", Math.min(this.currentPage * this.nbResultsByPage, this.nbResults)),
-                                new Arg("total_results", this.nbResults)
-                        )
-                ).addClass("results_count")
-                );
+        this.pagerPanel.append(getResultCount());
 
-        // PREVIOUS PAGE
-        this.pagerPanel.append(new PagerLink(this.table, this.currentPage - 1, _("Previous"), this.currentPage > 1).addClass("prev"));
+        boolean needPreviousBtn = this.currentPage > 1;
+        boolean needNextBtn = this.currentPage < getTotalPages();
 
-        if (start_page > 1) {
-            this.pagerPanel.append(new Text("...").addClass("ellipsis"));
+        if (needPreviousBtn || needNextBtn) {
+            // PREVIOUS PAGE
+            this.pagerPanel.append(new PagerLink(this.table, this.currentPage - 1, _("Previous"), needPreviousBtn).addClass("prev"));
+
+            if (startPage > 1) {
+                this.pagerPanel.append(new Text("...").addClass("ellipsis"));
+            }
+
+            // PAGE NUMBERS
+            for (int i = startPage; i <= endPage && i <= getTotalPages(); i++) {
+                this.pagerPanel.append(new PagerLink(this.table, i, String.valueOf(i), !(this.currentPage == i), this.currentPage == i).addClass("pagenum"));
+            }
+
+            if (endPage < getTotalPages()) {
+                this.pagerPanel.append(new Text("...").addClass("ellipsis"));
+            }
+
+            // NEXT PAGE
+            this.pagerPanel.append(new PagerLink(this.table, this.currentPage + 1, _("Next"), needNextBtn).addClass("next"));
+
+            // LAST PAGE
+            // this.pagerPanel.append(new PagerLink(this.table, getTotalPages(), _("Last"), needNextBtn).addClass("last"));
+        }
+    }
+
+    private Text getResultCount() {
+        int startResult = this.nbResults <= 0 ? 0 : (this.currentPage - 1) * this.nbResultsByPage + 1;
+        int endResult = Math.min(this.currentPage * this.nbResultsByPage, this.nbResults);
+        Text resultCount;
+        if (nbResults == startResult) {
+            resultCount = new Text(
+                    _("%start_result% of %total_results%",
+                            new Arg("start_result", startResult),
+                            new Arg("total_results", this.nbResults)
+                    )
+                    );
+        } else {
+            resultCount = new Text(
+                    _("%start_result% - %end_result% of %total_results%",
+                            new Arg("start_result", startResult),
+                            new Arg("end_result", endResult),
+                            new Arg("total_results", this.nbResults)
+                    )
+                    );
         }
 
-        // PAGE NUMBERS
-        for (int i = start_page; i <= end_page && i <= getTotalPages(); i++) {
-            this.pagerPanel.append(new PagerLink(this.table, i, String.valueOf(i), !(this.currentPage == i), this.currentPage == i).addClass("pagenum"));
-        }
-
-        if (end_page < getTotalPages()) {
-            this.pagerPanel.append(new Text("...").addClass("ellipsis"));
-        }
-
-        // NEXT PAGE
-        this.pagerPanel.append(new PagerLink(this.table, this.currentPage + 1, _("Next"), this.currentPage < getTotalPages()).addClass("next"));
-
-        // LAST PAGE
-        // this.pagerPanel.append(new PagerLink(this.table, getTotalPages(), _("Last"), this.currentPage < getTotalPages()).addClass("last"));
-
+        resultCount.addClass("results_count");
+        return resultCount;
     }
 
     @Override
