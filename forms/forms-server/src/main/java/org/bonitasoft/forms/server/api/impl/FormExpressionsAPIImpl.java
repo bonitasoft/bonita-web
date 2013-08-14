@@ -189,7 +189,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Serializable evaluateInstanceInitialExpression(final APISession session, final long processInstanceId, final Expression expression,
             final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException {
-        final Serializable result = null;
+        Serializable result = null;
         if (expression != null) {
             final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressions =
                     new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
@@ -199,13 +199,13 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
             final ProcessInstanceAccessor processInstanceAccessor = getProcessInstanceAccessor(session, processInstanceId);
             final ProcessInstanceExpressionsEvaluator processInstanceExpressionEvaluator = getProcessInstanceExpressionEvaluator(session);
-            return getFirstResult(processInstanceExpressionEvaluator.evaluate(processInstanceAccessor, expressions, !isCurrentValue));
+            result = getFirstResult(processInstanceExpressionEvaluator.evaluate(processInstanceAccessor, expressions, !isCurrentValue));
         } else {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "The expression or its type are null");
             }
-            return null;
         }
+        return result;
     }
 
     protected Serializable getFirstResult(final Map<String, Serializable> evaluatedExpressions) {
@@ -276,6 +276,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      *            the field ID
      * @param fieldValues
      *            the form field values
+     * @param deleteDocuments
      * @return the value of the field as an Serializable
      * @throws FileTooBigException
      * @throws IOException
@@ -283,14 +284,14 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * @throws InvalidSessionException
      */
     protected Serializable evaluateFieldValueActionExpression(final APISession session, final String fieldId, final Map<String, FormFieldValue> fieldValues,
-            final Locale locale) throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException {
+            final Locale locale, final boolean deleteDocuments) throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException {
 
         Serializable result = null;
 
         final FormFieldValue fieldValue = fieldValues.get(fieldId);
         if (fieldValue != null) {
             if (fieldValue.isDocument()) {
-                result = getDocumentValue(session, fieldValue);
+                result = getDocumentValue(session, fieldValue, deleteDocuments);
             } else {
                 result = fieldValue.getValue();
             }
@@ -303,13 +304,15 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * 
      * @param session
      * @param fieldValue
+     * @param deleteDocument
      * @return
      * @throws FileTooBigException
      * @throws IOException
      * @throws BPMEngineException
      * @throws InvalidSessionException
      */
-    protected DocumentValue getDocumentValue(final APISession session, final FormFieldValue fieldValue) throws FileTooBigException, IOException,
+    protected DocumentValue getDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument)
+            throws FileTooBigException, IOException,
             InvalidSessionException, BPMEngineException {
         DocumentValue documentValue = null;
         final String uri = (String) fieldValue.getValue();
@@ -330,7 +333,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
                     final String contentType = mimetypesFileTypeMap.getContentType(theSourceFile);
                     documentValue = new DocumentValue(fileContent, contentType, originalFileName);
-                    theSourceFile.delete();
+                    if (deleteDocument) {
+                        theSourceFile.delete();
+                    }
                 } else {
                     if (LOGGER.isLoggable(Level.SEVERE)) {
                         LOGGER.log(Level.SEVERE, "Error while retrieving the uploaded file " + uri + ": File not found.");
@@ -364,6 +369,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * @param session
      * @param fieldValues
      * @param locale
+     * @param deleteDocuments
      * @return the context
      * @throws IOException
      * @throws FileTooBigException
@@ -372,13 +378,14 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      */
     @Override
     public Map<String, Serializable> generateGroovyContext(final APISession session, final Map<String, FormFieldValue> fieldValues, final Locale locale,
-            Map<String, Serializable> context) throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException {
+            Map<String, Serializable> context, final boolean deleteDocuments) throws FileTooBigException, IOException, InvalidSessionException,
+            BPMEngineException {
         if (context == null) {
             context = new HashMap<String, Serializable>();
         }
         for (final Entry<String, FormFieldValue> fieldValuesEntry : fieldValues.entrySet()) {
             final String fieldId = fieldValuesEntry.getKey();
-            final Serializable fieldValue = evaluateFieldValueActionExpression(session, fieldId, fieldValues, locale);
+            final Serializable fieldValue = evaluateFieldValueActionExpression(session, fieldId, fieldValues, locale, deleteDocuments);
             context.put(FIELDID_PREFIX + fieldId, fieldValue);
         }
         context.put(IFormExpressionsAPI.USER_LOCALE, locale);
@@ -440,7 +447,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException {
         Serializable result = null;
         if (expression != null) {
-            final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context);
+            final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context, false);
             final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressionWithContext = new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
             final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
             expressionWithContext.put(expressionAdapter.getEngineExpression(expression), evalContext);
@@ -516,7 +523,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
         Serializable result = null;
         if (expression != null) {
-            final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context);
+            final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context, false);
             final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressions = new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
             final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
             expressions.put(expressionAdapter.getEngineExpression(expression), evalContext);
@@ -583,7 +590,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             InvalidSessionException, FileTooBigException, IOException {
         Serializable result = null;
         if (expression != null) {
-            final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context);
+            final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context, false);
             final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressionWithContext = new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
             final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
             expressionWithContext.put(expressionAdapter.getEngineExpression(expression), evalContext);
@@ -861,7 +868,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         }
 
         if (!expressionsWithContext.isEmpty()) {
-            context = generateGroovyContext(session, fieldValues, locale, context);
+            context = generateGroovyContext(session, fieldValues, locale, context, false);
             Map<String, Serializable> evaluated;
 
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
@@ -985,7 +992,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         }
 
         if (!expressionsWithContext.isEmpty()) {
-            context = generateGroovyContext(session, fieldValues, locale, context);
+            context = generateGroovyContext(session, fieldValues, locale, context, false);
             result.putAll(getProcessInstanceExpressionEvaluator(session)
                     .evaluate(getProcessInstanceAccessor(session, processInstanceId),
                             expressionsWithContext,
@@ -1083,7 +1090,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         }
 
         if (!expressionsWithContext.isEmpty()) {
-            context = generateGroovyContext(session, fieldValues, locale, context);
+            context = generateGroovyContext(session, fieldValues, locale, context, false);
             result.putAll(getExpressionEvaluator(session)
                     .evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionsWithContext));
         }
