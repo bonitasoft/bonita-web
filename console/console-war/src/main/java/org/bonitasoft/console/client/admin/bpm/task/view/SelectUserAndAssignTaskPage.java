@@ -42,6 +42,7 @@ public class SelectUserAndAssignTaskPage extends SelectUserAndDoPage {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     @Override

@@ -62,6 +62,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public static final String PARAMETER_USER_ID = "userid";

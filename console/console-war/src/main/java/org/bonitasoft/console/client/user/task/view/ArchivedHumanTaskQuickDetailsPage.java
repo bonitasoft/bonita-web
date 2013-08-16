@@ -56,6 +56,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public ArchivedHumanTaskQuickDetailsPage() {

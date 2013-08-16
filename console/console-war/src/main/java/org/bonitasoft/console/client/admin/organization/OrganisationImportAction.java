@@ -16,47 +16,61 @@
  */
 package org.bonitasoft.console.client.admin.organization;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import java.util.Map;
 
-import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
-import org.bonitasoft.web.toolkit.client.ui.Page;
-import org.bonitasoft.web.toolkit.client.ui.action.ClosePopUpAction;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.SendFormAction;
-import org.bonitasoft.web.toolkit.client.ui.component.Button;
-import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
+import org.bonitasoft.web.toolkit.client.ui.component.form.AbstractForm;
 
 public class OrganisationImportAction extends SendFormAction {
 
     private static final String IMPORT_REST_API_URL = "../services/organization/import";
     
+    private static AbstractForm form;
+    
     private final static HttpCallback callBack = new HttpCallback() {
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            ViewController.getInstance().showPopup(new Page() {
-                
-                @Override
-                public String defineToken() {
-                    return "confirmationpopup";
-                }
-                
-                @Override
-                public void buildView() {
-                    addBody(new Paragraph("Organization succesfully imported."));
-                    addBody(new Button("OK", "ok", new ClosePopUpAction()));
-                    
-                }
-
-                @Override
-                public void defineTitle() {
-                    this.setTitle("Info");
-                    
-                }
-            });
+            form.addError(new JsId("organizationDataUpload"), _("Organization successfully imported."));
+            form.addClass("success");
         }
 
     };
+
+    
+    @Override
+    public void execute() {
+        // TODO Auto-generated method stub
+        super.execute();
+        form = this.getForm();
+    }
+
+
+    /* (non-Javadoc)
+     * @see org.bonitasoft.web.toolkit.client.ui.action.Action#setOnError(org.bonitasoft.web.toolkit.client.ui.action.Action)
+     */
+    @Override
+    public void setOnError(Action onError) {
+        // TODO Auto-generated method stub
+        super.setOnError(onError);
+        form.removeClass("success");
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#clone()
+     */
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        // TODO Auto-generated method stub
+        return super.clone();
+    }
+
 
     public OrganisationImportAction() {
         super(IMPORT_REST_API_URL, callBack);

@@ -67,6 +67,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     /**

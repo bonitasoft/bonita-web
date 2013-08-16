@@ -29,7 +29,6 @@ import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnip
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
@@ -64,6 +63,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     static {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public CaseMoreDetailsAdminPage() {

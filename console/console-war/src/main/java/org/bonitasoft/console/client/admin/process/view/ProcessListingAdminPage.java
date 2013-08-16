@@ -61,6 +61,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     private static final String TABLE_ACTION_DISABLE = "actiondisableprocesses";

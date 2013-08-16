@@ -1,10 +1,10 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
+ * Copyright (C) 2011 BonitaSoft S.A.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,7 +21,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -91,8 +90,9 @@ public class OrganizationImportAndExportPage extends Page {
         ((FileUpload) uploadForm.getEntry(fileJsId)).addFilter(new XmlUploadFilter());
         uploadForm.getEntry(fileJsId).addValidator(new MandatoryValidator(_("Please select a file first")));
         uploadForm.getEntry(fileJsId).addValidator(new FileExtensionAllowedValidator("xml"));
-        
+                       
         uploadForm.addButton(new JsId("uploadData"), _("Import"), _("Import"), new OrganisationImportAction());
+        
         return uploadForm;
     }
 

@@ -54,6 +54,7 @@ public class CreateCategoryAndAddToProcessPage extends AddProcessCategoryPage {
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public CreateCategoryAndAddToProcessPage() {

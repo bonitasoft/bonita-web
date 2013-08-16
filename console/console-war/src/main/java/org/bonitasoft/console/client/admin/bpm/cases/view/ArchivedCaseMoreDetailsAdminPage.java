@@ -51,6 +51,7 @@ public class ArchivedCaseMoreDetailsAdminPage extends ItemQuickDetailsPage<Archi
     static {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public ArchivedCaseMoreDetailsAdminPage(final ArchivedCaseItem archivedCase) {

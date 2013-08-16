@@ -62,6 +62,7 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public HumanTaskMoreDetailsPage() {

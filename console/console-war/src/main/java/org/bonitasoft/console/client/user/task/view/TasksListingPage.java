@@ -71,6 +71,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     private static String TABLE_AVAILABLE = "available";
