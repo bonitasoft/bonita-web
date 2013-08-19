@@ -17,6 +17,7 @@ package org.bonitasoft.console.client.menu.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.client.SHA1;
 import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
@@ -50,13 +51,14 @@ public class TechnicalUserMenuView extends RawView {
     }
 
     protected Menu buildMenu() {
-        List<String> availableTokens = new ArrayList<String>();
-        availableTokens.add(UserListingAdminPage.TOKEN);
-        availableTokens.add(GroupListingAdminPage.TOKEN);
-        availableTokens.add(RoleListingPage.TOKEN);
-        availableTokens.add(OrganizationImportAndExportPage.TOKEN);
-        availableTokens.add(ListProfilePage.TOKEN);
-        Session.addParameter("conf", availableTokens);
+        String sessionId = new String(Session.getParameter("session_id"));
+        
+        AvailableTokens.tokens.add(SHA1.calcSHA1(UserListingAdminPage.TOKEN.concat(sessionId)));
+        AvailableTokens.tokens.add(SHA1.calcSHA1(RoleListingPage.TOKEN.concat(sessionId)));
+        AvailableTokens.tokens.add(SHA1.calcSHA1(OrganizationImportAndExportPage.TOKEN.concat(sessionId)));
+        AvailableTokens.tokens.add(SHA1.calcSHA1(ListProfilePage.TOKEN.concat(sessionId)));
+        
+        //Session.addParameter("conf", availableTokens);
         return new Menu(new OrganizationMenuItem(), new PortalMenuItem());
     }
 
