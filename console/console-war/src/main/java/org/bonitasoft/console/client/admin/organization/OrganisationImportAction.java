@@ -50,27 +50,12 @@ public class OrganisationImportAction extends SendFormAction {
         form = this.getForm();
     }
 
-
-    /* (non-Javadoc)
-     * @see org.bonitasoft.web.toolkit.client.ui.action.Action#setOnError(org.bonitasoft.web.toolkit.client.ui.action.Action)
-     */
     @Override
     public void setOnError(Action onError) {
         // TODO Auto-generated method stub
         super.setOnError(onError);
         form.removeClass("success");
     }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#clone()
-     */
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        // TODO Auto-generated method stub
-        return super.clone();
-    }
-
 
     public OrganisationImportAction() {
         super(IMPORT_REST_API_URL, callBack);
