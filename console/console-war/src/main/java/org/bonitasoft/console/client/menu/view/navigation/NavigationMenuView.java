@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.SHA1;
-import org.bonitasoft.console.client.menu.view.AvailableTokens;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
@@ -110,14 +109,16 @@ public class NavigationMenuView extends RawView {
 
 
     private void updateMenuItems(List<ProfileEntryItem> items) {
+        List<String> availableTokens = new ArrayList<String>();
         String sessionId = new String(Session.getParameter("session_id"));
-        AvailableTokens.tokens.clear();
+        
         for (ProfileEntryItem item: items) {
             String pageToken = item.getPage();
             if (pageToken != null) {
-                AvailableTokens.tokens.add(SHA1.calcSHA1(pageToken.concat(sessionId)));
+                availableTokens.add(SHA1.calcSHA1(pageToken.concat(sessionId)));
             }
         }
+        Session.addParameter("conf", availableTokens);
     }
 
     private List<ProfileEntryItem> parseProfileEntries(final String response) {

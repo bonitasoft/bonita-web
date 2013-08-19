@@ -92,7 +92,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     @Override
     public Page defineViewTokens(final String token) {
         
-        List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
+        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
+        //List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
         
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();

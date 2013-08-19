@@ -19,13 +19,11 @@ import java.util.List;
 
 import org.bonitasoft.console.client.SHA1;
 import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
-import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
 import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuItem;
 import org.bonitasoft.console.client.menu.view.technicaluser.PortalMenuItem;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
@@ -51,16 +49,15 @@ public class TechnicalUserMenuView extends RawView {
     }
 
     protected Menu buildMenu() {
+        List<String> availableTokens = new ArrayList<String>();
         String sessionId = new String(Session.getParameter("session_id"));
         
-        AvailableTokens.tokens.clear();
+        availableTokens.add(SHA1.calcSHA1(UserListingAdminPage.TOKEN.concat(sessionId)));
+        availableTokens.add(SHA1.calcSHA1(RoleListingPage.TOKEN.concat(sessionId)));
+        availableTokens.add(SHA1.calcSHA1(OrganizationImportAndExportPage.TOKEN.concat(sessionId)));
+        availableTokens.add(SHA1.calcSHA1(ListProfilePage.TOKEN.concat(sessionId)));
         
-        AvailableTokens.tokens.add(SHA1.calcSHA1(UserListingAdminPage.TOKEN.concat(sessionId)));
-        AvailableTokens.tokens.add(SHA1.calcSHA1(RoleListingPage.TOKEN.concat(sessionId)));
-        AvailableTokens.tokens.add(SHA1.calcSHA1(OrganizationImportAndExportPage.TOKEN.concat(sessionId)));
-        AvailableTokens.tokens.add(SHA1.calcSHA1(ListProfilePage.TOKEN.concat(sessionId)));
-        
-        //Session.addParameter("conf", availableTokens);
+        Session.addParameter("conf", availableTokens);
         return new Menu(new OrganizationMenuItem(), new PortalMenuItem());
     }
 
