@@ -111,7 +111,7 @@ public class NavigationMenuView extends RawView {
 
     private void updateMenuItems(List<ProfileEntryItem> items) {
         String sessionId = new String(Session.getParameter("session_id"));
-        
+        AvailableTokens.tokens.clear();
         for (ProfileEntryItem item: items) {
             String pageToken = item.getPage();
             if (pageToken != null) {

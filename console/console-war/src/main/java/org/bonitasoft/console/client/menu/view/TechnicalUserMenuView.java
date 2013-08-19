@@ -53,6 +53,8 @@ public class TechnicalUserMenuView extends RawView {
     protected Menu buildMenu() {
         String sessionId = new String(Session.getParameter("session_id"));
         
+        AvailableTokens.tokens.clear();
+        
         AvailableTokens.tokens.add(SHA1.calcSHA1(UserListingAdminPage.TOKEN.concat(sessionId)));
         AvailableTokens.tokens.add(SHA1.calcSHA1(RoleListingPage.TOKEN.concat(sessionId)));
         AvailableTokens.tokens.add(SHA1.calcSHA1(OrganizationImportAndExportPage.TOKEN.concat(sessionId)));
