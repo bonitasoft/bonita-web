@@ -110,7 +110,6 @@ public class NavigationMenuView extends RawView {
 
 
     private void updateMenuItems(List<ProfileEntryItem> items) {
-        //List<String> availableTokens = new ArrayList<String>();
         String sessionId = new String(Session.getParameter("session_id"));
         
         for (ProfileEntryItem item: items) {
@@ -119,7 +118,6 @@ public class NavigationMenuView extends RawView {
                 AvailableTokens.tokens.add(SHA1.calcSHA1(pageToken.concat(sessionId)));
             }
         }
-        //Session.addParameter("conf", availableTokens);
     }
 
     private List<ProfileEntryItem> parseProfileEntries(final String response) {
