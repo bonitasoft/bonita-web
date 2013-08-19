@@ -17,6 +17,8 @@
 package org.bonitasoft.forms.server.accessor;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.impl.EngineApplicationFormDefAccessorImpl;
@@ -30,6 +32,11 @@ import org.w3c.dom.Document;
  */
 public class FormDefAccessorFactory {
 
+    /**
+     * Logger
+     */
+    private static Logger LOGGER = Logger.getLogger(FormDefAccessorFactory.class.getName());
+
     public static XMLApplicationFormDefAccessorImpl getXMLApplicationFormDefAccessor(final APISession session, final long processDefinitionID,
             final Document document, final String formId, final String locale, final Date processDeploymentDate)
             throws ApplicationFormDefinitionNotFoundException {
@@ -38,9 +45,17 @@ public class FormDefAccessorFactory {
 
     public static EngineApplicationFormDefAccessorImpl getEngineApplicationFormDefAccessor(final APISession session, final long processDefinitionID,
             final long activityInstanceID, final boolean includeApplicationVariables, final boolean isEditMode, final boolean isCurrentValue,
-            final boolean isConfirmationPage) {
-        return new EngineApplicationFormDefAccessorImpl(session, processDefinitionID, activityInstanceID, includeApplicationVariables, isEditMode,
-                isCurrentValue, isConfirmationPage);
+            final boolean isConfirmationPage) throws ApplicationFormDefinitionNotFoundException {
+        if (DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId()).autoGenerateForms()) {
+            return new EngineApplicationFormDefAccessorImpl(session, processDefinitionID, activityInstanceID, includeApplicationVariables, isEditMode,
+                    isCurrentValue, isConfirmationPage);
+        } else {
+            final String message = "Automatic form access is not allowed. Check the configuration file forms_config.xml";
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, message);
+            }
+            throw new ApplicationFormDefinitionNotFoundException(message);
+        }
     }
 
 }
