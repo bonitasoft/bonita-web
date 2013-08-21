@@ -19,13 +19,15 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
  */
 public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller {
 
-	private final ItemListingPage<T> itemListingPage;
-	
+    private final ItemListingPage<T> itemListingPage;
+
     private final ItemListingResourceFilter filter;
+
+    public boolean isBodyEmpty = false;
 
     public ResourceFilterFiller(ItemListingPage<T> itemListingPage, final ItemListingResourceFilter filter) {
         this.itemListingPage = itemListingPage;
-		this.filter = filter;
+        this.filter = filter;
     }
 
     /**
@@ -48,6 +50,10 @@ public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller
     protected void setData(final String json, final Map<String, String> headers) {
         final List<IItem> items = JSonItemReader.parseItems(json, this.filter.getSearchRequest().getItemDefinition());
         final List<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
+
+        if (items.size() != 0) {
+            this.itemListingPage.addTitleToSection(itemListingPage.defineResourceFiltersTitle(), itemListingPage.resourceFilters);
+        }
 
         for (final IItem item : items) {
 

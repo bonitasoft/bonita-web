@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.process.action.DisableProcessAction;
 import org.bonitasoft.console.client.admin.process.action.EnableProcessAction;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
@@ -53,12 +52,12 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
  * @author Haojie Yuan, Zhiheng Yang
  */
 public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
-        {
+{
 
     public static final String TOKEN = "processlistingadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
