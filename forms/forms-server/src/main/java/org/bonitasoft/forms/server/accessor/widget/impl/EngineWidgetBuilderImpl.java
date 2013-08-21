@@ -16,36 +16,20 @@
  */
 package org.bonitasoft.forms.server.accessor.widget.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.engine.bpm.data.DataDefinition;
 import org.bonitasoft.engine.bpm.document.DocumentDefinition;
 import org.bonitasoft.engine.expression.ExpressionType;
-import org.bonitasoft.forms.client.model.ActionType;
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.client.model.FormWidget;
+import org.bonitasoft.forms.client.model.*;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
-import org.bonitasoft.forms.client.model.WidgetType;
 import org.bonitasoft.forms.server.accessor.widget.IEngineWidgetBuilder;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.exception.NotHandledTypeException;
-import org.bonitasoft.forms.server.validator.CharFieldValidator;
-import org.bonitasoft.forms.server.validator.DateFieldValidator;
-import org.bonitasoft.forms.server.validator.NumericDoubleFieldValidator;
-import org.bonitasoft.forms.server.validator.NumericFloatFieldValidator;
-import org.bonitasoft.forms.server.validator.NumericIntegerFieldValidator;
-import org.bonitasoft.forms.server.validator.NumericLongFieldValidator;
-import org.bonitasoft.forms.server.validator.NumericShortFieldValidator;
+import org.bonitasoft.forms.server.validator.*;
+
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut
@@ -175,8 +159,8 @@ public class EngineWidgetBuilderImpl implements IEngineWidgetBuilder {
 
                 formWidgets.put(formWidget, formAction);
             } catch (final NotHandledTypeException e) {
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, e.getMessage());
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, e.getMessage());
                 }
             }
         }

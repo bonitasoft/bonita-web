@@ -14,6 +14,19 @@
  */
 package org.bonitasoft.console.common.server.themes;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.DateUtil;
+import org.bonitasoft.console.common.server.utils.UnZIPUtil;
+import org.bonitasoft.engine.session.APISession;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,20 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.DateUtil;
-import org.bonitasoft.console.common.server.utils.UnZIPUtil;
-import org.bonitasoft.engine.session.APISession;
 
 /**
  * Utility class upload theme
@@ -70,8 +69,8 @@ public class ThemeUploadServlet extends HttpServlet {
         try {
             if (!ServletFileUpload.isMultipartContent(request)) {
                 final String theErrorMessage = "Error while using the servlet ThemeUploadServlet to upload theme,it is not MultipartContent";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, theErrorMessage);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, theErrorMessage);
                 }
                 throw new ServletException(theErrorMessage);
             }
@@ -95,8 +94,8 @@ public class ThemeUploadServlet extends HttpServlet {
                 themeTempPath = uploadedFile.getAbsolutePath();
                 // extract ZIP file
                 UnZIPUtil.unzip(item.getInputStream(), themeTempPath);
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "uploaded File Path: " + themeTempPath);
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.log(Level.FINEST, "uploaded File Path: " + themeTempPath);
                 }
                 final String encodedUploadedFilePath = URLEncoder.encode(themeTempPath, "UTF-8");
                 // validate and copy

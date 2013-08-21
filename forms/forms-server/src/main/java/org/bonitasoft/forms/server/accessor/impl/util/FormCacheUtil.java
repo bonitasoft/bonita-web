@@ -1,20 +1,14 @@
 package org.bonitasoft.forms.server.accessor.impl.util;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.forms.client.model.*;
+import org.bonitasoft.forms.server.cache.CacheUtil;
+import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
+
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.forms.client.model.ApplicationConfig;
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormPage;
-import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.client.model.FormWidget;
-import org.bonitasoft.forms.client.model.TransientData;
-import org.bonitasoft.forms.server.cache.CacheUtil;
-import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 
 public class FormCacheUtil {
 	
@@ -68,7 +62,7 @@ public class FormCacheUtil {
             CACHE_DISK_STORE_PATH = WebBonitaConstantsUtils.getInstance(tenantID).getFormsWorkFolder().getAbsolutePath();
             this.tenantID = tenantID;
         } catch (final Exception e) {
-            LOGGER.log(Level.SEVERE, "Unable to retrieve the path of the cache disk store directory path.", e);
+            LOGGER.log(Level.WARNING, "Unable to retrieve the path of the cache disk store directory path.", e);
         }
     }
 

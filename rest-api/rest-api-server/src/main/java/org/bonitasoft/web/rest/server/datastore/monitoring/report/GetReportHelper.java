@@ -16,12 +16,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.monitoring.report;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Vincent Elcrin
@@ -48,7 +48,7 @@ public class GetReportHelper implements DatastoreHasGet<ReportItem> {
                 return report;
             }
         }
-        LOGGER.log(Level.FINE, "The report " + id.getPart(0) + " was not founnd");
+        LOGGER.log(Level.FINEST, "The report " + id.getPart(0) + " wasn't found");
         return null;
     }
 

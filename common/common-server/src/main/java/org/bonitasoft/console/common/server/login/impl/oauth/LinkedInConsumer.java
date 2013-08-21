@@ -13,9 +13,6 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.oauth;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.engine.exception.BonitaException;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -24,6 +21,9 @@ import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Ruiheng Fan, Chong Zhao
@@ -58,8 +58,8 @@ public class LinkedInConsumer extends OAuthConsumer {
 
         } catch (final JSONException e) {
             final String message = "Return values from LinkedIn cannot be resolved.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage());
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, e.getMessage());
             }
             throw new BonitaException(message, e);
         }

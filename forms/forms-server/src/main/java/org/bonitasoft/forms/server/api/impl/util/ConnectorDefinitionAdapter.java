@@ -16,15 +16,6 @@
  */
 package org.bonitasoft.forms.server.api.impl.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.engine.bpm.connector.ConnectorDefinition;
 import org.bonitasoft.engine.bpm.connector.ConnectorEvent;
 import org.bonitasoft.engine.bpm.connector.FailAction;
@@ -32,6 +23,11 @@ import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.engine.operation.Operation;
 import org.bonitasoft.forms.client.model.Connector;
 import org.bonitasoft.forms.client.model.FormAction;
+
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Ruiheng Fan
@@ -85,7 +81,7 @@ public class ConnectorDefinitionAdapter implements ConnectorDefinition {
      */
     @Override
     public ConnectorEvent getActivationEvent() {
-        LOGGER.log(Level.SEVERE, "getActivationEvent() in ConnectorDefinitionAdapter is not supported yet.");
+        LOGGER.log(Level.WARNING, "getActivationEvent() in ConnectorDefinitionAdapter is not supported yet.");
         return null;
     }
 

@@ -14,18 +14,13 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Servlet allowing to download process instances attachments
@@ -70,8 +65,8 @@ public class AttachmentDownloadServlet extends HttpServlet {
                 content = fileContent;
             } catch (final FileNotFoundException e) {
                 final String errorMessage = "Error while getting the attachment. The file " + attachmentPath + " does not exist.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             } finally {
@@ -79,14 +74,14 @@ public class AttachmentDownloadServlet extends HttpServlet {
             }
         } catch (final FileNotFoundException e) {
             final String errorMessage = "Attachment : No such file\n\t> " + attachmentPath;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage);
             }
             throw e;
         } catch (final IOException e) {
             final String errorMessage = "Attachment : Error while reading file " + attachmentPath;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage + "\n\t> " + e.getMessage());
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage + "\n\t> " + e.getMessage());
             }
             throw new ServletException(errorMessage, e);
         }

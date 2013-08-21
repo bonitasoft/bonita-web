@@ -16,9 +16,6 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.console.common.server.preferences.properties.PlatformTenantConfigProperties;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.PlatformAPI;
@@ -27,6 +24,9 @@ import org.bonitasoft.engine.api.PlatformLoginAPI;
 import org.bonitasoft.engine.platform.PlatformLogoutException;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.engine.session.SessionNotFoundException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Zhiheng Yang
@@ -72,7 +72,7 @@ public class PlatformTenantManager {
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while loging in on the platform", e);
+                LOGGER.log(Level.SEVERE, "Error while logging to the platform", e);
             }
             throw e;
         }

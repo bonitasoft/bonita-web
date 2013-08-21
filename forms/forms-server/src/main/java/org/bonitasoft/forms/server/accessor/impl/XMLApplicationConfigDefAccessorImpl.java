@@ -16,10 +16,6 @@
  */
 package org.bonitasoft.forms.server.accessor.impl;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
@@ -30,6 +26,10 @@ import org.bonitasoft.forms.server.constants.XMLForms;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Haojie Yuan, Anthony Birembaut
@@ -257,8 +257,8 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
         final Node applicationNode = getNodeByXpath(document, applicationXpath);
 
         if (applicationNode == null) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Failed to retrieve application element. query : " + applicationXpath);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Failed to retrieve application element. query : " + applicationXpath);
             }
         } else {
             permissionsNode = getNodeByXpath(applicationNode, XMLForms.PERMISSIONS);
@@ -284,8 +284,8 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
 
         final Node migrationProductVersionNode = getNodeByXpath(document, xpath);
         if (migrationProductVersionNode == null) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Failed to retrieve migration product version element. query : " + xpath);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Failed to retrieve migration product version element. query : " + xpath);
             }
         } else {
             migrationProductVersion = migrationProductVersionNode.getTextContent();

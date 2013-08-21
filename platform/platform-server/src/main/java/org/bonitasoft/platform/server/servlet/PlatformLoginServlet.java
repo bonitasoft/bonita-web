@@ -16,19 +16,18 @@
  */
 package org.bonitasoft.platform.server.servlet;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.bonitasoft.engine.api.PlatformAPI;
+import org.bonitasoft.engine.api.PlatformAPIAccessor;
+import org.bonitasoft.engine.api.PlatformLoginAPI;
+import org.bonitasoft.engine.session.PlatformSession;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.engine.api.PlatformAPI;
-import org.bonitasoft.engine.api.PlatformAPIAccessor;
-import org.bonitasoft.engine.api.PlatformLoginAPI;
-import org.bonitasoft.engine.session.PlatformSession;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
@@ -103,7 +102,7 @@ public class PlatformLoginServlet extends HttpServlet {
                 response.sendRedirect(this.PLATFORM_PAGE);
             }
         } catch (final Exception e) {
-            final String errorMessage = "Error while loging in to the platform";
+            final String errorMessage = "Error while logging to the platform";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, errorMessage, e);
             }
