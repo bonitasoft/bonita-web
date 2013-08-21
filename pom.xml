@@ -22,7 +22,7 @@
 
 	<properties>
 		<bonita.engine.version>6.0.2</bonita.engine.version>
-		<bos-test-toolkit.version>6.0.2</bos-test-toolkit.version>
+		<bos-test-toolkit.version>6.0.3-SNAPSHOT</bos-test-toolkit.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

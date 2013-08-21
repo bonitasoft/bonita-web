@@ -9,7 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bonita.version>6.0.2</bonita.version>
+		<bonita.version>6.0.3-SNAPSHOT</bonita.version>
 	</properties>
 
 	<dependencies>

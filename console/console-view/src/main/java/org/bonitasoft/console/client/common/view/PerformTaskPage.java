@@ -27,12 +27,12 @@ import org.bonitasoft.console.client.user.task.model.TaskAPI;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
-import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
@@ -83,7 +83,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
                 }
             });
         } else if (!task.getAssignedId().equals(getUserId())) {
-            addBody(new Paragraph(_("You can't perform this task, it has already been assigned to someone else.")));
+            ViewController.showView(TasksListingPage.TOKEN);
+            throw new APIException(_("You can't perform this task, it has already been assigned to someone else."));
         } else {
             addBody(createFormIframe(task));
         }
@@ -108,7 +109,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
                 .append("&locale=")
                 .append(AbstractI18n.getDefaultLocale().toString())
-                
+
                 .append("#form=")
                 .append(URL.decodeQueryString(item.getProcess().getName())).append(this.UUID_SEPERATOR)
                 .append(item.getProcess().getVersion()).append(this.UUID_SEPERATOR)
