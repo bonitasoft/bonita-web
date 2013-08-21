@@ -152,10 +152,7 @@ public class LoginBox extends RawView {
         if (!profiles.isEmpty()) {
             ensureProfileId((ProfileItem) profiles.get(0));
             profileMenuItem.addItems(profiles);
-            if (profiles.get(0).getId().toString().equals((ClientApplicationURL.getProfileId()))) {
-                
-                loadNavigationMenu();
-            }    
+            loadNavigationMenu();
         } else {
             profileMenuItem.setVisible(false);
         }
