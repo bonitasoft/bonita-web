@@ -65,7 +65,7 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
             }
             if (humanTask.getAttributes().containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) {
                 if (humanTask.getAttributeValue(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID) != null
-                        && !humanTask.getAttributeValue(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).contentEquals(assignedUserId)) {
+                        && !humanTask.getAttributeValue(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).equals(assignedUserId)) {
                     throw new APIForbiddenException("Can't assign this task because it has already been assigned.");
                 }
             }
