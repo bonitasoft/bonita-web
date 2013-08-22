@@ -36,10 +36,8 @@
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(@p1, @c1), color-stop(@p2, @c2)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  @c1 @p1,@c2 @p2); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  @c1 @p1, @c2 @p2); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  @c1 @p1,@c2 @p2); /* IE10+ */
 	background: linear-gradient(to bottom,  @c1 @p1, @c2 @p2); /* W3C */
-	-pie-background: linear-gradient(@c1 @p1, @c2 @p2) @c1;
-	.CSSPIE();
+	filter: ~"progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=@{c1}, endColorstr=@{c2})"; /* also meant to be IE... */
 }
 .horizontalGradient(@c1, @p1, @c2, @p2) {
 	background-color: @c1; /* Old browsers */
@@ -100,7 +98,15 @@
 .borderRadiusRight(@radius){
 	.borderRadius(0, @radius, 0, @radius, 0);
 }
-
+.borderRadiusTop(@radius){
+	.borderRadius(@radius, @radius, 0, 0);
+}
+.borderRadiusBottom(@radius){
+	.borderRadius(0, 0, @radius ,@radius);
+}
+.noBorderRadius(){
+	.borderRadius(0);
+}
 .textOverflow(@overflow) {
 	-ms-text-overflow:@overflow;
 	-o-text-overflow:@overflow;
@@ -136,8 +142,8 @@
 	-moz-box-shadow: @x @y @blur @color inset;
 	-o-box-shadow: @x @y @blur @color inset;
 	box-shadow: @x @y @blur @color inset;
-	filter:~"progid:DXImageTransform.Microsoft.Blur(pixelradius=@{x})";
-	-ms-filter:~"progid:DXImageTransform.Microsoft.Blur(pixelradius=@{x})";
+	//filter:~"progid:DXImageTransform.Microsoft.Blur(pixelradius=@{x})";
+	//-ms-filter:~"progid:DXImageTransform.Microsoft.Blur(pixelradius=@{x})";
 }
 
 .opacity (@opacity:1) {
@@ -194,7 +200,6 @@
 .bg(@img, @repeat: no-repeat, @bgcolor: transparent, @x:center, @y: center){
 	.noIEGradient();
 	background: url("../skins/@{skinpath}/images/@{img}") @bgcolor @repeat  @x @y !important;
-	
 }
 
 .bgLeft(@img){
@@ -282,3 +287,5 @@
 		text-decoration: underline;
 	}	
 }
+.displayNone{ display: none !important; }
+.displayNone(){ .displayNone; }
