@@ -94,13 +94,13 @@ public class DefaultFormsProperties {
      *            the tenant Id
      */
     protected DefaultFormsProperties(final long tenantId) {
-        this.defaultProperties = new Properties();
+        defaultProperties = new Properties();
         // Read properties file.
         InputStream inputStream = null;
         try {
             final File propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), FORM_DEFAULT_CONFIG_FILE_NAME);
             inputStream = new FileInputStream(propertiesFile);
-            this.defaultProperties.load(inputStream);
+            defaultProperties.load(inputStream);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "default forms config file " + FORM_DEFAULT_CONFIG_FILE_NAME + " is missing form the forms conf directory");
@@ -119,7 +119,7 @@ public class DefaultFormsProperties {
     }
 
     public String getApplicationLayout() {
-        return this.defaultProperties.getProperty("forms.default.application.layout");
+        return defaultProperties.getProperty("forms.default.application.layout");
     }
 
     public String getApplicationMandatorySymbol() {
@@ -131,19 +131,19 @@ public class DefaultFormsProperties {
     }
 
     public String getPageErrorTemplate() {
-        return this.defaultProperties.getProperty("forms.default.page.template.error");
+        return defaultProperties.getProperty("forms.default.page.template.error");
     }
 
     public String getPageConfirmationTemplate() {
-        return this.defaultProperties.getProperty("forms.default.page.template.confirm");
+        return defaultProperties.getProperty("forms.default.page.template.confirm");
     }
 
     public String getGlobalPageTemplate() {
-        return this.defaultProperties.getProperty("forms.default.page.template");
+        return defaultProperties.getProperty("forms.default.page.template");
     }
 
     public String getDefaultDateFormat() {
-        String dateFormat = this.defaultProperties.getProperty("forms.default.date.format");
+        String dateFormat = defaultProperties.getProperty("forms.default.date.format");
         if (dateFormat == null) {
             LOGGER.log(Level.INFO, "the default date format is undefined. Using the default value : " + DEFAULT_DATE_FORMAT);
             dateFormat = DEFAULT_DATE_FORMAT;
@@ -152,52 +152,52 @@ public class DefaultFormsProperties {
     }
 
     public int getMaxWigdetPerPage() {
-        final String maxWidgetPerPage = this.defaultProperties.getProperty("forms.default.page.maxwidget");
+        final String maxWidgetPerPage = defaultProperties.getProperty("forms.default.page.maxwidget");
         try {
             return Integer.parseInt(maxWidgetPerPage);
         } catch (final NumberFormatException nfe) {
             LOGGER.log(Level.INFO, "the max number of widgets per page is undefined or incorrectly defined. Using the default value : "
-                + DEFAULT_MAX_WIDGET_PER_PAGE);
+                    + DEFAULT_MAX_WIDGET_PER_PAGE);
             return DEFAULT_MAX_WIDGET_PER_PAGE;
         }
     }
 
     public int getMaxProcessesInCache() {
-        final String maxProcessesInCache = this.defaultProperties.getProperty("forms.cache.processes.size");
+        final String maxProcessesInCache = defaultProperties.getProperty("forms.cache.processes.size");
         try {
             return Integer.parseInt(maxProcessesInCache);
         } catch (final NumberFormatException nfe) {
             LOGGER.log(Level.INFO, "the max number of process form definifion in cache is undefined or incorrectly defined. Using the default value : "
-                + DEFAULT_CACHE_MAX_PROCESS_ENTRIES);
+                    + DEFAULT_CACHE_MAX_PROCESS_ENTRIES);
             return DEFAULT_CACHE_MAX_PROCESS_ENTRIES;
         }
     }
 
     public int getMaxLanguagesInCache() {
-        final String maxLanguagesInCache = this.defaultProperties.getProperty("forms.cache.languages.size");
+        final String maxLanguagesInCache = defaultProperties.getProperty("forms.cache.languages.size");
         try {
             return Integer.parseInt(maxLanguagesInCache);
         } catch (final NumberFormatException nfe) {
             LOGGER.log(Level.INFO,
-                "the max number of languages of process form definifion in cache is undefined or incorrectly defined. Using the default value : "
-                    + DEFAULT_CACHE_MAX_LANGUAGE_ENTRIES);
+                    "the max number of languages of process form definifion in cache is undefined or incorrectly defined. Using the default value : "
+                            + DEFAULT_CACHE_MAX_LANGUAGE_ENTRIES);
             return DEFAULT_CACHE_MAX_LANGUAGE_ENTRIES;
         }
     }
 
     public long getProcessesTimeToLiveInCache() {
-        final String processesTTLInCache = this.defaultProperties.getProperty("forms.cache.process.ttl");
+        final String processesTTLInCache = defaultProperties.getProperty("forms.cache.process.ttl");
         try {
             return Long.parseLong(processesTTLInCache);
         } catch (final NumberFormatException nfe) {
             LOGGER.log(Level.INFO, "the processes form definifion time to live in cache is undefined or incorrectly defined. Using the default value : "
-                + DEFAULT_CACHE_PROCESS_EXPIRATION_TIME);
+                    + DEFAULT_CACHE_PROCESS_EXPIRATION_TIME);
             return DEFAULT_CACHE_PROCESS_EXPIRATION_TIME;
         }
     }
 
     public long getAttachmentMaxSize() {
-        final String attachmentMaxSize = this.defaultProperties.getProperty("form.attachment.max.size");
+        final String attachmentMaxSize = defaultProperties.getProperty("form.attachment.max.size");
         try {
             return Long.parseLong(attachmentMaxSize);
         } catch (final NumberFormatException nfe) {
@@ -207,20 +207,30 @@ public class DefaultFormsProperties {
     }
 
     public String getUserXPURL() {
-        return this.defaultProperties.getProperty("forms.user-xp.url");
+        return defaultProperties.getProperty("forms.user-xp.url");
     }
 
     /**
      * @return get form service provider implementation
      */
     public String getFormServiceProviderImpl() {
-        final String formServiceProviderImpl = this.defaultProperties.getProperty("form.service.provider");
+        final String formServiceProviderImpl = defaultProperties.getProperty("form.service.provider");
         if (formServiceProviderImpl == null) {
             final String defaultImpl = FormServiceProviderImpl.class.getName();
             LOGGER.log(Level.INFO, "the form service provider Implementation is undefined or incorrectly defined. Using the default implementation : "
-                + defaultImpl);
+                    + defaultImpl);
             return defaultImpl;
         }
         return formServiceProviderImpl;
+    }
+
+    public boolean autoGenerateForms() {
+        final String autoGenerateForms = defaultProperties.getProperty("form.generation.auto");
+        if (!Boolean.FALSE.toString().equals(autoGenerateForms) && !Boolean.TRUE.toString().equals(autoGenerateForms)) {
+            LOGGER.log(Level.INFO,
+                    "the property for automatic form generation using the engine when the form is not defined is undefined or incorrectly defined. using the value : false");
+            return false;
+        }
+        return Boolean.valueOf(autoGenerateForms);
     }
 }
