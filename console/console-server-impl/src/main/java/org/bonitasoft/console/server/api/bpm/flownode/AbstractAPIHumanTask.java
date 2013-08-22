@@ -60,7 +60,7 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
         final String assignedUserId = attributes.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
         if (assignedUserId.length() > 0) {
             ITEM humanTask = get(id);
-            if (humanTask.isManualTask() && !StringUtil.isBlank(assignedUserId)) {
+            if (humanTask.isManualTask() && StringUtil.isBlank(assignedUserId)) {
                 throw new APIForbiddenException("Can't unassigned a manual task.");
             }
             if (humanTask.getAttributes().containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) {
