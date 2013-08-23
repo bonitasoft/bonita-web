@@ -17,14 +17,13 @@ package org.bonitasoft.console.client.menu.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.client.SHA1;
 import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
-import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
 import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuItem;
 import org.bonitasoft.console.client.menu.view.technicaluser.PortalMenuItem;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
@@ -51,11 +50,13 @@ public class TechnicalUserMenuView extends RawView {
 
     protected Menu buildMenu() {
         List<String> availableTokens = new ArrayList<String>();
-        availableTokens.add(UserListingAdminPage.TOKEN);
-        availableTokens.add(GroupListingAdminPage.TOKEN);
-        availableTokens.add(RoleListingPage.TOKEN);
-        availableTokens.add(OrganizationImportAndExportPage.TOKEN);
-        availableTokens.add(ListProfilePage.TOKEN);
+        String sessionId = new String(Session.getParameter("session_id"));
+        
+        availableTokens.add(SHA1.calcSHA1(UserListingAdminPage.TOKEN.concat(sessionId)));
+        availableTokens.add(SHA1.calcSHA1(RoleListingPage.TOKEN.concat(sessionId)));
+        availableTokens.add(SHA1.calcSHA1(OrganizationImportAndExportPage.TOKEN.concat(sessionId)));
+        availableTokens.add(SHA1.calcSHA1(ListProfilePage.TOKEN.concat(sessionId)));
+        
         Session.addParameter("conf", availableTokens);
         return new Menu(new OrganizationMenuItem(), new PortalMenuItem());
     }

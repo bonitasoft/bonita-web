@@ -74,7 +74,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     private ItemListingFilter currentFilter = null;
 
-
     /**
      * The search bar.
      */
@@ -168,7 +167,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     /**
      * Third filter section. Contains resource dependent filters
      */
-    private Section resourceFilters = null;
+    public Section resourceFilters = null;
 
     /**
      * Map of all filters defined.<br />
@@ -298,8 +297,8 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         this.resourceFilters = new Section(new JsId("resource_filters"));
         this.filtersPanel.addBody(this.resourceFilters);
 
-        addTitleToSection(defineResourceFiltersTitle(), this.resourceFilters);
-        this.resourceFilters.addFiller(new ResourceFilterFiller<T>(this, filter));
+        ResourceFilterFiller<T> filler = new ResourceFilterFiller<T>(this, filter);
+        this.resourceFilters.addFiller(filler);
     }
 
     /**
@@ -364,21 +363,20 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      * @param section
      *            Section where the title will be added
      */
-    private void addTitleToSection(final Title title, final Section section) {
+    public void addTitleToSection(final Title title, final Section section) {
         if (title != null) {
             section.addHeader(title);
         }
     }
 
     boolean hasResourceFilterParameter() {
-    	return hasParameter(UrlOption.RESOURCE_FILTER) && ItemListingPage.this.filtersLinks.containsKey(getParameter(UrlOption.RESOURCE_FILTER));
+        return hasParameter(UrlOption.RESOURCE_FILTER) && ItemListingPage.this.filtersLinks.containsKey(getParameter(UrlOption.RESOURCE_FILTER));
     }
-    
+
     void displayFilters(final List<ItemListingFilter> filters) {
-    	ItemListingPage.this.addLinkFilters(filters, ItemListingPage.this.resourceFilters);
+        ItemListingPage.this.addLinkFilters(filters, ItemListingPage.this.resourceFilters);
     }
-    
-    
+
     void selectFilter(final String filterId) {
         final Link defaultFilterLink = this.filtersLinks.get(filterId);
         $(defaultFilterLink.getElement()).click();
@@ -680,18 +678,18 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     private void sortTable(final ItemTable table, ItemListingSort itemListingSort) {
         if (table.getOrder() == null && itemListingSort != null) {
             table.setOrder(itemListingSort.getSortName(), itemListingSort.isSortAscending());
-        } 
+        }
     }
 
     /**
      * Define the default sorting.
      * 
      * @return This method must return the default sort that must be used.
-     * @deprecated don't add sort order on page but on tables, use {@link ItemTable#setOrder(String, boolean)} 
+     * @deprecated don't add sort order on page but on tables, use {@link ItemTable#setOrder(String, boolean)}
      */
     @Deprecated
     protected ItemListingSort defineDefaultSort() {
-    	return null;
+        return null;
     }
 
     /**
@@ -702,7 +700,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     protected abstract LinkedList<ItemListingTable> defineTables();
 
     public void updateQuickDetailPanel(ItemQuickDetailsPage<?> itemQuickDetailsPage, String itemId) {
-    	final TreeIndexed<String> params = itemQuickDetailsPage.getParameters();
+        final TreeIndexed<String> params = itemQuickDetailsPage.getParameters();
         params.addValue("id", itemId);
 
         ClientApplicationURL.addAttribute("_id", itemId);
@@ -748,11 +746,11 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     }
 
-	void selectRightResourceFilter() {
-		if (hasResourceFilterParameter()) {
-	        selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
-	    } else if (!hasParameter(UrlOption.FILTER)) {
-	        selectFirstFilter();
-	    }
-	}
+    void selectRightResourceFilter() {
+        if (hasResourceFilterParameter()) {
+            selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
+        } else if (!hasParameter(UrlOption.FILTER)) {
+            selectFirstFilter();
+        }
+    }
 }
