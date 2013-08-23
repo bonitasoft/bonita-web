@@ -236,6 +236,16 @@ public interface BonitaAPIClient {
     ClientResponse<String> importOrganization(String pBody);
 
     /**
+     * Export organization.
+     * 
+     * @return
+     */
+    @GET
+    @Path("portal/exportOrganization")
+    @Produces("application/xml")
+    ClientResponse<String> exportOrganization();
+
+    /**
      * Get processes.
      * 
      * @param pStart
