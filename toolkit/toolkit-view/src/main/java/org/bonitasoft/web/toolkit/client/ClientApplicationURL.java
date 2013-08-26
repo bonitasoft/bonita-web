@@ -33,6 +33,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.utils.I18n;
 import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 
@@ -66,6 +67,11 @@ public class ClientApplicationURL {
     private TreeIndexed<String> attributes = new TreeIndexed<String>();
 
     private static ClientApplicationURL self = null;
+
+    /**
+     * The cookie name for the forms locale
+     */
+    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
 
     /**
      * Default Constructor.
@@ -230,6 +236,7 @@ public class ClientApplicationURL {
 
         Session.addParameter(ATTRIBUTE_LANG, lang.toString());
         Cookie.addParameter(ATTRIBUTE_LANG, lang.toString());
+        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, lang.toString());
         AbstractI18n.setDefaultLocale(lang);
 
         if (refresh) {

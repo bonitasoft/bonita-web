@@ -82,7 +82,12 @@ public class JAASLoginManagerImpl implements LoginManager {
             throw new LoginFailedException(e.getMessage(), e);
         }
 
-        final User user = new User(request.getUsername(), "en");
+        String local = DEFAULT_LOCALE;
+        if (request.getParameterMap().get("_l") != null
+                && request.getParameterMap().get("_l").length >= 0) {
+            local = request.getParameterMap().get("_l")[0];
+        }
+        final User user = new User(request.getUsername(), local);
         final APISession apiSession = getUserLogger().doLogin(credentials);
         user.setUseCredentialTransmission(useCredentialsTransmission(apiSession));
         SessionUtil.sessionLogin(user, apiSession, request.getHttpSession());
