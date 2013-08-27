@@ -18,7 +18,6 @@ package org.bonitasoft.web.toolkit.client.common.i18n.model;
 
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -26,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  * @author Séverin Moussel
  * 
  */
-public class I18nLocaleDefinition extends ItemDefinition {
+public class I18nLocaleDefinition extends ItemDefinition<I18nLocaleItem> {
 
     /**
      * Singleton
@@ -41,8 +40,6 @@ public class I18nLocaleDefinition extends ItemDefinition {
      * the URL of i18nlocale resource
      */
     private static final String API_URL = "../API/system/i18nlocale";
-
-    private static final String PLURAL_RESOURCES_URL = "../API/system/i18nlocale";
 
     @Override
     public String defineToken() {
@@ -66,7 +63,7 @@ public class I18nLocaleDefinition extends ItemDefinition {
     }
 
     @Override
-    protected IItem _createItem() {
+    protected I18nLocaleItem _createItem() {
         return new I18nLocaleItem();
     }
 

@@ -29,7 +29,6 @@ import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -48,65 +47,73 @@ public class ChangeLangPage extends Page {
     public static final String TOKEN = "changelang";
 
     @Override
-    public String defineToken() {
-        return TOKEN;
-    }
-
-    @Override
     public void defineTitle() {
         this.setTitle(_("Choose a language"));
     }
 
     @Override
     public void buildView() {
-
-        final Form form = new Form();
-
-        form.addSelectEntry(new JsId("lang"), _("Choose a language"), _("Choose a language"))
-
-                .addButton(new JsId("ok"), _("Ok"), _("Change to selected language"), new FormAction() {
-
-                    @Override
-                    public void execute() {
-                        final String choosenLang = this.getParameter("lang");
-
-                        I18n.getInstance().loadLocale(AbstractI18n.stringToLocale(choosenLang), new Action() {
-
-                            @Override
-                            public void execute() {
-                                ClientApplicationURL.setLang(AbstractI18n.stringToLocale(choosenLang));
-                                ViewController.closePopup();
-
-                            }
-                        });
-
-                    }
-                })
-
-                .addCancelButton()
-
-                .setFiller(new FormFiller() {
-
-                    @Override
-                    protected void getData(final APICallback callback) {
-                        new I18nLocaleDefinition().getAPICaller().search(0, 0, callback);
-                    }
-
-                    @Override
-                    protected void setData(final String json, final Map<String, String> headers) {
-                        final List<IItem> items = new JSonItemReader().getItems(json, new I18nLocaleDefinition());
-                        final List<Option> options = new ArrayList<Option>();
-                        for (final IItem item : items) {
-                            options.add(new Option(item.getAttributeValue(I18nLocaleItem.ATTRIBUTE_NAME), item
-                                    .getAttributeValue(I18nLocaleItem.ATTRIBUTE_LOCALE), item
-                                    .getAttributeValue(I18nLocaleItem.ATTRIBUTE_LOCALE).equals(ClientApplicationURL.getLang())));
-                        }
-
-                        ((Select) this.target.getEntry(new JsId("lang"))).refreshOptions(options);
-                    }
-                });
-
+        Form form = new Form();
+        form.addSelectEntry(new JsId("lang"), _("Choose a language"), _("Choose a language"));
+        form.addButton(new JsId("ok"), _("Ok"), _("Change to selected language"), new ChangeLangFormAction());
+        form.addCancelButton();
+        form.setFiller(new ChangeLangSelectFiller());
         addBody(form);
+    }
+   
+    @Override
+    public String defineToken() {
+        return TOKEN;
+    }
 
+    /**
+     * Action called to change portal language 
+     */
+    private final class ChangeLangFormAction extends FormAction {
+        @Override
+        public void execute() {
+            final String choosenLang = this.getParameter("lang");
+
+            I18n.getInstance().loadLocale(AbstractI18n.stringToLocale(choosenLang), new Action() {
+
+                @Override
+                public void execute() {
+                    ClientApplicationURL.setLang(AbstractI18n.stringToLocale(choosenLang));
+                    ViewController.closePopup();
+
+                }
+            });
+
+        }
+    }
+
+    /**
+     * Fill select box with available languages
+     */
+    private final class ChangeLangSelectFiller extends FormFiller {
+        
+        @Override
+        protected void getData(final APICallback callback) {
+            new I18nLocaleDefinition().getAPICaller().search(0, 0, callback);
+        }
+    
+        @Override
+        protected void setData(final String json, final Map<String, String> headers) {
+            List<I18nLocaleItem> items = new JSonItemReader().getItems(json, new I18nLocaleDefinition());
+            List<Option> options = buildSelectOptions(items);
+            ((Select) this.target.getEntry(new JsId("lang"))).refreshOptions(options);
+        }
+
+        private List<Option> buildSelectOptions(List<I18nLocaleItem> items) {
+            List<Option> options = new ArrayList<Option>();
+            for (I18nLocaleItem item : items) {
+                options.add(buildSelectOption(item));
+            }
+            return options;
+        }
+
+        private Option buildSelectOption(final I18nLocaleItem item) {
+            return new Option(item.getName(), item.getLocale(), item.getLocale().equals(ClientApplicationURL.getLang()));
+        }
     }
 }

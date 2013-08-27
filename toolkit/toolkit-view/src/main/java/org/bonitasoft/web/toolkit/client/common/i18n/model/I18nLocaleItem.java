@@ -26,6 +26,9 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  */
 public class I18nLocaleItem extends Item {
 
+    public static final String ATTRIBUTE_NAME = "name";
+    public static final String ATTRIBUTE_LOCALE = "locale";
+
     public I18nLocaleItem() {
         super();
     }
@@ -34,10 +37,6 @@ public class I18nLocaleItem extends Item {
         super(item);
     }
 
-    public static final String ATTRIBUTE_LOCALE = "locale";
-
-    public static final String ATTRIBUTE_NAME = "name";
-
     public I18nLocaleItem(final String locale, final String name) {
         this();
         this.setAttribute(ATTRIBUTE_LOCALE, locale);
@@ -45,8 +44,15 @@ public class I18nLocaleItem extends Item {
     }
 
     @Override
-    public ItemDefinition getItemDefinition() {
+    public ItemDefinition<I18nLocaleItem> getItemDefinition() {
         return new I18nLocaleDefinition();
     }
 
+    public String getName() {
+        return getAttributeValue(ATTRIBUTE_NAME);
+    }
+    
+    public String getLocale() {
+        return getAttributeValue(ATTRIBUTE_LOCALE);
+    }
 }
