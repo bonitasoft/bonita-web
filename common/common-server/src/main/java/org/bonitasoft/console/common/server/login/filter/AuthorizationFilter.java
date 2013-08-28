@@ -22,7 +22,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -45,6 +44,7 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 /**
  * @author Vincent Elcrin
@@ -68,14 +68,11 @@ public class AuthorizationFilter implements Filter {
             ensureUserSession(request, session, apiSession);
             chain.doFilter(request, response);
 
-        } else if (isAutoLogin(requestAccessor, requestedTenantId)
-                && doAutoLogin(requestAccessor, requestedTenantId)) {
+        } else if (isAutoLogin(requestAccessor, requestedTenantId) && doAutoLogin(requestAccessor, requestedTenantId)) {
             chain.doFilter(request, response);
         } else {
             cleanHttpSession(session);
-            responseAccessor.redirect(createLoginUrl(
-                    makeRedirectUrl(requestAccessor, requestAccessor.getRedirectUrl()).getUrl(),
-                    requestedTenantId));
+            responseAccessor.redirect(createLoginUrl(makeRedirectUrl(requestAccessor, requestAccessor.getRedirectUrl()).getUrl(), requestedTenantId));
         }
     }
 
@@ -92,8 +89,7 @@ public class AuthorizationFilter implements Filter {
     }
 
     private SecurityProperties getSecurityProperties(final HttpServletRequestAccessor httpRequest, final long tenantId) {
-        return SecurityProperties.getInstance(tenantId,
-                new ProcessIdentifier(httpRequest.getAutoLoginScope()));
+        return SecurityProperties.getInstance(tenantId, new ProcessIdentifier(httpRequest.getAutoLoginScope()));
     }
 
     private LoginManager getLoginManager(final long tenantId) throws ServletException {
@@ -104,12 +100,9 @@ public class AuthorizationFilter implements Filter {
         }
     }
 
-    private boolean doAutoLogin(final HttpServletRequestAccessor request,
-            final long tenantId) throws ServletException {
+    private boolean doAutoLogin(final HttpServletRequestAccessor request, final long tenantId) throws ServletException {
         try {
-            getLoginManager(tenantId)
-                    .login(request,
-                            new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId));
+            getLoginManager(tenantId).login(request, new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId));
             return true;
         } catch (final LoginFailedException e) {
             return false;
@@ -126,40 +119,20 @@ public class AuthorizationFilter implements Filter {
     }
 
     private String getLocale(final ServletRequest request) {
-        String userLocaleStr = null;
-        final String theLocaleCookieName = "BOS_Locale";
-        final HttpServletRequest httpRequest = (HttpServletRequest) request;
-        final Cookie theCookies[] = httpRequest.getCookies();
-        if (theCookies != null) {
-            for (int i = 0; i < theCookies.length; i++) {
-                if (theCookies[i].getName().equals(theLocaleCookieName)) {
-                    final Cookie theCookie = theCookies[i];
-                    userLocaleStr = theCookie.getValue().toString();
-                    break;
-                }
-            }
-        }
-        if (userLocaleStr == null) {
-            userLocaleStr = request.getLocale().toString();
-        }
-        return userLocaleStr;
+        return LocaleUtils.getUserLocale((HttpServletRequest) request);
     }
 
     private boolean isAutoLogin(final HttpServletRequestAccessor request, final long requestedTenantId) {
-        return request.isAutoLoginRequested()
-                && getSecurityProperties(request, requestedTenantId).allowAutoLogin();
+        return request.isAutoLoginRequested() && getSecurityProperties(request, requestedTenantId).allowAutoLogin();
     }
 
     private boolean useCredentialsTransmission(final APISession apiSession) {
-        return PropertiesFactory.getSecurityProperties(apiSession.getTenantId())
-                .useCredentialsTransmission();
+        return PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).useCredentialsTransmission();
     }
 
     private LoginUrl createLoginUrl(final String redirectUrl, final long requestedTenantId) throws ServletException {
         try {
-            return new LoginUrl(getLoginManager(requestedTenantId),
-                    requestedTenantId,
-                    redirectUrl);
+            return new LoginUrl(getLoginManager(requestedTenantId), requestedTenantId, redirectUrl);
         } catch (final LoginUrlException e) {
             throw new ServletException(e);
         }

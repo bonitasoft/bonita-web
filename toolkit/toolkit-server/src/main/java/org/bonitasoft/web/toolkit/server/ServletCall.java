@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,6 +36,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 /**
  * @author Séverin Moussel
@@ -354,22 +354,7 @@ public abstract class ServletCall {
     }
 
     public String getLocale() {
-        String userLocaleStr = null;
-        final String theLocaleCookieName = "BOS_Locale";
-        final Cookie theCookies[] = request.getCookies();
-        if (theCookies != null) {
-            for (int i = 0; i < theCookies.length; i++) {
-                if (theCookies[i].getName().equals(theLocaleCookieName)) {
-                    final Cookie theCookie = theCookies[i];
-                    userLocaleStr = theCookie.getValue().toString();
-                    break;
-                }
-            }
-        }
-        if (userLocaleStr == null) {
-            userLocaleStr = request.getLocale().toString();
-        }
-        return userLocaleStr;
+        return LocaleUtils.getUserLocale(request);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

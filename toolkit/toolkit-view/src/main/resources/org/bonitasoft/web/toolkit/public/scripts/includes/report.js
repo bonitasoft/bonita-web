@@ -67,6 +67,9 @@ function hookReportFormSubmition(localeDateFormat, prefix){
 				removeReportStyle();
 				reportDateRangePicker(localeDateFormat, prefix);
 				retrieveFieldsValues(urlToRefresh.split('?')[1], localeDateFormat);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				$("div.report").html("<p>" + errorThrown + "</p>");
 			}
 		});
 		return false;
@@ -124,6 +127,9 @@ function refreshReport(e, localeDateFormat, prefix){
 			removeReportStyle();
 			reportDateRangePicker(localeDateFormat, prefix);
 			retrieveFieldsValues(params, localeDateFormat);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			$("div.report").html("<p>" + errorThrown + "</p>");
 		}
 	});
 }
