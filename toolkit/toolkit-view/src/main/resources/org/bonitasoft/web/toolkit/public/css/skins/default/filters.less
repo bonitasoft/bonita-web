@@ -180,15 +180,15 @@
                     }
 				}
 				&.enabledusers{
-                    .bgFilter("filters-human.png");
+                    .bgFilter("filters-user-active.png");
                     &:hover{
-                        .bgHoverFilter("filters-human.png");
+                        .bgHoverFilter("filters-user-active.png");
                     }
                 }
                 &.disabledusers{
-                    .bgFilter("filters-user-disactivated.png");
+                    .bgFilter("filters-user-inactive.png");
                     &:hover{
-                        .bgHoverFilter("filters-user-disactivated.png");
+                        .bgHoverFilter("filters-user-inactive.png");
                     }
                 }
 				&:hover{
@@ -248,10 +248,10 @@
 					.bgFilter("filters-reporting-selected.png");
 				}
 				&.enabledusers{
-                    .bgFilter("filters-human-selected.png");
+                    .bgFilter("filters-user-active-selected.png");
                 }
                 &.disabledusers{
-                    .bgFilter("filters-user-disactivated-selected.png");
+                    .bgFilter("filters-user-inactive-selected.png");
                 }
 				&:hover{
 					background-color: @filtersPanel-filterHover-bgColor !important;
