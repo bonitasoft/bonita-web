@@ -41,6 +41,13 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
 
     public static String TOKEN = "archivedcasequickdetailsadmin";
 
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+    }
+
     public ArchivedCaseQuickDetailsAdminPage() {
         super(ArchivedCaseDefinition.get());
     }

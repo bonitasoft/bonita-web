@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.cases.section.ArchivedTasksSection;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
@@ -44,6 +45,14 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class ArchivedCaseMoreDetailsAdminPage extends ItemQuickDetailsPage<ArchivedCaseItem> {
 
     public static final String TOKEN = "archivedcasemoredetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public ArchivedCaseMoreDetailsAdminPage(final ArchivedCaseItem archivedCase) {
         this();

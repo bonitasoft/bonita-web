@@ -162,7 +162,7 @@ SortableItemTable.getProfileFolderIndex = function(col, initialDomIndex){
 SortableItemTable.getInitialProfileFolderDomIndex = function(col){ 
 	var colAPIId = DOMUtil.getAPIid(col);
 	var childNodes = $(col).siblings(".tablePannel").addBack();
-	SortableItemTable.getProfileDomFromChildnodes(childNodes, colAPIId);
+	return SortableItemTable.getProfileDomFromChildnodes(childNodes, colAPIId);
 }
 SortableItemTable.getProfileDomFromChildnodes = function(childNodes, searchedAPIID){
 	for(var i = 0; i< childNodes.length; i++){

@@ -16,6 +16,11 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.DeleteMembershipAction;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.Page;
@@ -32,6 +37,14 @@ public class DeleteMembershipPage extends Page {
     private static final String PARAMETER_MEMBERSHIP_ID = "id";
 
     public final static String TOKEN = "deletemembership";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+        PRIVILEGES.add(RoleListingPage.TOKEN);
+    }
 
     public DeleteMembershipPage() {
     }
@@ -57,6 +70,7 @@ public class DeleteMembershipPage extends Page {
 
         addBody(
                 new Paragraph(_("Are you sure you want to delete this membership ?")),
+                new Paragraph("\n\n"),
                 new ButtonAction(_("Delete"), _("Delete this membership"), deleteAction),
                 new Button(_("Cancel"), _("Do not delete this membership"), new HistoryBackAction()));
 

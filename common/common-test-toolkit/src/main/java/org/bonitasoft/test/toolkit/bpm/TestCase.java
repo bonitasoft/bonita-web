@@ -172,6 +172,22 @@ public class TestCase {
     public ArchivedProcessInstance getArchive() {
         return getArchive(TestToolkitCtx.getInstance().getInitiator());
     }
+    
+    public void archive() throws InterruptedException {
+        TestUser user = TestToolkitCtx.getInstance().getInitiator();
+        APISession session = user.getSession();
+        try {
+            while (true) {
+                final TestHumanTask nextActivityInstance = getNextHumanTask(session);
+                if (nextActivityInstance != null) {
+                    nextActivityInstance.assignTo(user).execute(session);
+                }
+                Thread.sleep(SLEEP_TIME_MS);
+            }
+        } catch (NoActivityLeftException e) {
+            // no more activity, finished
+        }
+    }
 
     public long getId() {
         return this.processInstance.getId();

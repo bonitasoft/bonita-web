@@ -35,7 +35,7 @@
 	.stroke(1px, lighten(@txtColor, 100% - lightness(@txtColor)));
 }
 
-.pagerButton(@btnColor, @btnImage){
+.pagerButton(@btnColor, @btnImage, @btnImageDisable){
 	outline-color: lighten(@btnColor, 10%);
 	border: @button-pager-border;
 	.hideText();
@@ -47,10 +47,9 @@
 		border: @button-pager-borderHover;
 	}
 	&.disable {
-		border: @button-pager-border;
-		&:hover{
-			cursor: not-allowed;
-		}
+		border: @button-pager-border-disable;
+		.bg( @btnImageDisable, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
+		cursor: default;
 	}
 	+ a{
 		margin: @button-pager-marginBetween;
@@ -126,19 +125,19 @@
 	.fontSize(@filtersPanel-subfilters-fontSize);
 	.bgFilter(@bg, @bgColor, @bgLeft);
 }
-.bgHoverFilter(@bg, @bgLeft: @filtersPanel-filters-currentLine-backgroundLeft, @bgTop: @filtersPanel-filters-currentLine-backgroundTop){
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -moz-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -ms-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, linear-gradient(to bottom, #f20a08 0%, #b20706 100%) !important;
+.bgHoverFilter(@bg, @bgLeft: @filtersPanel-filters-currentLine-backgroundLeft, @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -moz-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -ms-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, linear-gradient(to bottom, @c1 @p1, @c2 @p2) !important;
 }
-.bgHoverSubFilter(@bg, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft,  @bgTop: @filtersPanel-filters-currentLine-backgroundTop){
+.bgHoverSubFilter(@bg, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft,  @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
     padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
 	.fontSize(@filtersPanel-subfilters-fontSize);
-	background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -moz-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -ms-linear-gradient(top, #f20a08 0%, #b20706 100%) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, linear-gradient(to bottom, #f20a08 0%, #b20706 100%) !important;
+	background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -moz-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -ms-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
+    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, linear-gradient(to bottom, @c1 @p1, @c2 @p2) !important;
 }
 .bgCurrentFilter(@bg, @bgColor: @filtersPanel-filterHover-bgColor){
 	.bgFilter(@bg,@bgColor);

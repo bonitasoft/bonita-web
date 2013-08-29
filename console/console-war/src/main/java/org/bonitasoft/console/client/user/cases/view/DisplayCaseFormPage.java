@@ -10,9 +10,14 @@ package org.bonitasoft.console.client.user.cases.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.Session;
@@ -33,6 +38,16 @@ import com.google.gwt.http.client.URL;
 public class DisplayCaseFormPage extends Page {
 
     public final static String TOKEN = "DisplayCaseForm";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     private final String UUID_SEPERATOR = "--";
     

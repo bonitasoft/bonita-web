@@ -1,3 +1,42 @@
+.page_tasklistingadmin .filters_panel .primary_filters{
+    a{
+        color: @filtersPanel-textColor;
+		font-weight: @filtersPanel-fontWeight;
+		.fontSize(@filtersPanel-fontSize);
+		.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
+		display: block;
+		padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
+		min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom ;
+        &.performed{
+            .bgFilter(@filtersPanel-filters-bgPerformed);
+            &:hover{
+                .bgHoverFilter(@filtersPanel-filters-bgPerformed);
+            }
+    	}
+    }
+    a.current{
+        &.performed{
+            .bgCurrentFilter(@filtersPanel-filters-bgPerformedSelected);
+        }
+    }
+    .body a.current, .body a.current:hover{
+		position: relative;
+		background-color: @filtersPanel-filtersCurrent-background !important;
+		color: @filtersPanel-filtersCurrent-link-textColor;
+		&:after{
+			position: absolute;
+			content: "";
+			display: block;
+			width: @filtersPanel-filtersCurrent-width;
+			.bg(@filtersPanel-filtersCurrent-bgArrow, no-repeat, @filtersPanel-filtersCurrent-background, center, right);
+			top: 0;
+			right: @filtersPanel-filtersCurrent-positionRight;
+			margin-right: 0px;
+			height: 100%;
+			z-index: @zIndex-currentArrow;
+		}
+	}
+}
 .filters_panel{
 	font-family: @filtersPanel-font;
 	color: @filtersPanel-textColor;
@@ -38,16 +77,22 @@
 				padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
 				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom ;
 				
-				&.available, &.enabledprocesses {
-					.bgFilter(@filtersPanel-filters-bgAvailable);
+                &.enabledprocesses{
+                    .bgFilter(@filtersPanel-filters-bgAvailable);
                     &:hover{
                         .bgHoverFilter(@filtersPanel-filters-bgAvailable);
                     }
+                }
+				&.available {
+					.bgFilter(@filtersPanel-filters-users-tasks-todo);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-users-tasks-todo);
+                    }
 				}
 				&.unassigned{
-					.bgSubFilter(@filtersPanel-filters-bgUnassigned);
+					.bgSubFilter(@filtersPanel-filters-users-tasks-available);
                     &:hover{
-                        .bgHoverSubFilter(@filtersPanel-filters-bgUnassigned);
+                        .bgHoverSubFilter(@filtersPanel-filters-users-tasks-available);
                     }
 				}
 				&.disabledprocesses{
@@ -69,21 +114,21 @@
                     }
 				}
 				&.assigned{
-					.bgSubFilter(@filtersPanel-filters-bgAssigned);
+					.bgSubFilter(@filtersPanel-filters-users-tasks-mytasks);
                     &:hover{
-                        .bgHoverSubFilter(@filtersPanel-filters-bgAssigned);
+                        .bgHoverSubFilter(@filtersPanel-filters-users-tasks-mytasks);
                     }
 				}
 				&.ignored{
-					.bgFilter(@filtersPanel-filters-bgIgnored);
+					.bgFilter(@filtersPanel-filters-users-tasks-hidden);
                     &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgIgnored);
+                        .bgHoverFilter(@filtersPanel-filters-users-tasks-hidden);
                     }
 				}
 				&.performed{
-					.bgFilter(@filtersPanel-filters-bgPerformed);
+					.bgFilter(@filtersPanel-filters-users-tasks-performed);
                     &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgPerformed);
+                        .bgHoverFilter(@filtersPanel-filters-users-tasks-performed);
                     }
 				}
 				&.mycases{
@@ -151,8 +196,11 @@
 				}
 			}
 			a.current{
-				&.available, &.enabledprocesses {
-					.bgCurrentFilter(@filtersPanel-filters-bgAvailableSelected);
+                &.enabledprocesses{
+                    .bgCurrentFilter(@filtersPanel-filters-bgAvailableSelected);
+                }
+				&.available {
+					.bgCurrentFilter(@filtersPanel-filters-users-tasks-todo-selected);
 				}
 				&.disabledprocesses{
 					.bgCurrentFilter(@filtersPanel-filters-bgUnassignedSelected);
@@ -164,16 +212,16 @@
 					.bgCurrentSubFilter("filters-unresolved-selected.png");
 				}
 				&.assigned{
-					.bgCurrentSubFilter(@filtersPanel-filters-bgAssignedSelected);
+					.bgCurrentSubFilter(@filtersPanel-filters-users-tasks-mytasks-selected);
 				}
 				&.unassigned{
-					.bgCurrentSubFilter(@filtersPanel-filters-bgUnassignedSelected);
+					.bgCurrentSubFilter(@filtersPanel-filters-users-tasks-available-selected);
 				}
 				&.ignored{
-					.bgCurrentFilter(@filtersPanel-filters-bgIgnoredSelected);
+					.bgCurrentFilter(@filtersPanel-filters-users-tasks-hidden-selected);
 				}
 				&.performed{
-					.bgCurrentFilter(@filtersPanel-filters-bgPerformedSelected);
+					.bgCurrentFilter(@filtersPanel-filters-users-tasks-performed-selected);
 				}
 				&.mycases{
 					.bgCurrentFilter(@filtersPanel-filters-bgMyCasesSelected);

@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
+import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
+
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +38,10 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
- * @author Séverin Moussel, Colin PUY
+ * @author Séverin Moussel
  */
-public class UserDatastore extends CommonDatastore<UserItem, User> implements DatastoreHasGet<UserItem> {
+public class UserDatastore extends CommonDatastore<UserItem, User>
+        implements DatastoreHasGet<UserItem> {
 
     private EngineClientFactory engineClientFactory;
     private UserItemConverter userItemConverter;
@@ -60,19 +63,22 @@ public class UserDatastore extends CommonDatastore<UserItem, User> implements Da
         User user = getUserEngineClient().update(id.toLong(), userUpdater);
         return userItemConverter.convert(user);
     }
-    
+
     public UserItem get(final APIID id) {
         User user = getUserEngineClient().get(id.toLong());
         return userItemConverter.convert(user);
     }
 
-    public void delete(final List<APIID> ids) {
-        getUserEngineClient().delete(APIID.toLongList(ids));
-    }
-
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
-
+        
+        if (filters.containsKey(UserItem.FILTER_GROUP_ID)) {
+            List<User> users =  getUserEngineClient().getUsersInGroup(Long.valueOf(filters.get(UserItem.FILTER_GROUP_ID)), 
+                    computeIndex(page, resultsByPage), resultsByPage);
+            
+            return new ItemSearchResult<UserItem>(page, resultsByPage, users.size(), userItemConverter.convert(users));
+        }
+        
         SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, 
                 new Sorts(orders, new UserSearchAttributeConverter()), 
                 new Filters(filters, new GenericFilterCreator(new UserSearchAttributeConverter())));
@@ -81,6 +87,10 @@ public class UserDatastore extends CommonDatastore<UserItem, User> implements Da
         
         return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(), 
                 userItemConverter.convert(engineSearchResults.getResult()));
+    }
+
+    public void delete(final List<APIID> ids) {
+        getUserEngineClient().delete(APIID.toLongList(ids));
     }
 
     // protected for tests

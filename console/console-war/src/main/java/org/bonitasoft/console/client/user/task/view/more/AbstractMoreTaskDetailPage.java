@@ -74,9 +74,7 @@ public abstract class AbstractMoreTaskDetailPage<T extends IHumanTaskItem> exten
         metadatas.addCaseId();
         metadatas.addState();
         metadatas.addPriority();
-        if (item.getAssignedId() != null) {
-            metadatas.addAssignedTo();
-        }
+        metadatas.addAssignedTo();
         metadatas.addDueDate(FORMAT.DISPLAY_RELATIVE);
         metadatas.addLastUpdateDate(FORMAT.DISPLAY);
         metadatas.addAssignedDate(FORMAT.DISPLAY);

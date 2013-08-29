@@ -16,19 +16,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
+import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCreator;
-import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupSearchDescriptor;
 import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
@@ -36,6 +31,9 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
+import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.GroupEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -44,8 +42,6 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -58,27 +54,19 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         DatastoreHasGet<GroupItem>,
         DatastoreHasSearch<GroupItem>, DatastoreHasDelete {
 
-    /**
-     * Default Constructor.
-     * 
-     * @param engineSession
-     */
+    private EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
+    
     public GroupDatastore(final APISession engineSession) {
         super(engineSession);
     }
 
-    /*
-     * Delete group(s)
-     */
+    private GroupEngineClient getGroupEngineClient() {
+        return engineClientFactory.createGroupEngineClient(getEngineSession()); 
+    }
+    
     @Override
     public void delete(final List<APIID> ids) {
-        try {
-            final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getEngineSession());
-            identityAPI.deleteGroups(APIID.toLongList(ids));
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-
+        getGroupEngineClient().delete(toLongList(ids));
     }
 
     @Override
@@ -89,16 +77,13 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
             addFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_NAME, GroupSearchDescriptor.NAME);
             addFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_DISPLAY_NAME, GroupSearchDescriptor.DISPLAY_NAME);
-
+            addFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_PARENT_PATH, GroupSearchDescriptor.PARENT_PATH);
+            
             SearchResult<Group> engineSearchResults;
             engineSearchResults = TenantAPIAccessor.getIdentityAPI(getEngineSession()).searchGroups(builder.done());
 
-            final List<GroupItem> consoleSearchResults = new ArrayList<GroupItem>();
-            for (final Group engineItem : engineSearchResults.getResult()) {
-                consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
-            }
-
-            return new ItemSearchResult<GroupItem>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
+            return new ItemSearchResult<GroupItem>(page, resultsByPage, engineSearchResults.getCount(), 
+                    new GroupItemConverter().convert(engineSearchResults.getResult()));
 
         } catch (final Exception e) {
             throw new APIException(e);
@@ -107,57 +92,23 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     public GroupItem get(final APIID id) {
-        try {
-            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(id.toLong());
-            return convertEngineToConsoleItem(result);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        Group result = getGroupEngineClient().get(id.toLong());
+        return new GroupItemConverter().convert(result);
     }
 
     @Override
     public GroupItem update(final APIID id, final Map<String, String> attributes) {
-        final GroupUpdater updater = new GroupUpdater();
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_DESCRIPTION)) {
-            updater.updateDescription(attributes.get(GroupItem.ATTRIBUTE_DESCRIPTION));
-        }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_PATH)) {
-            updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_PATH));
-        }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_PARENT_GROUP_ID)) {
-            updater.updateParentPath(attributes.get(GroupItem.ATTRIBUTE_PARENT_GROUP_ID));
-        }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_ICON)) {
-            updater.updateIconPath(attributes.get(GroupItem.ATTRIBUTE_ICON));
-        }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_NAME)) {
-            updater.updateName(attributes.get(GroupItem.ATTRIBUTE_NAME));
-        }
-
-        try {
-            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).updateGroup(id.toLong(), updater);
-            return convertEngineToConsoleItem(result);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        GroupUpdater updater = new GroupUpdaterConverter(getGroupEngineClient()).convert(attributes);
+        Group group = getGroupEngineClient().update(id.toLong(), updater);
+        return new GroupItemConverter().convert(group);
     }
 
     @Override
     public GroupItem add(final GroupItem group) {
-        try {
-            final Group result = TenantAPIAccessor.getIdentityAPI(getEngineSession()).createGroup(createGroupCreator(group));
-            return convertEngineToConsoleItem(result);
-        } catch (final AlreadyExistsException e) {
-            String message = _("Can't create group. Group '%groupName%' already exists", new Arg("groupName", group.getName()));
-            throw new APIForbiddenException(message, e);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group);
+        Group result = getGroupEngineClient().create(creator);
+        return new GroupItemConverter().convert(result);
     }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // COUNTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Long getNumberOfUsers(final APIID groupId) {
         try {
@@ -167,62 +118,8 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         }
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONVERTS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     protected GroupItem convertEngineToConsoleItem(final Group group) {
-        final GroupItem groupItem = new GroupItem();
-        groupItem.setCreatedByUserId(group.getCreatedBy());
-        groupItem.setCreationDate(group.getCreationDate());
-        groupItem.setDescription(group.getDescription());
-        groupItem.setDisplayName(group.getDisplayName());
-        groupItem.setIcon(group.getIconPath());
-        groupItem.setId(group.getId());
-        groupItem.setLastUpdateDate(group.getLastUpdate());
-        groupItem.setName(group.getName());
-        groupItem.setParentPath(group.getParentPath());
-        groupItem.setParentGroupId(group.getPath());
-        return groupItem;
-    }
-
-    protected final GroupCreator createGroupCreator(final GroupItem item) {
-        if (item == null) {
-            return null;
-        }
-
-        GroupCreator builder = new GroupCreator(item.getName());
-
-        if (!isBlank(item.getDescription())) {
-            builder.setDescription(item.getDescription());
-        }
-
-        if (!isBlank(item.getDisplayName())) {
-            builder.setDisplayName(item.getDisplayName());
-        }
-
-        if (!isBlank(item.getIcon())) {
-            builder.setIconName(item.getIcon());
-            builder.setIconPath(item.getIcon());
-        }
-        
-        if (!isBlank(item.getParentGroupId())) {
-            try {
-                Group group = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroup(Long.parseLong(item.getParentGroupId()));
-                if (group.getParentPath() == null) {
-                    builder.setParentPath("/"+group.getName());
-                } else {
-                    builder.setParentPath(group.getParentPath()+"/"+group.getName());
-                }
-            } catch (GroupNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
-        }
-
-        return builder;
+       throw new RuntimeException("Unimplemented method");
     }
 }

@@ -16,10 +16,13 @@ package org.bonitasoft.console.client.admin.process.view.section.entitymapping;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.action.ShowAddUserToActorPageAction;
 import org.bonitasoft.console.client.common.view.ViewParameter;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
@@ -40,6 +43,13 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.Table;
 public class ListProcessActorUserPage extends ListProcessActorMemberPage {
 
     public static final String TOKEN = "ListProcessActorUser";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     @Override
     public void defineTitle(final ActorItem actor) {

@@ -14,16 +14,22 @@
  */
 package org.bonitasoft.console.client.menu.view.navigation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.SHA1;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 import org.bonitasoft.web.toolkit.client.eventbus.events.ChangeViewEvent;
@@ -43,9 +49,11 @@ public class NavigationMenuView extends RawView {
 
     public static final String ONVIEWCHANGE_HANDLER_NAME = TOKEN + ".onviewchange";
 
-    private final NavigationMenu navigationMenu = new NavigationMenu(new JsId(MAIN_MENU_ID));
+    private NavigationMenu navigationMenu = new NavigationMenu(new JsId(MAIN_MENU_ID));
 
     private final MenuListCreator menuListCreator;
+
+    private boolean isDefault;
 
     public NavigationMenuView(MenuListCreator menuListCreator) {
         this.menuListCreator = menuListCreator;
@@ -59,8 +67,25 @@ public class NavigationMenuView extends RawView {
 
     @Override
     public void buildView() {
+        isDefault();
         addBody(navigationMenu);
         getProfileEntries(ClientApplicationURL.getProfileId(), updateNavigationMenuOnCallback());
+    }
+
+    private void isDefault() {
+
+        new APICaller(ProfileDefinition.get()).get(ClientApplicationURL.getProfileId(), new APICallback() {
+
+            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+
+                ProfileItem profile = (ProfileItem) JSonItemReader.parseItem(response, ProfileDefinition.get());
+                if (Boolean.valueOf(profile.getAttributeValue(ProfileItem.ATTRIBUTE_IS_DEFAULT))) {
+                    navigationMenu.addClass("notCustom");
+                } else {
+                    navigationMenu = (NavigationMenu) navigationMenu.removeClass("notCustom");
+                }
+            }
+        });
     }
 
     private APICallback updateNavigationMenuOnCallback() {
@@ -75,10 +100,25 @@ public class NavigationMenuView extends RawView {
     }
 
     private void updateNavigationMenu(final List<ProfileEntryItem> items) {
+        updateMenuItems(items);
         navigationMenu.addItems(menuListCreator.asList(items));
         listenViewChangeEvent(selectMenuOnChange());
         updateUI();
         navigationMenu.select(ViewController.getInstance().getCurrentPageToken());
+    }
+
+
+    private void updateMenuItems(List<ProfileEntryItem> items) {
+        List<String> availableTokens = new ArrayList<String>();
+        String sessionId = new String(Session.getParameter("session_id"));
+        
+        for (ProfileEntryItem item: items) {
+            String pageToken = item.getPage();
+            if (pageToken != null) {
+                availableTokens.add(SHA1.calcSHA1(pageToken.concat(sessionId)));
+            }
+        }
+        Session.addParameter("conf", availableTokens);
     }
 
     private List<ProfileEntryItem> parseProfileEntries(final String response) {

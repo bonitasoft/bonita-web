@@ -441,7 +441,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             final Expression mandatorySymbolExpression = applicationConfigFormDefinition.getApplicationMandatorySymbolExpression();
             final Expression mandatoryLabelExpression = applicationConfigFormDefinition.getApplicationMandatoryLabelExpression();
             final String mandatorySymbolClasses = applicationConfigFormDefinition.getApplicationMandatorySymbolStyle();
-            final String userXPURL = DefaultFormsPropertiesFactory.getDefaultFormProperties(tenantID).getUserXPURL();
+            final String userXPURL = DefaultFormsPropertiesFactory.getDefaultFormProperties(tenantID).getPortalURL();
             applicationConfig = new ApplicationConfig(applicationLabelExpression, mandatorySymbolExpression, mandatoryLabelExpression, mandatorySymbolClasses,
                     userXPURL);
             applicationConfig.setApplicationLayout(applicationLayout);

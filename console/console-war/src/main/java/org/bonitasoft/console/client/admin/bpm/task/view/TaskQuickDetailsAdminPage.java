@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.admin.bpm.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
@@ -46,7 +48,13 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNodeItem> {
 
-    public final static String TOKEN = "taskquickdetailsadmin";
+    public final static String TOKEN = "taskquickdetailsadmin";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+    }
 
     public TaskQuickDetailsAdminPage() {
         super(FlowNodeDefinition.get(), ArchivedFlowNodeDefinition.get());
@@ -89,6 +97,7 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addDueDate(getArchivedDateFormat());
+        metadatas.addAssignedTo();
         return metadatas.build();
     }
 
@@ -118,7 +127,7 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
 
     @Override
     protected List<String> defineDeploys() {
-        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID);
+        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
     }
 
     @Override

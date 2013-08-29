@@ -2,9 +2,12 @@ package org.bonitasoft.console.client.admin.profile.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.organization.users.action.AddMembershipAction;
+import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
@@ -30,12 +33,18 @@ public class AddMembershipToProfileMemberPage extends Page {
      * 
      */
     private static final String PARAMETER_PROFILE_ID = "profileId";
-
+    
     /**
      * the token of this page
      */
     public static final String TOKEN = "addMembershipToProfileMember";
-
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ListProfilePage.TOKEN);
+    }
+    
     public AddMembershipToProfileMemberPage() {
     }
 

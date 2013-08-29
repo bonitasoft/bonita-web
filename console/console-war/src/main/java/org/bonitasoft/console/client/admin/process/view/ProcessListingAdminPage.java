@@ -20,6 +20,7 @@ import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.VALUE_ACTIVA
 import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.VALUE_ACTIVATION_STATE_ENABLED;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,9 +52,16 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
  * @author Haojie Yuan, Zhiheng Yang
  */
 public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
-        {
+{
 
     public static final String TOKEN = "processlistingadmin";
+
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     private static final String TABLE_ACTION_DISABLE = "actiondisableprocesses";
 

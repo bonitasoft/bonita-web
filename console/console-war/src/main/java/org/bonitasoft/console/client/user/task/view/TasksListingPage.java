@@ -18,9 +18,16 @@ package org.bonitasoft.console.client.user.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.formatter.OverdueDateCellFormatter;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
@@ -53,7 +60,19 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
  */
 public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements PluginTask {
 
-    public static final String TOKEN = "tasklistinguser";
+    public static final String TOKEN = "tasklistinguser";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN); //FIX ME: we should create a humantaskmoredetails admin page so ill never need this
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     private static String TABLE_AVAILABLE = "available";
 

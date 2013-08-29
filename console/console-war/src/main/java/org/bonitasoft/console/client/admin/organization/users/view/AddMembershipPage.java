@@ -18,6 +18,11 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.AddMembershipAction;
 import org.bonitasoft.console.client.common.identity.view.PageOnUserItem;
 import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
@@ -42,6 +47,14 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 public class AddMembershipPage extends PageOnUserItem {
 
     public static final String TOKEN = "addmembership";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+        PRIVILEGES.add(RoleListingPage.TOKEN);
+    }
 
     public AddMembershipPage() {
     }

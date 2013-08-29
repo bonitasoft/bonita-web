@@ -36,7 +36,6 @@ import org.bonitasoft.forms.client.view.widget.UserLogoutWidget;
 import org.bonitasoft.web.rest.model.user.User;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
@@ -420,22 +419,12 @@ public class FormApplicationViewController {
         formPagesViewController.setMandatoryFieldSymbol(mandatoryFieldSymbol);
         formPagesViewController.setMandatoryFieldLabel(mandatoryFieldLabel);
         formPagesViewController.setMandatoryFieldClasses(mandatoryFieldClasses);
-        hideLoading();
+
         if (formId != null) {
             formPagesViewController.createForm();
         } else {
             final String errorMessage = FormsResourceBundle.getMessages().inboxEmptyMessage();
             formsServiceAsync.getApplicationErrorTemplate(formId, urlContext, new ErrorPageHandler(applicationHTMLPanel, formId, errorMessage, elementId));
-        }
-    }
-
-    /**
-     * Hide loading
-     */
-    protected void hideLoading() {
-        final Element loadingElement = DOM.getElementById("loading");
-        if (loadingElement != null) {
-            loadingElement.getStyle().setProperty("display", "none");
         }
     }
 

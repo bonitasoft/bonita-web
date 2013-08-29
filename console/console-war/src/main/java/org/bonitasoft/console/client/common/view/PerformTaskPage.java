@@ -18,21 +18,27 @@ package org.bonitasoft.console.client.common.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.model.TaskAPI;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
-import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
@@ -46,6 +52,18 @@ import com.google.gwt.http.client.URL;
 public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
     public final static String TOKEN = "performTask";
+
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN); // FIX ME: we should create a humantaskmoredetails admin page so ill never need this
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public static final String PARAMETER_USER_ID = "userid";
 
@@ -83,7 +101,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
                 }
             });
         } else if (!task.getAssignedId().equals(getUserId())) {
-            addBody(new Paragraph(_("You can't perform this task, it has already been assigned to someone else.")));
+            ViewController.showView(TasksListingPage.TOKEN);
+            throw new APIException(_("You can't perform this task, it has already been assigned to someone else."));
         } else {
             addBody(createFormIframe(task));
         }

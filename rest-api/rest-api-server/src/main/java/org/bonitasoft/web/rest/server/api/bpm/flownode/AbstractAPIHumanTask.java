@@ -58,9 +58,16 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
     public ITEM update(final APIID id, final Map<String, String> attributes) {
         // Cant unassigned a manual task
         final String assignedUserId = attributes.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
-        if (attributes.containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID) && StringUtil.isBlank(assignedUserId)) {
-            if (get(id).isManualTask()) {
+        if (assignedUserId.length() > 0) {
+            ITEM humanTask = get(id);
+            if (humanTask.isManualTask() && StringUtil.isBlank(assignedUserId)) {
                 throw new APIForbiddenException("Can't unassigned a manual task.");
+            }
+            if (humanTask.getAttributes().containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) {
+                if (humanTask.getAttributeValue(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID) != null
+                        && !humanTask.getAttributeValue(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).equals(assignedUserId)) {
+                    throw new APIForbiddenException("Can't assign this task because it has already been assigned.");
+                }
             }
         }
 

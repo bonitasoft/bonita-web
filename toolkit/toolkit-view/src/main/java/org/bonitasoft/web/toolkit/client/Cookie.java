@@ -36,7 +36,7 @@ public class Cookie extends ParametersStorage {
 
     private static final String LOGIN_COOKIE_NAME = "BOS_Locale";
 
-    private static final long COOKIE_EXPIRE = 604800000; // 7 days
+    private static final long COOKIE_EXPIRE = 6048000000L; // 70 days
 
     private static Cookie SINGLETON = new Cookie();
 

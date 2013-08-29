@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
@@ -51,6 +53,14 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     public static final String TOKEN = "usermoredetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+        PRIVILEGES.add(RoleListingPage.TOKEN);
+    }
 
     public UserMoreDetailsAdminPage() {
         addClass(CssClass.MORE_DETAILS);

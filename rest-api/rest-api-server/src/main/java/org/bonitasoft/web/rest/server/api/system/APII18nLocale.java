@@ -15,7 +15,6 @@
 package org.bonitasoft.web.rest.server.api.system;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
@@ -23,29 +22,26 @@ import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleItem;
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Julien Mege
  */
+// TODO add url pathParameter to load available locales by application (portal, mobile, platform, ...)
 public class APII18nLocale extends API<I18nLocaleItem> {
 
+    private static final String DEFAULT_APPLICATION = "portal";
+    
     @Override
-    protected ItemDefinition defineItemDefinition() {
-        return Definitions.get(I18nLocaleDefinition.TOKEN);
-    }
-
-    @Override
-    public String defineDefaultSearchOrder() {
-        return "";
+    protected ItemDefinition<I18nLocaleItem> defineItemDefinition() {
+        return I18nLocaleDefinition.get();
     }
 
     @Override
     public ItemSearchResult<I18nLocaleItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final Map<String, String> availableLocales = I18n.getAvailableLocales();
+        final Map<String, String> availableLocales = I18n.getAvailableLocalesFor(DEFAULT_APPLICATION);
         final LinkedList<I18nLocaleItem> items = new LinkedList<I18nLocaleItem>();
 
         for (final String locale : availableLocales.keySet()) {
@@ -61,11 +57,7 @@ public class APII18nLocale extends API<I18nLocaleItem> {
     }
 
     @Override
-    protected void fillDeploys(final I18nLocaleItem item, final List<String> deploys) {
+    public String defineDefaultSearchOrder() {
+        return "";
     }
-
-    @Override
-    protected void fillCounters(final I18nLocaleItem item, final List<String> counters) {
-    }
-
 }

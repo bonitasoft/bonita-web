@@ -26,6 +26,7 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
+import org.bonitasoft.engine.identity.UserCriterion;
 import org.bonitasoft.engine.identity.UserCreator.UserField;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.identity.UserUpdater;
@@ -87,5 +88,9 @@ public class UserEngineClient {
         } catch (SearchException e) {
             throw new APIException(_("Error when searching users"), e);
         }
+    }
+    
+    public List<User> getUsersInGroup(long groupId, int startIndex, int maxResults) {
+        return identityAPI.getUsersInGroup(groupId, startIndex, maxResults, UserCriterion.LAST_NAME_ASC);
     }
 }

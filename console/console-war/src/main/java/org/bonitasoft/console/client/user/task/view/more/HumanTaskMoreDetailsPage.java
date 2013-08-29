@@ -16,15 +16,24 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
 import org.bonitasoft.console.client.user.task.action.UserTasksUnhideAction;
 import org.bonitasoft.console.client.user.task.view.PluginTask;
 import org.bonitasoft.console.client.user.task.view.TaskButtonFactory;
+import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
@@ -42,7 +51,19 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
  */
 public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTaskItem> implements PluginTask {
 
-    public static String TOKEN = "taskdetails";
+    public static String TOKEN = "taskdetails";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public HumanTaskMoreDetailsPage() {
         super(HumanTaskDefinition.get());

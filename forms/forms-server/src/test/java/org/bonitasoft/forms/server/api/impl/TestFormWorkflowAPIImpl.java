@@ -40,6 +40,7 @@ import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
@@ -48,6 +49,7 @@ import org.bonitasoft.engine.expression.ExpressionBuilder;
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.forms.client.model.ActionType;
 import org.bonitasoft.forms.client.model.ActivityAttribute;
 import org.bonitasoft.forms.client.model.ActivityEditState;
@@ -806,6 +808,15 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
             getTaskEditState_return_NOT_EDITABLE_if_task_is_performed_using_archived_task_ID() throws Exception {
         final TestHumanTask task = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).startCase().getNextHumanTask();
         task.assignTo(getInitiator()).execute();
+        Assert.assertTrue("task not executed yet", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                final SearchOptions searchOptions = new SearchOptionsBuilder(0, 10).filter(ArchivedHumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID,
+                        task.getHumanTaskInstance().getParentProcessInstanceId()).done();
+                return processAPI.searchArchivedHumanTasks(searchOptions).getCount() == 1;
+            }
+        }.waitUntil());
 
         final ActivityEditState state = formWorkflowApi.getTaskEditState(getSession(), processAPI.getArchivedActivityInstance(task.getId()).getId(), true);
 

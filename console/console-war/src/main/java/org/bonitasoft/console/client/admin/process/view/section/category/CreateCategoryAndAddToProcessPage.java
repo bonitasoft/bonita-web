@@ -18,9 +18,12 @@ package org.bonitasoft.console.client.admin.process.view.section.category;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.section.category.action.CreateCategoryAction;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
@@ -46,6 +49,13 @@ public class CreateCategoryAndAddToProcessPage extends AddProcessCategoryPage {
     private static final String PARAMETER_PROCESS_NAME = "processName";
 
     public static final String TOKEN = "CreateCategoryAndAddToProcess";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public CreateCategoryAndAddToProcessPage() {
     }

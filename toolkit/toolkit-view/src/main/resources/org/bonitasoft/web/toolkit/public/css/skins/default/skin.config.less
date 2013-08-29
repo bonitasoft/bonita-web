@@ -89,13 +89,16 @@
 @pager-padding: 1*@h 5*@w 3*@h 0;
 @button-pager-marginBetween: 0 0 0 1*@w;
 @button-pager-border: @border-width solid #c2c2c2;
+@button-pager-border-disable: @border-width solid #DCDCDC;
 @button-pager-borderHover:@border-width solid #666666;
 @button-pager-width: 5*@w;
 @button-pager-height: 5*@h;
 @button-pager-bgX: center;
 @button-pager-bgY: center;
 @button-pager-nextBg: "pager-next.png";
+@button-pager-nextBg-disable: "pager-next-disable.png";
 @button-pager-previousBg: "pager-previous.png";
+@button-pager-previousBg-disable: "pager-previous-disable.png";
 @button-pager-bgColor: #fff;
 @button-pager-margin: 0 0 0 1*@w;
 @pager-resultsCount-padding: 2*@w;
@@ -193,7 +196,7 @@
 @header-menu-link-padding: @header-menu-link-paddingY @header-menu-link-paddingX;
 @header-menuEditor-actionLink-width: 4*@w;
 @header-menuEditor-link-padding: @header-menu-link-paddingY @header-menu-link-paddingX @header-menu-link-paddingY (@header-menu-link-paddingX - @header-menuEditor-actionLink-width);
-
+@header-menu-link-disabled-color: #A0A0A0;
 
 @header-menu-link-borderWidth: @border-width;
 @header-menu-link-borderLeft: @header-menu-link-borderWidth solid darken(@mainAccentColor, 7%);
@@ -347,6 +350,17 @@
 @filtersPanel-subfilters-paddingLeft: 14*@w;
 @filtersPanel-filters-paddingRight: 3*@w;
 
+@filtersPanel-filters-users-tasks-todo: "filters-users-tasks-todo.png";
+@filtersPanel-filters-users-tasks-todo-selected: "filters-users-tasks-todo-selected.png";
+@filtersPanel-filters-users-tasks-available: "filters-users-tasks-available.png";
+@filtersPanel-filters-users-tasks-available-selected: "filters-users-tasks-available-selected.png";
+@filtersPanel-filters-users-tasks-mytasks: "filters-users-tasks-mytasks.png";
+@filtersPanel-filters-users-tasks-mytasks-selected: "filters-users-tasks-mytasks-selected.png";
+@filtersPanel-filters-users-tasks-hidden: "filters-users-tasks-hidden.png";
+@filtersPanel-filters-users-tasks-hidden-selected: "filters-users-tasks-hidden-selected.png";
+@filtersPanel-filters-users-tasks-performed: "filters-users-tasks-performed.png";
+@filtersPanel-filters-users-tasks-performed-selected: "filters-users-tasks-performed-selected.png";
+
 @filtersPanel-filters-bgAvailable: "filters-available.png";
 @filtersPanel-filters-bgAvailableSelected: "filters-available-selected.png";
 
@@ -400,15 +414,16 @@
 @filtersPanel-filtersResourceTitle-display: block;
 @filtersPanel-filtersResourceTitle-fontSize: 22;
 @filtersPanel-filtersResourceTitle-fontStyle: italic;
-@filtersPanel-filtersResourceTitle-margin: 0 @filtersPanel-filters-paddingRight 3*@h 0;
+@filtersPanel-filtersResourceTitle-margin: 3*@h @filtersPanel-filters-paddingRight 0 0;
 @filtersPanel-filters-filtersResourceTitle-padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom 4*@w;
 @filtersPanel-filters-filtersResourceTitle-borderColor1: darken(@mainAccentColor, 7%);
 @filtersPanel-filters-filtersResourceTitle-borderHeight: @border-width;
+@filtersPanel-filters-filtersResourceTitle-top-borderHeight: 3px;
 @filtersPanel-filters-filtersResourceTitle-borderColor2: lighten(@mainAccentColor, 8.5%);
 
 @filtersPanel-filters-filtersResourceTitle-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
-@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
+@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-top-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
 @filtersPanel-filters-filtersResourceTitleContainer-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-process-bgImage: "filters-resource-process.png";
 @filtersPanel-filters-filtersResourceTitle-process-bgX: 4*@w;
@@ -640,7 +655,7 @@
 @profileList-line-position: relative;
 @profileList-header-icon-width: 3*@w;
 @profileList-description-top: @tablesPanel-table-line-paddingTop + @tablesPanel-table-cell-fontSize + 7px;
-@profileList-description-left: 37px;
+@profileList-description-left: 57px;
 @profileList-description-textColor: #82837e;
 @profileList-description-fontSize: 12;
 @profileList-description-position: absolute;
@@ -657,6 +672,7 @@
 @profileMoreDetails-deleteProfileEntryLink-width: 6*@w;
 @profileMoreDetails-deleteProfileEntryLink-height: 4*@h;
 
+@profileMoreDetails-menuEditor-padding: 0 0 @header-menu-link-paddingY (@filtersPanel-width - @moreDetails-paddingLeft - @moreDetails-section-header-paddingX);
 @profileMoreDetails-menuEditor-folder-padding: @header-menu-link-paddingY (@header-menu-link-paddingX - @profileMoreDetails-deleteProfileEntryLink-width) @header-menu-link-paddingY @header-menu-link-paddingX;
 @profileMoreDetails-menuEditor-folder-borderTop: none;
 @profileMoreDetails-menuEditor-folder-textAlign: left;

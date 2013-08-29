@@ -16,7 +16,17 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.view.PluginTask;
+import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 
@@ -27,7 +37,19 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
  */
 public class ArchivedHumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<ArchivedHumanTaskItem> implements PluginTask {
 
-    public static String TOKEN = "archivedtaskmoredetails";
+    public static String TOKEN = "archivedtaskmoredetails";    
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(TasksListingPage.TOKEN);
+        PRIVILEGES.add(TaskListingAdminPage.TOKEN);
+        PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public ArchivedHumanTaskMoreDetailsPage() {
         super(ArchivedHumanTaskDefinition.get());

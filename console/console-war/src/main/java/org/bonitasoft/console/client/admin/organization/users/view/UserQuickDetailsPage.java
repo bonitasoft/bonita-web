@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,12 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
 
     public static final String TOKEN = "userquickdetails";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+    }
 
     public UserQuickDetailsPage() {
         super(Definitions.get(UserDefinition.TOKEN));

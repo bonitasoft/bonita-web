@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
+import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ import org.junit.Test;
  * @author Fabio Lombardi
  * 
  */
-public class PageListerTest {
+public class PageListerTest extends APITestWithMock {
 
     private PageLister pageLister;
 

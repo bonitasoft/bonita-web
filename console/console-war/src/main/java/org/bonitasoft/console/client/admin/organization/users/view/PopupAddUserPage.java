@@ -18,6 +18,9 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.console.client.admin.organization.users.action.AddUserFormAction;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
@@ -35,6 +38,12 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 public class PopupAddUserPage extends Page {
 
     public static final String TOKEN = "popupadduserpage";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(UserListingAdminPage.TOKEN);
+    }
 
     @Override
     public void defineTitle() {

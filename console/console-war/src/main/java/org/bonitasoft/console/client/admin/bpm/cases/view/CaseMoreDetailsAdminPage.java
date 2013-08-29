@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirectionAction;
 import org.bonitasoft.console.client.admin.bpm.cases.action.TaskRedirectionAction;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
@@ -56,6 +57,14 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
 
     public static final String TOKEN = "casemoredetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public CaseMoreDetailsAdminPage() {
         addClass(CssClass.MORE_DETAILS);

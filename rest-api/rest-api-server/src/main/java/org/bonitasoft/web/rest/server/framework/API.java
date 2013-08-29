@@ -63,7 +63,7 @@ public abstract class API<ITEM extends IItem> {
 
     protected ItemDefinition<ITEM> itemDefinition = null;
 
-    private Map<String, Deployer> deployers = new HashMap<String, Deployer>();
+    private final Map<String, Deployer> deployers = new HashMap<String, Deployer>();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -119,6 +119,10 @@ public abstract class API<ITEM extends IItem> {
      */
     protected final HttpSession getHttpSession() {
         return this.caller.getHttpSession();
+    }
+
+    protected String getLocale() {
+        return this.caller.getLocale();
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,8 +239,8 @@ public abstract class API<ITEM extends IItem> {
         return ((DatastoreHasGet<ITEM>) datastore).get(id);
     }
 
-    public ItemSearchResult<ITEM> runSearch(final int page, final int resultsByPage, final String search,
-            final String orders, final Map<String, String> filters, final List<String> deploys, final List<String> counters) {
+    public ItemSearchResult<ITEM> runSearch(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters, final List<String> deploys, final List<String> counters) {
 
         // FIXME Activate at end of APIs refactoring
         // if (!(this instanceof APIHasSearch)) {
@@ -249,13 +253,12 @@ public abstract class API<ITEM extends IItem> {
 
             // TODO remove this test and exception while the automated unit test over all APis
             if (realOrders == null) {
-                throw new APIException("No default search order defined. Please, override the defineDefaultSearchOrder method in "
-                        + this.getClass().toString() + ".");
+                throw new APIException("No default search order defined. Please, override the defineDefaultSearchOrder method in " + this.getClass().toString()
+                        + ".");
             }
         }
 
-        final ItemSearchResult<ITEM> searchResult = search(page, resultsByPage, search, realOrders,
-                filters != null ? filters : new HashMap<String, String>());
+        final ItemSearchResult<ITEM> searchResult = search(page, resultsByPage, search, realOrders, filters != null ? filters : new HashMap<String, String>());
 
         for (final ITEM item : searchResult.getResults()) {
             fillDeploys(item, deploys != null ? deploys : new ArrayList<String>());
@@ -527,17 +530,17 @@ public abstract class API<ITEM extends IItem> {
     // DEPLOYS AND COUNTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void addDeployer(Deployer deployer) {
+    public void addDeployer(final Deployer deployer) {
         deployers.put(deployer.getDeployedAttribute(), deployer);
     }
 
     protected void fillDeploys(final ITEM item, final List<String> deploys) {
-        for (String attribute : deploys) {
+        for (final String attribute : deploys) {
             deployAttribute(attribute, item);
         }
     }
 
-    private void deployAttribute(String attribute, final ITEM item) {
+    private void deployAttribute(final String attribute, final ITEM item) {
         if (deployers.containsKey(attribute)) {
             deployers.get(attribute).deployIn(item);
         }
@@ -555,9 +558,7 @@ public abstract class API<ITEM extends IItem> {
     protected final boolean isDeployable(final String attributeName, final List<String> deploys, final IItem item) {
         final String attributeValue = item.getAttributeValue(attributeName);
 
-        return deploys.contains(attributeName)
-                && attributeValue != null
-                && APIID.makeAPIID(attributeValue) != null;
+        return deploys.contains(attributeName) && attributeValue != null && APIID.makeAPIID(attributeValue) != null;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

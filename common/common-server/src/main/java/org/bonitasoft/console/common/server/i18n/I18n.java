@@ -30,12 +30,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
  */
 public class I18n extends AbstractI18n {
 
-    private static final String BONITA_HOME = System.getProperty("bonita.home");
-
-    private static final String I18N_PATH = "client" + File.separator + "platform" + File.separator + "work" + File.separator + "i18n"
-            + File.separator;
-
-    private static final File I18N_DIR = new File(BONITA_HOME, I18N_PATH);
+    private static final File I18N_DIR = getI18nDirectory();
 
     private I18n() {
         // Singleton
@@ -48,6 +43,13 @@ public class I18n extends AbstractI18n {
         return (I18n) I18N_instance;
     }
 
+    private static File getI18nDirectory() {
+        String bonitaHome = System.getProperty("bonita.home");
+        String i18nPath = "client" + File.separator + "platform" + File.separator + "work" + File.separator + "i18n"
+                + File.separator;
+        return new File(bonitaHome, i18nPath);
+    }
+    
     @Override
     public void loadLocale(final LOCALE locale) {
         Map<String, String> results = loadLocale(locale, FileUtils.listDir(I18N_DIR));
@@ -74,20 +76,23 @@ public class I18n extends AbstractI18n {
         return new String("(.*)" + locale.toString().trim() + ".po");
     }
 
-    private static File getLocaleFile(final String locale) {
-        return new File(BONITA_HOME, I18N_PATH + locale + ".po");
-    }
-
-    public static Map<String, String> getAvailableLocales() {
+    public static Map<String, String> getAvailableLocalesFor(String application) {
         final Map<String, String> results = new LinkedHashMap<String, String>();
         final Map<String, String> locales = getLocales();
 
         for (final String locale : locales.keySet()) {
-            if (getLocaleFile(locale).exists()) {
+            if (getLocaleFile(locale, application).exists()) {
                 results.put(locale, locales.get(locale));
             }
         }
 
         return results;
+    }
+
+    /**
+     * @return available locale file for a specified application (i.e application_locale.po)
+     */
+    private static File getLocaleFile(String locale, String application) {
+        return new File(I18N_DIR, application + "_" + locale + ".po");
     }
 }

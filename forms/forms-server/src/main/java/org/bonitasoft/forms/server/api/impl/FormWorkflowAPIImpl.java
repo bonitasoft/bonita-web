@@ -284,7 +284,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final Map<String, FormFieldValue> fieldValues, final List<FormAction> actions, final Locale locale, final String submitButtonId,
             final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
-        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context);
+        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context, true);
         if (context != null) {
             evalContext.putAll(context);
         }
@@ -345,7 +345,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
         final CommandAPI commandAPI = bpmEngineAPIUtil.getCommandAPI(session);
         final Map<String, Serializable> excuteParameters = new HashMap<String, Serializable>();
-        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context);
+        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context, true);
         if (context != null) {
             evalContext.putAll(context);
         }
@@ -408,9 +408,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             }
         } else {
             final ArchivedFlowNodeInstance archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(activityInstanceID);
-            if (isHumanTask(archivedFlowNodeInstance)) {
-                return ActivityEditState.NOT_EDITABLE;
-            }
             activityInstanceState = archivedFlowNodeInstance.getState();
         }
 
@@ -726,7 +723,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     }
 
     private boolean isHumanTask(final ArchivedFlowNodeInstance archivedActivityInstance) {
-        return !FlowNodeType.USER_TASK.equals(archivedActivityInstance.getType()) && !FlowNodeType.HUMAN_TASK.equals(archivedActivityInstance.getType());
+        return FlowNodeType.USER_TASK.equals(archivedActivityInstance.getType()) || FlowNodeType.MANUAL_TASK.equals(archivedActivityInstance.getType())
+                || FlowNodeType.HUMAN_TASK.equals(archivedActivityInstance.getType());
     }
 
     /**

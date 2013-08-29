@@ -16,6 +16,7 @@ package org.bonitasoft.console.client.admin.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +55,13 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessItem> {
 
     public static final String TOKEN = "processmoredetailsadmin";
+    
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+    
+    static {
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
+    }
 
     public ProcessMoreDetailsAdminPage(final ProcessItem process) {
         this();

@@ -22,7 +22,6 @@ import java.util.Map;
 
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
-import org.bonitasoft.engine.bpm.process.ActivationState;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
@@ -43,7 +42,6 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
-
 /**
  * Process data store
  * 
@@ -63,24 +61,24 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
      */
     private static final String FILE_UPLOAD = "fileupload";
 
-    private EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
-    
+    private final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
+
     public ProcessDatastore(final APISession engineSession) {
         super(engineSession);
     }
 
     @Override
     public ProcessItem add(final ProcessItem process) {
-        ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
-        File barFile = new File(process.getAttributes().get(FILE_UPLOAD));
-        BusinessArchive businessArchive = readBusinessArchive(barFile);
-        ProcessDefinition deployedArchive = engineClient.deploy(businessArchive);
-        ProcessDeploymentInfo processDeploymentInfo = engineClient.getProcessDeploymentInfo(deployedArchive.getId());
+        final ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
+        final File barFile = new File(process.getAttributes().get(FILE_UPLOAD));
+        final BusinessArchive businessArchive = readBusinessArchive(barFile);
+        final ProcessDefinition deployedArchive = engineClient.deploy(businessArchive);
+        final ProcessDeploymentInfo processDeploymentInfo = engineClient.getProcessDeploymentInfo(deployedArchive.getId());
         return convertEngineToConsoleItem(processDeploymentInfo);
     }
 
     /*
-     * Overridden in SP 
+     * Overridden in SP
      */
     protected BusinessArchive readBusinessArchive(final File file) {
         try {
@@ -89,12 +87,12 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
             throw new APIException(e);
         }
     }
-    
+
     @Override
     public ProcessItem update(final APIID id, final Map<String, String> attributes) {
         final ProcessDeploymentInfoUpdater updater = new ProcessDeploymentInfoUpdater();
 
-        ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
+        final ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
         if (attributes.containsKey(ProcessItem.ATTRIBUTE_DISPLAY_DESCRIPTION)) {
             updater.setDisplayDescription(attributes.get(ProcessItem.ATTRIBUTE_DISPLAY_DESCRIPTION));
         }
@@ -111,16 +109,16 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
         if (attributes.containsKey(ProcessItem.ATTRIBUTE_ACTIVATION_STATE)) {
             changeProcessState(engineClient, id.toLong(), attributes.get(ProcessItem.ATTRIBUTE_ACTIVATION_STATE));
         }
-        
+
         if (!updater.getFields().isEmpty()) {
-            ProcessDeploymentInfo processDeploymentInfo = engineClient.updateProcessDeploymentInfo(id.toLong(), updater);
+            final ProcessDeploymentInfo processDeploymentInfo = engineClient.updateProcessDeploymentInfo(id.toLong(), updater);
             return convertEngineToConsoleItem(processDeploymentInfo);
         } else {
-            return convertEngineToConsoleItem(engineClient.getProcessDeploymentInfo(id.toLong())); 
+            return convertEngineToConsoleItem(engineClient.getProcessDeploymentInfo(id.toLong()));
         }
     }
 
-    private void changeProcessState(ProcessEngineClient engineClient, Long processId, String state) {
+    private void changeProcessState(final ProcessEngineClient engineClient, final Long processId, final String state) {
         if (ProcessItem.VALUE_ACTIVATION_STATE_DISABLED.equals(state)) {
             engineClient.disableProcess(processId);
         } else if (ProcessItem.VALUE_ACTIVATION_STATE_ENABLED.equals(state)) {
@@ -130,26 +128,26 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
 
     @Override
     public ProcessItem get(final APIID id) {
-        ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
-        ProcessDeploymentInfo processDeploymentInfo = engineClient.getProcessDeploymentInfo(id.toLong());
+        final ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
+        final ProcessDeploymentInfo processDeploymentInfo = engineClient.getProcessDeploymentInfo(id.toLong());
         return convertEngineToConsoleItem(processDeploymentInfo);
     }
 
     @Override
     public void delete(final List<APIID> ids) {
-        ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
-        engineClient.deleteProcesses(APIID.toLongList(ids));
+        final ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
+        engineClient.deleteDisabledProcesses(APIID.toLongList(ids));
     }
-    
+
     @Override
     public ItemSearchResult<ProcessItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
+        final ProcessEngineClient engineClient = engineClientFactory.createProcessEngineClient(getEngineSession());
         return new SearchProcessHelper(engineClient).search(page, resultsByPage, search, orders, filters);
     }
 
     @Override
-    protected ProcessItem convertEngineToConsoleItem(ProcessDeploymentInfo item) {
+    protected ProcessItem convertEngineToConsoleItem(final ProcessDeploymentInfo item) {
         if (item != null) {
             return new ProcessItemConverter().convert(item);
         }

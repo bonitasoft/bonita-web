@@ -67,6 +67,7 @@ import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
+import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -223,8 +224,10 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             } else {
                 return formPage.getReducedFormPage();
             }
-        } catch (final ForbiddenFormAccessException e) {
+        } catch (final ApplicationFormDefinitionNotFoundException e) {
             throw new ForbiddenFormAccessException(e);
+        } catch (final ForbiddenFormAccessException e) {
+            throw e;
         } catch (final MigrationProductVersionNotIdenticalException e) {
             throw new MigrationProductVersionNotIdenticalException(e);
         } catch (final CanceledFormException e) {
@@ -335,7 +338,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
             return formPage.getReducedFormPage();
         } catch (final ForbiddenFormAccessException e) {
-            throw new ForbiddenFormAccessException(e);
+            throw e;
         } catch (final CanceledFormException e) {
             throw new CanceledFormException(e);
         } catch (final SuspendedFormException e) {
@@ -604,9 +607,17 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     protected void setFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
             final Map<String, Serializable> transientDataContext, final Map<String, Object> context) {
 
-        final HttpServletRequest request = getThreadLocalRequest();
-        final HttpSession session = request.getSession();
-        formServiceProvider.storeFormTransientDataContext(session, TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, transientDataContext, context);
+        formServiceProvider.storeFormTransientDataContext(getSession(),
+                TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID,
+                transientDataContext,
+                context);
+    }
+
+    /*
+     * Code smell. Shouldn't be protected but avoid npe during tests.
+     */
+    protected HttpSession getSession() {
+        return getThreadLocalRequest().getSession();
     }
 
     /**

@@ -254,6 +254,8 @@ public class URLUtils {
         String localeStr = null;
         if (Window.Location.getParameter(LOCALE_PARAM) == null) {
             localeStr = Cookies.getCookie(BOS_LOCALE_COOKIE_NAME);
+        } else {
+            localeStr = Window.Location.getParameter(LOCALE_PARAM);
         }
         if (localeStr == null || localeStr.length() == 0) {
             localeStr = LocaleInfo.getCurrentLocale().getLocaleName();
@@ -379,8 +381,8 @@ public class URLUtils {
      * @param hashParamsToAdd
      * @return the new url to set
      */
-    protected String rebuildUrl(final String url, final Map<String, List<String>> parametersMap, final String hash, 
-            final List<String> paramsToRemove, final Map<String, String> paramsToAdd, 
+    protected String rebuildUrl(final String url, final Map<String, List<String>> parametersMap, final String hash,
+            final List<String> paramsToRemove, final Map<String, String> paramsToAdd,
             final List<String> hashParamsToRemove, final Map<String, String> hashParamsToAdd) {
 
         String urlParams = buildUrlParameters(parametersMap, paramsToRemove, paramsToAdd);
@@ -579,7 +581,7 @@ public class URLUtils {
         } else {
             return null;
         }
-    
+
         return theURL.toString();
     }
 

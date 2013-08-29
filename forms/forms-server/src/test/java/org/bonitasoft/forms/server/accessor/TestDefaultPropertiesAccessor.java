@@ -47,7 +47,7 @@ public class TestDefaultPropertiesAccessor extends FormsTestCase {
     }
 
     @Test
-    public void testGetUserXPURL() throws Exception {
-        Assert.assertEquals("/bonita", defaultPropertiesAccessor.getUserXPURL());
+    public void testGetPortalURL() throws Exception {
+        Assert.assertEquals("/bonita", defaultPropertiesAccessor.getPortalURL());
     }
 }

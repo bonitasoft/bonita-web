@@ -22,8 +22,8 @@
 	</filter>
 	<!-- SSO filter -->
 	<filter>
-		<filter-name>SSOFilter</filter-name>
-		<filter-class>org.bonitasoft.console.common.server.sso.filter.SSOFilter</filter-class>
+		<filter-name>InternalSSOFilter</filter-name>
+		<filter-class>org.bonitasoft.console.common.server.sso.filter.InternalSSOFilter</filter-class>
 	</filter>
 	<!-- Cache Filter -->
 	<filter>
@@ -95,11 +95,11 @@
 		<url-pattern>/API/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>SSOFilter</filter-name>
+		<filter-name>InternalSSOFilter</filter-name>
 		<url-pattern>/portal/BonitaConsole.html</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>SSOFilter</filter-name>
+		<filter-name>InternalSSOFilter</filter-name>
 		<url-pattern>/portal/homepage</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
@@ -191,7 +191,7 @@
 		<servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
 		<init-param>
 			<param-name>SupportedExtensions</param-name>
-			<param-value>png,jpg,gif</param-value>
+			<param-value>png,jpg,gif,jpeg,bmp,wbmp,tga</param-value>
 		</init-param>
 	</servlet>
 
@@ -207,7 +207,10 @@
 		<servlet-name>logoutService</servlet-name>
 		<servlet-class>org.bonitasoft.console.common.server.login.servlet.LogoutServlet</servlet-class>
 	</servlet>
-
+    <servlet>
+        <servlet-name>exportOrganizationServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.server.servlet.OrganizationExportServlet</servlet-class>
+    </servlet>
 	<servlet>
 		<servlet-name>org.bonitasoft.forms.server.FormsServletconsole/formsservice</servlet-name>
 		<servlet-class>org.bonitasoft.forms.server.FormsServlet</servlet-class>
@@ -234,6 +237,10 @@
 		<servlet-name>formsDocumentImage</servlet-name>
 		<servlet-class>org.bonitasoft.forms.server.DocumentImageServlet</servlet-class>
 	</servlet>
+	<servlet-mapping>
+        <servlet-name>exportOrganizationServlet</servlet-name>
+        <url-pattern>/portal/exportOrganization</url-pattern>
+    </servlet-mapping>
 	<servlet>
 		<servlet-name>exportProcessActorsServlet</servlet-name>
 		<servlet-class>org.bonitasoft.console.server.servlet.ProcessActorsExportServlet</servlet-class>
