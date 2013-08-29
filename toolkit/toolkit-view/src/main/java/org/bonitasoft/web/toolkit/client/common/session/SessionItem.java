@@ -44,6 +44,8 @@ public class SessionItem extends Item {
     public static final String ATTRIBUTE_ICON = "icon";
 
     public static final String ATTRIBUTE_IS_TECHNICAL_USER = "is_technical_user";
+    
+    public static final String ATTRIBUTE_CONF = "conf";
 
     /**
      * Default Constructor.

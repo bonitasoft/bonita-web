@@ -54,7 +54,7 @@ msgstr "Tasks"
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:42
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:35
 msgid "Directory"
-msgstr "Directory"
+msgstr "Organizzazione"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:44
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AbstractUserListingPage.java:95
@@ -101,7 +101,7 @@ msgstr "Privilegi"
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:37
 msgid "Analytics"
-msgstr "Analytics"
+msgstr "Statistiche"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:60
 msgid "Reports"

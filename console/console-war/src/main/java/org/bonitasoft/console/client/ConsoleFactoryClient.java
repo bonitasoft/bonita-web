@@ -91,7 +91,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     
     @Override
     public Page defineViewTokens(final String token) {
-        
+                
         List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
         //List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
         
@@ -288,7 +288,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         
         for (String privilege: privileges) {
             
-            if (accessRights.contains(SHA1.calcSHA1(privilege.concat(sessionId)))) {
+            String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
+            
+            if (accessRights.contains(calcSHA1.toUpperCase())) {
                 return true;
             }
             

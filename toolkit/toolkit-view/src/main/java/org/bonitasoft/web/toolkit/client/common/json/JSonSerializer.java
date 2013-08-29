@@ -15,6 +15,7 @@
 package org.bonitasoft.web.toolkit.client.common.json;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +39,8 @@ public class JSonSerializer extends JSonUtil {
             return "null";
         } else if (object instanceof JsonSerializable) {
             return ((JsonSerializable) object).toJson();
-        } else if (object instanceof List<?>) {
-            return serializeList((List<?>) object);
+        } else if (object instanceof Collection<?>) {
+            return serializeCollection((Collection<?>) object);
         } else if (object instanceof Map<?, ?>) {
             return serializeMap((Map<?, ?>) object);
         } else if (object instanceof Number) {
@@ -60,7 +61,7 @@ public class JSonSerializer extends JSonUtil {
         return quote(key.toString()) + ":" + serialize(value);
     }
 
-    public static String serializeList(final List<? extends Object> list) {
+    public static String serializeCollection(final Collection<? extends Object> list) {
         String json = "[";
 
         boolean first = true;

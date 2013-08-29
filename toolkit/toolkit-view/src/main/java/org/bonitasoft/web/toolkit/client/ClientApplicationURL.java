@@ -16,13 +16,18 @@ package org.bonitasoft.web.toolkit.client;
 
 import static com.google.gwt.query.client.GQuery.$;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.common.json.JSonUnserializerClient;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
@@ -33,6 +38,9 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.utils.I18n;
 import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
@@ -310,7 +318,11 @@ public class ClientApplicationURL {
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 final IItem session = JSonItemReader.parseItem(response, new SessionDefinition());
                 for (final String name : session.getAttributeNames()) {
-                    Session.addParameter(name, session.getAttributeValue(name));
+                    if (name.equals("conf")) {
+                        Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
+                    } else {
+                        Session.addParameter(name, session.getAttributeValue(name));                        
+                    }
                 }
 
                 // TODO Add here assertions on parameters mandatory for the toolkit
