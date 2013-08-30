@@ -18,6 +18,8 @@ package org.bonitasoft.web.toolkit.client.ui.component;
 
 import static com.google.gwt.query.client.GQuery.$;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -74,6 +76,8 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     private String valueAttributeName = null;
 
     private Filler<AutoCompleteTextInput> refreshFiller;
+    
+    private HashMap<String, String> searchFilters = new HashMap<String, String>();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
@@ -220,6 +224,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
                                 ? APICaller.orderArrayToString(((CompoundAttributeReader) AutoCompleteTextInput.this.labelTemplate).getAttributes())
                                 : AutoCompleteTextInput.this.labelTemplate.getLeadAttribute(),
                         search,
+                        searchFilters,
                         callback
                         );
             }
@@ -371,6 +376,10 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
         initFiller();
 
         return elements;
+    }
+
+    public void addSearchFilter(String filterName, String filterValue) {
+        searchFilters.put(filterName, filterValue);
     }
 
 }

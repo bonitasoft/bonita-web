@@ -819,38 +819,60 @@ public class Form extends AbstractForm {
     // AUTOCOMPLETE
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     */
+    @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final String labelAttributeName, final String valueAttributeName) {
         return this.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, null, null);
     }
 
+    /**
+     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     */
+    @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final String labelAttributeName, final String valueAttributeName, final String defaultValue) {
         return this.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, defaultValue, null);
     }
 
+    /**
+     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     */
+    @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final String labelAttributeName, final String valueAttributeName, final String defaultValue, final String description) {
         AutoCompleteEntry entry = new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
-        entry.addInputHandler(createInputCompleteHandler(), InputCompleteEvent.TYPE);
         addEntry(entry);
         return this;
     }
 
+    /**
+     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     */
+    @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final AbstractAttributeReader labelTemplate, final String valueAttributeName) {
         return this.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, null, null);
     }
 
+    /**
+     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     */
+    @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final AbstractAttributeReader labelTemplate, final String valueAttributeName, final String defaultValue) {
         return this.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, defaultValue, null);
     }
 
+    /**
+     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     */
+    @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final AbstractAttributeReader labelTemplate, final String valueAttributeName, final String defaultValue, final String description) {
         AutoCompleteEntry entry = new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, description);
-        entry.addInputHandler(createInputCompleteHandler(), InputCompleteEvent.TYPE);
         addEntry(entry);
         return this;
     }

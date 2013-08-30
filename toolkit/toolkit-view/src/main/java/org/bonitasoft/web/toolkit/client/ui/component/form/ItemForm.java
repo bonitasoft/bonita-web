@@ -27,6 +27,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
 import org.bonitasoft.web.toolkit.client.ui.action.form.UpdateItemFormAction;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.AutoCompleteEntry;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Option;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.ValuedFormEntry;
 
@@ -155,7 +156,9 @@ public class ItemForm<T extends IItem> extends AbstractForm {
             final String labelAttributeName, final String valueAttributeName, final String description) {
         final JsId jsid = new JsId(attributeName);
 
-        this.form.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
+        AutoCompleteEntry autoComplete = 
+                new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
+        this.form.addEntry(autoComplete);
 
         initValidatorsAndModifiers(jsid, attributeName);
 
@@ -172,8 +175,9 @@ public class ItemForm<T extends IItem> extends AbstractForm {
             final AbstractAttributeReader labelTemplate, final String valueAttributeName, final String description) {
 
         final JsId jsid = new JsId(attributeName);
-        this.form.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate,
-                valueAttributeName, description);
+        AutoCompleteEntry autoComplete = 
+                new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, description);
+        this.form.addEntry(autoComplete);
 
         initValidatorsAndModifiers(jsid, attributeName);
 
