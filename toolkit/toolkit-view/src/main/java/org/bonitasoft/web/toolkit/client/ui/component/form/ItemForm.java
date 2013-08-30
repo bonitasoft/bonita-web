@@ -36,6 +36,9 @@ import com.google.gwt.user.client.Element;
 /**
  * @author Julien Mege
  */
+
+// FIXME this is not an AbstractForm since this object include his own form 
+// FIXME need to extend Form and then remove all reference to form class variable.
 public class ItemForm<T extends IItem> extends AbstractForm {
 
     private Form form = null;
@@ -184,6 +187,9 @@ public class ItemForm<T extends IItem> extends AbstractForm {
         return this;
     }
 
+    public void addEntry(final FormNode entry) {
+        form.addEntry(entry);
+    }
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATIC ENTRIES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
