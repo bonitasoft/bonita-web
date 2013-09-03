@@ -707,8 +707,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
             final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
             final APISession session = getAPISessionFromContext(context);
-            final Map<String, FormFieldValue> fieldValues = convertFormFieldValues((Map<String, FormFieldValue>) context
-                    .get(FormServiceProviderUtil.FIELD_VALUES), true);
+            final Map<String, FormFieldValue> fieldValues = convertFormFieldValues(
+                    (Map<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES), true);
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
             try {
                 final Map<String, Object> urlContext = getUrlContext(context);
@@ -975,8 +975,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Object> executeActions(final List<FormAction> actions, final Map<String, Object> context) throws FileTooBigException,
-            FormNotFoundException,
-            FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
+            FormNotFoundException, FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -1008,8 +1007,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 }
                 processDefinitionID = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
                 final long newProcessInstanceID = workflowAPI.executeActionsAndStartInstance(session, userID, processDefinitionID, fieldValues, actions,
-                        locale,
-                        submitButtonId, transientDataContext);
+                        locale, submitButtonId, transientDataContext);
                 urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                 urlContext.remove(FormServiceProviderUtil.TASK_UUID);
                 urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, String.valueOf(newProcessInstanceID));
@@ -1029,6 +1027,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     }
                 }
             }
+        } catch (final FormAlreadySubmittedException e) {
+            final String message = "The task with ID " + activityInstanceID + " has already been executed";
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, message);
+            }
+            throw new FormAlreadySubmittedException(message);
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance for activity instance with ID " + activityInstanceID + " does not exist!";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -1174,8 +1178,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     final Map<String, Object> newURLContext = new HashMap<String, Object>(urlContext);
                     newURLContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                     newURLContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
-                    newURLContext.put(FormServiceProviderUtil.FORM_ID,
-                            createFormIdFromUuid(activityDefinitionUuid, FormServiceProviderUtil.ENTRY_FORM_TYPE));
+                    newURLContext.put(FormServiceProviderUtil.FORM_ID, createFormIdFromUuid(activityDefinitionUuid, FormServiceProviderUtil.ENTRY_FORM_TYPE));
                     newURLContext.put(FormServiceProviderUtil.TASK_UUID, String.valueOf(activityInstanceId));
                     urlComponents.setUrlContext(newURLContext);
                 }
@@ -1197,16 +1200,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getAppDedicatedUrl(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final String uiMode,
-            final boolean isArchived)
-            throws FormWorflowApiException,
-            InvalidSessionException {
+            final boolean isArchived) throws FormWorflowApiException, InvalidSessionException {
         final long processDefinitionId = getProcessDefinitionId(session, workflowAPI, activityInstanceId, isArchived);
         return ApplicationURLUtils.getInstance().getDedicatedApplicationUrl(processDefinitionId, uiMode);
     }
 
     private long getProcessDefinitionId(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final boolean isArchived)
-            throws FormWorflowApiException,
-            InvalidSessionException {
+            throws FormWorflowApiException, InvalidSessionException {
         try {
             return workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceId, isArchived);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1222,8 +1222,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getActivityName(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final boolean isArchived)
-            throws InvalidSessionException,
-            FormWorflowApiException {
+            throws InvalidSessionException, FormWorflowApiException {
         try {
             return workflowAPI.getActivityName(session, activityInstanceId, isArchived);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1239,8 +1238,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getActivityDefinitionUUID(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId,
-            final boolean isArchived)
-            throws InvalidSessionException, FormWorflowApiException {
+            final boolean isArchived) throws InvalidSessionException, FormWorflowApiException {
         try {
             return workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceId, isArchived);
         } catch (final ActivityInstanceNotFoundException e) {
