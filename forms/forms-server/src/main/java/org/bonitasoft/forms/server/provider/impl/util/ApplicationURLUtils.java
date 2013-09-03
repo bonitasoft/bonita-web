@@ -64,7 +64,7 @@ public class ApplicationURLUtils {
     }
 
     /**
-     * Get application url depending on the theme to apply
+     * Get application url depending on the theme to doAuthorize
      * 
      * @param processDefinitionId
      * @return

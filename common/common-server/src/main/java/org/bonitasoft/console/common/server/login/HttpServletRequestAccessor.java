@@ -16,12 +16,11 @@
  */
 package org.bonitasoft.console.common.server.login;
 
-import java.util.Map;
+import org.bonitasoft.engine.session.APISession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.bonitasoft.engine.session.APISession;
+import java.util.Map;
 
 /**
  * @author Vincent Elcrin
@@ -35,9 +34,9 @@ public class HttpServletRequestAccessor {
 
     public static final String PASSWORD_PARAM = "password";
 
-    protected static final String AUTO_LOGIN_PARAM = "autologin";
+    public static final String AUTO_LOGIN_PARAM = "autologin";
 
-    protected static final String PROCESS_DEFINITION_ID = "process";
+    public static final String PROCESS_DEFINITION_ID = "process";
 
     private final static String OAUTH_VERIFIER = "oauth_verifier";
 
@@ -104,4 +103,7 @@ public class HttpServletRequestAccessor {
         return httpServletRequest.getRequestURI();
     }
 
+    public HttpServletRequest asHttpServletRequest() {
+        return httpServletRequest;
+    }
 }
