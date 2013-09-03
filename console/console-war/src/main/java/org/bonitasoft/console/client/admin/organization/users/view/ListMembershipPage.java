@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
+import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.identity.view.PageOnUserItem;
 import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
@@ -56,6 +58,8 @@ public class ListMembershipPage extends PageOnUserItem {
     
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
+        PRIVILEGES.add(GroupListingAdminPage.TOKEN);
+        PRIVILEGES.add(RoleListingPage.TOKEN);
     }
 
     @Override

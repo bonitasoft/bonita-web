@@ -49,6 +49,7 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
     
     public ProcessQuickDetailsAdminPage() {

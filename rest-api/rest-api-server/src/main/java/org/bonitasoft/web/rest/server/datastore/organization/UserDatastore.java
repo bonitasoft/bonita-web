@@ -146,9 +146,9 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
      * @param search
      *            Search terms
      * @param filters
-     *            The filters to apply. There will be an AND operand between filters.
+     *            The filters to doAuthorize. There will be an AND operand between filters.
      * @param orders
-     *            The order to apply to the search
+     *            The order to doAuthorize to the search
      * @return This method returns an ItemSearch result containing the returned data and information about the total possible results.
      */
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search, final Map<String, String> filters,

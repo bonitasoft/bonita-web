@@ -47,6 +47,7 @@ public class AddProcessCategoryPage extends Page {
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public AddProcessCategoryPage() {

@@ -23,6 +23,7 @@ import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.common.json.JSonUnserializerClient;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
@@ -310,7 +311,12 @@ public class ClientApplicationURL {
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 final IItem session = JSonItemReader.parseItem(response, new SessionDefinition());
                 for (final String name : session.getAttributeNames()) {
-                    Session.addParameter(name, session.getAttributeValue(name));
+                    if (name.equals("conf")) {
+                        AvailableTokens.tokens.addAll(((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
+//                        Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
+                    } else {
+                        Session.addParameter(name, session.getAttributeValue(name));                        
+                    }
                 }
 
                 // TODO Add here assertions on parameters mandatory for the toolkit

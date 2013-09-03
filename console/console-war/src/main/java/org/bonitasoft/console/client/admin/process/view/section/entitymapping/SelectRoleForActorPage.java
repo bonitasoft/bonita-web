@@ -47,6 +47,7 @@ public class SelectRoleForActorPage extends SelectRoleAndDoPageOnItem<ActorItem>
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public SelectRoleForActorPage(final APIID itemId) {

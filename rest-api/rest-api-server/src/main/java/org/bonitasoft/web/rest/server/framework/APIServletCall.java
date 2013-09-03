@@ -98,7 +98,7 @@ public class APIServletCall extends ServletCall {
      * Read the inputStream and parse it as an IItem compatible with the called API.
      */
     private IItem getJSonStreamAsItem() {
-        final IItem item = JSonItemReader.parseItem(getInputStream(), this.api.getItemDefinition());
+        final IItem item = JSonItemReader.parseItem(getInputStream(), api.getItemDefinition());
 
         ValidatorEngine.validate(item, false);
 
@@ -125,18 +125,18 @@ public class APIServletCall extends ServletCall {
             throw new APIMalformedUrlException("Missing API or resource name [" + request.getRequestURL() + "]");
         }
 
-        this.apiName = path[1];
-        this.resourceName = path[2];
+        apiName = path[1];
+        resourceName = path[2];
 
-        this.api = APIs.get(this.apiName, this.resourceName);
-        this.api.setCaller(this);
+        api = APIs.get(apiName, resourceName);
+        api.setCaller(this);
 
         // Read id (if defined)
         if (path.length > 3) {
             final List<String> pathList = Arrays.asList(path);
-            this.id = APIID.makeAPIID(pathList.subList(3, pathList.size()));
+            id = APIID.makeAPIID(pathList.subList(3, pathList.size()));
         } else {
-            this.id = null;
+            id = null;
         }
 
         super.parseRequest(request);
@@ -153,35 +153,26 @@ public class APIServletCall extends ServletCall {
     public final void doGet() {
         try {
             // GET one
-            if (this.id != null) {
-                output(this.api.runGet(
-                        this.id,
-                        getParameterAsList(APISearchRequest.PARAMETER_DEPLOY),
-                        getParameterAsList(APISearchRequest.PARAMETER_COUNTER)
-                        ));
+            if (id != null) {
+                output(api.runGet(id, getParameterAsList(APISearchRequest.PARAMETER_DEPLOY), getParameterAsList(APISearchRequest.PARAMETER_COUNTER)));
             } else if (countParameters() == 0) {
                 throw new APIMissingIdException(getRequestURL());
             }
             // Search
             else {
 
-                final ItemSearchResult<?> result = this.api.runSearch(
-                        Integer.parseInt(getParameter(APISearchRequest.PARAMETER_PAGE, "0")),
-                        Integer.parseInt(getParameter(APISearchRequest.PARAMETER_LIMIT, "10")),
-                        getParameter(APISearchRequest.PARAMETER_SEARCH),
-                        getParameter(APISearchRequest.PARAMETER_ORDER),
-                        parseFilters(getParameterAsList(APISearchRequest.PARAMETER_FILTER)),
-                        getParameterAsList(APISearchRequest.PARAMETER_DEPLOY),
-                        getParameterAsList(APISearchRequest.PARAMETER_COUNTER)
-                        );
+                final ItemSearchResult<?> result = api.runSearch(Integer.parseInt(getParameter(APISearchRequest.PARAMETER_PAGE, "0")),
+                        Integer.parseInt(getParameter(APISearchRequest.PARAMETER_LIMIT, "10")), getParameter(APISearchRequest.PARAMETER_SEARCH),
+                        getParameter(APISearchRequest.PARAMETER_ORDER), parseFilters(getParameterAsList(APISearchRequest.PARAMETER_FILTER)),
+                        getParameterAsList(APISearchRequest.PARAMETER_DEPLOY), getParameterAsList(APISearchRequest.PARAMETER_COUNTER));
 
                 head("Content-Range", result.getPage() + "-" + result.getLength() + "/" + result.getTotal());
 
                 output(result.getResults());
             }
         } catch (final APIException e) {
-            e.setApi(this.apiName);
-            e.setResource(this.resourceName);
+            e.setApi(apiName);
+            e.setResource(resourceName);
             throw e;
         }
     }
@@ -193,12 +184,12 @@ public class APIServletCall extends ServletCall {
     public final void doPost() {
         try {
             final IItem jSonStreamAsItem = getJSonStreamAsItem();
-            final IItem outputItem = this.api.runAdd(jSonStreamAsItem);
+            final IItem outputItem = api.runAdd(jSonStreamAsItem);
 
             output(JSonItemWriter.itemToJSON(outputItem));
         } catch (final APIException e) {
-            e.setApi(this.apiName);
-            e.setResource(this.resourceName);
+            e.setApi(apiName);
+            e.setResource(resourceName);
             throw e;
 
         }
@@ -210,23 +201,23 @@ public class APIServletCall extends ServletCall {
     @Override
     public final void doPut() {
         try {
-            if (this.id == null) {
+            if (id == null) {
                 throw new APIMissingIdException(getRequestURL());
             }
 
             final String inputStream = getInputStream();
             if (inputStream.length() == 0) {
-                this.api.runUpdate(this.id, new HashMap<String, String>());
+                api.runUpdate(id, new HashMap<String, String>());
                 return;
             }
 
             Item.setApplyValidatorMandatoryByDefault(false);
             final Map<String, String> attributes = getJSonStreamAsItem().getAttributes();
 
-            this.api.runUpdate(this.id, attributes);
+            api.runUpdate(id, attributes);
         } catch (final APIException e) {
-            e.setApi(this.apiName);
-            e.setResource(this.resourceName);
+            e.setApi(apiName);
+            e.setResource(resourceName);
             throw e;
 
         }
@@ -241,7 +232,7 @@ public class APIServletCall extends ServletCall {
             final List<APIID> ids = new ArrayList<APIID>();
 
             // Using ids in json input stream
-            if (this.id == null) {
+            if (id == null) {
                 final String inputStream = getInputStream();
                 if (inputStream.length() == 0) {
                     throw new APIMissingIdException("Id of the element to delete is missing [" + inputStream + "]");
@@ -269,13 +260,13 @@ public class APIServletCall extends ServletCall {
 
             // Using id in URL
             else {
-                ids.add(this.id);
+                ids.add(id);
             }
 
-            this.api.runDelete(ids);
+            api.runDelete(ids);
         } catch (final APIException e) {
-            e.setApi(this.apiName);
-            e.setResource(this.resourceName);
+            e.setApi(apiName);
+            e.setResource(resourceName);
             throw e;
 
         }

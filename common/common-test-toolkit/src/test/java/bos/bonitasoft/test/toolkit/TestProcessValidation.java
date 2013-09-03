@@ -16,6 +16,9 @@
  */
 package bos.bonitasoft.test.toolkit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -23,14 +26,20 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.test.toolkit.EngineSetup;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
+import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,7 +73,7 @@ public class TestProcessValidation extends EngineSetup {
         testHumanTask.assignTo(TestUserFactory.getJohnCarpenter());
 
         testHumanTask.archive();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
+        final ProcessAPI processAPI = getProcessAPI();
 
         try {
             // Assert.assertEquals(testHumanTask.getId(), processAPI.getArchivedActivityInstance(testHumanTask.getId()).getId());
@@ -142,14 +151,16 @@ public class TestProcessValidation extends EngineSetup {
 
     @Test
     public void testArchivedCase() throws Exception {
-        testCase.getNextHumanTask().assignTo(TestUserFactory.getJohnCarpenter());
-        testCase.execute()
-                .execute()
-                .execute();
+        TestCase processInstance = TestProcessFactory.getDefaultHumanTaskProcess().startCase();
 
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
-        final List<ArchivedProcessInstance> archivedCaseList = processAPI.getArchivedProcessInstances(testCase.getId(), 0, 10);
-        Assert.assertEquals(3, archivedCaseList.size()); // engine archive an instance every time this instance change state (initializing, started, completed)
+        processInstance.archive();
+
+        List<ArchivedProcessInstance> archivedCaseList = getProcessAPI().getArchivedProcessInstances(processInstance.getId(), 0, 10);
+        assertThat(archivedCaseList.size(), greaterThan(0));
+    }
+
+    private ProcessAPI getProcessAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
     }
 
     @Test

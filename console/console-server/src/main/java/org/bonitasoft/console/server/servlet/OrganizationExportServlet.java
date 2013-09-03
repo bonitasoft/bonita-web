@@ -35,8 +35,6 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 
-
-
 /**
  * @author Chong Zhao
  * 
@@ -83,7 +81,7 @@ public class OrganizationExportServlet extends HttpServlet {
             if (organizationContent == null) {
                 response.setContentLength(0);
             } else {
-                response.setContentLength(organizationContent.length());
+                response.setContentLength(organizationContent.getBytes().length);
             }
             out.write(organizationContent.getBytes());
             out.flush();

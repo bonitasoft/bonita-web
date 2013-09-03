@@ -47,6 +47,7 @@ public class SelectMembershipForActorPage extends SelectMembershipAndDoPageOnIte
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     public SelectMembershipForActorPage(final APIID itemId) {

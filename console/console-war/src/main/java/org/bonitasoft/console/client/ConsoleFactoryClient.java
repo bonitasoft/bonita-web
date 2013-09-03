@@ -1,9 +1,7 @@
 package org.bonitasoft.console.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
@@ -36,7 +34,6 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
-import org.bonitasoft.console.client.admin.process.view.StartProcessOnBehalfPage;
 import org.bonitasoft.console.client.admin.process.view.UploadProcessPage;
 import org.bonitasoft.console.client.admin.process.view.section.category.AddProcessCategoryPage;
 import org.bonitasoft.console.client.admin.process.view.section.category.CreateCategoryAndAddToProcessPage;
@@ -58,9 +55,6 @@ import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
-import org.bonitasoft.console.client.admin.theme.view.EditThemePage;
-import org.bonitasoft.console.client.admin.theme.view.ListThemePage;
-import org.bonitasoft.console.client.admin.theme.view.UploadThemePage;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -79,6 +73,7 @@ import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
+import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
@@ -96,9 +91,10 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     
     @Override
     public Page defineViewTokens(final String token) {
+                
+//        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
+        List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
         
-        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
-         
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
 
@@ -288,14 +284,18 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
     private boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
        
+        String sessionId = new String(Session.getParameter("session_id"));
+        
         for (String privilege: privileges) {
             
-            if (accessRights.contains(privilege)) {
+            String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
+            
+            if (accessRights.contains(calcSHA1.toUpperCase())) {
                 return true;
             }
             
         }      
-       
+              
         return false;
     }
 }

@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.SHA1;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
@@ -99,23 +100,10 @@ public class NavigationMenuView extends RawView {
     }
 
     private void updateNavigationMenu(final List<ProfileEntryItem> items) {
-        updateMenuItems(items);
         navigationMenu.addItems(menuListCreator.asList(items));
         listenViewChangeEvent(selectMenuOnChange());
         updateUI();
         navigationMenu.select(ViewController.getInstance().getCurrentPageToken());
-    }
-
-
-    private void updateMenuItems(List<ProfileEntryItem> items) {
-        List<String> availableTokens = new ArrayList<String>();
-        for (ProfileEntryItem item: items) {
-            String pageToken = item.getPage();
-            if (pageToken != null) {
-                availableTokens.add(pageToken);
-            }
-        }
-        Session.addParameter("conf", availableTokens);
     }
 
     private List<ProfileEntryItem> parseProfileEntries(final String response) {

@@ -3,6 +3,7 @@
  */
 package org.bonitasoft.test.toolkit.api;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,9 @@ import org.bonitasoft.test.toolkit.api.json.MapToActor;
 import org.bonitasoft.test.toolkit.api.json.SetProcessDisplayName;
 import org.bonitasoft.test.toolkit.api.json.SetProcessState;
 import org.bonitasoft.test.toolkit.api.json.SetUserManager;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.client.ProxyFactory;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
@@ -48,6 +52,9 @@ public class APIHelper {
 
     /** JSON parser. */
     protected JSONParser jsonParser;
+
+    /** XML reader. */
+    protected SAXReader xmlReader;
 
     /** Logger. */
     protected final Logger logger;
@@ -82,6 +89,7 @@ public class APIHelper {
         consumeResponse(res);
 
         this.jsonParser = new JSONParser();
+        this.xmlReader = new SAXReader();
     }
 
     /**
@@ -635,6 +643,25 @@ public class APIHelper {
         final ImportOrganization importOrganization = new ImportOrganization(pOrganizationDataUpload);
         final ClientResponse<String> res = this.client.importOrganization(importOrganization.toJSONObject().toJSONString());
         return consumeResponse(res);
+    }
+
+    /**
+     * Export organization.
+     * 
+     * @return
+     */
+    public final Document exportOrganization() {
+        System.out.println("[INFO] APIHelper => exportOrganization()");
+        Document result = null;
+        final ClientResponse<String> res = this.client.exportOrganization();
+        final String entity = consumeResponse(res).getEntity();
+        System.out.println("[INFO] APIHelper => exportOrganization() - Entity: [" + entity + "]");
+        try {
+            result = this.xmlReader.read(new StringReader(entity));
+        } catch (final DocumentException de) {
+            throw new Error(de);
+        }
+        return result;
     }
 
     /**

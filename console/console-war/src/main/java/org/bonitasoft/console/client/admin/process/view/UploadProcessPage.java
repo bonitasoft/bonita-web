@@ -51,6 +51,7 @@ public class UploadProcessPage extends Page {
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     private HttpCallback httpCallback;

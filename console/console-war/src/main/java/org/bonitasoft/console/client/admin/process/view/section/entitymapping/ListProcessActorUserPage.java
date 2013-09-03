@@ -48,6 +48,7 @@ public class ListProcessActorUserPage extends ListProcessActorMemberPage {
     
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("reportlistingadminext");
     }
 
     @Override
