@@ -82,7 +82,7 @@ public class OrganizationExportServlet extends HttpServlet {
             if (organizationContent == null) {
                 response.setContentLength(0);
             } else {
-                response.setContentLength(organizationContent.length());
+                response.setContentLength(organizationContent.getBytes().length);
             }
             out.write(organizationContent.getBytes());
             out.flush();

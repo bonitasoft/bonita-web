@@ -156,7 +156,7 @@ public class ThemeConfigManager {
     }
 
     public void setApplyTheme(final String themeName) {
-        // set the privious theme apply to false
+        // set the privious theme doAuthorize to false
         final NodeList applys = root.getElementsByTagName(APPLY);
         for (int i = 0; i < applys.getLength(); i++) {
             Node apply = applys.item(i).getFirstChild();
@@ -166,7 +166,7 @@ public class ThemeConfigManager {
                 apply.setNodeValue("false");
             }
         }
-        // set the apply theme apply to true
+        // set the doAuthorize theme doAuthorize to true
         Element theme = null;
         final NodeList names = root.getElementsByTagName(NAME);
         for (int j = 0; j < names.getLength(); j++) {

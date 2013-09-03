@@ -65,7 +65,13 @@ public class SessionDefinition extends ItemDefinition {
         createAttribute(SessionItem.ATTRIBUTE_ICON, ItemAttribute.TYPE.IMAGE);
         createAttribute(SessionItem.ATTRIBUTE_USERID, ItemAttribute.TYPE.STRING);
         createAttribute(SessionItem.ATTRIBUTE_USERNAME, ItemAttribute.TYPE.STRING);
+        createAttribute(SessionItem.ATTRIBUTE_CONF, ItemAttribute.TYPE.STRING);
     }
+    
+//    @Override
+//    protected void defineDeploys() {
+//        declareDeployable(SessionItem.ATTRIBUTE_CONF, new SHA1Definition());
+//    }
 
     @Override
     public IItem _createItem() {

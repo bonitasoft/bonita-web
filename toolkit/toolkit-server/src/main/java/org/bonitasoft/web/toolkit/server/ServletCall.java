@@ -36,6 +36,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 /**
  * @author Séverin Moussel
@@ -105,14 +106,14 @@ public abstract class ServletCall {
      * @return This method returns the session from the current call.
      */
     public HttpSession getHttpSession() {
-        return this.request.getSession();
+        return request.getSession();
     }
 
     /**
      * @see javax.servlet.http.HttpServletRequest#getQueryString()
      */
     public String getQueryString() {
-        return this.request.getQueryString();
+        return request.getQueryString();
     }
 
     /**
@@ -124,16 +125,16 @@ public abstract class ServletCall {
      * @return This method returns the reconstructed URL
      */
     public final String getRequestURL() {
-        return this.request.getRequestURL().toString();
+        return request.getRequestURL().toString();
     }
 
     /**
      * Read the input stream and set it in a String
      */
     public final String getInputStream() {
-        if (this.inputStream == null) {
+        if (inputStream == null) {
             try {
-                final BufferedReader reader = this.request.getReader();
+                final BufferedReader reader = request.getReader();
                 final StringBuilder sb = new StringBuilder();
                 String line = reader.readLine();
                 while (line != null) {
@@ -142,14 +143,14 @@ public abstract class ServletCall {
                 }
                 reader.close();
 
-                this.inputStream = sb.toString();
+                inputStream = sb.toString();
 
             } catch (final IOException e) {
                 throw new RuntimeException("Can't read input Stream.", e);
             }
         }
 
-        return this.inputStream;
+        return inputStream;
     }
 
     /**
@@ -158,7 +159,7 @@ public abstract class ServletCall {
      * @return This method returns the number of parameters in the URL
      */
     public final int countParameters() {
-        return this.parameters.size();
+        return parameters.size();
     }
 
     /**
@@ -182,8 +183,8 @@ public abstract class ServletCall {
      * @return This method returns the values of a parameter as a list of String
      */
     public final List<String> getParameterAsList(final String name, final String defaultValue) {
-        if (this.parameters.containsKey(name)) {
-            return Arrays.asList(this.parameters.get(name));
+        if (parameters.containsKey(name)) {
+            return Arrays.asList(parameters.get(name));
         }
         if (defaultValue != null) {
             final List<String> results = new ArrayList<String>();
@@ -214,8 +215,8 @@ public abstract class ServletCall {
      * @return This method returns the first value of a parameter as a String
      */
     public final String getParameter(final String name, final String defaultValue) {
-        if (this.parameters.containsKey(name)) {
-            final String[] result = this.parameters.get(name);
+        if (parameters.containsKey(name)) {
+            final String[] result = parameters.get(name);
             if (result.length > 0) {
                 return result[0];
             }
@@ -229,7 +230,7 @@ public abstract class ServletCall {
      * @return This method returns all the parameters as a Map of array of String
      */
     public final Map<String, String[]> getParameters() {
-        return this.parameters;
+        return parameters;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,7 +246,7 @@ public abstract class ServletCall {
      *            The value of the header to write.
      */
     protected final void head(final String name, final String value) {
-        this.response.addHeader(name, value);
+        response.addHeader(name, value);
     }
 
     /**
@@ -271,7 +272,7 @@ public abstract class ServletCall {
      *            The name of the file to retrieve with the stream.
      */
     protected void output(final InputStream stream, final String filename) {
-        this.response.addHeader("Content-Disposition", "attachment; filename=" + filename + ";");
+        response.addHeader("Content-Disposition", "attachment; filename=" + filename + ";");
         output(stream);
     }
 
@@ -282,9 +283,9 @@ public abstract class ServletCall {
      *            The stream to output
      */
     protected void output(final InputStream stream) {
-        this.response.setContentType("application/octet-stream");
+        response.setContentType("application/octet-stream");
         try {
-            IOUtils.copy(stream, this.response.getOutputStream());
+            IOUtils.copy(stream, response.getOutputStream());
         } catch (final IOException e) {
             throw new ServerException(e);
         }
@@ -325,15 +326,15 @@ public abstract class ServletCall {
      * @param response
      */
     private PrintWriter getOutputWriter() {
-        if (this.outputWriter == null) {
-            this.response.setContentType("application/json;charset=UTF-8");
+        if (outputWriter == null) {
+            response.setContentType("application/json;charset=UTF-8");
             try {
-                this.outputWriter = this.response.getWriter();
+                outputWriter = response.getWriter();
             } catch (final IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        return this.outputWriter;
+        return outputWriter;
     }
 
     /**
@@ -349,7 +350,11 @@ public abstract class ServletCall {
     @SuppressWarnings("unchecked")
     protected void parseRequest(final HttpServletRequest request) {
         // Create a new HashMap and copy all the elements in the new one
-        this.parameters.putAll(this.request.getParameterMap());
+        parameters.putAll(this.request.getParameterMap());
+    }
+
+    public String getLocale() {
+        return LocaleUtils.getUserLocale(request);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

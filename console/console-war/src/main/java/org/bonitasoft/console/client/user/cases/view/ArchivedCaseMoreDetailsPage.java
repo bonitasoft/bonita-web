@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedTasksSection;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
@@ -47,6 +48,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
     
     static {
         PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
     public ArchivedCaseMoreDetailsPage() {

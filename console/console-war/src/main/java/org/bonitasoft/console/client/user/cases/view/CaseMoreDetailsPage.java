@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
@@ -48,6 +49,7 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
     
     static {
         PRIVILEGES.add(CaseListingPage.TOKEN);
+        PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
     public CaseMoreDetailsPage() {

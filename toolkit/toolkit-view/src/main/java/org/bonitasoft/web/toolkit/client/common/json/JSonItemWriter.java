@@ -63,7 +63,7 @@ public class JSonItemWriter<T extends IItem> {
 
     @Override
     public String toString() {
-        return JSonSerializer.serializeList(this.itemList);
+        return JSonSerializer.serializeCollection(this.itemList);
     }
 
     public static String itemToJSON(final IItem item) {
@@ -78,7 +78,7 @@ public class JSonItemWriter<T extends IItem> {
      * @return Returns a valid json code
      */
     public static String itemsListToJSON(final List<? extends IItem> items) {
-        return JSonSerializer.serializeList(items);
+        return JSonSerializer.serializeCollection(items);
     }
 
     /**

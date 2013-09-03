@@ -414,15 +414,16 @@
 @filtersPanel-filtersResourceTitle-display: block;
 @filtersPanel-filtersResourceTitle-fontSize: 22;
 @filtersPanel-filtersResourceTitle-fontStyle: italic;
-@filtersPanel-filtersResourceTitle-margin: 0 @filtersPanel-filters-paddingRight 3*@h 0;
+@filtersPanel-filtersResourceTitle-margin: 3*@h @filtersPanel-filters-paddingRight 0 0;
 @filtersPanel-filters-filtersResourceTitle-padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom 4*@w;
 @filtersPanel-filters-filtersResourceTitle-borderColor1: darken(@mainAccentColor, 7%);
 @filtersPanel-filters-filtersResourceTitle-borderHeight: @border-width;
+@filtersPanel-filters-filtersResourceTitle-top-borderHeight: 3px;
 @filtersPanel-filters-filtersResourceTitle-borderColor2: lighten(@mainAccentColor, 8.5%);
 
 @filtersPanel-filters-filtersResourceTitle-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
-@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
+@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-top-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
 @filtersPanel-filters-filtersResourceTitleContainer-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-process-bgImage: "filters-resource-process.png";
 @filtersPanel-filters-filtersResourceTitle-process-bgX: 4*@w;

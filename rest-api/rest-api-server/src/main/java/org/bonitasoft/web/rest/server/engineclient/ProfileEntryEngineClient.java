@@ -17,11 +17,15 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import java.util.List;
+
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.engine.profile.ProfileEntryNotFoundException;
+import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
@@ -62,4 +66,9 @@ public class ProfileEntryEngineClient {
         }
     }
 
+    public List<ProfileEntry> getProfileEntriesByProfile(Long profileId) {
+        SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0,Integer.MAX_VALUE);
+        searchOptionsBuilder.filter(ProfileEntrySearchDescriptor.PROFILE_ID, profileId);
+        return searchProfiles(searchOptionsBuilder.done()).getResult();
+    }
 }
