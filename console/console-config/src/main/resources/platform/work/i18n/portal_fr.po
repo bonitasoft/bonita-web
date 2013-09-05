@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-60\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-02 14:37+0200\n"
-"PO-Revision-Date: 2013-09-04 07:13-0400\n"
+"PO-Revision-Date: 2013-09-05 03:35-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2686,7 +2686,7 @@ msgstr "Etes-vous sûr de vouloir supprimer de l'app les membres de l'acteur sé
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorRolePage.java:53
 msgid "Edit roles of actor %actor_name%"
-msgstr "Modifier les rôles associés à l'acteur %actor_name%"
+msgstr "Edit roles of actor %actor_name%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectMembershipForActorPage.java:102
 msgid "Add this membership to %actor_name%"

@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-60\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-02 14:37+0200\n"
-"PO-Revision-Date: 2013-09-04 04:34-0400\n"
+"PO-Revision-Date: 2013-09-05 03:36-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -159,43 +159,43 @@ msgstr "Dieser Bericht zeigt die Liste der verfügbaren menschlichen Aufgaben im
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
 msgid "visualize & do tasks"
-msgstr "visualisieren & Aufgaben ausführen"
+msgstr "visualize & do tasks"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
 msgid "manage tasks"
-msgstr "Verwalten von Aufgaben"
+msgstr "manage tasks"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
 msgid "visualize cases"
-msgstr "Fälle visualisieren"
+msgstr "visualize cases"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 msgid "manage cases"
-msgstr "Verwalten von Fällen"
+msgstr "manage cases"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
 msgid "visualize & start apps"
-msgstr "visualisieren & starten von Apps"
+msgstr "visualize & start apps"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
 msgid "manage apps"
-msgstr "Apps verwalten"
+msgstr "manage apps"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 msgid "manage users"
-msgstr "Verwalten von Benutzern"
+msgstr "manage users"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
 msgid "manage groups"
-msgstr "Verwalten von Gruppen"
+msgstr "manage groups"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
 msgid "manage roles"
-msgstr "Verwalten von Rollen"
+msgstr "manage roles"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "import/export organization"
-msgstr "Import/Export Organisation"
+msgstr "import/export organization"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "Import/Export"
@@ -419,7 +419,7 @@ msgstr "Sie werden umgeleitet"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/UnexpectedErrorPage.java:40
 msgid "The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support"
-msgstr "In der Anwendung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.\nWenn der Fehler weiterhin auftritt, kontaktieren Sie bitte den Bonitasoft Support"
+msgstr "The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/chart/SerieChart.java:326
 msgid "mm/dd/yy"
@@ -1294,7 +1294,7 @@ msgstr "Ausgeführt am:"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:38
 msgid "Aborted by:"
-msgstr "Abgebrochen durch:"
+msgstr "Aborted by:"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:40
 msgid "Performed by:"
@@ -1819,11 +1819,11 @@ msgstr "Datei wählen"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:59
 msgid "Update a role"
-msgstr "Aktualisieren einer Rolle"
+msgstr "Update a role"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:71
 msgid "Update this role"
-msgstr "Aktualisieren Sie diese Rolle"
+msgstr "Update this role"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:32
 msgid "Select an avatar for this role"
@@ -1875,7 +1875,7 @@ msgstr "Rolle"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:67
 msgid "Edit a role"
-msgstr "Bearbeiten Sie eine Rolle"
+msgstr "Edit a role"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/AddRolePage.java:57
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:71
@@ -2916,15 +2916,15 @@ msgstr "Fälle, mit denen begonnen wurde oder an denen gearbeitet wird"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:108
 msgid "Delete selected cases"
-msgstr "Löschen der ausgewählten Fälle"
+msgstr "Delete selected cases"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:108
 msgid "case"
-msgstr "Fall"
+msgstr "case"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:108
 msgid "cases"
-msgstr "Fälle"
+msgstr "cases"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:19
 msgid "Case variable"
