@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.server.datastore.converter.ValueConverter;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 
 /**
  * @author Vincent Elcrin

@@ -14,11 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client.common.exception.api;
+package org.bonitasoft.web.rest.server.framework.exception;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
 
 /**
