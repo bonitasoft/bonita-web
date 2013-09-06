@@ -38,37 +38,6 @@ public abstract class AbstractManualTask {
 
     public abstract String getDescription();
 
-    // ///////////////////////////////////////////////////////////////////
-    // / Comments
-    // ///////////////////////////////////////////////////////////////////
-
-    private void addComment(final APISession apiSession, final String content) {
-        final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
-        try {
-            processAPI.addComment(getId(), content);
-        } catch (final Exception e) {
-            throw new TestToolkitException("Can't add comment to <" + getId() + ">", e);
-        }
-    }
-
-    public void addComment(final TestUser initiator, final String content) {
-        addComment(initiator.getSession(), content);
-    }
-
-    public void addComment(final String content) {
-        addComment(TestToolkitCtx.getInstance().getInitiator(), content);
-    }
-
-    public void addComments(final TestUser initiator, final int nbOfComments, final String content) {
-        for (int i = 0; i < nbOfComments; i++) {
-            addComment(initiator, content + i);
-        }
-    }
-
-    public void addComments(final int nbOfComments, final String content) {
-        addComments(TestToolkitCtx.getInstance().getInitiator(), nbOfComments, content);
-    }
-
     // ////////////////////////////////////////////////////////////////////////////
     // / Hide
     // ////////////////////////////////////////////////////////////////////////////
