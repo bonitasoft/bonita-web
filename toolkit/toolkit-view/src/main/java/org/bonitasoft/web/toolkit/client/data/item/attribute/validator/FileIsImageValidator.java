@@ -23,7 +23,7 @@ package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 public class FileIsImageValidator extends FileExtensionAllowedValidator {
 
     public FileIsImageValidator() {
-        super("png", "jpg", "jpeg", "bmp", "wbmp", "tga", "gif");
+        super("png", "jpg", "jpeg", "bmp", "wbmp", "tga", "gif", "PNG", "JPG", "JPEG", "BMP", "WBMP", "TGA", "GIF");
     }
 
 }
