@@ -21,6 +21,7 @@ import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -49,10 +50,18 @@ public class AutoLoginRuleTest {
     @Mock
     private TenantIdAccessor tenantAccessor;
 
+    String initialBonitaHome = "";
+
     @Before
     public void setUp() throws Exception {
+        initialBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
         initMocks(this);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        System.setProperty(WebBonitaConstants.BONITA_HOME, initialBonitaHome);
     }
 
     @Test
