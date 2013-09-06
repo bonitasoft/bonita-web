@@ -189,7 +189,7 @@
 		<servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
 		<init-param>
 			<param-name>SupportedExtensions</param-name>
-			<param-value>png,jpg,gif</param-value>
+			<param-value>png,jpg,jpeg,gif</param-value>
 		</init-param>
 	</servlet>
 	
