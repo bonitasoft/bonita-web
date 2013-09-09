@@ -87,27 +87,21 @@
 									padding: 0;
 									a {
 										margin: 0;
+										visibility: hidden;
+                                        display: inline-block;
+                                        width: @profileMoreDetails-deleteProfileEntryLink-width;
+                                        .height(@header-menu-height);
+                                        .hideText();
+                                        vertical-align: middle;
 										&.deleteProfileEntryLink{
-											/* visibility: hidden; */
-											display: inline-block;
-											width: @profileMoreDetails-deleteProfileEntryLink-width;
-											.hideText();
 											.bg(@profileMoreDetails-deleteProfileEntryLink-bg);
-											.height(@header-menu-height);
-											width: @profileMoreDetails-deleteProfileEntryLink-width;
 										}
 										&.editProfileEntryLink{
-                                            /* visibility: hidden; */
-                                            display: inline-block;
-                                            width: @profileMoreDetails-deleteProfileEntryLink-width;
-                                            .hideText();
-                                            .bg(@profileMoreDetails-deleteProfileEntryLink-bg);
-                                            .height(@header-menu-height);
-                                            width: @profileMoreDetails-deleteProfileEntryLink-width;
+                                            .bg("edit.png");
                                         }
 									}
 								}
-								&:hover > .td_actions a.deleteProfileEntryLink {
+								&:hover > .td_actions a {
 									visibility: visible;
 								}
 							}
