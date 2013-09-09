@@ -616,7 +616,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     protected FileUploadWidget createFileUpload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
         final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, false, widgetData.getId(), widgetData.getFileWidgetInputType(),
                 fieldValue.getValueType(), fieldValue.getDocumentId(), fieldValue.getDocumentName(), getStringValue(fieldValue),
-                widgetData.isDisplayAttachmentImage(), true);
+                widgetData.isDisplayAttachmentImage());
         if (widgetData.isReadOnly()) {
             fileUploadWidget.disable();
         }
