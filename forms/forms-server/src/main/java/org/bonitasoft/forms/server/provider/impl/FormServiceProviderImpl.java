@@ -1847,17 +1847,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             org.bonitasoft.engine.bpm.document.Document.class.getName(), null, null);
                     final Serializable evaluationResult = resolveExpression(documentExpression, context);
                     final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult;
-                    if (document.hasContent()) {
-                        documentValue = document.getContentFileName();
-                        valueType = File.class.getName();
-                    } else {
-                        documentValue = document.getUrl();
-                        valueType = String.class.getName();
-                    }
-                    documentId = document.getId();
-                    documentName = document.getName();
-                    if (LOGGER.isLoggable(Level.FINE)) {
-                        LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                    if (document != null) {
+                        if (document.hasContent()) {
+                            documentValue = document.getContentFileName();
+                            valueType = File.class.getName();
+                        } else {
+                            documentValue = document.getUrl();
+                            valueType = String.class.getName();
+                        }
+                        documentId = document.getId();
+                        documentName = document.getName();
+                        if (LOGGER.isLoggable(Level.FINE)) {
+                            LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                        }
                     }
                 } catch (final FormNotFoundException e) {
                     final String message = "Error while trying to retrieve the document " + documentName;
