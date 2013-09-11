@@ -83,8 +83,8 @@ public abstract class AbstractDocumentItem extends Item implements ItemHasUnique
         return this.getAttributeValue(ATTRIBUTE_URL);
     }
 
-    public APIID getFile() {
-        return this.getAttributeValueAsAPIID(ATTRIBUTE_FILE);
+    public String getFile() {
+        return this.getAttributeValue(ATTRIBUTE_FILE);
     }
 
     public boolean hasContent() {
