@@ -14,26 +14,8 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.bonitasoft.console.common.client.user.User;
-import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
-import org.bonitasoft.console.common.server.login.LoginFailedException;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
+import org.bonitasoft.console.common.server.login.*;
 import org.bonitasoft.console.common.server.login.datastore.AutoLoginCredentials;
 import org.bonitasoft.console.common.server.login.localization.LoginUrl;
 import org.bonitasoft.console.common.server.login.localization.LoginUrlException;
@@ -45,6 +27,13 @@ import org.bonitasoft.console.common.server.preferences.properties.SecurityPrope
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
+
+import javax.servlet.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * @author Vincent Elcrin
@@ -63,13 +52,14 @@ public class AuthorizationFilter implements Filter {
         final HttpSession session = requestAccessor.getHttpSession();
         final APISession apiSession = requestAccessor.getApiSession();
         final long requestedTenantId = getTenantId(requestAccessor);
+        final long tenantId = ensureTenantId(requestedTenantId);
 
         if (isUserLoggedIn(apiSession, requestedTenantId)) {
             ensureUserSession(request, session, apiSession);
             chain.doFilter(request, response);
 
-        } else if (isAutoLogin(requestAccessor, requestedTenantId)
-                && doAutoLogin(requestAccessor, requestedTenantId)) {
+        } else if (isAutoLogin(requestAccessor, tenantId)
+                && doAutoLogin(requestAccessor, tenantId)) {
             chain.doFilter(request, response);
         } else {
             cleanHttpSession(session);
@@ -77,6 +67,18 @@ public class AuthorizationFilter implements Filter {
                     makeRedirectUrl(requestAccessor, requestAccessor.getRedirectUrl()).getUrl(),
                     requestedTenantId));
         }
+    }
+
+    /**
+     * Ensure tenant id by fetching default one if no requested.
+     * @param requestedTenantId
+     * @return
+     */
+    private long ensureTenantId(long requestedTenantId) {
+        if(requestedTenantId < 0) {
+            return TenantsManagementUtils.getDefaultTenantId();
+        }
+        return requestedTenantId;
     }
 
     @Override

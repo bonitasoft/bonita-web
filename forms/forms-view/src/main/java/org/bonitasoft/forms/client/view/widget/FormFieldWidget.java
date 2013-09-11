@@ -614,9 +614,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @return a {@link FileUploadWidget}
      */
     protected FileUploadWidget createFileUpload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
-        final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, false, widgetData.getId(),
-                widgetData.getFileWidgetInputType(), fieldValue.getValueType(), fieldValue.getDocumentId(), fieldValue.getDocumentName(),
-                getStringValue(fieldValue), widgetData.isDisplayAttachmentImage(), false);
+        final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, false, widgetData.getId(), widgetData.getFileWidgetInputType(),
+                fieldValue.getValueType(), fieldValue.getDocumentId(), fieldValue.getDocumentName(), getStringValue(fieldValue),
+                widgetData.isDisplayAttachmentImage());
         if (widgetData.isReadOnly()) {
             fileUploadWidget.disable();
         }
@@ -633,8 +633,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @return a {@link FileDownloadWidget}
      */
     protected FileDownloadWidget createFileDownload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
-        return new FileDownloadWidget(formID, contextMap, false, fieldValue.getValueType(), fieldValue.getDocumentId(),
-                widgetData.isDisplayAttachmentImage(),
+        return new FileDownloadWidget(formID, contextMap, false, fieldValue.getValueType(), fieldValue.getDocumentId(), widgetData.isDisplayAttachmentImage(),
                 getStringValue(fieldValue));
     }
 
@@ -1319,8 +1318,8 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
                     break;
                 case TEXT:
                     final HTML text = (HTML) fieldWidget;
-                    if (text.getHTML() != null && text.getHTML().equals(fieldValue.getValue())
-                            || fieldValue.getValue() != null && fieldValue.getValue().equals(text.getHTML())) {
+                    if (text.getHTML() != null && text.getHTML().equals(fieldValue.getValue()) || fieldValue.getValue() != null
+                            && fieldValue.getValue().equals(text.getHTML())) {
                         fireEvents = false;
                     }
                     if (SupportedFieldTypes.JAVA_DATE_CLASSNAME.equals(fieldValue.getValueType())) {
@@ -1454,8 +1453,8 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
                     break;
                 case HIDDEN:
                     final Hidden hidden = (Hidden) fieldWidget;
-                    if (hidden.getValue() != null && hidden.getValue().equals(fieldValue.getValue()) || fieldValue.getValue() != null && fieldValue.getValue()
-                            .equals(hidden.getValue())) {
+                    if (hidden.getValue() != null && hidden.getValue().equals(fieldValue.getValue()) || fieldValue.getValue() != null
+                            && fieldValue.getValue().equals(hidden.getValue())) {
                         fireEvents = false;
                     }
                     hidden.setValue(getStringValue(fieldValue));

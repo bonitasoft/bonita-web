@@ -34,8 +34,6 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.client.user.User;
 import org.bonitasoft.console.common.server.exception.NoCredentialsInSessionException;
-import org.bonitasoft.console.common.server.privileges.datastore.PrivilegesDatastore;
-import org.bonitasoft.console.common.server.privileges.datastore.PrivilegesDatastoreImpl;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
@@ -307,8 +305,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
         final String currentProductVersion = FormBuilderImpl.PRODUCT_VERSION;
         if (productVersion != null) {
-            if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0])
-                    || migrationProductVersion != null && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
+            if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0]) || migrationProductVersion != null
+                    && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
                 final String message = "The migration product version not identical with current product version.";
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, message);
@@ -976,8 +974,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Object> executeActions(final List<FormAction> actions, final Map<String, Object> context) throws FileTooBigException,
-            FormNotFoundException,
-            FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
+            FormNotFoundException, FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
 
         if (LOGGER.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -1008,8 +1005,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 }
                 processDefinitionID = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
                 final long newProcessInstanceID = workflowAPI.executeActionsAndStartInstance(session, userID, processDefinitionID, fieldValues, actions,
-                        locale,
-                        submitButtonId, transientDataContext);
+                        locale, submitButtonId, transientDataContext);
                 urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                 urlContext.remove(FormServiceProviderUtil.TASK_UUID);
                 urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, String.valueOf(newProcessInstanceID));
@@ -1029,6 +1025,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     }
                 }
             }
+        } catch (final FormAlreadySubmittedException e) {
+            final String message = "The task with ID " + activityInstanceID + " has already been executed";
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, message);
+            }
+            throw new FormAlreadySubmittedException(message);
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance for activity instance with ID " + activityInstanceID + " does not exist!";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -1165,8 +1167,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     final Map<String, Object> newURLContext = new HashMap<String, Object>(urlContext);
                     newURLContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                     newURLContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
-                    newURLContext.put(FormServiceProviderUtil.FORM_ID,
-                            createFormIdFromUuid(activityDefinitionUuid, FormServiceProviderUtil.ENTRY_FORM_TYPE));
+                    newURLContext.put(FormServiceProviderUtil.FORM_ID, createFormIdFromUuid(activityDefinitionUuid, FormServiceProviderUtil.ENTRY_FORM_TYPE));
                     newURLContext.put(FormServiceProviderUtil.TASK_UUID, String.valueOf(activityInstanceId));
                     urlComponents.setUrlContext(newURLContext);
                 }
@@ -1188,16 +1189,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getAppDedicatedUrl(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final String uiMode,
-            final boolean isArchived)
-            throws FormWorflowApiException,
-            InvalidSessionException {
+            final boolean isArchived) throws FormWorflowApiException, InvalidSessionException {
         final long processDefinitionId = getProcessDefinitionId(session, workflowAPI, activityInstanceId, isArchived);
         return ApplicationURLUtils.getInstance().getDedicatedApplicationUrl(processDefinitionId, uiMode);
     }
 
     private long getProcessDefinitionId(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final boolean isArchived)
-            throws FormWorflowApiException,
-            InvalidSessionException {
+            throws FormWorflowApiException, InvalidSessionException {
         try {
             return workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceId, isArchived);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1213,8 +1211,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getActivityName(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final boolean isArchived)
-            throws InvalidSessionException,
-            FormWorflowApiException {
+            throws InvalidSessionException, FormWorflowApiException {
         try {
             return workflowAPI.getActivityName(session, activityInstanceId, isArchived);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1230,8 +1227,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getActivityDefinitionUUID(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId,
-            final boolean isArchived)
-            throws InvalidSessionException, FormWorflowApiException {
+            final boolean isArchived) throws InvalidSessionException, FormWorflowApiException {
         try {
             return workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceId, isArchived);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1851,17 +1847,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             org.bonitasoft.engine.bpm.document.Document.class.getName(), null, null);
                     final Serializable evaluationResult = resolveExpression(documentExpression, context);
                     final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult;
-                    if (document.hasContent()) {
-                        documentValue = document.getContentFileName();
-                        valueType = File.class.getName();
-                    } else {
-                        documentValue = document.getUrl();
-                        valueType = String.class.getName();
-                    }
-                    documentId = document.getId();
-                    documentName = document.getName();
-                    if (LOGGER.isLoggable(Level.FINE)) {
-                        LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                    if (document != null) {
+                        if (document.hasContent()) {
+                            documentValue = document.getContentFileName();
+                            valueType = File.class.getName();
+                        } else {
+                            documentValue = document.getUrl();
+                            valueType = String.class.getName();
+                        }
+                        documentId = document.getId();
+                        documentName = document.getName();
+                        if (LOGGER.isLoggable(Level.FINE)) {
+                            LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                        }
                     }
                 } catch (final FormNotFoundException e) {
                     final String message = "Error while trying to retrieve the document " + documentName;
