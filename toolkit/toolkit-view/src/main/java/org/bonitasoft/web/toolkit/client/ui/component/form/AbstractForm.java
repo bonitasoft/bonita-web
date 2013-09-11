@@ -346,10 +346,11 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         } else if (entry instanceof FormEntry) {
             addEntry((FormEntry) entry);
         } else {
-            throw new RuntimeException("Unauthorized type entry <" + entry.getClass() + ">");
+            getLastContainer().append(entry);
         }
     }
 
+    
     /**
      * Section is the highest container implementing FormNode
      * 
