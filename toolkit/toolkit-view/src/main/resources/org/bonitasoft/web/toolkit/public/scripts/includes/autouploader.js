@@ -78,7 +78,7 @@ $(function() {
 		var uploaderEl = $('<div id="uploader"><a id="filepicker"></a></div>')
 		
 		var pluploader = new plupload.Uploader({
-			runtimes : 'gears,html5,flash,silverlight,browserplus',
+			runtimes : 'gears,html4,html5,flash,silverlight,browserplus',
 			multipart : true,
 			container : 'uploader',
 			browse_button : 'filepicker',
