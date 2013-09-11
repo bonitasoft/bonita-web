@@ -346,6 +346,9 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         } else if (entry instanceof FormEntry) {
             addEntry((FormEntry) entry);
         } else {
+            if (entry instanceof Component) {
+                ((Component) entry).addClass("formentry");
+            }
             getLastContainer().append(entry);
         }
     }
