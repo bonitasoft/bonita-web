@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
             final long tenantId = getTenantId(request, response);
             String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + request.getQueryString() + ")");
+                LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + dropPassword(request.getQueryString()) + ")");
             }
             if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
                 redirectURL = LoginManager.DEFAULT_DIRECT_URL;
@@ -225,6 +225,14 @@ public class LoginServlet extends HttpServlet {
                 throw new ServletException(errorMessage, e);
             }
         }
+    }
+
+    public String dropPassword(String content) {
+        String tmp = content;
+        if(content.contains("password")) {
+            tmp = tmp.replaceAll("[&]?password=([^&|#]*)?", "");
+        }
+        return tmp;
     }
 
 }

@@ -189,4 +189,7 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
         return VALUE_TYPE.link.name().equals(getType());
     }
 
+    public boolean isParentProfileEntry() {
+        return getParentId().toLong() == 0L;
+    }
 }

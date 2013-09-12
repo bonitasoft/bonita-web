@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2012 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client.common.exception.api;
+package org.bonitasoft.web.rest.server.framework.exception;
 
 /**
  * @author Séverin Moussel
  * 
  */
-public class APIItemAlreadyExistsException extends APIItemException {
+public class APIAttributeMissingException extends APIAttributeException {
 
-    private static final long serialVersionUID = -8993667729581278861L;
+    private static final long serialVersionUID = 1254220877755354148L;
 
-    public APIItemAlreadyExistsException(final String itemType) {
-        super(itemType);
-    }
-
-    @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
+    public APIAttributeMissingException(final String attributeName) {
+        super(attributeName);
     }
 
     @Override
     protected String defaultMessage() {
-        return "A similar " + this.itemType.toLowerCase() + " already exists for API " + getApi() + "#" + getResource();
+        return "Attribute " + getAttributeName() + " is missing for API " + getApi() + "#" + getResource();
     }
 
 }

@@ -39,12 +39,12 @@ public class POParserTest {
 
     @Test
     public void testToParseASimpleMsg() {
-        assertEquals("This is a multilinesMessage", i18n.get("MultilineMessageId"));
+        assertEquals("theMsg", i18n.get("theId"));
     }
 
     @Test
     public void testToParseAMultiLinesMsg() {
-        assertEquals("theMsg", i18n.get("theId"));
+        assertEquals("This is a multilines\nMessage", i18n.get("Multiline\nMessage\nId"));
     }
 
 }
