@@ -74,7 +74,7 @@ public class DefaultValidatorsProperties {
         try {
             defaultProperties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(FORM_VALIDATORS_CONFIG_FILE_NAME));
         } catch (final IOException e) {
-            LOGGER.log(Level.SEVERE, "default forms config file " + FORM_VALIDATORS_CONFIG_FILE_NAME + " is missing form the classpath");
+            LOGGER.log(Level.WARNING, "default forms config file " + FORM_VALIDATORS_CONFIG_FILE_NAME + " is missing form the classpath");
         }
     }
 

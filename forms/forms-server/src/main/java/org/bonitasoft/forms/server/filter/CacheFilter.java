@@ -16,20 +16,14 @@
  */
 package org.bonitasoft.forms.server.filter;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Haojie Yuan
@@ -51,17 +45,16 @@ public class CacheFilter implements Filter {
 		expiresMap.clear();
 		Enumeration names = filterConfig.getInitParameterNames();
 		while (names.hasMoreElements()) {
-			try {
-				final String name = (String) names.nextElement();
-				final String value = filterConfig.getInitParameter(name);
-				final Integer expire = Integer.valueOf(value);
-				expiresMap.put(name, expire);
-			} catch (Exception e) {
-				LOGGER.log(Level.SEVERE, "Error while init the CacheFilter in session");
-				throw new ServletException(e);
-			}
-		}
-	}
+            final String name = (String) names.nextElement();
+            final String value = filterConfig.getInitParameter(name);
+            try {
+                final Integer expire = Integer.valueOf(value);
+                expiresMap.put(name, expire);
+            } catch (NumberFormatException e) {
+                LOGGER.log(Level.WARNING, name + " parameter value should be an integer");
+            }
+        }
+    }
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;

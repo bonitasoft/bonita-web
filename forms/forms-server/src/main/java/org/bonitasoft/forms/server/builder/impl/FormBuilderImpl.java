@@ -175,7 +175,7 @@ public class FormBuilderImpl implements IFormBuilder {
                 fileOutputStream.close();
             }
         } catch (final TransformerException e) {
-            LOGGER.log(Level.SEVERE, "Error while generating the forms definition file.", e);
+            LOGGER.log(Level.WARNING, "Error while generating the forms definition file.", e);
         }
         return formsDefinitionFile;
     }
@@ -202,7 +202,7 @@ public class FormBuilderImpl implements IFormBuilder {
             this.rootElement.appendChild(migrationVersionElement);
             this.currentElement = this.rootElement;
         } catch (final ParserConfigurationException e) {
-            LOGGER.log(Level.SEVERE, "Invalid parser configuration", e);
+            LOGGER.log(Level.WARNING, "Invalid parser configuration", e);
         }
         return this;
     }

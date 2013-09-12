@@ -16,6 +16,9 @@
  */
 package org.bonitasoft.console.common.server.login;
 
+import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,9 +26,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * Utility class for Session Manager access (read in a properties file)
@@ -93,12 +93,12 @@ public class LoginManagerProperties {
             inputStream = new FileInputStream(propertiesFile);
             this.defaultProperties.load(inputStream);
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
                 if (propertiesFile != null) {
-                    LOGGER.log(Level.SEVERE,
+                    LOGGER.log(Level.WARNING,
                             "default login config file " + LOGIN_CONFIG_FILE_NAME + " is missing from the conf directory (" + propertiesFile.getPath() + ")");
                 } else {
-                    LOGGER.log(Level.SEVERE, "default login config file " + LOGIN_CONFIG_FILE_NAME + " is missing from the conf directory");
+                    LOGGER.log(Level.WARNING, "default login config file " + LOGIN_CONFIG_FILE_NAME + " is missing from the conf directory");
                 }
             }
         } finally {
@@ -106,8 +106,8 @@ public class LoginManagerProperties {
                 try {
                     inputStream.close();
                 } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "default login config file " + LOGIN_CONFIG_FILE_NAME + " stream could not be closed.", e);
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "default login config file " + LOGIN_CONFIG_FILE_NAME + " stream could not be closed.", e);
                     }
                 }
             }
@@ -121,7 +121,7 @@ public class LoginManagerProperties {
         final String sessionManagerImpl = this.defaultProperties.getProperty(LOGIN_MANAGER);
         if (sessionManagerImpl == null || sessionManagerImpl.isEmpty()) {
             final String defaultImpl = StandardLoginManagerImpl.class.getName();
-            LOGGER.log(Level.INFO, "The login manager implementation is undefined. Using default implementation : " + defaultImpl);
+            LOGGER.log(Level.FINEST, "The login manager implementation is undefined. Using default implementation : " + defaultImpl);
             return defaultImpl;
         }
         return sessionManagerImpl;

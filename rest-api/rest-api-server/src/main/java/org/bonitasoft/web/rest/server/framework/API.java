@@ -58,9 +58,6 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  */
 public abstract class API<ITEM extends IItem> {
 
-    // Fixme Remove before starting refactoring of the API
-    protected static final Logger LOGGER = Logger.getLogger(API.class.getName());
-
     protected ItemDefinition<ITEM> itemDefinition = null;
 
     private final Map<String, Deployer> deployers = new HashMap<String, Deployer>();

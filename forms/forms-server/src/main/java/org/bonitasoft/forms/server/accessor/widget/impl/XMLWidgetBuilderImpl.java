@@ -16,33 +16,21 @@
  */
 package org.bonitasoft.forms.server.accessor.widget.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.bonitasoft.forms.client.model.ActionType;
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FileWidgetInputType;
-import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormFieldAvailableValue;
-import org.bonitasoft.forms.client.model.FormSubtitle;
-import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.client.model.FormWidget;
+import org.bonitasoft.forms.client.model.*;
 import org.bonitasoft.forms.client.model.ReducedFormSubtitle.SubTitlePosition;
 import org.bonitasoft.forms.client.model.ReducedFormValidator.ValidatorPosition;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.SelectMode;
-import org.bonitasoft.forms.client.model.WidgetType;
 import org.bonitasoft.forms.server.accessor.impl.util.XPathUtil;
 import org.bonitasoft.forms.server.accessor.widget.IXMLWidgetBuilder;
 import org.bonitasoft.forms.server.constants.XMLForms;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Accessor used to read the page nodes in the XML definition file and retrieve the widgets and validators
@@ -99,8 +87,8 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
         final String xpath = XMLForms.PAGE_VALIDATORS + "/" + XMLForms.VALIDATOR;
         final NodeList pageValidatorNodes = getNodeListByXpath(pageNode, xpath);
         if (pageValidatorNodes == null) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Failed to parse the form definition file. query : " + xpath);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Failed to parse the form definition file. query : " + xpath);
             }
         } else {
             for (int i = 0; i < pageValidatorNodes.getLength(); i++) {
@@ -144,8 +132,8 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
         final NodeList widgetNodes = getNodeListByXpath(pageNode, xpath);
         if (widgetNodes == null) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Failed to parse the form definition file. query : " + xpath);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Failed to parse the form definition file. query : " + xpath);
             }
         } else {
             for (int i = 0; i < widgetNodes.getLength(); i++) {
@@ -154,8 +142,8 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
                     widget.setViewPageWidget(!isEditMode);
                     widgets.add(widget);
                 } catch (final InvalidFormDefinitionException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "invalid widget definition", e);
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "invalid widget definition", e);
                     }
                 }
             }
@@ -433,8 +421,8 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
         final String xpath = getActionsXpath(escapeSingleQuote(pageId));
         final NodeList actionNodes = getNodeListByXpath(parentNode, xpath);
         if (actionNodes == null) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Failed to parse the form definition file. query : " + xpath);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Failed to parse the form definition file. query : " + xpath);
             }
             throw new InvalidFormDefinitionException("The actions were not found in the forms definition file");
         } else {

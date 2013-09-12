@@ -14,6 +14,9 @@
  */
 package org.bonitasoft.forms.server.accessor;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.forms.server.provider.impl.FormServiceProviderImpl;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,9 +24,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.forms.server.provider.impl.FormServiceProviderImpl;
 
 /**
  * Utility class for default properties access (read in a properties file)
@@ -103,15 +103,15 @@ public class DefaultFormsProperties {
             defaultProperties.load(inputStream);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "default forms config file " + FORM_DEFAULT_CONFIG_FILE_NAME + " is missing form the forms conf directory");
+                LOGGER.log(Level.WARNING, "default forms config file " + FORM_DEFAULT_CONFIG_FILE_NAME + " is missing form the forms conf directory");
             }
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "default forms config file " + FORM_DEFAULT_CONFIG_FILE_NAME + " stream could not be closed.", e);
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "default forms config file " + FORM_DEFAULT_CONFIG_FILE_NAME + " stream could not be closed.", e);
                     }
                 }
             }

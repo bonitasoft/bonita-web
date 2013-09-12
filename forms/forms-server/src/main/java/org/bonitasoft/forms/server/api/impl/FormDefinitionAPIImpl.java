@@ -389,9 +389,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         try {
             htmlTemplate = getPageLayout(templatePath, applicationDeploymentDate, context);
         } catch (final FileNotFoundException e) {
-            final String message = "Using the default page template.";
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, message);
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Page layout not fount. Using the default page template.");
             }
             boolean isActivity = false;
             @SuppressWarnings("unchecked")
@@ -566,8 +565,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                 try {
                     label = labels.getString(itemFound);
                 } catch (final Exception e) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "No step attribute label " + itemFound + " was found.");
+                    if (LOGGER.isLoggable(Level.INFO)) {
+                        LOGGER.log(Level.INFO, "No step attribute label " + itemFound + " was found.");
                     }
                     label = "";
                 }

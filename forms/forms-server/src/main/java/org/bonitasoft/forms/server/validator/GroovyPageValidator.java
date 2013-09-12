@@ -16,16 +16,16 @@
  */
 package org.bonitasoft.forms.server.validator;
 
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.server.api.FormAPIFactory;
+import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
+
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormFieldValue;
-import org.bonitasoft.forms.server.api.FormAPIFactory;
-import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
 
 /**
  * @author Anthony Birembaut
@@ -61,14 +61,14 @@ public class GroovyPageValidator extends AbstractFormValidator implements IFormP
 	    		if (processDefinitionID != -1) {
 	    			valid = (Boolean)formWorkflowAPI.getProcessFieldValue(getSession(), processDefinitionID, expression, fieldValues, locale, context);
 	    		} else {
-	                if (LOGGER.isLoggable(Level.SEVERE)) {
-	                    LOGGER.log(Level.SEVERE, "The process definition UUID and activity definition UUID are undefined.");
+	                if (LOGGER.isLoggable(Level.WARNING)) {
+	                    LOGGER.log(Level.WARNING, "The process definition UUID and activity definition UUID are undefined.");
 	                }
 	    		}
 	    	}
     	} catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while validating with a groovy expression", e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while validating with a groovy expression", e);
             }
 		}
     	return valid;

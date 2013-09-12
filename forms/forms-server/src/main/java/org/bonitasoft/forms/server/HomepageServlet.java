@@ -17,14 +17,13 @@
  */
 package org.bonitasoft.forms.server;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.bonitasoft.console.common.server.themes.ApplicationResourceServlet;
+import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.console.common.server.themes.ApplicationResourceServlet;
-import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Servlet for requesting home page
@@ -79,8 +78,8 @@ public class HomepageServlet extends ApplicationResourceServlet {
         try {
             ThemeResourceServlet.getThemePackageFile(request, response, DEFAULT_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Get error while loading the " + getFileName(isForm) + " in theme " + DEFAULT_THEME_NAME);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Get error while loading the " + getFileName(isForm) + " in theme " + DEFAULT_THEME_NAME);
             }
         }
     }

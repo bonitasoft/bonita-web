@@ -668,20 +668,20 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     final String attachmentName = fieldId;
                     performSetAttachmentAction(session, processInstanceID, attachments, attachmentName, filePath, setAttachment);
                 } else {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE,
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING,
                                 "The attachment to set should be either a String or a groovy expression returning a String which is not the case of value : "
                                         + action.getDataName());
                     }
                 }
             } else {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Error while setting the attachment. Unable to find a field with ID " + fieldId + " in the form.");
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Error while setting the attachment. Unable to find a field with ID " + fieldId + " in the form.");
                 }
             }
         } catch (final IndexOutOfBoundsException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Invalid action expression : " + action.getExpression().getName());
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Invalid action expression : " + action.getExpression().getName());
             }
         }
 
@@ -747,25 +747,25 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "can't get the file content in the location: " + fileName);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "can't get the file content in the location: " + fileName);
             }
         } catch (final ProcessInstanceNotFoundException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Process instance " + processInstanceID + " not found.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Process instance " + processInstanceID + " not found.");
             }
         } catch (final DocumentAttachmentException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while setting the attachment.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while setting the attachment.");
             }
         } catch (final FileTooBigException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while setting the attachment: file too big!");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while setting the attachment: file too big!");
             }
             throw e;
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while setting the attachment.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while setting the attachment.");
             }
 
         }
