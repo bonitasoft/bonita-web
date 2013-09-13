@@ -16,27 +16,13 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.TaskSkipAction;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.IUserTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.*;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -46,12 +32,18 @@ import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
+import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
-import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
+
+import java.util.*;
+
+import static java.util.Arrays.asList;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Vincent Elcrin
@@ -218,14 +210,21 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                     .setNbLinesByPage(10)
                     .build());
         } else {
-            addBody(new ConnectorInstanceSectionSnippet(item)
-                    .setNbLinesByPage(10)
-                    .build());
+            addBody(buildConnectorInstanceSection(item));
         }
 
         addBody(new CommentSectionSnippet(item.getCaseId())
                 .setNbLinesByPage(10)
                 .build());
+    }
+
+    /**
+     * Overridden in SP
+     */
+    protected Section buildConnectorInstanceSection(IFlowNodeItem item) {
+        return new ConnectorInstanceSectionSnippet(item)
+                .setNbLinesByPage(10)
+                .build();
     }
 
     @Override
