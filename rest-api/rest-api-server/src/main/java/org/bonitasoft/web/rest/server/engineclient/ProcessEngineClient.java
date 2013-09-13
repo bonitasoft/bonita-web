@@ -16,31 +16,22 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
-import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
-import org.bonitasoft.engine.bpm.process.ProcessDefinition;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
-import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
-import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
-import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.exception.DeletionException;
-import org.bonitasoft.engine.exception.ProcessInstanceHierarchicalDeletionException;
-import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.bpm.process.*;
+import org.bonitasoft.engine.exception.*;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * Process engine API client
@@ -63,7 +54,7 @@ public class ProcessEngineClient {
 
     public ProcessDeploymentInfo getProcessDeploymentInfo(final long processId) {
         try {
-            return processAPI.getProcessDeploymentInfo(processId);
+            return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final ProcessDefinitionNotFoundException e) {
             // if not found, return null
             return null;
@@ -72,9 +63,13 @@ public class ProcessEngineClient {
         }
     }
 
+    public ProcessAPI getProcessApi() {
+        return processAPI;
+    }
+
     public ProcessDefinition deploy(final BusinessArchive businessArchive) {
         try {
-            return processAPI.deploy(businessArchive);
+            return getProcessApi().deploy(businessArchive);
         } catch (final AlreadyExistsException e) {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
             throw new APIException(_("Apps %appName% in version %version% already exists",
@@ -87,7 +82,7 @@ public class ProcessEngineClient {
 
     public void enableProcess(final long processId) {
         try {
-            processAPI.enableProcess(processId);
+            getProcessApi().enableProcess(processId);
         } catch (final Exception e) {
             throw new APIException(_("Unable to enable process"), e);
         }
@@ -95,7 +90,7 @@ public class ProcessEngineClient {
 
     public void disableProcess(final long processId) {
         try {
-            processAPI.disableProcess(processId);
+            getProcessApi().disableProcess(processId);
         } catch (final Exception e) {
             throw new APIException(_("Unable to disable process"), e);
         }
@@ -103,8 +98,8 @@ public class ProcessEngineClient {
 
     public ProcessDeploymentInfo updateProcessDeploymentInfo(final long processId, final ProcessDeploymentInfoUpdater processDeploymentInfoUpdater) {
         try {
-            processAPI.updateProcessDeploymentInfo(processId, processDeploymentInfoUpdater);
-            return processAPI.getProcessDeploymentInfo(processId);
+            getProcessApi().updateProcessDeploymentInfo(processId, processDeploymentInfoUpdater);
+            return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final Exception e) {
             throw new APIException("Error when updating process deployment informations", e);
         }
@@ -115,7 +110,7 @@ public class ProcessEngineClient {
             for (final Long id : processIds) {
                 deleteProcessInstancesByBunch(id, DELETE_PROCESS_BUNCH_SIZE, processIds);
                 deleteArchivedProcessInstancesByBunch(id, DELETE_PROCESS_BUNCH_SIZE, processIds);
-                processAPI.deleteProcessDefinition(id);
+                getProcessApi().deleteProcessDefinition(id);
             }
         } catch (final BonitaException e) {
             throw new APIException("Error when deleting processe(s) " + processIds, e);
@@ -133,10 +128,10 @@ public class ProcessEngineClient {
         long numberOfDeletedArchivedProcessInstances = 0;
         do {
             try {
-                numberOfDeletedArchivedProcessInstances = processAPI.deleteArchivedProcessInstances(processId, 0, bunchSize);
+                numberOfDeletedArchivedProcessInstances = getProcessApi().deleteArchivedProcessInstances(processId, 0, bunchSize);
             } catch (final ProcessInstanceHierarchicalDeletionException e) {
                 final long parentProcessInstanceID = e.getProcessInstanceId();
-                final long parentProcessID = processAPI.getProcessDefinitionIdFromProcessInstanceId(parentProcessInstanceID);
+                final long parentProcessID = getProcessApi().getProcessDefinitionIdFromProcessInstanceId(parentProcessInstanceID);
                 if (processesAllowedToBeDeletedIds.contains(parentProcessID)) {
                     deleteProcessInstancesByBunch(parentProcessID, DELETE_PROCESS_BUNCH_SIZE, processesAllowedToBeDeletedIds);
                 } else {
@@ -157,10 +152,10 @@ public class ProcessEngineClient {
         long numberOfDeletedProcessInstances = 0;
         do {
             try {
-                numberOfDeletedProcessInstances = processAPI.deleteProcessInstances(processId, 0, bunchSize);
+                numberOfDeletedProcessInstances = getProcessApi().deleteProcessInstances(processId, 0, bunchSize);
             } catch (final ProcessInstanceHierarchicalDeletionException e) {
                 final long parentProcessInstanceID = e.getProcessInstanceId();
-                final long parentProcessID = processAPI.getProcessDefinitionIdFromProcessInstanceId(parentProcessInstanceID);
+                final long parentProcessID = getProcessApi().getProcessDefinitionIdFromProcessInstanceId(parentProcessInstanceID);
                 if (processesAllowedToBeDeletedIds.contains(parentProcessID)) {
                     deleteProcessInstancesByBunch(parentProcessID, DELETE_PROCESS_BUNCH_SIZE, processesAllowedToBeDeletedIds);
                 } else {
@@ -172,7 +167,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchProcessDefinitions(final SearchOptions searchOptions) {
         try {
-            return processAPI.searchProcessDeploymentInfos(searchOptions);
+            return getProcessApi().searchProcessDeploymentInfos(searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching process definition", e);
         }
@@ -180,7 +175,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchUncategorizedProcessDefinitionsSupervisedBy(final long userId, final SearchOptions searchOptions) {
         try {
-            return processAPI.searchUncategorizedProcessDeploymentInfosSupervisedBy(userId, searchOptions);
+            return getProcessApi().searchUncategorizedProcessDeploymentInfosSupervisedBy(userId, searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching uncategorized process definition supervised by user " + userId, e);
         }
@@ -188,7 +183,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchProcessDefinitionsSupervisedBy(final long userId, final SearchOptions searchOptions) {
         try {
-            return processAPI.searchUncategorizedProcessDeploymentInfosSupervisedBy(userId, searchOptions);
+            return getProcessApi().searchUncategorizedProcessDeploymentInfosSupervisedBy(userId, searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching process definition supervised by user " + userId, e);
         }
@@ -196,7 +191,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchUncategorizedProcessDefinitionsUserCanStart(final long userId, final SearchOptions searchOptions) {
         try {
-            return processAPI.searchUncategorizedProcessDeploymentInfosUserCanStart(userId, searchOptions);
+            return getProcessApi().searchUncategorizedProcessDeploymentInfosUserCanStart(userId, searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching uncategorized process definition which can be started by user " + userId, e);
         }
@@ -204,7 +199,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchRecentlyStartedProcessDefinitions(final long userId, final SearchOptions searchOptions) {
         try {
-            return processAPI.searchProcessDeploymentInfosStartedBy(userId, searchOptions);
+            return getProcessApi().searchProcessDeploymentInfosStartedBy(userId, searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching recently started process by user " + userId, e);
         }
@@ -214,7 +209,7 @@ public class ProcessEngineClient {
         final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 0);
         builder.filter(ProcessDeploymentInfoSearchDescriptor.CONFIGURATION_STATE, ProcessItem.VALUE_CONFIGURATION_STATE_RESOLVED);
         try {
-            return processAPI.searchProcessDeploymentInfos(builder.done()).getCount();
+            return getProcessApi().searchProcessDeploymentInfos(builder.done()).getCount();
         } catch (final Exception e) {
             throw new APIException("Error when counting resolved processes", e);
         }
@@ -222,7 +217,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchProcessDeploymentInfos(final long userId, final SearchOptions searchOptions) {
         try {
-            return processAPI.searchProcessDeploymentInfos(userId, searchOptions);
+            return getProcessApi().searchProcessDeploymentInfos(userId, searchOptions);
         } catch (final SearchException e) {
             throw new APIException("Error when searching process user can start", e);
         }

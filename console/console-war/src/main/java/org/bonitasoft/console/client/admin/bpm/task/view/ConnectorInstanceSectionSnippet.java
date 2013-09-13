@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import org.bonitasoft.console.client.common.component.snippet.SectionSnippet;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceDefinition;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
@@ -26,6 +24,8 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Vincent Elcrin
@@ -47,7 +47,7 @@ public class ConnectorInstanceSectionSnippet implements SectionSnippet {
                 .addBody(buildConnectorTable());
     }
 
-    private ItemTable buildConnectorTable() {
+    protected ItemTable buildConnectorTable() {
         return new ItemTable(new JsId("connectors"), Definitions.get(ConnectorInstanceDefinition.TOKEN))
                 // filter
                 .addHiddenFilter(ConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID, this.item.getId())
