@@ -31,10 +31,6 @@ div.bonita_form_container {
 	}
 }
 
-#bonita_form_step_header {
-	display: none;
-}
-
 div.bonita_form_confirm_message,
 div.bonita_form_container div#bonita_form_confirm_todolist .bonita_form_available_task_title,
 div.bonita_form_task_link,
