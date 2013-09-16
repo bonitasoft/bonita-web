@@ -29,7 +29,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnector;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessConnectorDatastore;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

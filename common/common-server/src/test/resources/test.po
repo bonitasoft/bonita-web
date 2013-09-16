@@ -21,11 +21,11 @@ msgstr ""
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/SupportCodePage.java:42
 msgid ""
-"Multiline"
-"Message"
+"Multiline\n"
+"Message\n"
 "Id"
 msgstr ""
-"This is a multilines"
+"This is a multilines\n"
 "Message"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/SupportCodePage.java:43

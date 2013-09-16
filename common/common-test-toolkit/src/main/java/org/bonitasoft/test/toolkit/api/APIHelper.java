@@ -44,6 +44,8 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("unchecked")
 public class APIHelper {
 
+    public static final long DEFAULT_TENANT_ID = 1;
+
     public static final String TECHUSER_LOGIN = "install";
 
     public static final String TECHUSER_PASSWORD = "install";
@@ -75,21 +77,34 @@ public class APIHelper {
     /**
      * Constructor.
      * 
+     * @param pTenantId
+     * @param siteUrl
+     * @param pUserName
+     * @param pPassword
+     */
+    public APIHelper(final long pTenantId, final String siteUrl, final String pUserName, final String pPassword) {
+        this.logger = LoggerFactory.getLogger(APIHelper.class);
+        this.logger.info("Login on tenant [{}] with user [{}]", pTenantId, pUserName);
+
+        RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
+        this.client = ProxyFactory.create(BonitaAPIClient.class, siteUrl);
+
+        final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword);
+        consumeResponse(res);
+
+        this.jsonParser = new JSONParser();
+        this.xmlReader = new SAXReader();
+    }
+
+    /**
+     * Constructor (using default tenant id).
+     * 
      * @param siteUrl
      * @param pUserName
      * @param pPassword
      */
     public APIHelper(final String siteUrl, final String pUserName, final String pPassword) {
-        this.logger = LoggerFactory.getLogger(APIHelper.class);
-
-        RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
-        this.client = ProxyFactory.create(BonitaAPIClient.class, siteUrl);
-
-        final ClientResponse<String> res = this.client.login(pUserName, pPassword);
-        consumeResponse(res);
-
-        this.jsonParser = new JSONParser();
-        this.xmlReader = new SAXReader();
+        this(DEFAULT_TENANT_ID, siteUrl, pUserName, pPassword);
     }
 
     /**
@@ -99,6 +114,15 @@ public class APIHelper {
      */
     public APIHelper(final String siteUrl) {
         this(siteUrl, TECHUSER_LOGIN, TECHUSER_PASSWORD);
+    }
+
+    /**
+     * Constructor using technical user credentials.
+     * 
+     * @param siteUrl
+     */
+    public APIHelper(final String siteUrl, final long pTenantId) {
+        this(pTenantId, siteUrl, TECHUSER_LOGIN, TECHUSER_PASSWORD);
     }
 
     /**

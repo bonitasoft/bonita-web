@@ -32,9 +32,9 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterException;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
