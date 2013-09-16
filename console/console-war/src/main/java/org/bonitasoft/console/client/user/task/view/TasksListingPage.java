@@ -39,8 +39,10 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
@@ -191,6 +193,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
       return taskButtonFactory.createRefreshButton(new Action(){
           @Override
           public void execute() {
+              ClientApplicationURL.setPageAttributes(ClientApplicationURL.getPageAttributes().addValue("_id", ""), true);
               ViewController.refreshCurrentPage();
               TasksListingPage.this.tablesSearch.reset();
           }
