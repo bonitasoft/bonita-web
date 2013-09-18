@@ -289,9 +289,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             evalContext.putAll(context);
         }
         long ProcessInstance = 0;
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, session.getUserName() + " starting an instance of " + processDefinitionID);
-        }
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
 
         final List<FormAction> actionsToExecute = new ArrayList<FormAction>();
@@ -352,9 +349,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         excuteParameters.put(FormWorkflowUtil.ACTIVITY_INSTANCE_ID_KEY, activityInstanceID);
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_LIST_KEY, (Serializable) buildOperations(actionsToExecute));
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_INPUT_KEY, (Serializable) evalContext);
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, session.getUserName() + " executing task " + activityInstanceID);
-        }
         bpmEngineAPIUtil.executeCommand(commandAPI, FormWorkflowUtil.EXECUTE_ACTION_AND_TERMINATE, excuteParameters);
     }
 
