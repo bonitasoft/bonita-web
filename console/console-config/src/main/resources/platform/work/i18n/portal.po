@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-05 14:42+0200\n"
+"POT-Creation-Date: 2013-09-19 15:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,6 @@ msgid "Deleted"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/system/view/PopupAboutPage.java:35
-#: console/console-war/src/main/webapp/login.jsp:88
 #: console/console-war/src/main/webapp/login.jsp:107
 msgid "Bonita Portal"
 msgstr ""
@@ -224,7 +223,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:124
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:129
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:500
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:502
 msgid "No data"
 msgstr ""
 
@@ -410,7 +409,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:96
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:81
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:118
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:199
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:221
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:70
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
@@ -438,7 +437,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:147
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:167
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:192
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:161
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:170
 msgid "Priority"
 msgstr ""
 
@@ -447,7 +446,7 @@ msgid "The priority of the task"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:118
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:128
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:135
 msgid "Unassigned"
 msgstr ""
 
@@ -489,7 +488,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:151
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:170
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:128
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:163
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:172
 msgid "Due date"
 msgstr ""
 
@@ -524,8 +523,8 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedTasksSection.java:58
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:127
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:145
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:162
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:174
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:171
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:186
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:121
 msgid "Name"
 msgstr ""
@@ -700,7 +699,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:134
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:87
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:118
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:546
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:548
 msgid "All"
 msgstr ""
 
@@ -906,8 +905,8 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:115
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableActionSet.java:280
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:611
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:617
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:612
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:618
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/view/DeleteItemPage.java:93
 msgid "Delete"
 msgstr ""
@@ -1258,8 +1257,8 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:149
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:169
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:194
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:164
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:176
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:173
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:188
 msgid "App"
 msgstr ""
 
@@ -1869,7 +1868,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:106
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:89
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:119
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:101
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:105
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:36
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
@@ -1883,7 +1882,7 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:151
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:196
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:175
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:187
 msgid "Performed date"
 msgstr ""
 
@@ -1936,7 +1935,7 @@ msgid "Tasks "
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:113
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:171
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:180
 msgid "Performed"
 msgstr ""
 
@@ -2286,59 +2285,59 @@ msgstr ""
 msgid "Performed on"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:116
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:120
 msgid "Available"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:139
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:147
 msgid "Assigned to me"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:150
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:159
 msgid "Hidden to me"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:200
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:222
 msgid "Select an App in the list below to display the available tasks"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:219
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:241
 msgid "My tasks"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:219
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:241
 msgid "Tasks assigned to me"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:225
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:247
 msgid "Available tasks"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:225
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:247
 msgid "Unassigned tasks I can perform"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:231
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:253
 msgid "To do"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:231
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:253
 msgid "Tasks I can perform"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:244
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:266
 msgid "Done"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:244
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:266
 msgid "Display tasks I have performed"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:248
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:270
 msgid "Hidden"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:248
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:270
 msgid "Display tasks I'm ignoring"
 msgstr ""
 
@@ -2384,6 +2383,10 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:64
 msgid "Assign this task to me. Other allowed users will no longer see it"
+msgstr ""
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:69
+msgid "Refresh this table"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessQuickDetailsPage.java:66
@@ -2647,32 +2650,32 @@ msgid ""
 "If the error persists, please contact Bonitasoft support"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:582
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:588
 msgid "ascending"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:589
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:595
 msgid "descending"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:612
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:618
 msgid "Sort by"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:627
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:630
 msgid "Enter the text to search for"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:627
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:630
 msgid "Search..."
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:631
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:438
 msgid "Search"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:631
 msgid "Update this page using the defined serach query"
 msgstr ""
 
@@ -2716,7 +2719,7 @@ msgstr ""
 msgid "Go to page %pagenumber%"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:667
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:668
 msgid "actions"
 msgstr ""
 
@@ -2812,7 +2815,7 @@ msgstr ""
 msgid "Finish this page"
 msgstr ""
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/AbstractForm.java:653
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/AbstractForm.java:657
 msgid "this field"
 msgstr ""
 
