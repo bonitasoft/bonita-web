@@ -1099,7 +1099,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @return
      * @throws Exception
      */
-    protected FormFieldValue convertValueType(final FormFieldValue formFieldValue, final boolean throwException) throws Exception {
+    protected FormFieldValue convertValueType(final FormFieldValue formFieldValue, final boolean throwException) {
         final String modifier = formFieldValue.getModifier();
 
         if (!isStringEmptyOrBlank(modifier)) {
@@ -1129,11 +1129,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     }
                 }
             } catch (final IllegalArgumentException e) {
-                // if no exception is requested, the value of the field is not converted
-                if (throwException) {
-                    throw e;
-                }
-            } catch (final Exception e) {
                 // if no exception is requested, the value of the field is not converted
                 if (throwException) {
                     throw e;
