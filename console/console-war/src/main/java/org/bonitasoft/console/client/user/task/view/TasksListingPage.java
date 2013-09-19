@@ -39,12 +39,16 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
+import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -95,7 +99,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     public static final String FILTER_IGNORED = "ignored";
 
     private TaskButtonFactory taskButtonFactory = new TaskButtonFactory();
-
+    
     @Override
     public void defineTitle() {
         this.setTitle(_("Tasks"));
@@ -113,16 +117,19 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemListingTable availableTable() {
-        return new ItemListingTable(new JsId(TABLE_AVAILABLE), _("Available"), availableItemTable(), new HumanTaskQuickDetailsPage());
+        return new ItemListingTable(new JsId(TABLE_AVAILABLE), _("Available"), availableItemTable(), new HumanTaskQuickDetailsPage()); 
+         
     }
 
     private ItemTable availableItemTable() {
         return buildItemTableColumns()
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
+                .addAction(newRefreshButton())
                 .addGroupedAction(newAssignToMeButton())
                 .addGroupedAction(newUnasignButton())
                 .addGroupedAction(newIgnoreButton());
     }
+
 
     private ItemListingTable unassignedTable() {
         return new ItemListingTable(new JsId(TABLE_UNASSIGNED), _("Unassigned"), unasignedItemTable(), new HumanTaskQuickDetailsPage());
@@ -131,6 +138,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     private ItemTable unasignedItemTable() {
         return buildItemTableColumns()
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
+                .addAction(newRefreshButton())
                 .addGroupedAction(newAssignToMeButton())
                 .addGroupedAction(newIgnoreButton());
     }
@@ -142,6 +150,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     private ItemTable assignedItemTable() {
         return buildItemTableColumns()
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
+                .addAction(newRefreshButton())
                 .addGroupedAction(newUnasignButton())
                 .addGroupedAction(newIgnoreButton());
     }
@@ -168,16 +177,29 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemListingTable performedTasksTable() {
-        return new ItemListingTable(new JsId(TABLE_PERFORMED), _("Performed"),
-                new ItemTable(Definitions.get(ArchivedHumanTaskDefinition.TOKEN))
-                        .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
-                        .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
-                        .addColumn(new DeployedAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                        .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false),
-                new ArchivedHumanTaskQuickDetailsPage());
+        return new ItemListingTable(new JsId(TABLE_PERFORMED), _("Performed"), performedTasksItemTable(), new ArchivedHumanTaskQuickDetailsPage());
     }
 
+    private ItemTable performedTasksItemTable() {
+        return new ItemTable(Definitions.get(ArchivedHumanTaskDefinition.TOKEN))
+                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
+                .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+                .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
+                .addColumn(new DeployedAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
+    }
+    
+    private Link newRefreshButton() {
+      return taskButtonFactory.createRefreshButton(new Action(){
+          @Override
+          public void execute() {
+              ClientApplicationURL.setPageAttributes(ClientApplicationURL.getPageAttributes().addValue("_id", ""), true);
+              ViewController.refreshCurrentPage();
+              TasksListingPage.this.tablesSearch.reset();
+          }
+      });
+    }
+        
     private Link newAssignToMeButton() {
         return taskButtonFactory.createClaimButton(new TaskClaimAction(Session.getUserId()));
     }
