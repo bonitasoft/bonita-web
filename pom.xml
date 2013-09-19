@@ -4,7 +4,7 @@
 	<artifactId>bonita-console</artifactId>
 	<name>bonita console</name>
 	<packaging>pom</packaging>
-	<version>6.0.3-SNAPSHOT</version>
+	<version>6.0.4-SNAPSHOT</version>
 
 	<modules>
 		<module>toolkit</module>
@@ -22,7 +22,7 @@
 
 	<properties>
 		<bonita.engine.version>6.0.3-SNAPSHOT</bonita.engine.version>
-		<bos-test-toolkit.version>6.0.3-SNAPSHOT</bos-test-toolkit.version>
+		<bos-test-toolkit.version>6.0.4-SNAPSHOT</bos-test-toolkit.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

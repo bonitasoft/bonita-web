@@ -119,7 +119,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
      */
     public FileUploadWidget(final String formID, final Map<String, Object> contextMap, final boolean isArchived, final String fieldId,
             final FileWidgetInputType fileWidgetInputType, final String valueType, final long attachmentId, final String attachmentName, final String value,
-            final boolean hasImagePreview, final boolean isElementOfMultipleWidget) {
+            final boolean hasImagePreview) {
 
         this.fileWidgetInputType = fileWidgetInputType;
         this.attachmentId = attachmentId;
@@ -144,8 +144,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             } else {
                 initialRadioButton = URL_DOCUMENT_TYPE;
             }
-            radioButtonGroupWidget = new RadioButtonGroupWidget(fieldId + "_document_type", availableValues, initialRadioButton,
-                    "bonita_form_radio_inline", false, isElementOfMultipleWidget);
+            radioButtonGroupWidget = new RadioButtonGroupWidget(fieldId + "_document_type", availableValues, initialRadioButton, "bonita_form_radio_inline",
+                    false, true);
             radioButtonGroupWidget.addValueChangeHandler(this);
             flowPanel.add(radioButtonGroupWidget);
             final FlowPanel clearFloatPanel = new FlowPanel();

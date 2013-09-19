@@ -284,7 +284,10 @@ public class URLUtils {
         String localeStr = null;
         if (Window.Location.getParameter(LOCALE_PARAM) == null) {
             localeStr = Cookies.getCookie(BOS_LOCALE_COOKIE_NAME);
+        } else {
+            localeStr = Window.Location.getParameter(LOCALE_PARAM);
         }
+
         if (localeStr == null || localeStr.length() == 0) {
             localeStr = LocaleInfo.getCurrentLocale().getLocaleName();
         }

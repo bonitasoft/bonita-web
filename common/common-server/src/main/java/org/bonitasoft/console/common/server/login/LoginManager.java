@@ -30,6 +30,11 @@ public interface LoginManager {
     static final String USER_SESSION_PARAM_KEY = "user";
 
     /**
+     * default locale
+     */
+    static final String DEFAULT_LOCALE = "en";
+
+    /**
      * Tenant parameter name
      */
     static final String TENANT = "tenant";

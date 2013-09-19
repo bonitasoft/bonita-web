@@ -767,7 +767,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "The form with ID " + formID + " has already been submitted by someone else.", e);
             }
-            throw new FormAlreadySubmittedException(e);
+            throw e;
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "Session timeout");
