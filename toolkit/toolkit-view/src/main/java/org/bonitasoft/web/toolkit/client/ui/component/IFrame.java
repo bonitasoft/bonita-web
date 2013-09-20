@@ -14,13 +14,12 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component;
 
-import static com.google.gwt.query.client.GQuery.$;
-
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.html.HTML;
 import org.bonitasoft.web.toolkit.client.ui.html.XMLAttributes;
 
-import com.google.gwt.user.client.Element;
+import static com.google.gwt.query.client.GQuery.$;
 
 /**
  * 
@@ -51,7 +50,7 @@ public class IFrame extends Component {
     protected Element makeElement() {
 
         return (Element) $(
-                HTML.iFrame(this.url, new XMLAttributes("height", this.height).add("width", this.width).add("frameborder", "0")))
+                HTML.iFrame(this.url, new XMLAttributes("height", this.height).add("width", this.width).add("frameborder", "0").add("id", "formframe")))
                 .get(0);
     }
 }
