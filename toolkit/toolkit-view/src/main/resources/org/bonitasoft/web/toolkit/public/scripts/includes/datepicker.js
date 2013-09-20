@@ -76,7 +76,11 @@ $(function() {
 			// Translate String to Date
 			if ($.isSet(settings.startDate)) {
 				var split = settings.startDate.split(' ')[0].split('/');
-				settings.startDate = new Date(split[2], split[0] - 1, split[1]);
+				if (settings.format == 'mm/dd/yyyy') {
+					settings.startDate = new Date(split[2], split[0] - 1, split[1]);
+				} else {
+					settings.startDate = new Date(split[2], split[1] - 1, split[0]);
+				}
 			}
 
 			// Translate String to Date
@@ -95,6 +99,14 @@ $(function() {
 				current : new Date(),
 				starts : settings.startDay,
 				position : 'r',
+				locale : {
+					days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+					daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+					daysMin: [settings.daysMin[0], settings.daysMin[1], settings.daysMin[2], settings.daysMin[3], settings.daysMin[4], settings.daysMin[5], settings.daysMin[6]],
+					months: [settings.months[0], settings.months[1], settings.months[2], settings.months[3], settings.months[4], settings.months[5], settings.months[6], settings.months[7], settings.months[8], settings.months[9], settings.months[10], settings.months[11]],
+					monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+					weekMin: 'wk'
+				},
 				onBeforeShow : function() {
 					if (e.val()) {
 						e.DatePickerSetDate(e.val(), true);
