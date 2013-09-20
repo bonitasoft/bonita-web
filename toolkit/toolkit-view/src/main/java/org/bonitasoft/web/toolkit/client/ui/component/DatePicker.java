@@ -88,8 +88,8 @@ public class DatePicker extends Component {
         months.add(_("June"));
         months.add(_("July"));
         months.add(_("August"));
-        months.add(_("Settembre"));
-        months.add(_("Ottobre"));
+        months.add(_("September"));
+        months.add(_("October"));
         months.add(_("November"));
         months.add(_("December"));
         return months;
