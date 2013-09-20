@@ -98,7 +98,7 @@ public class DatePicker extends Component {
     private ArrayList<String> getDaysMin() {
         ArrayList<String> daysMin = new ArrayList<String>();
         daysMin.add(_("Su"));
-        daysMin.add(_("Lu"));
+        daysMin.add(_("Mo"));
         daysMin.add(_("Tu"));
         daysMin.add(_("We"));
         daysMin.add(_("Th"));
