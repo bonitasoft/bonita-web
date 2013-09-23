@@ -5,11 +5,11 @@
 	<artifactId>bos-test-toolkit</artifactId>
 	<packaging>jar</packaging>
 	<name>bos-test-toolkit</name>
-	<version>6.0.4-SNAPSHOT</version>
+	<version>6.0.4-rc-01</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bonita.version>6.0.3-SNAPSHOT</bonita.version>
+		<bonita.version>6.0.4-rc-03</bonita.version>
 	</properties>
 
 	<dependencies>
