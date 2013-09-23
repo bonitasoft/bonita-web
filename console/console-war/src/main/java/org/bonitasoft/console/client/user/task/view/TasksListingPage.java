@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
+import static com.google.gwt.query.client.GQuery.$;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
@@ -122,12 +124,13 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemTable availableItemTable() {
-        return buildItemTableColumns()
-                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
-                .addAction(newRefreshButton())
-                .addGroupedAction(newAssignToMeButton())
-                .addGroupedAction(newUnasignButton())
-                .addGroupedAction(newIgnoreButton());
+        ItemTable table = buildItemTableColumns();
+        table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
+        table.addAction(newRefreshButton(table));
+        table.addGroupedAction(newAssignToMeButton());
+        table.addGroupedAction(newUnasignButton());
+        table.addGroupedAction(newIgnoreButton());
+        return table;
     }
 
 
@@ -136,11 +139,12 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemTable unasignedItemTable() {
-        return buildItemTableColumns()
-                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
-                .addAction(newRefreshButton())
-                .addGroupedAction(newAssignToMeButton())
-                .addGroupedAction(newIgnoreButton());
+        ItemTable table = buildItemTableColumns();
+        table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
+        table.addAction(newRefreshButton(table));
+        table.addGroupedAction(newAssignToMeButton());
+        table.addGroupedAction(newIgnoreButton());
+        return table;
     }
 
     private ItemListingTable assignedTable() {
@@ -148,11 +152,12 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemTable assignedItemTable() {
-        return buildItemTableColumns()
-                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
-                .addAction(newRefreshButton())
-                .addGroupedAction(newUnasignButton())
-                .addGroupedAction(newIgnoreButton());
+        ItemTable table = buildItemTableColumns();
+        table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
+        table.addAction(newRefreshButton(table));
+        table.addGroupedAction(newUnasignButton());
+        table.addGroupedAction(newIgnoreButton());
+        return table;
     }
 
     private ItemListingTable hiddenToMeTable() {
@@ -189,12 +194,14 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
     }
     
-    private Link newRefreshButton() {
+    private Link newRefreshButton(final ItemTable table) {
       return taskButtonFactory.createRefreshButton(new Action(){
           @Override
           public void execute() {
-              ClientApplicationURL.setPageAttributes(ClientApplicationURL.getPageAttributes().addValue("_id", ""), true);
-              ViewController.refreshCurrentPage();
+              table.setPage(0);
+              table.setDefaultSelectedLine(0);
+              table.setDefaultSelectedId(null);
+              table.refresh();
               TasksListingPage.this.tablesSearch.reset();
           }
       });
