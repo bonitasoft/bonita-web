@@ -22,7 +22,7 @@ import java.util.Collections;
 
 import org.bonitasoft.web.rest.server.datastore.filter.FilterAccessor;
 import org.bonitasoft.web.rest.server.datastore.profile.member.MemberTypeConverter;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 import org.junit.Test;
 
 /**

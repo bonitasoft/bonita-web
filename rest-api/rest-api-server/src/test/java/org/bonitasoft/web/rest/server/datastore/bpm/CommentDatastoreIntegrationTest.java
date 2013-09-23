@@ -1,11 +1,27 @@
+/**
+ * Copyright (C) 2012 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.web.rest.server.datastore.bpm;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import java.util.HashMap;
 
 import org.bonitasoft.test.toolkit.bpm.TestCase;
-import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
@@ -17,90 +33,51 @@ import org.junit.Test;
 
 public class CommentDatastoreIntegrationTest extends AbstractConsoleTest {
 
-    private static final String COMMENTS_CONTENT = "#*Ã©Ã Ã¢Ã¤Ã«ÃªÃ©~Ã§ÃžÅ¡Å’Ã˜Ã�Ã†";
-
     private CommentDatastore commentDatastore;
 
-    private TestCase testCase;
-
-    private TestHumanTask testHumanTask;
-
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.test.AbstractJUnitTest#getInitiator()
-     */
     @Override
     protected TestUser getInitiator() {
         return TestUserFactory.getJohnCarpenter();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.console.server.AbstractJUnitWebTest#webTestSetUp()
-     */
     @Override
     public void consoleTestSetUp() throws Exception {
-        this.commentDatastore = new CommentDatastore(TestUserFactory.getJohnCarpenter().getSession());
+        commentDatastore = new CommentDatastore(TestUserFactory.getJohnCarpenter().getSession());
+    }
 
-        this.testCase = TestProcessFactory.getDefaultHumanTaskProcess()
-                .addActor(TestUserFactory.getJohnCarpenter())
-                .startCase();
-        this.testHumanTask = this.testCase.getNextHumanTask();
+    private TestCase aCase() {
+        return TestProcessFactory.getDefaultHumanTaskProcess().addActor(TestUserFactory.getJohnCarpenter()).startCase();
+    }
+
+    private HashMap<String, String> filterByCaseId(long caseId) {
+        HashMap<String, String> filters = new HashMap<String, String>();
+        filters.put(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, String.valueOf(caseId));
+        return filters;
     }
 
     @Test
-    public void paginationCommentTest() throws Exception {
-        this.testHumanTask.addComments(12, COMMENTS_CONTENT);
-        final HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, String.valueOf(this.testHumanTask.getId()));
-        final ItemSearchResult<CommentItem> resultPage1 = this.commentDatastore.search(0, 10, null, null, filters);
+    public void comment_datastore_can_do_a_paginated_search() throws Exception {
+        TestCase aCase = aCase();
+        aCase.addComment("Comment 1");
+        aCase.addComment("Comment 2");
+        aCase.addComment("Comment 3");
+        
+        final ItemSearchResult<CommentItem> results = commentDatastore.search(0, 2, null, null, filterByCaseId(aCase.getId()));
 
-        int nb = 0;
-        for (final CommentItem instance : resultPage1.getResults()) {
-            assertEquals("Search of the comment number " + nb + " not possible",
-                    instance.getProcessInstanceId(), this.testHumanTask.getId());
-            assertEquals("Search of the comment number " + nb + " not possible",
-                    instance.getUserId(), TestUserFactory.getJohnCarpenter().getId());
-            assertEquals("Search of the comment number " + nb + " not possible",
-                    instance.getContent(), COMMENTS_CONTENT + nb);
-            nb++;
-        }
+        assertThat(results.getTotal(), is(3L));
+        assertThat(results.getResults().size(), is(2));
+        assertThat(results.getResults().get(0).getContent(), is("Comment 1"));
+        assertThat(results.getResults().get(1).getContent(), is("Comment 2"));
     }
 
     @Test
-    public void specialCharHumanTaskTest() throws Exception {
-        this.testHumanTask.addComment(COMMENTS_CONTENT);
+    public void comment_datastore_can_search_comments_with_special_characters() throws Exception {
+        String specialCharComment = "#*Ã©Ã Ã¢Ã¤Ã«ÃªÃ©~Ã§ÃžÅ¡Å’Ã˜Ã�Ã†";
+        TestCase aCase = aCase();
+        aCase.addComment(specialCharComment);
 
-        final HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, String.valueOf(this.testHumanTask.getId()));
-        final ItemSearchResult<CommentItem> result = this.commentDatastore.search(0, 10, null, null, filters);
+        final ItemSearchResult<CommentItem> results = commentDatastore.search(0, 10, null, null, filterByCaseId(aCase.getId()));
 
-        final CommentItem comment = result.getResults().get(0);
-        assertEquals("Comment with special UTF-8 characters on a humanTask is not possible",
-                comment.getContent(), COMMENTS_CONTENT);
+        assertThat(results.getResults().get(0).getContent(), is(specialCharComment));
     }
-
-    // @Test
-    // public void specialCharManualTaskTest() throws Exception {
-    // // Assign the human task to john
-    // testHumanTask.assignTo(TestUserFactory.getJohnCarpenter());
-    //
-    // // Create a subtask and add a comment
-    // TestSubTask subTask = testHumanTask.addSubTask("manualTask1",
-    // "Manualtask display name",
-    // TestUserFactory.getJohnCarpenter().getId(),
-    // "Manualtask display description",
-    // new Date(), TaskPriority.NORMAL);
-    // subTask.addComment(COMMENTS_CONTENT);
-    //
-    // // search the subtask with dataStore
-    // HashMap<String, String> filters = new HashMap<String, String>();
-    // filters.put(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, String.valueOf(subTask.getId()));
-    // ItemSearchResult<CommentItem> result = commentDatastore.search(0, 10, "", "", filters);
-    //
-    // CommentItem comment = result.getResults().get(0);
-    // assertEquals("Comment with special UTF-8 characters on a manualTask is not possible",
-    // comment.getContent(), COMMENTS_CONTENT);
-    // }
-
 }

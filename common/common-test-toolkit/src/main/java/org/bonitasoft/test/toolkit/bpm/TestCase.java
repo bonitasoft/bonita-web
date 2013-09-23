@@ -241,4 +241,7 @@ public class TestCase {
         }
     }
 
+    public void addComment(String content) {
+        addComment(TestToolkitCtx.getInstance().getInitiator(), content);
+    }
 }

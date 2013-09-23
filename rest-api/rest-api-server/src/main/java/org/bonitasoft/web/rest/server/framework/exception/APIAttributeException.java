@@ -14,55 +14,53 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client.common.exception.api;
+package org.bonitasoft.web.rest.server.framework.exception;
+
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 
 /**
  * @author Séverin Moussel
  * 
  */
-public class APIFilterException extends APIException {
+public class APIAttributeException extends APIException {
 
-    private static final long serialVersionUID = -3674362051034713685L;
+    private static final long serialVersionUID = -4611825491187153300L;
 
-    private String filterName;
+    private String attributeName;
 
-    public APIFilterException(final String filterName) {
-        super();
-        this.filterName = filterName;
+    public APIAttributeException(final String attributeName) {
+        super((Exception) null);
     }
 
-    public APIFilterException(final String filterName, final String message, final Throwable cause) {
+    public APIAttributeException(final String attributeName, final String message, final Throwable cause) {
         super(message, cause);
-        this.filterName = filterName;
     }
 
-    public APIFilterException(final String filterName, final String message) {
+    public APIAttributeException(final String attributeName, final String message) {
         super(message);
-        this.filterName = filterName;
     }
 
-    public APIFilterException(final String filterName, final Throwable cause) {
+    public APIAttributeException(final String attributeName, final Throwable cause) {
         super(cause);
-        this.filterName = filterName;
     }
 
     /**
-     * @return the filterName
+     * @return the attributeName
      */
-    public String getFilterName() {
-        return this.filterName;
+    public String getAttributeName() {
+        return this.attributeName;
     }
 
     @Override
     protected void toJsonAdditionnalAttributes(final StringBuilder json) {
         super.toJsonAdditionnalAttributes(json);
 
-        addJsonAdditionalAttribute("filterName", getFilterName(), json);
+        addJsonAdditionalAttribute("attributeName", getAttributeName(), json);
     }
 
     @Override
     protected String defaultMessage() {
-        return "Error on filter : " + getFilterName();
+        return "Malformed attribute : " + this.attributeName;
     }
 
 }

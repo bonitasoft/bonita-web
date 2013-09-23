@@ -67,8 +67,7 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         Assert.assertEquals("File name is different", document.getContentFileName(), caseDocumentItem.getFileName());
         Assert.assertEquals("Author is different", document.getAuthor(), (long) caseDocumentItem.getAuthor().toLong());
         Assert.assertEquals("Mime type is different", document.getContentMimeType(), caseDocumentItem.getContentMimeType());
-        // FIXME get file return negative string to makeAPIID which then return null and cause NPE
-        Assert.assertEquals("Content storage id is different", document.getContentStorageId(), caseDocumentItem.getFile().toString());
+        Assert.assertEquals("Content storage id is different", document.getContentStorageId(), caseDocumentItem.getFile());
         Assert.assertEquals("Creation date is different", document.getCreationDate(),  caseDocumentItem.getCreationDate());
         Assert.assertEquals("Id is different", document.getId(), (long) caseDocumentItem.getId().toLong());
         Assert.assertEquals("Process instance id is different", document.getProcessInstanceId(), (long) caseDocumentItem.getProcessInstanceId().toLong());
