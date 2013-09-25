@@ -19,9 +19,10 @@ package org.bonitasoft.web.toolkit.client.common.exception.api;
 import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.getDefaultLocale;
 
 /**
  * @author Séverin Moussel
@@ -37,6 +38,8 @@ public class APIException extends ServerException implements JsonSerializable {
 
     private String resource = "...";
 
+    private _ localizedMessage;
+
     protected APIException() {
         super();
     }
@@ -51,7 +54,15 @@ public class APIException extends ServerException implements JsonSerializable {
 
     public APIException(final Throwable cause) {
         super(cause);
+    }
 
+    public APIException(final _ localizedMessage, final Throwable cause) {
+        super(cause);
+        this.localizedMessage = localizedMessage;
+    }
+
+    public APIException(final _ localizedMessage) {
+        this.localizedMessage = localizedMessage;
     }
 
     /**
@@ -103,9 +114,17 @@ public class APIException extends ServerException implements JsonSerializable {
     }
 
     @Override
+    public String getMessage() {
+        if(localizedMessage != null) {
+            return localizedMessage.localize(getDefaultLocale());
+        }
+        return super.getMessage();
+    }
+
+    @Override
     public String getLocalizedMessage() {
-        if(locale != null) {
-            return _(locale, getMessage());
+        if(locale != null && localizedMessage != null) {
+            return localizedMessage.localize(locale);
         }
         return super.getLocalizedMessage();
     }

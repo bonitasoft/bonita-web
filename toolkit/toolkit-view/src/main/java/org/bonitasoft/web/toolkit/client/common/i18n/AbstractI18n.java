@@ -1028,7 +1028,7 @@ public abstract class AbstractI18n {
     }
 
     protected String getText(final LOCALE locale, final String string, final Arg... args) {
-        return new TextTemplate(_(locale, string)).toString(args);
+        return new TextTemplate(_(string, locale)).toString(args);
     }
 
     public static String _(final String string) {
@@ -1039,12 +1039,16 @@ public abstract class AbstractI18n {
         return string.isEmpty() ? "" : I18N_instance.getText(string, args);
     }
 
-    public static String _(final LOCALE locale, final String string) {
+    public static String _(final String string, final LOCALE locale) {
         return string.isEmpty() ? "" : I18N_instance.getText(locale, string);
     }
 
-    public static String _(final LOCALE locale, final String string, final Arg... args) {
+    public static String _(final String string, final LOCALE locale, final Arg... args) {
         return string.isEmpty() ? "" : I18N_instance.getText(locale, string, args);
+    }
+
+    public static String _(LOCALE locale, L10n localization) {
+        return localization.localize(locale);
     }
 
 }
