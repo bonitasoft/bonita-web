@@ -19,6 +19,7 @@ package org.bonitasoft.web.toolkit.client.common.exception.http;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.I18nHook;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -45,18 +46,6 @@ public class JsonExceptionSerializerTest {
 
         assertEquals(exception, json);
     }
-
-//    @Test
-//    public void testWeCanConvertExceptionWithCause() throws Exception {
-//        HttpException exception = new HttpException();
-//        HttpException cause = new HttpException();
-//        exception.initCause(cause);
-//        JsonExceptionSerializer serializer = new JsonExceptionSerializer(exception);
-//
-//        String json = serializer.end();
-//
-//        assertEquals(exception, json);
-//    }
 
     @Test
     public void testWeCanConvertExceptionWithMessageToJson() throws Exception {
@@ -85,8 +74,8 @@ public class JsonExceptionSerializerTest {
     }
 
     @Test
-    public void testJsonContainsInternationalizationWhenLocalIsSet() throws Exception {
-        APIException exception = new APIException("message");
+    public void testJsonContainsInternationalizedMessageWhenLocalIsSet() throws Exception {
+        APIException exception = new APIException(new _("message"));
         i18nHook.setL10n("localization");
         exception.setLocale(LOCALE.en);
         JsonExceptionSerializer serializer = new JsonExceptionSerializer(exception);
@@ -95,22 +84,8 @@ public class JsonExceptionSerializerTest {
 
         assertThat(json, equalTo(
                 "{\"exception\":\"" + exception.getClass().toString() + "\"," +
-                        "\"message\":\"" + exception.getMessage() + "\"," +
-                        "\"localizedmessage\":\"localization\"," +
+                        "\"message\":\"localization\"," +
                         "\"stacktrace\":\"" + Arrays.toString(exception.getStackTrace()) + "\"}"));
-    }
-
-    @Test
-    public void testJsonDoestContainsInternationalizationWhenIdenticalToMessage() throws Exception {
-        APIException exception = new APIException("identicalMessage");
-        JsonExceptionSerializer serializer = new JsonExceptionSerializer(exception);
-        i18nHook.setL10n("identicalMessage");
-        exception.setLocale(LOCALE.en);
-
-        String json = serializer.end();
-
-        assertEquals(exception, json);
-
     }
 
     private void assertEquals(Exception e, String json) {

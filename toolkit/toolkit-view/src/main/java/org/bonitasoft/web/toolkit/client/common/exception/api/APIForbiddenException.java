@@ -37,4 +37,8 @@ public class APIForbiddenException extends APIException {
     public APIForbiddenException(_ localizedMessage) {
         super(localizedMessage);
     }
+
+    public APIForbiddenException(_ localizedMessage, Throwable cause) {
+        super(localizedMessage, cause);
+    }
 }

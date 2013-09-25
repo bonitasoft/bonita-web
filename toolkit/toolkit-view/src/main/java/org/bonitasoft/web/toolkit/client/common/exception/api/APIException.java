@@ -18,11 +18,10 @@ package org.bonitasoft.web.toolkit.client.common.exception.api;
 
 import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
-import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.getDefaultLocale;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 /**
  * @author Séverin Moussel
@@ -32,7 +31,7 @@ public class APIException extends ServerException implements JsonSerializable {
 
     private static final long serialVersionUID = 1820639344042666872L;
 
-    private AbstractI18n.LOCALE locale;
+    private LOCALE locale;
 
     private String api = "...";
 
@@ -109,24 +108,16 @@ public class APIException extends ServerException implements JsonSerializable {
         return "The API \"" + getApi() + "#" + getResource() + "\" has encountered an unknown error";
     }
 
-    public void setLocale(AbstractI18n.LOCALE locale) {
+    public void setLocale(LOCALE locale) {
         this.locale = locale;
     }
 
     @Override
     public String getMessage() {
-        if(localizedMessage != null) {
-            return localizedMessage.localize(getDefaultLocale());
-        }
-        return super.getMessage();
-    }
-
-    @Override
-    public String getLocalizedMessage() {
         if(locale != null && localizedMessage != null) {
             return localizedMessage.localize(locale);
         }
-        return super.getLocalizedMessage();
+        return super.getMessage();
     }
 
 }

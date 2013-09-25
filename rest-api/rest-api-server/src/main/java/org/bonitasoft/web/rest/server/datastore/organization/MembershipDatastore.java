@@ -14,12 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
@@ -38,8 +32,14 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
 
 /**
  * @author Séverin Moussel
@@ -132,7 +132,7 @@ public class MembershipDatastore extends CommonDatastore<MembershipItem, UserMem
             return convertEngineToConsoleItem(getIdentityAPI()
                     .addUserMembership(item.getUserId().toLong(), item.getGroupId().toLong(), item.getRoleId().toLong()));
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(_("This membership is already added to user"), e);
+            throw new APIForbiddenException(new _("This membership is already added to user"), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }

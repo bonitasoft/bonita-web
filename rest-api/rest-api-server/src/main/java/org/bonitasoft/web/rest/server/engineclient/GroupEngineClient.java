@@ -60,7 +60,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.getGroup(parseId(groupId)).getPath();
         } catch (GroupNotFoundException e) {
-            throw new APIException(_("Unable to get group path, group not found"));
+            throw new APIException(new _("Unable to get group path, group not found"));
         }
     }
     
@@ -76,7 +76,7 @@ public class GroupEngineClient {
         try {
             groupAPI.deleteGroups(groupIds);
         } catch (DeletionException e) {
-            throw new APIException(_("Error when deleting groups"), e);
+            throw new APIException(new _("Error when deleting groups"), e);
         }
     }
     
@@ -84,9 +84,9 @@ public class GroupEngineClient {
         try {
             return groupAPI.updateGroup(groupId, groupUpdater);
         } catch (GroupNotFoundException e) {
-            throw new APIException(_("Can't update group. Group not found"));
+            throw new APIException(new _("Can't update group. Group not found"));
         } catch (UpdateException e) {
-            throw new APIException(_("Error when updating group"), e);
+            throw new APIException(new _("Error when updating group"), e);
         }
     }
     

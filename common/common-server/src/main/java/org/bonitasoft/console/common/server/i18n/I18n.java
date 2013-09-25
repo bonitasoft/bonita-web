@@ -17,7 +17,6 @@
 package org.bonitasoft.console.common.server.i18n;
 
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 import java.io.File;
 import java.util.LinkedHashMap;
@@ -97,13 +96,13 @@ public class I18n extends AbstractI18n {
         return new File(I18N_DIR, application + "_" + locale + ".po");
     }
 
-    @Override
-    protected String getText(String string) {
-        throw new RuntimeException("On server side, we absolutely need to pass locale");
-    }
-
-    @Override
-    protected String getText(String string, Arg... args) {
-        throw new RuntimeException("On server side, we absolutely need to pass locale");
-    }
+//    @Override
+//    protected String getText(String string) {
+//        throw new RuntimeException("On server side, we absolutely need to pass locale");
+//    }
+//
+//    @Override
+//    protected String getText(String string, Arg... args) {
+//        throw new RuntimeException("On server side, we absolutely need to pass locale");
+//    }
 }

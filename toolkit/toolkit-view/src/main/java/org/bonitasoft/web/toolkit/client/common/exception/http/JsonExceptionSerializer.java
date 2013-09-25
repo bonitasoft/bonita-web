@@ -62,18 +62,15 @@ public class JsonExceptionSerializer {
         final StringBuilder json = new StringBuilder().append(JSON_OPEN);
 
         addAttribute(json, EXCEPTION_ATTRIBUTE, exception.getClass());
-        addMessage(json, exception.getMessage(), exception.getLocalizedMessage());
+        addMessage(json, exception.getMessage());
         addNextAttribute(json, STACK_TRACE_ATTRIBUTE, Arrays.toString(exception.getStackTrace()));
         addNextAttribute(json, CAUSE_ATTRIBUTE, exception.getCause());
 
         return json;
     }
 
-    private void addMessage(final StringBuilder json, String message, String localizedMessage) {
+    private void addMessage(final StringBuilder json, String message) {
         addNextAttribute(json, MESSAGE_ATTRIBUTE, message);
-        if (message != null && !message.equals(localizedMessage)) {
-            addNextAttribute(json, LOCALIZED_MESSAGE_ATTRIBUTE, localizedMessage);
-        }
     }
 
     private void addNextAttribute(final StringBuilder json, final String name, final Object value) {
