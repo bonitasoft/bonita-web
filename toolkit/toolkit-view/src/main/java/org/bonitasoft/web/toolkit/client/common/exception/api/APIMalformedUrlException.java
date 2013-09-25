@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
+
 /**
  * @author Séverin Moussel
  * 
@@ -54,10 +56,9 @@ public class APIMalformedUrlException extends APIException {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-
-        addJsonAdditionalAttribute("url", getUrl(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("url", getUrl());
     }
 
     @Override

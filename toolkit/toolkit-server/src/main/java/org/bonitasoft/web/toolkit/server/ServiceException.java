@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.server;
 
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 
 /**
@@ -63,9 +64,9 @@ public class ServiceException extends ServerException {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-        addJsonAdditionalAttribute("path", getPath(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("path", getPath());
     }
 
 }

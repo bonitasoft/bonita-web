@@ -16,11 +16,12 @@
  */
 package org.bonitasoft.web.rest.server.framework.exception;
 
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
+import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
+
 import java.util.Arrays;
 import java.util.List;
-
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
 
 /**
  * @author Séverin Moussel
@@ -65,10 +66,9 @@ public class APIAttributesException extends APIException {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-
-        addJsonAdditionalAttribute("attributesNames", getAttributesNames(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("attributesNames", getAttributesNames());
     }
 
     @Override
