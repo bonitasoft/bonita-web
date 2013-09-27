@@ -3,4 +3,8 @@
 *.settings
 *.classpath
 *.class
+pom.xml
 target/
+console/console-war/.gwt/
+console/console-war/btm1.tlog
+console/console-war/btm2.tlog
