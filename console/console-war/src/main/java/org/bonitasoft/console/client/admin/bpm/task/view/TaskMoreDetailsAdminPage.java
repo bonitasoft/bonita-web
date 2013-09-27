@@ -35,6 +35,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
+import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
@@ -194,10 +195,6 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         return metadatas.build();
     }
 
-    protected boolean isAssigned(final IFlowNodeItem item) {
-        return !StringUtil.isBlank(item.getAttributeValue(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID));
-    }
-
     protected FORMAT getArchivedDateFormat() {
         return isArchived() ? FORMAT.DISPLAY : FORMAT.DISPLAY_RELATIVE;
     }
@@ -210,7 +207,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                     .setNbLinesByPage(10)
                     .build());
         } else {
-            addBody(buildConnectorInstanceSection(item));
+            addBody(new Section(_("Connectors")).addBody(
+                    createConnectorInstanceTable(item)
+                            .setNbLinesByPage(10)));
         }
 
         addBody(new CommentSectionSnippet(item.getCaseId())
@@ -221,10 +220,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     /**
      * Overridden in SP
      */
-    protected Section buildConnectorInstanceSection(IFlowNodeItem item) {
-        return new ConnectorInstanceSectionSnippet(item)
-                .setNbLinesByPage(10)
-                .build();
+    protected ItemTable createConnectorInstanceTable(IFlowNodeItem item) {
+        return new ConnectorInstanceTable(item)
+                .addStateColumn();
     }
 
     @Override
