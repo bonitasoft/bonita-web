@@ -221,8 +221,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
      * Overridden in SP
      */
     protected ItemTable createConnectorInstanceTable(IFlowNodeItem item) {
-        return new ConnectorInstanceTable(item)
-                .addStateColumn();
+        return new ConnectorInstanceTable(item);
     }
 
     @Override

@@ -23,6 +23,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ItemTableCellFormatter;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
@@ -40,9 +41,11 @@ public class ConnectorInstanceTable extends ItemTable {
 
         addHiddenFilter(ConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID, item.getId());
         addColumn(ConnectorInstanceItem.ATTRIBUTE_NAME, _("Name"));
+        addColumn(ConnectorInstanceItem.ATTRIBUTE_STATE, _("State"));
     }
 
-    public ItemTable addStateColumn() {
-        return addColumn(ConnectorInstanceItem.ATTRIBUTE_STATE, _("State"));
+    public ConnectorInstanceTable addStateCellFormatter(ItemTableCellFormatter formatter) {
+        addCellFormatter(ConnectorInstanceItem.ATTRIBUTE_STATE, formatter);
+        return this;
     }
 }

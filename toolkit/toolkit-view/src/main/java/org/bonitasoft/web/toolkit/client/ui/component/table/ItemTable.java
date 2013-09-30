@@ -14,26 +14,12 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.table;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedJsId;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.HasCounters;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.HasDeploys;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.HasReaders;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.*;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.popup.DeleteMultipleItemsPopupAction;
@@ -47,8 +33,10 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.DefaultIte
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ItemTableCellFormatter;
 import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Element;
+import java.util.*;
+
+import static com.google.gwt.query.client.GQuery.$;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Séverin Moussel
@@ -70,8 +58,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     private APIID defaultSelectedId = null;
 
     private Integer defaultSelectedLine = null;
-
-    private boolean registerRefresh = true;
 
     private HashMap<String, String> attributesForGroupedActions = new HashMap<String, String>();
 
@@ -109,11 +95,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
         return addHandler(handler, ItemTableLoadedEvent.TYPE);
     }
 
-    public ItemTable setRegisterRefresh(final boolean register) {
-        this.registerRefresh = register;
-        return this;
-    }
-
     /**
      * Define the line to select by default.
      * 
@@ -125,16 +106,8 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
         return this;
     }
 
-    public Integer getDefaultSelectedLine() {
-        return this.defaultSelectedLine;
-    }
-
     public void setDefaultSelectedId(final APIID id) {
         this.defaultSelectedId = id;
-    }
-
-    public APIID getDefaultSelectedId() {
-        return this.defaultSelectedId;
     }
 
     public final ItemDefinition<?> getItemDefinition() {
