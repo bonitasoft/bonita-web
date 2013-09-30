@@ -16,19 +16,14 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * @author Ruiheng.Fan
@@ -108,16 +103,16 @@ public class TenantProperties {
             inputStream = new FileInputStream(this.propertiesFile);
             this.properties.load(inputStream);
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
             }
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
                     }
                 }
             }
@@ -153,16 +148,16 @@ public class TenantProperties {
                 outputStream = new FileOutputStream(this.propertiesFile);
                 this.properties.store(outputStream, null);
             } catch (final IOException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
                 }
             } finally {
                 if (outputStream != null) {
                     try {
                         outputStream.close();
                     } catch (final IOException e) {
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
+                        if (LOGGER.isLoggable(Level.WARNING)) {
+                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
                         }
                     }
                 }
@@ -178,16 +173,16 @@ public class TenantProperties {
                 outputStream = new FileOutputStream(this.propertiesFile);
                 this.properties.store(outputStream, null);
             } catch (final IOException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
                 }
             } finally {
                 if (outputStream != null) {
                     try {
                         outputStream.close();
                     } catch (final IOException e) {
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
+                        if (LOGGER.isLoggable(Level.WARNING)) {
+                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
                         }
                     }
                 }

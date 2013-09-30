@@ -13,54 +13,13 @@
  **/
 package org.bonitasoft.forms.server;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.client.model.ApplicationConfig;
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormFieldValue;
-import org.bonitasoft.forms.client.model.FormPage;
-import org.bonitasoft.forms.client.model.FormURLComponents;
-import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.client.model.FormWidget;
-import org.bonitasoft.forms.client.model.HtmlTemplate;
-import org.bonitasoft.forms.client.model.ReducedApplicationConfig;
-import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
-import org.bonitasoft.forms.client.model.ReducedFormPage;
-import org.bonitasoft.forms.client.model.ReducedFormValidator;
-import org.bonitasoft.forms.client.model.ReducedFormWidget;
-import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
-import org.bonitasoft.forms.client.model.TransientData;
-import org.bonitasoft.forms.client.model.exception.AbortedFormException;
-import org.bonitasoft.forms.client.model.exception.CanceledFormException;
-import org.bonitasoft.forms.client.model.exception.FileTooBigException;
-import org.bonitasoft.forms.client.model.exception.ForbiddenApplicationAccessException;
-import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
-import org.bonitasoft.forms.client.model.exception.FormAlreadySubmittedException;
-import org.bonitasoft.forms.client.model.exception.FormInErrorException;
-import org.bonitasoft.forms.client.model.exception.IllegalActivityTypeException;
-import org.bonitasoft.forms.client.model.exception.MigrationProductVersionNotIdenticalException;
-import org.bonitasoft.forms.client.model.exception.RPCException;
-import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
-import org.bonitasoft.forms.client.model.exception.SkippedFormException;
-import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
+import org.bonitasoft.forms.client.model.*;
+import org.bonitasoft.forms.client.model.exception.*;
 import org.bonitasoft.forms.client.rpc.FormsService;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
@@ -76,8 +35,15 @@ import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
-import com.google.gwt.user.client.rpc.SerializationException;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Servlet implementing the Forms service for async calls
@@ -130,7 +96,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             return super.processCall(payload);
         } catch (final SerializationException e) {
             LOGGER.log(Level.SEVERE,
-                    "The Object returned by the RPC call is not supported by the client. Complex java types and XML types are not supported as data field's inputs.");
+                    "The Object returned by the RPC call is not supported by the client. Complex java types and XML types are not supported as data field's inputs.", e);
             throw e;
         }
     }
@@ -780,7 +746,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "The form with ID " + formID + " has already been submitted by someone else.", e);
             }
-            throw new FormAlreadySubmittedException(e);
+            throw e;
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "Session timeout");
@@ -818,8 +784,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             }
             throw new SessionTimeoutException(e.getMessage(), e);
         } catch (final Throwable e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while getting any todolist form");
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Error while getting any todolist form", e);
             }
             throw new RPCException(e.getMessage(), e);
         }
@@ -836,8 +802,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final User user = (User) session.getAttribute(USER_SESSION_PARAM_KEY);
             if (user == null) {
                 final String errorMessage = "There is no user in the HTTP session.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, errorMessage);
                 }
                 throw new NoCredentialsInSessionException(errorMessage);
             }
@@ -919,8 +885,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
         final User user = (User) session.getAttribute(USER_SESSION_PARAM_KEY);
         if (user == null) {
             final String errorMessage = "There is no user in the HTTP session.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage);
             }
             throw new NoCredentialsInSessionException(errorMessage);
         }

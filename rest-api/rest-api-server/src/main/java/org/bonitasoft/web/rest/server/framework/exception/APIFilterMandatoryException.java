@@ -14,23 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client.common.exception.api;
+package org.bonitasoft.web.rest.server.framework.exception;
 
 /**
  * @author Séverin Moussel
  * 
  */
-public class APIAttributeMissingException extends APIAttributeException {
+public class APIFilterMandatoryException extends APIFilterException {
 
-    private static final long serialVersionUID = 1254220877755354148L;
+    private static final long serialVersionUID = 7067237932975183746L;
 
-    public APIAttributeMissingException(final String attributeName) {
-        super(attributeName);
+    public APIFilterMandatoryException(final String filterName, final String message, final Throwable cause) {
+        super(filterName, message, cause);
+    }
+
+    public APIFilterMandatoryException(final String filterName, final String message) {
+        super(filterName, message);
+    }
+
+    public APIFilterMandatoryException(final String filterName, final Throwable cause) {
+        super(filterName, cause);
+    }
+
+    public APIFilterMandatoryException(final String filterName) {
+        super(filterName);
     }
 
     @Override
     protected String defaultMessage() {
-        return "Attribute " + getAttributeName() + " is missing for API " + getApi() + "#" + getResource();
+        return "Filter " + getFilterName() + " is mandatory";
     }
 
 }

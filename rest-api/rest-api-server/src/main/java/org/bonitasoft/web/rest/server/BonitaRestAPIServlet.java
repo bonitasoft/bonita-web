@@ -16,11 +16,6 @@
  */
 package org.bonitasoft.web.rest.server;
 
-import java.util.logging.Level;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.ModelFactory;
@@ -29,6 +24,10 @@ import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.rest.server.framework.servlet.APIServlet;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
 
 /**
  * @author Séverin Moussel
@@ -57,8 +56,8 @@ public class BonitaRestAPIServlet extends APIServlet {
     @Override
     protected void catchAllExceptions(final Throwable exception, final HttpServletRequest req, final HttpServletResponse resp) {
         if (exception instanceof APIException && exception.getCause() != null && exception.getCause() instanceof InvalidSessionException) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, exception.getMessage(), exception);
             }
             outputException(exception, resp, HttpServletResponse.SC_UNAUTHORIZED);
         } else if (exception.getCause() instanceof NotFoundException) {

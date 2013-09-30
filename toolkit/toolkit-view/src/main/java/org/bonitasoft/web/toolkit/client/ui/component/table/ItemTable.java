@@ -41,6 +41,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.popup.ItemDeletePopupAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Refreshable;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerDummy;
+import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.DefaultItemTableCellFormatter;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ItemTableCellFormatter;
@@ -52,7 +53,7 @@ import com.google.gwt.user.client.Element;
 /**
  * @author Séverin Moussel
  */
-public class ItemTable extends AbstractTable implements Refreshable {
+public class ItemTable extends AbstractTable implements Refreshable, FormNode {
 
     protected Table table = null;
 

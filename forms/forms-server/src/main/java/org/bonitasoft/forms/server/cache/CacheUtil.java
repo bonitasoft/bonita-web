@@ -16,14 +16,13 @@
  */
 package org.bonitasoft.forms.server.cache;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CacheUtil {
 
@@ -39,7 +38,7 @@ public class CacheUtil {
             final String pathToCacheConfigFile = WebBonitaConstantsUtils.getInstance().getConfFolder().getAbsolutePath() + "/cache-config.xml";
             CACHE_MANAGER = new CacheManager(pathToCacheConfigFile);
         } catch (final Exception e) {
-            LOGGER.log(Level.SEVERE, "Unable to retrieve the path of the cache configuration file.", e);
+            LOGGER.log(Level.WARNING, "Unable to retrieve the path of the cache configuration file.", e);
             CACHE_MANAGER = new CacheManager();
         }
     }
@@ -77,7 +76,7 @@ public class CacheUtil {
                 value = element.getValue();
             }
         } else {
-            LOGGER.log(Level.FINE, "Cache with name " + cacheName + " doesn't exists or wasn't created yet.");
+            LOGGER.log(Level.FINEST, "Cache with name " + cacheName + " doesn't exists or wasn't created yet.");
         }
         return value;
     }

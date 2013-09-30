@@ -16,11 +16,25 @@
  */
 package org.bonitasoft.console.client.admin.process.view.section.configuration;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 /**
  * @author Colin PUY
  * 
  */
 public enum ConfigurationState {
 
-    RESOLVED, UNRESOLVED
+    RESOLVED(_("RESOLVED")), UNRESOLVED(_("UNRESOLVED"));
+
+    // for i18n purpose
+    private String value;
+
+    private ConfigurationState(String value) {
+        this.value = value;
+    }
+    
+    @Override
+    public String toString() {
+        return value;
+    }
 }

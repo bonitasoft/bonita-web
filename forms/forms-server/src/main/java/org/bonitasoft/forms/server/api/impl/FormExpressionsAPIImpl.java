@@ -134,12 +134,12 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
             if (isCurrentValue) {
-                final Map<String, Serializable> evaluatedExpressions =
-                        engineClient.evaluateExpressionsOnActivityInstance(activityInstanceID, expressionWithContext);
+                final Map<String, Serializable> evaluatedExpressions = engineClient.evaluateExpressionsOnActivityInstance(activityInstanceID,
+                        expressionWithContext);
                 result = getFirstResult(evaluatedExpressions);
             } else {
-                final Map<String, Serializable> evaluatedExpressions =
-                        engineClient.evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressionWithContext);
+                final Map<String, Serializable> evaluatedExpressions = engineClient.evaluateExpressionsOnCompletedActivityInstance(activityInstanceID,
+                        expressionWithContext);
                 result = getFirstResult(evaluatedExpressions);
             }
         } else {
@@ -191,8 +191,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException {
         Serializable result = null;
         if (expression != null) {
-            final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressions =
-                    new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
+            final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressions = new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
             context.put(IFormExpressionsAPI.USER_LOCALE, locale);
             final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
             expressions.put(expressionAdapter.getEngineExpression(expression), context);
@@ -312,8 +311,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * @throws InvalidSessionException
      */
     protected DocumentValue getDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument)
-            throws FileTooBigException, IOException,
-            InvalidSessionException, BPMEngineException {
+            throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException {
         DocumentValue documentValue = null;
         final String uri = (String) fieldValue.getValue();
         if (File.class.getName().equals(fieldValue.getValueType())) {
@@ -345,11 +343,13 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                 final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
                 try {
                     final Document document = processAPI.getDocument(fieldValue.getDocumentId());
-                    if (document.hasContent()) {
-                        documentValue = new DocumentValue(processAPI.getDocumentContent(document.getContentStorageId()), document.getContentMimeType(),
-                                document.getContentFileName());
-                    } else {
-                        documentValue = new DocumentValue(document.getUrl());
+                    if (document != null) {
+                        if (document.hasContent()) {
+                            documentValue = new DocumentValue(processAPI.getDocumentContent(document.getContentStorageId()), document.getContentMimeType(),
+                                    document.getContentFileName());
+                        } else {
+                            documentValue = new DocumentValue(document.getUrl());
+                        }
                     }
                 } catch (final DocumentNotFoundException e) {
                     if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -454,12 +454,12 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
             if (isCurrentValue) {
-                final Map<String, Serializable> evaluatedExpressions =
-                        engineClient.evaluateExpressionsOnActivityInstance(activityInstanceID, expressionWithContext);
+                final Map<String, Serializable> evaluatedExpressions = engineClient.evaluateExpressionsOnActivityInstance(activityInstanceID,
+                        expressionWithContext);
                 result = getFirstResult(evaluatedExpressions);
             } else {
-                final Map<String, Serializable> evaluatedExpressions =
-                        engineClient.evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressionWithContext);
+                final Map<String, Serializable> evaluatedExpressions = engineClient.evaluateExpressionsOnCompletedActivityInstance(activityInstanceID,
+                        expressionWithContext);
                 result = getFirstResult(evaluatedExpressions);
             }
         } else {
@@ -528,10 +528,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
             expressions.put(expressionAdapter.getEngineExpression(expression), evalContext);
 
-            result = getFirstResult(getProcessInstanceExpressionEvaluator(session)
-                    .evaluate(getProcessInstanceAccessor(session, processInstanceId),
-                            expressions,
-                            !isCurrentValue));
+            result = getFirstResult(getProcessInstanceExpressionEvaluator(session).evaluate(getProcessInstanceAccessor(session, processInstanceId),
+                    expressions, !isCurrentValue));
         } else {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "The expression or its type are null");
@@ -596,8 +594,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             expressionWithContext.put(expressionAdapter.getEngineExpression(expression), evalContext);
 
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
-            final Map<String, Serializable> evaluatedExpressions =
-                    engineClient.evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionWithContext);
+            final Map<String, Serializable> evaluatedExpressions = engineClient.evaluateExpressionsOnProcessDefinition(processDefinitionID,
+                    expressionWithContext);
             result = getFirstResult(evaluatedExpressions);
         } else {
             if (LOGGER.isLoggable(Level.FINE)) {
@@ -670,20 +668,20 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     final String attachmentName = fieldId;
                     performSetAttachmentAction(session, processInstanceID, attachments, attachmentName, filePath, setAttachment);
                 } else {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE,
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING,
                                 "The attachment to set should be either a String or a groovy expression returning a String which is not the case of value : "
                                         + action.getDataName());
                     }
                 }
             } else {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Error while setting the attachment. Unable to find a field with ID " + fieldId + " in the form.");
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Error while setting the attachment. Unable to find a field with ID " + fieldId + " in the form.");
                 }
             }
         } catch (final IndexOutOfBoundsException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Invalid action expression : " + action.getExpression().getName());
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Invalid action expression : " + action.getExpression().getName());
             }
         }
 
@@ -749,25 +747,25 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "can't get the file content in the location: " + fileName);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "can't get the file content in the location: " + fileName);
             }
         } catch (final ProcessInstanceNotFoundException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Process instance " + processInstanceID + " not found.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Process instance " + processInstanceID + " not found.");
             }
         } catch (final DocumentAttachmentException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while setting the attachment.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while setting the attachment.");
             }
         } catch (final FileTooBigException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while setting the attachment: file too big!");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while setting the attachment: file too big!");
             }
             throw e;
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while setting the attachment.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while setting the attachment.");
             }
 
         }
@@ -814,11 +812,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             Map<String, Serializable> evaluated;
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
             if (isCurrentValue) {
-                evaluated = engineClient
-                        .evaluateExpressionsOnActivityInstance(activityInstanceID, expressionsWithContext);
+                evaluated = engineClient.evaluateExpressionsOnActivityInstance(activityInstanceID, expressionsWithContext);
             } else {
-                evaluated = engineClient
-                        .evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressionsWithContext);
+                evaluated = engineClient.evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressionsWithContext);
             }
             result.putAll(evaluated);
         }
@@ -873,11 +869,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
             if (isCurrentValue) {
-                evaluated = engineClient
-                        .evaluateExpressionsOnActivityInstance(activityInstanceID, expressionsWithContext);
+                evaluated = engineClient.evaluateExpressionsOnActivityInstance(activityInstanceID, expressionsWithContext);
             } else {
-                evaluated = engineClient
-                        .evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressionsWithContext);
+                evaluated = engineClient.evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressionsWithContext);
             }
             result.putAll(evaluated);
         }
@@ -922,10 +916,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             }
         }
         if (!expressionsWithContext.isEmpty()) {
-            result.putAll(getProcessInstanceExpressionEvaluator(session)
-                    .evaluate(getProcessInstanceAccessor(session, processInstanceId),
-                            expressionsWithContext,
-                            !isCurrentValue));
+            result.putAll(getProcessInstanceExpressionEvaluator(session).evaluate(getProcessInstanceAccessor(session, processInstanceId),
+                    expressionsWithContext, !isCurrentValue));
         }
         return result;
 
@@ -935,18 +927,15 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         return new ProcessInstanceAccessor(getEngineProcessInstanceAccessor(session), processInstanceId);
     }
 
-    protected ProcessInstanceExpressionsEvaluator getProcessInstanceExpressionEvaluator(final APISession session)
-            throws BPMEngineException {
+    protected ProcessInstanceExpressionsEvaluator getProcessInstanceExpressionEvaluator(final APISession session) throws BPMEngineException {
         return new ProcessInstanceExpressionsEvaluator(getExpressionEvaluator(session));
     }
 
-    private ExpressionEvaluatorEngineClient getExpressionEvaluator(final APISession session)
-            throws BPMEngineException {
+    private ExpressionEvaluatorEngineClient getExpressionEvaluator(final APISession session) throws BPMEngineException {
         return engineClientFactory.createExpressionEvaluatorEngineClient(session);
     }
 
-    private ProcessInstanceAccessorEngineClient getEngineProcessInstanceAccessor(final APISession session)
-            throws BPMEngineException {
+    private ProcessInstanceAccessorEngineClient getEngineProcessInstanceAccessor(final APISession session) throws BPMEngineException {
         return engineClientFactory.createProcessInstanceEngineClient(session);
     }
 
@@ -993,10 +982,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
         if (!expressionsWithContext.isEmpty()) {
             context = generateGroovyContext(session, fieldValues, locale, context, false);
-            result.putAll(getProcessInstanceExpressionEvaluator(session)
-                    .evaluate(getProcessInstanceAccessor(session, processInstanceId),
-                            expressionsWithContext,
-                            !isCurrentValue));
+            result.putAll(getProcessInstanceExpressionEvaluator(session).evaluate(getProcessInstanceAccessor(session, processInstanceId),
+                    expressionsWithContext, !isCurrentValue));
         }
         return result;
 
@@ -1041,8 +1028,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         if (!expressionsWithContext.isEmpty()) {
 
             final ExpressionEvaluatorEngineClient engineClient = getExpressionEvaluator(session);
-            result.putAll(engineClient
-                    .evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionsWithContext));
+            result.putAll(engineClient.evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionsWithContext));
         }
         return result;
 
@@ -1091,8 +1077,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
         if (!expressionsWithContext.isEmpty()) {
             context = generateGroovyContext(session, fieldValues, locale, context, false);
-            result.putAll(getExpressionEvaluator(session)
-                    .evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionsWithContext));
+            result.putAll(getExpressionEvaluator(session).evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionsWithContext));
         }
         return result;
 

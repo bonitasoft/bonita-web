@@ -198,8 +198,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             }
         } catch (final InvalidSessionException e) {
             final String errorMessage = "session is invalid.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, errorMessage, e);
             }
         } catch (final ProcessDefinitionNotFoundException e) {
             final String errorMessage = "process with " + processDefinitionID + "is not found.";
@@ -287,8 +287,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             }
         } catch (final InvalidSessionException e) {
             final String errorMessage = "session is invalid.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, errorMessage, e);
             }
             throw new FormException(errorMessage);
         } catch (final ProcessDefinitionNotFoundException e) {
@@ -387,8 +387,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             try {
                 nbOfPages = getNbOfPages();
             } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, e.getMessage(), e);
                 }
             }
         }
@@ -408,8 +408,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             try {
                 nbOfPages = getNbOfPages();
             } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, e.getMessage(), e);
                 }
             }
         }
@@ -452,8 +452,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             version = processAPI.getProcessDefinition(processDefinitionID).getVersion();
         } catch (final InvalidSessionException e) {
             final String errorMessage = "session is invalid.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, errorMessage, e);
             }
         } catch (final ProcessDefinitionNotFoundException e) {
             final String errorMessage = "process with " + processDefinitionID + "is not found.";
@@ -488,8 +488,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             }
             buildFormWidgets(pageId);
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
         }
         final List<FormWidget> widgets = engineWidgetBuilder.getPageWidgets(pageId, nbOfPages, applicationWidgets, PROCESS_ELEMENTS_PREFIX,
@@ -559,8 +559,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             }
         } catch (final InvalidSessionException e) {
             final String errorMessage = "session is invalid.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, errorMessage, e);
             }
             throw new SessionTimeoutException(errorMessage);
         } catch (final ProcessDefinitionNotFoundException e) {
@@ -604,8 +604,8 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
         try {
             nbOfPages = getNbOfPages();
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
         }
         String pageLabelComplement = null;

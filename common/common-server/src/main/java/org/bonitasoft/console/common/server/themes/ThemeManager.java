@@ -165,7 +165,7 @@ public class ThemeManager {
             }
             dir.delete();
         } else {
-            final String theErrorMessage = "The directory is not exist: "
+            final String theErrorMessage = "The directory does not exist: "
                     + folderPath;
             if (this.LOGGER.isLoggable(Level.SEVERE)) {
                 this.LOGGER.log(Level.SEVERE, theErrorMessage);

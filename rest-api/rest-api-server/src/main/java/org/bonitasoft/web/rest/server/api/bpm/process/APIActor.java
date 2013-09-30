@@ -33,8 +33,8 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 

@@ -13,20 +13,7 @@
  **/
 package org.bonitasoft.console.common.server.login.servlet;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginFailedException;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
+import org.bonitasoft.console.common.server.login.*;
 import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.preferences.properties.PlatformTenantConfigProperties;
@@ -40,6 +27,14 @@ import org.bonitasoft.engine.platform.PlatformLogoutException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.engine.session.SessionNotFoundException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut, Ruiheng Fan, Chong Zhao, Haojie Yuan
@@ -93,7 +88,7 @@ public class LoginServlet extends HttpServlet {
             final long tenantId = getTenantId(request, response);
             String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + request.getQueryString() + ")");
+                LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + dropPassword(request.getQueryString()) + ")");
             }
             if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
                 redirectURL = LoginManager.DEFAULT_DIRECT_URL;
@@ -171,9 +166,8 @@ public class LoginServlet extends HttpServlet {
                     TenantsManagementUtils.getTechnicalUserPassword());
             tenantId = session.getTenantId();
         } catch (final Exception e) {
-            final String message = "Unable to get the default tenant.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+                LOGGER.log(Level.SEVERE, "Unable to get the default tenant.", e);
             }
         }
         return tenantId;
@@ -231,6 +225,14 @@ public class LoginServlet extends HttpServlet {
                 throw new ServletException(errorMessage, e);
             }
         }
+    }
+
+    public String dropPassword(String content) {
+        String tmp = content;
+        if(content.contains("password")) {
+            tmp = tmp.replaceAll("[&]?password=([^&|#]*)?", "");
+        }
+        return tmp;
     }
 
 }

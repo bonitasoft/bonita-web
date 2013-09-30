@@ -11,7 +11,7 @@
 	<extend-property name="locale" values="fr"/>
 
 	<!-- Spanish language, independent of country					-->
-	<extend-property name="locale" values="es_ES"/>
+	<extend-property name="locale" values="es"/>
 	
 	<!-- German language, independent of country					-->
 	<extend-property name="locale" values="de"/>

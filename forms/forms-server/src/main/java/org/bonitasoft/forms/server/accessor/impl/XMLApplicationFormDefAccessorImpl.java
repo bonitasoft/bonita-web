@@ -16,18 +16,7 @@
  */
 package org.bonitasoft.forms.server.accessor.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormType;
-import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.client.model.FormWidget;
-import org.bonitasoft.forms.client.model.TransientData;
+import org.bonitasoft.forms.client.model.*;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
 import org.bonitasoft.forms.server.accessor.impl.util.XPathUtil;
@@ -39,6 +28,12 @@ import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of {@link IApplicationFormDefAccessor} allowing to parse the xml form definition file to get the application
@@ -135,8 +130,8 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
         }
         if (formNode == null) {
             final String message = "The node for the form " + formId + " was not found in the forms definition file";
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, message);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, message);
             }
             throw new ApplicationFormDefinitionNotFoundException(message);
         }
@@ -151,8 +146,8 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
 
         final Node applicationNode = getNodeByXpath(document, applicationXpath);
         if (applicationNode == null) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Failed to parse the forms definition file. query : " + applicationXpath);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Failed to parse the forms definition file. query : " + applicationXpath);
             }
         } else {
             final NodeList pageNodes = getNodeListByXpath(formNode, XMLForms.PAGES + "/" + XMLForms.PAGE);
@@ -231,8 +226,8 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
         } else {
             final Node pageTemplateNode = getNodeByXpath(pageNode, XMLForms.PAGE_LAYOUT);
             if (pageTemplateNode == null) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Failed to parse the form definition file. The default page template will be used.");
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.log(Level.FINE, "Failed to parse the form definition file. The default page template will be used.");
                 }
                 templatePath = null;
             } else {

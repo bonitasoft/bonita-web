@@ -467,6 +467,8 @@ public class Table extends AbstractTable implements Refreshable {
             clearSelectedIds();
         }
 
+        disableActionLinks();
+        
         if (this.lines.size() == 0) {
             addCheckAllCheckbox();
             addEmptyCssClass();

@@ -16,21 +16,6 @@
  */
 package org.bonitasoft.forms.server.accessor.impl.util;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
@@ -42,6 +27,17 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
 import org.bonitasoft.forms.server.exception.BPMEngineException;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut
@@ -94,11 +90,10 @@ public class ApplicationResourcesUtils {
      * @param processDeployementDate
      *            the process deployement date
      * @throws IOException
-     * @throws BPMEngineException
-     * @throws ProcessResourceException
+     * @throws ProcessDefinitionNotFoundException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
-     * @throws ProcessNotFoundException
+     * @throws BPMEngineException
+     * @throws RetrieveException
      */
     public static synchronized void retrieveApplicationFiles(final APISession session, final long processDefinitionID, final Date processDeployementDate)
             throws IOException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException {
@@ -128,8 +123,8 @@ public class ApplicationResourcesUtils {
                         try {
                             fos.close();
                         } catch (final IOException e) {
-                            if (LOGGER.isLoggable(Level.SEVERE)) {
-                                LOGGER.log(Level.SEVERE, "unable to close file output stream for business archive resource " + formResourceFile.getPath(), e);
+                            if (LOGGER.isLoggable(Level.WARNING)) {
+                                LOGGER.log(Level.WARNING, "unable to close file output stream for business archive resource " + formResourceFile.getPath(), e);
                             }
                         }
                     }
@@ -249,7 +244,7 @@ public class ApplicationResourcesUtils {
                         } catch (final Exception e) {
                             if (LOGGER.isLoggable(Level.WARNING)) {
                                 LOGGER.log(Level.WARNING,
-                                        "Process application resources deployement folder contains a directory that does not match a process deployement timestamp: "
+                                        "Process application resources deployment folder contains a directory that does not match a process deployement timestamp: "
                                                 + directory.getName(), e);
                             }
                         }
@@ -257,7 +252,7 @@ public class ApplicationResourcesUtils {
                     if (lastDeployementDate == 0L) {
                         if (LOGGER.isLoggable(Level.WARNING)) {
                             LOGGER.log(Level.WARNING,
-                                    "Process application resources deployement folder contains no directory that match a process deployement timestamp.");
+                                    "Process application resources deployment folder contains no directory that match a process deployement timestamp.");
                         }
                     }
                     final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastDeployementDate));
@@ -281,8 +276,6 @@ public class ApplicationResourcesUtils {
      *            the API session
      * @param processDefinitionID
      *            the process definition ID
-     * @param domain
-     *            the UserProfile domain name
      */
     public static synchronized void removeApplicationFiles(final APISession session, final long processDefinitionID) {
 
@@ -294,8 +287,8 @@ public class ApplicationResourcesUtils {
             final File formsDir = new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder(), processUUID);
             final boolean deleted = deleteDirectory(formsDir);
             if (!deleted) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "unable to delete the web resources directory " + formsDir.getCanonicalPath()
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "unable to delete the web resources directory " + formsDir.getCanonicalPath()
                             + ". You will be able to delete it manually once the JVM will shutdown");
                 }
             }
@@ -317,8 +310,8 @@ public class ApplicationResourcesUtils {
      * @throws IOException
      * @throws BPMEngineException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
      * @throws ProcessDefinitionNotFoundException
+     * @throws RetrieveException
      */
     public static File getApplicationResourceDir(final APISession session, final long processDefinitionID, final Date processDeployementDate)
             throws IOException, InvalidSessionException, BPMEngineException, ProcessDefinitionNotFoundException, RetrieveException {

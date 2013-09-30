@@ -16,17 +16,16 @@
  */
 package org.bonitasoft.forms.server.accessor.impl.util;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.bonitasoft.forms.server.constants.XMLForms;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.bonitasoft.forms.server.constants.XMLForms;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut
@@ -58,8 +57,8 @@ public abstract class XPathUtil {
         try {
             node = (Node) xpathEvaluator.evaluate(xPath, parentNode, XPathConstants.NODE);
         } catch (final XPathExpressionException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error in Xpath expression", e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error in Xpath expression", e);
             }
         }
         return node;
@@ -97,8 +96,8 @@ public abstract class XPathUtil {
         try {
             nodeList = (NodeList) xpathEvaluator.evaluate(xPath, parentNode, XPathConstants.NODESET);
         } catch (final XPathExpressionException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error in Xpath expression", e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error in Xpath expression", e);
             }
         }
         return nodeList;
@@ -116,8 +115,8 @@ public abstract class XPathUtil {
             try {
                 return Integer.parseInt(node.getTextContent());
             } catch (final IllegalArgumentException nfe) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "the widget property " + node.getNodeName() + " should be numeric", nfe);
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "the widget property " + node.getNodeName() + " should be numeric", nfe);
                 }
             }
         }

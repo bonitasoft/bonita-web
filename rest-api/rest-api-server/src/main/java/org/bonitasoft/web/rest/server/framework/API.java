@@ -33,14 +33,14 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.exception.APIAttributeException;
+import org.bonitasoft.web.rest.server.framework.exception.APIFileUploadNotFoundException;
+import org.bonitasoft.web.rest.server.framework.exception.ForbiddenAttributesException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.FilePathBuilder;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIAttributeException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFileUploadNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.ForbiddenAttributesException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.DummyItem;
@@ -57,9 +57,6 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  * 
  */
 public abstract class API<ITEM extends IItem> {
-
-    // Fixme Remove before starting refactoring of the API
-    protected static final Logger LOGGER = Logger.getLogger(API.class.getName());
 
     protected ItemDefinition<ITEM> itemDefinition = null;
 

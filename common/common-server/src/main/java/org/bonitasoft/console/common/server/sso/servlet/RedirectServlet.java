@@ -122,8 +122,8 @@ public class RedirectServlet extends HttpServlet {
             }
             return URLEncoder.encode(theURL + tokenSuffix, "UTF-8");
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
             return "";
         }

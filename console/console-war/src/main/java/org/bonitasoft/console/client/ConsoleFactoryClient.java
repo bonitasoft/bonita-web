@@ -57,7 +57,6 @@ import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
-import org.bonitasoft.console.client.menu.view.AvailableTokens;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
@@ -74,6 +73,7 @@ import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
+import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
@@ -91,9 +91,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     
     @Override
     public Page defineViewTokens(final String token) {
-        
-        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
-        //List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
+                
+//        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
+        List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
         
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
@@ -288,7 +288,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         
         for (String privilege: privileges) {
             
-            if (accessRights.contains(SHA1.calcSHA1(privilege.concat(sessionId)))) {
+            String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
+            
+            if (accessRights.contains(calcSHA1.toUpperCase())) {
                 return true;
             }
             

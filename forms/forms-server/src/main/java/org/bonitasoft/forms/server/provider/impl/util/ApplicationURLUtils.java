@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.forms.server.provider.impl.util;
 
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-
 /**
  * Utility class dealing with the metadatas for the URLs of the dedicated application
  * 
@@ -64,7 +62,7 @@ public class ApplicationURLUtils {
     }
 
     /**
-     * Get application url depending on the theme to apply
+     * Get application url depending on the theme to doAuthorize
      * 
      * @param processDefinitionId
      * @return
@@ -83,16 +81,6 @@ public class ApplicationURLUtils {
         stringBuilder.append(key);
         stringBuilder.append("=");
         stringBuilder.append(value);
-    }
-
-    /**
-     * @param aProcessDefinitionUUID
-     * @param anApplicationURL
-     * @throws ProcessNotFoundException
-     */
-    public void setProcessApplicationURLMetadata(final long processDefinitionID, final String applicationURL) throws ProcessDefinitionNotFoundException {
-        // FIXME: retrieve and store the metadata somewhere
-        // AccessorUtil.getRuntimeAPI().addProcessMetaData(processDefinitionID, DEDICATED_APP_URL_META_NAME, applicationURL);
     }
 
 }

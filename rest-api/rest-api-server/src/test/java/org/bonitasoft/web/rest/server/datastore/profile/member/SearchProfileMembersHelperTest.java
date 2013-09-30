@@ -37,8 +37,8 @@ import org.bonitasoft.web.rest.server.datastore.profile.member.ProfileMemberItem
 import org.bonitasoft.web.rest.server.datastore.profile.member.SearchProfileMembersHelper;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchUtils;
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;
+import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIFilterMandatoryException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

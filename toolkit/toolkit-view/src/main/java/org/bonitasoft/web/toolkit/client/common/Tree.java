@@ -105,7 +105,7 @@ public class Tree<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> implements 
 
     @Override
     public String toJson() {
-        return JSonSerializer.serializeList(this.children);
+        return JSonSerializer.serializeCollection(this.children);
     }
 
     @Override

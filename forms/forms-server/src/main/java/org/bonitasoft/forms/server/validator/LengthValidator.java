@@ -17,11 +17,11 @@
  */
 package org.bonitasoft.forms.server.validator;
 
+import org.bonitasoft.forms.client.model.FormFieldValue;
+
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bonitasoft.forms.client.model.FormFieldValue;
 
 /**
  * @author Aurelien Pupier
@@ -45,9 +45,9 @@ public class LengthValidator extends AbstractFormValidator implements IFormField
                 try {
                     final int targetLength = Integer.parseInt(getParameter().getContent());
                     return fieldValue.length() == targetLength;
-                } catch (final Exception e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "The parameter for a length validator should be an integer.", e);
+                } catch (final NumberFormatException e) {
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "The parameter for a length validator should be an integer.", e);
                     }
                     return false;
                 }

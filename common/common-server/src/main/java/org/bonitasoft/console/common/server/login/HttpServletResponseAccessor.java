@@ -16,12 +16,12 @@
  */
 package org.bonitasoft.console.common.server.login;
 
-import java.io.IOException;
+import org.bonitasoft.console.common.server.login.localization.Locator;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.console.common.server.login.localization.Locator;
+import java.io.IOException;
 
 /**
  * @author Vincent Elcrin
@@ -43,4 +43,7 @@ public class HttpServletResponseAccessor {
         }
     }
 
+    public ServletResponse asServletResponse() {
+        return response;
+    }
 }

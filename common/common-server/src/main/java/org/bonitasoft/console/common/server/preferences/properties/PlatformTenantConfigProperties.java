@@ -41,9 +41,9 @@ public class PlatformTenantConfigProperties {
      */
     public static final String PLATFORM_CREATE = "platform.create";
 
-    protected static final String PLATFORM_START = "platform.start";
+    protected static final String NODE_START = "node.start";
 
-    protected static final String PLATFORM_STOP = "platform.stop";
+    protected static final String NODE_STOP = "node.stop";
 
     protected static final String PLATFORM_USERNAME = "platform.username";
 
@@ -52,19 +52,11 @@ public class PlatformTenantConfigProperties {
     /**
      * Configurations of tenant
      */
-    protected static final String PLATFORM_TENANT_DEFAULT_CREATE = "platform.tenant.create";
-
-    protected static final String PLATFORM_TENANT_DEFAULT_USE = "platform.tenant.default.use";
-
     public static final String PLATFORM_DEFAULT_TENANT_ID = "platform.tenant.default.id";
-
-    protected static final String PLATFORM_TENANT_DEFAULT_NAME = "platform.tenant.default.name";
 
     protected static final String PLATFORM_TENANT_DEFAULT_USERNAME = "platform.tenant.default.username";
 
     protected static final String PLATFORM_TENANT_DEFAULT_PASSWORD = "platform.tenant.default.password";
-
-    protected static final String PLATFORM_TENANT_DEFAULT_DESCRIPTION = "platform.tenant.default.description";
 
     /**
      * Indicates that the preferences have been loaded
@@ -125,12 +117,12 @@ public class PlatformTenantConfigProperties {
     }
 
     public boolean platformStart() {
-        final String start = properties.getProperty(PLATFORM_START);
+        final String start = properties.getProperty(NODE_START);
         return Boolean.valueOf(start);
     }
 
     public boolean platformStop() {
-        final String stop = properties.getProperty(PLATFORM_STOP);
+        final String stop = properties.getProperty(NODE_STOP);
         return Boolean.valueOf(stop);
     }
 
@@ -142,22 +134,8 @@ public class PlatformTenantConfigProperties {
         return properties.getProperty(PLATFORM_PASSWORD);
     }
 
-    public boolean createDefaultTenant() {
-        final String createDefaultTenant = properties.getProperty(PLATFORM_TENANT_DEFAULT_CREATE);
-        return Boolean.valueOf(createDefaultTenant);
-    }
-
-    public boolean useDefaultTenant() {
-        final String useDefaultTenant = properties.getProperty(PLATFORM_TENANT_DEFAULT_USE);
-        return Boolean.valueOf(useDefaultTenant);
-    }
-
     public String getDefaultTenantId() {
         return properties.getProperty(PLATFORM_DEFAULT_TENANT_ID);
-    }
-
-    public String defaultTenantName() {
-        return properties.getProperty(PLATFORM_TENANT_DEFAULT_NAME);
     }
 
     public String defaultTenantUserName() {
@@ -166,10 +144,6 @@ public class PlatformTenantConfigProperties {
 
     public String defaultTenantPassword() {
         return properties.getProperty(PLATFORM_TENANT_DEFAULT_PASSWORD);
-    }
-
-    public String defaultTenantDesc() {
-        return properties.getProperty(PLATFORM_TENANT_DEFAULT_DESCRIPTION);
     }
 
 }

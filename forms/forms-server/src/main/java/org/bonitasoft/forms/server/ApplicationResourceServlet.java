@@ -13,16 +13,10 @@
  **/
 package org.bonitasoft.forms.server;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
@@ -31,11 +25,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Servlet allowing to download process application resources
@@ -163,7 +156,7 @@ public class ApplicationResourceServlet extends HttpServlet {
                 }
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "The Process application resources deployement directory does not exist.");
+                    LOGGER.log(Level.WARNING, "The Process application resources deployment directory does not exist.");
                 }
             }
         } catch (final Exception e) {
