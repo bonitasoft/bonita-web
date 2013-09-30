@@ -302,6 +302,7 @@ public interface IFormExpressionsAPI {
      * @param session
      * @param fieldValues
      * @param locale
+	 * @param deleteDocuments 
      * @return the context
      * @throws IOException
      * @throws FileTooBigException
@@ -309,7 +310,7 @@ public interface IFormExpressionsAPI {
      * @throws InvalidSessionException
      */
     Map<String, Serializable> generateGroovyContext(APISession session, Map<String, FormFieldValue> fieldValues, Locale locale,
-            Map<String, Serializable> context) throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException;
+            Map<String, Serializable> context, boolean deleteDocuments) throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException;
 
     /**
      * Get the right object value according to the datafield definition

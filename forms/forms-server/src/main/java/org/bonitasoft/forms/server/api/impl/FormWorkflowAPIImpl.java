@@ -284,7 +284,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final Map<String, FormFieldValue> fieldValues, final List<FormAction> actions, final Locale locale, final String submitButtonId,
             final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
-        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context);
+        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context, true);
         if (context != null) {
             evalContext.putAll(context);
         }
@@ -345,7 +345,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
         final CommandAPI commandAPI = bpmEngineAPIUtil.getCommandAPI(session);
         final Map<String, Serializable> excuteParameters = new HashMap<String, Serializable>();
-        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context);
+        final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context, true);
         if (context != null) {
             evalContext.putAll(context);
         }
