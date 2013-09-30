@@ -2,5 +2,13 @@
 *.project
 *.settings
 *.classpath
-*.class
 target/
+
+# intellij settings
+*.iml
+
+btm1.tlog
+btm2.tlog
+
+*.class
+/en.po

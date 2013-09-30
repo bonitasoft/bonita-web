@@ -85,7 +85,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title><%=_("Bonita Portal")%></title>
+<title><%=_("Bonita BPM Portal")%></title>
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
 <!-- Load LESS CSS -->
 <script type="text/javascript" src="console/scripts/includes/array.prototype.js"></script>
