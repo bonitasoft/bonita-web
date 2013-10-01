@@ -59,7 +59,7 @@ public class ProcessEngineClient {
             // if not found, return null
             return null;
         } catch (final Exception e) {
-            throw new APIException("Error when getting process deployement informations", e);
+            throw new APIException("Error when getting process deployment information", e);
         }
     }
 
@@ -101,7 +101,7 @@ public class ProcessEngineClient {
             getProcessApi().updateProcessDeploymentInfo(processId, processDeploymentInfoUpdater);
             return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final Exception e) {
-            throw new APIException("Error when updating process deployment informations", e);
+            throw new APIException("Error when updating process deployment information", e);
         }
     }
 
@@ -113,7 +113,7 @@ public class ProcessEngineClient {
                 getProcessApi().deleteProcessDefinition(id);
             }
         } catch (final BonitaException e) {
-            throw new APIException("Error when deleting processe(s) " + processIds, e);
+            throw new APIException("Error when deleting process(es) " + processIds, e);
         }
     }
 
