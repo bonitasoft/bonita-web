@@ -1097,6 +1097,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formFieldValue
      * @param throwException
      * @return
+     * @throws Exception
      */
     protected FormFieldValue convertValueType(final FormFieldValue formFieldValue, final boolean throwException) {
         final String modifier = formFieldValue.getModifier();

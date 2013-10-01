@@ -63,4 +63,12 @@ public class TaskButtonFactory {
         return new ButtonAction("btn-assigntome", _("Take"),
                 _("Assign this task to me. Other allowed users will no longer see it"), taskClaimAction);
     }
+    
+    public Button createRefreshButton(Action tableRefreshAction) {
+        Button btn = new Button("btn-refresh", "",
+                _("Refresh this table"), tableRefreshAction);
+
+        btn.addClass("btn-refresh");
+        return btn;
+    }
 }
