@@ -17,27 +17,31 @@
 
 package org.bonitasoft.web.toolkit.client.ui.component;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.user.client.Element;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
-import org.bonitasoft.web.toolkit.client.ui.html.XML;
 
 /**
  * Created by Vincent Elcrin
- * Date: 30/09/13
- * Time: 16:53
+ * Date: 01/10/13
+ * Time: 10:55
  */
-public class SafeHtmlClickable extends Clickable {
+public final class CommonTemplates {
 
-    private SafeHtml html;
+    public interface Templates extends SafeHtmlTemplates {
 
-    public SafeHtmlClickable(SafeHtml html, Action action) {
-        super(null, action);
-        this.html = html;
+        @SafeHtmlTemplates.Template(
+                "<div class='section'>" +
+                        "<div class='header'><h1>{0}</h1></div>" +
+                        "<div class='body'>{1}</div>" +
+                        "</div></div>")
+        SafeHtml section(String title, SafeHtml content);
     }
 
-    @Override
-    protected Element makeElement() {
-        return XML.makeElement(html.asString());
+    private static Templates TEMPLATES = GWT.create(Templates.class);
+
+    public static Templates get() {
+        return TEMPLATES;
     }
+
 }
