@@ -18,6 +18,7 @@ package org.bonitasoft.web.toolkit.client.ui.component;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -63,16 +64,48 @@ public class DatePicker extends Component {
         }
 
         this.addJsOption("format", _("mm/dd/yyyy"));
-
+        this.addJsOption("months", getMonths());
+        this.addJsOption("daysMin", getDaysMin());
+        
         this.element = DOM.createInputText();
         this.element.addClassName("inputDate");
         this.element.setAttribute("name", getJsId().toString());
         this.element.setAttribute("maxlength", "10"); // yyyy-mm-dd
-
+        
         if (this.defaultValue != null) {
             this.element.setAttribute("value", this.defaultValue);
         }
         return this.element;
+    }
+
+    private ArrayList<String> getMonths() {
+        ArrayList<String> months = new ArrayList<String>();
+        months.add(_("January"));
+        months.add(_("February"));
+        months.add(_("March"));
+        months.add(_("April"));
+        months.add(_("May"));
+        months.add(_("June"));
+        months.add(_("July"));
+        months.add(_("August"));
+        months.add(_("September"));
+        months.add(_("October"));
+        months.add(_("November"));
+        months.add(_("December"));
+        return months;
+    }
+
+    private ArrayList<String> getDaysMin() {
+        ArrayList<String> daysMin = new ArrayList<String>();
+        daysMin.add(_("Su"));
+        daysMin.add(_("Mo"));
+        daysMin.add(_("Tu"));
+        daysMin.add(_("We"));
+        daysMin.add(_("Th"));
+        daysMin.add(_("Fr"));
+        daysMin.add(_("Sa"));
+        daysMin.add(_("Su"));
+        return daysMin;
     }
 
     public String getValue() {

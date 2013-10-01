@@ -14,7 +14,6 @@
 	src: local('?'), url("fonts/Signika-Semibold.woff") format('woff'), url("fonts/Signika-Semibold.ttf") format('truetype'), url("fonts/Signika-Semibold.svg") format('svg');
 }
 
-/* Process template */
 body {
 	font-size: 1em;
 	font-family: Signika-Regular;
@@ -25,29 +24,20 @@ div.bonita_form_container {
 	width: 1250px;
 	margin: 0 auto;
 }
+
 @media screen and (max-width: 1250px) {
 	div.bonita_form_container {
 		width: 100%;
 	}
 }
 
-/**/
 #bonita_form_step_header {
 	display: none;
 }
 
-span.bonita_form_radio, .bonita_form_text,
-div.bonita_form_confirm_message,
-div.bonita_form_container div#bonita_form_confirm_todolist .bonita_form_available_task_title,
-div.bonita_form_task_link,
-div.bonita_form_container div#bonita_form_confirm_todolist .bonita_form_task_loading_label {
+span.bonita_form_radio, .bonita_form_text {
 	font-size: 1em;
 	font-weight: normal;
-}
-
-div.bonita_form_container div#bonita_form_confirm_todolist .bonita_form_task_link {
-	color: #B20706;
-	text-decoration: underline;
 }
 
 button.bonita_form_button {
@@ -390,16 +380,6 @@ div#bonita-object-area-description {
 	text-align: center;
 	font-size: 138.46153846153845%;
 	color: #282626;
-}
-
-.bonita_form_confirm_message {
-	padding-top: 30px;
-	margin-right: auto;
-	text-align: center;
-	color: black;
-	font-size: 14px;
-	margin-left: auto;
-	padding-bottom: 20px;
 }
 
 .bonita_form_error_message {

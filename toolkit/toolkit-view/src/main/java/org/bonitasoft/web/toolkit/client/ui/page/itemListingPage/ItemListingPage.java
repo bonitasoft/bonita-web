@@ -79,6 +79,12 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     protected boolean showSearchBar = true;
 
+    
+    /**
+     * The search form for all tables.
+     */
+    protected final Form tablesSearch = new Form(new JsId("search"));
+    
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -611,10 +617,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     private final MenuFolder menuSorts = new MenuFolder(_("Sort by"));
 
-    /**
-     * The search form for all tables.
-     */
-    private final Form tablesSearch = new Form(new JsId("search"));
+    
 
     /**
      * Initialize the table search form.
@@ -745,7 +748,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         // $(getCurrentFilter().getLink().getElement()).click();
 
     }
-
+    
     void selectRightResourceFilter() {
         if (hasResourceFilterParameter()) {
             selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
@@ -753,4 +756,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
             selectFirstFilter();
         }
     }
+
+
 }
