@@ -22,7 +22,7 @@
 	</scm>
 
 	<properties>
-		<bonita.engine.version>6.1.0-rc-19</bonita.engine.version>
+		<bonita.engine.version>6.1.0-SNAPSHOT</bonita.engine.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
