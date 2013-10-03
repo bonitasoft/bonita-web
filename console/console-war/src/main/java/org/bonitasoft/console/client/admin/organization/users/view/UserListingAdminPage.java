@@ -111,22 +111,12 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
 
     protected ItemListingTable enabledUserTable() {
         ItemTable itemTable = itemTable();
-        itemTable.addGroupedAction(disableButton());
         return new ItemListingTable(new JsId(TABLE_ENABLED_USERS), _("Users"), itemTable, getItemQuickDetailPage());
     }
     
     private ItemListingTable disabledUserTable() {
         ItemTable itemTable = itemTable();
-        itemTable.addGroupedAction(enableButton());
         return new ItemListingTable(new JsId(TABLE_DISABLED_USERS), _("Users"), itemTable, getItemQuickDetailPage());
-    }
-
-    private ButtonAction enableButton() {
-        return new ButtonAction(_("Activate"), _("Activate selected users"), new ChangeUsersStateAction(STATE.ENABLED));
-    }
-    
-    private ButtonAction disableButton() {
-        return new ButtonAction(_("Deactivate"), _("Deactivate selected users"), new ChangeUsersStateAction(STATE.DISABLED));
     }
 
     protected ItemTable itemTable() {

@@ -17,7 +17,6 @@
 package org.bonitasoft.console.client.admin.organization.users.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
@@ -25,31 +24,31 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
-import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 
 /**
  * Change users state to ENABLE or DISABLE
  *  
  * @author Colin PUY
  */
-public class ChangeUsersStateAction extends ActionOnItemIds {
+public class ChangeUsersStateAction extends Action {
 
     public enum STATE { ENABLED, DISABLED }
 
     private STATE newState;
+    private APIID userId;
 
-    public ChangeUsersStateAction(STATE newState) {
+    public ChangeUsersStateAction(APIID userId, STATE newState) {
+        this.userId = userId;
         this.newState = newState;
     }
     
     @Override
-    protected void execute(List<APIID> itemIds) {
+    public void execute() {
         HashMap<String, String> updateAttributes = buildAttributesMap();
-        for (APIID apiid : itemIds) {
-            UserDefinition.get().getAPICaller().update(apiid, updateAttributes, new ChangeUserStateCallback());
-        }
+        UserDefinition.get().getAPICaller().update(userId, updateAttributes, new ChangeUserStateCallback());
     }
-
+    
     private HashMap<String, String> buildAttributesMap() {
         HashMap<String, String> map = new HashMap<String, String>();
         if (STATE.ENABLED.equals(newState)) {
