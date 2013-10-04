@@ -58,7 +58,7 @@ public class DeactivateUserWarningPopUp extends Page {
         container.append(new Paragraph(_("You risk interrupting one or more apps.")));
         container.append(new Paragraph(_("Deactivating the only user able to perform a task(s), will cause the interruption of an app(s).")));
         container.append(new Paragraph(_("Before proceeding, you may want to go to the 'More' page of the app and check the actor mapping.")));
-        container.append(new Paragraph(_("Are you sure you want to deactivate this user now?")));
+        container.append(new Paragraph(_("Are you sure you want to deactivate this user now ?")));
         return container;
     }
     
