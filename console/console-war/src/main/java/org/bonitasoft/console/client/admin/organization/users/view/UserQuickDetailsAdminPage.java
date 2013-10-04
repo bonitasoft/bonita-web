@@ -29,6 +29,7 @@ import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
@@ -69,9 +70,10 @@ public class UserQuickDetailsAdminPage extends UserQuickDetailsPage {
     }
     
     private ButtonAction disableButton() {
-        return new ButtonAction(_("Deactivate"), _("Deactivate selected users"), new ChangeUsersStateAction(getItemId(), STATE.DISABLED));
+        return new ButtonAction(_("Deactivate"), _("Deactivate selected users"), 
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new DeactivateUserWarningPopUp(getItemId()))));
+        
     }
-
 
     protected Action createMoreAction(final UserItem item) {
         return new CheckValidSessionBeforeAction(new ActionShowView(new UserMoreDetailsAdminPage(item.getId())));

@@ -36,9 +36,13 @@ public class ChangeUsersStateAction extends Action {
     public enum STATE { ENABLED, DISABLED }
 
     private STATE newState;
-    private APIID userId;
+    private String userId;
 
     public ChangeUsersStateAction(APIID userId, STATE newState) {
+        this(userId.toString(), newState);
+    }
+    
+    public ChangeUsersStateAction(String userId, STATE newState) {
         this.userId = userId;
         this.newState = newState;
     }
@@ -62,6 +66,7 @@ public class ChangeUsersStateAction extends Action {
     private final class ChangeUserStateCallback extends APICallback {
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            ViewController.closePopup();
             ViewController.refreshCurrentPage();
         }
     
