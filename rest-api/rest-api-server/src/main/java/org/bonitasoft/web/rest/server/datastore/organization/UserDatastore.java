@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
-
 import java.util.List;
 import java.util.Map;
 
@@ -71,13 +69,6 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
-        
-        if (filters.containsKey(UserItem.FILTER_GROUP_ID)) {
-            List<User> users =  getUserEngineClient().getUsersInGroup(Long.valueOf(filters.get(UserItem.FILTER_GROUP_ID)), 
-                    computeIndex(page, resultsByPage), resultsByPage);
-            
-            return new ItemSearchResult<UserItem>(page, resultsByPage, users.size(), userItemConverter.convert(users));
-        }
         
         SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, 
                 new Sorts(orders, new UserSearchAttributeConverter()), 
