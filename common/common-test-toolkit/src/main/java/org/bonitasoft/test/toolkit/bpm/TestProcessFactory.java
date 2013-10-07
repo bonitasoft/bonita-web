@@ -89,7 +89,11 @@ public class TestProcessFactory {
     // ///////////////////////////////////////////////////////////////////////////////////
 
     protected static ProcessDefinitionBuilder getDefaultProcessDefinitionBuilder(final String processName) {
-        final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, "1.0");
+        return getDefaultProcessDefinitionBuilder(processName, "1.0");
+    }
+
+    public static ProcessDefinitionBuilder getDefaultProcessDefinitionBuilder(final String processName, String version) {
+        final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, version);
         processDefinitionBuidler.addActor("Employees", true)
                 .addDescription("This a default process")
 
@@ -170,7 +174,7 @@ public class TestProcessFactory {
     public static TestProcess createRandomResolvedProcess(TestUser actor) {
         return getRandomHumanTaskProcess().addActor(actor);
     }
-    
+
     /**
      * This process contains only a human task
      * 
@@ -230,6 +234,20 @@ public class TestProcessFactory {
 
     public static TestProcess getRandomHumanTaskProcess() {
         return getHumanTaskProcess(getRandomString());
+    }
+
+    /**
+     * This process contains only a human task
+     * 
+     * @return
+     */
+    public static TestProcess getHumanTaskProcess(final String processName, String version) {
+        if (getInstance().getProcessList().get(processName) == null) {
+            final TestProcess testProcess = new TestProcess(getDefaultProcessDefinitionBuilder(processName, version));
+            getInstance().getProcessList().put(processName, testProcess);
+        }
+
+        return getInstance().getProcessList().get(processName);
     }
 
     /**
