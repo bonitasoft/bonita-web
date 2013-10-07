@@ -46,6 +46,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.Table;
  */
 public class AddUserToProfileMemberPage extends Page {
 
+    public static final String TOKEN = "AddUserToProfileMember";
     public static final String PARAMETER_PROFILE_ID = "profileId";
     
     public static final List<String> PRIVILEGES = new ArrayList<String>();
@@ -54,10 +55,6 @@ public class AddUserToProfileMemberPage extends Page {
         PRIVILEGES.add(ListProfilePage.TOKEN);
     }
 
-    /**
-     * the token of this page
-     */
-    public static final String TOKEN = "AddUserToProfileMember";
 
     public AddUserToProfileMemberPage() {
     }
@@ -92,6 +89,7 @@ public class AddUserToProfileMemberPage extends Page {
         params.put(UserItem.FILTER_PROFILE_ID, profileId);
         final AddProfileMemberAction action = new AddProfileMemberAction(profileId, MemberType.USER.name(), null);
         addBody(new ItemTable(Definitions.get(UserDefinition.TOKEN))
+                .addHiddenFilter(UserItem.ATTRIBUTE_ENABLED, "true")
                 .addColumn(UserItem.ATTRIBUTE_ICON, _("Avatar"))
                 .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("Firstname"))
                 .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Lastname"))

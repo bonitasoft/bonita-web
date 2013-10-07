@@ -30,6 +30,29 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  */
 public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdateDate, ItemHasCreator, ItemHasIcon {
 
+    public static final String DEFAULT_USER_ICON = "/default/icon_user.png";
+
+    public static final String ATTRIBUTE_FIRSTNAME = "firstname";
+    public static final String ATTRIBUTE_LASTNAME = "lastname";
+    public static final String ATTRIBUTE_PASSWORD = "password";
+    public static final String ATTRIBUTE_USERNAME = "userName";
+    public static final String ATTRIBUTE_MANAGER_ID = "manager_id";
+    public static final String ATTRIBUTE_LAST_CONNECTION_DATE = "last_connection";
+    public static final String ATTRIBUTE_TITLE = "title";
+    public static final String ATTRIBUTE_JOB_TITLE = "job_title";
+    public static final String ATTRIBUTE_ENABLED = "enabled";
+
+    public static final String FILTER_ROLE_ID = "role_id";
+    public static final String FILTER_GROUP_ID = "group_id";
+    public static final String FILTER_PROFILE_ID = "profile_id";
+    public static final String FILTER_INDIRECT_PROFILE_ID = "indirect_profile_id";
+
+    public static final String COUNTER_OPEN_TASKS = "open_tasks";
+    public static final String COUNTER_OVERDUE_TASKS = "overdue_tasks";
+
+    public static final String DEPLOY_PROFESSIONAL_DATA = "professional_data";
+    public static final String DEPLOY_PERSONNAL_DATA = "personnal_data";
+    
     public UserItem() {
         super();
     }
@@ -37,60 +60,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
     public UserItem(final IItem item) {
         super(item);
     }
-
-    public static final String DEFAULT_USER_ICON = "/default/icon_user.png";
-
-    public static final String ATTRIBUTE_FIRSTNAME = "firstname";
-
-    public static final String ATTRIBUTE_LASTNAME = "lastname";
-
-    public static final String ATTRIBUTE_PASSWORD = "password";
-
-    public static final String ATTRIBUTE_USERNAME = "userName";
-
-    public static final String ATTRIBUTE_MANAGER_ID = "manager_id";
-
-    public static final String ATTRIBUTE_LAST_CONNECTION_DATE = "last_connection";
-
-    public static final String ATTRIBUTE_TITLE = "title";
-
-    public static final String ATTRIBUTE_JOB_TITLE = "job_title";
-
-    public static final String ATTRIBUTE_STATE = "user_state";
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // ATTRIBUTES VALUES
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static final String VALUE_ACTIVATION_STATE_DISABLED = "DISABLED";
-
-    public static final String VALUE_ACTIVATION_STATE_ENABLED = "ENABLED";
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // FILTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static final String FILTER_ROLE_ID = "role_id";
-
-    public static final String FILTER_GROUP_ID = "group_id";
-
-    public static final String FILTER_PROFILE_ID = "profile_id";
-
-    public static final String FILTER_INDIRECT_PROFILE_ID = "indirect_profile_id";
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // COUNTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static final String COUNTER_OPEN_TASKS = "open_tasks";
-
-    public static final String COUNTER_OVERDUE_TASKS = "overdue_tasks";
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // GETTERS AND SETTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // GETTERS
 
     public String getFirstName() {
         return this.getAttributeValue(ATTRIBUTE_FIRSTNAME);
@@ -132,10 +101,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
         return this.getAttributeValueAsDate(ATTRIBUTE_LAST_UPDATE_DATE);
     }
 
-    public String getState() {
-        return this.getAttributeValue(ATTRIBUTE_STATE);
-    }
-
     public String getLastConnectionDate() {
         return this.getAttributeValue(ATTRIBUTE_LAST_CONNECTION_DATE);
     }
@@ -148,16 +113,13 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
         return this.getAttributeValue(ATTRIBUTE_JOB_TITLE);
     }
 
-    //
-    // public AbstractContactDataItem getPersonnalData() {
-    // return this.getAttributeValue(ATTRIBUTE_PERSONNAL_DATA);
-    // }
-    //
-    // public AbstractContactDataItem getProfessionnalData() {
-    // return this.getAttributeValue(ATTRIBUTE_PROFESSIONAL_DATA);
-    // }
-
-    // SETTERS
+    public boolean isEnabled() {
+        return "true".equals(getAttributeValue(ATTRIBUTE_ENABLED));
+    }
+    
+    public void setEnabled(boolean enabled) {
+        setAttribute(ATTRIBUTE_ENABLED, String.valueOf(enabled));
+    }
 
     @Override
     public void setId(final String id) {
@@ -195,10 +157,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
 
     public void setManagerId(final APIID id) {
         setAttribute(ATTRIBUTE_MANAGER_ID, id);
-    }
-
-    public void setState(final String state) {
-        this.setAttribute(ATTRIBUTE_STATE, state);
     }
 
     @Override
@@ -257,14 +215,6 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
         this.setAttribute(ATTRIBUTE_JOB_TITLE, jobTitle);
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // DEPLOYS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static final String DEPLOY_PROFESSIONAL_DATA = "professional_data";
-
-    public static final String DEPLOY_PERSONNAL_DATA = "personnal_data";
-
     public ProfessionalContactDataItem getProfessionalData() {
         return new ProfessionalContactDataItem(getDeploy(DEPLOY_PROFESSIONAL_DATA));
     }
@@ -282,13 +232,8 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
         return new UserItem(getDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // UTILS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
-    public ItemDefinition getItemDefinition() {
+    public ItemDefinition<UserItem> getItemDefinition() {
         return new UserDefinition();
     }
-
 }

@@ -37,23 +37,8 @@ public class AutoCompleteEntry extends FormEntry {
     private AutoCompleteTextInput inputComponent = null;
 
     public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition, final String labelAttributeName,
-            final String valueAttributeName, final String defaultValue, final String description, final String example) {
-        this(jsid, label, tooltip, definition, new AttributeReader(labelAttributeName), valueAttributeName, defaultValue, description, example);
-    }
-
-    public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition, final String labelAttributeName,
-            final String valueAttributeName, final String defaultValue, final String description) {
-        this(jsid, label, tooltip, definition, labelAttributeName, valueAttributeName, defaultValue, description, null);
-    }
-
-    public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition, final String labelAttributeName,
             final String valueAttributeName, final String defaultValue) {
-        this(jsid, label, tooltip, definition, labelAttributeName, valueAttributeName, defaultValue, null, null);
-    }
-
-    public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition, final String labelAttributeName,
-            final String valueAttributeName) {
-        this(jsid, label, tooltip, definition, labelAttributeName, valueAttributeName, null, null, null);
+        this(jsid, label, tooltip, definition, new AttributeReader(labelAttributeName), valueAttributeName, defaultValue, null, null);
     }
 
     public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition,
@@ -72,20 +57,8 @@ public class AutoCompleteEntry extends FormEntry {
 
     public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition,
             final AbstractAttributeReader labelTemplate,
-            final String valueAttributeName, final String defaultValue, final String description) {
-        this(jsid, label, tooltip, definition, labelTemplate, valueAttributeName, defaultValue, description, null);
-    }
-
-    public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition,
-            final AbstractAttributeReader labelTemplate,
             final String valueAttributeName, final String defaultValue) {
         this(jsid, label, tooltip, definition, labelTemplate, valueAttributeName, defaultValue, null, null);
-    }
-
-    public AutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition definition,
-            final AbstractAttributeReader labelTemplate,
-            final String valueAttributeName) {
-        this(jsid, label, tooltip, definition, labelTemplate, valueAttributeName, null, null, null);
     }
 
     @Override
@@ -98,6 +71,11 @@ public class AutoCompleteEntry extends FormEntry {
         this.inputComponent.setValue(value);
     }
 
+    public AutoCompleteEntry addFilter(String filterName, String filterValue) {
+        inputComponent.addSearchFilter(filterName, filterValue);
+        return this;
+    }
+    
     @Override
     protected Element makeInput(final String uid2) {
         final Element div = DOM.createDiv();

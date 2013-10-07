@@ -27,6 +27,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
 import org.bonitasoft.web.toolkit.client.ui.action.form.UpdateItemFormAction;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.AutoCompleteEntry;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Option;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.ValuedFormEntry;
 
@@ -35,6 +36,9 @@ import com.google.gwt.user.client.Element;
 /**
  * @author Julien Mege
  */
+
+// FIXME this is not an AbstractForm since this object include his own form 
+// FIXME need to extend Form and then remove all reference to form class variable.
 public class ItemForm<T extends IItem> extends AbstractForm {
 
     private Form form = null;
@@ -155,7 +159,9 @@ public class ItemForm<T extends IItem> extends AbstractForm {
             final String labelAttributeName, final String valueAttributeName, final String description) {
         final JsId jsid = new JsId(attributeName);
 
-        this.form.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
+        AutoCompleteEntry autoComplete = 
+                new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
+        this.form.addEntry(autoComplete);
 
         initValidatorsAndModifiers(jsid, attributeName);
 
@@ -172,14 +178,18 @@ public class ItemForm<T extends IItem> extends AbstractForm {
             final AbstractAttributeReader labelTemplate, final String valueAttributeName, final String description) {
 
         final JsId jsid = new JsId(attributeName);
-        this.form.addAutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate,
-                valueAttributeName, description);
+        AutoCompleteEntry autoComplete = 
+                new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, description);
+        this.form.addEntry(autoComplete);
 
         initValidatorsAndModifiers(jsid, attributeName);
 
         return this;
     }
 
+    public void addEntry(final FormNode entry) {
+        form.addEntry(entry);
+    }
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATIC ENTRIES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

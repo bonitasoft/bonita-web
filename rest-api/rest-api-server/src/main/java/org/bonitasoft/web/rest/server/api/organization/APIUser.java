@@ -29,6 +29,11 @@ import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.PersonalContactDataDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.ProfessionalContactDataDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -41,13 +46,9 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationException
  * @author Séverin Moussel
  * 
  */
-public class APIUser extends ConsoleAPI<UserItem> {
-
-    public static final String USERNAME = "username";
-
-    public final static String GROUP_ID = "groupId";
-
-    public final static String ROLE_ID = "roleId";
+// TODO : implements APIhasFile
+public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>, APIHasDelete, APIHasUpdate<UserItem>,
+    APIHasGet<UserItem>, APIHasSearch<UserItem> {
 
     @Override
     protected ItemDefinition<UserItem> defineItemDefinition() {

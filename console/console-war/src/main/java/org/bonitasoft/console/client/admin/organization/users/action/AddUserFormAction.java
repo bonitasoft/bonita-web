@@ -27,7 +27,6 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
@@ -38,13 +37,8 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
  */
 public class AddUserFormAction extends AddItemFormAction<UserItem> {
 
-    /**
-     * Default Constructor.
-     * 
-     * @param itemDefinition
-     */
-    public AddUserFormAction(final ItemDefinition itemDefinition) {
-        super(itemDefinition);
+    public AddUserFormAction() {
+        super(UserDefinition.get());
     }
 
     @Override
