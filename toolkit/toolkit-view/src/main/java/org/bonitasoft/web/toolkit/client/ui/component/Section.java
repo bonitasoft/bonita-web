@@ -163,7 +163,7 @@ public class Section extends Component {
      */
     public final Section addBody(final AbstractComponent... components) {
         this.body.append(components);
-
+ 
         if (isGenerated() && !this.bodyIncluded) {
             if (!this.headerIncluded) {
                 HTML.prepend(this.element, this.body.getElement());

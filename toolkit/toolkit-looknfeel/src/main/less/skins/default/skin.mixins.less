@@ -3,13 +3,13 @@
 	font-size: percentage(@pFontSize/@skinFontSize);
 }
 
-
 .revertfontSize(@pFontSize){
-	@calcValue: percentage(@pFontSize/@skinFontSize);
-	@calcValueFinal: 1 - (@calcValue/100);
-	font-size: percentage(@calcValueFinal);
+	font-size: percentage((@pFontSize - 6px)/@skinFontSize);
+	//@calcValue: percentage(@pFontSize/@skinFontSize);
+	//@calcValueFinal: 1 - (@calcValue/100);
+	//font-size: percentage(@calcValueFinal);
+	//font-size: 100% - @calcValue; 
 }
-
 
 //-----------------------------------------------------------------------------
 // specific application mixin

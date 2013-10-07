@@ -29,7 +29,7 @@ public class DoubleSection extends Section {
     public DoubleSection(final JsId jsId) {
         this(jsId, (String) null, (AbstractComponent) null);
     }
-
+ 
     public DoubleSection(final JsId jsId, final String title) {
         this(jsId, title, (AbstractComponent) null);
     }

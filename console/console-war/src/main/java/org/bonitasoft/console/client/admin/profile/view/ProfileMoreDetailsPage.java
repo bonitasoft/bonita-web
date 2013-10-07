@@ -48,7 +48,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     public String defineToken() {
         return TOKEN;
     }
-
+ 
     @Override
     protected boolean isDescriptionBeforeMetadatas() {
         return false;
