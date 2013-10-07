@@ -28,19 +28,16 @@ import static com.google.gwt.query.client.GQuery.$;
  */
 public class IFrame extends Component {
 
+    private String id;
     private String url = null;
 
     private String width = "100%";
 
     private String height = "100%";
 
-    public IFrame(final String url) {
+    public IFrame(final String id, final String url, final String width, final String height) {
         super();
-        this.url = url;
-    }
-
-    public IFrame(final String url, final String width, final String height) {
-        super();
+        this.id = id;
         this.url = url;
         this.width = width;
         this.height = height;
@@ -50,7 +47,7 @@ public class IFrame extends Component {
     protected Element makeElement() {
 
         return (Element) $(
-                HTML.iFrame(this.url, new XMLAttributes("height", this.height).add("width", this.width).add("frameborder", "0").add("id", "formframe")))
+                HTML.iFrame(this.url, new XMLAttributes("height", this.height).add("width", this.width).add("frameborder", "0").add("id", id)))
                 .get(0);
     }
 }

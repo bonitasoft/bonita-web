@@ -8,13 +8,8 @@
  *******************************************************************************/
 package org.bonitasoft.console.client.user.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.URL;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
@@ -27,8 +22,12 @@ import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 
 /**
@@ -93,7 +92,7 @@ public class DisplayCaseFormPage extends Page {
        	
        	
        	addToolbarLink(new ButtonBack());
-        addBody(new IFrame(frameURL, "100%", "700px"));
+        addBody(new IFrame("formframe", frameURL, "100%", "700px"));
     }
     
     public static final Map<String, String> getItemParams(final CaseItem item) {

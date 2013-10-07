@@ -16,12 +16,8 @@
  */
 package org.bonitasoft.console.client.common.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.URL;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
@@ -42,8 +38,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Séverin Moussel
@@ -116,7 +115,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     }
 
     private IFrame createFormIframe(final HumanTaskItem item) {
-        return new IFrame(buildTasksFormURL(item), "100%", "700px");
+        return new IFrame("formframe", buildTasksFormURL(item), "100%", "700px");
     }
 
     private String buildTasksFormURL(final HumanTaskItem item) {
