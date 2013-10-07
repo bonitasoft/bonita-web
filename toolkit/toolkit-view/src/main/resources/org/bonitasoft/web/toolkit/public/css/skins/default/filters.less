@@ -179,6 +179,18 @@
                         .bgHoverFilter("filters-reporting.png");
                     }
 				}
+				&.enabledusers{
+                    .bgFilter("filters-user-active.png");
+                    &:hover{
+                        .bgHoverFilter("filters-user-active.png");
+                    }
+                }
+                &.disabledusers{
+                    .bgFilter("filters-user-inactive.png");
+                    &:hover{
+                        .bgHoverFilter("filters-user-inactive.png");
+                    }
+                }
 				&:hover{
 					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1,@header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
@@ -235,6 +247,12 @@
 				&.reports{
 					.bgFilter("filters-reporting-selected.png");
 				}
+				&.enabledusers{
+                    .bgFilter("filters-user-active-selected.png");
+                }
+                &.disabledusers{
+                    .bgFilter("filters-user-inactive-selected.png");
+                }
 				&:hover{
 					background: @filtersPanel-filterHover-bgColor;
 				}

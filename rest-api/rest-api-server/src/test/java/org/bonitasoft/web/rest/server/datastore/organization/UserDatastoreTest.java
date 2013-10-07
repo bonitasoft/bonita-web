@@ -25,6 +25,7 @@ import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,8 @@ public class UserDatastoreTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Mockito.doReturn(mockedIdentityAPI).when(datastore).getIdentityAPI();
+        UserEngineClient userEngineClient = new UserEngineClient(mockedIdentityAPI);
+        Mockito.doReturn(userEngineClient).when(datastore).getUserEngineClient();
     }
 
     @Test

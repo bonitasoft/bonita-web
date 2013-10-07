@@ -34,8 +34,6 @@ public final class ShowAddUserToActorPageAction extends Action {
 
     @Override
     public void execute() {
-        final SelectUserForActorPage popup = new SelectUserForActorPage();
-        popup.addParameter("id", actorId);
-        ViewController.showPopup(popup);
+        ViewController.showPopup(new SelectUserForActorPage(actorId));
     }
 }

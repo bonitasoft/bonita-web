@@ -41,7 +41,10 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
+import org.bonitasoft.web.toolkit.client.ui.component.event.InputCompleteEvent;
+import org.bonitasoft.web.toolkit.client.ui.component.event.InputCompleteHandler;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormButton;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.AutoCompleteEntry;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.FormEntries;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.FormEntry;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Section;
@@ -369,8 +372,21 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      * @param entry
      */
     private void addEntry(final FormEntry entry) {
+        if (entry instanceof AutoCompleteEntry) {
+            ((AutoCompleteEntry) entry).addInputHandler(createInputCompleteHandler(), InputCompleteEvent.TYPE);
+        }
         getLastContainer().append(entry);
         this.entriesIndex.put(entry.getJsId().toString(), entry);
+    }
+    
+    private InputCompleteHandler createInputCompleteHandler() {
+        return new InputCompleteHandler() {
+
+            @Override
+            public void onComplete(InputCompleteEvent event) {
+                AbstractForm.this.resetErrors();
+            }
+        };
     }
 
     /**

@@ -36,9 +36,7 @@ import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
 import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.api.organization.APIUser;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasCreator;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
@@ -70,8 +68,6 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
 
     // magic number. Look at testSearchUser for details.
     private static final int NUM_EXPECTED_USERS = 12;
-
-    private static final int STRESS_ADD_DELETE_MAX = 100;
 
     private HashMap<Integer, UserItem> expectedUsers;
 
@@ -286,27 +282,6 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
 
         // then clean
         identityAPI.deleteUser(addedUser.getId().toLong());
-    }
-
-    @Test
-    public void testStressAddDeleteUser() throws Exception {
-        for (int i = 0; i < STRESS_ADD_DELETE_MAX; i++) {
-
-            // dont create user on top of the ones created during the setup
-            final UserItem user = createCompleteUser(userAttributesList, 100);
-            final UserItem addedUser = this.apiUser.add(user);
-            assertUserEquals(userAttributesList, user, addedUser);
-
-            // retrieve user
-            assertUserEquals(userAttributesList, user, this.apiUser.runGet(addedUser.getId(), new ArrayList<String>(), new ArrayList<String>()));
-
-            // delete user
-            this.apiUser.delete(Arrays.asList(addedUser.getId()));
-            try {
-                Assert.assertNull("User still exist", this.apiUser.runGet(addedUser.getId(), new ArrayList<String>(), new ArrayList<String>()));
-            } catch (final APIItemNotFoundException e) {
-            }
-        }
     }
 
     @Test
