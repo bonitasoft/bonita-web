@@ -45,8 +45,10 @@ public class Section extends Component {
     private final Container<AbstractComponent> footer = new Container<AbstractComponent>();
 
     private boolean footerIncluded = false;
-    
+
     private String className;
+
+    private Container<Paragraph> descriptionContainer = null;
 
     public Section(final JsId jsId) {
         this(jsId, (String) null, (AbstractComponent) null);
@@ -99,6 +101,9 @@ public class Section extends Component {
         }
         this.body.setRootTag("div", "body");
         if (this.body.size() > 0) {
+            if (this.descriptionContainer != null) {
+                this.element.appendChild(descriptionContainer.getElement());
+            }
             this.element.appendChild(this.body.getElement());
             this.bodyIncluded = true;
         }
@@ -117,7 +122,7 @@ public class Section extends Component {
     public String getClassName() {
         return className;
     }
-    
+
     public void setClassName(String className) {
         this.className = className;
     }
@@ -197,6 +202,14 @@ public class Section extends Component {
     public final Section emptyFooter() {
         this.footer.empty();
         return this;
+    }
+
+    public final void addDescription(final String description) {
+        if (this.descriptionContainer == null) {
+            this.descriptionContainer = new Container<Paragraph>(new JsId("description"));
+        }
+
+        this.descriptionContainer.append(new Paragraph(description));
     }
 
 }
