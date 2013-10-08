@@ -19,7 +19,9 @@ import java.util.Map;
 
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
+import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.engine.identity.UserUpdater;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
@@ -72,7 +74,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         
         SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, 
                 new Sorts(orders, new UserSearchAttributeConverter()), 
-                new Filters(filters, new GenericFilterCreator(new UserSearchAttributeConverter())));
+                new Filters(filters, new UserFilterCreator()));
 
         SearchResult<User> engineSearchResults = getUserEngineClient().search(searchOptionsCreator.create());
         
