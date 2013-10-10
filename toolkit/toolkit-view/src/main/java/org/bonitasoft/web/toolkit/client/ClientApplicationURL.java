@@ -220,7 +220,7 @@ public class ClientApplicationURL {
     }
 
     public static String getTenantId() {
-        return self._getProfileId();
+        return self._getTenantId();
     }
 
     public static void setPageToken(final String pageToken) {
