@@ -1047,8 +1047,4 @@ public abstract class AbstractI18n {
         return string.isEmpty() ? "" : I18N_instance.getText(locale, string, args);
     }
 
-    public static String _(LOCALE locale, L10n localization) {
-        return localization.localize(locale);
-    }
-
 }

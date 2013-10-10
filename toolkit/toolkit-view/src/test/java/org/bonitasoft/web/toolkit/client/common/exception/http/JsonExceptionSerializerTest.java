@@ -18,8 +18,9 @@
 package org.bonitasoft.web.toolkit.client.common.exception.http;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18nHook;
+import org.bonitasoft.web.toolkit.client.common.i18n.FakeI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -35,7 +36,12 @@ import static org.junit.Assert.assertThat;
  */
 public class JsonExceptionSerializerTest {
 
-    I18nHook i18nHook = new I18nHook();
+    private FakeI18n fakeI18n;
+
+    @Before
+    public void setUp() throws Exception {
+        fakeI18n = new FakeI18n();
+    }
 
     @Test
     public void testWeCanConvertExceptionWithoutMessage() throws Exception {
@@ -76,7 +82,7 @@ public class JsonExceptionSerializerTest {
     @Test
     public void testJsonContainsInternationalizedMessageWhenLocalIsSet() throws Exception {
         APIException exception = new APIException(new _("message"));
-        i18nHook.setL10n("localization");
+        fakeI18n.setL10n("localization");
         exception.setLocale(LOCALE.en);
         JsonExceptionSerializer serializer = new JsonExceptionSerializer(exception);
 

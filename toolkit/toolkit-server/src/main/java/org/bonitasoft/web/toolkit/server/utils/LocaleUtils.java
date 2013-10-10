@@ -38,7 +38,7 @@ public class LocaleUtils {
      */
     public static String getUserLocale(final HttpServletRequest request) {
         String userLocaleStr = getUserLocale(request.getCookies());
-        if (userLocaleStr == null) {
+        if (userLocaleStr == null && request.getLocale() != null) {
             userLocaleStr = request.getLocale().toString();
         }
         return userLocaleStr;

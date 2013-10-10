@@ -22,11 +22,11 @@ package org.bonitasoft.web.toolkit.client.common.i18n;
  * Date: 23/09/13
  * Time: 18:40
  */
-public class I18nHook extends AbstractI18n {
+public class FakeI18n extends AbstractI18n {
 
     private String l10n;
 
-    public I18nHook() {
+    public FakeI18n() {
         I18N_instance = this;
     }
 

@@ -32,7 +32,6 @@ public class JsonExceptionSerializer {
     public static final String CAUSE_ATTRIBUTE = "cause";
     public static final String STACK_TRACE_ATTRIBUTE = "stacktrace";
     public static final String MESSAGE_ATTRIBUTE = "message";
-    public static final String LOCALIZED_MESSAGE_ATTRIBUTE = "localizedmessage";
     public static final String JSON_OPEN = "{";
     public static final String ATTRIBUTE_SEPARATOR = ",";
     public static final String VALUE_SEPARATOR = ":";
@@ -81,7 +80,9 @@ public class JsonExceptionSerializer {
     }
 
     private void addAttribute(StringBuilder json, String name, Object value) {
-        json.append(JSonSerializer.quote(name)).append(VALUE_SEPARATOR).append(JSonSerializer.serialize(value));
+        json.append(JSonSerializer.quote(name))
+                .append(VALUE_SEPARATOR)
+                .append(JSonSerializer.serialize(value));
     }
 
 }

@@ -18,8 +18,8 @@
 package org.bonitasoft.web.toolkit.server.servlet;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.server.ServletCall;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -68,7 +68,7 @@ public class ToolkitHttpServletTest {
 
         toolkitHttpServlet.outputException(exception, req, resp, 500);
 
-        verify(writer).print(new JsonExceptionSerializer(exception).end());
+        verify(writer).print(exception.toJson());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ToolkitHttpServletTest {
 
         doReturn(writer).when(resp).getWriter();
         doReturn(new Cookie[] {
-                new Cookie("BOS_Locale", "fr_FR")
+                new Cookie(LocaleUtils.BOS_LOCALE, "fr_FR")
         }).when(req).getCookies();
 
         toolkitHttpServlet.outputException(exception, req, resp, 500);
