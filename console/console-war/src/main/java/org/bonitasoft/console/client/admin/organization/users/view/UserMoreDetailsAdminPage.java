@@ -89,9 +89,11 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     }
 
     @Override
-    protected void buildToolbar(final UserItem item) {
+    protected void buildToolbar(final UserItem user) {
         addToolbarLink(new ButtonBack());
-        addToolbarLink(newEditUserButton());
+        if (user.isEnabled()) {
+            addToolbarLink(newEditUserButton());
+        }
     }
 
     private Clickable newEditUserButton() {
@@ -108,10 +110,6 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         addBody(membershipSection(user));
         addBody(businessCardSection(user.getProfessionalData()));
         addBody(personalInformationSection(user.getPersonnalData()));
-    }
-
-    private boolean deploySuccessed(UserItem user, String deploy) {
-        return user.getDeploy(deploy) != null;
     }
 
     @Override

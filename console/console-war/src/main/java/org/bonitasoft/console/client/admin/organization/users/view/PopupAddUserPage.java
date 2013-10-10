@@ -27,7 +27,6 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.StringNoSpaceValidator;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.StringRegexpValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
@@ -57,6 +56,7 @@ public class PopupAddUserPage extends Page {
         final ItemDefinition<UserItem> definition = UserDefinition.get();
 
         final Form form = new Form()
+                .addHiddenEntry(UserItem.ATTRIBUTE_ENABLED, "true")
                 .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Login"), _("Enter the login for this user"))
                 .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
                 .addPasswordEntry(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Confirm password"), _("Confirm the password for this user"))
@@ -68,7 +68,7 @@ public class PopupAddUserPage extends Page {
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD), new MandatoryValidator())
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), new MandatoryValidator(_("Confirm password")));
 
-        form.addButton(new JsId("create"), _("Create"), _("Create this user"), new AddUserFormAction(definition));
+        form.addButton(new JsId("create"), _("Create"), _("Create this user"), new AddUserFormAction());
 
         form.addCancelButton();
 

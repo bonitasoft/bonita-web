@@ -104,7 +104,7 @@
 
 </head>
 <body id="LoginPage">
-	<div id="LoginHeader"><h1><span><%= _("Welcome to") %></span> <%= _("Bonita Portal") %></h1></div>
+	<div id="LoginHeader"><h1><span><%= _("Welcome to") %></span> <%= _("Bonita BPM Portal") %></h1></div>
 	<div id="floater"></div>
 	<div id="LoginFormContainer" >
 		<div id="logo">
