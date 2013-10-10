@@ -76,26 +76,17 @@ public class StartProcessFormPage extends Page {
             userId = Session.getUserId().toString();
         }
         this.setTitle(_("Start an instance of app %app_name%", new Arg("app_name", decodedProcessName)));
-        StringBuilder frameURL = new StringBuilder();
-        frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?ui=form&locale=")
-                .append(locale)
-                .append("#form=")
-                .append(processName)
-                .append(this.UUID_SEPERATOR)
-                .append(processVersion)
-                .append("$entry&process=")
-                .append(processId)
-                .append("&autoInstantiate=false&mode=form&user=")
-                .append(userId);
+        final StringBuilder frameURL = new StringBuilder();
+        frameURL.append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=").append(locale).append("#form=").append(processName).append(UUID_SEPERATOR)
+                .append(processVersion).append("$entry&process=").append(processId).append("&autoInstantiate=false&mode=form&user=").append(userId);
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
-        String tenantId = ClientApplicationURL.getTenantId();
-        if (!tenantId.isEmpty()) {
+        final String tenantId = ClientApplicationURL.getTenantId();
+        if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenantId=").append(tenantId);
         }
 
-        this.addBody(new IFrame(frameURL.toString(), "100%", "700px"));
+        addBody(new IFrame(frameURL.toString(), "100%", "700px"));
     }
 
     public static final Map<String, String> getItemParams(final IItem item) {

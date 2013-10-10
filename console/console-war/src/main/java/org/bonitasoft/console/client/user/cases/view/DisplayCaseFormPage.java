@@ -18,6 +18,7 @@ import java.util.Map;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -53,7 +54,7 @@ public class DisplayCaseFormPage extends Page {
 
     // legacy, needed by ConsoleFactoryClient
     public DisplayCaseFormPage() {
-        this.addClass("moredetails");
+        addClass("moredetails");
     }
 
     public DisplayCaseFormPage(final CaseItem item) {
@@ -78,7 +79,10 @@ public class DisplayCaseFormPage extends Page {
         // TODO remove this once the same method is used in the toolkit and in the studio to URL encode/decode
         final String decodedProcessName = URL.decodeQueryString(processName);
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
+        String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
+        if (caseId == null) {
+            caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
+        }
         final String locale = AbstractI18n.getDefaultLocale().toString();
 
         String userId = this.getParameter("userId");
@@ -88,23 +92,17 @@ public class DisplayCaseFormPage extends Page {
         this.setTitle(_("Display a case form of app %app_name%", new Arg("app_name", decodedProcessName)));
 
         final StringBuilder frameURL = new StringBuilder();
-        frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?ui=form&locale=")
-                .append(locale).append("#form=")
-                .append(processName)
-                .append(this.UUID_SEPERATOR)
-                .append(processVersion)
-                .append("$recap&mode=form&instance=")
-                .append(caseId).append("&recap=true");
+        frameURL.append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=").append(locale).append("#form=").append(processName).append(UUID_SEPERATOR)
+                .append(processVersion).append("$recap&mode=form&instance=").append(caseId).append("&recap=true");
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
-        String tenantId = ClientApplicationURL.getTenantId();
-        if (!tenantId.isEmpty()) {
+        final String tenantId = ClientApplicationURL.getTenantId();
+        if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenantId=").append(tenantId);
         }
 
         this.addToolbarLink(new ButtonBack());
-        this.addBody(new IFrame(frameURL.toString(), "100%", "700px"));
+        addBody(new IFrame(frameURL.toString(), "100%", "700px"));
     }
 
     public static final Map<String, String> getItemParams(final CaseItem item) {
@@ -115,6 +113,9 @@ public class DisplayCaseFormPage extends Page {
         processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getProcess().getName());
         processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getProcess().getVersion());
         processParams.put(CaseItem.ATTRIBUTE_ID, item.getId().toString());
+        if (item instanceof ArchivedCaseItem) {
+            processParams.put(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ((ArchivedCaseItem) item).getSourceObjectId().toString());
+        }
         processParams.put("token", TOKEN);
         return processParams;
     }

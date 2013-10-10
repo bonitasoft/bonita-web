@@ -94,18 +94,18 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     @Override
     public void buildView(final HumanTaskItem task) {
         if (task.getAssignedId() == null) {
-            TaskAPI.claim(task.getId(), this.getUserId(), new Action() {
+            TaskAPI.claim(task.getId(), getUserId(), new Action() {
 
                 @Override
                 public void execute() {
                     PerformTaskPage.this.addBody(PerformTaskPage.this.createFormIframe(task));
                 }
             });
-        } else if (!task.getAssignedId().equals(this.getUserId())) {
+        } else if (!task.getAssignedId().equals(getUserId())) {
             ViewController.showView(TasksListingPage.TOKEN);
             throw new APIException(_("You can't perform this task, it has already been assigned to someone else."));
         } else {
-            this.addBody(this.createFormIframe(task));
+            addBody(createFormIframe(task));
         }
     }
 
@@ -117,31 +117,26 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     }
 
     private IFrame createFormIframe(final HumanTaskItem item) {
-        return new IFrame(this.buildTasksFormURL(item), "100%", "700px");
+        return new IFrame(buildTasksFormURL(item), "100%", "700px");
     }
 
     private String buildTasksFormURL(final HumanTaskItem item) {
         final StringBuilder frameURL = new StringBuilder()
 
-                .append(GWT.getModuleBaseURL()).append("homepage")
-                .append("?ui=form")
+        .append(GWT.getModuleBaseURL()).append("homepage").append("?ui=form")
 
-                .append("&locale=")
-                .append(AbstractI18n.getDefaultLocale().toString())
+        .append("&locale=").append(AbstractI18n.getDefaultLocale().toString())
 
-                .append("#form=")
-                .append(URL.decodeQueryString(item.getProcess().getName())).append(this.UUID_SEPERATOR)
-                .append(item.getProcess().getVersion()).append(this.UUID_SEPERATOR)
-                .append(URL.decodeQueryString(item.getName()))
+        .append("#form=").append(URL.decodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR).append(item.getProcess().getVersion())
+                .append(UUID_SEPERATOR).append(URL.decodeQueryString(item.getName()))
 
                 .append("$entry")
 
-                .append("&task=").append(item.getId())
-                .append("&mode=form");
+                .append("&task=").append(item.getId()).append("&mode=form");
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
-        String tenantId = ClientApplicationURL.getTenantId();
-        if (!tenantId.isEmpty()) {
+        final String tenantId = ClientApplicationURL.getTenantId();
+        if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenantId=").append(tenantId);
         }
         return frameURL.toString();

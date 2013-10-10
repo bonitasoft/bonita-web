@@ -17,8 +17,6 @@
 package org.bonitasoft.forms.server.accessor.api;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -30,28 +28,17 @@ import org.bonitasoft.forms.server.exception.BPMEngineException;
  */
 public class ProcessInstanceAccessorEngineClient {
 
-    private ProcessAPI processApi;
+    private final ProcessAPI processApi;
 
-    public ProcessInstanceAccessorEngineClient(ProcessAPI processApi) {
+    public ProcessInstanceAccessorEngineClient(final ProcessAPI processApi) {
         this.processApi = processApi;
     }
 
-    public ProcessInstance getProcessInstance(long id)
-            throws BPMEngineException, ProcessInstanceNotFoundException {
+    public ProcessInstance getProcessInstance(final long id) throws BPMEngineException, ProcessInstanceNotFoundException {
         try {
             return processApi.getProcessInstance(id);
-        } catch (InvalidSessionException e) {
+        } catch (final InvalidSessionException e) {
             throw new BPMEngineException(e);
         }
     }
-
-    public ArchivedProcessInstance getArchivedProcessInstance(long id)
-            throws BPMEngineException, ArchivedProcessInstanceNotFoundException {
-        try {
-            return processApi.getArchivedProcessInstance(id);
-        } catch (InvalidSessionException e) {
-            throw new BPMEngineException(e);
-        }
-    }
-
 }

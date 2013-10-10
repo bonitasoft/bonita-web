@@ -71,9 +71,14 @@ public class FormServiceProviderUtil {
     public static final String IS_CURRENT_VALUE = "isCurrentValue";
 
     /**
+     * is edit mode
+     */
+    public static final String IS_EDIT_MODE = "isEditMode";
+
+    /**
      * context page
      */
-    public static final String IS_CONTEXT = "isContext";
+    public static final String IS_CONFIG_CONTEXT = "isContext";
 
     /**
      * confirmation page
@@ -94,11 +99,6 @@ public class FormServiceProviderUtil {
      * form document
      */
     public static final String DOCUMENT = "document";
-
-    /**
-     * is edit mode
-     */
-    public static final String IS_EDIT_MODE = "isEditMode";
 
     /**
      * assign task parameter
