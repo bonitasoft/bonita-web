@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
@@ -41,10 +42,10 @@ import com.google.gwt.http.client.URL;
  */
 public class StartProcessFormPage extends Page {
 
-    public final static String TOKEN = "StartProcess";    
-    
+    public final static String TOKEN = "StartProcess";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
@@ -69,17 +70,32 @@ public class StartProcessFormPage extends Page {
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
         final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
         final String locale = AbstractI18n.getDefaultLocale().toString();
-        
+
         String userId = this.getParameter("userId");
         if (userId == null) {
             userId = Session.getUserId().toString();
         }
         this.setTitle(_("Start an instance of app %app_name%", new Arg("app_name", decodedProcessName)));
+        StringBuilder frameURL = new StringBuilder();
+        frameURL.append(GWT.getModuleBaseURL())
+                .append("homepage?ui=form&locale=")
+                .append(locale)
+                .append("#form=")
+                .append(processName)
+                .append(this.UUID_SEPERATOR)
+                .append(processVersion)
+                .append("$entry&process=")
+                .append(processId)
+                .append("&autoInstantiate=false&mode=form&user=")
+                .append(userId);
 
-        // TODO
-        final String frameURL = GWT.getModuleBaseURL() + "homepage?ui=form&locale=" + locale + "#form=" + processName + UUID_SEPERATOR + processVersion + "$entry&process="
-                + processId + "&autoInstantiate=false&mode=form&user=" + userId;
-        addBody(new IFrame(frameURL, "100%", "700px"));
+        // if tenant is filled in portal url add tenant parameter to IFrame url
+        String tenantId = ClientApplicationURL.getTenantId();
+        if (!tenantId.isEmpty()) {
+            frameURL.append("&tenantId=").append(tenantId);
+        }
+
+        this.addBody(new IFrame(frameURL.toString(), "100%", "700px"));
     }
 
     public static final Map<String, String> getItemParams(final IItem item) {

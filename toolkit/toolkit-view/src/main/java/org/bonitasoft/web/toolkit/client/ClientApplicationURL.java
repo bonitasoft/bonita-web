@@ -70,6 +70,8 @@ public class ClientApplicationURL {
 
     protected static final String ATTRIBUTE_PROFILE = UrlOption.PROFILE;
 
+    protected static final String ATTRIBUTE_TENANT = "tenant";
+
     private TreeIndexed<String> attributes = new TreeIndexed<String>();
 
     private static ClientApplicationURL self = null;
@@ -93,16 +95,16 @@ public class ClientApplicationURL {
 
     protected void parseUrl() {
         // If Token or profile disappeared, keep the previous one
-        final String token = _getPageToken();
-        final String profileId = _getProfileId();
+        final String token = this._getPageToken();
+        final String profileId = this._getProfileId();
 
-        this.attributes = parseToken();
+        this.attributes = this.parseToken();
 
         // If Token or profile disappeared, keep the previous one
-        if (token != null && _getPageToken() == null) {
+        if (token != null && this._getPageToken() == null) {
             this._setPageToken(token);
         }
-        if (profileId != null && _getProfileId() == null) {
+        if (profileId != null && this._getProfileId() == null) {
             this._setProfileId(profileId);
         }
     }
@@ -121,6 +123,10 @@ public class ClientApplicationURL {
 
     protected String _getProfileId() {
         return this.attributes.getValue(ATTRIBUTE_PROFILE);
+    }
+
+    protected String _getTenantId() {
+        return this.attributes.getValue(ATTRIBUTE_TENANT);
     }
 
     private void _setPageToken(final String pageToken) {
@@ -168,8 +174,8 @@ public class ClientApplicationURL {
     }
 
     private void _setPageAttributes(final TreeIndexed<String> attributes, final boolean refresh) {
-        final String token = _getPageToken();
-        final String profileId = _getProfileId();
+        final String token = this._getPageToken();
+        final String profileId = this._getProfileId();
 
         this.attributes = attributes.copy();
 
@@ -210,6 +216,10 @@ public class ClientApplicationURL {
     }
 
     public static String getProfileId() {
+        return self._getProfileId();
+    }
+
+    public static String getTenantId() {
         return self._getProfileId();
     }
 
@@ -260,7 +270,7 @@ public class ClientApplicationURL {
 
     private void _refreshUrl(final boolean refreshView) {
 
-        if (parseToken().equals(this.attributes)) {
+        if (this.parseToken().equals(this.attributes)) {
             // Same URL attributes, do nothing
             return;
         }
@@ -268,12 +278,12 @@ public class ClientApplicationURL {
         History.newItem("?" + UrlSerializer.serialize(this.attributes), false);
 
         if (refreshView) {
-            refreshView();
+            this.refreshView();
         }
     }
 
     private void _refresh() {
-        refreshView();
+        this.refreshView();
     }
 
     public static void refreshUrl() {
@@ -313,9 +323,9 @@ public class ClientApplicationURL {
                 for (final String name : session.getAttributeNames()) {
                     if (name.equals("conf")) {
                         AvailableTokens.tokens.addAll(((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
-//                        Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
+                        // Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
                     } else {
-                        Session.addParameter(name, session.getAttributeValue(name));                        
+                        Session.addParameter(name, session.getAttributeValue(name));
                     }
                 }
 
@@ -329,7 +339,7 @@ public class ClientApplicationURL {
 
     protected void initLang(final Action callback) {
         // Check if the lang is in the URL
-        String newLang = parseToken().getValue(ATTRIBUTE_LANG);
+        String newLang = this.parseToken().getValue(ATTRIBUTE_LANG);
 
         // Clean
         if (newLang != null) {
@@ -366,13 +376,13 @@ public class ClientApplicationURL {
         // Hide global loader
         $("#initloader").remove();
 
-        if (_getPageToken() != null && _getProfileId() != null) {
-            ViewController.showView(_getPageToken(), _getPageAttributes());
+        if (this._getPageToken() != null && this._getProfileId() != null) {
+            ViewController.showView(this._getPageToken(), this._getPageAttributes());
         }
     }
 
     protected void refreshView() {
-        parseUrl();
-        ViewController.showView(_getPageToken(), _getPageAttributes());
+        this.parseUrl();
+        ViewController.showView(this._getPageToken(), this._getPageAttributes());
     }
 }
