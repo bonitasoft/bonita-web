@@ -26,6 +26,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
  * Created by Vincent Elcrin
  * Date: 25/09/13
  * Time: 14:09
+ *
+ * This class name is compatible with internationalization mechanism gettext.
  */
 public class _ {
 

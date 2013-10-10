@@ -22,12 +22,12 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.server.ServletCall;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -102,7 +102,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
         try {
             final PrintWriter output = resp.getWriter();
             if(e instanceof APIException) {
-                setLocalization((APIException) e, getLocale(req.getCookies()));
+                setLocalization((APIException) e, LocaleUtils.getUserLocale(req));
             }
 
             output.print(e == null ? "" : JSonSerializer.serialize(e));
@@ -116,17 +116,6 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
         if(locale != null && !locale.isEmpty()) {
             localizable.setLocale(LOCALE.valueOf(locale));
         }
-    }
-
-    private String getLocale(Cookie[] cookies) {
-        if(cookies != null) {
-            for(Cookie cookie: cookies) {
-                if("BOS_Locale".equals(cookie.getName())) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
     }
 
     /**
