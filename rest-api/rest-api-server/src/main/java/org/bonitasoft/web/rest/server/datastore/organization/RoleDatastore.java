@@ -16,12 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
@@ -38,17 +32,18 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.*;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -123,8 +118,7 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
 
             return convertEngineToConsoleItem(getIdentityAPI().createRole(creator));
         } catch (AlreadyExistsException e) {
-            String message = _("Can't create role. Role '%roleName%' already exists", new Arg("roleName", role.getName()));
-            throw new APIForbiddenException(message, e);
+            throw new APIForbiddenException(new _("Can't create role. Role '%roleName%' already exists", new Arg("roleName", role.getName())), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }

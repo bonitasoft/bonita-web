@@ -17,10 +17,6 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.List;
-
 import org.bonitasoft.engine.api.GroupAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.CreationException;
@@ -33,7 +29,10 @@ import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupUpdater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+
+import java.util.List;
 
 /**
  * @author Paul AMAR
@@ -51,7 +50,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.getGroup(groupId);
         } catch (GroupNotFoundException e) {
-            throw new APIException(_("Unable to find group %groupId%", new Arg("groupId", groupId)));
+            throw new APIException(new _("Unable to find group %groupId%", new Arg("groupId", groupId)));
         }
     }
     
@@ -59,7 +58,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.getGroup(parseId(groupId)).getPath();
         } catch (GroupNotFoundException e) {
-            throw new APIException(_("Unable to get group path, group not found"));
+            throw new APIException(new _("Unable to get group path, group not found"));
         }
     }
     
@@ -75,7 +74,7 @@ public class GroupEngineClient {
         try {
             groupAPI.deleteGroups(groupIds);
         } catch (DeletionException e) {
-            throw new APIException(_("Error when deleting groups"), e);
+            throw new APIException(new _("Error when deleting groups"), e);
         }
     }
     
@@ -83,9 +82,9 @@ public class GroupEngineClient {
         try {
             return groupAPI.updateGroup(groupId, groupUpdater);
         } catch (GroupNotFoundException e) {
-            throw new APIException(_("Can't update group. Group not found"));
+            throw new APIException(new _("Can't update group. Group not found"));
         } catch (UpdateException e) {
-            throw new APIException(_("Error when updating group"), e);
+            throw new APIException(new _("Error when updating group"), e);
         }
     }
     
@@ -93,10 +92,11 @@ public class GroupEngineClient {
         try {
             return groupAPI.createGroup(groupCreator);
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(_("Can't create group. Group '%groupName%' already exists", 
+            throw new APIForbiddenException(new _(
+                    "Can't create group. Group '%groupName%' already exists",
                     new Arg("groupName", groupCreator.getFields().get(GroupField.NAME))));
         } catch (CreationException e) {
-            throw new APIException(_("Error when creating group"), e);
+            throw new APIException(new _("Error when creating group"), e);
         }
     }
 }

@@ -16,10 +16,13 @@
  */
 package org.bonitasoft.web.toolkit.server;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 /**
  * This class represent a service.<br />
@@ -141,6 +144,14 @@ public abstract class Service {
      */
     public final Map<String, String[]> getParameters() {
         return this.caller.getParameters();
+    }
+
+    public final LOCALE getLocale() {
+        try {
+            return LOCALE.valueOf(caller.getLocale());
+        } catch (IllegalArgumentException e) {
+            return AbstractI18n.getDefaultLocale();
+        }
     }
 
 }
