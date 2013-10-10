@@ -22,6 +22,7 @@ import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleQuickDetailsPage;
 import org.bonitasoft.console.client.admin.organization.role.UpdateRolePage;
 import org.bonitasoft.console.client.admin.organization.users.view.AddMembershipPage;
+import org.bonitasoft.console.client.admin.organization.users.view.DeactivateUserWarningPopUp;
 import org.bonitasoft.console.client.admin.organization.users.view.DeleteMembershipPage;
 import org.bonitasoft.console.client.admin.organization.users.view.ListMembershipPage;
 import org.bonitasoft.console.client.admin.organization.users.view.PopupAddUserPage;
@@ -97,6 +98,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
+        } else if (DeactivateUserWarningPopUp.TOKEN.equals(token)) {
+            return new DeactivateUserWarningPopUp();
 
         // Manage Cases pages
         } else if (CaseListingAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseListingAdminPage.PRIVILEGES, currentUserAccessRights)) {

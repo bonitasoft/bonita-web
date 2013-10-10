@@ -337,4 +337,14 @@ public interface BonitaAPIClient {
     ClientResponse<String> getActors(@QueryParam("p") int pStart, @QueryParam("c") int pCount, @QueryParam("o") String pOrder,
             @QueryParam("f") String pFilterExpression);
 
+    /**
+     * 
+     * @param url
+     * @return
+     * @Path("/")
+     */
+    @GET
+    @Produces("application/json")
+    ClientResponse<String> RESTGet(@PathParam("") String url);
+
 }

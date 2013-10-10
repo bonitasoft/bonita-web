@@ -29,19 +29,12 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  */
 public class UserDefinition extends ItemDefinition<UserItem> {
 
-    /**
-     * Singleton
-     */
+    public static final String TOKEN = "user";
+    private static final String API_URL = "../API/identity/user";
+
     public static final UserDefinition get() {
         return (UserDefinition) Definitions.get(TOKEN);
     }
-
-    public static final String TOKEN = "user";
-
-    /**
-     * the URL of user resource
-     */
-    private static final String API_URL = "../API/identity/user";
 
     @Override
     public String defineToken() {
@@ -78,7 +71,7 @@ public class UserDefinition extends ItemDefinition<UserItem> {
         createAttribute(UserItem.ATTRIBUTE_TITLE, ItemAttribute.TYPE.STRING);
         createAttribute(UserItem.ATTRIBUTE_JOB_TITLE, ItemAttribute.TYPE.STRING);
         createAttribute(UserItem.ATTRIBUTE_MANAGER_ID, ItemAttribute.TYPE.ITEM_ID);
-
+        createAttribute(UserItem.ATTRIBUTE_ENABLED, ItemAttribute.TYPE.BOOLEAN);
     }
 
     /*
@@ -101,5 +94,4 @@ public class UserDefinition extends ItemDefinition<UserItem> {
     public APICaller<UserItem> getAPICaller() {
         return new APICaller<UserItem>(this);
     }
-
 }

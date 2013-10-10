@@ -40,11 +40,25 @@
 			&.doublesection{
 				clear: both;
 				width: @moreDetails-double-section-width;
-			}
+				.section{
+					&:nth-child(even){
+						clear: none;
+					}
+					&:nth-child(odd){
+						clear: left;
+					}
+					h1{
+						.revertfontSize(@moreDetails-title-fontSize);
+					}
+					.table, .pager {
+						.fontSize(@skinFontSize - 3px);
+					}
+				}
+			} 
 			&.tasks, &.cases {
 				padding-bottom: 0;
 			}
-			+ .section{
+		    + .section{
 				padding: @moreDetails-sectionLeft-padding;
 			}
 			&:nth-child(even){

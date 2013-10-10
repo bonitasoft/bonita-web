@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2012 BonitaSoft S.A.
+ * 
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,26 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.process.view.section.entitymapping.action;
+package org.bonitasoft.web.rest.server.datastore.filter;
 
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.SelectUserForActorPage;
-import org.bonitasoft.web.toolkit.client.ViewController;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.rest.server.datastore.converter.BooleanValueConverter;
 
-/**
- * @author Colin PUY
- * 
- */
-public final class ShowAddUserToActorPageAction extends Action {
+public class BooleanValue extends Value<Boolean> {
 
-    private final String actorId;
-
-    public ShowAddUserToActorPageAction(String actorId) {
-        this.actorId = actorId;
+    public BooleanValue(String value) {
+        super(value, new BooleanValueConverter());
     }
 
-    @Override
-    public void execute() {
-        ViewController.showPopup(new SelectUserForActorPage(actorId));
-    }
 }

@@ -42,6 +42,10 @@ public abstract class CommonAPI<T extends IItem> extends API<T> {
         return this.sessionSingleton;
     }
 
+    /**
+     * @deprecated user SearchOptionCreator
+     */
+    @Deprecated
     protected final SearchOptionsBuilder MakeSearchOptions(final int pageIndex, final int itemPerPage, final String search, final String order,
             final Map<String, String> filtersMap) {
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(pageIndex, itemPerPage, order, search);

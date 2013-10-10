@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
+import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_ENABLED;
 import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_FIRSTNAME;
 import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_LASTNAME;
 import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_MANAGER_ID;
@@ -24,6 +25,7 @@ import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_GROUP_ID;
 import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_ROLE_ID;
 
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 
@@ -44,8 +46,8 @@ public class UserSearchAttributeConverter implements AttributeConverter {
             return UserSearchDescriptor.LAST_NAME;
         if (ATTRIBUTE_USERNAME.equals(attribute))
             return UserSearchDescriptor.USER_NAME;
-        // FIXME no attribute enabled
-        // if (UserItem.ATTRIBUTE_ENABLED.equals(attribute)) return ENABLED;
+        if (ATTRIBUTE_ENABLED.equals(attribute)) 
+            return UserSearchDescriptor.ENABLED;
         if (ATTRIBUTE_MANAGER_ID.equals(attribute))
             return UserSearchDescriptor.MANAGER_USER_ID;
         if (FILTER_GROUP_ID.equals(attribute))
