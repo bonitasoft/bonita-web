@@ -34,8 +34,6 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 import java.util.List;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 /**
  * @author Paul AMAR
  * 
@@ -52,7 +50,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.getGroup(groupId);
         } catch (GroupNotFoundException e) {
-            throw new APIException(_("Unable to find group %groupId%", new Arg("groupId", groupId)));
+            throw new APIException(new _("Unable to find group %groupId%", new Arg("groupId", groupId)));
         }
     }
     
