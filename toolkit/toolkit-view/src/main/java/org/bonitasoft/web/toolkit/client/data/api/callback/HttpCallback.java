@@ -16,9 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.data.api.callback;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import com.google.gwt.http.client.Header;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONException;
+import com.google.gwt.user.client.Window;
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -28,12 +31,8 @@ import org.bonitasoft.web.toolkit.client.common.exception.http.HttpException;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonUnserializerClient;
 
-import com.google.gwt.http.client.Header;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.json.client.JSONException;
-import com.google.gwt.user.client.Window;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel

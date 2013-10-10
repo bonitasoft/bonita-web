@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
+
 /**
  * @author Séverin Moussel
  * 
@@ -53,10 +55,9 @@ public class APIItemException extends APIException {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-
-        addJsonAdditionalAttribute("itemtype", getItemType(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("itemtype", getItemType());
     }
 
     @Override

@@ -16,8 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 /**
  * @author Séverin Moussel
@@ -27,9 +31,13 @@ public class APIException extends ServerException implements JsonSerializable {
 
     private static final long serialVersionUID = 1820639344042666872L;
 
+    private LOCALE locale;
+
     private String api = "...";
 
     private String resource = "...";
+
+    private _ localizedMessage;
 
     protected APIException() {
         super();
@@ -45,7 +53,15 @@ public class APIException extends ServerException implements JsonSerializable {
 
     public APIException(final Throwable cause) {
         super(cause);
+    }
 
+    public APIException(final _ localizedMessage, final Throwable cause) {
+        super(cause);
+        this.localizedMessage = localizedMessage;
+    }
+
+    public APIException(final _ localizedMessage) {
+        this.localizedMessage = localizedMessage;
     }
 
     /**
@@ -81,16 +97,27 @@ public class APIException extends ServerException implements JsonSerializable {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-
-        addJsonAdditionalAttribute("api", getApi(), json);
-        addJsonAdditionalAttribute("resource", getResource(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("api", getApi())
+                .appendAttribute("resource", getResource());
     }
 
     @Override
     protected String defaultMessage() {
         return "The API \"" + getApi() + "#" + getResource() + "\" has encountered an unknown error";
+    }
+
+    public void setLocale(LOCALE locale) {
+        this.locale = locale;
+    }
+
+    @Override
+    public String getMessage() {
+        if(locale != null && localizedMessage != null) {
+            return localizedMessage.localize(locale);
+        }
+        return super.getMessage();
     }
 
 }

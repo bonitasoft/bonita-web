@@ -16,13 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.common.i18n;
 
+import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Séverin Moussel
@@ -978,22 +977,6 @@ public abstract class AbstractI18n {
 
     public abstract void loadLocale(LOCALE locale);
 
-    public static boolean isLoaded(final LOCALE locale) {
-        return I18N_instance.isLocaleLoaded(locale);
-    }
-
-    public final boolean isLocaleLoaded(final LOCALE locale) {
-        return this.locales.containsKey(locale);
-    }
-
-    public static int countLoaded() {
-        return I18N_instance.countLoadedLocales();
-    }
-
-    public final int countLoadedLocales() {
-        return this.locales.size();
-    }
-
     public static LOCALE getDefaultLocale() {
         return I18N_instance._getDefaultLocale();
     }
@@ -1021,42 +1004,11 @@ public abstract class AbstractI18n {
         return null;
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // GETTEXT
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected boolean _isSet(final String string) {
-        return isSet(string, this.defaultLocale);
-    }
-
-    protected boolean _isSet(final String string, final LOCALE locale) {
-        final Map<String, String> localeMap = getLocale(locale);
-
-        if (localeMap == null) {
-            return false;
-        }
-
-        final String translation = localeMap.get(string);
-        if (translation == null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public static boolean isSet(final String string) {
-        return I18N_instance._isSet(string);
-    }
-
-    public static boolean isSet(final String string, final LOCALE locale) {
-        return I18N_instance._isSet(string, locale);
-    }
-
     protected String getText(final String string) {
-        return this.getText(string, this.defaultLocale);
+        return this.getText(this.defaultLocale, string);
     }
 
-    protected String getText(final String string, final LOCALE locale) {
+    protected String getText(final LOCALE locale, final String string) {
         final Map<String, String> localeMap = getLocale(locale);
 
         if (localeMap == null) {
@@ -1072,43 +1024,27 @@ public abstract class AbstractI18n {
     }
 
     protected String getText(final String string, final Arg... args) {
-        return this.getText(string, this.defaultLocale, args);
-    }
-
-    protected String getText(final String string, final LOCALE locale, final Arg... args) {
         return new TextTemplate(_(string)).toString(args);
     }
 
-    protected String getText(final String string, final IItem item) {
-        return this.getText(string, this.defaultLocale, item);
-    }
-
-    protected String getText(final String string, final LOCALE locale, final IItem item) {
-        return new TextTemplate(string).toString(item.getAttributes());
+    protected String getText(final LOCALE locale, final String string, final Arg... args) {
+        return new TextTemplate(_(string, locale)).toString(args);
     }
 
     public static String _(final String string) {
         return string.isEmpty() ? "" : I18N_instance.getText(string);
     }
 
-    public static String _(final String string, final LOCALE locale) {
-        return string.isEmpty() ? "" : I18N_instance.getText(string, locale);
-    }
-
     public static String _(final String string, final Arg... args) {
         return string.isEmpty() ? "" : I18N_instance.getText(string, args);
     }
 
+    public static String _(final String string, final LOCALE locale) {
+        return string.isEmpty() ? "" : I18N_instance.getText(locale, string);
+    }
+
     public static String _(final String string, final LOCALE locale, final Arg... args) {
-        return string.isEmpty() ? "" : I18N_instance.getText(string, locale, args);
-    }
-
-    public static String _(final String string, final IItem item) {
-        return string.isEmpty() ? "" : I18N_instance.getText(string, item);
-    }
-
-    public static String _(final String string, final LOCALE locale, final IItem item) {
-        return string.isEmpty() ? "" : I18N_instance.getText(string, locale, item);
+        return string.isEmpty() ? "" : I18N_instance.getText(locale, string, args);
     }
 
 }

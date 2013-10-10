@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
+
 /**
  * @author Séverin Moussel
  * 
@@ -44,10 +46,9 @@ public class APISearchIndexOutOfRange extends APIException {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-
-        addJsonAdditionalAttribute("page", getPageNumber(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("page", getPageNumber());
     }
 
 }

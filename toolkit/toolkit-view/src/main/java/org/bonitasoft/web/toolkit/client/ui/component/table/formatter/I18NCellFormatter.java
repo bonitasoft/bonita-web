@@ -17,14 +17,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
  */
 public class I18NCellFormatter extends ItemTableCellFormatter {
 
-    /* (non-Javadoc)
-     * @see org.bonitasoft.web.toolkit.client.ui.component.core.ComponentFormatter#execute()
-     */
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
         this.table.addCell(_(getAttribute().read(getItem())));
-
     }
 
 }

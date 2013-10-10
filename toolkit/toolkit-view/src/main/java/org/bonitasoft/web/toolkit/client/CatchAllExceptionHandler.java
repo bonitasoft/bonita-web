@@ -16,15 +16,14 @@
  */
 package org.bonitasoft.web.toolkit.client;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
+import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
+import com.google.gwt.event.shared.UmbrellaException;
 import org.bonitasoft.web.toolkit.client.common.exception.KnownException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.ui.page.UnexpectedErrorPage;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
-import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
-import com.google.gwt.event.shared.UmbrellaException;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Séverin Moussel

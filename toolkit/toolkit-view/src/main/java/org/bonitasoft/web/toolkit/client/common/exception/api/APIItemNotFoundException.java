@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -41,10 +42,9 @@ public class APIItemNotFoundException extends APIItemException {
     }
 
     @Override
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
-        super.toJsonAdditionnalAttributes(json);
-
-        addJsonAdditionalAttribute("id", getId(), json);
+    protected JsonExceptionSerializer buildJson() {
+        return super.buildJson()
+                .appendAttribute("id", getId());
     }
 
     @Override

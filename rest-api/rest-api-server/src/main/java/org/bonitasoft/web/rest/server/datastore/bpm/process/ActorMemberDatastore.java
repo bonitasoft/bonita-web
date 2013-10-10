@@ -16,23 +16,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.console.common.server.utils.ListUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorMember;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.CreationException;
-import org.bonitasoft.engine.exception.NotFoundException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.exception.*;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
@@ -46,9 +35,14 @@ import org.bonitasoft.web.rest.server.framework.exception.APIAttributesException
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -227,9 +221,9 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         try {
             return getProcessAPI().addGroupToActor(item.getActorId().toLong(), item.getGroupId().toLong());
         } catch (final AlreadyExistsException e) {
-            throw new APIForbiddenException(_("This group has already been mapped to actor"), e);
+            throw new APIForbiddenException(new _("This group has already been mapped to actor"), e);
         } catch (CreationException e) {
-            throw new APIException(_("Error when adding group to actor member"), e);
+            throw new APIException(new _("Error when adding group to actor member"), e);
         }
     }
 
@@ -238,7 +232,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         try {
             return getProcessAPI().addRoleToActor(item.getActorId().toLong(), item.getRoleId().toLong());
         } catch (final CreationException e) {
-            throw new APIForbiddenException(_("This role has already been mapped to actor"), e);
+            throw new APIForbiddenException(new _("This role has already been mapped to actor"), e);
         }
     }
 
@@ -248,7 +242,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
             return getProcessAPI()
                     .addRoleAndGroupToActor(item.getActorId().toLong(), item.getRoleId().toLong(), item.getGroupId().toLong());
         } catch (final CreationException e) {
-            throw new APIForbiddenException(_("This membership has already been mapped to actor"), e);
+            throw new APIForbiddenException(new _("This membership has already been mapped to actor"), e);
         }
     }
 
@@ -257,7 +251,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         try {
             return getProcessAPI().addUserToActor(item.getActorId().toLong(), item.getUserId().toLong());
         } catch (final CreationException e) {
-            throw new APIForbiddenException(_("This user has already been mapped to actor"), e);
+            throw new APIForbiddenException(new _("This user has already been mapped to actor"), e);
         }
     }
 

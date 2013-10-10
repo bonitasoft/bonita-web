@@ -16,17 +16,18 @@
  */
 package org.bonitasoft.console.server.service;
 
+import org.apache.commons.io.IOUtils;
+import org.bonitasoft.engine.api.IdentityAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.server.ServiceException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.server.ServiceException;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Séverin Moussel
@@ -52,7 +53,8 @@ public class OrganizationImportService extends ConsoleService {
             final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(apiSession);
             identityAPI.importOrganization(new String(organizationContent));
         } catch (final Exception e) {
-            throw new ServiceException(TOKEN, I18n._("Can't import organization. Please check that your file is well-formed"), e);
+            throw new ServiceException(TOKEN, _("Can't import organization. Please check that your file is well-formed",
+                    getLocale()), e);
         } finally {
             if (xmlStream != null) {
                 try {
