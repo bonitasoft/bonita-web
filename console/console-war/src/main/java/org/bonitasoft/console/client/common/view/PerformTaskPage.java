@@ -141,7 +141,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
         String tenantId = ClientApplicationURL.getTenantId();
-        if (!tenantId.isEmpty()) {
+        if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenantId=").append(tenantId);
         }
         return frameURL.toString();
