@@ -17,7 +17,6 @@
 
 package org.bonitasoft.web.toolkit.client.ui.html;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.safehtml.shared.SafeHtml;
 
 /**
@@ -36,11 +35,18 @@ public class HtmlUtils {
      * }</pre>
      * Result: someValue has been replaced
      *
-     * @param el the element which contains the html with variables
+     * @param accessor the object which gives access to the html
      * @param name the name of the variable. This is the token contained between %%
      * @param value the value which will replace the variable
      */
-    public static void replaceVariable(Element el, String name, SafeHtml value) {
-        el.setInnerHTML(el.getInnerHTML().replaceAll("%" + name + "%", value.asString()));
+    public static void replaceVariable(HtmlAccessor accessor, String name, SafeHtml value) {
+        accessor.setInnerHTML(replaceAll(accessor.getInnerHTML(), name, value));
+    }
+
+    private static String replaceAll(String html, String name, SafeHtml value) {
+        if(html != null) {
+            return html.replaceAll("%" + name + "%", value.asString());
+        }
+        return html;
     }
 }
