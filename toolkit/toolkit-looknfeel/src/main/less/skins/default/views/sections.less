@@ -4,6 +4,16 @@
 	border-color: darken(@secondary-background, 5%);
 }
 
+.section {
+	.description {
+			width: 90%;
+			padding: 1px 0 4*@h @section-padding-left;
+			/** hack for merging border on tr hover */
+			margin-bottom: -1px;
+			word-wrap: break-word;
+	}
+}
+
 // ****************************************************//
 //					TASKS SECTIONS
 // ****************************************************//
@@ -15,7 +25,7 @@
 					font-weight: bold;
 					padding-right: @w;
 				}
-				overflow: hidden;
+				overflow: hidden; 
 			}
 		}
 		.td_displaydescription {

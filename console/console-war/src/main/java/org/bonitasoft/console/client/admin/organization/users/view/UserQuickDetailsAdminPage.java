@@ -23,12 +23,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.organization.users.action.ChangeUsersStateAction;
+import org.bonitasoft.console.client.admin.organization.users.action.ChangeUsersStateAction.STATE;
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
@@ -52,8 +56,23 @@ public class UserQuickDetailsAdminPage extends UserQuickDetailsPage {
     }
 
     @Override
-    protected void buildToolbar(UserItem item) {
-        addToolbarLink(new MoreButton(_("Show more details about this user"), createMoreAction(item)));
+    protected void buildToolbar(UserItem user) {
+        if (user.isEnabled()) {
+            addToolbarLink(disableButton());
+        } else {
+            addToolbarLink(enableButton());
+        }
+        addToolbarLink(new MoreButton(_("Show more details about this user"), createMoreAction(user)));
+    }
+    
+    private ButtonAction enableButton() {
+        return new ButtonAction(_("Activate"), _("Activate selected users"), new ChangeUsersStateAction(getItemId(), STATE.ENABLED));
+    }
+    
+    private ButtonAction disableButton() {
+        return new ButtonAction(_("Deactivate"), _("Deactivate selected users"), 
+                new CheckValidSessionBeforeAction(new ActionShowPopup(new DeactivateUserWarningPopUp(getItemId()))));
+        
     }
 
     protected Action createMoreAction(final UserItem item) {

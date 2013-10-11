@@ -23,23 +23,29 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
-import org.bonitasoft.console.client.common.view.SelectUserAndDoPageOnItem;
+import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorMemberItem;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
+import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.AutoCompleteEntry;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 /**
- * @author Julien Mege
  * 
+ * @author Colin PUY
  */
-public class SelectUserForActorPage extends SelectUserAndDoPageOnItem<ActorItem> {
+public class SelectUserForActorPage extends PageOnItem<ActorItem> {
 
     public static final String TOKEN = "selectUserforactor";
     
@@ -50,61 +56,70 @@ public class SelectUserForActorPage extends SelectUserAndDoPageOnItem<ActorItem>
         PRIVILEGES.add("reportlistingadminext");
     }
 
-    public SelectUserForActorPage(final APIID itemId) {
-        super(itemId, ActorDefinition.get());
+    public SelectUserForActorPage(String actorId) {
+        super(actorId, ActorDefinition.get());
     }
 
     public SelectUserForActorPage() {
+        // Used by page Factory  -- To be deleted
         super(ActorDefinition.get());
     }
 
-    public SelectUserForActorPage(final String itemId) {
-        super(itemId, ActorDefinition.get());
+    @Override
+    protected void defineTitle(ActorItem actor) {
+        setTitle(_("Add a user to %actor_name%", new Arg("actor_name", actor.getDisplayName())));
+    }
+
+    @Override
+    protected void buildView(ActorItem item) {
+        addBody(addUserForm(item));
+    }
+
+    private Form addUserForm(ActorItem actor) {
+        Form form = new Form();
+        form.addEntry(selectUserAutoComplete());
+        form.addHiddenEntry(ActorMemberItem.ATTRIBUTE_ACTOR_ID, actor.getId().toString());
+        form.addButton(_("Add"), _("Add this user to %actor_name%", 
+                new Arg("actor_name", actor.getAttributeValue(ActorItem.ATTRIBUTE_DISPLAY_NAME))), 
+                new AddUserToActorFormAction());
+        form.addCancelButton();
+        return form;
+    }
+
+    private AutoCompleteEntry selectUserAutoComplete() {
+        AutoCompleteEntry autoComplete = new AutoCompleteEntry(new JsId(ActorMemberItem.ATTRIBUTE_USER_ID), 
+                _("Select a user"), _("Select a user to be added to actor"), 
+                UserDefinition.get(), new UserAttributeReader(), UserItem.ATTRIBUTE_ID, null);
+        autoComplete.addFilter(UserItem.ATTRIBUTE_ENABLED, "true");
+        autoComplete.addValidator(new MandatoryValidator());
+        return autoComplete;
     }
 
     @Override
     public String defineToken() {
         return TOKEN;
     }
+    
+    /** */
+    private class AddUserToActorFormAction extends FormAction {
 
-    @Override
-    protected FormAction defineSubmitButtonAction() {
-        return new FormAction() {
+        @Override
+        public void execute() {
+            final ActorMemberItem item = new ActorMemberItem();
+            item.setAttribute(ActorMemberItem.ATTRIBUTE_USER_ID, getParameter(ActorMemberItem.ATTRIBUTE_USER_ID));
+            item.setAttribute(ActorMemberItem.ATTRIBUTE_ACTOR_ID, getParameter(ActorMemberItem.ATTRIBUTE_ACTOR_ID));
 
-            @Override
-            public void execute() {
-
-                final ActorMemberItem item = new ActorMemberItem();
-                item.setAttribute(ActorMemberItem.ATTRIBUTE_USER_ID, this.getParameter(USER_ID));
-                item.setAttribute(ActorMemberItem.ATTRIBUTE_ACTOR_ID, this.getParameter("id"));
-
-                ActorMemberDefinition.get().getAPICaller().add(item, new APICallback() {
-
-                    @Override
-                    public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                        ViewController.showPopup(ListProcessActorUserPage.TOKEN, MapUtil.asMap(
-                                new Arg("id", SelectUserForActorPage.this.getParameter("id"))));
-                    }
-
-                });
-            }
-        };
+            ActorMemberDefinition.get().getAPICaller().add(item, new AddUserToActorAPICallback());
+        }
+        
     }
-
-    @Override
-    protected String defineSubmitButtonLabel(final ActorItem item) {
-        return _("Add");
-    }
-
-    @Override
-    protected String defineSubmitButtonTooltip(final ActorItem item) {
-        return _("Add this user to %actor_name%", new Arg("actor_name", item.getAttributeValue(ActorItem.ATTRIBUTE_DISPLAY_NAME)));
-    }
-
-    @Override
-    protected void defineTitle(final ActorItem item) {
-        setTitle(_("Add a user to %actor_name%", new Arg("actor_name", item.getAttributeValue(ActorItem.ATTRIBUTE_DISPLAY_NAME))));
-
+    
+    /** */
+    private final class AddUserToActorAPICallback extends APICallback {
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            ViewController.showPopup(ListProcessActorUserPage.TOKEN, MapUtil.asMap(new Arg("id", getItemId().toString())));
+        }
     }
 
 }

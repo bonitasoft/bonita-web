@@ -5,16 +5,23 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
+
+import static java.util.Arrays.asList;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.TaskSkipAction;
@@ -22,7 +29,12 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
-import org.bonitasoft.web.rest.model.bpm.flownode.*;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IUserTaskItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -36,26 +48,20 @@ import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
-import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
-
-import java.util.*;
-
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNodeItem> {
 
-    public final static String TOKEN = "taskmoredetailsadmin";    
-    
+    public final static String TOKEN = "taskmoredetailsadmin";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
@@ -65,9 +71,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     /**
      * Default Constructor.
-     * 
      * Set item definition as well as archived item definition.
-     * 
      */
     public TaskMoreDetailsAdminPage() {
         super(FlowNodeDefinition.get(), ArchivedFlowNodeDefinition.get());
@@ -76,7 +80,6 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     /**
      * Default Constructor.
-     * 
      * Constructor which set archived parameter of the page.
      * 
      * @param archived
@@ -105,8 +108,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                     }
                 }
             }
-            if (IFlowNodeItem.VALUE_STATE_FAILED.equals(flowNode.getState())
-                    && flowNode.isActivity()) {
+            if (IFlowNodeItem.VALUE_STATE_FAILED.equals(flowNode.getState()) && flowNode.isActivity()) {
                 addToolbarLink(skipButton(flowNode.getId()));
             }
         }
@@ -114,28 +116,21 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     }
 
     private ActionShowPopup newAssignTaskToUserAction(final APIID taskId) {
-        SelectUserAndAssignTaskPage page = new SelectUserAndAssignTaskPage();
+        final SelectUserAndAssignTaskPage page = new SelectUserAndAssignTaskPage();
         page.addParameter(PageOnItem.PARAMETER_ITEM_ID, taskId.toString());
         return new ActionShowPopup(page);
     }
 
     private Link skipButton(final APIID flowNodeId) {
-        return new ButtonAction("btn-skip",
-                _("Skip"),
-                _("Skip this task"),
-                createTaskSkipAction(flowNodeId));
+        return new ButtonAction("btn-skip", _("Skip"), _("Skip this task"), createTaskSkipAction(flowNodeId));
     }
 
     private Link unasignButton(final APIID taskId) {
-        return new ButtonAction("btn-unassign", _("Unassign"),
-                _("Unassign this task. Other allowed users will see it"),
-                new TaskRelaseAction(asList(taskId)));
+        return new ButtonAction("btn-unassign", _("Unassign"), _("Unassign this task. Other allowed users will see it"), new TaskRelaseAction(asList(taskId)));
     }
 
     private Link assignButton(final APIID taskId) {
-        return new ButtonAction("btn-assign", _("Assign"),
-                _("Assign task to someone"),
-                newAssignTaskToUserAction(taskId));
+        return new ButtonAction("btn-assign", _("Assign"), _("Assign task to someone"), newAssignTaskToUserAction(taskId));
     }
 
     private Action createTaskSkipAction(final APIID flowNodeId) {
@@ -143,7 +138,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
+                final TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
                 taskListingAdminPage.selectResourceFilter(APIID.makeAPIID(TaskListingAdminPage.FILTER_PRIMARY_FAILED));
                 ViewController.showView(taskListingAdminPage);
             }
@@ -156,8 +151,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     }
 
     private void showFailedTaskListingPage() {
-        ViewController.showView(TaskListingAdminPage.TOKEN,
-                Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
+        ViewController.showView(TaskListingAdminPage.TOKEN, Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
     }
 
     @Override
@@ -201,26 +195,26 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     @Override
     protected void buildBody(final IFlowNodeItem item) {
+        addBody(createConnectorSection(item));
+        addBody(createCommentsSection(item));
+    }
 
+    protected Section createCommentsSection(final IFlowNodeItem item) {
+        return new CommentSectionSnippet(item.getCaseId()).setNbLinesByPage(10).build();
+    }
+
+    protected Section createConnectorSection(final IFlowNodeItem item) {
         if (item.isArchived()) {
-            addBody(new ArchivedConnectorInstanceSectionSnippet(item)
-                    .setNbLinesByPage(10)
-                    .build());
+            return new ArchivedConnectorInstanceSectionSnippet(item).setNbLinesByPage(10).build();
         } else {
-            addBody(new Section(_("Connectors")).addBody(
-                    createConnectorInstanceTable(item)
-                            .setNbLinesByPage(10)));
+            return new Section(_("Connectors")).addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
         }
-
-        addBody(new CommentSectionSnippet(item.getCaseId())
-                .setNbLinesByPage(10)
-                .build());
     }
 
     /**
      * Overridden in SP
      */
-    protected ItemTable createConnectorInstanceTable(IFlowNodeItem item) {
+    protected ItemTable createConnectorInstanceTable(final IFlowNodeItem item) {
         return new ConnectorInstanceTable(item);
     }
 

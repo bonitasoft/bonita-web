@@ -42,6 +42,7 @@ public class UsersListSection extends Section {
 
     private ItemTable buildUsersTable() {
        return new ItemTable(Definitions.get(UserDefinition.TOKEN))
+            .addHiddenFilter(UserItem.ATTRIBUTE_ENABLED, "true")
             .addColumn(UserItem.ATTRIBUTE_ICON, _("Icon"))
             .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("First name"), true)
             .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Last name"), true)
