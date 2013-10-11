@@ -950,7 +950,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final ApplicationConfig applicationConfig) throws FormNotFoundException, SessionTimeoutException,
             org.bonitasoft.forms.server.exception.FileTooBigException, IOException {
         try {
-            context.put(FormServiceProviderUtil.IS_CONTEXT, true);
+            context.put(FormServiceProviderUtil.IS_CONFIG_CONTEXT, true);
 
             String resolvedExpression = (String) formServiceProvider.resolveExpression(applicationConfig.getApplicationLabelExpression(), context);
             applicationConfig.setApplicationLabel(resolvedExpression);

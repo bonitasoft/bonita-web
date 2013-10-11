@@ -226,7 +226,7 @@ public class Table extends AbstractTable implements Refreshable {
 
     private class CheckLineAction extends Action {
 
-        private String checkboxId;
+        private final String checkboxId;
 
         private Action defaultAction;
 
@@ -237,9 +237,9 @@ public class Table extends AbstractTable implements Refreshable {
         @Override
         public void execute() {
             clearCheckboxes();
-            setCheckboxesValue(getCheckbox(checkboxId), true, false);
-            if (defaultAction != null) {
-                defaultAction.execute();
+            setCheckboxesValue(getCheckbox(this.checkboxId), true, false);
+            if (this.defaultAction != null) {
+                this.defaultAction.execute();
             }
         }
 
@@ -258,11 +258,11 @@ public class Table extends AbstractTable implements Refreshable {
         if (className != null) {
             line.addClass(className);
         }
-        if (itemIdOnRow) {
+        if (this.itemIdOnRow) {
             line.addClass("APIID_" + checkboxId);
         }
 
-        if (selectLineOnClick) {
+        if (this.selectLineOnClick) {
             CheckLineAction action = new CheckLineAction(checkboxId);
             action.setDefaultAction(defaultAction);
             line.setDefaultAction(action);
@@ -290,7 +290,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public Table addLine(String checkboxId, final String className, final Action defaultAction) {
-        return addLine(checkboxId, className, defaultAction, true);
+        return this.addLine(checkboxId, className, defaultAction, true);
     }
 
     public Table addCell(final AbstractComponent... components) {
@@ -468,7 +468,7 @@ public class Table extends AbstractTable implements Refreshable {
         }
 
         disableActionLinks();
-        
+
         if (this.lines.size() == 0) {
             addCheckAllCheckbox();
             addEmptyCssClass();
@@ -491,11 +491,11 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void removeEmptyCssClass() {
-        this.getElement().removeClassName("empty");
+        getElement().removeClassName("empty");
     }
 
     private void addEmptyCssClass() {
-        this.getElement().addClassName("empty");
+        getElement().addClassName("empty");
     }
 
     private Element createEmptyLinesElement() {
@@ -512,14 +512,14 @@ public class Table extends AbstractTable implements Refreshable {
 
             @Override
             public void f(final Element e) {
-                processEvent($(e));
+                Table.this.processEvent($(e));
             }
 
         }).click(new Function() {
 
             @Override
             public boolean f(final Event e) {
-                processEvent($(e.getEventTarget()));
+                Table.this.processEvent($(e.getEventTarget()));
                 return false;
             }
 
@@ -533,7 +533,7 @@ public class Table extends AbstractTable implements Refreshable {
 
                     @Override
                     public void f(final Element e) {
-                        setCheckboxesValue(getAllCheckboxes(), $(e).is(":checked"), false);
+                        Table.this.setCheckboxesValue(Table.this.getAllCheckboxes(), $(e).is(":checked"), false);
                     }
 
                 }).click(new Function() {
@@ -569,10 +569,10 @@ public class Table extends AbstractTable implements Refreshable {
 
         // Set datatable class to to inform about selected or not
         if ($(".td_checkboxes :checked", Table.this.getElement()).length() > 0) {
-            $(this.getElement()).addClass("linechecked");
+            $(getElement()).addClass("linechecked");
             enableActionsLinks();
         } else {
-            $(this.getElement()).removeClass("linechecked");
+            $(getElement()).removeClass("linechecked");
             disableActionLinks();
         }
     }
@@ -586,19 +586,21 @@ public class Table extends AbstractTable implements Refreshable {
     private void onCheckItem(final GQuery labels, String itemId) {
         labels.addClass("checked");
         fireEvent(new ItemCheckedEvent(Table.this.selectedIds, itemId));
-        Table.this.selectedIds.add(itemId);
+        if (!Table.this.selectedIds.contains(itemId)) {
+            Table.this.selectedIds.add(itemId);
+        }
     }
 
     public HandlerRegistration addItemCheckedHandler(ItemCheckedHandler handler) {
-        return addHandler(handler, ItemCheckedEvent.TYPE);
+        return this.addHandler(handler, ItemCheckedEvent.TYPE);
     }
 
     public HandlerRegistration addItemUncheckedHandler(ItemUncheckedHandler handler) {
-        return addHandler(handler, ItemUncheckedEvent.TYPE);
+        return this.addHandler(handler, ItemUncheckedEvent.TYPE);
     }
 
     private void disableActionLinks() {
-        for (Link link : groupedActions.getComponents()) {
+        for (Link link : this.groupedActions.getComponents()) {
             if (!link.hasClass(ALWAYS_ENABLE_CLASS)) {
                 link.setEnabled(false);
             }
@@ -606,7 +608,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void enableActionsLinks() {
-        for (Link link : groupedActions.getComponents()) {
+        for (Link link : this.groupedActions.getComponents()) {
             if (!link.hasClass(ALWAYS_ENABLE_CLASS)) {
                 link.setEnabled(true);
             }
@@ -695,8 +697,9 @@ public class Table extends AbstractTable implements Refreshable {
      * @deprecated
      *             Create your own link and use {@link #addGroupedAction(Link, boolean)} instead
      */
+    @Deprecated
     public Table addGroupedAction(final JsId id, final String label, final String tooltip, final Action action, final boolean force) {
-        addGroupedAction(new ButtonAction("btn-" + id.toString(), label, tooltip, action), force);
+        this.addGroupedAction(new ButtonAction("btn-" + id.toString(), label, tooltip, action), force);
         return this;
     }
 
@@ -960,7 +963,7 @@ public class Table extends AbstractTable implements Refreshable {
         if (this.refreshFiller != null) {
             this.refreshFiller.run();
         }
-        runFillers();
+        this.runFillers();
     }
 
     public void setView(final VIEW_TYPE view) {

@@ -284,7 +284,7 @@ public class BPMURLSupportFilter implements Filter {
             if (taskIDStr != null) {
                 final IFormWorkflowAPI workflowAPI = FormAPIFactory.getFormWorkflowAPI();
                 final long activityInstanceID = Long.parseLong(taskIDStr[0]);
-                final String activityDefinitionUUID = workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceID, false);
+                final String activityDefinitionUUID = workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceID);
 
                 if (isRecap) {
                     formType = OVERVIEW_FORM;

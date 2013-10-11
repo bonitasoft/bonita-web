@@ -181,8 +181,7 @@ public class DocumentDownloadServlet extends HttpServlet {
                 if (processIDStr != null) {
                     processDefinitionID = Long.parseLong(processIDStr);
                 } else if (taskIdStr != null) {
-                    processDefinitionID = workflowAPI.getProcessDefinitionIDFromActivityInstanceID(apiSession, Long.parseLong(taskIdStr),
-                            Boolean.valueOf(isArchived));
+                    processDefinitionID = workflowAPI.getProcessDefinitionIDFromActivityInstanceID(apiSession, Long.parseLong(taskIdStr));
                 } else if (instanceIDStr != null) {
                     processDefinitionID = workflowAPI.getProcessDefinitionIDFromProcessInstanceID(apiSession, Long.parseLong(instanceIDStr));
                 } else {
