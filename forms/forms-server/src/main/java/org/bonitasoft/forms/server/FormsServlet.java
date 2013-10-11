@@ -13,13 +13,54 @@
  **/
 package org.bonitasoft.forms.server;
 
-import com.google.gwt.user.client.rpc.SerializationException;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.client.model.*;
-import org.bonitasoft.forms.client.model.exception.*;
+import org.bonitasoft.forms.client.model.ApplicationConfig;
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.FormPage;
+import org.bonitasoft.forms.client.model.FormURLComponents;
+import org.bonitasoft.forms.client.model.FormValidator;
+import org.bonitasoft.forms.client.model.FormWidget;
+import org.bonitasoft.forms.client.model.HtmlTemplate;
+import org.bonitasoft.forms.client.model.ReducedApplicationConfig;
+import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
+import org.bonitasoft.forms.client.model.ReducedFormPage;
+import org.bonitasoft.forms.client.model.ReducedFormValidator;
+import org.bonitasoft.forms.client.model.ReducedFormWidget;
+import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
+import org.bonitasoft.forms.client.model.TransientData;
+import org.bonitasoft.forms.client.model.exception.AbortedFormException;
+import org.bonitasoft.forms.client.model.exception.CanceledFormException;
+import org.bonitasoft.forms.client.model.exception.FileTooBigException;
+import org.bonitasoft.forms.client.model.exception.ForbiddenApplicationAccessException;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
+import org.bonitasoft.forms.client.model.exception.FormAlreadySubmittedException;
+import org.bonitasoft.forms.client.model.exception.FormInErrorException;
+import org.bonitasoft.forms.client.model.exception.IllegalActivityTypeException;
+import org.bonitasoft.forms.client.model.exception.MigrationProductVersionNotIdenticalException;
+import org.bonitasoft.forms.client.model.exception.RPCException;
+import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
+import org.bonitasoft.forms.client.model.exception.SkippedFormException;
+import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
 import org.bonitasoft.forms.client.rpc.FormsService;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
@@ -35,15 +76,8 @@ import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * Servlet implementing the Forms service for async calls
@@ -75,7 +109,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     /**
      * The cookie name for the forms locale
      */
-    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
+    public static final String FORM_LOCALE_COOKIE_NAME = "BOS_Locale";
 
     /**
      * the engine API session param key name

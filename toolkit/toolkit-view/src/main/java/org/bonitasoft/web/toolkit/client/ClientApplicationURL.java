@@ -54,7 +54,7 @@ public class ClientApplicationURL {
     /**
      * The cookie name for the forms locale
      */
-    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
+    public static final String FORM_LOCALE_COOKIE_NAME = "BOS_Locale";
 
     public static final String TOKEN_FORM_APP = "perform";
 

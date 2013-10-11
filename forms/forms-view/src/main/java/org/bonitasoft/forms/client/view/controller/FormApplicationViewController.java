@@ -290,7 +290,6 @@ public class FormApplicationViewController {
 
                                 final List<String> paramsToRemove = new ArrayList<String>();
                                 paramsToRemove.add(URLUtils.LOCALE_PARAM);
-                                paramsToRemove.add(URLUtils.FORM_LOCALE);
                                 final List<String> hashParamsToRemove = new ArrayList<String>();
 
                                 if (user.isAutoLogin()) {

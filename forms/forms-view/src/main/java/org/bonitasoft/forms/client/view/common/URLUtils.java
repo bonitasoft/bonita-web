@@ -156,11 +156,6 @@ public class URLUtils {
     public static final String CONSOLE_LOCALE_PARAM = "_l";
 
     /**
-     * form's locale URL param
-     */
-    public static final String FORM_LOCALE = "formLocale";
-
-    /**
      * user's domain URL parameter
      */
     public static final String TENANT_PARAM = "tenant";
@@ -176,14 +171,9 @@ public class URLUtils {
     public static final String DEFAULT_LOCALE = "en";
 
     /**
-     * Locale cookie name
-     */
-    public static final String BOS_LOCALE_COOKIE_NAME = "BOS_Locale";
-
-    /**
      * Locale cookie name for form
      */
-    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
+    public static final String FORM_LOCALE_COOKIE_NAME = "BOS_Locale";
 
     /**
      * The separator for history token parameters
@@ -253,7 +243,7 @@ public class URLUtils {
     public String getLocale() {
         String localeStr = null;
         if (Window.Location.getParameter(LOCALE_PARAM) == null) {
-            localeStr = Cookies.getCookie(BOS_LOCALE_COOKIE_NAME);
+            localeStr = Cookies.getCookie(FORM_LOCALE_COOKIE_NAME);
         } else {
             localeStr = Window.Location.getParameter(LOCALE_PARAM);
         }
@@ -270,7 +260,8 @@ public class URLUtils {
         final Date now = new Date();
         // Expiration in 120 days.
         final Date theExpirationTime = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 120);
-        Cookies.setCookie(BOS_LOCALE_COOKIE_NAME, localeName, theExpirationTime);
+        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, localeName, theExpirationTime);
+
     }
 
     /**
