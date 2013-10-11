@@ -123,13 +123,16 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     private String buildTasksFormURL(final HumanTaskItem item) {
         final StringBuilder frameURL = new StringBuilder()
 
-                .append(GWT.getModuleBaseURL()).append("homepage")
-                .append("?ui=form")
+                .append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=")
+                .append(AbstractI18n.getDefaultLocale().toString());
 
-                .append("&locale=")
-                .append(AbstractI18n.getDefaultLocale().toString())
+        // if tenant is filled in portal url add tenant parameter to IFrame url
+        final String tenantId = ClientApplicationURL.getTenantId();
+        if (tenantId != null && !tenantId.isEmpty()) {
+            frameURL.append("&tenant=").append(tenantId);
+        }
 
-                .append("#form=")
+        frameURL.append("#form=")
                 .append(URL.decodeQueryString(item.getProcess().getName())).append(this.UUID_SEPERATOR)
                 .append(item.getProcess().getVersion()).append(this.UUID_SEPERATOR)
                 .append(URL.decodeQueryString(item.getName()))
@@ -139,11 +142,6 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
                 .append("&task=").append(item.getId())
                 .append("&mode=form");
 
-        // if tenant is filled in portal url add tenant parameter to IFrame url
-        String tenantId = ClientApplicationURL.getTenantId();
-        if (tenantId != null && !tenantId.isEmpty()) {
-            frameURL.append("&tenantId=").append(tenantId);
-        }
         return frameURL.toString();
     }
 

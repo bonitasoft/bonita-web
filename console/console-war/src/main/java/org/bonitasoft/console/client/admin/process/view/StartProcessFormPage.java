@@ -77,10 +77,18 @@ public class StartProcessFormPage extends Page {
         }
         this.setTitle(_("Start an instance of app %app_name%", new Arg("app_name", decodedProcessName)));
         StringBuilder frameURL = new StringBuilder();
+
         frameURL.append(GWT.getModuleBaseURL())
                 .append("homepage?ui=form&locale=")
-                .append(locale)
-                .append("#form=")
+                .append(locale);
+
+        // if tenant is filled in portal url add tenant parameter to IFrame url
+        String tenantId = ClientApplicationURL.getTenantId();
+        if (tenantId != null && !tenantId.isEmpty()) {
+            frameURL.append("&tenant=").append(tenantId);
+        }
+
+        frameURL.append("#form=")
                 .append(processName)
                 .append(this.UUID_SEPERATOR)
                 .append(processVersion)
@@ -88,12 +96,6 @@ public class StartProcessFormPage extends Page {
                 .append(processId)
                 .append("&autoInstantiate=false&mode=form&user=")
                 .append(userId);
-
-        // if tenant is filled in portal url add tenant parameter to IFrame url
-        String tenantId = ClientApplicationURL.getTenantId();
-        if (tenantId != null && !tenantId.isEmpty()) {
-            frameURL.append("&tenantId=").append(tenantId);
-        }
 
         this.addBody(new IFrame(frameURL.toString(), "100%", "700px"));
     }
