@@ -40,16 +40,15 @@ import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityStates;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
-import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ActivationState;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotEnabledException;
@@ -328,9 +327,9 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     @Override
     public void executeActionsAndTerminate(final APISession session, final long activityInstanceID, final Map<String, FormFieldValue> fieldValues,
-            final List<FormAction> actions,
-            final Locale locale, final String submitButtonId, final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException,
-            ActivityInstanceNotFoundException, ProcessInstanceNotFoundException, FileTooBigException, IOException {
+            final List<FormAction> actions, final Locale locale, final String submitButtonId, final Map<String, Serializable> context)
+            throws BPMEngineException, InvalidSessionException, ActivityInstanceNotFoundException, ProcessInstanceNotFoundException, FileTooBigException,
+            IOException {
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
 
         final List<FormAction> actionsToExecute = new ArrayList<FormAction>();
@@ -385,24 +384,18 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     @Override
-    public ActivityEditState getTaskEditState(final APISession session, final long activityInstanceID, final boolean isArchived)
-            throws ActivityInstanceNotFoundException,
-            ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException, ArchivedFlowNodeInstanceNotFoundException {
+    public ActivityEditState getTaskEditState(final APISession session, final long activityInstanceID) throws ActivityInstanceNotFoundException,
+            ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         String activityInstanceState;
 
-        if (!isArchived) {
-            try {
-                final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
-                activityInstanceState = humanTaskInstance.getState();
-            } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
-                activityInstanceState = archivedActivityInstance.getState();
-            }
-        } else {
-            final ArchivedFlowNodeInstance archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(activityInstanceID);
-            activityInstanceState = archivedFlowNodeInstance.getState();
+        try {
+            final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
+            activityInstanceState = humanTaskInstance.getState();
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+            activityInstanceState = archivedActivityInstance.getState();
         }
 
         // re-establish this once the SUSPENDED state will be supported by the engine
@@ -474,8 +467,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     }
 
     public long getProcessInstanceTaskAvailableForUser(final ProcessAPI processAPI, final long processInstanceId, final long userId)
-            throws UserNotFoundException,
-            InvalidSessionException, SearchException {
+            throws UserNotFoundException, InvalidSessionException, SearchException {
         final SearchOptionsBuilder searchOptionBuilder = createProcessInstancePendingTasksSearchOption(1, processInstanceId);
         final SearchResult<HumanTaskInstance> searchPendingTasksForUser = processAPI.searchMyAvailableHumanTasks(userId, searchOptionBuilder.done());
         return extractFirstAcitivityId(searchPendingTasksForUser);
@@ -490,16 +482,12 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     }
 
     private boolean isSearchResultEmpty(final SearchResult<HumanTaskInstance> searchPendingTasksForUser) {
-        return searchPendingTasksForUser == null
-                || searchPendingTasksForUser.getResult() == null
-                || searchPendingTasksForUser.getResult().isEmpty();
+        return searchPendingTasksForUser == null || searchPendingTasksForUser.getResult() == null || searchPendingTasksForUser.getResult().isEmpty();
     }
 
     private SearchOptionsBuilder createProcessInstancePendingTasksSearchOption(final int nbOfResult, final long processInstanceId) {
-        return new SearchOptionsBuilder(SEARCH_FIRST_PAGE_INDEX, nbOfResult)
-                .filter(HumanTaskInstanceSearchDescriptor.STATE_NAME, ActivityStates.READY_STATE)
-                .filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId)
-                .sort(HumanTaskInstanceSearchDescriptor.DUE_DATE, Order.ASC);
+        return new SearchOptionsBuilder(SEARCH_FIRST_PAGE_INDEX, nbOfResult).filter(HumanTaskInstanceSearchDescriptor.STATE_NAME, ActivityStates.READY_STATE)
+                .filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId).sort(HumanTaskInstanceSearchDescriptor.DUE_DATE, Order.ASC);
     }
 
     /**
@@ -507,8 +495,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     @Override
     public long getAnyTodoListTaskForProcessDefinition(final APISession session, final long processDefinitionID) throws ProcessDefinitionNotFoundException,
-            BPMEngineException, UserNotFoundException, ProcessInstanceNotFoundException,
-            InvalidSessionException {
+            BPMEngineException, UserNotFoundException, ProcessInstanceNotFoundException, InvalidSessionException {
 
         long activityInstanceID = -1;
         if (processDefinitionID != -1) {
@@ -552,8 +539,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     @Override
     public Map<String, String> getActivityAttributes(final APISession session, final long activityInstanceID, final Locale locale)
-            throws ActivityInstanceNotFoundException, BPMEngineException, ActivityInstanceNotFoundException,
-            InvalidSessionException {
+            throws ActivityInstanceNotFoundException, BPMEngineException, ActivityInstanceNotFoundException, InvalidSessionException {
 
         final Map<String, String> attributes = new HashMap<String, String>();
 
@@ -716,11 +702,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return dateFormat;
     }
 
-    private boolean isHumanTask(final ArchivedFlowNodeInstance archivedActivityInstance) {
-        return FlowNodeType.USER_TASK.equals(archivedActivityInstance.getType()) || FlowNodeType.MANUAL_TASK.equals(archivedActivityInstance.getType())
-                || FlowNodeType.HUMAN_TASK.equals(archivedActivityInstance.getType());
-    }
-
     /**
      * {@inheritDoc}
      * 
@@ -739,8 +720,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * 
      */
     @Override
-    public void terminateTask(final APISession session, final long activityInstanceID) throws BPMEngineException,
-            InvalidSessionException, FlowNodeExecutionException {
+    public void terminateTask(final APISession session, final long activityInstanceID) throws BPMEngineException, InvalidSessionException,
+            FlowNodeExecutionException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         processAPI.executeFlowNode(activityInstanceID);
@@ -773,8 +754,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long processInstanceID)
-            throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException,
-            ProcessDefinitionNotFoundException {
+            throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
         // FIXME restore this once the admin case will be handled in FormServiceProviderImpl#canUserViewInstanceForm
         // return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
         return true;
@@ -785,43 +765,30 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * 
      */
     @Override
-    public boolean isUserInvolvedInActivityInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long activityInstanceID,
-            final boolean isArchived)
-            throws ActivityInstanceNotFoundException, BPMEngineException, ProcessDefinitionNotFoundException,
-            InvalidSessionException, ArchivedFlowNodeInstanceNotFoundException {
+    public boolean isUserInvolvedInActivityInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long activityInstanceID)
+            throws ActivityInstanceNotFoundException, BPMEngineException, ProcessDefinitionNotFoundException, InvalidSessionException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         long actorID = -1;
         long assigneeID = -1;
-        if (!isArchived) {
-            try {
-                final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
-                actorID = humanTaskInstance.getActorId();
-                assigneeID = humanTaskInstance.getAssigneeId();
-            } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
-                if (archivedActivityInstance instanceof ArchivedHumanTaskInstance) {
-                    actorID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getActorId();
-                    assigneeID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getAssigneeId();
-                } else {
-                    throw new ActivityInstanceNotFoundException(activityInstanceID);
-                }
-            }
-        } else {
-            final ArchivedHumanTaskInstance archivedHumanTaskInstance = (ArchivedHumanTaskInstance) processAPI.getArchivedFlowNodeInstance(activityInstanceID);
-            if (isHumanTask(archivedHumanTaskInstance)) {
-                actorID = archivedHumanTaskInstance.getActorId();
-                assigneeID = archivedHumanTaskInstance.getAssigneeId();
+        try {
+            final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
+            actorID = humanTaskInstance.getActorId();
+            assigneeID = humanTaskInstance.getAssigneeId();
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+            if (archivedActivityInstance instanceof ArchivedHumanTaskInstance) {
+                actorID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getActorId();
+                assigneeID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getAssigneeId();
             } else {
-                return false;
+                throw new ActivityInstanceNotFoundException(activityInstanceID);
             }
         }
-
         boolean isInvolved = false;
         if (session.getUserId() == assigneeID) {
             isInvolved = true;
         } else if (userProcessActors != null) {
-            final long processDefinitionID = getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID, isArchived);
+            final long processDefinitionID = getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID);
             final Set<Long> userActorIds = userProcessActors.get(processDefinitionID);
             isInvolved = userActorIds.contains(actorID);
         }
@@ -968,18 +935,14 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public long getProcessInstanceIDFromActivityInstanceID(final APISession session, final long activityInstanceID, final boolean isArchived)
-            throws BPMEngineException, InvalidSessionException, ActivityInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException {
+    public long getProcessInstanceIDFromActivityInstanceID(final APISession session, final long activityInstanceID) throws BPMEngineException,
+            InvalidSessionException, ActivityInstanceNotFoundException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        if (!isArchived) {
-            try {
-                return processAPI.getActivityInstance(activityInstanceID).getParentProcessInstanceId();
-            } catch (final ActivityInstanceNotFoundException e) {
-                return processAPI.getArchivedActivityInstance(activityInstanceID).getProcessInstanceId();
-            }
-        } else {
-            return processAPI.getArchivedFlowNodeInstance(activityInstanceID).getProcessInstanceId();
+        try {
+            return processAPI.getActivityInstance(activityInstanceID).getParentProcessInstanceId();
+        } catch (final ActivityInstanceNotFoundException e) {
+            return processAPI.getArchivedActivityInstance(activityInstanceID).getProcessInstanceId();
         }
     }
 
@@ -988,19 +951,14 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * 
      */
     @Override
-    public long getProcessDefinitionIDFromActivityInstanceID(final APISession session, final long activityInstanceID, final boolean isArchived)
-            throws ActivityInstanceNotFoundException,
-            BPMEngineException, InvalidSessionException, ArchivedFlowNodeInstanceNotFoundException {
+    public long getProcessDefinitionIDFromActivityInstanceID(final APISession session, final long activityInstanceID) throws ActivityInstanceNotFoundException,
+            BPMEngineException, InvalidSessionException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        if (!isArchived) {
-            try {
-                return processAPI.getActivityInstance(activityInstanceID).getProcessDefinitionId();
-            } catch (final ActivityInstanceNotFoundException e) {
-                return processAPI.getArchivedActivityInstance(activityInstanceID).getProcessDefinitionId();
-            }
-        } else {
-            return processAPI.getArchivedFlowNodeInstance(activityInstanceID).getProcessDefinitionId();
+        try {
+            return processAPI.getActivityInstance(activityInstanceID).getProcessDefinitionId();
+        } catch (final ActivityInstanceNotFoundException e) {
+            return processAPI.getArchivedActivityInstance(activityInstanceID).getProcessDefinitionId();
         }
     }
 
@@ -1016,8 +974,20 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceID);
             return processInstance.getProcessDefinitionId();
         } catch (final ProcessInstanceNotFoundException e) {
-            final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceID);
-            return archivedProcessInstance.getProcessDefinitionId();
+            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+            searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceID);
+            searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.ASC);
+            SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
+            try {
+                searchArchivedProcessInstances = processAPI.searchArchivedProcessInstances(searchOptionsBuilder.done());
+            } catch (final SearchException se) {
+                throw new ArchivedProcessInstanceNotFoundException(se);
+            }
+            if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
+                return searchArchivedProcessInstances.getResult().get(0).getProcessDefinitionId();
+            } else {
+                throw new ArchivedProcessInstanceNotFoundException(new Exception("Unable to find an archive process instance with ID " + processInstanceID));
+            }
         }
     }
 
@@ -1043,57 +1013,22 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public String getActivityDefinitionUUIDFromActivityInstanceID(final APISession session, final long activityInstanceID, final boolean isArchived)
-            throws ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, ArchivedFlowNodeInstanceNotFoundException {
+    public String getActivityDefinitionUUIDFromActivityInstanceID(final APISession session, final long activityInstanceID)
+            throws ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         String activityName;
         ProcessDefinition processDefinition;
-        if (!isArchived) {
-            try {
-                final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
-                activityName = activityInstance.getName();
-                processDefinition = processAPI.getProcessDefinition(activityInstance.getProcessDefinitionId());
-            } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
-                activityName = archivedActivityInstance.getName();
-                processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
-            }
-        } else {
-            final ArchivedFlowNodeInstance archivedFlowNode = processAPI.getArchivedFlowNodeInstance(activityInstanceID);
-            activityName = archivedFlowNode.getName();
-            processDefinition = processAPI.getProcessDefinition(archivedFlowNode.getProcessDefinitionId());
+        try {
+            final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
+            activityName = activityInstance.getName();
+            processDefinition = processAPI.getProcessDefinition(activityInstance.getProcessDefinitionId());
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+            activityName = archivedActivityInstance.getName();
+            processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
         }
         return processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion() + UUID_SEPARATOR + activityName;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    @Override
-    public boolean isProcessOfActivityInstanceEnabled(final APISession session, final long activityInstanceID, final boolean isArchived)
-            throws InvalidSessionException,
-            BPMEngineException, ProcessDefinitionNotFoundException, ActivityInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException {
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        // TODO have an engine method to perform a single call
-        return ActivationState.ENABLED.equals(processAPI.getProcessDeploymentInfo(
-                getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID, isArchived)).getActivationState());
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    @Override
-    public boolean isProcessOfProcessInstanceEnabled(final APISession session, final long processInstanceID) throws InvalidSessionException,
-            BPMEngineException, ProcessDefinitionNotFoundException, ProcessInstanceNotFoundException,
-            ArchivedProcessInstanceNotFoundException {
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        // TODO have an engine method to perform a single call
-        return ActivationState.ENABLED.equals(processAPI.getProcessDeploymentInfo(
-                getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID)).getActivationState());
     }
 
     /**
@@ -1111,30 +1046,21 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * 
      */
     @Override
-    public String getActivityName(final APISession session, final long activityInstanceID, final boolean isArchived) throws InvalidSessionException,
-            BPMEngineException,
-            ActivityInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException {
+    public String getActivityName(final APISession session, final long activityInstanceID) throws InvalidSessionException, BPMEngineException,
+            ActivityInstanceNotFoundException {
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         String displayName;
-        if (!isArchived) {
-            try {
-                final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
-                displayName = activityInstance.getDisplayName();
-                if (displayName == null) {
-                    displayName = activityInstance.getName();
-                }
-            } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
-                displayName = archivedActivityInstance.getDisplayName();
-                if (displayName == null) {
-                    displayName = archivedActivityInstance.getName();
-                }
-            }
-        } else {
-            final ArchivedFlowNodeInstance archivedFlowNode = processAPI.getArchivedFlowNodeInstance(activityInstanceID);
-            displayName = archivedFlowNode.getDisplayName();
+        try {
+            final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
+            displayName = activityInstance.getDisplayName();
             if (displayName == null) {
-                displayName = archivedFlowNode.getName();
+                displayName = activityInstance.getName();
+            }
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+            displayName = archivedActivityInstance.getDisplayName();
+            if (displayName == null) {
+                displayName = archivedActivityInstance.getName();
             }
         }
         return displayName;

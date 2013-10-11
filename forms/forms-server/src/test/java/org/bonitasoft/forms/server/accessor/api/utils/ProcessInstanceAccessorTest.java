@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 /**
- * @author Vincent Elcrin
+ * @author Vincent Elcrin, Anthony Birembaut
  * 
  */
 public class ProcessInstanceAccessorTest {
@@ -51,23 +51,20 @@ public class ProcessInstanceAccessorTest {
     @Test
     public void testWeCanGetAProcessInstanceInformation() throws Exception {
         when(engineClient.getProcessInstance(1L)).thenReturn(processInstance);
-        when(processInstance.getId()).thenReturn(2L);
 
-        ProcessInstanceAccessor accessor = new ProcessInstanceAccessor(engineClient, 1L);
-        long id = accessor.getId();
+        final ProcessInstanceAccessor accessor = new ProcessInstanceAccessor(engineClient, 1L);
+        final long id = accessor.getId();
 
-        assertEquals(2L, id);
+        assertEquals(1L, id);
     }
 
     @Test
     public void testWeCanGetAnArchivedProcessInstanceInformation() throws Exception {
         when(engineClient.getProcessInstance(2L)).thenThrow(new ProcessInstanceNotFoundException(2L));
-        when(engineClient.getArchivedProcessInstance(2L)).thenReturn(archivedProcessInstance);
-        when(archivedProcessInstance.getSourceObjectId()).thenReturn(3L);
 
-        ProcessInstanceAccessor accessor = new ProcessInstanceAccessor(engineClient, 2L);
-        long id = accessor.getId();
+        final ProcessInstanceAccessor accessor = new ProcessInstanceAccessor(engineClient, 2L);
+        final boolean isArchived = accessor.isArchived();
 
-        assertEquals(3L, id);
+        assertEquals(true, isArchived);
     }
 }

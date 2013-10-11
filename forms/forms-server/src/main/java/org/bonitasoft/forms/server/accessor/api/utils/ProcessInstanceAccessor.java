@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.forms.server.accessor.api.utils;
 
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.forms.server.accessor.api.ProcessInstanceAccessorEngineClient;
@@ -35,18 +33,18 @@ public class ProcessInstanceAccessor {
 
     private boolean archived;
 
-    public ProcessInstanceAccessor(ProcessInstanceAccessorEngineClient processInstanceAccessor, long id) throws BPMEngineException {
+    public ProcessInstanceAccessor(final ProcessInstanceAccessorEngineClient processInstanceAccessor, final long id) throws BPMEngineException {
         this.processInstanceAccessor = processInstanceAccessor;
         fecthConfiguration(id);
     }
 
-    private void fecthConfiguration(long id) throws BPMEngineException {
+    private void fecthConfiguration(final long id) throws BPMEngineException {
+        this.id = id;
         try {
-            this.id = getProcessInstance(id).getId();
-            this.archived = false;
-        } catch (ProcessInstanceNotFoundException e) {
-            this.id = getArchivedProcessInstance(id).getSourceObjectId();
-            this.archived = true;
+            getProcessInstance(id);
+            archived = false;
+        } catch (final ProcessInstanceNotFoundException e) {
+            archived = true;
         }
     }
 
@@ -58,15 +56,7 @@ public class ProcessInstanceAccessor {
         return archived;
     }
 
-    private ProcessInstance getProcessInstance(long id) throws BPMEngineException, ProcessInstanceNotFoundException {
+    private ProcessInstance getProcessInstance(final long id) throws BPMEngineException, ProcessInstanceNotFoundException {
         return processInstanceAccessor.getProcessInstance(id);
-    }
-
-    private ArchivedProcessInstance getArchivedProcessInstance(long id) throws BPMEngineException {
-        try {
-            return processInstanceAccessor.getArchivedProcessInstance(id);
-        } catch (ArchivedProcessInstanceNotFoundException e) {
-            throw new BPMEngineException(e);
-        }
     }
 }
