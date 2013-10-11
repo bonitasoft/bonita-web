@@ -787,7 +787,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         boolean isInvolved = false;
         if (session.getUserId() == assigneeID) {
             isInvolved = true;
-        } else if (userProcessActors != null) {
+        } else if (assigneeID == 0L && userProcessActors != null) {
             final long processDefinitionID = getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID);
             final Set<Long> userActorIds = userProcessActors.get(processDefinitionID);
             isInvolved = userActorIds.contains(actorID);
