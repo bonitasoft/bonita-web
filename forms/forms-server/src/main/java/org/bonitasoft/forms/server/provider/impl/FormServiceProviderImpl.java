@@ -1921,7 +1921,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final Map<String, Object> urlContext = getUrlContext(context);
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 final String formId = (String) urlContext.get(FormServiceProviderUtil.FORM_ID);
-                if (!FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId))) {
+                if (FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId))) {
                     isCurrentValue = true;
                 } else {
                     isCurrentValue = false;

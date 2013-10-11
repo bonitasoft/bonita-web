@@ -32,8 +32,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataDefinition;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.expression.ExpressionType;
@@ -188,7 +187,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
                     activityName = activityInstance.getName();
                     activityDisplayName = activityInstance.getDisplayName();
                 } else {
-                    final ArchivedFlowNodeInstance activityInstance = processAPI.getArchivedFlowNodeInstance(activityInstanceID);
+                    final ArchivedActivityInstance activityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
                     activityName = activityInstance.getName();
                     activityDisplayName = activityInstance.getDisplayName();
                 }
@@ -208,11 +207,6 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             }
         } catch (final ActivityInstanceNotFoundException e) {
             final String errorMessage = "Activity with " + activityInstanceID + " is not found.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
-            }
-        } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-            final String errorMessage = "Archived activity with " + activityInstanceID + " is not found.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, errorMessage, e);
             }
@@ -268,8 +262,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
                      * If we include process variables we need to check from which page of which data type the pageId belong to
                      */
                     if (Integer.valueOf(pageId) < nbOfProcessDataDefinitionPages) {
-                        processDataFields = processAPI.getProcessDataDefinitions(processDefinitionID, getFirstFieldIndex(pageId, numberPerPage),
-                                numberPerPage);
+                        processDataFields = processAPI.getProcessDataDefinitions(processDefinitionID, getFirstFieldIndex(pageId, numberPerPage), numberPerPage);
                         processDataFieldSet.addAll(processDataFields);
                     } else {
                         final List<DataDefinition> activityDataFields = processAPI.getActivityDataDefinitions(processDefinitionID, activityName,
@@ -312,7 +305,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
      * 
      * @param pageId
      * @param numberPerPage
-     * return index of the first field of the form page to display 
+     *            return index of the first field of the form page to display
      */
     private int getFirstFieldIndex(final String pageId, final int numberPerPage) {
         return Integer.valueOf(pageId) * numberPerPage;
@@ -327,8 +320,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
      */
     protected void createWidgets(final Set<DataDefinition> applicationDataFields) {
         final boolean includeInitialValues = !(activityName == null && isEditMode);
-        final Map<FormWidget, FormAction> applicationFields = engineWidgetBuilder.createWidgets(applicationDataFields, PROCESS_ELEMENTS_PREFIX,
-                isEditMode,
+        final Map<FormWidget, FormAction> applicationFields = engineWidgetBuilder.createWidgets(applicationDataFields, PROCESS_ELEMENTS_PREFIX, isEditMode,
                 includeInitialValues);
         for (final Entry<FormWidget, FormAction> applicationFieldEntry : applicationFields.entrySet()) {
             final FormWidget applicationWidget = applicationFieldEntry.getKey();
@@ -351,8 +343,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
     protected void createWidgets(final Set<DataDefinition> applicationDataFields, final Set<DataDefinition> activityDataFields) {
         createWidgets(applicationDataFields);
         final boolean includeInitialValues = !(activityName == null && isEditMode);
-        final Map<FormWidget, FormAction> activityFields = engineWidgetBuilder.createWidgets(activityDataFields, ACTIVITY_ELEMENTS_PREFIX,
-                isEditMode,
+        final Map<FormWidget, FormAction> activityFields = engineWidgetBuilder.createWidgets(activityDataFields, ACTIVITY_ELEMENTS_PREFIX, isEditMode,
                 includeInitialValues);
         final List<FormWidget> activityWidgets = new ArrayList<FormWidget>();
         for (final Entry<FormWidget, FormAction> activityFieldEntry : activityFields.entrySet()) {
@@ -492,8 +483,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
                 LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
         }
-        final List<FormWidget> widgets = engineWidgetBuilder.getPageWidgets(pageId, nbOfPages, applicationWidgets, PROCESS_ELEMENTS_PREFIX,
-                isEditMode);
+        final List<FormWidget> widgets = engineWidgetBuilder.getPageWidgets(pageId, nbOfPages, applicationWidgets, PROCESS_ELEMENTS_PREFIX, isEditMode);
         final List<String> widgetIds = new ArrayList<String>();
         for (final FormWidget formWidget : widgets) {
             widgetIds.add(formWidget.getId());
@@ -632,8 +622,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             }
         } else {
             return new Expression("pageLabelExpression", toUpperCaseFirstLetter(activityDisplayName + pageLabelComplement),
-                    ExpressionType.TYPE_CONSTANT.toString(),
-                    String.class.getName(), null, null);
+                    ExpressionType.TYPE_CONSTANT.toString(), String.class.getName(), null, null);
         }
     }
 
