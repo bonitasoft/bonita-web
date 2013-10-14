@@ -614,7 +614,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @return a {@link FileUploadWidget}
      */
     protected FileUploadWidget createFileUpload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
-        final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, false, widgetData.getId(), widgetData.getFileWidgetInputType(),
+        final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, widgetData.getId(), widgetData.getFileWidgetInputType(),
                 fieldValue.getValueType(), fieldValue.getDocumentId(), fieldValue.getDocumentName(), getStringValue(fieldValue),
                 widgetData.isDisplayAttachmentImage());
         if (widgetData.isReadOnly()) {
@@ -633,7 +633,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @return a {@link FileDownloadWidget}
      */
     protected FileDownloadWidget createFileDownload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
-        return new FileDownloadWidget(formID, contextMap, false, fieldValue.getValueType(), fieldValue.getDocumentId(), widgetData.isDisplayAttachmentImage(),
+        return new FileDownloadWidget(formID, contextMap, fieldValue.getValueType(), fieldValue.getDocumentId(), widgetData.isDisplayAttachmentImage(),
                 getStringValue(fieldValue));
     }
 
@@ -657,7 +657,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
                 value = getStringValue(fieldValue);
             }
         }
-        return new ImageWidget(formID, contextMap, false, documentId, value, widgetData.getImageStyle(), displayAttachmentImage);
+        return new ImageWidget(formID, contextMap, documentId, value, widgetData.getImageStyle(), displayAttachmentImage);
     }
 
     /**

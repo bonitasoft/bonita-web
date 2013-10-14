@@ -62,11 +62,6 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
     protected boolean displayAttachmentImage;
 
     /**
-     * archived : indicates if the required document is archived
-     */
-    protected boolean isArchived;
-
-    /**
      * Click handlers registered for the widget
      */
     protected List<ClickHandler> clickHandlers;
@@ -81,13 +76,11 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
      * @param ImageStyle
      * @param displayAttachmentImage
      */
-    public ImageWidget(final String formID, final Map<String, Object> contextMap, final boolean isArchived, final long documentId, final String value,
-            final String imageStyle,
+    public ImageWidget(final String formID, final Map<String, Object> contextMap, final long documentId, final String value, final String imageStyle,
             final boolean displayAttachmentImage) {
 
         this.formID = formID;
         this.contextMap = contextMap;
-        this.isArchived = isArchived;
         this.displayAttachmentImage = displayAttachmentImage;
 
         final FlowPanel flowPanel = new FlowPanel();
@@ -96,7 +89,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
         if (value != null) {
             if (displayAttachmentImage) {
                 final String imageServletURL = RpcFormsServices.getAttachmentImageURL();
-                final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, isArchived, documentId, value);
+                final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, documentId, value);
                 image.setUrl(imageURL);
             } else {
                 image.setUrl(value);
@@ -131,7 +124,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
         if (value != null) {
             if (displayAttachmentImage) {
                 final String imageServletURL = RpcFormsServices.getAttachmentImageURL();
-                final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, isArchived, documentId, value);
+                final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, documentId, value);
                 image.setUrl(imageURL);
             } else {
                 image.setUrl(value);
