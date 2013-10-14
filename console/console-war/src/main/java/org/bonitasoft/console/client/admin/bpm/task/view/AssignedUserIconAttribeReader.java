@@ -46,12 +46,18 @@ public class AssignedUserIconAttribeReader extends DeployedAttributeReader {
 
     @Override
     protected String _read(final IItem item) {
-        if (item instanceof IFlowNodeItem && ((IFlowNodeItem) item).isHumanTask()) {
-            return super._read(item);
-        } else {
-            // TODO move icon urls in respective items
-            return "/default/icon_automaticTask.png";
+        if (item instanceof IFlowNodeItem) {
+            if (((IFlowNodeItem) item).isHumanTask()) {
+                return super._read(item);
+            } else if (((IFlowNodeItem) item).isCallActivity()) {
+                return IFlowNodeItem.VALUE_ICON_CALL_ACTIVITY;
+            } else if (((IFlowNodeItem) item).isMultiInsatnceActivity()) {
+                return IFlowNodeItem.VALUE_ICON_MULTI_INSTANCE_ACTIVITY;
+            } else if (((IFlowNodeItem) item).isLoopActivity()) {
+                return IFlowNodeItem.VALUE_ICON_LOOP_ACTIVITY;
+            }
         }
+        return IFlowNodeItem.VALUE_ICON_AUTOMATIC_TASK;
     }
 
 }

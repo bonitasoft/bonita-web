@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -37,9 +37,9 @@ import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction
 public class CaseQuickDetailsAdminPage extends AbstractCaseQuickDetailsAdminPage<CaseItem> {
 
     public static String TOKEN = "casequickdetailsadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
     }
@@ -69,8 +69,8 @@ public class CaseQuickDetailsAdminPage extends AbstractCaseQuickDetailsAdminPage
     }
 
     @Override
-    protected ItemDefinition getTasksDefinition() {
-        return Definitions.get(TaskDefinition.TOKEN);
+    protected ItemDefinition getHumanTasksDefinition() {
+        return Definitions.get(HumanTaskDefinition.TOKEN);
     }
 
 }

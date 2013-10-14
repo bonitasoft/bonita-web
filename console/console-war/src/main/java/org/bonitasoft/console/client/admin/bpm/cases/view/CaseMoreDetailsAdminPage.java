@@ -28,6 +28,7 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
+import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -57,9 +58,9 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
 
     public static final String TOKEN = "casemoredetailsadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
@@ -130,14 +131,14 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     }
 
     protected ItemTable getTaskTable(final CaseItem item) {
-        return new ItemTable(new JsId("tasks"), getTasksDefinition())
+        return new ItemTable(new JsId("tasks"), getHumanTasksDefinition())
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_CASE_ID, item.getId())
                 .addHiddenFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
                 .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
                 .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE), _("Due date"))
                 .addColumn(new DescriptionAttributeReader(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
-                
-                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
+
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new SpanPrepender(_("Due in:")))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")));
     }
@@ -152,7 +153,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
                 .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Preformed by"))
                 .addColumn(new DescriptionAttributeReader(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))
-                .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
+                .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
