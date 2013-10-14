@@ -113,10 +113,12 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     }
 
     @Override
-    protected Section membershipSection(final UserItem item) {
+    protected Section membershipSection(final UserItem user) {
         final Section section = new Section(new JsId("membershipSection"), _("Membership"));
-        section.addBody(membershipTable(item));
-        section.addBody(addMembershipLink());
+        section.addBody(membershipTable(user));
+        if (user.isEnabled()) {
+            section.addBody(addMembershipLink());
+        }
         return section;
     }
 
