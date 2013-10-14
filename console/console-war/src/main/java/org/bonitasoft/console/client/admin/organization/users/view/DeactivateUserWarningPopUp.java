@@ -70,7 +70,7 @@ public class DeactivateUserWarningPopUp extends Page {
     }
 
     private Button closeButon() {
-        return new Button(_("Close"), _("Close"), new ClosePopUpAction());
+        return new Button(_("Cancel"), _("Cancel"), new ClosePopUpAction());
     }
 
     private ButtonAction deactivateButton() {
