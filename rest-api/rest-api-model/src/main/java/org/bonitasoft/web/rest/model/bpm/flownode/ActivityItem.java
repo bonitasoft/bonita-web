@@ -26,6 +26,8 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  */
 public class ActivityItem extends FlowNodeItem implements IActivityItem {
 
+    public static final String ATTRIBUTE_VARIABLES = "variables";
+    
     public ActivityItem() {
         super();
     }

@@ -23,14 +23,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
+import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.rest.server.framework.utils.JSonUnserializerServer;
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeLeaf;
@@ -75,24 +76,6 @@ public class APIServletCall extends ServletCall {
         head("Cache-Control", "no-cache,no-store,no-transform,max-age=0");
         head("Expires", df.format(expdate));
     }
-
-    // /**
-    // * @param parameter
-    // * @return
-    // */
-    // private List<ItemSearchOrder> parseOrders(final String parameter) {
-    // if (this.parameters == null) {
-    // return null;
-    // }
-    // final String[] split = parameter.split("\\s*,\\s*");
-    // final List<ItemSearchOrder> results = new ArrayList<ItemSearchOrder>();
-    // for (int i = 0; i < split.length; i++) {
-    // final String[] orderSplit = split[i].split("\\s");
-    // results.add(new ItemSearchOrder(orderSplit[0], orderSplit.length == 1 || orderSplit[1].equalsIgnoreCase("asc")));
-    // }
-    //
-    // return results;
-    // }
 
     /**
      * Read the inputStream and parse it as an IItem compatible with the called API.
@@ -212,15 +195,29 @@ public class APIServletCall extends ServletCall {
             }
 
             Item.setApplyValidatorMandatoryByDefault(false);
-            final Map<String, String> attributes = getJSonStreamAsItem().getAttributes();
-
-            api.runUpdate(id, attributes);
+            IItem item = getJSonStreamAsItem();
+            api.runUpdate(id, getAttributesWithDeploysAsJsonString(item));
         } catch (final APIException e) {
             e.setApi(apiName);
             e.setResource(resourceName);
             throw e;
 
         }
+    }
+
+    /**
+     * Get deploys and add them in json representation in map<String, String>
+     * 
+     * Workaround to be able to have included json objects in main object in PUT request
+     * You have to unserialize them to be able to use them in java representation 
+     */
+    private HashMap<String, String> getAttributesWithDeploysAsJsonString(IItem item) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.putAll(item.getAttributes());
+        for (Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
+            map.put(deploy.getKey(), deploy.getValue().toJson());
+        }
+        return map;
     }
 
     /**
@@ -239,7 +236,7 @@ public class APIServletCall extends ServletCall {
                 }
 
                 // Parsing ids in Json input stream
-                final AbstractTreeNode<String> tree = JSonUnserializerServer.unserializeTree(inputStream);
+                final AbstractTreeNode<String> tree = JSonSimpleDeserializer.unserializeTree(inputStream);
 
                 if (tree instanceof Tree<?>) {
                     final List<AbstractTreeNode<String>> nodes = ((Tree<String>) tree).getNodes();
@@ -285,7 +282,6 @@ public class APIServletCall extends ServletCall {
             final String[] split = parameter.split("=");
             if (split.length < 2) {
                 results.put(split[0], null);
-                // throw new APIMalformedUrlException("Malformed filter parameter : " + parameter);
             } else {
                 results.put(split[0], split[1]);
             }

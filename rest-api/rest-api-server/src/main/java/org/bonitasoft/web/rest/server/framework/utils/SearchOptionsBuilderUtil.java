@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.framework.utils;
 
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.web.rest.server.datastore.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 
 /**
  * @author Haojie Yuan

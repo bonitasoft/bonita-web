@@ -16,8 +16,13 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
+
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
@@ -29,6 +34,11 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.server.datastore.utils.VariableMapper;
+import org.bonitasoft.web.rest.server.datastore.utils.VariablesMapper;
+import org.bonitasoft.web.rest.server.engineclient.ActivityEngineClient;
+import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
+import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
@@ -110,6 +120,11 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
 
     @Override
     public CONSOLE_ITEM update(final APIID id, final Map<String, String> attributes) {
+        String jsonVariables = MapUtil.getValue(attributes, ActivityItem.ATTRIBUTE_VARIABLES, null);
+        if (!isBlank(jsonVariables)) {
+            updateActivityVariables(id.toLong(), jsonVariables);
+        }
+
         update(get(id), attributes);
         try {
             return get(id);
@@ -119,7 +134,25 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
             }
             throw e;
         }
+    }
 
+    private void updateActivityVariables(long activityId, String jsonValue) {
+        ActivityEngineClient activityEngineclient = getActivityEngineClient();
+        HashMap<String, Serializable> variables = buildVariablesMap(activityId, jsonValue, activityEngineclient);
+        activityEngineclient.updateVariables(activityId, variables);
+    }
+
+    private ActivityEngineClient getActivityEngineClient() {
+        return new EngineClientFactory(new EngineAPIAccessor()).createActivityEngineClient(getEngineSession());
+    }
+
+    private HashMap<String, Serializable> buildVariablesMap(long activityId,  String jsonValue, ActivityEngineClient client) {
+        HashMap<String, Serializable> map = new HashMap<String, Serializable>();
+        for (VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
+            DataInstance data = client.getDataInstance(var.getName(), activityId);
+            map.put(var.getName(), var.getSerializableValue(data.getClassName()));
+        }
+        return map;
     }
 
     protected void update(final CONSOLE_ITEM item, final Map<String, String> attributes) {

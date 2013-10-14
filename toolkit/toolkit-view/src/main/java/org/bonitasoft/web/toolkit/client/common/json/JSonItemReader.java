@@ -210,8 +210,10 @@ public class JSonItemReader {
         item.setApplyValidators(applyValidators);
 
         for (final Entry<String, AbstractTreeNode<String>> entry : tree.getNodes().entrySet()) {
+            // primitive type
             if (entry.getValue() instanceof TreeLeaf<?>) {
                 item.setAttribute(entry.getKey(), ((TreeLeaf<String>) entry.getValue()).getValue());
+            // json object
             } else if (entry.getValue() instanceof TreeIndexed<?>) {
                 item.setDeploy(
                         entry.getKey(),
@@ -219,7 +221,11 @@ public class JSonItemReader {
                                 (TreeIndexed<String>) entry.getValue(),
                                 itemDefinition.getDeployDefinition(entry.getKey())
                         )
-                        );
+                
+                      );
+            // json list - set directly json in attribute value
+            } else if (entry.getValue() instanceof Tree<?>) {
+                item.setAttribute(entry.getKey(), entry.getValue().toJson());
             }
         }
 

@@ -33,7 +33,22 @@ public class ProcessVariable {
     private Class<?> classe;
 
     private Expression defaultValue;
-
+    
+    public static ProcessVariable aStringVariable(String name, String defaultValue) throws InvalidExpressionException {
+        return new ProcessVariable(name, String.class, 
+                new ExpressionBuilder().createConstantStringExpression(defaultValue));
+    }
+    
+    public static ProcessVariable aLongVariable(String name, long defaultValue) throws InvalidExpressionException {
+        return new ProcessVariable(name, Long.class, 
+                new ExpressionBuilder().createConstantLongExpression(defaultValue));
+    }
+    
+    public static ProcessVariable aDateVariable(String name, String defaultValue) throws InvalidExpressionException {
+        return new ProcessVariable(name, Date.class, 
+                new ExpressionBuilder().createConstantDateExpression(defaultValue));
+    }
+    
     public ProcessVariable(String name, Class<?> classe, Expression defaultValue) {
         this.name = name;
         this.classe = classe;
