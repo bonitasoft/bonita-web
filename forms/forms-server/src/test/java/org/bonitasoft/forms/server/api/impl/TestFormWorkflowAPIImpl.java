@@ -265,6 +265,9 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
         final Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
         final FormFieldValue value1 = new FormFieldValue(null, File.class.getName());
+        value1.setDocument(true);
+        value1.setDocumentId(processAPI.getLastDocument(processInstanceID, "doc1").getId());
+        value1.setDocumentName("doc1");
         fieldValues.put("fieldId1", value1);
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
