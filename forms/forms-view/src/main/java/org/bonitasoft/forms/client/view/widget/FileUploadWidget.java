@@ -234,6 +234,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileUpload = addFileUploalToFormPanel(fileUploadFormName);
                     formPanel.setVisible(true);
                     fileDownloadWidget.setVisible(false);
+                    fileDownloadWidget.resetDownloadlink();
                     modifyLabel.setVisible(false);
                     removeLabel.setVisible(false);
                     uploadLabel.setVisible(true);
@@ -417,16 +418,12 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         String displayedValue = null;
         if (FileWidgetInputType.ALL.equals(fileWidgetInputType)) {
             if (FILE_DOCUMENT_TYPE.equals(radioButtonGroupWidget.getValue())) {
-                if (uploadedFilePath != null) {
-                    displayedValue = fileDownloadWidget.getDisplayedValue();
-                }
+                displayedValue = fileDownloadWidget.getDisplayedValue();
             } else {
                 displayedValue = urlTextBox.getValue();
             }
         } else if (FileWidgetInputType.FILE.equals(fileWidgetInputType)) {
-            if (uploadedFilePath != null) {
-                displayedValue = fileDownloadWidget.getDisplayedValue();
-            }
+            displayedValue = fileDownloadWidget.getDisplayedValue();
         } else {
             displayedValue = urlTextBox.getValue();
         }

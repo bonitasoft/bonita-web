@@ -152,4 +152,9 @@ public class FileDownloadWidget extends Composite {
         return fileNameLabel.getText();
     }
 
+    public void resetDownloadlink() {
+        fileNameLabel.setHref(null);
+        fileNameLabel.setText(null);
+    }
+
 }
