@@ -13,6 +13,12 @@
 	<name>Bonita REST API server</name>
 	
 	<dependencies>
+		<dependency>
+	        <groupId>org.codehaus.jackson</groupId>
+	        <artifactId>jackson-mapper-asl</artifactId>
+	        <version>1.9.13</version>
+	    </dependency>
+    
 		<!-- dependency to common-server kept for PropertieFactory used in DocumentDatastore -->
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>

@@ -1,11 +1,24 @@
 package org.bonitasoft.web.rest.server.api.bpm.cases;
 
+import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aDateVariable;
+import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aLongVariable;
+import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aStringVariable;
+import static org.bonitasoft.web.rest.model.builder.bpm.cases.CaseItemBuilder.aCaseItem;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.test.toolkit.bpm.ProcessVariable;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
@@ -13,7 +26,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.api.bpm.cases.APICase;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
@@ -24,8 +36,12 @@ import org.junit.Test;
  */
 public class APICaseIntegrationTest extends AbstractConsoleTest {
 
+    private APICase apiCase;
+
     @Override
     public void consoleTestSetUp() throws Exception {
+        apiCase = new APICase();
+        apiCase.setCaller(getAPICaller(getInitiator().getSession(), "API/bpm/case"));
     }
 
     @Override
@@ -36,6 +52,14 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GET
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private ProcessInstance getProcessInstance(APIID caseId) throws Exception {
+        try {
+            return TenantAPIAccessor.getProcessAPI(getInitiator().getSession()).getProcessInstance(caseId.toLong());
+        } catch (ProcessInstanceNotFoundException e) {
+            return null;
+        }
+    }
 
     private void assertEquals(final String message, final ProcessInstance engineItem, final CaseItem consoleItem) {
 
@@ -54,19 +78,10 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
                 .addActor(getInitiator())
                 .startCase();
 
-        final CaseItem caseItem = getAPICase().runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<String>(), new ArrayList<String>());
+        final CaseItem caseItem = apiCase.runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<String>(), new ArrayList<String>());
 
         Assert.assertNotNull("Case not found", caseItem);
         assertEquals("Wrong case found", testCase.getProcessInstance(), caseItem);
-    }
-
-    /**
-     * @return
-     */
-    private APICase getAPICase() {
-        final APICase apiCase = new APICase();
-        apiCase.setCaller(getAPICaller(getInitiator().getSession(), "API/bpm/case"));
-        return apiCase;
     }
 
     @Test
@@ -74,7 +89,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         final TestProcess testProcess = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator());
         final TestCase testCase = testProcess.startCase();
 
-        final CaseItem caseItem = getAPICase().runGet(APIID.makeAPIID(testCase.getId()),
+        final CaseItem caseItem = apiCase.runGet(APIID.makeAPIID(testCase.getId()),
                 Arrays.asList(CaseItem.ATTRIBUTE_PROCESS_ID, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID), new ArrayList<String>());
 
         Assert.assertNotNull("Failed to deploy process", caseItem.getProcess());
@@ -119,7 +134,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, String.valueOf(getInitiator().getId()));
 
-        final ItemSearchResult<CaseItem> caseItems = getAPICase().runSearch(0, 10, null, null, filters, null, null);
+        final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, filters, null, null);
 
         checkSearchResults(caseItems, 10, 14);
     }
@@ -135,7 +150,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(CaseItem.FILTER_USER_ID, String.valueOf(getInitiator().getId()));
 
-        final ItemSearchResult<CaseItem> caseItems = getAPICase().runSearch(0, 10, null, null, filters, null, null);
+        final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, filters, null, null);
 
         checkSearchResults(caseItems, 10, 14);
     }
@@ -156,7 +171,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, String.valueOf(testProcess3.getId()));
 
-        final ItemSearchResult<CaseItem> caseItems = getAPICase().runSearch(0, 3, null, null, filters, null, null);
+        final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 3, null, null, filters, null, null);
 
         checkSearchResults(caseItems, 3, 5);
 
@@ -170,7 +185,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
 
         initCasesForSearch();
 
-        final ItemSearchResult<CaseItem> caseItems = getAPICase().runSearch(0, 10, null, null, null, null, null);
+        final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, null, null, null);
 
         // On more process (testProcess3)
         checkSearchResults(caseItems, 10, 15);
@@ -193,7 +208,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(CaseItem.FILTER_SUPERVISOR_ID, String.valueOf(TestUserFactory.getRidleyScott().getId()));
 
-        final ItemSearchResult<CaseItem> caseItems = getAPICase().runSearch(0, 10, null, null, filters, null, null);
+        final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, filters, null, null);
 
         checkSearchResults(caseItems, 10, 5);
     }
@@ -217,7 +232,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(CaseItem.FILTER_TEAM_MANAGER_ID, String.valueOf(TestUserFactory.getTeamManagerUser().getId()));
 
-        final ItemSearchResult<CaseItem> caseItems = getAPICase().runSearch(0, 100, null, null, filters, null, null);
+        final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 100, null, null, filters, null, null);
         checkSearchResults(caseItems, 100, 25);
     }
 
@@ -228,5 +243,43 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         Assert.assertTrue("Empty search results", caseItems.getLength() > 0);
         Assert.assertTrue("Wrong page size", caseItems.getLength() == nbResultsByPageExpected);
         Assert.assertTrue("Wrong Total size", caseItems.getTotal() == nbTotalResultsExpected);
+    }
+    
+    @Test
+    public void we_can_start_a_case() throws Exception {
+        TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).setEnable(true);
+        
+        CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).build());
+        
+        ProcessInstance instance = getProcessInstance(item.getId());
+        assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
+    }
+    
+    @Test
+    public void we_can_start_a_case_with_variables() throws Exception {
+        String jsonVariables = "[" +
+                "{\"name\": \"stringVariable\", \"value\": \"newValue\"}," +
+                "{\"name\": \"longVariable\", \"value\": 9}," +
+                "{\"name\": \"dateVariable\", \"value\": 349246800000}" +
+            "]";
+        TestProcess process = createProcessWithVariables(aStringVariable("stringVariable", "firstValue"), 
+                aLongVariable("longVariable", 1L), aDateVariable("dateVariable", "428558400000"));
+        
+        CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).withVariables(jsonVariables).build());
+        
+        ProcessInstance instance = getProcessInstance(item.getId());
+        assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
+        assertThat((String) getProcessDataInstanceValue("stringVariable", instance.getId()), equalTo("newValue"));
+        assertThat((Long) getProcessDataInstanceValue("longVariable", instance.getId()), equalTo(9L));
+        assertThat((Date) getProcessDataInstanceValue("dateVariable", instance.getId()), equalTo(new Date(349246800000L)));
+    }
+
+    private TestProcess createProcessWithVariables(ProcessVariable... processVariables) throws Exception {
+        return TestProcessFactory.createProcessWithVariables("processWithVariables", processVariables)
+                .addActor(getInitiator()).setEnable(true);
+    }
+    
+    private Serializable getProcessDataInstanceValue(String dataName, long processInstanceId) throws Exception {
+        return TenantAPIAccessor.getProcessAPI(getInitiator().getSession()).getProcessDataInstance(dataName, processInstanceId).getValue();
     }
 }

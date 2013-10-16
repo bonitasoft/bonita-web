@@ -29,6 +29,11 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.engineclient.CaseEngineClient;
+import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
+import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
@@ -42,7 +47,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Séverin Moussel
  */
 public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> implements DatastoreHasGet<CaseItem>, DatastoreHasSearch<CaseItem>,
-        DatastoreHasDelete {
+        DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
 
     public CaseDatastore(final APISession engineSession) {
         super(engineSession);
@@ -50,20 +55,9 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
 
     @Override
     protected CaseItem convertEngineToConsoleItem(final ProcessInstance item) {
-
-        final CaseItem result = new CaseItem();
-
-        result.setId(item.getId());
-        result.setLastUpdateDate(item.getLastUpdate());
-        result.setState(item.getState());
-        result.setStartDate(item.getStartDate());
-        result.setStartedByUserId(item.getStartedBy());
-        result.setEndDate(item.getEndDate());
-        result.setProcessId(item.getProcessDefinitionId());
-
-        return result;
+        return new CaseItemConverter().convert(item);
     }
-
+    
     @Override
     public ItemSearchResult<CaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
@@ -128,5 +122,18 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         } catch (final Exception e) {
             throw new APIException(e);
         }
+    }
+
+    @Override
+    public CaseItem add(CaseItem caseItem) {
+        return new CaseSarter(caseItem, createCaseEngineClient(), createProcessEngineClient()).start();
+    }
+    
+    private CaseEngineClient createCaseEngineClient() {
+        return new EngineClientFactory(new EngineAPIAccessor()).createCaseEngineClient(getEngineSession());
+    }
+    
+    private ProcessEngineClient createProcessEngineClient() {
+        return new EngineClientFactory(new EngineAPIAccessor()).createProcessEngineClient(getEngineSession());
     }
 }

@@ -17,6 +17,8 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,4 +76,19 @@ public class ProcessEngineClientTest extends APITestWithMock {
         verify(processAPI, times(3)).deleteProcessInstances(1L, 0, 10);
     }
 
+    @Test(expected = Exception.class)
+    public void getProcessDataDefinitions_throw_exception_if_process_definition_is_not_found() throws Exception {
+        when(processAPI.getProcessDataDefinitions(anyLong(), anyInt(), anyInt())).thenThrow(new ProcessDefinitionNotFoundException(""));
+        
+        processEngineClient.getProcessDataDefinitions(1L);
+    }
+    
+    @Test
+    public void getProcessDataDefinitions_get_all_process_data_definition() throws Exception {
+        long expectedProcessId = 1L;
+        
+        processEngineClient.getProcessDataDefinitions(expectedProcessId);
+        
+        verify(processAPI).getProcessDataDefinitions(expectedProcessId, 0, Integer.MAX_VALUE);
+    }
 }

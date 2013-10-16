@@ -107,7 +107,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
      * Constructor
      * 
      * @param contextMap
-     * @param isArchived
      * @param fieldId
      * @param fileWidgetInputType
      * @param valueType
@@ -117,9 +116,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
      * @param hasImagePreview
      * @param isElementOfMultipleWidget
      */
-    public FileUploadWidget(final String formID, final Map<String, Object> contextMap, final boolean isArchived, final String fieldId,
-            final FileWidgetInputType fileWidgetInputType, final String valueType, final long attachmentId, final String attachmentName, final String value,
-            final boolean hasImagePreview) {
+    public FileUploadWidget(final String formID, final Map<String, Object> contextMap, final String fieldId, final FileWidgetInputType fileWidgetInputType,
+            final String valueType, final long attachmentId, final String attachmentName, final String value, final boolean hasImagePreview) {
 
         this.fileWidgetInputType = fileWidgetInputType;
         this.attachmentId = attachmentId;
@@ -158,7 +156,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
             filePanel = new FlowPanel();
 
-            fileDownloadWidget = new FileDownloadWidget(formID, contextMap, isArchived, valueType, attachmentId, hasImagePreview);
+            fileDownloadWidget = new FileDownloadWidget(formID, contextMap, valueType, attachmentId, hasImagePreview);
 
             loadingImage = new Image("images/ajax-loader.gif");
             loadingImage.setTitle(FormsResourceBundle.getMessages().uploadingLabel());

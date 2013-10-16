@@ -225,7 +225,7 @@ public class TestProcessFactory {
     }
 
     public static TestProcess createProcessWithVariables(String processName, ProcessVariable... variables) {
-        ProcessDefinitionBuilder builder = getDefaultProcessDefinitionBuilder("processWithVariables");
+        ProcessDefinitionBuilder builder = getDefaultProcessDefinitionBuilder(processName);
         for (ProcessVariable variable : variables) {
             builder.addData(variable.getName(), variable.getClassName(), variable.getDefaultValue());
         }
