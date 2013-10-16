@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-60\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-16 00:31+0200\n"
-"PO-Revision-Date: 2013-10-15 18:33-0400\n"
+"PO-Revision-Date: 2013-10-16 18:34-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1277,11 +1277,11 @@ msgstr "Attention"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:58
 msgid "You risk interrupting one or more apps.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n\nBefore proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "You risk interrupting one or more apps.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n\nBefore proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
+msgstr "Cette action pourrait interrompre une ou plusieurs apps.\n\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'une(des) app(s).\n\nIl est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\nConfirmer la désactivation de cet utilisateur?"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:77
 msgid "Dactivate selected user"
-msgstr "Dactivate selected user"
+msgstr "Désactiver utilisateur sélectionné"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:76
@@ -3004,7 +3004,7 @@ msgstr "L'application a rencontré une erreur."
 
 #: toolkit/toolkit-view/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:84
 msgid "message"
-msgstr "message"
+msgstr "Message"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:50
 msgid "Organization"
@@ -3062,23 +3062,23 @@ msgstr "Plus basse"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/framework/json/JacksonDeserializer.java:52
 msgid "Can't parse json, non-well formed content"
-msgstr "Can't parse json, non-well formed content"
+msgstr "Impossible de lire le json, le contenu n'est pas correctement structuré"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/framework/json/JacksonDeserializer.java:54
 msgid "Json can't be mapped to "
-msgstr "Json can't be mapped to "
+msgstr "Json ne peut pas être mappée à"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/utils/VariableMapper.java:47
 msgid "%value% is not a valid value for %className%"
-msgstr "%value% is not a valid value for %className%"
+msgstr "%value% n'est pas valide pour la valeur de %className%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/utils/VariableMapper.java:50
 msgid "%className% not found. Only jdk types are supported"
-msgstr "%className% not found. Only jdk types are supported"
+msgstr "%className% introuvable. Seuls les éléments de types jdk sont supportés."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/utils/VariableMapper.java:52
 msgid "%className% is not Serializable"
-msgstr "%className% is not Serializable"
+msgstr "%className% n'est pas serializable"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/MembershipDatastore.java:135
 msgid "This membership is already added to user"
@@ -3090,7 +3090,7 @@ msgstr "Il n'est pas possible de créer ce rôle, car '%roleName%' est déjà pr
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/cases/CaseSarter.java:95
 msgid "Data definition %dataName% doesn't exists for process %processId%"
-msgstr "Data definition %dataName% doesn't exists for process %processId%"
+msgstr "Data definition %dataName% n'existe pas pour le process %processId%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:224
 msgid "This group has already been mapped to actor"
@@ -3202,23 +3202,23 @@ msgstr "Erreur lors de la recherche des utilisateurs"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/CaseEngineClient.java:59
 msgid "Can't start process, process %processId% not found"
-msgstr "Can't start process, process %processId% not found"
+msgstr "Impossible de démarrer le processus, processus %processId% introuvable"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/CaseEngineClient.java:61
 msgid "Can't start process, process %processId% is not enabled"
-msgstr "Can't start process, process %processId% is not enabled"
+msgstr "Impossible de démarrer le processus, car %processId% n'est pas activé"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/CaseEngineClient.java:63
 msgid "Error occured when starting process %processId%"
-msgstr "Error occured when starting process %processId%"
+msgstr "Une erreur s'est produite lors du démarrage de processus %processId%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ActivityEngineClient.java:61
 msgid "Unable to find data instance %dataName% for activity %activityId%"
-msgstr "Unable to find data instance %dataName% for activity %activityId%"
+msgstr "Impossible de trouver les données de l'instance %dataName% pour l'activité %activityId%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ActivityEngineClient.java:70
 msgid "Error when updating %activityId% activity variables"
-msgstr "Error when updating %activityId% activity variables"
+msgstr "Erreur lors de la mise à jour des variables de l'activité de %activityId%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/GroupEngineClient.java:53
 msgid "Unable to find group %groupId%"
@@ -3266,11 +3266,11 @@ msgstr "Impossible de desactiver l'app"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:109
 msgid "Error when updating process deployment informations"
-msgstr "Error when updating process deployment informations"
+msgstr "Erreur lors de l'actualisation des informations de déploiement du processus"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:235
 msgid "Unable to get process data definitions, process %processId% not found"
-msgstr "Unable to get process data definitions, process %processId% not found"
+msgstr "Impossible d'obtenir des définitions de données de processus, car %processId% est introuvable"
 
 #: console/console-war/src/main/webapp/login.jsp:72
 msgid "The server is not available"
