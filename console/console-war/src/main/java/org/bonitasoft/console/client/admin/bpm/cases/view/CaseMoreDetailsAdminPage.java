@@ -35,7 +35,6 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
@@ -133,7 +132,6 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected ItemTable getTaskTable(final CaseItem item) {
         return new ItemTable(new JsId("tasks"), getHumanTasksDefinition())
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_CASE_ID, item.getId())
-                .addHiddenFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
                 .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
                 .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE), _("Due date"))
                 .addColumn(new DescriptionAttributeReader(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
