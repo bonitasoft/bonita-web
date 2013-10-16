@@ -27,6 +27,7 @@ import org.bonitasoft.console.client.admin.bpm.cases.filler.LastExecutedTaskFill
 import org.bonitasoft.console.client.admin.bpm.cases.filler.OpenTasksFiller;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
+import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
@@ -148,14 +149,14 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 .addColumn(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Update date"))
                 .addColumn(new DeployedUserReader(TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Executed by"))
                 .addColumn(new DescriptionAttributeReader(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, TaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
-                .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
+                .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID, new SpanPrepender(_("Executed by:")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, new SpanPrepender(_("Failed")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .setDefaultAction(new RedirectionAction(TaskMoreDetailsAdminPage.TOKEN, new Arg(TaskItem.ATTRIBUTE_ID, item.getId().toString())));
     }
 
-    protected abstract ItemDefinition getTasksDefinition();
+    protected abstract ItemDefinition getHumanTasksDefinition();
 
     protected void preparetasksTable(final ItemTable tasksTable) {
         tasksTable.setNbLinesByPage(5);

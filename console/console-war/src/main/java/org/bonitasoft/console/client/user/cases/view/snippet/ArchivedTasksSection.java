@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.user.cases.view.snippet;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
+import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -59,7 +60,7 @@ public class ArchivedTasksSection extends Section {
                 .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE), _("Archived date"))
                 .addColumn(new DescriptionAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedHumanTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))
-                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
+                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter());
         return table;
