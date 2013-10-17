@@ -149,7 +149,12 @@ public class FileDownloadWidget extends Composite {
     }
 
     public String getDisplayedValue() {
-        return fileNameLabel.getText();
+        final String displayedValue = fileNameLabel.getText();
+        if (displayedValue != null && !displayedValue.isEmpty()) {
+            return displayedValue;
+        } else {
+            return null;
+        }
     }
 
     public void resetDownloadlink() {
