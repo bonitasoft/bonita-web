@@ -17,15 +17,14 @@
 		max-width: @popup-maxWidth;
 		.page{
 			padding: @popup-padding;
-			> .header{
+			> .header {
 				h1{
 					.fontSize(@popup-title-fontSize);
 					margin: @popup-title-margin;
 				}
 			}
-			> .body{
-				width: auto;
-				max-width: 600px;
+			.form {
+                max-width: none;
 			}
 		}
 		p {
@@ -36,7 +35,7 @@
 	.popupcontainerheader{
 		.clearFix();
 		h2{
-			float:left;
+			float: left;
 		}
 		a.close_popup{
 			position: absolute;
@@ -109,5 +108,4 @@
 		top: 150px;
 		text-align: center;
 	}
-
 }

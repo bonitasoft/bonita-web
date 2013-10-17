@@ -58,7 +58,6 @@ function Popup(settings) {
 		}
 	});
 	$('body').append(wrapper);
-	$('.popupcontainer').draggable({cursor: "move", distance: 20});
 
 	function autoResize() {
 		$('.popupoverlay:first', wrapper).css({

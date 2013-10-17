@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import org.bonitasoft.console.client.common.component.snippet.SectionSnippet;
 import org.bonitasoft.web.rest.model.bpm.connector.ArchivedConnectorInstanceDefinition;
 import org.bonitasoft.web.rest.model.bpm.connector.ArchivedConnectorInstanceItem;
@@ -27,6 +25,8 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Julien mege

@@ -1,32 +1,22 @@
 package org.bonitasoft.web.toolkit.client.ui.component;
 
-import java.util.LinkedList;
-
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Components;
-import org.bonitasoft.web.toolkit.client.ui.html.HTML;
 import org.bonitasoft.web.toolkit.client.ui.html.XML;
 
-import com.google.gwt.user.client.Element;
+import java.util.LinkedList;
 
 public class Html extends Components {
 
     private String html = null;
 
-    public Html() {
-        super();
-        this.html = HTML.div() + HTML._div();
-    }
-
     public Html(final String html) {
-        super();
         this.html = html;
     }
 
-    public void setHtml(final String html) {
-        this.html = html;
-        if (isGenerated()) {
-            replace(makeElements());
-        }
+    public Html(final SafeHtml html) {
+        this.html = html.asString();
     }
 
     @Override

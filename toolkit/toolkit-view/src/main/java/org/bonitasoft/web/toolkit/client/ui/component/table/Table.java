@@ -14,16 +14,13 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.table;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Random;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ModifierEngine;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -44,13 +41,11 @@ import org.bonitasoft.web.toolkit.client.ui.html.XML;
 import org.bonitasoft.web.toolkit.client.ui.html.XMLAttributes;
 import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.GQuery;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Random;
+import java.util.*;
+import java.util.Map.Entry;
+
+import static com.google.gwt.query.client.GQuery.$;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Séverin Moussel
@@ -158,29 +153,24 @@ public class Table extends AbstractTable implements Refreshable {
 
     protected ContainerStyled<TableColumn> columns = new ContainerStyled<TableColumn>();
 
-    public Table addColumn(final String label) {
-        return this.addColumn(null, label, null, false, true);
-    }
-
     public Table addColumn(final JsId jsid, final String label) {
-        return this.addColumn(jsid, label, null, false, true);
+        return this.addColumn(new TableColumn(this, jsid, label, null, false, true));
     }
 
     public Table addColumn(final JsId jsid, final String label, final String sortName) {
-        return this.addColumn(jsid, label, sortName, true, true);
-    }
-
-    public Table addColumn(final JsId jsid, final String label, final String sortName, final boolean sorted) {
-        return this.addColumn(jsid, label, sortName, sorted, true);
+        return this.addColumn(new TableColumn(this, jsid, label, sortName, true, true));
     }
 
     public Table addColumn(final JsId jsid, final String label, final String sortName, final boolean sorted, final boolean sortAscending) {
-        this.columns.append(new TableColumn(this, jsid, label, sortName, sorted, sortAscending));
+        return addColumn(new TableColumn(this, jsid, label, sortName, sorted, sortAscending));
+    }
 
+    public Table addColumn(TableColumn column) {
+        this.columns.append(column);
+        String sortName = column.getSortName();
         if (sortName != null) {
-            this.order = sortName + (sortAscending ? " ASC" : " DESC");
+            this.order = sortName + (column.isSortAscending() ? " ASC" : " DESC");
         }
-
         return this;
     }
 
