@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>bos-web-toolkit</artifactId>
 		<groupId>org.bonitasoft.web.toolkit</groupId>
-		<version>6.1.0-rc-23</version>
+		<version>6.1.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>toolkit-view</artifactId>
