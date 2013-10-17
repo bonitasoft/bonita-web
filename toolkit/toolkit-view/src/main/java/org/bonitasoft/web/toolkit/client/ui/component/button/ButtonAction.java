@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.button;
 
+import com.google.gwt.uibinder.client.UiConstructor;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.utils.TypedString;
@@ -27,6 +28,11 @@ import org.bonitasoft.web.toolkit.client.ui.utils.TypedString;
 public class ButtonAction extends Button {
 
     public static final String CSS_CLASS = "btn-action";
+
+    @UiConstructor
+    public ButtonAction(String label) {
+        super(label, null, (Action) null);
+    }
 
     public ButtonAction(String label, String tooltip, Action action) {
         super(label, tooltip, action);

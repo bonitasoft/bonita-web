@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,8 +44,10 @@ import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
+import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
+import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
@@ -55,14 +55,13 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNodeItem> {
 
-    public final static String TOKEN = "taskmoredetailsadmin";    
-    
+    public final static String TOKEN = "taskmoredetailsadmin";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
@@ -72,9 +71,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     /**
      * Default Constructor.
-     * 
      * Set item definition as well as archived item definition.
-     * 
      */
     public TaskMoreDetailsAdminPage() {
         super(FlowNodeDefinition.get(), ArchivedFlowNodeDefinition.get());
@@ -83,7 +80,6 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     /**
      * Default Constructor.
-     * 
      * Constructor which set archived parameter of the page.
      * 
      * @param archived
@@ -112,8 +108,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                     }
                 }
             }
-            if (IFlowNodeItem.VALUE_STATE_FAILED.equals(flowNode.getState())
-                    && flowNode.isActivity()) {
+            if (IFlowNodeItem.VALUE_STATE_FAILED.equals(flowNode.getState()) && flowNode.isActivity()) {
                 addToolbarLink(skipButton(flowNode.getId()));
             }
         }
@@ -121,28 +116,21 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     }
 
     private ActionShowPopup newAssignTaskToUserAction(final APIID taskId) {
-        SelectUserAndAssignTaskPage page = new SelectUserAndAssignTaskPage();
+        final SelectUserAndAssignTaskPage page = new SelectUserAndAssignTaskPage();
         page.addParameter(PageOnItem.PARAMETER_ITEM_ID, taskId.toString());
         return new ActionShowPopup(page);
     }
 
     private Link skipButton(final APIID flowNodeId) {
-        return new ButtonAction("btn-skip",
-                _("Skip"),
-                _("Skip this task"),
-                createTaskSkipAction(flowNodeId));
+        return new ButtonAction("btn-skip", _("Skip"), _("Skip this task"), createTaskSkipAction(flowNodeId));
     }
 
     private Link unasignButton(final APIID taskId) {
-        return new ButtonAction("btn-unassign", _("Unassign"),
-                _("Unassign this task. Other allowed users will see it"),
-                new TaskRelaseAction(asList(taskId)));
+        return new ButtonAction("btn-unassign", _("Unassign"), _("Unassign this task. Other allowed users will see it"), new TaskRelaseAction(asList(taskId)));
     }
 
     private Link assignButton(final APIID taskId) {
-        return new ButtonAction("btn-assign", _("Assign"),
-                _("Assign task to someone"),
-                newAssignTaskToUserAction(taskId));
+        return new ButtonAction("btn-assign", _("Assign"), _("Assign task to someone"), newAssignTaskToUserAction(taskId));
     }
 
     private Action createTaskSkipAction(final APIID flowNodeId) {
@@ -150,7 +138,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
+                final TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
                 taskListingAdminPage.selectResourceFilter(APIID.makeAPIID(TaskListingAdminPage.FILTER_PRIMARY_FAILED));
                 ViewController.showView(taskListingAdminPage);
             }
@@ -163,8 +151,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     }
 
     private void showFailedTaskListingPage() {
-        ViewController.showView(TaskListingAdminPage.TOKEN,
-                Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
+        ViewController.showView(TaskListingAdminPage.TOKEN, Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
     }
 
     @Override
@@ -202,30 +189,33 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         return metadatas.build();
     }
 
-    protected boolean isAssigned(final IFlowNodeItem item) {
-        return !StringUtil.isBlank(item.getAttributeValue(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID));
-    }
-
     protected FORMAT getArchivedDateFormat() {
         return isArchived() ? FORMAT.DISPLAY : FORMAT.DISPLAY_RELATIVE;
     }
 
     @Override
     protected void buildBody(final IFlowNodeItem item) {
+        addBody(createConnectorSection(item));
+        addBody(createCommentsSection(item));
+    }
 
+    protected Section createCommentsSection(final IFlowNodeItem item) {
+        return new CommentSectionSnippet(item.getCaseId()).setNbLinesByPage(10).build();
+    }
+
+    protected Section createConnectorSection(final IFlowNodeItem item) {
         if (item.isArchived()) {
-            addBody(new ArchivedConnectorInstanceSectionSnippet(item)
-                    .setNbLinesByPage(10)
-                    .build());
+            return new ArchivedConnectorInstanceSectionSnippet(item).setNbLinesByPage(10).build();
         } else {
-            addBody(new ConnectorInstanceSectionSnippet(item)
-                    .setNbLinesByPage(10)
-                    .build());
+            return new Section(_("Connectors")).addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
         }
+    }
 
-        addBody(new CommentSectionSnippet(item.getCaseId())
-                .setNbLinesByPage(10)
-                .build());
+    /**
+     * Overridden in SP
+     */
+    protected ItemTable createConnectorInstanceTable(final IFlowNodeItem item) {
+        return new ConnectorInstanceTable(item);
     }
 
     @Override

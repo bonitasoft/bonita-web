@@ -125,4 +125,18 @@ public abstract class StringUtil {
         return value == null || value.isEmpty() || value.trim().isEmpty();
     }
 
+    /**
+     * Ensure value by returning default if that value {@link StringUtil#isBlank(String)}
+     *
+     * @param value
+     * @param defaultValue
+     * @return
+     */
+    public static String ensure(String value, String defaultValue) {
+        if (StringUtil.isBlank(value)) {
+            return defaultValue;
+        }
+        return value;
+    }
+
 }

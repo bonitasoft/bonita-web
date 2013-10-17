@@ -28,10 +28,6 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  */
 public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // ATTRIBUTES
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public static final String ATTRIBUTE_CONNECTOR_ID = "connectorId";
 
     public static final String ATTRIBUTE_NAME = "name";
@@ -47,10 +43,6 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_CONTAINER_ID = "containerId";
 
     public static final String ATTRIBUTE_RESET_STATE = "resetState";
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // ATTRIBUTES VALUES
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static final String VALUE_ACTIVATION_EVENT_ON_ENTER = "ON_ENTER";
 
@@ -70,16 +62,6 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
 
     public static final String VALUE_RESET_STATE_SKIPPED = "skipped";
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // FILTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // SETTERS AND GETTERS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // SETTERS
-
     @Override
     public void setId(String id) {
         this.setAttribute(ATTRIBUTE_ID, id);
@@ -94,15 +76,7 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
         this.setAttribute(ATTRIBUTE_NAME, name);
     }
 
-    public void setConnectorId(APIID id) {
-        this.setAttribute(ATTRIBUTE_CONNECTOR_ID, id);
-    }
-
     public void setConnectorId(String id) {
-        this.setAttribute(ATTRIBUTE_CONNECTOR_ID, id);
-    }
-
-    public void setConnectorId(Long id) {
         this.setAttribute(ATTRIBUTE_CONNECTOR_ID, id);
     }
 
@@ -122,19 +96,9 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
         this.setAttribute(ATTRIBUTE_CONTAINER_TYPE, type);
     }
 
-    public void setContainerId(APIID id) {
-        this.setAttribute(ATTRIBUTE_CONTAINER_ID, id);
-    }
-
-    public void setContainerId(String id) {
-        this.setAttribute(ATTRIBUTE_CONTAINER_ID, id);
-    }
-
     public void setContainerId(Long id) {
         this.setAttribute(ATTRIBUTE_CONTAINER_ID, id);
     }
-
-    // GETTERS
 
     public String getName() {
         return this.getAttributeValue(ATTRIBUTE_NAME);
@@ -146,10 +110,6 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
 
     public String getVersion() {
         return this.getAttributeValue(ATTRIBUTE_VERSION);
-    }
-
-    public String getActivationEvent() {
-        return this.getAttributeValue(ATTRIBUTE_ACTIVATION_EVENT);
     }
 
     public String getState() {
@@ -164,17 +124,13 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
         return this.getAttributeValue(ATTRIBUTE_CONTAINER_TYPE);
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // DEPLOYS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // UTILS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     public ItemDefinition getItemDefinition() {
         return Definitions.get(ConnectorInstanceDefinition.TOKEN);
+    }
+
+    public boolean hasFailed() {
+        return VALUE_STATE_FAILED.equals(getState());
     }
 
 }

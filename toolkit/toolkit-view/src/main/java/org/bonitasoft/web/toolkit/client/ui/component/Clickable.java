@@ -14,18 +14,20 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component;
 
-import static com.google.gwt.query.client.GQuery.$;
-
+import com.google.gwt.event.dom.client.DomEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.query.client.Function;
+import com.google.gwt.user.client.Event;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
+import org.bonitasoft.web.toolkit.client.ui.component.event.ActionEvent;
+import org.bonitasoft.web.toolkit.client.ui.component.event.ActionHandler;
 import org.bonitasoft.web.toolkit.client.ui.utils.TypedString;
 
-import com.google.gwt.event.dom.client.DomEvent;
-import com.google.gwt.query.client.Function;
-import com.google.gwt.user.client.Event;
+import static com.google.gwt.query.client.GQuery.$;
 
 /**
  * @author Séverin Moussel
@@ -52,20 +54,33 @@ public abstract class Clickable extends Component {
         this(null, tooltip, action);
     }
 
+    public HandlerRegistration addActionHandler(ActionHandler handler) {
+        this.action = createUiBinderAction();
+        return addHandler(handler, ActionEvent.TYPE);
+    }
+
+    private Action createUiBinderAction() {
+        return new Action() {
+
+            @Override
+            public void execute() {
+                Clickable.this.fireEvent(new ActionEvent());
+            }
+        };
+    }
+
     // With TypedString
     // ////////////////
 
     /**
-     * @deprecated
-     *             Create redirection action yourself!
+     * @deprecated Create redirection action yourself!
      */
     public Clickable(final JsId jsid, final String tooltip, final TypedString token) {
         this(jsid, tooltip, new RedirectionAction(token));
     }
 
     /**
-     * @deprecated
-     *             Create redirection action yourself!
+     * @deprecated Create redirection action yourself!
      */
     public Clickable(final String tooltip, final TypedString token) {
         this(null, tooltip, token);
@@ -75,32 +90,28 @@ public abstract class Clickable extends Component {
     // //////////////////////////////////
 
     /**
-     * @deprecated
-     *             Create redirection action yourself!
+     * @deprecated Create redirection action yourself!
      */
     public Clickable(final JsId jsid, final String tooltip, final String token, final TreeIndexed<String> parameters) {
         this(jsid, tooltip, new RedirectionAction(token, parameters));
     }
 
     /**
-     * @deprecated
-     *             Create redirection action yourself!
+     * @deprecated Create redirection action yourself!
      */
     public Clickable(final String tooltip, final String token, final TreeIndexed<String> parameters) {
         this(null, tooltip, token, parameters);
     }
 
     /**
-     * @deprecated
-     *             Create redirection action yourself!
+     * @deprecated Create redirection action yourself!
      */
     public Clickable(final JsId jsid, final String tooltip, final String token) {
         this(jsid, tooltip, token, null);
     }
 
     /**
-     * @deprecated
-     *             Create redirection action yourself!
+     * @deprecated Create redirection action yourself!
      */
     public Clickable(final String tooltip, final String token) {
         this(null, tooltip, token, null);
@@ -157,8 +168,7 @@ public abstract class Clickable extends Component {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param action
-     *            the action to set
+     * @param action the action to set
      */
     public void setAction(final Action action) {
         this.action = action;
