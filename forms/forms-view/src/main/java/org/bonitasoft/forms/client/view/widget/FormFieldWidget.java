@@ -715,7 +715,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
         // label creation
         HTML labelWidget = null;
-        if (widgetData.getLabel() != null && widgetData.getLabel().length() > 0) {
+        if (widgetData.isMandatory() || (widgetData.getLabel() != null && widgetData.getLabel().length() > 0)) {
             labelWidget = createLabelWidget(widgetData);
         }
         if (labelWidget != null) {
@@ -915,10 +915,12 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     private HTML createLabelWidget(final ReducedFormWidget widgetData) {
         final HTML labelWidget = new HTML();
 
-        if (widgetData.allowHTMLInLabel()) {
-            labelWidget.setHTML(widgetData.getLabel() + " ");
-        } else {
-            labelWidget.setText(widgetData.getLabel() + " ");
+        if (widgetData.getLabel() != null && widgetData.getLabel().length() > 0) {
+            if (widgetData.allowHTMLInLabel()) {
+                labelWidget.setHTML(widgetData.getLabel() + " ");
+            } else {
+                labelWidget.setText(widgetData.getLabel() + " ");
+            }
         }
 
         // mandatory fields symbol display
