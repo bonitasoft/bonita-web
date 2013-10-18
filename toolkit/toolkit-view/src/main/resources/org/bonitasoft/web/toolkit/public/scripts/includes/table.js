@@ -32,11 +32,6 @@ $(function() {
 			var datatable = $(this);
 			var table = $('.table', datatable);
 
-
-			// Add select all
-			// $('.thead .th:first', table).before('<div class="th
-			// th_checkbox"><input type="checkbox" /></div>');
-
 			// get semantics
 			var semantics = new Array();
 			$('.thead .th', table).each(function() {
@@ -57,7 +52,6 @@ $(function() {
 				$('.tr', $(this)).each(function() {
 					var line = $(this);
 					line.addClass(cnt_lines % 2 == 0 ? 'even' : 'odd').addClass('tr_' + (cnt_lines++));
-
 					cnt_cols = 0;
 					$('.td, .th', $(this)).each(function() {
 						var e = $(this);
