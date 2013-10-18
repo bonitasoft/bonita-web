@@ -1921,21 +1921,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final Map<String, Object> urlContext = getUrlContext(context);
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 final String formId = (String) urlContext.get(FormServiceProviderUtil.FORM_ID);
-                if (FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId))) {
-                    isCurrentValue = true;
-                } else {
-                    isCurrentValue = false;
-                }
+                isCurrentValue = FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId));
             } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
                 isCurrentValue = false;
             } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                 if (urlContext.get(FormServiceProviderUtil.RECAP_FORM_TYPE) != null) {
-                    final boolean isRecap = Boolean.valueOf((String) urlContext.get(FormServiceProviderUtil.RECAP_FORM_TYPE));
-                    if (isRecap) {
-                        isCurrentValue = true;
-                    } else {
-                        isCurrentValue = false;
-                    }
+                    isCurrentValue = Boolean.valueOf((String) urlContext.get(FormServiceProviderUtil.RECAP_FORM_TYPE));
                 } else {
                     isCurrentValue = false;
                 }

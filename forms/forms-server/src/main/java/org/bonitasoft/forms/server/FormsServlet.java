@@ -129,8 +129,10 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
         try {
             return super.processCall(payload);
         } catch (final SerializationException e) {
-            LOGGER.log(Level.SEVERE,
-                    "The Object returned by the RPC call is not supported by the client. Complex java types and XML types are not supported as data field's inputs.", e);
+            LOGGER.log(
+                    Level.SEVERE,
+                    "The Object returned by the RPC call is not supported by the client. Complex java types and XML types are not supported as data field's inputs.",
+                    e);
             throw e;
         }
     }
@@ -213,9 +215,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 formPage = definitionAPI.getFormPage(formID, pageId, context);
                 if (formPage != null) {
                     formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-                    formFieldValuesUtil.setFormWidgetsValues(tenantID,
-                            formPage.getFormWidgets(),
-                            context);
+                    formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
                     formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
                 }
             }
@@ -302,8 +302,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     @Override
     public ReducedFormPage getFormNextPage(final String formID, final Map<String, Object> urlContext, final String nextPageExpressionId,
             final Map<String, FormFieldValue> fieldValues) throws RPCException, SessionTimeoutException, FormAlreadySubmittedException, SuspendedFormException,
-            CanceledFormException, ForbiddenFormAccessException, FormInErrorException,
-            SkippedFormException, AbortedFormException {
+            CanceledFormException, ForbiddenFormAccessException, FormInErrorException, SkippedFormException, AbortedFormException {
         final String localeStr = getLocale();
         final Locale userLocale = resolveLocale(localeStr);
         final Map<String, Object> context = initContext(urlContext, userLocale);
@@ -332,9 +331,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final String pageId = (String) formServiceProvider.resolveExpression(nextPageIdExpression, context);
             final FormPage formPage = definitionAPI.getFormPage(formID, pageId, context);
             formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-            formFieldValuesUtil.setFormWidgetsValues(tenantID,
-                    formPage.getFormWidgets(),
-                    context);
+            formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
             formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
             return formPage.getReducedFormPage();
         } catch (final ForbiddenFormAccessException e) {
@@ -512,8 +509,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final Date deployementDate = formServiceProvider.getDeployementDate(context);
             final boolean isEditMode = formServiceProvider.isEditMode(formID, context);
             context.put(FormServiceProviderUtil.IS_EDIT_MODE, isEditMode);
-            final boolean isCurrentValue = formServiceProvider.isCurrentValue(context);
-            context.put(FormServiceProviderUtil.IS_CURRENT_VALUE, isCurrentValue);
+            // Set the current value to false in order to evaluate the confirmation message on archived objects
+            context.put(FormServiceProviderUtil.IS_CURRENT_VALUE, Boolean.FALSE);
             context.put(FormServiceProviderUtil.IS_CONFIRMATION_PAGE, Boolean.TRUE);
             final Document document = formServiceProvider.getFormDefinitionDocument(context);
             final IFormDefinitionAPI definitionAPI = FormAPIFactory.getFormDefinitionAPI(tenantID, document, deployementDate, localeStr);
@@ -607,10 +604,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     protected void setFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
             final Map<String, Serializable> transientDataContext, final Map<String, Object> context) {
 
-        formServiceProvider.storeFormTransientDataContext(getSession(),
-                TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID,
-                transientDataContext,
-                context);
+        formServiceProvider.storeFormTransientDataContext(getSession(), TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, transientDataContext, context);
     }
 
     /*
