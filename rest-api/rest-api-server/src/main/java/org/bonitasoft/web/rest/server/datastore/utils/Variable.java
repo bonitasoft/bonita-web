@@ -20,7 +20,8 @@ package org.bonitasoft.web.rest.server.datastore.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+
 
 /**
  * Variable - Used for variable Json deserialization

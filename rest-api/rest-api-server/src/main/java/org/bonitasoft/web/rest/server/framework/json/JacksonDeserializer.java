@@ -23,10 +23,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.JavaType;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Jackson ObjectMapper Wrapper to fit our needs
