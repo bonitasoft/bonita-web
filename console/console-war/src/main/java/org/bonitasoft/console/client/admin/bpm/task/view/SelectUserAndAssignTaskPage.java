@@ -68,13 +68,15 @@ public class SelectUserAndAssignTaskPage extends Page {
     }
 
     private SelectItemAndDoEntry selectUserAndDoEntry() {
-        return new SelectItemAndDoEntry(
+        SelectItemAndDoEntry selectItemAndDoEntry = new SelectItemAndDoEntry(
                 "user_id",
                 _("Select a user"),
                 _("Select a user by typing a part of his name."),
                 UserDefinition.get(),
                 new UserAttributeReader(),
                 UserItem.ATTRIBUTE_ID);
+        selectItemAndDoEntry.addFilter(UserItem.ATTRIBUTE_ENABLED, "true");
+        return selectItemAndDoEntry;
     }
 
     private FormAction assignTaskAction() {

@@ -49,7 +49,7 @@ public class SelectItemAndDoForm extends Component {
     private final Action callback;
 
     private TreeIndexed<String> hiddenEntries = new TreeIndexed<String>();
-
+    
     public SelectItemAndDoForm(final List<SelectItemAndDoEntry> entries, final String submitLabel, final String submitTooltip, final Action callback) {
         super();
         this.entries = entries;
@@ -101,6 +101,7 @@ public class SelectItemAndDoForm extends Component {
              */
         }
     }
+    
 
     @Override
     protected Element makeElement() {
@@ -112,6 +113,9 @@ public class SelectItemAndDoForm extends Component {
             AutoCompleteEntry autoCompleteEntry = new AutoCompleteEntry(new JsId(entry.getName()), entry.getLabel(), 
                     entry.getTooltip(), entry.getItemDefinition(), entry.getSuggestionLabel(), 
                     entry.getSuggestionValueAttributeName(), null);
+            for (Entry<String, String> filter : entry.getFilters().entrySet()) {
+                autoCompleteEntry.addFilter(filter.getKey(), filter.getValue());
+            }
             form.addEntry(autoCompleteEntry);
             form.getEntry(new JsId(entry.getName())).addValidator(new MandatoryValidator());
         }
