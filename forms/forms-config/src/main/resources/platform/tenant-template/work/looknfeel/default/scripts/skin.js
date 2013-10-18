@@ -52,7 +52,6 @@ function resizeSelect(f) {
 		var newListWidth = list.outerWidth();
 		// set the container width to list width including arrow width & padding if the max available width is not reached
 		if (newListWidth < maxAvailableWidth) {
-			console.log(newListWidth - arrowBgWidth);
 			listContainer.css("width", newListWidth - arrowBgWidth);
 		} else {
 			//if the width is higher set to max available width
