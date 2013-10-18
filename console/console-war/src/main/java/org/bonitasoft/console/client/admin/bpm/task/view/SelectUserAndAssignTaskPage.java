@@ -19,12 +19,18 @@ package org.bonitasoft.console.client.admin.bpm.task.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.AssignTaskAndHistoryBackAction;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
-import org.bonitasoft.console.client.common.view.SelectUserAndDoPage;
+import org.bonitasoft.console.client.common.view.SelectItemAndDoEntry;
+import org.bonitasoft.console.client.common.view.SelectItemAndDoForm;
+import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 
@@ -32,7 +38,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
  * @author Vincent Elcrin
  * 
  */
-public class SelectUserAndAssignTaskPage extends SelectUserAndDoPage {
+public class SelectUserAndAssignTaskPage extends Page {
 
     public static final String TOKEN = "assignTaskTo";    
     
@@ -50,7 +56,6 @@ public class SelectUserAndAssignTaskPage extends SelectUserAndDoPage {
         return TOKEN;
     }
 
-    @Override
     protected Action defineSubmitButtonAction() {
         // need to use a form action otherwise hidden field are not passed though to the action
         return new FormAction() {
@@ -65,20 +70,58 @@ public class SelectUserAndAssignTaskPage extends SelectUserAndDoPage {
         };
     }
 
-    @Override
     protected String defineSubmitButtonLabel() {
         return _("Assign");
     }
 
-    @Override
     protected String defineSubmitButtonTooltip() {
         return _("Assign selected tasks to user");
     }
 
-    @Override
     public void defineTitle() {
         setTitle(_("Select user to assign task"));
 
+    }
+
+    /**
+     * Override this method to change the name of the parameter passed to the callback action
+     * 
+     * @return This method must return the name of the parameter
+     */
+    protected String defineUserIdParameterName() {
+        return "user_id";
+    }
+
+    protected final List<SelectItemAndDoEntry> defineEntries() {
+        return Arrays.asList(
+                new SelectItemAndDoEntry(
+                        defineUserIdParameterName(),
+                        _("Select a user"),
+                        _("Select a user by typing a part of his name."),
+                        UserDefinition.get(),
+                        new UserAttributeReader(),
+                        UserItem.ATTRIBUTE_ID)
+                );
+    }
+
+    @Override
+    public final void buildView() {
+        // Before
+        buildBefore();
+    
+        // Build form
+        final SelectItemAndDoForm selectItemAndDoForm = new SelectItemAndDoForm(
+                defineEntries(),
+                defineSubmitButtonLabel(),
+                defineSubmitButtonTooltip(),
+                defineSubmitButtonAction());
+        selectItemAndDoForm.setHiddenEntries(getParameters());
+    
+        addBody(selectItemAndDoForm);
+    }
+
+    protected void buildBefore() {
+        // Do nothing if not overriden
     }
 
 }
