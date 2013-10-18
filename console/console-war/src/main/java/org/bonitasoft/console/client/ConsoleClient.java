@@ -43,7 +43,7 @@ public class ConsoleClient extends ClientApplication {
     }
 
     protected void registerJSNIMethods() {
-    
+        JsniPublisher.publishMethods();
     }
 
     protected void onConsoleLoad() {
