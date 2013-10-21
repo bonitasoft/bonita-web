@@ -5,8 +5,8 @@ var bonitasoft = (function (bonitasoft) {
         /*
          * Extend namespace by creating all 
          * intermediate namespace and calling 
-         * extension method with requested 
-         * namespace to be extended
+         * extension method to extends requested 
+         * namespace.
          */
         function extend(root, namespaces, extension) {
             var i, 
@@ -27,7 +27,8 @@ var bonitasoft = (function (bonitasoft) {
             
     var assertion = (function(assertion) {
         /*
-         * Throw an excepton if the condition is false.
+         * Throw an excepton if the 
+         * condition isn't met.
          */
         function assert(condition, message) {
             if(!condition) {
@@ -40,12 +41,9 @@ var bonitasoft = (function (bonitasoft) {
     })(assertion);
             
     var variable = (function(variable, assertion) {
-            
         /*
-         * Replace variables contained in html.
-         * Variable are added with the following
-         * pattern %variable-name%. This methode
-         * replace them with value.
+         * Replace following pattern %variable-name%
+         * with value in element's html.
          */
         function inject(context, name, value) {
             assertion.assert(context !== undefined);
