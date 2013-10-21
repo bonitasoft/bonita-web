@@ -1,9 +1,7 @@
 var bonitasoft = (function (bonitasoft) {
     "use strict";
     
-    // namespace utilitaries.
-    function Namespace() {
-        
+    var namespace = (function(namespace) {
         /*
          * Extend namespace by creating all 
          * intermediate namespace and calling 
@@ -22,36 +20,56 @@ var bonitasoft = (function (bonitasoft) {
             extension(current);
         }
         
-        return {
+        return namespace || {
             extend: extend
         };
-    }
-    
-    // variables utilitaries.
-    function Variable() {
-
-	/*
-	 * Replace variables contained in html.
-	 * Variable are added with the following
-	 * pattern %variable-name%. This methode
-	 * replace them with value.
-	 */
+    })(namespace);
+            
+    var assertion = (function(assertion) {
+        /*
+         * Throw an excepton if the condition is false.
+         */
+        function assert(condition, message) {
+            if(!condition) {
+                throw message || 'Assertion failed';
+            }
+        }
+        return assertion || {
+            assert: assert
+        };
+    })(assertion);
+            
+    var variable = (function(variable, assertion) {
+            
+        /*
+         * Replace variables contained in html.
+         * Variable are added with the following
+         * pattern %variable-name%. This methode
+         * replace them with value.
+         */
         function inject(context, name, value) {
+            assertion.assert(context !== undefined);
             context.html(context.html().replace('%' + name + '%', value));
         }
-        
-        return {
+        return variable || {
             inject: inject
         };
-    }
-    
-    var namespace = new Namespace();
+    })(variable, assertion);
+
+    // bonitasoft.utils.namespace    
     namespace.extend(bonitasoft, 'utils', function (utils) {
         utils.namespace = namespace;
     });
-
-    namespace.extend(bonitasoft, 'utils.html', function (html) {
-        html.variable = new Variable();
+    
+    // bonitasoft.utils.assertion
+    namespace.extend(bonitasoft, 'utils', function (utils) {
+        utils.assertion = assertion;
     });
+
+    // bonitasoft.utils.html.variable
+    namespace.extend(bonitasoft, 'utils.html', function (html) {
+        html.variable = variable;
+    });
+        
     return bonitasoft;
 })(bonitasoft || {});
