@@ -19,6 +19,7 @@ package org.bonitasoft.test.toolkit.bpm;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.ActivityStates;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
+import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.exception.SearchException;
@@ -83,6 +84,7 @@ public class TestCase {
     public TestHumanTask getNextHumanTask(final APISession apiSession) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         final SearchOptionsBuilder searchOptBuilder = new SearchOptionsBuilder(0, 1);
+        searchOptBuilder.filter(HumanTaskInstanceSearchDescriptor.STATE_NAME, ActivityStates.READY_STATE);
 
         /**
          * Get next workable human task. (e.g not in initialization state)
@@ -92,7 +94,7 @@ public class TestCase {
         for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
             try {
                 result = processAPI.searchHumanTaskInstances(searchOptBuilder.done());
-                if (!result.getResult().isEmpty() && isAllowedState(result.getResult().get(0))) {
+                if (!result.getResult().isEmpty()) {
                     humanTask = result.getResult().get(0);
                     break;
                 }
@@ -172,7 +174,7 @@ public class TestCase {
     public ArchivedProcessInstance getArchive() {
         return getArchive(TestToolkitCtx.getInstance().getInitiator());
     }
-    
+
     public void archive() throws InterruptedException {
         TestUser user = TestToolkitCtx.getInstance().getInitiator();
         APISession session = user.getSession();

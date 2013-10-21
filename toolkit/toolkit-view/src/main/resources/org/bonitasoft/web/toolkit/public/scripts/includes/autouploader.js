@@ -74,13 +74,13 @@ $(function() {
 
 		var input = fileInput
 
-		var uploaderEl = $('<div id="uploader"><a id="' + input.attr("name")
+		var uploaderEl = $('<div class="uploader" id="uploader_'+input.attr("name")+'"><a id="' + input.attr("name")
 				+ '"></a></div>')
 
 		var pluploader = new plupload.Uploader({
-			runtimes : 'gears,html5,flash,silverlight,browserplus',
+			runtimes : 'gears,html5,html4,flash,silverlight,browserplus',
 			multipart : true,
-			container : 'uploader',
+			container : 'uploader_'+input.attr("name"),
 			browse_button : input.attr("name"),
 			url : input.getOption('url'),
 			flash_swf_url : 'scripts/ext/plupload.flash.swf',
@@ -117,7 +117,7 @@ $(function() {
 				updateUploaderState(true, pluploader.files[0].name,
 						CSS_IS_UPLOADING, pluploader.files[0].name)
 				var cache = document.createElement("div");
-				cache.id="uploadCache";
+				cache.id="uploadCache_"+input.attr("name");
 				cache.style.position="absolute";
 				cache.style.background="#000000";
 				cache.style.opacity="0.3";
@@ -125,7 +125,7 @@ $(function() {
 				cache.style.height="100%";
 				cache.style.top="0";
 				cache.style.left="0";
-				$('div.page_processupload div.fileupload div.input div#uploader').append(cache);
+				$('div.page_processupload div.fileupload div.input div#uploader'+input.attr("name")).append(cache);
 				if (!$("a.installUpload").hasClass("disabled")) {
 					$("a.installUpload").addClass("disabled");
 				}
@@ -140,14 +140,14 @@ $(function() {
 			$('div.alert_message.ERROR').remove();
 			pluploader.removeFile(file)
 			$("a.installUpload").removeClass("disabled");
-			$("#uploadCache").remove();
+			$("#uploadCache_"+input.attr("name")).remove();
 			updateUploaderState(false, response.response, CSS_IS_DONE)
 		}
 
 		var addError = function(message) {
 			$('div.alert_message.ERROR').remove();
-			$('#filepicker', 'uploader').after(
-					'<div class="alert_message ERROR">' + message + '<\div>');
+			$('#filepicker_' + input.attr("name") + ', #uploader_' + input.attr("name")).after(
+					'<div class="alert_message ERROR">' + message + '</div>');
 		}
 
 		/**
