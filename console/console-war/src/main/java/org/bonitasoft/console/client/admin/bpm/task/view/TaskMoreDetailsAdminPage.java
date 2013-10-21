@@ -101,8 +101,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         if (!isArchived()) {
             if (flowNode.isHumanTask()) {
                 if (StringUtil.isBlank(flowNode.getAttributeValue(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID))) {
-                    // WEB-3192 
-//                    addToolbarLink(assignButton(flowNode.getId()));
+                    addToolbarLink(assignButton(flowNode.getId()));
                 } else {
                     if (!flowNode.getType().equals(IUserTaskItem.VALUE_TYPE_MANUAL_TASK)) {
                         addToolbarLink(unasignButton(flowNode.getId()));
