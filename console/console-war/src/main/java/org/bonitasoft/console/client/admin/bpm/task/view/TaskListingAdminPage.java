@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.formatter.PriorityCssCellFormatter;
-import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
 import org.bonitasoft.console.client.common.formatter.OverdueDateCellFormatter;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -171,7 +170,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
 
                         // Grouped actions
-                        .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
+//                        .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
                         .addGroupedAction(new JsId("unassign"), _("Unassign"), _("Unassign this task. Other allowed users will see it"),
                                 new TaskRelaseAction())
 
