@@ -399,9 +399,10 @@ public interface FormServiceProvider {
      * @param context
      *            Map of context (containing the URL parameters and other data) (including the formID)
      * @return a {@link Map} of URL parameters. This Map should be empty if there are no forms to display
-     * @throws Exception
+     * @throws FormNotFoundException
+     * @throws SessionTimeoutException
      */
-    Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws Exception;
+    Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
 
     /**
      * Get the directory in which the application resources (like process layout, CSS...) are deployed.<br/>
