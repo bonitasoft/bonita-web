@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.formatter.PriorityCssCellFormatter;
-import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
+import org.bonitasoft.console.client.common.formatter.FlowNodeIconFormatter;
 import org.bonitasoft.console.client.common.formatter.OverdueDateCellFormatter;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -51,7 +51,6 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
-import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ImageCellFormater;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
@@ -65,10 +64,10 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
-    public static final String TOKEN = "tasklistingadmin";    
-    
+    public static final String TOKEN = "tasklistingadmin";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
     }
@@ -152,7 +151,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
                         // cell formatters
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new ImageCellFormater(UserItem.DEFAULT_USER_ICON))
+                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 ,
@@ -177,7 +176,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
                         // cell formatters
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new ImageCellFormater(UserItem.DEFAULT_USER_ICON))
+                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
 
                         .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
@@ -198,7 +197,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .setOrder(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false)
 
                         .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new ImageCellFormater(UserItem.DEFAULT_USER_ICON))
+                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 ,
