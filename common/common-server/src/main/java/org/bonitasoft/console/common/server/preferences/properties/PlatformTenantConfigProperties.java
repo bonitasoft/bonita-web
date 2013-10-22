@@ -37,19 +37,6 @@ public class PlatformTenantConfigProperties {
     protected static final String PROPERTIES_FILENAME = "platform-tenant-config.properties";
 
     /**
-     * Configurations of platform
-     */
-    public static final String PLATFORM_CREATE = "platform.create";
-
-    protected static final String NODE_START = "node.start";
-
-    protected static final String NODE_STOP = "node.stop";
-
-    protected static final String PLATFORM_USERNAME = "platform.username";
-
-    protected static final String PLATFORM_PASSWORD = "platform.password";
-
-    /**
      * Configurations of tenant
      */
     public static final String PLATFORM_DEFAULT_TENANT_ID = "platform.tenant.default.id";
@@ -109,29 +96,6 @@ public class PlatformTenantConfigProperties {
                 }
             }
         }
-    }
-
-    public boolean platformCreate() {
-        final String needCreate = properties.getProperty(PLATFORM_CREATE);
-        return Boolean.valueOf(needCreate);
-    }
-
-    public boolean platformStart() {
-        final String start = properties.getProperty(NODE_START);
-        return Boolean.valueOf(start);
-    }
-
-    public boolean platformStop() {
-        final String stop = properties.getProperty(NODE_STOP);
-        return Boolean.valueOf(stop);
-    }
-
-    public String platformUsername() {
-        return properties.getProperty(PLATFORM_USERNAME);
-    }
-
-    public String platformPassword() {
-        return properties.getProperty(PLATFORM_PASSWORD);
     }
 
     public String getDefaultTenantId() {

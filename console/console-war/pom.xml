@@ -11,8 +11,12 @@
 
 	<properties>
 		<permutations>All</permutations>
+
+		<!-- filtered in web.xml -->
 		<enable.engine.http.api.start>&lt;!--</enable.engine.http.api.start>
         <enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
+		<enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
+        <enable.engine.listener.end>--&gt;</enable.engine.listener.end>
 	</properties>
 
 	<dependencies>
@@ -311,7 +315,11 @@
 			</dependencies>
 			
 			<properties>
-                 <bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
+                <bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
+                 
+			    <!-- filtered in web.xml -->
+				<enable.engine.listener.start />
+        		<enable.engine.listener.end />
             </properties>
 			<build>
 				<plugins>

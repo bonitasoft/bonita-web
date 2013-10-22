@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -30,6 +28,7 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -58,7 +57,7 @@ public class ActivityEngineClient {
         try {
             return processAPI.getActivityDataInstance(dataName, activityId);
         } catch (DataNotFoundException e) {
-            throw new APIException(_("Unable to find data instance %dataName% for activity %activityId%", 
+            throw new APIException(new _("Unable to find data instance %dataName% for activity %activityId%", 
                     new Arg("dataName", dataName), new Arg("activityId", activityId)), e);
         }
     }
@@ -67,7 +66,7 @@ public class ActivityEngineClient {
         try {
             processAPI.updateActivityInstanceVariables(activityId, variables);
         } catch (UpdateException e) {
-            throw new APIException(_("Error when updating %activityId% activity variables", 
+            throw new APIException(new _("Error when updating %activityId% activity variables", 
                     new Arg("activityId", activityId)), e);
         }
     }
