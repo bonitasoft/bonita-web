@@ -894,9 +894,6 @@ public class Table extends AbstractTable implements Refreshable {
 
     public String getSearch() {
 
-        if (getElement().getClassName().contains("empty")) {// if the table is empty return ""
-            return "";
-        }
         if (!$(getElement()).isVisible()) {
             return "";
         }
