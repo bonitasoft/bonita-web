@@ -63,11 +63,6 @@ public class LoginServlet extends HttpServlet {
     protected static final String LOGIN_URL_PARAM_NAME = "loginUrl";
 
     /**
-     * indicate if the platform is created
-     */
-    private static Boolean isPlatformCreated = false;
-
-    /**
      * Necessary studio integration (username and password are passed in the URL in development mode)
      */
     @Override
@@ -83,58 +78,55 @@ public class LoginServlet extends HttpServlet {
         if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
             redirectAfterLogin = false;
         }
-        checkPlatform(request, response, redirectAfterLogin);
-        if (isPlatformCreated) {
-            final long tenantId = getTenantId(request, response);
-            String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + dropPassword(request.getQueryString()) + ")");
-            }
-            if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
-                redirectURL = LoginManager.DEFAULT_DIRECT_URL;
-            }
-            try {
-                doLogin(request, tenantId);
-                final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
-                // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
-                if (redirectAfterLogin) {
-                    if (apiSession.isTechnicalUser() || TenantsManagementUtils.hasProfileForUser(apiSession)) {
-                        response.sendRedirect(createRedirectUrl(request, redirectURL));
-                    } else {
-                        request.setAttribute(LOGIN_FAIL_MESSAGE, "noProfileForUser");
-                        getServletContext().getRequestDispatcher(LoginManager.LOGIN_PAGE).forward(request, response);
-                    }
-                }
-            } catch (final LoginFailedException e) {
-                // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
-                if (redirectAfterLogin) {
-                    try {
-                        request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
-                        String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
-                        if (loginURL == null) {
-                            loginURL = LoginManager.LOGIN_PAGE;
-                            getServletContext().getRequestDispatcher(loginURL).forward(request, response);
-                        } else {
-                            response.sendRedirect(createRedirectUrl(request, loginURL));
-                        }
-                    } catch (final Exception e1) {
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, e1.getMessage());
-                        }
-                        throw new ServletException(e1);
-                    }
+        final long tenantId = getTenantId(request, response);
+        String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + dropPassword(request.getQueryString()) + ")");
+        }
+        if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
+            redirectURL = LoginManager.DEFAULT_DIRECT_URL;
+        }
+        try {
+            doLogin(request, tenantId);
+            final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+            // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
+            if (redirectAfterLogin) {
+                if (apiSession.isTechnicalUser() || TenantsManagementUtils.hasProfileForUser(apiSession)) {
+                    response.sendRedirect(createRedirectUrl(request, redirectURL));
                 } else {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, e.getMessage());
-                    }
-                    throw new ServletException(e);
+                    request.setAttribute(LOGIN_FAIL_MESSAGE, "noProfileForUser");
+                    getServletContext().getRequestDispatcher(LoginManager.LOGIN_PAGE).forward(request, response);
                 }
-            } catch (final Exception e) {
+            }
+        } catch (final LoginFailedException e) {
+            // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
+            if (redirectAfterLogin) {
+                try {
+                    request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
+                    String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
+                    if (loginURL == null) {
+                        loginURL = LoginManager.LOGIN_PAGE;
+                        getServletContext().getRequestDispatcher(loginURL).forward(request, response);
+                    } else {
+                        response.sendRedirect(createRedirectUrl(request, loginURL));
+                    }
+                } catch (final Exception e1) {
+                    if (LOGGER.isLoggable(Level.SEVERE)) {
+                        LOGGER.log(Level.SEVERE, e1.getMessage());
+                    }
+                    throw new ServletException(e1);
+                }
+            } else {
                 if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
+                    LOGGER.log(Level.SEVERE, e.getMessage());
                 }
                 throw new ServletException(e);
             }
+        } catch (final Exception e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
+            }
+            throw new ServletException(e);
         }
     }
 
@@ -171,60 +163,6 @@ public class LoginServlet extends HttpServlet {
             }
         }
         return tenantId;
-    }
-
-    private synchronized void checkPlatform(final HttpServletRequest request, final HttpServletResponse response, final boolean redirectAfterLogin)
-            throws ServletException {
-        PlatformSession platformSession = null;
-        PlatformLoginAPI platformLoginAPI = null;
-        try {
-            if (!isPlatformCreated) {
-                platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
-                final PlatformTenantConfigProperties platformProperties = PropertiesFactory.getPlatformTenantConfigProperties();
-                platformSession = platformLoginAPI.login(platformProperties.platformUsername(), platformProperties.platformPassword());
-                final PlatformAPI platformAPI = PlatformAPIAccessor.getPlatformAPI(platformSession);
-                isPlatformCreated = platformAPI.isPlatformCreated();
-            }
-            if (!isPlatformCreated) {
-                // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
-                if (redirectAfterLogin) {
-                    request.setAttribute(LOGIN_FAIL_MESSAGE, isPlatformCreated);
-                    String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
-                    if (loginURL == null) {
-                        loginURL = LoginManager.LOGIN_PAGE;
-                    }
-                    getServletContext().getRequestDispatcher(loginURL).forward(request, response);
-                } else {
-                    final String message = "the platform is not started";
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, message);
-                    }
-                    throw new ServletException(message);
-                }
-            }
-        } catch (final Exception e) {
-            final String errorMessage = "Error while logging in to the platform";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
-            }
-            throw new ServletException(errorMessage, e);
-        } finally {
-            try {
-                if (platformLoginAPI != null) {
-                    platformLoginAPI.logout(platformSession);
-                }
-            } catch (final SessionNotFoundException e) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "Error while logging out. The session may have expired and was removed.");
-                }
-            } catch (final PlatformLogoutException e) {
-                final String errorMessage = "Error while logging out of the platform";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage);
-                }
-                throw new ServletException(errorMessage, e);
-            }
-        }
     }
 
     public String dropPassword(String content) {

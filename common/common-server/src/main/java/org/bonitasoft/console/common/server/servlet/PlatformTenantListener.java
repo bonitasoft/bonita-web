@@ -17,21 +17,15 @@
 package org.bonitasoft.console.common.server.servlet;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.api.CommandCaller;
-import org.bonitasoft.console.common.server.preferences.properties.PlatformTenantConfigProperties;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.identity.ImportPolicy;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -44,30 +38,14 @@ public class PlatformTenantListener implements ServletContextListener {
      */
     private static final Logger LOGGER = Logger.getLogger(PlatformTenantListener.class.getName());
 
-    private static PlatformTenantManager platformManager = null;
-
-    private static PlatformTenantConfigProperties platformProperties = null;
-
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
         try {
-            platformManager = PlatformTenantManager.getInstance();
-            platformManager.loginPlatform();
-            platformProperties = platformManager.getPlatformProperties();
-            if (platformProperties.platformCreate()) {
-                platformManager.createPlatform();
-            }
-            if (platformProperties.platformStart()) {
-                platformManager.startPlatform();
-            }
             initializeDefaultTenant();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                final String msg = "Error while starting the platform and tenant";
-                LOGGER.log(Level.SEVERE, msg, e);
+                LOGGER.log(Level.SEVERE, "Error while initializing the default tenant", e);
             }
-        } finally {
-            platformManager.logoutPlatform();
         }
 
     }
@@ -83,27 +61,21 @@ public class PlatformTenantListener implements ServletContextListener {
             final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
                     TenantsManagementUtils.getTechnicalUserPassword());
             final long tenantId = session.getTenantId();
-            final boolean wasDirectoryCreated = TenantsManagementUtils.addDirectoryForTenant(tenantId, platformManager.getPlatformSession());
-            if (wasDirectoryCreated) {
-                createDefaultProfiles(session);
-            }
+            TenantsManagementUtils.addDirectoryForTenant(tenantId);
             TenantAPIAccessor.getLoginAPI().logout(session);
         } catch (final NumberFormatException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                final String msg = "Error while casting default tenant id";
-                LOGGER.log(Level.SEVERE, msg, e);
+                LOGGER.log(Level.SEVERE, "Error while casting default tenant id", e);
             }
             throw e;
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                final String msg = "Error while creating tenant directory";
-                LOGGER.log(Level.SEVERE, msg, e);
+                LOGGER.log(Level.SEVERE, "Error while creating tenant directory", e);
             }
             throw e;
         } catch (final BonitaException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                final String msg = "Bonita exception while creating tenant directory";
-                LOGGER.log(Level.SEVERE, msg, e);
+                LOGGER.log(Level.SEVERE, "Bonita exception while creating tenant directory", e);
             }
             throw e;
         }
@@ -111,34 +83,6 @@ public class PlatformTenantListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(final ServletContextEvent sce) {
-        try {
-            if (platformProperties.platformStop()) {
-                platformManager.loginPlatform();
-                platformManager.stopPlatform();
-            }
-        } catch (final Throwable e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                final String msg = "Error while stopping the platform";
-                LOGGER.log(Level.SEVERE, msg, e);
-            }
-        } finally {
-            platformManager.logoutPlatform();
-        }
-    }
-
-    protected void createDefaultProfiles(final APISession session) throws IOException {
-        importProfilesFromResourceFile(session, "InitProfiles.xml");
-    }
-
-    @SuppressWarnings("unchecked")
-    protected void importProfilesFromResourceFile(final APISession session, final String xmlFileName) throws IOException {
-        final InputStream xmlStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(xmlFileName);
-        final byte[] xmlContent = IOUtils.toByteArray(xmlStream);
-
-        final CommandCaller addProfiles = new CommandCaller(session, "importProfilesCommand");
-        addProfiles.addParameter("xmlContent", xmlContent);
-        addProfiles.addParameter("importPolicy", ImportPolicy.MERGE_DUPLICATES);
-        final List<String> warningMsgs = (List<String>) addProfiles.run();
 
     }
 
