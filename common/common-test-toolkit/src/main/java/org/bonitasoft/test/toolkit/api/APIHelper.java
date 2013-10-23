@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.httpclient.HttpStatus;
 import org.bonitasoft.test.toolkit.api.json.AddToProfile;
 import org.bonitasoft.test.toolkit.api.json.CreateGroup;
@@ -24,8 +26,10 @@ import org.bonitasoft.test.toolkit.api.json.SetUserManager;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.client.ProxyFactory;
+import org.jboss.resteasy.client.core.executors.ApacheHttpClient4Executor;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.util.HttpResponseCodes;
@@ -43,6 +47,8 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("unchecked")
 public class APIHelper {
+
+    private String siteUrl;
 
     public static final long DEFAULT_TENANT_ID = 1;
 
@@ -64,6 +70,9 @@ public class APIHelper {
     /** API Client. */
     private final BonitaAPIClient client;
 
+    /** Client executor. */
+    private final ApacheHttpClient4Executor executor;
+
     /** Member type. */
     public enum MemberType {
         USER, GROUP, ROLE, ROLE_AND_GROUP
@@ -78,19 +87,21 @@ public class APIHelper {
      * Constructor.
      * 
      * @param pTenantId
-     * @param siteUrl
+     * @param pSiteUrl
      * @param pUserName
      * @param pPassword
      */
-    public APIHelper(final long pTenantId, final String siteUrl, final String pUserName, final String pPassword) {
+    public APIHelper(final long pTenantId, final String pSiteUrl, final String pUserName, final String pPassword) {
         this.logger = LoggerFactory.getLogger(APIHelper.class);
         this.logger.info("Login on tenant [{}] with user [{}]", pTenantId, pUserName);
 
         RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
-        this.client = ProxyFactory.create(BonitaAPIClient.class, siteUrl);
+        this.executor = new ApacheHttpClient4Executor();
+        setSiteUrl(pSiteUrl);
+        this.client = ProxyFactory.create(BonitaAPIClient.class, pSiteUrl, this.executor);
 
         final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword);
-        this.consumeResponse(res);
+        consumeResponse(res);
 
         this.jsonParser = new JSONParser();
         this.xmlReader = new SAXReader();
@@ -126,6 +137,18 @@ public class APIHelper {
     }
 
     /**
+     * Clean and set site URL.
+     * 
+     * @param pSiteUrl
+     */
+    private final void setSiteUrl(final String pSiteUrl) {
+        this.siteUrl = pSiteUrl;
+        if (!this.siteUrl.endsWith("/")) {
+            this.siteUrl = this.siteUrl + "/";
+        }
+    }
+
+    /**
      * @return
      */
     public final BonitaAPIClient getClient() {
@@ -140,7 +163,7 @@ public class APIHelper {
     public final JSONArray getAllUsers() {
         System.out.println("[INFO] APIHelper => getAllUsers()");
         final ClientResponse<String> res = this.client.getUsers(0, SEARCH_COUNT);
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         JSONArray users = new JSONArray();
         try {
             users = (JSONArray) this.jsonParser.parse(entity);
@@ -157,7 +180,7 @@ public class APIHelper {
      */
     public final JSONArray getAllGroups() {
         System.out.println("[INFO] APIHelper => getAllGroups()");
-        return this.search(BonitaAPIClient.GROUP_API_PATH, 0, SEARCH_COUNT, "name ASC", null, null, null);
+        return search(BonitaAPIClient.GROUP_API_PATH, 0, SEARCH_COUNT, "name ASC", null, null, null);
     }
 
     /**
@@ -167,7 +190,7 @@ public class APIHelper {
      */
     public final JSONArray getAllRoles() {
         System.out.println("[INFO] APIHelper => getAllRoles()");
-        return this.search(BonitaAPIClient.ROLE_API_PATH, 0, SEARCH_COUNT, "name ASC", null, null, null);
+        return search(BonitaAPIClient.ROLE_API_PATH, 0, SEARCH_COUNT, "name ASC", null, null, null);
     }
 
     /**
@@ -177,7 +200,7 @@ public class APIHelper {
      */
     public final JSONArray getAllProfiles() {
         System.out.println("[INFO] APIHelper => getAllProfiles()");
-        return this.search(BonitaAPIClient.PROFILE_API_PATH, 0, SEARCH_COUNT, "name ASC", null, null, null);
+        return search(BonitaAPIClient.PROFILE_API_PATH, 0, SEARCH_COUNT, "name ASC", null, null, null);
     }
 
     /**
@@ -188,7 +211,7 @@ public class APIHelper {
     public final JSONArray search(final String searchURL, final int pParam, final int cParam, final String oParam, final String fParam,
             final String dParam, final String nParam) {
         final ClientResponse<String> res = this.client.search(searchURL, pParam, cParam, oParam, fParam, dParam, nParam);
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         JSONArray items = new JSONArray();
         try {
             items = (JSONArray) this.jsonParser.parse(entity);
@@ -206,8 +229,7 @@ public class APIHelper {
     public final APIResponse searchResponse(final String searchURL, final int pParam, final int cParam, final String oParam, final String fParam,
             final String dParam, final String nParam) {
         final ClientResponse<String> res = this.client.search(searchURL, pParam, cParam, oParam, fParam, dParam, nParam);
-
-        return this.consumeResponse(res);
+        return consumeResponse(res);
     }
 
     /**
@@ -220,7 +242,7 @@ public class APIHelper {
         final String filterExpression = null; // "VIEW=ADMINISTRATOR";
         final String order = "deploymentDate DESC";
         final ClientResponse<String> res = this.client.getProcesses(order, filterExpression);
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         JSONArray processes = new JSONArray();
         try {
             processes = (JSONArray) this.jsonParser.parse(entity);
@@ -239,7 +261,7 @@ public class APIHelper {
      */
     public final String getUserId(final String pUsername) throws Exception {
         System.out.println("[INFO] APIHelper => getUserId(" + pUsername + ")");
-        final JSONObject jsonObj = this.getUserJSONObject(pUsername);
+        final JSONObject jsonObj = getUserJSONObject(pUsername);
         return (String) jsonObj.get("id");
     }
 
@@ -252,7 +274,7 @@ public class APIHelper {
      */
     public final JSONObject getUserJSONObject(final String pUsername) throws Exception {
         System.out.println("[INFO] APIHelper => getUserJSONObject(" + pUsername + ")");
-        final JSONArray users = this.getAllUsers();
+        final JSONArray users = getAllUsers();
         for (final Object obj : users) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String username = (String) jsonObj.get("userName");
@@ -273,7 +295,7 @@ public class APIHelper {
      */
     public final String getActorId(final String pProcessId, final String pActorName) throws Exception {
         System.out.println("[INFO] APIHelper => getActorId(" + pProcessId + ", " + pActorName + ")");
-        final JSONArray users = this.getAllActors(pProcessId);
+        final JSONArray users = getAllActors(pProcessId);
         for (final Object obj : users) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String actorName = (String) jsonObj.get("name");
@@ -293,7 +315,7 @@ public class APIHelper {
      */
     public final String getGroupId(final String pGroupName) throws Exception {
         System.out.println("[INFO] APIHelper => getGroupId(" + pGroupName + ")");
-        final JSONArray groups = this.getAllGroups();
+        final JSONArray groups = getAllGroups();
         for (final Object obj : groups) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String name = (String) jsonObj.get("name");
@@ -313,7 +335,7 @@ public class APIHelper {
      */
     public final String getRoleId(final String pRoleName) throws Exception {
         System.out.println("[INFO] APIHelper => getRoleId(" + pRoleName + ")");
-        final JSONArray roles = this.getAllRoles();
+        final JSONArray roles = getAllRoles();
         for (final Object obj : roles) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String name = (String) jsonObj.get("name");
@@ -333,7 +355,7 @@ public class APIHelper {
      */
     public final String getProfileId(final String pProfileName) throws Exception {
         System.out.println("[INFO] APIHelper => getProfileId(" + pProfileName + ")");
-        final JSONArray profiles = this.getAllProfiles();
+        final JSONArray profiles = getAllProfiles();
         for (final Object obj : profiles) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String name = (String) jsonObj.get("name");
@@ -374,7 +396,7 @@ public class APIHelper {
      */
     public final List<String> getProcessIds(final String pProcessName, final String pVersion) {
         final List<String> ids = new ArrayList<String>();
-        final JSONArray processes = this.getAllProcesses();
+        final JSONArray processes = getAllProcesses();
         for (final Object obj : processes) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String name = (String) jsonObj.get("name");
@@ -401,7 +423,7 @@ public class APIHelper {
      */
     public final String getProcessId(final String pProcessName, final String pVersion) {
         System.out.println("[INFO] APIHelper => getProcessId (" + pProcessName + "," + pVersion + ")");
-        final List<String> processIdList = this.getProcessIds(pProcessName, pVersion);
+        final List<String> processIdList = getProcessIds(pProcessName, pVersion);
         return processIdList != null ? processIdList.get(0) : null;
     }
 
@@ -416,7 +438,7 @@ public class APIHelper {
     public final String getProcessId(final String pProcessName, final String pDisplayName, final String pVersion) {
         System.out.println("[INFO] APIHelper => getProcessId (" + pProcessName + "," + pDisplayName + "," + pVersion + ")");
         String id = "";
-        final JSONArray processes = this.getAllProcesses();
+        final JSONArray processes = getAllProcesses();
         for (final Object obj : processes) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String name = (String) jsonObj.get("name");
@@ -442,7 +464,7 @@ public class APIHelper {
         APIResponse apiResponse = new APIResponse();
         String id = null;
         try {
-            id = this.getUserId(pUsername);
+            id = getUserId(pUsername);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
@@ -450,7 +472,7 @@ public class APIHelper {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
             final ClientResponse<String> res = this.client.deleteUsers(idsToDelete.toJSONString());
-            apiResponse = this.consumeResponse(res);
+            apiResponse = consumeResponse(res);
         }
         return apiResponse;
     }
@@ -464,7 +486,7 @@ public class APIHelper {
         System.out.println("[INFO] APIHelper => deleteGroup (" + pGroupName + ")");
         String id = null;
         try {
-            id = this.getGroupId(pGroupName);
+            id = getGroupId(pGroupName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
@@ -472,7 +494,7 @@ public class APIHelper {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
             final ClientResponse<String> res = this.client.deleteGroups(idsToDelete.toJSONString());
-            this.consumeResponse(res);
+            consumeResponse(res);
         }
     }
 
@@ -485,7 +507,7 @@ public class APIHelper {
         System.out.println("[INFO] APIHelper => deleteRole (" + pRoleName + ")");
         String id = null;
         try {
-            id = this.getRoleId(pRoleName);
+            id = getRoleId(pRoleName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
@@ -493,7 +515,7 @@ public class APIHelper {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
             final ClientResponse<String> res = this.client.deleteRoles(idsToDelete.toJSONString());
-            this.consumeResponse(res);
+            consumeResponse(res);
         }
     }
 
@@ -506,7 +528,7 @@ public class APIHelper {
         System.out.println("[INFO] APIHelper => deleteProfile (" + pProfileName + ")");
         String id = null;
         try {
-            id = this.getProfileId(pProfileName);
+            id = getProfileId(pProfileName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
@@ -514,7 +536,7 @@ public class APIHelper {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
             final ClientResponse<String> res = this.client.deleteProfiles(idsToDelete.toJSONString());
-            this.consumeResponse(res);
+            consumeResponse(res);
         }
     }
 
@@ -534,14 +556,14 @@ public class APIHelper {
      */
     public final APIResponse deleteAllProcesses(final String pProcessName, final String pVersion) {
         System.out.println("[INFO] APIHelper => deleteAllProcesses (" + pProcessName + "," + pVersion + ")");
-        final List<String> ids = this.getProcessIds(pProcessName, pVersion);
+        final List<String> ids = getProcessIds(pProcessName, pVersion);
         final JSONArray idsToDelete = new JSONArray();
         for (final String id : ids) {
-            this.setProcessStateById(id, ProcessActivationState.DISABLED);
+            setProcessStateById(id, ProcessActivationState.DISABLED);
             idsToDelete.add(id);
         }
         final ClientResponse<String> res = this.client.deleteProcesses(idsToDelete.toJSONString());
-        return this.consumeResponse(res);
+        return consumeResponse(res);
     }
 
     /**
@@ -553,7 +575,7 @@ public class APIHelper {
     public final APIResponse createUser(final CreateUser pCreateUser) {
         System.out.println("[INFO] APIHelper => createUser (" + pCreateUser.toString() + ")");
         final ClientResponse<String> res = this.client.createUser(pCreateUser.toJSONObject().toJSONString());
-        return this.consumeResponse(res);
+        return consumeResponse(res);
     }
 
     /**
@@ -567,7 +589,7 @@ public class APIHelper {
         System.out.println("[INFO]setUserManager( " + pUserId + " , " + pManagerId.toString() + ")");
         final SetUserManager setUserManager = new SetUserManager(pUserId, pManagerId);
         final ClientResponse<String> res = this.client.setUserManager(pUserId, setUserManager.toJSONObject().toJSONString());
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         return entity;
     }
 
@@ -583,15 +605,15 @@ public class APIHelper {
         try {
             switch (pMemberyType) {
                 case GROUP:
-                    memberId = this.getGroupId(pMemberName);
+                    memberId = getGroupId(pMemberName);
                     break;
 
                 case ROLE:
-                    memberId = this.getRoleId(pMemberName);
+                    memberId = getRoleId(pMemberName);
                     break;
 
                 default:
-                    memberId = this.getUserId(pMemberName);
+                    memberId = getUserId(pMemberName);
                     break;
             }
         } catch (final Exception e) {
@@ -613,15 +635,15 @@ public class APIHelper {
         String profileId = null;
         String memberId = null;
         try {
-            profileId = this.getProfileId(pProfileName);
-            memberId = this.getMemberId(pMemberType, pMemberName);
+            profileId = getProfileId(pProfileName);
+            memberId = getMemberId(pMemberType, pMemberName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
         if (profileId != null && memberId != null) {
             final AddToProfile addToProfile = new AddToProfile(profileId, pMemberType, memberId);
             final ClientResponse<String> res = this.client.addToProfile(addToProfile.toJSONObject().toJSONString());
-            apiResponse = this.consumeResponse(res);
+            apiResponse = consumeResponse(res);
         }
         return apiResponse;
     }
@@ -640,9 +662,9 @@ public class APIHelper {
         String roleId = null;
         String groupId = null;
         try {
-            profileId = this.getProfileId(pProfileName);
-            roleId = this.getRoleId(pRoleName);
-            groupId = this.getGroupId(pGroupName);
+            profileId = getProfileId(pProfileName);
+            roleId = getRoleId(pRoleName);
+            groupId = getGroupId(pGroupName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
@@ -651,7 +673,7 @@ public class APIHelper {
             addToProfile.setMemberType(MemberType.GROUP);
             addToProfile.setMemberId(groupId);
             final ClientResponse<String> res = this.client.addToProfile(addToProfile.toJSONObject().toJSONString());
-            apiResponse = this.consumeResponse(res);
+            apiResponse = consumeResponse(res);
         }
         return apiResponse;
     }
@@ -665,7 +687,7 @@ public class APIHelper {
     public final APIResponse installProcess(final String pFileupload) {
         final InstallProcess installProcess = new InstallProcess(pFileupload);
         final ClientResponse<String> res = this.client.installProcess(installProcess.toJSONObject().toJSONString());
-        return this.consumeResponse(res);
+        return consumeResponse(res);
     }
 
     /**
@@ -678,7 +700,7 @@ public class APIHelper {
         System.out.println("[INFO] APIHelper => importOrganization (" + pOrganizationDataUpload + ")");
         final ImportOrganization importOrganization = new ImportOrganization(pOrganizationDataUpload);
         final ClientResponse<String> res = this.client.importOrganization(importOrganization.toJSONObject().toJSONString());
-        return this.consumeResponse(res);
+        return consumeResponse(res);
     }
 
     /**
@@ -690,7 +712,7 @@ public class APIHelper {
         System.out.println("[INFO] APIHelper => exportOrganization()");
         Document result = null;
         final ClientResponse<String> res = this.client.exportOrganization();
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         System.out.println("[INFO] APIHelper => exportOrganization() - Entity: [" + entity + "]");
         try {
             result = this.xmlReader.read(new StringReader(entity));
@@ -710,9 +732,9 @@ public class APIHelper {
     public final List<APIResponse> setProcessState(final String pProcessName, final ProcessActivationState pState) {
         System.out.println("[INFO]setProcessState( " + pProcessName + " , " + pState.toString() + ")");
         final List<APIResponse> responses = new ArrayList<APIResponse>();
-        final List<String> ids = this.getProcessIds(pProcessName, null);
+        final List<String> ids = getProcessIds(pProcessName, null);
         for (final String processId : ids) {
-            responses.add(this.setProcessStateById(processId, pState));
+            responses.add(setProcessStateById(processId, pState));
         }
         return responses;
     }
@@ -729,7 +751,7 @@ public class APIHelper {
         System.out.println("[INFO]setProcessStateById( " + pProcessId + " , " + pState.toString() + ")");
         final SetProcessState setProcessState = new SetProcessState(pProcessId, pState);
         final ClientResponse<String> res = this.client.setProcessState(pProcessId, setProcessState.toJSONObject().toJSONString());
-        return this.consumeResponse(res);
+        return consumeResponse(res);
     }
 
     /**
@@ -743,7 +765,7 @@ public class APIHelper {
         System.out.println("[INFO]setProcessDisplayName( " + pProcessId + " , " + pDisplayName.toString() + ")");
         final SetProcessDisplayName setProcessDisplayName = new SetProcessDisplayName(pProcessId, pDisplayName);
         final ClientResponse<String> res = this.client.setProcessDisplayName(pProcessId, setProcessDisplayName.toJSONObject().toJSONString());
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         return entity;
     }
 
@@ -755,7 +777,7 @@ public class APIHelper {
     public final JSONArray getAllActors(final String pProcessId) {
         System.out.println("[INFO]getAllActors( " + pProcessId + ")");
         final ClientResponse<String> res = this.client.getActors(0, SEARCH_COUNT, "name ASC", "process_id=" + pProcessId);
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         JSONArray actors = new JSONArray();
         try {
             actors = (JSONArray) this.jsonParser.parse(entity);
@@ -778,7 +800,7 @@ public class APIHelper {
         filterExpressions.add("actor_id=" + pActorId);
         filterExpressions.add("MEMBER_TYPE=" + pMemberType.toString());
         final ClientResponse<String> res = this.client.getActorMembers(0, SEARCH_COUNT, "name ASC", filterExpressions);
-        final String entity = this.consumeResponse(res).getEntity();
+        final String entity = consumeResponse(res).getEntity();
         JSONArray actorMembers = new JSONArray();
         try {
             actorMembers = (JSONArray) this.jsonParser.parse(entity);
@@ -799,7 +821,7 @@ public class APIHelper {
      */
     public final String getActorMemberId(final String pActorId, final MemberType pMemberType, final String pMemberName) throws Exception {
         System.out.println("[INFO]getActorMembers( " + pActorId + "," + pMemberType.toString() + ", " + pMemberName + ")");
-        final JSONArray actorMembers = this.getActorMembers(pActorId, pMemberType);
+        final JSONArray actorMembers = getActorMembers(pActorId, pMemberType);
         for (final Object obj : actorMembers) {
             final JSONObject jsonObj = (JSONObject) obj;
             final String name = (String) jsonObj.get("name");
@@ -823,8 +845,8 @@ public class APIHelper {
         System.out.println("[INFO]deleteActorMember( " + pProcessId + "," + pActorName + ", " + pMemberType.toString() + "," + pMemberName + ")");
         String actorMemberId = null;
         try {
-            final String actorId = this.getActorId(pProcessId, pActorName);
-            actorMemberId = this.getActorMemberId(actorId, pMemberType, pMemberName);
+            final String actorId = getActorId(pProcessId, pActorName);
+            actorMemberId = getActorMemberId(actorId, pMemberType, pMemberName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
@@ -832,7 +854,7 @@ public class APIHelper {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(actorMemberId);
             final ClientResponse<String> res = this.client.deleteActorMembers(idsToDelete.toJSONString());
-            this.consumeResponse(res);
+            consumeResponse(res);
         }
     }
 
@@ -850,15 +872,15 @@ public class APIHelper {
         String userId = null;
         String entity = "";
         try {
-            userId = this.getUserId(pUserName);
-            actorId = this.getActorId(pProcessId, pActorName);
+            userId = getUserId(pUserName);
+            actorId = getActorId(pProcessId, pActorName);
         } catch (final Exception e) {
             this.logger.warn(e.getMessage());
         }
         if (userId != null && actorId != null) {
             final MapToActor actMapping = new MapToActor(actorId, pMemberyType, userId);
             final ClientResponse<String> res = this.client.mapToActor(actMapping.toJSONObject().toJSONString());
-            entity = this.consumeResponse(res).getEntity();
+            entity = consumeResponse(res).getEntity();
         }
         return entity;
     }
@@ -872,7 +894,7 @@ public class APIHelper {
     public final String createGroup(final CreateGroup pCreateGroup) {
         System.out.println("[INFO]createGroup( " + pCreateGroup.toString());
         final ClientResponse<String> res = this.client.createGroup(pCreateGroup.toJSONObject().toString());
-        return this.consumeResponse(res).getEntity();
+        return consumeResponse(res).getEntity();
     }
 
     /**
@@ -884,7 +906,7 @@ public class APIHelper {
     public final String createRole(final CreateRole pCreateRole) {
         System.out.println("[INFO]createRole( " + pCreateRole.toString());
         final ClientResponse<String> res = this.client.createRole(pCreateRole.toJSONObject().toString());
-        return this.consumeResponse(res).getEntity();
+        return consumeResponse(res).getEntity();
     }
 
     /**
@@ -895,7 +917,7 @@ public class APIHelper {
      */
     public final String createProfile(final CreateProfile pCreateProfile) {
         final ClientResponse<String> res = this.client.createProfile(pCreateProfile.toJSONObject().toString());
-        return this.consumeResponse(res).getEntity();
+        return consumeResponse(res).getEntity();
     }
 
     /**
@@ -907,7 +929,7 @@ public class APIHelper {
      */
     public final Map<String, String> getI18nTranslation(final String pLanguageCode) {
         this.logger.info("Loading i18n translation for language [{}]", pLanguageCode);
-        final JSONArray jsonArray = this.search(BonitaAPIClient.TRANSLATION_API_PATH, 0, SEARCH_COUNT, null, "locale=" + pLanguageCode, null, null);
+        final JSONArray jsonArray = search(BonitaAPIClient.TRANSLATION_API_PATH, 0, SEARCH_COUNT, null, "locale=" + pLanguageCode, null, null);
         final Map<String, String> map = new HashMap<String, String>();
         JSONObject jo;
         String cleanKey;
@@ -981,7 +1003,7 @@ public class APIHelper {
             loggerArgs[2] = HttpStatus.getStatusText(status);
             apiResponse = new APIResponse(entity, status);
             this.logger.debug("Response {}", entity);
-            String logPattern = "[{}] - {} {} ({}:{})";
+            final String logPattern = "[{}] - {} {} ({}:{})";
             if (isSuccessStatusCode(status)) {
                 this.logger.info(logPattern, loggerArgs);
             } else {
@@ -1005,6 +1027,60 @@ public class APIHelper {
      */
     public static boolean isSuccessStatusCode(final int pStatusCode) {
         return pStatusCode >= HttpResponseCodes.SC_OK && pStatusCode < HttpResponseCodes.SC_BAD_REQUEST;
+    }
+
+    /*
+     * --------------------------------------------------
+     * GENERIC METHODS
+     * --------------------------------------------------
+     */
+
+    /**
+     * Send HTTP GET to a given resource given the resource path including query params.
+     * Can be used for generice search for example.
+     * 
+     * @param pResourcePathWithQueryParams
+     *            eg. "API/system/i18ntranslation?p=0&c=0&f=locale%3den"
+     * @return {@link APIResponse}
+     * @throws Exception
+     */
+    public final APIResponse httpGet(final String pResourcePathWithQueryParams) throws Exception {
+        final String uriTemplate = this.siteUrl + pResourcePathWithQueryParams;
+        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
+        final ClientResponse<String> response = request.get();
+        return consumeResponse(response);
+    }
+
+    /**
+     * Send HTTP POST to a given resource with body.
+     * 
+     * @param pResourcePath
+     * @param pRequestBody
+     * @return
+     * @throws Exception
+     */
+    public final APIResponse httpPost(final String pResourcePath, final Object pRequestBody) throws Exception {
+        final String uriTemplate = this.siteUrl + pResourcePath;
+        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
+        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        final ClientResponse<String> response = request.post();
+        return consumeResponse(response);
+    }
+
+    /**
+     * Send HTTP PUT to a given resource with body.
+     * 
+     * @param pResourcePath
+     * @param pRequestBody
+     * @return
+     * @throws Exception
+     */
+    public final APIResponse httpPut(final String pResourcePath, final Object pRequestBody) throws Exception {
+        final String uriTemplate = this.siteUrl + pResourcePath;
+        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
+        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        final ClientResponse<String> response = request.put();
+        return consumeResponse(response);
     }
 
 }
