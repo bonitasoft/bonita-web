@@ -59,9 +59,9 @@ public class BonitaRestAPIServlet extends APIServlet {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, exception.getMessage(), exception);
             }
-            outputException(exception, resp, HttpServletResponse.SC_UNAUTHORIZED);
+            outputException(exception, req, resp, HttpServletResponse.SC_UNAUTHORIZED);
         } else if (exception.getCause() instanceof NotFoundException) {
-            outputException(null, resp, HttpServletResponse.SC_NOT_FOUND);
+            outputException(null, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else {
             super.catchAllExceptions(exception, req, resp);
         }

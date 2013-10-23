@@ -577,6 +577,10 @@ public abstract class Item implements IItem {
 
         return this.deploys.get(attributeName);
     }
+    
+    public Map<String, IItem> getDeploys() {
+        return deploys;
+    }
 
     /**
      * Get a counter value.

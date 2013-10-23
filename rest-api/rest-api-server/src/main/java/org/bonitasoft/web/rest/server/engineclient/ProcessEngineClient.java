@@ -16,15 +16,30 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
-import org.bonitasoft.engine.bpm.process.*;
-import org.bonitasoft.engine.exception.*;
+import org.bonitasoft.engine.bpm.data.DataDefinition;
+import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
+import org.bonitasoft.engine.bpm.process.ProcessDefinition;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
+import org.bonitasoft.engine.exception.AlreadyExistsException;
+import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.ProcessInstanceHierarchicalDeletionException;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 import java.util.List;
@@ -72,11 +87,11 @@ public class ProcessEngineClient {
             return getProcessApi().deploy(businessArchive);
         } catch (final AlreadyExistsException e) {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
-            throw new APIException(_("Apps %appName% in version %version% already exists",
+            throw new APIException(new _("Apps %appName% in version %version% already exists",
                     new Arg("appName", processDefinition.getName()),
                     new Arg("version", processDefinition.getVersion())), e);
         } catch (final Exception e) {
-            throw new APIException(_("Unable to deploy business archive"), e);
+            throw new APIException(new _("Unable to deploy business archive"), e);
         }
     }
 
@@ -84,7 +99,7 @@ public class ProcessEngineClient {
         try {
             getProcessApi().enableProcess(processId);
         } catch (final Exception e) {
-            throw new APIException(_("Unable to enable process"), e);
+            throw new APIException(new _("Unable to enable process"), e);
         }
     }
 
@@ -92,7 +107,7 @@ public class ProcessEngineClient {
         try {
             getProcessApi().disableProcess(processId);
         } catch (final Exception e) {
-            throw new APIException(_("Unable to disable process"), e);
+            throw new APIException(new _("Unable to disable process"), e);
         }
     }
 
@@ -101,7 +116,7 @@ public class ProcessEngineClient {
             getProcessApi().updateProcessDeploymentInfo(processId, processDeploymentInfoUpdater);
             return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final Exception e) {
-            throw new APIException("Error when updating process deployment information", e);
+            throw new APIException(new _("Error when updating process deployment informations"), e);
         }
     }
 
@@ -220,6 +235,14 @@ public class ProcessEngineClient {
             return getProcessApi().searchProcessDeploymentInfos(userId, searchOptions);
         } catch (final SearchException e) {
             throw new APIException("Error when searching process user can start", e);
+        }
+    }
+    
+    public List<DataDefinition> getProcessDataDefinitions(long processId) {
+        try {
+            return processAPI.getProcessDataDefinitions(processId, 0, Integer.MAX_VALUE);
+        } catch (ProcessDefinitionNotFoundException e) {
+            throw new APIException(new _("Unable to get process data definitions, process %processId% not found", new Arg("processId", processId)));
         }
     }
 }

@@ -17,28 +17,20 @@
 package org.bonitasoft.web.toolkit.client.common.i18n;
 
 /**
- * @author Paul AMAR
- * 
+ * @author Paul AMAR, Vincent Elcrin
+ *
+ * Use for test only. Need to find a better way.
  */
 public class I18n extends AbstractI18n {
 
     public static I18n getInstance() {
-        if (I18N_instance == null) {
-            I18N_instance = new I18n();
-        }
+        I18N_instance = new I18n();
         return (I18n) I18N_instance;
     }
 
-    /**
-     * Default Constructor.
-     */
     public I18n() {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n#loadLocale(org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE)
-     */
     @Override
     public void loadLocale(final LOCALE locale) {
 

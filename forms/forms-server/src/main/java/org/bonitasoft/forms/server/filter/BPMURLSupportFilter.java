@@ -61,14 +61,9 @@ import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 public class BPMURLSupportFilter implements Filter {
 
     /**
-     * the URL param for the locale to use
-     */
-    protected static final String LOCALE_URL_PARAM = "locale";
-
-    /**
      * the URL param for the form locale to use
      */
-    protected static final String FORM_LOCALE_URL_PARAM = "formLocale";
+    protected static final String FORM_LOCALE_URL_PARAM = "locale";
 
     /**
      * the URL param for the token
@@ -191,7 +186,8 @@ public class BPMURLSupportFilter implements Filter {
             final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             final HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             final Map<String, String[]> parameters = new HashMap<String, String[]>(httpServletRequest.getParameterMap());
-            final List<String> supportedParameterKeysList = Arrays.asList(LOCALE_URL_PARAM, FORM_LOCALE_URL_PARAM, TENANT_PARAM, UI_MODE_PARAM, THEME_PARAM,
+            final List<String> supportedParameterKeysList = Arrays.asList(FORM_LOCALE_URL_PARAM, FORM_LOCALE_URL_PARAM, TENANT_PARAM, UI_MODE_PARAM,
+                    THEME_PARAM,
                     GWT_DEBUG_PARAM, TOKEN_URL_PARAM, AUTO_LOGIN_PARAM);
             final Set<String> parameterKeys = new HashSet<String>(parameters.keySet());
             parameterKeys.removeAll(supportedParameterKeysList);
@@ -288,7 +284,7 @@ public class BPMURLSupportFilter implements Filter {
             if (taskIDStr != null) {
                 final IFormWorkflowAPI workflowAPI = FormAPIFactory.getFormWorkflowAPI();
                 final long activityInstanceID = Long.parseLong(taskIDStr[0]);
-                final String activityDefinitionUUID = workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceID, false);
+                final String activityDefinitionUUID = workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceID);
 
                 if (isRecap) {
                     formType = OVERVIEW_FORM;

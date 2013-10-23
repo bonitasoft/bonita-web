@@ -339,7 +339,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                         LOGGER.log(Level.SEVERE, "Error while retrieving the uploaded file " + uri + ": File not found.");
                     }
                 }
-            } else if (fieldValue.getDocumentId() != -1) {
+            } else if (fieldValue.getDocumentId() != -1 && fieldValue.getDisplayedValue() != null) {
                 final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
                 try {
                     final Document document = processAPI.getDocument(fieldValue.getDocumentId());
@@ -349,6 +349,10 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                                     document.getContentFileName());
                         } else {
                             documentValue = new DocumentValue(document.getUrl());
+                        }
+                    } else {
+                        if (LOGGER.isLoggable(Level.FINE)) {
+                            LOGGER.log(Level.FINE, "The document with ID " + fieldValue.getDocumentId() + " is null.");
                         }
                     }
                 } catch (final DocumentNotFoundException e) {

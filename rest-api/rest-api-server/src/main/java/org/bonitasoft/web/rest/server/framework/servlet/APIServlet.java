@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
-import org.bonitasoft.web.rest.server.framework.utils.JSonUnserializerServer;
+import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.server.ServletCall;
@@ -38,7 +38,7 @@ public abstract class APIServlet extends ToolkitHttpServlet {
     @Override
     protected void initializeToolkit() {
     	super.initializeToolkit();
-    	JSonItemReader.setUnserializer(new JSonUnserializerServer());
+    	JSonItemReader.setUnserializer(new JSonSimpleDeserializer());
     	ItemDefinitionFactory.setDefaultFactory(defineApplicatioFactoryCommon());
         RestAPIFactory.setDefaultFactory(defineApplicatioFactoryServer());
     }

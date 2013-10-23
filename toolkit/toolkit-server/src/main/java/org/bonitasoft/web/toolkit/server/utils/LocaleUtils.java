@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LocaleUtils {
 
+    public static final String BOS_LOCALE = "BOS_Locale";
+
     /**
      * Return the user locale as set in the BOS_Locale cookie.
      * If the cookie does not exist, return the locale of the request
@@ -35,21 +37,21 @@ public class LocaleUtils {
      * @return the user locale as a string
      */
     public static String getUserLocale(final HttpServletRequest request) {
-        String userLocaleStr = null;
-        final String theLocaleCookieName = "BOS_Locale";
-        final Cookie theCookies[] = request.getCookies();
-        if (theCookies != null) {
-            for (int i = 0; i < theCookies.length; i++) {
-                if (theCookies[i].getName().equals(theLocaleCookieName)) {
-                    final Cookie theCookie = theCookies[i];
-                    userLocaleStr = theCookie.getValue().toString();
-                    break;
-                }
-            }
-        }
-        if (userLocaleStr == null) {
+        String userLocaleStr = getUserLocale(request.getCookies());
+        if (userLocaleStr == null && request.getLocale() != null) {
             userLocaleStr = request.getLocale().toString();
         }
         return userLocaleStr;
+    }
+
+    public static String getUserLocale(Cookie[] cookies) {
+        if (cookies != null) {
+            for(Cookie cookie : cookies) {
+                if(BOS_LOCALE.equals(cookie.getName())) {
+                    return cookie.getValue().toString();
+                }
+            }
+        }
+        return null;
     }
 }

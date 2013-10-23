@@ -17,6 +17,8 @@
 package org.bonitasoft.test.toolkit.bpm;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.data.DataInstance;
+import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityExecutionException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
@@ -65,6 +67,14 @@ public class TestHumanTask extends AbstractManualTask {
         return this;
     }
 
+    public DataInstance getDataInstance(String dataName) {
+        try {
+            return TestProcess.getProcessAPI(TestToolkitCtx.getInstance().getInitiator().getSession())
+                    .getActivityDataInstance(dataName, humanTaskInstance.getId());
+        } catch (DataNotFoundException e) {
+            throw new TestToolkitException("Unable to find dataInstance " + dataName, e);
+        }
+    }
     /*
      * (non-Javadoc)
      * @see org.bonitasoft.test.AbstractManualTask#getId()

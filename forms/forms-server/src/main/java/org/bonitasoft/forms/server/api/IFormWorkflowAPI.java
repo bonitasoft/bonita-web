@@ -70,8 +70,8 @@ public interface IFormWorkflowAPI {
      * @throws ProcessInstanceReadException
      * @throws ProcessDefinitionNotFoundException
      */
-    long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException,
-            RetrieveException, BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
+    long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, RetrieveException,
+            BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
 
     /**
      * Retrieve any task id of the user todolist. If the process UUID is valid, the task belong to the process otherwise any task from the user todolist can be
@@ -464,18 +464,14 @@ public interface IFormWorkflowAPI {
      *            the API session
      * @param activityInstanceID
      *            the activity instance ID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
      * @return the {@link ActivityEditState}
      * @throws BPMEngineException
      * @throws ActivityInstanceNotFoundException
      * @throws InvalidSessionException
      * @throws ActivityInstanceReadException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
      */
-    ActivityEditState getTaskEditState(APISession session, long activityInstanceID, boolean isArchived) throws BPMEngineException,
-            ActivityInstanceNotFoundException,
-            RetrieveException, InvalidSessionException, ArchivedFlowNodeInstanceNotFoundException;
+    ActivityEditState getTaskEditState(APISession session, long activityInstanceID) throws BPMEngineException, ActivityInstanceNotFoundException,
+            RetrieveException, InvalidSessionException;
 
     /**
      * Execute a task
@@ -486,7 +482,7 @@ public interface IFormWorkflowAPI {
      *            the activity instance ID
      * @throws InvalidSessionException
      * @throws BPMEngineException
-     * @throws FlowNodeExecutionException 
+     * @throws FlowNodeExecutionException
      */
     void terminateTask(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException, FlowNodeExecutionException;
 
@@ -557,8 +553,6 @@ public interface IFormWorkflowAPI {
      *            the process actors of the user
      * @param activityInstanceID
      *            the activity instance ID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
      * @return true if the user is involved in the activity instance. False otherwise
      * @throws ActivityInstanceNotFoundException
      * @throws BPMEngineException
@@ -567,9 +561,9 @@ public interface IFormWorkflowAPI {
      * @throws ProcessDefinitionNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
-    boolean isUserInvolvedInActivityInstance(APISession session, Map<Long, Set<Long>> userProcessActors, long activityInstanceID, boolean isArchived)
-            throws ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException,
-            ProcessDefinitionNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
+    boolean isUserInvolvedInActivityInstance(APISession session, Map<Long, Set<Long>> userProcessActors, long activityInstanceID)
+            throws ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException, ProcessDefinitionNotFoundException,
+            ArchivedFlowNodeInstanceNotFoundException;
 
     /**
      * Retrieve some fields initial value
@@ -838,15 +832,13 @@ public interface IFormWorkflowAPI {
      *            the API session
      * @param activityInstanceID
      *            the activity instance ID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
      * @return the process instance ID
      * @throws BPMEngineException
      * @throws ProcessInstanceNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
-    long getProcessInstanceIDFromActivityInstanceID(APISession session, long activityInstanceID, boolean isArchived)
-            throws BPMEngineException, InvalidSessionException, ActivityInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
+    long getProcessInstanceIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
+            ActivityInstanceNotFoundException;
 
     /**
      * Retrieve the process definition ID from an activity instance ID
@@ -855,20 +847,16 @@ public interface IFormWorkflowAPI {
      *            the API session
      * @param activityInstanceID
      *            the activity instance ID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
      * @return the process definition ID
      * @throws BPMEngineException
      * @throws ActivityInstanceNotFoundException
      * @throws InvalidSessionException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
      */
-    long getProcessDefinitionIDFromActivityInstanceID(APISession session, long activityInstanceID, boolean isArchived) throws BPMEngineException,
-            InvalidSessionException,
-            ActivityInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
+    long getProcessDefinitionIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
+            ActivityInstanceNotFoundException;
 
     /**
-     * Retrieve the process definition ID from an process instance ID
+     * Retrieve the process definition ID from a process instance ID
      * 
      * @param session
      *            the API session
@@ -879,10 +867,9 @@ public interface IFormWorkflowAPI {
      * @throws ProcessInstanceNotFoundException
      * @throws ProcessDefinitionNotFoundException
      * @throws ArchivedProcessInstanceNotFoundException
-     * @throws ProcessInstanceReadException
      */
     long getProcessDefinitionIDFromProcessInstanceID(APISession session, long processInstanceID) throws BPMEngineException, InvalidSessionException,
-            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, RetrieveException, ArchivedProcessInstanceNotFoundException;
+            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException;
 
     /**
      * Retrieve the process ID for a given process definition UUID
@@ -905,8 +892,6 @@ public interface IFormWorkflowAPI {
      *            the API session
      * @param activityInstanceID
      *            the activity instance ID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
      * @return the signature of an activity as an UUID containing the process' name and version and the activity name
      * @throws BPMEngineException
      * @throws InvalidSessionException
@@ -915,46 +900,8 @@ public interface IFormWorkflowAPI {
      * @throws ArchivedFlowNodeInstanceNotFoundException
      * @throws ProcessDefinitionReadException
      */
-    String getActivityDefinitionUUIDFromActivityInstanceID(APISession session, long activityInstanceID, boolean isArchived) throws BPMEngineException,
-            InvalidSessionException,
-            ActivityInstanceNotFoundException, RetrieveException, ProcessDefinitionNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
-
-    /**
-     * Check if a process is enabled
-     * 
-     * @param session
-     *            the API session
-     * @param activityInstanceID
-     *            the activity instance ID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
-     * @return true if the process is enabled
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
-     * @throws ActivityInstanceNotFoundException
-     */
-    boolean isProcessOfActivityInstanceEnabled(APISession session, long activityInstanceID, boolean isArchived) throws InvalidSessionException,
-            BPMEngineException,
-            ProcessDefinitionNotFoundException, ActivityInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
-
-    /**
-     * Check if a process is enabled
-     * 
-     * @param session
-     *            the API session
-     * @param processInstanceID
-     *            the process instance ID
-     * @return true if the process is enabled
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws ArchivedProcessInstanceNotFoundException
-     */
-    boolean isProcessOfProcessInstanceEnabled(APISession session, long processInstanceID) throws InvalidSessionException, BPMEngineException,
-            ProcessDefinitionNotFoundException, RetrieveException, ProcessInstanceNotFoundException, ArchivedProcessInstanceNotFoundException;
+    String getActivityDefinitionUUIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
+            ActivityInstanceNotFoundException, RetrieveException, ProcessDefinitionNotFoundException;
 
     /**
      * Check if a process is enabled
@@ -977,16 +924,14 @@ public interface IFormWorkflowAPI {
      * 
      * @param session
      * @param activityInstanceID
-     * @param isArchived
-     *            indicate if the activity ID passed is the one of an archived activity
      * @return the activity name
      * @throws BPMEngineException
      * @throws InvalidSessionException
      * @throws ActivityInstanceNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
-    String getActivityName(APISession session, long activityInstanceID, boolean isArchived) throws InvalidSessionException, BPMEngineException,
-            ActivityInstanceNotFoundException, RetrieveException, ArchivedFlowNodeInstanceNotFoundException;
+    String getActivityName(APISession session, long activityInstanceID) throws InvalidSessionException, BPMEngineException, ActivityInstanceNotFoundException,
+            RetrieveException;
 
     /**
      * Assign a task to the user of whom belong the session
@@ -1014,4 +959,5 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     boolean isTaskReady(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException;
+
 }

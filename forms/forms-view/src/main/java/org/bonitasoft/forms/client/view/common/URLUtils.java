@@ -85,11 +85,6 @@ public class URLUtils {
     public static final String TODOLIST_PARAM = "todolist";
 
     /**
-     * archived : indicates if the required document is archived
-     */
-    public static final String ARCHIVED_PARAM = "archived";
-
-    /**
      * auto submit mode : indicates that the form should be automatically submitted
      */
     public static final String AUTO_SUBMIT_PARAM = "autoSubmit";
@@ -156,11 +151,6 @@ public class URLUtils {
     public static final String CONSOLE_LOCALE_PARAM = "_l";
 
     /**
-     * form's locale URL param
-     */
-    public static final String FORM_LOCALE = "formLocale";
-
-    /**
      * user's domain URL parameter
      */
     public static final String TENANT_PARAM = "tenant";
@@ -176,14 +166,9 @@ public class URLUtils {
     public static final String DEFAULT_LOCALE = "en";
 
     /**
-     * Locale cookie name
-     */
-    public static final String BOS_LOCALE_COOKIE_NAME = "BOS_Locale";
-
-    /**
      * Locale cookie name for form
      */
-    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
+    public static final String FORM_LOCALE_COOKIE_NAME = "BOS_Locale";
 
     /**
      * The separator for history token parameters
@@ -253,7 +238,7 @@ public class URLUtils {
     public String getLocale() {
         String localeStr = null;
         if (Window.Location.getParameter(LOCALE_PARAM) == null) {
-            localeStr = Cookies.getCookie(BOS_LOCALE_COOKIE_NAME);
+            localeStr = Cookies.getCookie(FORM_LOCALE_COOKIE_NAME);
         } else {
             localeStr = Window.Location.getParameter(LOCALE_PARAM);
         }
@@ -270,7 +255,8 @@ public class URLUtils {
         final Date now = new Date();
         // Expiration in 120 days.
         final Date theExpirationTime = new Date(now.getTime() + 1000 * 60 * 60 * 24 * 120);
-        Cookies.setCookie(BOS_LOCALE_COOKIE_NAME, localeName, theExpirationTime);
+        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, localeName, theExpirationTime);
+
     }
 
     /**
@@ -381,14 +367,13 @@ public class URLUtils {
      * @param hashParamsToAdd
      * @return the new url to set
      */
-    protected String rebuildUrl(final String url, final Map<String, List<String>> parametersMap, final String hash,
-            final List<String> paramsToRemove, final Map<String, String> paramsToAdd,
-            final List<String> hashParamsToRemove, final Map<String, String> hashParamsToAdd) {
+    protected String rebuildUrl(final String url, final Map<String, List<String>> parametersMap, final String hash, final List<String> paramsToRemove,
+            final Map<String, String> paramsToAdd, final List<String> hashParamsToRemove, final Map<String, String> hashParamsToAdd) {
 
-        String urlParams = buildUrlParameters(parametersMap, paramsToRemove, paramsToAdd);
-        String hashParams = buildUrlHash(hash, hashParamsToRemove, hashParamsToAdd);
+        final String urlParams = buildUrlParameters(parametersMap, paramsToRemove, paramsToAdd);
+        final String hashParams = buildUrlHash(hash, hashParamsToRemove, hashParamsToAdd);
 
-        StringBuilder href = new StringBuilder(url);
+        final StringBuilder href = new StringBuilder(url);
         if (!urlParams.isEmpty()) {
             href.append("?").append(urlParams);
         }
@@ -430,8 +415,7 @@ public class URLUtils {
         return hashParams.toString();
     }
 
-    private String buildUrlParameters(final Map<String, List<String>> parametersMap,
-            final List<String> paramsToRemove, final Map<String, String> paramsToAdd) {
+    private String buildUrlParameters(final Map<String, List<String>> parametersMap, final List<String> paramsToRemove, final Map<String, String> paramsToAdd) {
         final StringBuilder urlParams = new StringBuilder();
         if (parametersMap != null && !parametersMap.isEmpty()) {
             for (final Entry<String, List<String>> urlParamEntry : parametersMap.entrySet()) {
@@ -481,7 +465,7 @@ public class URLUtils {
     }
 
     public String getHashParameter(final String hashParameterName) {
-        Map<String, String> hashParameters = getHashParameters();
+        final Map<String, String> hashParameters = getHashParameters();
         return hashParameters.get(hashParameterName);
     }
 
@@ -665,8 +649,8 @@ public class URLUtils {
         Window.Location.assign(href);
     }
 
-    public String getAttachmentURL(final String servletURL, final String formID, final Map<String, Object> contextMap, final boolean isArchived,
-            final long documentId, final String fileName) {
+    public String getAttachmentURL(final String servletURL, final String formID, final Map<String, Object> contextMap, final long documentId,
+            final String fileName) {
         final StringBuilder urlParams = new StringBuilder();
         urlParams.append("?");
         final int size = contextMap.size();
@@ -687,7 +671,6 @@ public class URLUtils {
         } else {
             urlParams.append("&" + URLUtils.RESOURCE_FILE_NAME_PARAM + "=" + fileName);
         }
-        urlParams.append("&" + URLUtils.ARCHIVED_PARAM + "=" + isArchived);
         return servletURL + urlParams.toString();
     }
 

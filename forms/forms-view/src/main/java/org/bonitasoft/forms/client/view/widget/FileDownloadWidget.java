@@ -51,8 +51,6 @@ public class FileDownloadWidget extends Composite {
 
     private final String formID;
 
-    private final boolean isArchived;
-
     private String imageServletURL;
 
     private final Map<String, Object> contextMap;
@@ -63,15 +61,14 @@ public class FileDownloadWidget extends Composite {
      * Constructor
      * 
      * @param contextMap
-     * @param isArchived
      * @param valueType
      * @param attachmentId
      * @param hasImagePreview
      */
-    public FileDownloadWidget(final String formID, final Map<String, Object> contextMap, final boolean isArchived, final String valueType,
-            final long attachmentId, final boolean hasImagePreview) {
+    public FileDownloadWidget(final String formID, final Map<String, Object> contextMap, final String valueType, final long attachmentId,
+            final boolean hasImagePreview) {
 
-        this(formID, contextMap, isArchived, valueType, attachmentId, hasImagePreview, null);
+        this(formID, contextMap, valueType, attachmentId, hasImagePreview, null);
     }
 
     /**
@@ -82,33 +79,31 @@ public class FileDownloadWidget extends Composite {
      * @param taskUUIDStr
      * @param processUUIDStr
      * @param instanceUUIDStr
-     * @param isArchived
      * @param valueType
      * @param attachmentId
      * @param hasImagePreview
      * @param fileName
      */
-    public FileDownloadWidget(final String formID, final Map<String, Object> contextMap, final boolean isArchived, final String valueType,
-            final long attachmentId, final boolean hasImagePreview, final String fileName) {
+    public FileDownloadWidget(final String formID, final Map<String, Object> contextMap, final String valueType, final long attachmentId,
+            final boolean hasImagePreview, final String fileName) {
 
         this.hasImagePreview = hasImagePreview;
         this.attachmentId = attachmentId;
         this.formID = formID;
         this.contextMap = contextMap;
-        this.isArchived = isArchived;
 
         flowPanel = new FlowPanel();
         attachmentServletURL = RpcFormsServices.getAttachmentDownloadURL();
         String downloadURL;
         if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
-            downloadURL = URLUtils.getInstance().getAttachmentURL(attachmentServletURL, formID, contextMap, isArchived, this.attachmentId, fileName);
+            downloadURL = URLUtils.getInstance().getAttachmentURL(attachmentServletURL, formID, contextMap, this.attachmentId, fileName);
         } else {
             downloadURL = fileName;
         }
 
         if (this.hasImagePreview) {
             imageServletURL = RpcFormsServices.getAttachmentImageURL();
-            final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, isArchived, this.attachmentId, fileName);
+            final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, this.attachmentId, fileName);
             previewImage = new Image();
             previewImage.setStyleName("bonita_image_preview");
             if (fileName != null) {
@@ -131,11 +126,11 @@ public class FileDownloadWidget extends Composite {
     public void setFileName(final String fileName) {
 
         if (hasImagePreview) {
-            final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, isArchived, attachmentId, fileName);
+            final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, attachmentId, fileName);
             previewImage.setUrl(imageURL);
             previewImage.setTitle(fileName);
         }
-        final String downloadURL = URLUtils.getInstance().getAttachmentURL(attachmentServletURL, formID, contextMap, isArchived, attachmentId, fileName);
+        final String downloadURL = URLUtils.getInstance().getAttachmentURL(attachmentServletURL, formID, contextMap, attachmentId, fileName);
         fileNameLabel.setHref(downloadURL);
         fileNameLabel.setText(fileName);
     }
@@ -154,7 +149,17 @@ public class FileDownloadWidget extends Composite {
     }
 
     public String getDisplayedValue() {
-        return fileNameLabel.getText();
+        final String displayedValue = fileNameLabel.getText();
+        if (displayedValue != null && !displayedValue.isEmpty()) {
+            return displayedValue;
+        } else {
+            return null;
+        }
+    }
+
+    public void resetDownloadlink() {
+        fileNameLabel.setHref(null);
+        fileNameLabel.setText(null);
     }
 
 }

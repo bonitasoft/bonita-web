@@ -54,7 +54,7 @@ public class ClientApplicationURL {
     /**
      * The cookie name for the forms locale
      */
-    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
+    public static final String FORM_LOCALE_COOKIE_NAME = "BOS_Locale";
 
     public static final String TOKEN_FORM_APP = "perform";
 
@@ -69,6 +69,8 @@ public class ClientApplicationURL {
     protected static final String ATTRIBUTE_LANG = UrlOption.LANG;
 
     protected static final String ATTRIBUTE_PROFILE = UrlOption.PROFILE;
+
+    protected static final String ATTRIBUTE_TENANT = "tenant";
 
     private TreeIndexed<String> attributes = new TreeIndexed<String>();
 
@@ -96,7 +98,7 @@ public class ClientApplicationURL {
         final String token = _getPageToken();
         final String profileId = _getProfileId();
 
-        this.attributes = parseToken();
+        attributes = parseToken();
 
         // If Token or profile disappeared, keep the previous one
         if (token != null && _getPageToken() == null) {
@@ -112,15 +114,19 @@ public class ClientApplicationURL {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected String _getPageToken() {
-        return this.attributes.getValue(ATTRIBUTE_TOKEN);
+        return attributes.getValue(ATTRIBUTE_TOKEN);
     }
 
     protected String _getLang() {
-        return this.attributes.getValue(ATTRIBUTE_LANG);
+        return attributes.getValue(ATTRIBUTE_LANG);
     }
 
     protected String _getProfileId() {
-        return this.attributes.getValue(ATTRIBUTE_PROFILE);
+        return attributes.getValue(ATTRIBUTE_PROFILE);
+    }
+
+    protected String _getTenantId() {
+        return Window.Location.getParameter(ATTRIBUTE_TENANT);
     }
 
     private void _setPageToken(final String pageToken) {
@@ -129,9 +135,9 @@ public class ClientApplicationURL {
 
     private void _setPageToken(final String pageToken, final boolean refresh) {
         if (pageToken == null) {
-            this.attributes.removeNode(ATTRIBUTE_TOKEN);
+            attributes.removeNode(ATTRIBUTE_TOKEN);
         } else {
-            this.attributes.addValue(ATTRIBUTE_TOKEN, pageToken);
+            attributes.addValue(ATTRIBUTE_TOKEN, pageToken);
         }
 
         if (refresh) {
@@ -145,9 +151,9 @@ public class ClientApplicationURL {
 
     private void _setProfileId(final String profileId, final boolean refresh) {
         if (profileId == null) {
-            this.attributes.removeNode(ATTRIBUTE_PROFILE);
+            attributes.removeNode(ATTRIBUTE_PROFILE);
         } else {
-            this.attributes.addValue(ATTRIBUTE_PROFILE, profileId);
+            attributes.addValue(ATTRIBUTE_PROFILE, profileId);
         }
 
         if (refresh) {
@@ -160,7 +166,7 @@ public class ClientApplicationURL {
     }
 
     private TreeIndexed<String> _getPageAttributes() {
-        final TreeIndexed<String> result = this.attributes.copy();
+        final TreeIndexed<String> result = attributes.copy();
         result.removeNode(ATTRIBUTE_LANG);
         result.removeNode(ATTRIBUTE_PROFILE);
         result.removeNode(ATTRIBUTE_TOKEN);
@@ -213,6 +219,10 @@ public class ClientApplicationURL {
         return self._getProfileId();
     }
 
+    public static String getTenantId() {
+        return self._getTenantId();
+    }
+
     public static void setPageToken(final String pageToken) {
         self._setPageToken(pageToken, false);
     }
@@ -260,12 +270,12 @@ public class ClientApplicationURL {
 
     private void _refreshUrl(final boolean refreshView) {
 
-        if (parseToken().equals(this.attributes)) {
+        if (parseToken().equals(attributes)) {
             // Same URL attributes, do nothing
             return;
         }
 
-        History.newItem("?" + UrlSerializer.serialize(this.attributes), false);
+        History.newItem("?" + UrlSerializer.serialize(attributes), false);
 
         if (refreshView) {
             refreshView();
@@ -313,9 +323,9 @@ public class ClientApplicationURL {
                 for (final String name : session.getAttributeNames()) {
                     if (name.equals("conf")) {
                         AvailableTokens.tokens.addAll(((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
-//                        Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
+                        // Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
                     } else {
-                        Session.addParameter(name, session.getAttributeValue(name));                        
+                        Session.addParameter(name, session.getAttributeValue(name));
                     }
                 }
 

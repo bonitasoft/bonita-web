@@ -31,7 +31,9 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  * @author Haojie Yuan
  */
 public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniqueId {
-
+    
+    public static final String ATTRIBUTE_VARIABLES = "variables";
+    
     public CaseItem() {
         super();
     }

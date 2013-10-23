@@ -34,6 +34,7 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.impl.util.ApplicationResourcesUtils;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
@@ -83,11 +84,6 @@ public class DocumentDownloadServlet extends HttpServlet {
     protected static final String FILE_NAME_PARAM = "fileName";
 
     /**
-     * archived : indicates if the required document is archived
-     */
-    protected static final String ARCHIVED_PARAM = "archived";
-
-    /**
      * resource : indicate the file name of the process resource
      */
     protected static final String RESOURCE_FILE_NAME_PARAM = "resourceFileName";
@@ -122,7 +118,6 @@ public class DocumentDownloadServlet extends HttpServlet {
         String fileName = request.getParameter(FILE_NAME_PARAM);
         final String resourcePath = request.getParameter(RESOURCE_FILE_NAME_PARAM);
         final String documentId = request.getParameter(DOCUMENT_ID_PARAM);
-        final String isArchived = request.getParameter(ARCHIVED_PARAM);
         final APISession apiSession = (APISession) request.getSession().getAttribute(API_SESSION_PARAM_KEY);
         byte[] fileContent = null;
         if (filePath != null) {
@@ -152,14 +147,14 @@ public class DocumentDownloadServlet extends HttpServlet {
             try {
                 final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(apiSession);
                 String contentStorageId;
-                if (Boolean.valueOf(isArchived)) {
-                    final ArchivedDocument archivedDocument = processAPI.getArchivedProcessDocument(Long.valueOf(documentId));
-                    fileName = archivedDocument.getDocumentContentFileName();
-                    contentStorageId = archivedDocument.getContentStorageId();
-                } else {
+                try {
                     final Document document = processAPI.getDocument(Long.valueOf(documentId));
                     fileName = document.getContentFileName();
                     contentStorageId = document.getContentStorageId();
+                } catch (final DocumentNotFoundException dnfe) {
+                    final ArchivedDocument archivedDocument = processAPI.getArchivedProcessDocument(Long.valueOf(documentId));
+                    fileName = archivedDocument.getDocumentContentFileName();
+                    contentStorageId = archivedDocument.getContentStorageId();
                 }
                 if (contentStorageId != null && !contentStorageId.isEmpty()) {
                     fileContent = processAPI.getDocumentContent(contentStorageId);
@@ -181,8 +176,7 @@ public class DocumentDownloadServlet extends HttpServlet {
                 if (processIDStr != null) {
                     processDefinitionID = Long.parseLong(processIDStr);
                 } else if (taskIdStr != null) {
-                    processDefinitionID = workflowAPI.getProcessDefinitionIDFromActivityInstanceID(apiSession, Long.parseLong(taskIdStr),
-                            Boolean.valueOf(isArchived));
+                    processDefinitionID = workflowAPI.getProcessDefinitionIDFromActivityInstanceID(apiSession, Long.parseLong(taskIdStr));
                 } else if (instanceIDStr != null) {
                     processDefinitionID = workflowAPI.getProcessDefinitionIDFromProcessInstanceID(apiSession, Long.parseLong(instanceIDStr));
                 } else {

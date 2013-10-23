@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -15,12 +16,12 @@ import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoCriterion;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
+import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.api.bpm.process.APIProcess;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
@@ -37,9 +38,8 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
     public void consoleTestSetUp() throws Exception {
         this.apiProcess = new APIProcess();
         this.apiProcess.setCaller(getAPICaller(TestUserFactory.getJohnCarpenter().getSession(), "API/bpm/process"));
-        
-    }
 
+    }
 
     /**
      * Add a process uploaded
@@ -156,6 +156,39 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
             e.printStackTrace();
         }
         return tempFile;
+    }
+
+    /**
+     * Get the latest process version
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testGetLastProcessVersion() throws Exception {
+        // create 3 version of a process
+        TestProcess p1 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "aVersion"));
+        TestProcess p2 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "aVersion2"));
+        TestProcess p3 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "anOtherVersion"));
+
+        // map actor John Carpenter on the created processes, then set enable
+        p1.addActor(TestUserFactory.getJohnCarpenter()).setEnable(true);
+        p2.addActor(TestUserFactory.getJohnCarpenter()).setEnable(true);
+        p3.addActor(TestUserFactory.getJohnCarpenter()).setEnable(true);
+
+        // Set the filters
+        final HashMap<String, String> filters = new HashMap<String, String>();
+        filters.put(ProcessItem.FILTER_USER_ID, String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
+        filters.put(ProcessItem.ATTRIBUTE_DISPLAY_NAME, "multipleVersionsProcess");
+
+        // search the last version of a process
+        final List<ProcessItem> resultList = this.apiProcess.runSearch(0, 1, null, ProcessItem.ATTRIBUTE_DEPLOYMENT_DATE + " DESC", filters, null, null)
+                .getResults();
+
+        // get the first element
+        ProcessItem searchedProcessItem = resultList.get(0);
+        assertEquals("multipleVersionsProcess", searchedProcessItem.getDisplayName());
+        assertEquals("anOtherVersion", searchedProcessItem.getVersion());
+
     }
 
 }

@@ -13,13 +13,54 @@
  **/
 package org.bonitasoft.forms.server;
 
-import com.google.gwt.user.client.rpc.SerializationException;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.client.model.*;
-import org.bonitasoft.forms.client.model.exception.*;
+import org.bonitasoft.forms.client.model.ApplicationConfig;
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.FormPage;
+import org.bonitasoft.forms.client.model.FormURLComponents;
+import org.bonitasoft.forms.client.model.FormValidator;
+import org.bonitasoft.forms.client.model.FormWidget;
+import org.bonitasoft.forms.client.model.HtmlTemplate;
+import org.bonitasoft.forms.client.model.ReducedApplicationConfig;
+import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
+import org.bonitasoft.forms.client.model.ReducedFormPage;
+import org.bonitasoft.forms.client.model.ReducedFormValidator;
+import org.bonitasoft.forms.client.model.ReducedFormWidget;
+import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
+import org.bonitasoft.forms.client.model.TransientData;
+import org.bonitasoft.forms.client.model.exception.AbortedFormException;
+import org.bonitasoft.forms.client.model.exception.CanceledFormException;
+import org.bonitasoft.forms.client.model.exception.FileTooBigException;
+import org.bonitasoft.forms.client.model.exception.ForbiddenApplicationAccessException;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
+import org.bonitasoft.forms.client.model.exception.FormAlreadySubmittedException;
+import org.bonitasoft.forms.client.model.exception.FormInErrorException;
+import org.bonitasoft.forms.client.model.exception.IllegalActivityTypeException;
+import org.bonitasoft.forms.client.model.exception.MigrationProductVersionNotIdenticalException;
+import org.bonitasoft.forms.client.model.exception.RPCException;
+import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
+import org.bonitasoft.forms.client.model.exception.SkippedFormException;
+import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
 import org.bonitasoft.forms.client.rpc.FormsService;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
@@ -35,15 +76,8 @@ import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * Servlet implementing the Forms service for async calls
@@ -75,7 +109,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     /**
      * The cookie name for the forms locale
      */
-    public static final String FORM_LOCALE_COOKIE_NAME = "Form_Locale";
+    public static final String FORM_LOCALE_COOKIE_NAME = "BOS_Locale";
 
     /**
      * the engine API session param key name
@@ -95,8 +129,10 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
         try {
             return super.processCall(payload);
         } catch (final SerializationException e) {
-            LOGGER.log(Level.SEVERE,
-                    "The Object returned by the RPC call is not supported by the client. Complex java types and XML types are not supported as data field's inputs.", e);
+            LOGGER.log(
+                    Level.SEVERE,
+                    "The Object returned by the RPC call is not supported by the client. Complex java types and XML types are not supported as data field's inputs.",
+                    e);
             throw e;
         }
     }
@@ -179,9 +215,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 formPage = definitionAPI.getFormPage(formID, pageId, context);
                 if (formPage != null) {
                     formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-                    formFieldValuesUtil.setFormWidgetsValues(tenantID,
-                            formPage.getFormWidgets(),
-                            context);
+                    formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
                     formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
                 }
             }
@@ -268,8 +302,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     @Override
     public ReducedFormPage getFormNextPage(final String formID, final Map<String, Object> urlContext, final String nextPageExpressionId,
             final Map<String, FormFieldValue> fieldValues) throws RPCException, SessionTimeoutException, FormAlreadySubmittedException, SuspendedFormException,
-            CanceledFormException, ForbiddenFormAccessException, FormInErrorException,
-            SkippedFormException, AbortedFormException {
+            CanceledFormException, ForbiddenFormAccessException, FormInErrorException, SkippedFormException, AbortedFormException {
         final String localeStr = getLocale();
         final Locale userLocale = resolveLocale(localeStr);
         final Map<String, Object> context = initContext(urlContext, userLocale);
@@ -298,9 +331,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final String pageId = (String) formServiceProvider.resolveExpression(nextPageIdExpression, context);
             final FormPage formPage = definitionAPI.getFormPage(formID, pageId, context);
             formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-            formFieldValuesUtil.setFormWidgetsValues(tenantID,
-                    formPage.getFormWidgets(),
-                    context);
+            formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
             formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
             return formPage.getReducedFormPage();
         } catch (final ForbiddenFormAccessException e) {
@@ -478,8 +509,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final Date deployementDate = formServiceProvider.getDeployementDate(context);
             final boolean isEditMode = formServiceProvider.isEditMode(formID, context);
             context.put(FormServiceProviderUtil.IS_EDIT_MODE, isEditMode);
-            final boolean isCurrentValue = formServiceProvider.isCurrentValue(context);
-            context.put(FormServiceProviderUtil.IS_CURRENT_VALUE, isCurrentValue);
+            // Set the current value to false in order to evaluate the confirmation message on archived objects
+            context.put(FormServiceProviderUtil.IS_CURRENT_VALUE, Boolean.FALSE);
             context.put(FormServiceProviderUtil.IS_CONFIRMATION_PAGE, Boolean.TRUE);
             final Document document = formServiceProvider.getFormDefinitionDocument(context);
             final IFormDefinitionAPI definitionAPI = FormAPIFactory.getFormDefinitionAPI(tenantID, document, deployementDate, localeStr);
@@ -573,10 +604,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     protected void setFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
             final Map<String, Serializable> transientDataContext, final Map<String, Object> context) {
 
-        formServiceProvider.storeFormTransientDataContext(getSession(),
-                TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID,
-                transientDataContext,
-                context);
+        formServiceProvider.storeFormTransientDataContext(getSession(), TRANSIENT_DATA_SESSION_PARAM_KEY_PREFIX + formID, transientDataContext, context);
     }
 
     /*
@@ -916,7 +944,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final ApplicationConfig applicationConfig) throws FormNotFoundException, SessionTimeoutException,
             org.bonitasoft.forms.server.exception.FileTooBigException, IOException {
         try {
-            context.put(FormServiceProviderUtil.IS_CONTEXT, true);
+            context.put(FormServiceProviderUtil.IS_CONFIG_CONTEXT, true);
 
             String resolvedExpression = (String) formServiceProvider.resolveExpression(applicationConfig.getApplicationLabelExpression(), context);
             applicationConfig.setApplicationLabel(resolvedExpression);

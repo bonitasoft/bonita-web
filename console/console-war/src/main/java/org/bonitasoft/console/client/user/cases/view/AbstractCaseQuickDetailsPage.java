@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
+import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.cases.view.AbstractCaseQuickDetailsPage.CommentsTableAsyncBuilder;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedTasksSection;
@@ -127,7 +128,7 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
                 .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
                 .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"))
                 .addColumn(new DescriptionAttributeReader(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
-                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new SpanPrepender(_("Due in:")))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")));
     }
@@ -147,7 +148,7 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
                 .addColumn(new DescriptionAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedHumanTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))
 
-                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new SpanPrepender(_("Task name:")))
+                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
                 .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);

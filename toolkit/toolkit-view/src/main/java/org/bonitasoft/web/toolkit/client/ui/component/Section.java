@@ -206,7 +206,7 @@ public class Section extends Component {
 
     public final void addDescription(final String description) {
         if (this.descriptionContainer == null) {
-            this.descriptionContainer = new Container<Paragraph>(new JsId("description"));
+            this.descriptionContainer = new Container<Paragraph>(new JsId("section_description"));
         }
 
         this.descriptionContainer.append(new Paragraph(description));

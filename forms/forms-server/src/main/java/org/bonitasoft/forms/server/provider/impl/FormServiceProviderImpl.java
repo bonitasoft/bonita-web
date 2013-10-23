@@ -247,8 +247,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
                     final APISession session = getAPISessionFromContext(context);
                     try {
-                        final boolean isArchived = isTryingToDisplayAnArchivedActivity(urlContext);
-                        processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID, isArchived);
+                        processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
                     } catch (final FormWorflowApiException e) {
                         logSevereMessage(e, e.getMessage());
                         throw new RuntimeException(e);
@@ -327,8 +326,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         // Trying to display a Form for a TASK.
                         final long activityInstanceID = getActivityInstanceId(urlContext);
                         try {
-                            final boolean isArchived = !FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId));
-                            if (!getActivityDefinitionUUID(session, workflowAPI, activityInstanceID, isArchived).equals(activityDefinitionUUIDStr)) {
+                            if (!getActivityDefinitionUUID(session, workflowAPI, activityInstanceID).equals(activityDefinitionUUIDStr)) {
                                 final String message = "The task required is not an instance of activity " + activityDefinitionUUIDStr;
                                 if (LOGGER.isLoggable(Level.INFO)) {
                                     LOGGER.log(Level.INFO, message);
@@ -369,8 +367,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             // trying to display a form for a task (
                             final long activityInstanceID = getActivityInstanceId(urlContext);
                             try {
-                                final boolean isArchived = !FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId));
-                                final long activityInstanceProcessDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID, isArchived);
+                                final long activityInstanceProcessDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
                                 if (activityInstanceProcessDefinitionID != processDefinitionID) {
                                     final String message = "The task required is not an instance of an activity of process" + processDefinitionUUIDStr;
                                     if (LOGGER.isLoggable(Level.INFO)) {
@@ -498,17 +495,16 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             AbortedFormException {
 
         try {
-            final boolean isArchived = !FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId));
             // TODO verify if the user is admin. In this case, he can access the form
             // TODO verify if a user is process supervisor of the process. In this case, he can access the form
-            if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session), activityInstanceID, isArchived)) {
+            if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session), activityInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the form of activity instance " + activityInstanceID;
                 if (LOGGER.isLoggable(Level.INFO)) {
                     LOGGER.log(Level.INFO, message);
                 }
                 throw new ForbiddenFormAccessException(message);
             }
-            final ActivityEditState activityEditState = workflowAPI.getTaskEditState(session, activityInstanceID, isArchived);
+            final ActivityEditState activityEditState = workflowAPI.getTaskEditState(session, activityInstanceID);
             if (ActivityEditState.SUSPENDED.equals(activityEditState)) {
                 throw new SuspendedFormException();
             } else if (ActivityEditState.CANCELED.equals(activityEditState)) {
@@ -520,7 +516,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             } else if (ActivityEditState.ABORTED.equals(activityEditState)) {
                 throw new AbortedFormException();
             } else if (ActivityEditState.NOT_EDITABLE.equals(activityEditState)) {
-                if (!isArchived) {
+                if (FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId))) {
                     final String message = "The activity instance with ID " + activityInstanceID
                             + " cannot be executed anymore. It's either finished or aborted";
                     if (LOGGER.isLoggable(Level.INFO)) {
@@ -712,7 +708,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
             try {
                 final Map<String, Object> urlContext = getUrlContext(context);
-                if (Boolean.TRUE.equals(context.get(FormServiceProviderUtil.IS_CONTEXT))) {
+                if (Boolean.TRUE.equals(context.get(FormServiceProviderUtil.IS_CONFIG_CONTEXT))) {
                     resolveAndSetProcessDefinitionID(session, workflowAPI, urlContext);
                 }
                 if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
@@ -814,8 +810,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         try {
             if (urlContext.containsKey(FormServiceProviderUtil.TASK_UUID)) {
                 activityInstanceID = getActivityInstanceId(urlContext);
-                final boolean isArchived = isTryingToDisplayAnArchivedActivity(urlContext);
-                processDefinitionID = workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID, isArchived);
+                processDefinitionID = workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID);
                 urlContext.put(FormServiceProviderUtil.PROCESS_UUID, Long.toString(processDefinitionID));
             } else if (urlContext.containsKey(FormServiceProviderUtil.INSTANCE_UUID)) {
                 processInstanceID = getProcessInstanceId(urlContext);
@@ -852,17 +847,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 LOGGER.log(Level.SEVERE, message, e);
             }
             throw new FormNotFoundException(message);
-        } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-            final String message = "The archived activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
-            throw new FormNotFoundException(message);
         }
-    }
-
-    private boolean isTryingToDisplayAnArchivedActivity(final Map<String, Object> urlContext) throws FormNotFoundException {
-        final String formId = (String) urlContext.get(FormServiceProviderUtil.FORM_ID);
-        final boolean isArchived = !FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId));
-        return isArchived;
     }
 
     /**
@@ -892,7 +877,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         try {
             final Map<String, Object> urlContext = getUrlContext(context);
-            if (Boolean.TRUE.equals(context.get(FormServiceProviderUtil.IS_CONTEXT))) {
+            if (Boolean.TRUE.equals(context.get(FormServiceProviderUtil.IS_CONFIG_CONTEXT))) {
                 resolveAndSetProcessDefinitionID(session, workflowAPI, urlContext);
             }
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
@@ -1173,9 +1158,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final long activityInstanceId = getNextActivityInstanceId(getFormWorkFlowApi(), session, processInstanceID);
             if (activityInstanceId != -1) {
                 urlComponents = new FormURLComponents();
-                urlComponents.setApplicationURL(getAppDedicatedUrl(session, workflowAPI, activityInstanceId, UI_FORM_MODE, false));
+                urlComponents.setApplicationURL(getAppDedicatedUrl(session, workflowAPI, activityInstanceId, UI_FORM_MODE));
                 if (urlContext != null) {
-                    final String activityDefinitionUuid = getActivityDefinitionUUID(session, workflowAPI, activityInstanceId, false);
+                    final String activityDefinitionUuid = getActivityDefinitionUUID(session, workflowAPI, activityInstanceId);
                     final Map<String, Object> newURLContext = new HashMap<String, Object>(urlContext);
                     newURLContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                     newURLContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
@@ -1184,7 +1169,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     urlComponents.setUrlContext(newURLContext);
                 }
 
-                final String taskName = getActivityName(session, workflowAPI, activityInstanceId, false);
+                final String taskName = getActivityName(session, workflowAPI, activityInstanceId);
                 urlComponents.setTaskName(taskName);
 
                 urlComponents.setTaskId(activityInstanceId);
@@ -1200,21 +1185,18 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return urlComponents;
     }
 
-    private String getAppDedicatedUrl(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final String uiMode,
-            final boolean isArchived) throws FormWorflowApiException, InvalidSessionException {
-        final long processDefinitionId = getProcessDefinitionId(session, workflowAPI, activityInstanceId, isArchived);
+    private String getAppDedicatedUrl(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final String uiMode)
+            throws FormWorflowApiException, InvalidSessionException {
+        final long processDefinitionId = getProcessDefinitionId(session, workflowAPI, activityInstanceId);
         return ApplicationURLUtils.getInstance().getDedicatedApplicationUrl(processDefinitionId, uiMode);
     }
 
-    private long getProcessDefinitionId(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final boolean isArchived)
+    private long getProcessDefinitionId(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId)
             throws FormWorflowApiException, InvalidSessionException {
         try {
-            return workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceId, isArchived);
+            return workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceId);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceId + " does not exist!";
-            throw new FormWorflowApiException(message, e);
-        } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-            final String message = "The archived activity instance with ID " + activityInstanceId + " does not exist!";
             throw new FormWorflowApiException(message, e);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
@@ -1222,31 +1204,25 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
     }
 
-    private String getActivityName(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId, final boolean isArchived)
+    private String getActivityName(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId) throws InvalidSessionException,
+            FormWorflowApiException {
+        try {
+            return workflowAPI.getActivityName(session, activityInstanceId);
+        } catch (final ActivityInstanceNotFoundException e) {
+            final String message = "The activity instance with ID " + activityInstanceId + " does not exist!";
+            throw new FormWorflowApiException(message, e);
+        } catch (final BPMEngineException e) {
+            final String message = "Error while communicating with the engine.";
+            throw new FormWorflowApiException(message, e);
+        }
+    }
+
+    private String getActivityDefinitionUUID(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId)
             throws InvalidSessionException, FormWorflowApiException {
         try {
-            return workflowAPI.getActivityName(session, activityInstanceId, isArchived);
+            return workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceId);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceId + " does not exist!";
-            throw new FormWorflowApiException(message, e);
-        } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-            final String message = "The archived activity instance with ID " + activityInstanceId + " does not exist!";
-            throw new FormWorflowApiException(message, e);
-        } catch (final BPMEngineException e) {
-            final String message = "Error while communicating with the engine.";
-            throw new FormWorflowApiException(message, e);
-        }
-    }
-
-    private String getActivityDefinitionUUID(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId,
-            final boolean isArchived) throws InvalidSessionException, FormWorflowApiException {
-        try {
-            return workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceId, isArchived);
-        } catch (final ActivityInstanceNotFoundException e) {
-            final String message = "The activity instance with ID " + activityInstanceId + " does not exist!";
-            throw new FormWorflowApiException(message, e);
-        } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-            final String message = "The archived activity instance with ID " + activityInstanceId + " does not exist!";
             throw new FormWorflowApiException(message, e);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The engine was not able to read activity instance with ID " + activityInstanceId;
@@ -1271,12 +1247,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     private long getProcessInstanceIdParent(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceID)
             throws FormWorflowApiException, InvalidSessionException {
         try {
-            return workflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID, false);
+            return workflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-            throw new FormWorflowApiException(message, e);
-        } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-            final String message = "The archived activity instance with ID " + activityInstanceID + " does not exist!";
             throw new FormWorflowApiException(message, e);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
@@ -1943,40 +1916,21 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public boolean isCurrentValue(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-        long activityInstanceID = -1;
         boolean isCurrentValue = false;
-        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         try {
             final Map<String, Object> urlContext = getUrlContext(context);
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
-                activityInstanceID = getActivityInstanceId(urlContext);
-                final APISession session = getAPISessionFromContext(context);
-                final boolean isTaskReady = workflowAPI.isTaskReady(session, activityInstanceID);
-                if (isTaskReady) {
-                    isCurrentValue = true;
-                } else {
-                    isCurrentValue = false;
-                }
+                final String formId = (String) urlContext.get(FormServiceProviderUtil.FORM_ID);
+                isCurrentValue = FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId));
             } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
                 isCurrentValue = false;
             } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                 if (urlContext.get(FormServiceProviderUtil.RECAP_FORM_TYPE) != null) {
-                    final boolean isRecap = Boolean.valueOf((String) urlContext.get(FormServiceProviderUtil.RECAP_FORM_TYPE));
-                    if (isRecap) {
-                        isCurrentValue = true;
-                    } else {
-                        isCurrentValue = false;
-                    }
+                    isCurrentValue = Boolean.valueOf((String) urlContext.get(FormServiceProviderUtil.RECAP_FORM_TYPE));
                 } else {
                     isCurrentValue = false;
                 }
             }
-        } catch (final BPMEngineException e) {
-            final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
-            throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
             if (LOGGER.isLoggable(Level.INFO)) {
@@ -2015,7 +1969,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         workflowAPI.terminateTask(session, activityInstanceID);
                         urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                         urlContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
-                        processInstanceID = workflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID, false);
+                        processInstanceID = workflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID);
                         long newTaskInstanceID;
                         newTaskInstanceID = workflowAPI.getAnyTodoListTaskForProcessInstance(session, processInstanceID);
                         if (newTaskInstanceID != -1) {
@@ -2032,10 +1986,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     throw new SessionTimeoutException(message);
                 } catch (final ActivityInstanceNotFoundException e) {
                     final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-                    logSevereMessage(e, message);
-                    throw new FormNotFoundException(message);
-                } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
-                    final String message = "The archived activity instance with ID " + activityInstanceID + " does not exist!";
                     logSevereMessage(e, message);
                     throw new FormNotFoundException(message);
                 } catch (final ProcessInstanceNotFoundException e) {
@@ -2165,8 +2115,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             if (activityInstanceID != -1) {
                 String activitydefinitionUUID = null;
                 try {
-                    activitydefinitionUUID = getActivityDefinitionUUID(session, workflowAPI, activityInstanceID, false);
-                    processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID, false);
+                    activitydefinitionUUID = getActivityDefinitionUUID(session, workflowAPI, activityInstanceID);
+                    processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
                 } catch (final FormWorflowApiException e) {
                     logSevereMessage(e, e.getMessage());
                     throw new FormNotFoundException(e);

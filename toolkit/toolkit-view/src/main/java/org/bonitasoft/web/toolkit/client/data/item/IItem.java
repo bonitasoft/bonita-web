@@ -269,4 +269,6 @@ public interface IItem extends JsonSerializable {
     @Override
     public abstract String toString();
 
+    Map<String, IItem> getDeploys();
+
 }

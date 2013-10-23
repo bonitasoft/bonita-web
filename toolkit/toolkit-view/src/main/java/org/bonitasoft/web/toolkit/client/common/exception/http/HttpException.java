@@ -17,8 +17,6 @@
 package org.bonitasoft.web.toolkit.client.common.exception.http;
 
 import org.bonitasoft.web.toolkit.client.common.exception.KnownException;
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.common.json.JSonUtil;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 
 /**
@@ -63,53 +61,19 @@ public class HttpException extends KnownException implements JsonSerializable {
         return this;
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // JSON SERIALIZATION
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public final String toJson() {
-        // Open Json
-        final StringBuilder json = new StringBuilder().append("{");
-
-        // Fill with local attributes
-        json.append(JSonUtil.quote("exception")).append(":").append(JSonUtil.quote(getClass().toString()));
-
-        addJsonAdditionalAttribute("message", getMessage(), json);
-        addJsonAdditionalAttribute("stacktrace", getStackTrace(), json);
-
-        if (getCause() != null && getCause() != this) {
-            addJsonAdditionalAttribute("cause", getCause(), json);
-        }
-
-        // Add subclasses specific attributes
-        toJsonAdditionnalAttributes(json);
-
-        // Close Json
-        json.append("}");
-
-        return json.toString();
+        return buildJson().end();
     }
 
-    protected void toJsonAdditionnalAttributes(final StringBuilder json) {
+    protected JsonExceptionSerializer buildJson() {
+        return new JsonExceptionSerializer(this);
     }
-
-    /**
-     * @param json
-     */
-    protected void addJsonAdditionalAttribute(final String name, final Object value, final StringBuilder json) {
-        if (value != null) {
-            json.append(",");
-            json.append(JSonSerializer.quote(name)).append(":").append(JSonSerializer.serialize(value));
-        }
-    }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // DEFAULT MESSAGE
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected String defaultMessage() {
-        return "The connection has encountered an unknowed error";
+        return "The connection has encountered an unknown error";
     }
+
 
 }

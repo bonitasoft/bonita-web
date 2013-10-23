@@ -16,15 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
@@ -35,8 +26,12 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Séverin Moussel
@@ -105,7 +100,7 @@ public class ProcessCategoryDatastore extends CommonDatastore<ProcessCategoryIte
 
             return item;
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(_("This category has already been added to this apps"), e);
+            throw new APIForbiddenException(new _("This category has already been added to this apps"), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }

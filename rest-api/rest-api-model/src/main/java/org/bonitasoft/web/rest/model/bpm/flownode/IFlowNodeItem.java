@@ -66,15 +66,23 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
 
     public static final String VALUE_TYPE_AUTOMATIC_TASK = "AUTOMATIC_TASK";
 
+    public static final String VALUE_ICON_AUTOMATIC_TASK = "/default/icon_automaticTask.png";
+
     public static final String VALUE_TYPE_USER_TASK = "USER_TASK";
 
     public static final String VALUE_TYPE_MANUAL_TASK = "MANUAL_TASK";
 
     public static final String VALUE_TYPE_CALL_ACTIVITY = "CALL_ACTIVITY";
 
+    public static final String VALUE_ICON_CALL_ACTIVITY = "/default/icon_call_activity_task.png";
+
     public static final String VALUE_TYPE_LOOP_ACTIVITY = "LOOP_ACTIVITY";
 
+    public static final String VALUE_ICON_LOOP_ACTIVITY = "/default/icon_loop_task.png";
+
     public static final String VALUE_TYPE_MULTI_INSTANCE_ACTIVITY = "MULTI_INSTANCE_ACTIVITY";
+
+    public static final String VALUE_ICON_MULTI_INSTANCE_ACTIVITY = "/default/icon_multi_instance_task.png";
 
     public static final String VALUE_TYPE_SUB_PROCESS_ACTIVITY = "SUB_PROCESS_ACTIVITY";
 

@@ -267,7 +267,7 @@ public class FormPagesViewController {
                 }
             }
         } else {
-            enableButton(pressedButton);
+            enableButtons(true);
             throw new IndexOutOfBoundsException("No form available");
         }
     }
@@ -285,8 +285,8 @@ public class FormPagesViewController {
 
             try {
                 RequestBuilder theRequestBuilder;
-                final String theURL = urlUtils.buildLayoutURL(reducedFormPage.getPageTemplate().getBodyContentId(),
-                        (String) urlContext.get(URLUtils.FORM_ID), (String) urlContext.get(URLUtils.TASK_ID_PARAM), true);
+                final String theURL = urlUtils.buildLayoutURL(reducedFormPage.getPageTemplate().getBodyContentId(), (String) urlContext.get(URLUtils.FORM_ID),
+                        (String) urlContext.get(URLUtils.TASK_ID_PARAM), true);
                 GWT.log("Calling the Form Layout Download Servlet with query: " + theURL);
                 theRequestBuilder = new RequestBuilder(RequestBuilder.GET, theURL);
                 theRequestBuilder.setCallback(new RequestCallback() {
@@ -294,8 +294,7 @@ public class FormPagesViewController {
                     @Override
                     public void onError(final Request aRequest, final Throwable exception) {
                         final String errorMessage = FormsResourceBundle.getErrors().applicationConfigRetrievalError();
-                        formsServiceAsync.getApplicationErrorTemplate(reducedFormPage.getPageId(),
-                                urlContext,
+                        formsServiceAsync.getApplicationErrorTemplate(reducedFormPage.getPageId(), urlContext,
                                 new ErrorPageHandler(null, reducedFormPage.getPageId(), errorMessage, exception, elementId));
                     }
 
@@ -340,12 +339,10 @@ public class FormPagesViewController {
                 errorMessage = FormsResourceBundle.getErrors().pageRetrievalError();
             }
             if (formID != null) {
-                formsServiceAsync.getApplicationErrorTemplate(formID,
-                        urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                                formID, pageHTMLPanel,
-                                errorMessage, t, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, t, elementId));
             }
-            enableButton(pressedButton);
+            enableButtons(true);
 
         }
     }
@@ -362,7 +359,7 @@ public class FormPagesViewController {
      */
     protected void buildPage(final ReducedFormPage formPage, final boolean hasAlreadyBeenDisplayed, final boolean isNextPage) {
 
-        enableButton(pressedButton, false);
+        enableButtons(false);
         final ReducedHtmlTemplate pageTemplate = formPage.getPageTemplate();
         if (pageHTMLPanel != null) {
             if (applicationHTMLPanel != null) {
@@ -388,7 +385,7 @@ public class FormPagesViewController {
             if (autoSubmit != null) {
                 final FormButtonWidget autoSubmitButton = buttonWidgets.get(autoSubmit);
                 if (autoSubmitButton != null && autoSubmitButton.getWidgetType().equals(WidgetType.BUTTON_SUBMIT)) {
-                    disableButton(autoSubmitButton.getButton(), true);
+                    disableButtons(autoSubmitButton.getButton());
                     validatePage(ACTION_TYPE.SUBMIT);
                 }
             }
@@ -752,12 +749,11 @@ public class FormPagesViewController {
 
             final Object source = event.getSource();
             if (!(source instanceof Label && disabledLabelButtons.contains(source))) {
-                disableButton((Widget) source, true);
+                disableButtons((Widget) source);
                 if (editMode) {
                     validatePage(ACTION_TYPE.NEXT);
                 } else {
-                    final ReducedFormPage formPage = formPages.get(followedPagesIds
-                            .get(currentPageIndex));
+                    final ReducedFormPage formPage = formPages.get(followedPagesIds.get(currentPageIndex));
                     recordValues(formPage.getFormWidgets());
                     final int newIndex = currentPageIndex + 1;
                     try {
@@ -765,10 +761,9 @@ public class FormPagesViewController {
                         displayPage(newIndex);
                     } catch (final IndexOutOfBoundsException e) {
                         final String errorMessage = FormsResourceBundle.getErrors().pageIndexError(newIndex);
-                        formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext,
-                                new ErrorPageHandler(applicationHTMLPanel, formID,
-                                        pageHTMLPanel, errorMessage, elementId));
-                        enableButton(pressedButton);
+                        formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID,
+                                pageHTMLPanel, errorMessage, elementId));
+                        enableButtons(true);
                     }
                 }
             }
@@ -797,9 +792,8 @@ public class FormPagesViewController {
 
             final Object source = event.getSource();
             if (!(source instanceof Label && disabledLabelButtons.contains(source))) {
-                disableButton((Widget) source, true);
-                final ReducedFormPage formPage = formPages.get(followedPagesIds
-                        .get(currentPageIndex));
+                disableButtons((Widget) source);
+                final ReducedFormPage formPage = formPages.get(followedPagesIds.get(currentPageIndex));
                 recordValues(formPage.getFormWidgets());
                 final int newIndex = currentPageIndex - 1;
                 try {
@@ -807,11 +801,9 @@ public class FormPagesViewController {
                     displayPage(newIndex);
                 } catch (final IndexOutOfBoundsException e) {
                     final String errorMessage = FormsResourceBundle.getErrors().pageIndexError(newIndex);
-                    formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext,
-                            new ErrorPageHandler(applicationHTMLPanel, formID,
-                                    pageHTMLPanel,
-                                    errorMessage, elementId));
-                    enableButton(pressedButton);
+                    formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                            errorMessage, elementId));
+                    enableButtons(true);
                 }
             }
         }
@@ -830,12 +822,7 @@ public class FormPagesViewController {
 
             final Object source = event.getSource();
             if (!(source instanceof Label && disabledLabelButtons.contains(source))) {
-                disableButton((Widget) source, true);
-                for (final Entry<String, FormButtonWidget> entry : buttonWidgets.entrySet()) {
-                    if (entry.getValue().getWidgetType().equals(WidgetType.BUTTON_SUBMIT)) {
-                        disableButton(entry.getValue().getButton(), false);
-                    }
-                }
+                disableButtons((Widget) source);
                 validatePage(ACTION_TYPE.SUBMIT);
             }
 
@@ -843,33 +830,46 @@ public class FormPagesViewController {
     }
 
     /**
-     * Disable a button and set the pressedButton attribute if this is the button that was clicked
+     * Disable a button
      * 
      * @param button
-     *            the button that was pressed
-     * @param isPressedButton
-     *            indicate if this is the button that was pressed
+     *            the button to disable
      */
-    protected void disableButton(final Widget button, final boolean isPressedButton) {
+    protected void disableButton(final Widget button) {
         if (button instanceof Button) {
             ((Button) button).setEnabled(false);
         } else if (button instanceof Label) {
             disabledLabelButtons.add((Label) button);
         }
-        if (isPressedButton) {
-            pressedButton = button;
-        }
     }
 
     /**
-     * Enable the button that was clicked
+     * disable the buttons
      * 
      * @param button
      *            the button that was pressed
-     * @param hideLoader
-     *            boolean to specify if we had need to hide the loader
      */
-    protected void enableButton(final Widget button, final boolean hideLoader) {
+    protected void disableButtons(final Widget pressedButton) {
+        this.pressedButton = pressedButton;
+        for (final Entry<String, FormButtonWidget> entry : buttonWidgets.entrySet()) {
+            if (isActionButton(entry.getValue())) {
+                disableButton(entry.getValue().getButton());
+            }
+        }
+    }
+
+    protected boolean isActionButton(final FormButtonWidget formButtonWidget) {
+        return formButtonWidget.getWidgetType().equals(WidgetType.BUTTON_SUBMIT) || formButtonWidget.getWidgetType().equals(WidgetType.BUTTON_NEXT)
+                || formButtonWidget.getWidgetType().equals(WidgetType.BUTTON_PREVIOUS);
+    }
+
+    /**
+     * Enable a button
+     * 
+     * @param button
+     *            to enable
+     */
+    protected void enableButton(final Widget button) {
         if (button != null) {
             if (button instanceof Button) {
                 ((Button) button).setEnabled(true);
@@ -877,20 +877,24 @@ public class FormPagesViewController {
                 disabledLabelButtons.remove(button);
             }
         }
-        if (hideLoader) {
-            domUtils.hideLoading();
-        }
-
     }
 
     /**
-     * Enable the button that was clicked
+     * Enable the buttons
      * 
-     * @param button
-     *            the button that was pressed
+     * @param hideLoader
+     *            boolean to specify if we had need to hide the loader
      */
-    protected void enableButton(final Widget button) {
-        enableButton(button, true);
+    protected void enableButtons(final boolean hideLoader) {
+        pressedButton = null;
+        for (final Entry<String, FormButtonWidget> entry : buttonWidgets.entrySet()) {
+            if (isActionButton(entry.getValue())) {
+                enableButton(entry.getValue().getButton());
+            }
+        }
+        if (hideLoader) {
+            domUtils.hideLoading();
+        }
     }
 
     /**
@@ -943,21 +947,19 @@ public class FormPagesViewController {
                 }
             }
 
-            formsServiceAsync.validateFormFields(formID, urlContext, validators, widgetValues, submitButtonId,
-                    new FormFieldValidatorHandler(
-                            actionAfterValidation, formPage.getPageValidators(), formPage.getPageValidatorsId()));
+            formsServiceAsync.validateFormFields(formID, urlContext, validators, widgetValues, submitButtonId, new FormFieldValidatorHandler(
+                    actionAfterValidation, formPage.getPageValidators(), formPage.getPageValidatorsId()));
         } else if (isCurrentPageValid) {
             if (!pageValidators.isEmpty()) {
                 cleanValidatorsMessages(pageValidators);
                 formsServiceAsync.validateFormPage(formID, urlContext, formPage.getPageValidatorsId(), widgetValues, submitButtonId,
-                        new FormPageValidatorHandler(
-                                actionAfterValidation));
+                        new FormPageValidatorHandler(actionAfterValidation));
             } else {
                 submitForm(actionAfterValidation);
             }
         } else {
             resizeFrame();
-            enableButton(pressedButton);
+            enableButtons(true);
         }
     }
 
@@ -999,39 +1001,30 @@ public class FormPagesViewController {
     }
 
     private boolean isEmptyField(final FormFieldValue fieldValue) {
-        return isEmptyString(fieldValue)
-                || isEmptyFile(fieldValue)
-                || isEmptyBoolean(fieldValue)
-                || isEmptyCollection(fieldValue)
-                || isEmptyLong(fieldValue)
+        return isEmptyString(fieldValue) || isEmptyFile(fieldValue) || isEmptyBoolean(fieldValue) || isEmptyCollection(fieldValue) || isEmptyLong(fieldValue)
                 || isEmptyDate(fieldValue);
     }
 
     private boolean isEmptyDate(final FormFieldValue fieldValue) {
-        return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_DATE_CLASSNAME)
-                && fieldValue.getValue() == null;
+        return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_DATE_CLASSNAME) && fieldValue.getValue() == null;
     }
 
     private boolean isEmptyLong(final FormFieldValue fieldValue) {
-        return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_LONG_CLASSNAME)
-                && ((Long) fieldValue.getValue()).equals(Long.valueOf(0L));
+        return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_LONG_CLASSNAME) && ((Long) fieldValue.getValue()).equals(Long.valueOf(0L));
     }
 
     private boolean isEmptyCollection(final FormFieldValue fieldValue) {
         return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_COLLECTION_CLASSNAME)
-                && (fieldValue.getValue() == null
-                || ((Collection<?>) fieldValue.getValue()).isEmpty());
+                && (fieldValue.getValue() == null || ((Collection<?>) fieldValue.getValue()).isEmpty());
     }
 
     private boolean isEmptyBoolean(final FormFieldValue fieldValue) {
-        return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_BOOLEAN_CLASSNAME)
-                && ((Boolean) fieldValue.getValue()).equals(Boolean.FALSE);
+        return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_BOOLEAN_CLASSNAME) && ((Boolean) fieldValue.getValue()).equals(Boolean.FALSE);
     }
 
     private boolean isEmptyString(final FormFieldValue fieldValue) {
         return fieldValue.getValueType().equals(SupportedFieldTypes.JAVA_STRING_CLASSNAME)
-                && (fieldValue.getValue() == null
-                || ((String) fieldValue.getValue()).length() == 0);
+                && (fieldValue.getValue() == null || ((String) fieldValue.getValue()).length() == 0);
     }
 
     private boolean isEmptyFile(final FormFieldValue fieldValue) {
@@ -1078,8 +1071,7 @@ public class FormPagesViewController {
     protected void submitForm(final ACTION_TYPE actionAfterValidation) {
         if (actionAfterValidation.equals(ACTION_TYPE.SUBMIT)) {
             final String submitButtonId = pressedButton.getElement().getParentElement().getParentElement().getId();
-            formsServiceAsync.executeActions(formID, urlContext, widgetValues, followedPagesIds, submitButtonId,
-                    new FormSubmissionHandler());
+            formsServiceAsync.executeActions(formID, urlContext, widgetValues, followedPagesIds, submitButtonId, new FormSubmissionHandler());
         } else {
             int newIndex = currentPageIndex;
             if (actionAfterValidation.equals(ACTION_TYPE.PREVIOUS)) {
@@ -1093,12 +1085,10 @@ public class FormPagesViewController {
             } catch (final IndexOutOfBoundsException e) {
                 final String errorMessage = FormsResourceBundle.getErrors().pageIndexError(newIndex);
                 if (formID != null) {
-                    formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                            formID, pageHTMLPanel,
+                    formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
                             errorMessage, elementId));
                 } else {
-                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                            formID, pageHTMLPanel,
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
                             errorMessage, elementId));
                 }
             }
@@ -1156,15 +1146,14 @@ public class FormPagesViewController {
                     // once the fields validation is over perform the page validation
                     cleanValidatorsMessages(pageValidators);
                     final String submitButtonId = pressedButton.getElement().getParentElement().getParentElement().getId();
-                    formsServiceAsync.validateFormPage(formID, urlContext,
-                            pageValidatorsId, widgetValues, submitButtonId, new FormPageValidatorHandler(
-                                    actionAfterValidation));
+                    formsServiceAsync.validateFormPage(formID, urlContext, pageValidatorsId, widgetValues, submitButtonId, new FormPageValidatorHandler(
+                            actionAfterValidation));
                 } else {
                     submitForm(actionAfterValidation);
                 }
             } else {
                 resizeFrame();
-                enableButton(pressedButton);
+                enableButtons(true);
             }
         }
 
@@ -1172,17 +1161,13 @@ public class FormPagesViewController {
         public void onUnhandledFailure(final Throwable caught) {
             final String errorMessage = FormsResourceBundle.getErrors().fieldValidationError();
             if (formID != null) {
-                formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext,
-                        new ErrorPageHandler(applicationHTMLPanel, formID,
-                                pageHTMLPanel,
-                                errorMessage, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, elementId));
             } else {
-                formsServiceAsync.getApplicationErrorTemplate(formID,
-                        urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                                formID, pageHTMLPanel,
-                                errorMessage, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, elementId));
             }
-            enableButton(pressedButton);
+            enableButtons(true);
         }
     }
 
@@ -1216,7 +1201,7 @@ public class FormPagesViewController {
                     }
                 }
                 resizeFrame();
-                enableButton(pressedButton);
+                enableButtons(true);
             } else {
                 submitForm(actionAfterValidation);
             }
@@ -1226,17 +1211,13 @@ public class FormPagesViewController {
         public void onUnhandledFailure(final Throwable caught) {
             final String errorMessage = FormsResourceBundle.getErrors().pageValidationError();
             if (formID != null) {
-                formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext,
-                        new ErrorPageHandler(applicationHTMLPanel, formID,
-                                pageHTMLPanel,
-                                errorMessage, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(errorMessage, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, elementId));
             } else {
-                formsServiceAsync.getApplicationErrorTemplate(formID,
-                        urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                                formID, pageHTMLPanel,
-                                errorMessage, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, elementId));
             }
-            enableButton(pressedButton);
+            enableButtons(true);
         }
     }
 
@@ -1284,10 +1265,8 @@ public class FormPagesViewController {
                 throw caught;
             } catch (final FormAlreadySubmittedException e) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
-                formsServiceAsync.getApplicationErrorTemplate(formID,
-                        urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                                formID, pageHTMLPanel,
-                                errorMessage, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, elementId));
             } catch (final FileTooBigException e) {
                 final String fileName = e.getFileName();
                 final String maxSize = e.getMaxSize();
@@ -1298,13 +1277,11 @@ public class FormPagesViewController {
                 }
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formSubmissionError();
-                formsServiceAsync.getApplicationErrorTemplate(formID,
-                        urlContext, new ErrorPageHandler(applicationHTMLPanel,
-                                formID, pageHTMLPanel,
-                                errorMessage, elementId));
+                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                        errorMessage, elementId));
             }
 
-            enableButton(pressedButton);
+            enableButtons(true);
         }
     }
 
@@ -1378,15 +1355,12 @@ public class FormPagesViewController {
 
     private void redirectToConfirmationPage() {
         final String defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
-        formsServiceAsync.getFormConfirmationTemplate(formID, urlContext,
-                createConfirmationPageHandler(defaultConfirmationMessage));
+        formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, createConfirmationPageHandler(defaultConfirmationMessage));
     }
 
     private ConfirmationPageHandler createConfirmationPageHandler(final String defaultConfirmationMessage) {
-        return new ConfirmationPageHandler(applicationHTMLPanel,
-                elementId,
-                defaultConfirmationMessage, formID,
-                urlContext).setCurrentPageHTMLPanel(pageHTMLPanel);
+        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, defaultConfirmationMessage, formID, urlContext)
+                .setCurrentPageHTMLPanel(pageHTMLPanel);
     }
 
 }

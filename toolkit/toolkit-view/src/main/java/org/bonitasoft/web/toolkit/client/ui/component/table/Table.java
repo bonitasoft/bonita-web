@@ -46,6 +46,7 @@ import java.util.Map.Entry;
 
 import static com.google.gwt.query.client.GQuery.$;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import com.google.gwt.user.client.ui.CheckBox;
 
 /**
  * @author Séverin Moussel
@@ -216,7 +217,7 @@ public class Table extends AbstractTable implements Refreshable {
 
     private class CheckLineAction extends Action {
 
-        private String checkboxId;
+        private final String checkboxId;
 
         private Action defaultAction;
 
@@ -227,9 +228,9 @@ public class Table extends AbstractTable implements Refreshable {
         @Override
         public void execute() {
             clearCheckboxes();
-            setCheckboxesValue(getCheckbox(checkboxId), true, false);
-            if (defaultAction != null) {
-                defaultAction.execute();
+            setCheckboxesValue(getCheckbox(this.checkboxId), true, false);
+            if (this.defaultAction != null) {
+                this.defaultAction.execute();
             }
         }
 
@@ -248,11 +249,11 @@ public class Table extends AbstractTable implements Refreshable {
         if (className != null) {
             line.addClass(className);
         }
-        if (itemIdOnRow) {
+        if (this.itemIdOnRow) {
             line.addClass("APIID_" + checkboxId);
         }
 
-        if (selectLineOnClick) {
+        if (this.selectLineOnClick) {
             CheckLineAction action = new CheckLineAction(checkboxId);
             action.setDefaultAction(defaultAction);
             line.setDefaultAction(action);
@@ -280,7 +281,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public Table addLine(String checkboxId, final String className, final Action defaultAction) {
-        return addLine(checkboxId, className, defaultAction, true);
+        return this.addLine(checkboxId, className, defaultAction, true);
     }
 
     public Table addCell(final AbstractComponent... components) {
@@ -458,7 +459,7 @@ public class Table extends AbstractTable implements Refreshable {
         }
 
         disableActionLinks();
-        
+
         if (this.lines.size() == 0) {
             addCheckAllCheckbox();
             addEmptyCssClass();
@@ -481,11 +482,11 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void removeEmptyCssClass() {
-        this.getElement().removeClassName("empty");
+        getElement().removeClassName("empty");
     }
 
     private void addEmptyCssClass() {
-        this.getElement().addClassName("empty");
+        getElement().addClassName("empty");
     }
 
     private Element createEmptyLinesElement() {
@@ -498,43 +499,49 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void addChangeEventHandler(GQuery checkboxes) {
-        checkboxes.change(new Function() {
+        checkboxes.each(new Function() {
 
             @Override
-            public void f(final Element e) {
-                processEvent($(e));
+            public void f(final Element k) {
+                final GQuery checkbox = $(k);
+                checkbox.change(new Function() {
+
+                    @Override
+                    public boolean f(Event e) {
+                        Table.this.processEvent($(e));
+                        return true;
+                    }
+                });
+
+                // fix click propagation to line
+                checkbox.click(new Function() {
+
+                    @Override
+                    public boolean f(final Event e) {
+                        e.stopPropagation();
+                        checkbox.trigger(Event.ONCHANGE);
+                        return true;
+                    }
+                });
+
             }
-
-        }).click(new Function() {
-
-            @Override
-            public boolean f(final Event e) {
-                processEvent($(e.getEventTarget()));
-                return false;
-            }
-
         });
     }
 
     private void addCheckAllCheckbox() {
         final String checkAllId = HTML.getUniqueId();
-        $(".th_checkboxes", this.tableElement).empty().append(
-                $(HTML.checkbox("checkall", "0", new XMLAttributes("id", checkAllId))).change(new Function() {
+        CheckBox checkBox = new CheckBox();
+        $(".th_checkboxes", tableElement).empty().append(
+
+                $(HTML.checkbox("checkall", "0", new XMLAttributes("id", checkAllId))).click(new Function() {
 
                     @Override
                     public void f(final Element e) {
-                        setCheckboxesValue(getAllCheckboxes(), $(e).is(":checked"), false);
+                        Object checkedValue = $(e).prop("checked");
+                        Table.this.setCheckboxesValue(Table.this.getAllCheckboxes(), (Boolean) checkedValue, false);
                     }
 
-                }).click(new Function() {
-
-                    @Override
-                    public boolean f(final Event e) {
-                        e.stopPropagation();
-                        return true;
-                    }
-                }
-                        )).append(
+                })).append(
                 $(HTML.label(_("All"), checkAllId)));
     }
 
@@ -548,47 +555,54 @@ public class Table extends AbstractTable implements Refreshable {
         }
 
         // Check all if no checkbox unchecked
-        final boolean noCheckboxCheched = $(".td_checkboxes input:not(:checked)", Table.this.getElement()).length() == 0;
+        final boolean noCheckboxCheched = $(".td_checkboxes input", Table.this.getElement()).filter(":checked").length() == $(".td_checkboxes input",
+                Table.this.getElement()).length();
         if (noCheckboxCheched) {
-            setCheckboxesValue($(".th_checkboxes :checkbox", Table.this.getElement()), true, true);
-            $(".th_checkboxes label", Table.this.getElement()).addClass("checked");
+            setCheckAllCheckboxesValue($(".th_checkboxes input", Table.this.getElement()), true);
         } else {
-            setCheckboxesValue($(".th_checkboxes :checkbox", Table.this.getElement()), false, true);
-            $(".th_checkboxes label", Table.this.getElement()).removeClass("checked");
+            setCheckAllCheckboxesValue($(".th_checkboxes input", Table.this.getElement()), false);
         }
 
         // Set datatable class to to inform about selected or not
-        if ($(".td_checkboxes :checked", Table.this.getElement()).length() > 0) {
-            $(this.getElement()).addClass("linechecked");
+        if ($(".td_checkboxes input", Table.this.getElement()).filter(":checked").length() > 0) {
+            $(getElement()).addClass("linechecked");
             enableActionsLinks();
         } else {
-            $(this.getElement()).removeClass("linechecked");
+            $(getElement()).removeClass("linechecked");
             disableActionLinks();
         }
     }
 
     private void onUncheckItem(final GQuery labels, String itemId) {
-        labels.removeClass("checked");
-        Table.this.selectedIds.remove(itemId);
+        if (labels.length() > 0) {
+            labels.removeClass("checked");
+        }
+        if (Table.this.selectedIds.contains(itemId)) {
+            Table.this.selectedIds.remove(itemId);
+        }
         fireEvent(new ItemUncheckedEvent(Table.this.selectedIds, itemId));
     }
 
     private void onCheckItem(final GQuery labels, String itemId) {
-        labels.addClass("checked");
+        if (labels.length() > 0) {
+            labels.addClass("checked");
+        }
         fireEvent(new ItemCheckedEvent(Table.this.selectedIds, itemId));
-        Table.this.selectedIds.add(itemId);
+        if (!Table.this.selectedIds.contains(itemId)) {
+            Table.this.selectedIds.add(itemId);
+        }
     }
 
     public HandlerRegistration addItemCheckedHandler(ItemCheckedHandler handler) {
-        return addHandler(handler, ItemCheckedEvent.TYPE);
+        return this.addHandler(handler, ItemCheckedEvent.TYPE);
     }
 
     public HandlerRegistration addItemUncheckedHandler(ItemUncheckedHandler handler) {
-        return addHandler(handler, ItemUncheckedEvent.TYPE);
+        return this.addHandler(handler, ItemUncheckedEvent.TYPE);
     }
 
     private void disableActionLinks() {
-        for (Link link : groupedActions.getComponents()) {
+        for (Link link : this.groupedActions.getComponents()) {
             if (!link.hasClass(ALWAYS_ENABLE_CLASS)) {
                 link.setEnabled(false);
             }
@@ -596,7 +610,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void enableActionsLinks() {
-        for (Link link : groupedActions.getComponents()) {
+        for (Link link : this.groupedActions.getComponents()) {
             if (!link.hasClass(ALWAYS_ENABLE_CLASS)) {
                 link.setEnabled(true);
             }
@@ -604,7 +618,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private GQuery getAllCheckboxes() {
-        return $(".td_checkboxes :checkbox", this.tableElement);
+        return $(".td_checkboxes input", tableElement);
     }
 
     private Element makePager(final String className) {
@@ -685,8 +699,9 @@ public class Table extends AbstractTable implements Refreshable {
      * @deprecated
      *             Create your own link and use {@link #addGroupedAction(Link, boolean)} instead
      */
+    @Deprecated
     public Table addGroupedAction(final JsId id, final String label, final String tooltip, final Action action, final boolean force) {
-        addGroupedAction(new ButtonAction("btn-" + id.toString(), label, tooltip, action), force);
+        this.addGroupedAction(new ButtonAction("btn-" + id.toString(), label, tooltip, action), force);
         return this;
     }
 
@@ -879,24 +894,36 @@ public class Table extends AbstractTable implements Refreshable {
 
     public String getSearch() {
 
-        final String search = $(".tablefilters input[name=search]:not(.empty)", getElement()).val();
-
-        if ("null".equalsIgnoreCase(search)) {
+        if (getElement().getClassName().contains("empty")) {// if the table is empty return ""
             return "";
         }
-
-        return search;
+        if (!$(getElement()).isVisible()) {
+            return "";
+        }
+        return _getSearch(getElement());
     }
 
     public Table setSearch(final String query) {
         this.defaultSearch = query;
 
         if (isGenerated()) {
-            $(".tablefilters input[name=search]:not(.empty)", getElement()).val(this.defaultSearch);
+            this.setSearch(getElement(), defaultSearch);
         }
 
         return this;
     }
+
+    private native void setSearch(Element e, String defaultSearch)
+    /*-{
+     $wnd.$(".tablefilters input[name=search]", e).not(".empty").val(defaultSearch);
+    
+     }-*/;
+
+    private native String _getSearch(Element e)
+    /*-{
+      return $wnd.$(".tablefilters .tablefiltertext input", e).val();
+    
+     }-*/;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ORDER
@@ -950,7 +977,7 @@ public class Table extends AbstractTable implements Refreshable {
         if (this.refreshFiller != null) {
             this.refreshFiller.run();
         }
-        runFillers();
+        this.runFillers();
     }
 
     public void setView(final VIEW_TYPE view) {
@@ -996,9 +1023,9 @@ public class Table extends AbstractTable implements Refreshable {
     private void setCheckboxesValue(GQuery checkboxes, boolean value, boolean silent) {
         if (isCheckable(checkboxes)) {
             if (value) {
-                checkboxes.attr("checked", "checked");
+                checkboxes.prop("checked", true);
             } else {
-                checkboxes.removeAttr("checked");
+                checkboxes.prop("checked", false);
             }
             if (!silent) {
                 checkboxes.trigger(Event.ONCHANGE);
@@ -1006,9 +1033,19 @@ public class Table extends AbstractTable implements Refreshable {
         }
     }
 
-    private boolean isCheckable(GQuery checkboxes) {
-        return checkboxes != null && checkboxes.length() > 0;
+    private void setCheckAllCheckboxesValue(GQuery checkbox, boolean value) {
+        setCheckboxesValue(checkbox, value, true);
+        fireCssLabelEvent(tableElement);
     }
+
+    private boolean isCheckable(GQuery checkboxes) {
+        return checkboxes != null && checkboxes.length() > 0 && checkboxes.is(":checkbox");
+    }
+
+    private native void fireCssLabelEvent(Element e)
+    /*-{
+        $wnd.$(e).trigger("cssChange");
+    }-*/;
 
     public void setItemIdOnRow(boolean itemIdOnRow) {
         this.itemIdOnRow = itemIdOnRow;
