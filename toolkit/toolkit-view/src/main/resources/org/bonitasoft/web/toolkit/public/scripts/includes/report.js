@@ -196,3 +196,57 @@ function forceImgRefresh(ajaxResponse){
 	var reg= /<img(.*)src=\"([^\s]*)\"(.*)([>|/>])/gi;
 	return ajaxResponse.replace(reg, '<img$1src="$2&r='+r+'"$3$4');
 }
+
+/*
+ * Some utilitary methods for the form part of the report.
+ * Need to be instaciated to provide dependency on I18N
+ * exposed by portal.
+ *
+ * bonitasoft.utils.report.Create(bonitasoft.i18n.translate)
+ */
+(function(bonitasoft, utils) {
+    // bonitasoft.utils.report.Create
+    utils.namespace.extend(bonitasoft, 'utils.report', function (report) {
+        report.Create = function(_) {
+            function Option(item) {
+                return $("<option></option>")
+                    .text(item.text)
+                    .val(item.val);
+            }
+        
+            function initSelector(selector) {
+                selector.html('');
+                selector.append(new Option({
+                        val: '0',
+                        text: _("All")
+                    }));
+            }
+        
+            function getValueIndex(selector, value) {
+                return $("option[value=\"" + value + "\"]", selector)
+                    .prop("index");
+            }
+        
+            function select(selector, value) {
+                if(value) {
+                    selector.prop("selectedIndex",
+                                  getValueIndex(selector, value));
+                }
+            }
+        
+            function populate(selector, items, renderer) {
+                initSelector(selector);
+                utils.arrays.foreach(items, function(item) {
+                    selector.append(new Option(renderer(item)));
+                });
+                select(selector, selector.data('uriValue'));
+            }
+            
+            return {
+                select: {
+                    populate: populate
+                }
+            };
+        };
+    });
+})(bonitasoft, bonitasoft.utils);
