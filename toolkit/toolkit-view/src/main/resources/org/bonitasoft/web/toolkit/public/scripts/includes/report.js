@@ -43,7 +43,9 @@ function reportDateRangePicker(localeDateFormat, prefix){
 	} catch(err){
 		
 	}
-	$("#report-form select").attr("onchange", "refreshReport(this.form, \""+localeDateFormat+"\", \""+prefix+"\")");
+    $("#report-form").find('select').change(function() {
+	    refreshReport(this.form, localeDateFormat, prefix);
+	});
 }
 
 function hookReportFormSubmition(localeDateFormat, prefix){
@@ -164,6 +166,7 @@ function retrieveFieldsValues(params, localeDateFormat){
 					field.val(uriValue);
 				}
 			}else if(field.is("select")){
+                field.data('uriValue', uriValue);
 				field.prop("selectedIndex", $("option[value=\""+uriValue+"\"]", field).prop("index"));
 			}
 		}

@@ -4,7 +4,7 @@ var bonitasoft = (function (bonitasoft) {
     var namespace = (function(namespace) {
         /*
          * Extend namespace by creating all 
-         * intermediate namespace and calling 
+         * intermediate namespaces and calling
          * extension method to extends requested 
          * namespace.
          */
@@ -27,7 +27,7 @@ var bonitasoft = (function (bonitasoft) {
             
     var assertion = (function(assertion) {
         /*
-         * Throw an excepton if the 
+         * Throw an exception if the
          * condition isn't met.
          */
         function assert(condition, message) {
@@ -54,20 +54,35 @@ var bonitasoft = (function (bonitasoft) {
         };
     })(variable, assertion);
 
-    // bonitasoft.utils.namespace    
+    var arrays = (function(arrays) {
+        /*
+         * Iterate across each elements
+         * of an arrays to call apply
+         * method on this element.
+         */
+        function foreach(items, apply) {
+            for(var i = 0; i < items.length; i += 1) {
+                apply(items[i]);
+            }
+        }
+        return arrays || {
+            foreach: foreach
+        };
+    })(arrays);
+
     namespace.extend(bonitasoft, 'utils', function (utils) {
+        // bonitasoft.utils.namespace
         utils.namespace = namespace;
-    });
-    
-    // bonitasoft.utils.assertion
-    namespace.extend(bonitasoft, 'utils', function (utils) {
+        // bonitasoft.utils.assertion
         utils.assertion = assertion;
+        // bonitasoft.utils.arrays
+        utils.arrays = arrays;
     });
 
     // bonitasoft.utils.html.variable
     namespace.extend(bonitasoft, 'utils.html', function (html) {
         html.variable = variable;
     });
-        
+
     return bonitasoft;
 })(bonitasoft || {});
