@@ -43,9 +43,9 @@ function reportDateRangePicker(localeDateFormat, prefix){
 	} catch(err){
 		
 	}
-    $("#report-form").find('select').change(function() {
-	    refreshReport(this.form, localeDateFormat, prefix);
-	});
+    $("#report-form").find("select").change(function() {
+        refreshReport(this.form, localeDateFormat, prefix);
+    });
 }
 
 function hookReportFormSubmition(localeDateFormat, prefix){
@@ -198,55 +198,65 @@ function forceImgRefresh(ajaxResponse){
 }
 
 /*
- * Some utilitary methods for the form part of the report.
- * Need to be instaciated to provide dependency on I18N
- * exposed by portal.
- *
- * bonitasoft.utils.report.Create(bonitasoft.i18n.translate)
+ * Some utility methods for the report's form part.
  */
 (function(bonitasoft, utils) {
-    // bonitasoft.utils.report.Create
+
+    function append(selector, option) {
+        if(option) {
+            selector.append($("<option></option>")
+                .val(option.val)
+                .text(option.text));
+        }
+    }
+
+    function getIndex(selector, value) {
+        return $("option[value=\"" + value + "\"]", selector)
+            .prop("index");
+    }
+
+    function select(selector, value) {
+        if(value) {
+            selector.prop("selectedIndex",
+                          getIndex(selector, value));
+        }
+    }
+
+    /*
+     * Clear selector content as well as append
+     * default option if defined.
+     *
+     * selector - JQuery object containing a <select />
+     * defaults - Optional. Default option to append after cleaning.
+     */
+    function clear(selector, defaults) {
+        selector.html('');
+        if(defaults) {
+            append(selector, defaults);
+        }
+    }
+
+    /*
+     * Populate selector the items by calling renderer to append the options.
+     *
+     * selector - JQuery object containing a <select />
+     * items    - JSON array containing items to append
+     * renderer - function called with the current item in parameter.
+     *            It must return a literal object with val & text of the option.
+     *            e.g { val: '', text: '' }
+     */
+    function populate(selector, items, renderer) {
+        utils.arrays.foreach(items, function(item) {
+            append(selector, renderer(item));
+        });
+        select(selector, selector.data('uriValue'));
+    }
+
+    // bonitasoft.utils.report.form
     utils.namespace.extend(bonitasoft, 'utils.report', function (report) {
-        report.Create = function(_) {
-            function Option(item) {
-                return $("<option></option>")
-                    .text(item.text)
-                    .val(item.val);
-            }
-        
-            function initSelector(selector) {
-                selector.html('');
-                selector.append(new Option({
-                        val: '0',
-                        text: _("All")
-                    }));
-            }
-        
-            function getValueIndex(selector, value) {
-                return $("option[value=\"" + value + "\"]", selector)
-                    .prop("index");
-            }
-        
-            function select(selector, value) {
-                if(value) {
-                    selector.prop("selectedIndex",
-                                  getValueIndex(selector, value));
-                }
-            }
-        
-            function populate(selector, items, renderer) {
-                initSelector(selector);
-                utils.arrays.foreach(items, function(item) {
-                    selector.append(new Option(renderer(item)));
-                });
-                select(selector, selector.data('uriValue'));
-            }
-            
-            return {
-                select: {
-                    populate: populate
-                }
+            report.form = {
+                clear: clear,
+                populate: populate
             };
-        };
-    });
+        });
 })(bonitasoft, bonitasoft.utils);
