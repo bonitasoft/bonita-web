@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
-import org.bonitasoft.console.client.admin.bpm.task.action.AssignTaskAndHistoryBackAction;
+import org.bonitasoft.console.client.admin.bpm.task.action.UnassignAndAssignTask;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.view.SelectItemAndDoEntry;
 import org.bonitasoft.console.client.common.view.SelectItemAndDoForm;
@@ -84,7 +84,7 @@ public class SelectUserAndAssignTaskPage extends Page {
         
             @Override
             public void execute() {
-                final AssignTaskAndHistoryBackAction action = new AssignTaskAndHistoryBackAction();
+                final UnassignAndAssignTask action = new UnassignAndAssignTask();
                 action.setParameters(getParameters());
                 action.execute();
             }
