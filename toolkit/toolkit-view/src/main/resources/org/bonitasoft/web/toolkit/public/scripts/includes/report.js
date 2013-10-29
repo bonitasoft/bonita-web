@@ -198,7 +198,7 @@ function forceImgRefresh(ajaxResponse){
 }
 
 /*
- * Some utility methods for the report's form part.
+ * Some utility methods for report's form.
  */
 (function(bonitasoft, utils) {
 
