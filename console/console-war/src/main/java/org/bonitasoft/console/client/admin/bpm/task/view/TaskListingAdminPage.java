@@ -173,7 +173,8 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
                         .addGroupedAction(new JsId("unassign"), _("Unassign"), _("Unassign this task. Other allowed users will see it"),
                                 new TaskRelaseAction())
-
+                        .addAttributeToCheckForGroupedActions(HumanTaskItem.ATTRIBUTE_TYPE, "MANUAL_TASK")
+                        
                         // cell formatters
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
                                 new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
