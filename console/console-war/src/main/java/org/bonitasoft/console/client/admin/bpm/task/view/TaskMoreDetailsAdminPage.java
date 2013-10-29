@@ -177,6 +177,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         metadatas.addAppsName();
         metadatas.addAppsVersion();
         metadatas.addCaseId();
+        metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();
         metadatas.addAssignedTo();

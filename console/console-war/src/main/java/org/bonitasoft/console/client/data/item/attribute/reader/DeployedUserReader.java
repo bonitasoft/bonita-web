@@ -32,8 +32,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.HasDeploys;
 public class DeployedUserReader extends UserAttributeReader implements HasDeploys {
 
     public DeployedUserReader(final String attributeToDeploy) {
-        super();
-        leadAttribute = attributeToDeploy;
+        super(attributeToDeploy);
     }
 
     public static String readUser(final IItem item, final String attribute) {
@@ -59,7 +58,7 @@ public class DeployedUserReader extends UserAttributeReader implements HasDeploy
         if ("0".equals(userId)) {
             return createSystemUser();
         } else if (item.getDeploy(attributeToRead) == null) {
-            if ("".equals(userId) && !"".equals(this.getDefaultValue())) {
+            if ("".equals(userId) && !"".equals(getDefaultValue())) {
                 return createDefaultValueUser();
             }
             return createDeletedUser();
@@ -84,7 +83,7 @@ public class DeployedUserReader extends UserAttributeReader implements HasDeploy
 
     private UserItem createDefaultValueUser() {
         final UserItem user = new UserItem();
-        user.setFirstName(this.getDefaultValue());
+        user.setFirstName(getDefaultValue());
         return user;
     }
 

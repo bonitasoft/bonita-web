@@ -30,7 +30,11 @@ public class UserAttributeReader extends CompoundAttributeReader {
     protected static String TEMPLATE = _("%firstname% %lastname%");
 
     public UserAttributeReader() {
-        super(null, TEMPLATE);
+        this(null);
+    }
+
+    public UserAttributeReader(final String leadAttribute) {
+        super(leadAttribute, TEMPLATE);
     }
 
     public static String readUser(final IItem item) {
