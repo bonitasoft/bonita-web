@@ -894,20 +894,20 @@ public class Table extends AbstractTable implements Refreshable {
 
     public String getSearch() {
 
-        if (getElement().getClassName().contains("empty")) {// if the table is empty return ""
+        final String search = $(".tablefilters input[name=search]:not(.empty)", getElement()).val();
+
+        if ("null".equalsIgnoreCase(search)) {
             return "";
         }
-        if (!$(getElement()).isVisible()) {
-            return "";
-        }
-        return _getSearch(getElement());
+
+        return search;
     }
 
     public Table setSearch(final String query) {
         this.defaultSearch = query;
 
         if (isGenerated()) {
-            this.setSearch(getElement(), defaultSearch);
+            $(".tablefilters input[name=search]:not(.empty)", getElement()).val(this.defaultSearch);
         }
 
         return this;

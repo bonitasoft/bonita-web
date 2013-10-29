@@ -24,14 +24,14 @@ import com.google.gwt.safehtml.shared.SafeHtml;
  * Date: 07/10/13
  * Time: 16:27
  */
-public class HtmlUtils {
+public class VariableUtils {
 
     /**
      * Replace all variables occurrence in the element's html. Variables are tokens delimited by %%.
      *
      * <pre class="code">{@code
      * SpanElement el = new SpanElement("<span>%variable-name% has been replaced</span>");
-     * HtmlUtils.replaceVariable(el, "variable-name", "someValue");
+     * VariableUtils.inject(el, "variable-name", "someValue");
      * }</pre>
      * Result: someValue has been replaced
      *
@@ -39,7 +39,7 @@ public class HtmlUtils {
      * @param name the name of the variable. This is the token contained between %%
      * @param value the value which will replace the variable
      */
-    public static void replaceVariable(HtmlAccessor accessor, String name, SafeHtml value) {
+    public static void inject(HtmlAccessor accessor, String name, SafeHtml value) {
         accessor.setInnerHTML(replaceAll(accessor.getInnerHTML(), name, value));
     }
 

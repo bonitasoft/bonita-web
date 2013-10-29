@@ -36,6 +36,10 @@ public class AuthorizationFilter implements Filter {
     private LinkedList<AuthorizationRule> rules = new LinkedList<AuthorizationRule>();
 
     public AuthorizationFilter() {
+        addRules();
+    }
+
+    protected void addRules() {
         addRule(new AlreadyLoggedInRule());
         addRule(new AutoLoginRule());
     }

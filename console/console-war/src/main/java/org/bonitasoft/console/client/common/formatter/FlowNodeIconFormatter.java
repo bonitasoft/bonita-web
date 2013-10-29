@@ -16,14 +16,7 @@
  */
 package org.bonitasoft.console.client.common.formatter;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.web.toolkit.client.ui.component.Html;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
+import org.bonitasoft.web.toolkit.client.ui.component.Image;
 
 /**
  * Formatter for FlowNode Display Name
@@ -31,23 +24,30 @@ import com.google.gwt.safehtml.shared.SafeHtml;
  * 
  * @author Julien MEGE
  */
-public class FlowNodeDisplayNameFormatter extends FlowNodeCellFormatter {
+public class FlowNodeIconFormatter extends FlowNodeCellFormatter {
 
-    interface Templates extends SafeHtmlTemplates {
+    private final String urlDefaultIcon;
 
-        @SafeHtmlTemplates.Template(
-                "<span title='{2}' class='{1} prepend'>{0}</span>"
-                        + "<span>{3}</span>")
-                SafeHtml cell(String preFix, String cssClass, String tooltip, String displayName);
-
+    /**
+     * Default Constructor.
+     */
+    public FlowNodeIconFormatter(final String urlDefaultIcon) {
+        this.urlDefaultIcon = urlDefaultIcon;
     }
 
-    private Templates TEMPLATES = GWT.create(Templates.class);
-
+    /*
+     * (non-Javadoc)
+     * @see org.bonitasoft.web.toolkit.client.ui.component.core.ComponentFormatter#execute()
+     */
     @Override
     public void execute() {
-        FlowNodeItem task = (FlowNodeItem) getItem();
-        this.table.addCell(new Html(TEMPLATES.cell(_("Task name:"), task.getType().toLowerCase(), getTooltip(), getText())));
+        final String url = this.attributeReader.read(this.item);
+
+        if (url == null || url.length() == 0) {
+            this.table.addCell(new Image(this.urlDefaultIcon, 0, 0, getTooltip()).addClass("icon-default"));
+        } else {
+            this.table.addCell(new Image(url, 0, 0, getTooltip()));
+        }
     }
 
 }

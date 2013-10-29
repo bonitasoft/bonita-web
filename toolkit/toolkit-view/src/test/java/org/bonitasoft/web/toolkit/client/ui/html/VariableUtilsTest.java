@@ -14,7 +14,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * Date: 11/10/13
  * Time: 14:21
  */
-public class HtmlUtilsTest {
+public class VariableUtilsTest {
 
     @Mock
     private HtmlAccessor accessor;
@@ -30,7 +30,7 @@ public class HtmlUtilsTest {
                 .when(accessor)
                 .getInnerHTML();
 
-        HtmlUtils.replaceVariable(accessor, "variable1", SafeHtmlUtils.fromTrustedString("working"));
+        VariableUtils.inject(accessor, "variable1", SafeHtmlUtils.fromTrustedString("working"));
 
         verify(accessor).setInnerHTML("<p>This is working for variable1 but not for variable2</p>");
     }
@@ -41,7 +41,7 @@ public class HtmlUtilsTest {
                 .when(accessor)
                 .getInnerHTML();
 
-        HtmlUtils.replaceVariable(accessor, "variable", SafeHtmlUtils.fromTrustedString("value"));
+        VariableUtils.inject(accessor, "variable", SafeHtmlUtils.fromTrustedString("value"));
 
         verify(accessor).setInnerHTML("<p class='aside'>This is a test</p>");
     }
@@ -52,7 +52,7 @@ public class HtmlUtilsTest {
                 .when(accessor)
                 .getInnerHTML();
 
-        HtmlUtils.replaceVariable(accessor, "variable", SafeHtmlUtils.fromTrustedString("working"));
+        VariableUtils.inject(accessor, "variable", SafeHtmlUtils.fromTrustedString("working"));
 
         verify(accessor).setInnerHTML("<p class='working'>This is working</p>");
     }

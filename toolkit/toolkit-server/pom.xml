@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.bonitasoft.web.toolkit</groupId>
 		<artifactId>bos-web-toolkit</artifactId>
-		<version>6.1.0-SNAPSHOT</version>
+		<version>6.1.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>toolkit-server</artifactId>

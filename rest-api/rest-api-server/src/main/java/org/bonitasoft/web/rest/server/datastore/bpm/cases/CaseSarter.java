@@ -17,8 +17,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +29,7 @@ import org.bonitasoft.web.rest.server.datastore.utils.VariablesMapper;
 import org.bonitasoft.web.rest.server.engineclient.CaseEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
@@ -92,7 +91,7 @@ public class CaseSarter {
                 return dataDefinition;
             }
         }
-        throw new APIException(_("Data definition %dataName% doesn't exists for process %processId%", 
+        throw new APIException(new _("Data definition %dataName% doesn't exists for process %processId%", 
                 new Arg("dataName", dataName), new Arg("processId", caseItem.getProcessId())));
     }
 }

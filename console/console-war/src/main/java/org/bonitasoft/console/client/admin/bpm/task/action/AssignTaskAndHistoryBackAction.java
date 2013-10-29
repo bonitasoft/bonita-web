@@ -29,10 +29,6 @@ import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
  */
 public class AssignTaskAndHistoryBackAction extends ActionOnItemIds {
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds#execute(java.util.List)
-     */
     @Override
     protected void execute(List<APIID> taskIds) {
         TaskAPI.assign(taskIds, APIID.makeAPIID(this.getParameter("user_id")), new HistoryBackAction());

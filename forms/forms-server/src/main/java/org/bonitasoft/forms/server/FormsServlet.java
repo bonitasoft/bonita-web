@@ -806,6 +806,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final long tenantID = retrieveCredentialAndReturnTenantID(request, context);
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
             return formServiceProvider.getAnyTodoListForm(context);
+        } catch (final FormNotFoundException e) {
+            throw new RPCException(e.getMessage(), e);
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "Session timeout");
