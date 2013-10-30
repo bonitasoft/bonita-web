@@ -43,9 +43,8 @@ function reportDateRangePicker(localeDateFormat, prefix){
 	} catch(err){
 		
 	}
-    $("#report-form").find("select").change(function() {
-        refreshReport(this.form, localeDateFormat, prefix);
-    });
+
+    $("#report-form select").attr("onchange", "refreshReport(this.form, \""+localeDateFormat+"\", \""+prefix+"\")");
 }
 
 function hookReportFormSubmition(localeDateFormat, prefix){
