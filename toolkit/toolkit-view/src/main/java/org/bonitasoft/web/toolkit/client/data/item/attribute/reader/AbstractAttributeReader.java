@@ -33,6 +33,8 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
 
     protected String leadAttribute = null;
 
+    protected String className = null;
+
     private String defaultValue = "";
 
     public AbstractAttributeReader() {
@@ -40,16 +42,21 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
     }
 
     public AbstractAttributeReader(final String leadAttribute) {
+        this(leadAttribute, leadAttribute);
+    }
+
+    public AbstractAttributeReader(final String leadAttribute, final String className) {
         this.leadAttribute = leadAttribute;
+        this.className = className;
     }
 
     public final String read(final IItem item) {
 
         final String value = _read(item);
         if (!StringUtil.isBlank(value)) {
-            return this.outputModifiers.apply(value);
+            return outputModifiers.apply(value);
         } else {
-            return this.defaultValue;
+            return defaultValue;
         }
 
     }
@@ -60,7 +67,11 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      * @return the leadAttribute
      */
     public final String getLeadAttribute() {
-        return this.leadAttribute;
+        return leadAttribute;
+    }
+
+    public final String getClassName() {
+        return className;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +85,7 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      */
     @Override
     public List<Modifier> getOutputModifiers() {
-        return this.outputModifiers.getModifiers();
+        return outputModifiers.getModifiers();
     }
 
     /**
@@ -84,7 +95,7 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      */
     @Override
     public AbstractAttributeReader addOutputModifier(final Modifier modifier) {
-        this.outputModifiers.addModifier(modifier);
+        outputModifiers.addModifier(modifier);
         return this;
     }
 
@@ -95,7 +106,7 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      */
     @Override
     public AbstractAttributeReader addOutputModifiers(final List<Modifier> modifiers) {
-        this.outputModifiers.addModifiers(modifiers);
+        outputModifiers.addModifiers(modifiers);
         return this;
     }
 
@@ -106,7 +117,7 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      */
     @Override
     public AbstractAttributeReader removeOutputModifier(final String modifierClassName) {
-        this.outputModifiers.removeModifier(modifierClassName);
+        outputModifiers.removeModifier(modifierClassName);
         return this;
     }
 
@@ -116,7 +127,7 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      */
     @Override
     public boolean hasOutputModifier(final String modifierClassName) {
-        return this.outputModifiers.hasModifier(modifierClassName);
+        return outputModifiers.hasModifier(modifierClassName);
     }
 
     /**
@@ -125,14 +136,14 @@ public abstract class AbstractAttributeReader implements ModifiableOutput {
      */
     @Override
     public Modifier getOutputModifier(final String modifierClassName) {
-        return this.outputModifiers.getModifier(modifierClassName);
+        return outputModifiers.getModifier(modifierClassName);
     }
 
     /**
      * @return the defaultValue
      */
     protected final String getDefaultValue() {
-        return this.defaultValue;
+        return defaultValue;
     }
 
     /**

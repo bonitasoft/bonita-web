@@ -99,13 +99,13 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     }
 
     private ItemListingFilter humanFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Human"), _("Tasks "), TABLE_HUMAN_TASK)
-                .addFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_READY);
+        return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Human"), _("Tasks "), TABLE_HUMAN_TASK).addFilter(TaskItem.ATTRIBUTE_STATE,
+                TaskItem.VALUE_STATE_READY);
     }
 
     private ItemListingFilter failedFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_FAILED, _("Failed"), _("Tasks "), TABLE_ALL)
-                .addFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_FAILED);
+        return new ItemListingFilter(FILTER_PRIMARY_FAILED, _("Failed"), _("Tasks "), TABLE_ALL).addFilter(TaskItem.ATTRIBUTE_STATE,
+                TaskItem.VALUE_STATE_FAILED);
     }
 
     private ItemListingFilter performedFilter() {
@@ -119,9 +119,8 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
     @Override
     protected ItemListingResourceFilter defineResourceFilters() {
-        return new ItemListingResourceFilter(new APISearchRequest(ProcessDefinition.get()),
-                ProcessItem.ATTRIBUTE_DISPLAY_NAME, ProcessItem.ATTRIBUTE_ICON, TABLE_ALL)
-                .addFilterMapping(TaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID);
+        return new ItemListingResourceFilter(new APISearchRequest(ProcessDefinition.get()), ProcessItem.ATTRIBUTE_DISPLAY_NAME, ProcessItem.ATTRIBUTE_ICON,
+                TABLE_ALL).addFilterMapping(TaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID);
     }
 
     @Override
@@ -139,70 +138,60 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     }
 
     private ItemListingTable createAllListingTable() {
-        return new ItemListingTable(new JsId(TABLE_ALL), _("All"),
-                new ItemTable(FlowNodeDefinition.get())
+        return new ItemListingTable(new JsId(TABLE_ALL), _("All"), new ItemTable(FlowNodeDefinition.get())
 
-                        // columns configuration
-                        .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
-                        .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(FlowNodeItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                        .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
-                        .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), false)
+                // columns configuration
+                .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
+                .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+                .addColumn(new DeployedAttributeReader(FlowNodeItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
+                .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), false)
 
-                        // cell formatters
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
-                ,
-                new TaskQuickDetailsAdminPage());
+                // cell formatters
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
+                        new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter()), new TaskQuickDetailsAdminPage());
     }
 
     private ItemListingTable createHumanTaskListingTable() {
-        return new ItemListingTable(new JsId(TABLE_HUMAN_TASK), _("Human Task"),
-                new ItemTable(HumanTaskDefinition.get())
+        return new ItemListingTable(new JsId(TABLE_HUMAN_TASK), _("Human Task"), new ItemTable(HumanTaskDefinition.get())
 
-                        // columns configuration
-                        .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
-                        .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                        .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), true, true)
-                        .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
+                // columns configuration
+                .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
+                .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+                .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), true, true)
+                .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
 
-                        // Grouped actions
-                        .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
-                        .addGroupedAction(new JsId("unassign"), _("Unassign"), _("Unassign this task. Other allowed users will see it"),
-                                new TaskRelaseAction())
-                        .addAttributeToCheckForGroupedActions(HumanTaskItem.ATTRIBUTE_TYPE, "MANUAL_TASK")
+                // Grouped actions
+                .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
+                .addGroupedAction(new JsId("unassign"), _("Unassign"), _("Unassign this task. Other allowed users will see it"), new TaskRelaseAction())
+                .addAttributeToCheckForGroupedActions(HumanTaskItem.ATTRIBUTE_TYPE, "MANUAL_TASK")
 
-                        // cell formatters
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
+                // cell formatters
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
+                        new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
 
-                        .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
-                ,
-                new TaskQuickDetailsAdminPage());
+                .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false), new TaskQuickDetailsAdminPage());
     }
 
     private ItemListingTable createArchivedListingTable() {
-        return new ItemListingTable(new JsId(TABLE_HISTORY), _("All"),
-                new ItemTable(ArchivedTaskDefinition.get())
+        return new ItemListingTable(new JsId(TABLE_HISTORY), _("All"), new ItemTable(ArchivedTaskDefinition.get())
 
-                        .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
-                        .addColumn(ArchivedActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(ArchivedActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                        .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
-                        .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
+                .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
+                .addColumn(ArchivedActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+                .addColumn(new DeployedAttributeReader(ArchivedActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
+                .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
 
-                        .setOrder(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false)
+                .setOrder(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false)
 
-                        .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
-                ,
-                new TaskQuickDetailsAdminPage(true));
+                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
+                        new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter()), new TaskQuickDetailsAdminPage(true));
     }
 
     /**
