@@ -199,13 +199,14 @@ function forceImgRefresh(ajaxResponse){
 /*
  * Some utility methods for report's form.
  */
-(function(bonitasoft, utils) {
+(function(bonitasoft, utils, assertion) {
 
     function append(selector, option) {
         if(option) {
-            selector.append($("<option></option>")
-                .val(option.val)
-                .text(option.text));
+            var element = document.createElement("option");
+            element.text = option.text;
+            element.value = option.val;
+            selector.append(element);
         }
     }
 
@@ -229,6 +230,8 @@ function forceImgRefresh(ajaxResponse){
      * defaults - Optional. Default option to append after cleaning.
      */
     function clear(selector, defaults) {
+        assertion.assert(selector !== undefined);        
+        
         selector.html('');
         if(defaults) {
             append(selector, defaults);
@@ -244,9 +247,11 @@ function forceImgRefresh(ajaxResponse){
      *            It must return a literal object with val & text of the option.
      *            e.g { val: '', text: '' }
      */
-    function populate(selector, items, renderer) {
-        utils.arrays.foreach(items, function(item) {
-            append(selector, renderer(item));
+    function populate(selector, items, render) {
+        assertion.assert(items !== undefined);
+        
+        items.forEach(function(item) {
+            append(selector, render(item));
         });
         select(selector, selector.data('uriValue'));
     }
@@ -258,4 +263,4 @@ function forceImgRefresh(ajaxResponse){
                 populate: populate
             };
         });
-})(bonitasoft, bonitasoft.utils);
+})(bonitasoft, bonitasoft.utils, bonitasoft.utils.assertion);

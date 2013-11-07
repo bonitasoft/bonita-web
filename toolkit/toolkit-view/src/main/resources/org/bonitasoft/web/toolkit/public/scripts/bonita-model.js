@@ -1,22 +1,5 @@
-(function (bonitasoft, utils) {
-    var http = (function(http) {
-
-        function get(url, callback) {
-            var request = new XMLHttpRequest();
-            request.onreadystatechange = function() {
-                if (request.readyState == 4) {
-                    callback(request.status, request.responseText);
-                }
-            };
-            request.open("GET", url, true);
-            request.send();
-        }
-
-        return http || {
-            get: get
-        };
-    })(http);
-
+(function (bonitasoft, namespace, http) {
+    
     function Search(url) {
         return function(parameters, callback) {
             var target = url;
@@ -34,7 +17,7 @@
         };
     }
 
-    utils.namespace.extend(bonitasoft, 'model', function (model) {
+    namespace.extend(bonitasoft, 'model', function (model) {
         /*
          * Namespace allowing access to processes REST API 
          */
@@ -57,4 +40,4 @@
             };
         })();
     });
-}) (bonitasoft, bonitasoft.utils);
+}) (bonitasoft, bonitasoft.utils.namespace, bonitasoft.utils.http);
