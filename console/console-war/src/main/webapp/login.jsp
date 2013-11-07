@@ -21,7 +21,6 @@
 <%@page import="java.util.Locale"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.bonitasoft.console.common.server.i18n.I18n"%>
-<%@page import="static org.bonitasoft.console.common.server.i18n.I18n._"%>
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPUtils"%>
 <%
     JSPUtils JSP = new JSPUtils(request, session);
@@ -69,16 +68,16 @@
 		"noBonitaHomeMessage".equals(noBonitaHomeMessage) ||
 		"noBonitaClientFileMessage".equals(noBonitaClientFileMessage)
 	) {
-        errorMessage = _("The server is not available") + "<br />" + _("Please, contact your administrator.");
+        errorMessage = org.bonitasoft.console.common.server.i18n.I18n._("The server is not available") + "<br />" + org.bonitasoft.console.common.server.i18n.I18n._("Please, contact your administrator.");
         disableLogin = true;
     }
     // No profile for this user
     else if ("noProfileForUser".equals(loginFailMessage)) {
-        errorMessage = _("Login failed. No profile has been set up for this user. Contact your administrator.");
+        errorMessage = org.bonitasoft.console.common.server.i18n.I18n._("Login failed. No profile has been set up for this user. Contact your administrator.");
     }
  	// Login or password error
     else if ("loginFailMessage".equals(loginFailMessage)) {
-        errorMessage = _("Unable to log in. Please check your username and password.");
+        errorMessage = org.bonitasoft.console.common.server.i18n.I18n._("Unable to log in. Please check your username and password.");
     }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -104,7 +103,7 @@
 
 </head>
 <body id="LoginPage">
-	<div id="LoginHeader"><h1><span><%= _("Welcome to") %></span> <%= _("Bonita BPM Portal") %></h1></div>
+	<div id="LoginHeader"><h1><span><%= org.bonitasoft.console.common.server.i18n.I18n._("Welcome to") %></span> <%= org.bonitasoft.console.common.server.i18n.I18n._("Bonita BPM Portal") %></h1></div>
 	<div id="floater"></div>
 	<div id="LoginFormContainer" >
 		<div id="logo">
@@ -112,24 +111,24 @@
 		<div class="body">
 			<form id="LoginForm" action="<%=actionUrl%>" method="post">
 				<div class="header">
-					<h2><%=_("Login form")%></h2>
+					<h2><%=org.bonitasoft.console.common.server.i18n.I18n._("Login form")%></h2>
 				</div>
 				<p class="error"><%=errorMessage.length() > 0 ? errorMessage  : ""%></p>
 				<div class="formentries">
-					<div class="formentry" title="<%=_("Enter your login (username)")%>">
+					<div class="formentry" title="<%=org.bonitasoft.console.common.server.i18n.I18n._("Enter your login (username)")%>">
 						<div class="label">
-							<label for="username"><%=_("User")%></label>
+							<label for="username"><%=org.bonitasoft.console.common.server.i18n.I18n._("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=_("Login")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=_("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=org.bonitasoft.console.common.server.i18n.I18n._("Login")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=org.bonitasoft.console.common.server.i18n.I18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 					</div>
-					<div class="formentry" title="<%=_("Enter your password")%>">
+					<div class="formentry" title="<%=org.bonitasoft.console.common.server.i18n.I18n._("Enter your password")%>">
 						<div class="label">
-							<label for="password"><%=_("Password")%></label>
+							<label for="password"><%=org.bonitasoft.console.common.server.i18n.I18n._("Password")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=_("Password")%>" id="password" name="password" type="password" tabindex="2" maxlength="50" placeholder="<%=_("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=org.bonitasoft.console.common.server.i18n.I18n._("Password")%>" id="password" name="password" type="password" tabindex="2" maxlength="50" placeholder="<%=org.bonitasoft.console.common.server.i18n.I18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 						<input name="_l" type="hidden" value="<%=defaultLocale%>" />
 					</div>
