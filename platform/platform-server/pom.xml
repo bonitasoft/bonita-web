@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>platform-parent</artifactId>
 		<groupId>org.bonitasoft.platform</groupId>
-		<version>6.1.1-SNAPSHOT</version>
+		<version>6.2.0-TestTag</version>
 	</parent>
 
 	<artifactId>platform-server</artifactId>
