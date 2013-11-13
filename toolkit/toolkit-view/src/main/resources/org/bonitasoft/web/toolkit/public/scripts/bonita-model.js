@@ -1,4 +1,7 @@
+/* global bonitasoft:false */
+
 (function (bonitasoft, namespace, http) {
+    "use strict";
     
     function Search(url) {
         return function(parameters, callback) {

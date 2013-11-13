@@ -1,3 +1,5 @@
+/* jshint browser:true */
+
 var bonitasoft = (function (bonitasoft) {
     "use strict";
     
@@ -41,8 +43,14 @@ var bonitasoft = (function (bonitasoft) {
                 throw message || 'Assertion failed';
             }
         }
+        
+        function isDefined(variable, message) {
+            message = message || 'Some variable must be defined';
+            assert(variable !== undefined, message);
+        }
         return assertion || {
-            assert: assert
+            assert: assert,
+            isDefined: isDefined
         };
     })(assertion);
 
