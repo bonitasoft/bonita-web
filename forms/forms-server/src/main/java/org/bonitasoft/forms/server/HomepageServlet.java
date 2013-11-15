@@ -17,20 +17,21 @@
  */
 package org.bonitasoft.forms.server;
 
-import org.bonitasoft.console.common.server.themes.ApplicationResourceServlet;
-import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 
 /**
  * Servlet for requesting home page
  * 
  * @author Ruiheng Fan
  */
-public class HomepageServlet extends ApplicationResourceServlet {
+public class HomepageServlet extends HttpServlet {
 
     /**
      * UID
@@ -60,8 +61,9 @@ public class HomepageServlet extends ApplicationResourceServlet {
 
     protected static final String HOMEPAGE_SERVLET_ID_IN_PATH = "homepage";
 
-    protected static final String DEFAULT_THEME_NAME = "default";
+    protected static final String PORTAL_THEME_NAME = "portal";
 
+    @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) {
         allwaysShowDefaultPage(request, response, isForm(getUrlPrefix(request), getUiMode(request)));
     }
@@ -74,17 +76,17 @@ public class HomepageServlet extends ApplicationResourceServlet {
         return request.getServletPath().replaceAll(HOMEPAGE_SERVLET_ID_IN_PATH, "");
     }
 
-    private void allwaysShowDefaultPage(HttpServletRequest request, HttpServletResponse response, boolean isForm) {
+    private void allwaysShowDefaultPage(final HttpServletRequest request, final HttpServletResponse response, final boolean isForm) {
         try {
-            ThemeResourceServlet.getThemePackageFile(request, response, DEFAULT_THEME_NAME, getFileName(isForm));
+            ThemeResourceServlet.getThemePackageFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Get error while loading the " + getFileName(isForm) + " in theme " + DEFAULT_THEME_NAME);
+                LOGGER.log(Level.WARNING, "Get error while loading the " + getFileName(isForm) + " in theme " + PORTAL_THEME_NAME);
             }
         }
     }
 
-    private String getFileName(boolean isForm) {
+    private String getFileName(final boolean isForm) {
         return isForm ? DEFAULT_FORM_HOME_PAGE_FILENAME : DEFAULT_CONSOLE_HOME_PAGE_FILENAME;
     }
 

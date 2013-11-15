@@ -31,52 +31,13 @@ public class ThemeStructureState implements Serializable {
 
     boolean missBonitaConsoleHTML = true;
 
-    boolean themeDescriptorError = false;
-
-    boolean missThemeDescriptor = true;
-
-    boolean themeAlreadyExist = false;
-
-    public ThemeStructureState() {
-        // Mandatory for serialization.
-        super();
-    }
-
-    /**
-     * @return the themeAlreadyExist
-     */
-    public boolean isThemeAlreadyExist() {
-        return this.themeAlreadyExist;
-    }
-
-    /**
-     * @param themeAlreadyExist
-     *            the themeAlreadyExist to set
-     */
-    public void setThemeAlreadyExist(final boolean themeAlreadyExist) {
-        this.themeAlreadyExist = themeAlreadyExist;
-    }
-
-    /**
-     * @return the themeDescriptorError
-     */
-    public boolean isThemeDescriptorError() {
-        return this.themeDescriptorError;
-    }
-
-    /**
-     * @param themeDescriptorError
-     *            the themeDescriptorError to set
-     */
-    public void setThemeDescriptorError(final boolean themeDescriptorError) {
-        this.themeDescriptorError = themeDescriptorError;
-    }
+    boolean missMainLessFile = true;
 
     /**
      * @return the missBonitaConsoleHTML
      */
     public boolean isMissBonitaConsoleHTML() {
-        return this.missBonitaConsoleHTML;
+        return missBonitaConsoleHTML;
     }
 
     /**
@@ -90,20 +51,20 @@ public class ThemeStructureState implements Serializable {
     /**
      * @return the missThemeDescriptor
      */
-    public boolean isMissThemeDescriptor() {
-        return this.missThemeDescriptor;
+    public boolean isMissMainLessFile() {
+        return missMainLessFile;
     }
 
     /**
      * @param missThemeDescriptor
      *            the missThemeDescriptor to set
      */
-    public void setMissThemeDescriptor(final boolean missThemeDescriptor) {
-        this.missThemeDescriptor = missThemeDescriptor;
+    public void setMissMainLessFile(final boolean missMainLessFile) {
+        this.missMainLessFile = missMainLessFile;
     }
 
     public boolean hasError() {
-        return this.missBonitaConsoleHTML || this.themeDescriptorError || this.missThemeDescriptor || this.themeAlreadyExist;
+        return missBonitaConsoleHTML || missMainLessFile;
     }
 
 }
