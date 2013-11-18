@@ -86,7 +86,7 @@
             			<configuration>
             				<tasks>
 	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
-	            					<fileset dir="${project.build.directory}/forms-config/platform/tenant-template/work/looknfeel/default" />
+	            					<fileset dir="${project.build.directory}/forms-config/platform/tenant-template/work/theme/portal" />
 	            				</copy>
 	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
 	            					<fileset dir="${project.build.directory}/forms-design/application/application" />

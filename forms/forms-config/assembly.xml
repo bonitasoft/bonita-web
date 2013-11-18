@@ -15,7 +15,7 @@
 		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/forms-design/application/application</directory>
-			<outputDirectory>/platform/tenant-template/work/looknfeel/default</outputDirectory>
+			<outputDirectory>/platform/tenant-template/work/theme/portal</outputDirectory>
 			<includes>
 				<include>**/*</include>
 			</includes>

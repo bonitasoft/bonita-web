@@ -171,7 +171,7 @@ public class ThemeResourceServlet extends HttpServlet {
         }
     }
 
-    protected static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
+    public static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
         File myThemesParentFolder = null;
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
