@@ -1,5 +1,5 @@
 /* jshint browser:true, jquery:true */
-/* global localeRange:false, localePresets:false,  bonitasoft:false*/
+/* global localeRange:false, localePresets:false*/
 
 var cookie = document.cookie;
 var bosCookieValue = getCookie("bos_cookie");
@@ -12,7 +12,7 @@ function getProfileId() {
     location.hash.replace(/([^&=]+)=?([^&]*)(?:&+|$)/g, function (match, key, value) {
         (paramsMap[key] = paramsMap[key] || []).push(value);
     });
-    var profileId = paramsMap["_pf"];
+    var profileId = paramsMap._pf;
     if (profileId) return profileId;
     else return null;
 }
@@ -153,7 +153,7 @@ function retrieveFieldsValues(params, localeDateFormat) {
             if (field.is("input, textarea")) {
                 if (field.is(".dateRangePickers")) {
                     if (uriValue % 1 === 0) {
-                        uriValue = $.datepicker.formatDate(localeDateFormat, new Date(parseInt(uriValue)));
+                        uriValue = $.datepicker.formatDate(localeDateFormat, new Date(parseInt(uriValue, 10)));
                     } else {
                         uriValue = Date.parseExact(uriValue, localeDateFormat); // if
                         // the
@@ -202,94 +202,3 @@ function forceImgRefresh(ajaxResponse) {
     var reg = /<img(.*)src=\"([^\s]*)\"(.*)([>|/>])/gi;
     return ajaxResponse.replace(reg, '<img$1src="$2&r=' + r + '"$3$4');
 }
-
-/*
- * Some utility methods for report's form.
- */
-(function (bonitasoft, utils, assertion) {
-
-    function append(element, option) {
-        if (option) {
-            var opt = document.createElement("option");
-            opt.text = option.text;
-            opt.value = option.val;
-            element.append(opt);
-        }
-    }
-
-    function getIndex(element, value) {
-        return $("option[value=\"" + value + "\"]", element)
-            .prop("index");
-    }
-
-    function select(element, value) {
-        if (value) {
-            element.prop("selectedIndex",
-                getIndex(element, value));
-        }
-    }
-
-    function populate(element, items, render) {
-        items.forEach(function (item) {
-            append(element, render(item));
-        });
-        select(element.data('uriValue'));
-    }
-
-    /*
-     * Clear selector content as well as append
-     * default option if defined.
-     *
-     * defaults - Optional. Default option to append after cleaning.
-     */
-    function clear(defaults) {
-        assertion.isDefined(this.element);
-        
-        this.element.html('');
-        if (defaults) {
-            append(this.element, defaults);
-        }
-    }
-
-    /*
-     * Populate selector the items by calling renderer to append the options.
-     *
-     * items    - JSON array containing items to append
-     * renderer - function called with the current item in parameter.
-     *            It must return a literal object with val & text of the option.
-     *            e.g { val: '', text: '' }
-     */
-    function add(items, render) {
-        assertion.isDefined(items);
-        assertion.isDefined(render);
-
-        var that = this;
-        items.forEach(function (item) {
-            that.items.push(item);
-        });
-//        this.items.sort(function (a, b) {
-//            return !(a > b);
-//        });
-        this.clear();
-        populate(this.element, this.items, render);
-    }
-
-    /*
-     * Constructor for the <select /> wrapper.
-     *
-     * element - JQuery object wrapping a <select />
-     */
-    function Select(element) {
-        this.element = element;
-        this.items = [];
-    }
-    Select.prototype.clear = clear;
-    Select.prototype.add = add;
-
-    // bonitasoft.utils.report.form
-    utils.namespace.extend(bonitasoft, 'utils.report', function (report) {
-        report.form = {
-            Select: Select
-        };
-    });
-})(bonitasoft, bonitasoft.utils, bonitasoft.utils.assertion);
