@@ -135,18 +135,33 @@ public class ThemeResourceServlet extends HttpServlet {
                 }
                 throw new ServletException(errorMessage);
             }
-            if (fileName.toLowerCase().endsWith(".jpg")) {
-                contentType = "image/jpg";
-            } else if (fileName.toLowerCase().endsWith(".gif")) {
+            final String lowerCaseFileName = fileName.toLowerCase();
+            if (lowerCaseFileName.endsWith(".jpg")) {
+                contentType = "image/jpeg";
+            } else if (lowerCaseFileName.endsWith(".jpeg")) {
+                contentType = "image/jpeg";
+            } else if (lowerCaseFileName.endsWith(".gif")) {
                 contentType = "image/gif";
-            } else if (fileName.toLowerCase().endsWith(".png")) {
+            } else if (lowerCaseFileName.endsWith(".png")) {
                 contentType = "image/png";
-            } else if (fileName.toLowerCase().endsWith(".css")) {
+            } else if (lowerCaseFileName.endsWith(".css") || lowerCaseFileName.endsWith(".less")) {
                 contentType = "text/css";
-            } else if (fileName.toLowerCase().endsWith(".js")) {
+            } else if (lowerCaseFileName.endsWith(".js")) {
                 contentType = "application/x-javascript";
-            } else if (fileName.toLowerCase().endsWith(".html")) {
+            } else if (lowerCaseFileName.endsWith(".html")) {
                 contentType = "text/html";
+            } else if (lowerCaseFileName.endsWith(".htc")) {
+                contentType = "text/x-component";
+            } else if (lowerCaseFileName.endsWith(".svg")) {
+                contentType = "image/svg+xml";
+            } else if (lowerCaseFileName.endsWith(".eot")) {
+                contentType = "application/vnd.ms-fontobject";
+            } else if (lowerCaseFileName.endsWith(".woff")) {
+                contentType = "application/x-font-woff";
+            } else if (lowerCaseFileName.endsWith(".ttf")) {
+                contentType = "application/x-font-ttf";
+            } else if (lowerCaseFileName.endsWith(".otf")) {
+                contentType = "application/x-font-opentype";
             } else {
                 final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
                 contentType = mimetypesFileTypeMap.getContentType(file);
