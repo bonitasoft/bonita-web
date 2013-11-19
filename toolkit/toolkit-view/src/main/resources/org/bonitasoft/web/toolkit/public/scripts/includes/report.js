@@ -147,6 +147,9 @@ function retrieveFieldsValues(params, localeDateFormat) {
     });
     $("div.report #report-form :input").each(function () {
         var field = $(this);
+        if(map[field.attr("name")] === undefined) {
+            return;
+        }
         var uriValue = decodeURIComponent(map[field.attr("name")]);
         if (uriValue) {
             if (field.is("input, textarea")) {
@@ -201,20 +204,3 @@ function forceImgRefresh(ajaxResponse) {
     var reg = /<img(.*)src=\"([^\s]*)\"(.*)([>|/>])/gi;
     return ajaxResponse.replace(reg, '<img$1src="$2&r=' + r + '"$3$4');
 }
-
-(function () {
-    
-    var removeSelectAutoSubmit = function (form, callback) {
-        setTimeout(function () {
-            form.find("select").attr("onchange", null);
-            callback(form);
-        }, 500);
-    },
-        setExportHrefValues = function (href, values) {
-            var target = href.attr('href');
-            if (!target.contains("?")) {
-                href.attr("href", target + "?" + values);
-            }
-
-        };
-})();
