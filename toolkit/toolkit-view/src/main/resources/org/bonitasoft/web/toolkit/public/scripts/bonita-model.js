@@ -3,9 +3,38 @@
 (function (bonitasoft, assertion, namespace, http) {
     "use strict";
 
-    var createSearch = function (url) {
+    /*
+     * Get object definition.
+     */
+    var Get = function (url) {
+        if (this instanceof Get) {
+            this.url = url;
+            return this.init();
+        }
+        return new Get(url);
+    };
+    Get.prototype.init = function () {
+        var self = this;
+        return function (id, callback) {
+            http.get(self.url + '/' + id, callback);
+        };
+    };
+
+    /*
+     * Search object definition.
+     */
+    var Search = function (url) {
+        if (this instanceof Search) {
+            this.url = url;
+            return this.init();
+        }
+        return new Search(url);
+
+    };
+    Search.prototype.init = function () {
+        var self = this;
         return function (parameters, callback) {
-            var target = url;
+            var target = self.url;
             target += parameters.page ? '?p=' + parameters.page : '?p=0';
             target += parameters.count ? '&c=' + parameters.count : '&c=100';
             target += parameters.order ? '&o=' + parameters.order : '';
@@ -14,12 +43,9 @@
         };
     };
 
-    var createGet = function (url) {
-        return function (id, callback) {
-            http.get(url + '/' + id, callback);
-        };
-    };
-
+    /*
+     * APIs factory.
+     */
     var api = {
         create: function (configuration) {
             assertion.isDefined(configuration.url);
@@ -28,36 +54,27 @@
                 api = {};
 
             if (configuration.hasGet === true) {
-                api.get = configuration.get || createGet(url);
+                api.get = configuration.get || new Get(url);
             }
 
             if (configuration.hasSearch === true) {
-                api.search = configuration.search || createSearch(url);
+                api.search = configuration.search || new Search(url);
             }
 
             return api;
-        },
-        callback: function (callback) {
-            return function(code, response) {
-                if(code == 200) {
-                    callback.onSuccess && callback.onSuccess(JSON.parse(response));
-                } else {
-                    callback.onFail && callback.onFail(code, response);
-                }
-            }
         }
-
     };
-    
+
+    /*
+     * Model description.
+     */
     namespace.extend(bonitasoft, 'model', function (model) {
-        model.callback = api.callback;
         /*
          * Namespace allowing access to processes REST API
          */
-        model.processes = model.processes || (function () {
+        model.processes = (function () {
             return api.create({
                 url: '../API/bpm/process',
-
                 hasGet: true,
                 hasSearch: true
             });
@@ -66,25 +83,85 @@
         /*
          * Namespace allowing access to cases REST API
          */
-        model.cases = model.cases || (function () {
+        model.cases = (function () {
             return api.create({
                 url: '../API/bpm/case',
-
                 hasGet: true,
                 hasSearch: true
             });
         })();
-        
+
         /*
          * Namespace allowing access to archived cases REST API
          */
-        model.cases.archives = model.cases.archives || (function () {
+        model.cases.archives = (function () {
+
             return api.create({
                 url: '../API/bpm/archivedCase',
-
                 hasGet: true,
                 hasSearch: true
             });
         })();
     });
-})(bonitasoft, bonitasoft.utils.assertion, bonitasoft.utils.namespace, bonitasoft.utils.http);
+
+    /*
+     * Case object description.
+     */
+    var Case = function (item) {
+
+        if (this instanceof Case) {
+            this.item = item;
+            return this;
+        }
+        return new Case(item);
+    };
+    Case.prototype = {
+        get id() {
+            return this.item.sourceObjectId || this.item.id;
+        }
+    };
+
+    /*
+     * Custom callbacks description.
+     */
+    var wrap = function (items, constructor, callback) {
+
+        if (items instanceof Array) {
+            var wraps = [];
+            items.forEach(function (item) {
+                wraps.push(constructor(item));
+            });
+            callback(wraps);
+        } else {
+            callback(items);
+        }
+    };
+
+    namespace.extend(bonitasoft, 'model', function (model) {
+        
+        model.callback = function (callback) {
+            return function (code, response) {
+
+                if (code == 200 && callback.onSuccess !== undefined) {
+                    callback.onSuccess(JSON.parse(response));
+
+                } else if (callback.onFail !== undefined) {
+                    callback.onFail(code, response);
+                }
+            };
+        };
+        
+        model.cases.callback = function (callback) {
+            return model.callback({
+                onSuccess: function (items) {
+                    wrap(items, Case, callback.onSuccess);
+                },
+                onFail: callback.onFail
+            });
+        };
+    });
+
+})(bonitasoft,
+    bonitasoft.utils.assertion,
+    bonitasoft.utils.namespace,
+    bonitasoft.utils.http);

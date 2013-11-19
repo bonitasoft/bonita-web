@@ -186,6 +186,24 @@ var bonitasoft = (function (bonitasoft) {
         })()
     };
 
+    var arrays = (function () {
+        var merge = function (a, b, order) {
+            assertion.isArray(a, "a must be an array");
+            
+            if (b instanceof Array) {
+                a = a.concat(b);
+            }
+            if (order !== undefined) {
+                a = a.sort(order);
+            }
+            return a;
+        };
+
+        return {
+            merge: merge
+        };
+    })();
+
     namespace.extend(bonitasoft, 'utils', function (utils) {
         // bonitasoft.utils.namespace
         utils.namespace = namespace;
@@ -193,6 +211,8 @@ var bonitasoft = (function (bonitasoft) {
         utils.assertion = assertion;
         // bonitasoft.utils.http
         utils.http = http;
+        // bonitasoft.utils.arrays
+        utils.arrays = arrays;
     });
 
     // bonitasoft.utils.html.variable

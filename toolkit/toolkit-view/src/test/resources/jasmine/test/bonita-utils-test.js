@@ -65,6 +65,52 @@ describe("Bonita utils", function () {
                 utils.assertion.assert(foo !== undefined, message);
             }).toThrow(message);
         });
+        
+        describe("for isArray", function() {
+            it("which can success", function() {
+                var foo = [];
+                
+                utils.assertion.isArray(foo);
+            });
+            
+            it("which fail for undefined", function() {
+                var foo = undefined,
+                    message = "foo can't be undefined";
+                
+                expect(function () {
+                    utils.assertion.isArray(foo, message);
+                }).toThrow(message);
+            });
+            
+            it("which fail for Object", function() {
+                var foo = {},
+                    message = "foo can't be an object";
+                
+                expect(function () {
+                    utils.assertion.isArray(foo, message);
+                }).toThrow(message);
+                
+            });
+        });
+        
+        describe("for isDefined", function() {
+            it("which can success", function() {
+                var foo = {};
+                
+                utils.assertion.isDefined(foo);
+            });
+            
+            it("which fail for undefined", function() {
+                var foo = undefined,
+                    message = "foo must be defined";
+                
+                expect(function () {
+                    utils.assertion.isArray(foo, message);
+                }).toThrow(message);
+            });
+        });
+        
+        
     });
 
     /*
@@ -159,4 +205,45 @@ describe("Bonita utils", function () {
             }
         }
     });
+
+    /*
+     * Arrays utils
+     */
+    describe("provide array utils", function () {
+        describe("to merge two arrays", function () {
+            it("unordered", function () {
+                var foo = ["1", "2", "4"],
+                    bar = ["3", "5"];
+
+                var composite = utils.arrays.merge(foo, bar);
+                
+                expect(composite).toEqual(["1", "2", "4", "3", "5"]);
+            });
+            
+            it("ordered", function () {
+                var foo = ["1", "2", "4"],
+                    bar = ["3", "5"];
+
+                var composite = utils.arrays.merge(foo, bar, function(a, b) {
+                    return a < b;
+                });
+                
+                expect(composite).toEqual(["5", "4", "3", "2", "1"]);
+            });
+
+            it("which throw an exception if foo isn't an array", function () {
+                var foo = undefined,
+                    bar = ["1", "2"];
+                
+                expect(function(){
+                    utils.arrays.merge(foo, bar)
+                    
+                }).toThrow("a must be an array");
+            });
+
+            it("which doesn't merge b if not an array", function () {});
+
+        });
+    });
+
 });
