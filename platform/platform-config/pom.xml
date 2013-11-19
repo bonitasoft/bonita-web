@@ -41,4 +41,23 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<!-- default CSS -->
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<bonita.css>css/bonita.css</bonita.css>
+			</properties>
+		</profile>
+		<!-- WRO CSS MANAGEMENT -->
+		<profile>
+			<id>css</id>
+			<properties>
+				<bonita.css>http://127.0.0.1:8081/bonita.css</bonita.css>
+			</properties>
+		</profile>
+	</profiles>
 </project>

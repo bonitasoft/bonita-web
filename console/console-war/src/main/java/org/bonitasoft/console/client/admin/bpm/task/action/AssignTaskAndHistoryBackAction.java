@@ -19,9 +19,10 @@ package org.bonitasoft.console.client.admin.bpm.task.action;
 import java.util.List;
 
 import org.bonitasoft.console.client.user.task.model.TaskAPI;
+import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
-import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
 
 /**
  * @author Vincent Elcrin
@@ -31,7 +32,15 @@ public class AssignTaskAndHistoryBackAction extends ActionOnItemIds {
 
     @Override
     protected void execute(List<APIID> taskIds) {
-        TaskAPI.assign(taskIds, APIID.makeAPIID(this.getParameter("user_id")), new HistoryBackAction());
+        TaskAPI.assign(taskIds, APIID.makeAPIID(this.getParameter("user_id")), new Action() {
+
+            @Override
+            public void execute() {
+                ViewController.refreshCurrentPage();
+                ViewController.closePopup();
+
+            }
+        });
     }
 
 }

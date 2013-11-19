@@ -53,7 +53,7 @@ import org.bonitasoft.console.client.admin.profile.view.AddRoleToProfileMemberPa
 import org.bonitasoft.console.client.admin.profile.view.AddUserToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.DeleteProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
-import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
+import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
@@ -194,8 +194,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new UpdateGroupPage();
         
         // User Privileges settings pages
-        } else if (ListProfilePage.TOKEN.equals(token) && isUserAuthorized(ListProfilePage.PRIVILEGES, currentUserAccessRights)) {
-            return new ListProfilePage();
+        } else if (ProfileListingPage.TOKEN.equals(token) && isUserAuthorized(ProfileListingPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProfileListingPage();
         } else if (ProfileMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProfileMoreDetailsPage();
         } else if (ProfileQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {

@@ -9,9 +9,9 @@
 		text-align: left;
 		padding: 0;
 		background: @popup-bgColor;
-		background-clip: content-box;
+		background-clip: content-box;//TODO check this rule
 		position: relative;
-        min-width: 500px;
+		min-width: 500px;
 		.boxShadow(@popup-shadowX, @popup-shadowY, @popup-shadowBlur, @popup-shadowColor);
 		display: inline-block;
 		max-width: @popup-maxWidth;
@@ -23,10 +23,17 @@
 					margin: @popup-title-margin;
 				}
 			}
-			> .body{
-				width: auto;
-				max-width: 600px;
+		//> .body{
+		//	width: auto;
+		//	max-width: 600px;
+		//}
+
+			.form {
+                max-width: none;
 			}
+		}
+		p {
+		  margin: 15px 0;
 		} 
 	}
 
@@ -74,7 +81,7 @@
 							&.add{
 								
 							}
-							+a{
+							+a, + css3-container + a{
 								margin-left: @popup-button-marginBetween; 
 							}
 						}
@@ -106,5 +113,4 @@
 		top: 150px;
 		text-align: center;
 	}
-
 }

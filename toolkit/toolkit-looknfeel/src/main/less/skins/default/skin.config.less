@@ -16,7 +16,8 @@
 @calcFontSize: (@skinFontSize / @browserFontSize);
 
 @fontSize: ~"@{calcFontSize}em";
-@skinFont: "Signika-Regular";
+@skinFont: "Signika-Regular", sans-serif;
+@skinFontPath: "skins/default/fonts/";
 @fontColor: #6e6f6b;
 @borderColor: #c2c2c2;
 @borderColor2: #a6a9b0;
@@ -108,7 +109,8 @@
 @inputPaddingLeft: 1*@w;
 @inputHeight: 35px;
 
-@button-action-subsection-size: 80%;
+@button-action-doublesection-size: 80%;
+@button-action-subsection-size : 70%;
 
 @body-padding-bottom: 5*@h;
 // ----------------------------------------------------------------------------
@@ -283,11 +285,11 @@
 @tablesPanel-table-line-height: 8*@h;
 @tablesPanel-table-line-paddingTop: 3*@h;
 @tablesPanel-table-line-paddingBottom: 0;
-@tablesPanel-table-line-gradientColor1: #fefefe;
+@tablesPanel-table-line-gradientColor1: rgba(0,0,0,0.03);
 @tablesPanel-table-line-gradientPosition1: 0%;
-@tablesPanel-table-line-gradientColor2: #f5f5f5;
+@tablesPanel-table-line-gradientColor2: rgba(0,0,0,0.1);
 @tablesPanel-table-line-gradientPosition2: 100%;
-@tablesPanel-table-line-shadowX: 0;
+@tablesPanel-table-line-shadowX: 0px;
 @tablesPanel-table-line-shadowY: 1px;
 @tablesPanel-table-line-shadowBlur: 2px;
 @tablesPanel-table-line-shadowColor: #c2c2c2;//rgba(0, 0, 0, 11%);
@@ -295,6 +297,7 @@
 @tablesPanel-table-currentLine-arrow-width: 20px;
 @tablesPanel-table-currentLine-arrow-bg: "arrow-current.png";
 @tablesPanel-table-currentLine-background: #fff;
+@tablesPanel-table-currentLine-border:1px solid @tablesPanel-table-line-shadowColor;
 @tablesPanel-table-currentLine-shadow-background: "shadow-list-current.png";
 @tablesPanel-table-currentLine-shadow-positionBottom: -14px;
 @tablesPanel-table-currentLine-shadow-width:407px;
@@ -322,12 +325,16 @@
 @tablesPanel-search-button-height: 17px;
 @tablesPanel-search-button-top: 9px;
 @tablesPanel-search-button-right: @tablesPanel-search-inputContainer-paddingRight + 3*@w;
+
+@tablesPanel-refresh-button-bg: "refresh.png";
+@tablesPanel-refresh-button-min-width: 20px;
 // ----------------------------------------------------------------------------
 // Lists : filters
 // ----------------------------------------------------------------------------
 @filtersPanel-titleColor: #fff;
 @filtersPanel-display: block;
-@filtersPanel-padding: 7*@h 0 0 1*@w;
+@filtersPanel-padding-left: 1*@w;
+@filtersPanel-padding: 7*@h 0 0 @filtersPanel-padding-left;
 @filtersPanel-margin: 0;
 @filtersPanel-font: @skinFont;
 @filtersPanel-position: relative;
@@ -419,11 +426,12 @@
 @filtersPanel-filters-filtersResourceTitle-padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom 4*@w;
 @filtersPanel-filters-filtersResourceTitle-borderColor1: darken(@mainAccentColor, 7%);
 @filtersPanel-filters-filtersResourceTitle-borderHeight: @border-width;
+@filtersPanel-filters-filtersResourceTitle-top-borderHeight: 3px;
 @filtersPanel-filters-filtersResourceTitle-borderColor2: lighten(@mainAccentColor, 8.5%);
 
 @filtersPanel-filters-filtersResourceTitle-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
-@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
+@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-top-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
 @filtersPanel-filters-filtersResourceTitleContainer-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-process-bgImage: "filters-resource-process.png";
 @filtersPanel-filters-filtersResourceTitle-process-bgX: 4*@w;
@@ -472,6 +480,11 @@
 @detailsPanel-definition-dueDateBg: "metadata-due-date.png";
 @detailsPanel-definition-dueDateH: "metadata-due-date.png";
 @detailsPanel-definition-userBg: "metadata-user.png";
+@detailsPanel-definition-human-taskBg: "metadata-user.png";
+@detailsPanel-definition-multi-instance-taskBg: "metadata_multi_instance_small.png";
+@detailsPanel-definition-call-activity-taskBg: "metadata_callactivity_small.png";
+@detailsPanel-definition-loop-taskBg: "metadata_loop_small.png";
+@detailsPanel-definition-automatic-taskBg: "metadata_automaticTask_small.png";
 @detailsPanel-section-body-position: relative;
 @detailsPanel-section-body-overflow: inherit;
 @detailsPanel-section-pagerTop-display: none;
@@ -737,6 +750,11 @@
 @moreDetails-metadatas-definition-assignedUser-bgImage: "metadata-assignee-big.png";
 @moreDetails-metadatas-definition-priority-bgImage: "metadata-priority-big.png";
 @moreDetails-metadatas-definition-case-bgImage: "metadata-case-big.png";
+@moreDetails-metadatas-definition-human-task-bgImage: "metadata-human-big.png";
+@moreDetails-metadatas-definition-multi-instance-task-bgImage: "metadata_multi_instance-big.png";
+@moreDetails-metadatas-definition-call-activity-task-bgImage: "metadata_callactivity.png";
+@moreDetails-metadatas-definition-loop-task-bgImage: "metadata-loop.png";
+@moreDetails-metadatas-definition-automatic-task-bgImage: "metadata_automaticTask.png";
 
 
 @moreDetails-section-border: @border-width solid @borderColor;
@@ -817,7 +835,7 @@
 @dropdown-shadowX: 2px;
 @dropdown-shadowY: 2px;
 @dropdown-shadowBlur: 2px;
-@dropdown-shadowColor: rgba(0, 0, 0, 0.2);
+@dropdown-shadowColor: #dfdede;
 
 
 // ----------------------------------------------------------------------------
@@ -829,7 +847,7 @@
 @loginPage-formContainer-shadowX: 0;
 @loginPage-formContainer-shadowY: 0;
 @loginPage-formContainer-shadowBlur: 10px;
-@loginPage-formContainer-shadowColor: rgba(0, 0, 0, 0.2);
+@loginPage-formContainer-shadowColor: #dfdede;
 
 @loginPage-formContainer-radius: @defaultRadius;
 @loginPage-formContainer-border: @border-width solid #bab9b9;
@@ -868,7 +886,7 @@
 @loginPage-form-input-innerShadowX: 0;
 @loginPage-form-input-innerShadowY: 0;
 @loginPage-form-input-innerShadowBlur: 4px;
-@loginPage-form-input-innerShadowColor: rgba(0,0,0, 0.3);
+@loginPage-form-input-innerShadowColor:  #dfdede;
 
 @loginPage-form-input-password-bg: "login-input-password.png";
 @loginPage-form-input-username-bg: "login-input-username.png";
@@ -893,6 +911,7 @@
 @form-input-radius: @defaultRadius;
 @form-input-border: @border-width solid @borderColor;
 @form-label-color: #282626;
+@form-tabs-fontSize: 16;//TODO check this rule
 @form-labelContainer-margin: 0 0 2*@h 0; 
 @form-fieldContainer-margin: 4*@h 0 0 0;
 @form-tabsContainer-margin: 4*@h 0 0 0;
@@ -911,7 +930,9 @@
 @form-input-radio-height: 18px;
 @form-input-radioChecked-bgImg: "form-radio-selected.png";
 @form-input-radioChecked-bgPosition: left;
+@form-input-custom-checkbox-width: 10px;
 @form-input-checkbox-width: 17px;
+@form-input-custom-checkbox-height: 10px;
 @form-input-checkbox-height: 17px;
 @form-input-checkbox-bgImg: "form-checkbox.png";
 @form-input-checkboxChecked-bgImg: "form-checkbox-checked-red.png";
@@ -925,7 +946,7 @@
 @form-input-fileProgress-bgImg: "form-input-file-progress.gif";
 
 @form-input-file-padding: 41px;//@form-input-file-bgImg width + 5px
-@form-input-file-lineHeight: 1.2em;
+@form-input-file-lineHeight: @inputHeight;
 @form-input-error-margin: 1*@h 0 0 0; 
 @form-input-error-txtColor: @mainAccentColor;
 @form-input-error-borderColor: @mainAccentColor;
@@ -1010,7 +1031,7 @@
 @popup-shadowX: 0;
 @popup-shadowY: 0;
 @popup-shadowBlur: 6*@w;
-@popup-shadowColor: rgba(0,0,0,0.75);
+@popup-shadowColor: #727272;
 @popup-closeButton-bgImg:"popup-close.png";
 @popup-closeButton-width: 50px;
 @popup-closeButton-height: 50px;
@@ -1026,8 +1047,9 @@
 @tabs-tab-radiusTR: @defaultRadius;
 @tabs-tab-radiusBR: 0;
 @tabs-tab-radiusBL: 0;
-@tabs-tab-border: @border-width solid @borderColor;
-@tabs-tab-padding: 3*@h 6*@w;
+@tabs-tab-border: @border-width solid lighten(@mainAccentColor, 8.5%);
+@tabs-tab-border-active: @border-width solid @borderColor;
+@tabs-tab-padding: 3*@h 3*@w;//TODO check this rule 6*w instead 3*w
 @tabs-tabActive-bgColor: #fff;
 @tabs-tabActive-txtColor: @mainAccentColor;
 @tabs-tab-txtColor: #fff;
@@ -1071,7 +1093,7 @@
 @table-shadowX: -2px;
 @table-shadowY: 2px;
 @table-shadowBlur: 3px;
-@table-shadowColor: rgba(0,0,0, 0.17);
+@table-shadowColor: #dddddd;
 @table-pager-padding: 0 3*@w 0 0 ; 
 @tableList-header-display: none;
 @tableList-header-cell-height: 3*@h;
@@ -1116,3 +1138,11 @@
 @zIndex-header: @zIndex-max - 4;
 @zIndex-currentArrow:  @zIndex-max - 4;
 @zIndex-actionFilter: @zIndex-max - 3;
+
+// ----------------------------------------------------------------------------
+// Connector failure information
+// ----------------------------------------------------------------------------
+@information-bgImage: "information.png";
+@connector-failure-popup-width: 65%;
+@stackTrace-height: 500px;
+@stackTrace-bg-color: #eae4e4;

@@ -149,7 +149,7 @@
 		<listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
 	</listener>
 	<!-- Platform and tenant listeners -->
-    <!-- For Apps containing the engine server -->
+	<!-- For Apps containing the engine server -->
 ${enable.engine.listener.start}
 	<listener>
 		<listener-class>org.bonitasoft.engine.api.internal.servlet.EngineInitializerListener</listener-class>

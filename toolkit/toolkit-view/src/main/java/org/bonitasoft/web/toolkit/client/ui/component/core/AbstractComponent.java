@@ -104,7 +104,7 @@ public abstract class AbstractComponent extends Widget implements Node {
      */
 
     public final boolean isGenerated() {
-        return this.generated;
+        return generated;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ public abstract class AbstractComponent extends Widget implements Node {
 
         if (!this.fillOnLoad) {
             ViewController.getInstance().unregisterOnLoadEvent(this);
-        } else if (this.fillers.size() > 0) {
+        } else if (fillers.size() > 0) {
             ViewController.getInstance().registerOnLoadEvent(this);
         }
 
@@ -147,7 +147,7 @@ public abstract class AbstractComponent extends Widget implements Node {
 
         if (!this.fillOnRefresh) {
             ViewController.getInstance().unregisterOnPageRefreshEvent((Refreshable) this);
-        } else if (this.fillers.size() > 0) {
+        } else if (fillers.size() > 0) {
             ViewController.getInstance().registerOnPageRefreshEvent((Refreshable) this);
         }
 
@@ -162,15 +162,16 @@ public abstract class AbstractComponent extends Widget implements Node {
      *            The action to run on load
      */
     public final void onLoad(final Action action) {
-        this.onLoadAction = action;
+        onLoadAction = action;
         ViewController.getInstance().registerOnLoadEvent(this);
     }
 
     /**
      * Override of onLoad method to run fillers if needed.
      */
+    @Override
     protected void onLoad() {
-        if (this.fillOnLoad) {
+        if (fillOnLoad) {
             runFillers();
         }
     }
@@ -180,8 +181,8 @@ public abstract class AbstractComponent extends Widget implements Node {
      */
     public final void triggerLoad() {
         this.onLoad();
-        if (this.onLoadAction != null) {
-            this.onLoadAction.execute();
+        if (onLoadAction != null) {
+            onLoadAction.execute();
         }
     }
 
@@ -219,13 +220,13 @@ public abstract class AbstractComponent extends Widget implements Node {
      */
     public final AbstractComponent addFiller(final Filler<?> filler) {
         if (filler != null) {
-            this.fillers.add(filler);
+            fillers.add(filler);
         }
 
-        if (this.fillOnLoad) {
+        if (fillOnLoad) {
             ViewController.getInstance().registerOnLoadEvent(this);
         }
-        if (this.fillOnRefresh) {
+        if (fillOnRefresh) {
             ViewController.getInstance().registerOnPageRefreshEvent((Refreshable) this);
         }
 
@@ -238,7 +239,7 @@ public abstract class AbstractComponent extends Widget implements Node {
      * @return This method returns "this" to allow cascading calls.
      */
     public final AbstractComponent resetFillers() {
-        this.fillers.clear();
+        fillers.clear();
         return this;
     }
 
@@ -254,10 +255,10 @@ public abstract class AbstractComponent extends Widget implements Node {
         this.fillers.addAll(fillers);
         ViewController.getInstance().registerOnLoadEvent(this);
 
-        if (this.fillOnLoad) {
+        if (fillOnLoad) {
             ViewController.getInstance().registerOnLoadEvent(this);
         }
-        if (this.fillOnRefresh) {
+        if (fillOnRefresh) {
             ViewController.getInstance().registerOnPageRefreshEvent((Refreshable) this);
         }
 
@@ -284,14 +285,18 @@ public abstract class AbstractComponent extends Widget implements Node {
         runFillers(null);
     }
 
+    public final List<Filler<? extends Object>> getFillers() {
+        return fillers;
+    }
+
     /**
      * Execute the fillers of this component, and call the action at the end.
      */
     protected final void runFillers(final Action callback) {
-        if (!this.generated) {
+        if (!generated) {
             return;
         }
-        for (final Filler<? extends Object> filler : this.fillers) {
+        for (final Filler<? extends Object> filler : fillers) {
             filler.setTarget(this);
             filler.setOnFinishCallback(callback);
             filler.run();
@@ -311,9 +316,9 @@ public abstract class AbstractComponent extends Widget implements Node {
     public final List<Element> getElements() {
         final List<Element> elements = _getElements();
 
-        if (this.tooltip != null) {
+        if (tooltip != null) {
             for (final Element e : elements) {
-                e.setAttribute("title", this.tooltip);
+                e.setAttribute("title", tooltip);
             }
         }
 
@@ -403,7 +408,7 @@ public abstract class AbstractComponent extends Widget implements Node {
      * @return This method returns "this" to allow cascading calls.
      */
     public final String getTooltip() {
-        return this.tooltip;
+        return tooltip;
     }
 
     /**

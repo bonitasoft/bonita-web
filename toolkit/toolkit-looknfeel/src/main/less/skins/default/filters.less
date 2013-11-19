@@ -1,25 +1,25 @@
 .page_tasklistingadmin .filters_panel .primary_filters{
-    a{
-        color: @filtersPanel-textColor;
+	a{
+		color: @filtersPanel-textColor;
 		font-weight: @filtersPanel-fontWeight;
 		.fontSize(@filtersPanel-fontSize);
 		.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
 		display: block;
 		padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
-		min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom ;
-        &.performed{
-            .bgFilter(@filtersPanel-filters-bgPerformed);
-            &:hover{
-                .bgHoverFilter(@filtersPanel-filters-bgPerformed);
-            }
-    	}
-    }
-    a.current{
-        &.performed{
-            .bgCurrentFilter(@filtersPanel-filters-bgPerformedSelected);
-        }
-    }
-    .body a.current, .body a.current:hover{
+		min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+		&.performed{
+			.bgFilter(@filtersPanel-filters-bgPerformed);
+			&:hover{
+				.bgHoverFilter(@filtersPanel-filters-bgPerformed);
+			}
+		}
+	}
+	a.current{
+		&.performed{
+			.bgCurrentFilter(@filtersPanel-filters-bgPerformedSelected);
+		}
+	}
+	.body a.current, .body a.current:hover{
 		position: relative;
 		background-color: @filtersPanel-filtersCurrent-background !important;
 		color: @filtersPanel-filtersCurrent-link-textColor;
@@ -50,12 +50,13 @@
 			position: @filtersPanel-actions-position;
 			top: @filtersPanel-actions-positionTop;
 			left: @filtersPanel-actions-positionLeft;
-			a {
+			a{
 				.addButton(@filtersPanel-actions-addButton-bgColor, @filtersPanel-actions-addButton-txtColor);
+				max-width: @filtersPanel-width -(@filtersPanel-padding-left*2) -(@filtersPanel-actions-positionLeft*2) -(@button-paddingX*2);
 			}
 		}
 	}
-	
+
 	h1, h2, h3, h4, h5, h6, h7, label{
 		color: @filtersPanel-titleColor;
 		.boxSizing();
@@ -64,7 +65,7 @@
 		a{
 			
 		}
-		
+
 	}
 	.primary, .secondary, .resource{
 		&_filters{
@@ -75,128 +76,140 @@
 				.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
 				display: block;
 				padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
-				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom ;
-				
-                &.enabledprocesses{
-                    .bgFilter(@filtersPanel-filters-bgAvailable);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgAvailable);
-                    }
-                }
-				&.available {
+				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+				position: relative;
+				&.enabledprocesses{
+					.bgFilter(@filtersPanel-filters-bgAvailable);
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgAvailable);
+					}
+				}
+				&.available{
 					.bgFilter(@filtersPanel-filters-users-tasks-todo);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-users-tasks-todo);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-users-tasks-todo);
+					}
 				}
 				&.unassigned{
 					.bgSubFilter(@filtersPanel-filters-users-tasks-available);
-                    &:hover{
-                        .bgHoverSubFilter(@filtersPanel-filters-users-tasks-available);
-                    }
+					&:hover{
+						.bgHoverSubFilter(@filtersPanel-filters-users-tasks-available);
+					}
 				}
 				&.disabledprocesses{
-				    .bgFilter(@filtersPanel-filters-bgUnassigned);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgUnassigned);
-                    }
+					.bgFilter(@filtersPanel-filters-bgUnassigned);
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgUnassigned);
+					}
 				}
-				&.resolvedprocesses {
+				&.resolvedprocesses{
 					.bgSubFilter("filters-resolved.png");
-                    &:hover{
-                        .bgHoverSubFilter("filters-resolved.png");
-                    }
+					&:hover{
+						.bgHoverSubFilter("filters-resolved.png");
+					}
 				}
-				&.unresolvedprocesses {
+				&.unresolvedprocesses{
 					.bgSubFilter("filters-unresolved.png");
-                    &:hover{
-                        .bgHoverSubFilter("filters-unresolved.png");
-                    }
+					&:hover{
+						.bgHoverSubFilter("filters-unresolved.png");
+					}
 				}
 				&.assigned{
 					.bgSubFilter(@filtersPanel-filters-users-tasks-mytasks);
-                    &:hover{
-                        .bgHoverSubFilter(@filtersPanel-filters-users-tasks-mytasks);
-                    }
+					&:hover{
+						.bgHoverSubFilter(@filtersPanel-filters-users-tasks-mytasks);
+					}
 				}
 				&.ignored{
 					.bgFilter(@filtersPanel-filters-users-tasks-hidden);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-users-tasks-hidden);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-users-tasks-hidden);
+					}
 				}
 				&.performed{
 					.bgFilter(@filtersPanel-filters-users-tasks-performed);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-users-tasks-performed);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-users-tasks-performed);
+					}
 				}
 				&.mycases{
 					.bgFilter(@filtersPanel-filters-bgMyCases);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgMyCases);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgMyCases);
+					}
 				}
 				&.workedoncases, &.openedcases{
 					.bgFilter(@filtersPanel-filters-bgWorkedOn);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgWorkedOn);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgWorkedOn);
+					}
 				}
 				&.archivedcases{
 					.bgFilter(@filtersPanel-filters-bgArchived);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgArchived);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgArchived);
+					}
 				}
-				&.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all {
+				&.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all{
 					.bgFilter(@filtersPanel-filters-bgAll);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgAll);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgAll);
+					}
 				}
 				&.humantask{
 					.bgFilter(@filtersPanel-filters-bgHumanTask);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgHumanTask);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgHumanTask);
+					}
 				}
 				&.failed{
 					.bgFilter(@filtersPanel-filters-bgFailed);
-                    &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgFailed);
-                    }
+					&:hover{
+						.bgHoverFilter(@filtersPanel-filters-bgFailed);
+					}
 				}
 				&.monitoring{
 					.bgFilter("filters-monitoring.png");
-                    &:hover{
-                        .bgHoverFilter("filters-monitoring.png");
-                    }
+					&:hover{
+						.bgHoverFilter("filters-monitoring.png");
+					}
 				}
 				&.reports{
 					.bgFilter("filters-reporting.png");
-                    &:hover{
-                        .bgHoverFilter("filters-reporting.png");
-                    }
+					&:hover{
+						.bgHoverFilter("filters-reporting.png");
+					}
 				}
+				&.enabledusers{
+                    .bgFilter("filters-user-active.png");
+                    &:hover{
+                        .bgHoverFilter("filters-user-active.png");
+                    }
+                }
+                &.disabledusers{
+                    .bgFilter("filters-user-inactive.png");
+                    &:hover{
+                        .bgHoverFilter("filters-user-inactive.png");
+                    }
+                }
 				&:hover{
-					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1,@header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
+					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1, @header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
 			}
 			a.current{
-                &.enabledprocesses{
-                    .bgCurrentFilter(@filtersPanel-filters-bgAvailableSelected);
-                }
-				&.available {
+				&.enabledprocesses{
+					.bgCurrentFilter(@filtersPanel-filters-bgAvailableSelected);
+				}
+				&.available{
 					.bgCurrentFilter(@filtersPanel-filters-users-tasks-todo-selected);
 				}
 				&.disabledprocesses{
 					.bgCurrentFilter(@filtersPanel-filters-bgUnassignedSelected);
 				}
-				&.resolvedprocesses {
+				&.resolvedprocesses{
 					.bgCurrentSubFilter("filters-resolved-selected.png");
 				}
-				&.unresolvedprocesses {
+				&.unresolvedprocesses{
 					.bgCurrentSubFilter("filters-unresolved-selected.png");
 				}
 				&.assigned{
@@ -235,25 +248,35 @@
 				&.reports{
 					.bgFilter("filters-reporting-selected.png");
 				}
+				&.enabledusers{
+                    .bgFilter("filters-user-active-selected.png");
+                }
+                &.disabledusers{
+                    .bgFilter("filters-user-inactive-selected.png");
+                }
 				&:hover{
-					background-color: @filtersPanel-filterHover-bgColor !important;
+					background: @filtersPanel-filterHover-bgColor;
 				}
 			}
-			.body a.current, .body a.current:hover{
+			.body{
 				position: relative;
-				background-color: @filtersPanel-filtersCurrent-background !important;
-				color: @filtersPanel-filtersCurrent-link-textColor;
-				&:after{
-					position: absolute;
-					content: "";
-					display: block;
-					width: @filtersPanel-filtersCurrent-width;
-					.bg(@filtersPanel-filtersCurrent-bgArrow, no-repeat, @filtersPanel-filtersCurrent-background, center, right);
-					top: 0;
-					right: @filtersPanel-filtersCurrent-positionRight;
-					margin-right: 0px;
-					height: 100%;
-					z-index: @zIndex-currentArrow;
+				a.current, .body a.current:hover{
+					position: relative;
+					background-color: @filtersPanel-filtersCurrent-background !important;
+					color: @filtersPanel-filtersCurrent-link-textColor;
+					&:after{
+						position: absolute;
+						content: "";
+						display: block;
+						width: @filtersPanel-filtersCurrent-width;
+						.bg(@filtersPanel-filtersCurrent-bgArrow, no-repeat, @filtersPanel-filtersCurrent-background, center, right);
+						top: 0;
+						right: @filtersPanel-filtersCurrent-positionRight;
+						margin-right: 0px;
+						height: 100%;
+						z-index: @zIndex-currentArrow;
+					}
+			
 				}
 			}
 		}
@@ -277,7 +300,7 @@
 			position: relative;
 			a{
 				img{
-					position : @filtersPanel-filters-filtersResource-linkImage-position;
+					position: @filtersPanel-filters-filtersResource-linkImage-position;
 					display: @filtersPanel-filters-filtersResource-linkImage-display;
 					margin: @filtersPanel-filters-filtersResource-linkImage-margin;
 					width: @filtersPanel-filters-filtersResource-linkImage-width;
@@ -303,11 +326,11 @@
 				.header{
 					h1{
 						.bg(@filtersPanel-filters-filtersResourceTitle-process-bgImage, @filtersPanel-filters-filtersResourceTitle-process-bgRepeat, @filtersPanel-filters-filtersResourceTitle-process-bgColor, @filtersPanel-filters-filtersResourceTitle-process-bgX, @filtersPanel-filters-filtersResourceTitle-process-bgY);
-					}	
+					}
 				}
 			}
 		}
-		
+
 	}
 	&processlistingadmin{
 		.filters_panel{
@@ -315,7 +338,7 @@
 				.header{
 					h1{
 						.bg(@filtersPanel-filters-filtersResourceTitle-category-bgImage, @filtersPanel-filters-filtersResourceTitle-category-bgRepeat, @filtersPanel-filters-filtersResourceTitle-category-bgColor, @filtersPanel-filters-filtersResourceTitle-category-bgX, @filtersPanel-filters-filtersResourceTitle-category-bgY);
-					}	
+					}
 				}
 			}
 		}

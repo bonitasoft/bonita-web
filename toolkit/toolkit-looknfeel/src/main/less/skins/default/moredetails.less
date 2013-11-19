@@ -11,6 +11,15 @@
 			overflow: hidden;
 			h1{
 				.moreDetails_title();
+				
+				span.inactive-user {
+				    .hideText();
+				    .bg("filters-user-inactive-selected.png", no-repeat, transparent, left, bottom);
+				    display: inline-block;
+				    float: right;
+				    height: 30px;
+				    width: 30px;
+				}
 			}
 			.description{
 				.moreDetails_description();
@@ -50,7 +59,7 @@
 					h1{
 						.revertfontSize(@moreDetails-title-fontSize);
 					}
-					.table {
+					.table, .pager {
 						.fontSize(@skinFontSize - 3px);
 					}
 				}
@@ -58,7 +67,7 @@
 			&.tasks, &.cases {
 				padding-bottom: 0;
 			}
-		    + .section{
+			+ .section, + css3-container + .section{
 				padding: @moreDetails-sectionLeft-padding;
 			}
 			&:nth-child(even){
@@ -176,7 +185,7 @@
 								}
 							}
 						}
-						+ .tr{
+						+ .tr, + css3-container + .tr{
 							margin: @moreDetails-comments-line-margin;
 						}
 					}
@@ -224,7 +233,7 @@
 			margin: @moreDetails-toolbar-margin;
 			text-align: @moreDetails-toolbar-txtAlign;
 			a{
-				+a{ margin-left: @button-marginBetween; }
+				+ a, + css3-container + a{ margin-left: @button-marginBetween; }
 				&.back{
 					float: left;
 				}
@@ -250,6 +259,26 @@
 							&.caseid{
 								padding: @moreDetails-metadatas-definitionWithIcon-padding;
 								.bg(@moreDetails-metadatas-definition-case-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
+							}
+							&.human_task{
+								padding: @moreDetails-metadatas-definitionWithIcon-padding;
+								.bg(@moreDetails-metadatas-definition-human-task-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
+							}
+							&.multi_instance_task{
+								padding: @moreDetails-metadatas-definitionWithIcon-padding;
+								.bg(@moreDetails-metadatas-definition-multi-instance-task-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
+							}
+							&.call_activity_task{
+								padding: @moreDetails-metadatas-definitionWithIcon-padding;
+								.bg(@moreDetails-metadatas-definition-call-activity-task-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
+							}
+							&.loop_task{
+								padding: @moreDetails-metadatas-definitionWithIcon-padding;
+								.bg(@moreDetails-metadatas-definition-loop-task-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
+							}
+							&.automatic_task{
+								padding: @moreDetails-metadatas-definitionWithIcon-padding;
+								.bg(@moreDetails-metadatas-definition-automatic-task-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
 							}
 							&.assigned_id_firstname_lastname{
 								padding: @moreDetails-metadatas-definitionWithIcon-padding;

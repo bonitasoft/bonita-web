@@ -8,7 +8,8 @@
 					}
 					&.th_icon{
 						width: @userList-header-icon-width;
-						color: transparent;
+						height: 0.01px;//ie8 need a height to display a block with a "invisible" text
+						.hideText();
 						overflow: hidden;
 					}
 					&.th_last_connection{
@@ -44,7 +45,7 @@
 						&.empty{
 							background: none !important;
 						}
-						width: @userListAdmin-lastConnection-width;
+						width: @userListAdmin-lastConnection-width;//TODO width:86px;
 					}
 				}
 			}

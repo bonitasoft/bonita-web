@@ -2,7 +2,7 @@
 // CSS 2-3 mixins 
 //-----------------------------------------------------------------------------
 
-.CSSPIE(){ behavior: url(PIE.htc); }//call this to use CSSPIE
+.CSSPIE(){ behavior: url(css/PIE.htc); -pie-watch-ancestors: 1;}//call this to use CSSPIE
 
 .clearFix() {
 	zoom: 1;
@@ -37,7 +37,8 @@
 	background: -webkit-linear-gradient(top,  @c1 @p1,@c2 @p2); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  @c1 @p1, @c2 @p2); /* Opera 11.10+ */
 	background: linear-gradient(to bottom,  @c1 @p1, @c2 @p2); /* W3C */
-	filter: ~"progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=@{c1}, endColorstr=@{c2})"; /* also meant to be IE... */
+	-pie-background: linear-gradient(@c1 @p1, @c2 @p2);
+	.CSSPIE();
 }
 .horizontalGradient(@c1, @p1, @c2, @p2) {
 	background-color: @c1; /* Old browsers */
@@ -47,7 +48,7 @@
 	background: -o-linear-gradient(left, @c1 @p1, @c2 @p2); /* Opera 11.10+ */
 	background: -ms-linear-gradient(left, @c1 @p1, @c2 @p2); /* IE10+ */
 	background: linear-gradient(to right, @c1 @p1, @c2 @p2); /* W3C */
-	-pie-background: linear-gradient(0deg, @c1 @p1,@c2 @p2) @c2;
+	-pie-background: linear-gradient(0deg, @c1 @p1,@c2 @p2);
 	.CSSPIE();
 }
 .verticalGradient(@c1, @p1, @c2, @p2, @c3, @p3) {
@@ -128,6 +129,7 @@
 	-moz-box-shadow: @x @y @blur @color;
 	-o-box-shadow: @x @y @blur @color;
 	box-shadow: @x @y @blur @color;
+	.CSSPIE();
 }
 
 .noBoxShadow() {
@@ -135,6 +137,7 @@
 	-moz-box-shadow: none;
 	-o-box-shadow: none;
 	box-shadow: none;
+	.CSSPIE();
 }
 
 .boxShadowInner (@x: 3px, @y: 3px, @blur: 3px, @color: #000) {
@@ -197,9 +200,29 @@
 	white-space: nowrap;
 }
 
+.bg(@img, @repeat: no-repeat, @bgcolor: transparent, @x:center, @y: center, @important: "!important"){
+	background: url("skins/@{skinpath}/images/@{img}") @bgcolor @repeat  @x @y ~"@{important}";
+}
 .bg(@img, @repeat: no-repeat, @bgcolor: transparent, @x:center, @y: center){
-	.noIEGradient();
-	background: url("../skins/@{skinpath}/images/@{img}") @bgcolor @repeat  @x @y !important;
+	.bg(@img, @repeat, @bgcolor, @x, @y, "!important");
+}
+.bg(@img, @options){
+	background: url("skins/@{skinpath}/images/@{img}") @options !important;
+}
+.bgPie(@img, @options){
+	.bgPie(@img, @options,"");
+}
+.bg(@img, @options,@important:"!important"){
+	background: url("skins/@{skinpath}/images/@{img}") @options ~"@{important}";
+}
+.bgPie(@img, @options,@important:"!important"){
+	-pie-background: url("skins/@{skinpath}/images/@{img}") @options ;
+	.CSSPIE();
+}
+.bgAlphaColor(@c){
+	background-color: @c;
+	-pie-background:@c;
+	.CSSPIE();
 }
 
 .bgLeft(@img){
@@ -226,10 +249,10 @@
 
 .hideText(){
 	color: transparent !important;
-	font-size: 0.01% !important;
+	font-size: 0.0000001% ;
 }
 .boxSizing(@value: border-box){
-	*behavior: url(boxsizing.htc);
+	*behavior: url(css/boxsizing.htc);
 	-moz-box-sizing: @value;
 	-webkit-box-sizing: @value;
 	box-sizing: @value;

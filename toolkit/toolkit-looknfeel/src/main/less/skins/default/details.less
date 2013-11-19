@@ -12,7 +12,7 @@
 		.toolbar{
 			text-align: right;
 			margin: @detailsPanel-toolbar-margin;
-			a+a{ margin-left: @button-marginBetween; }
+			a + a, a + css3-container + a{ margin-left: @button-marginBetween; }
 		}
 		.metadatas{
 			H1{
@@ -25,7 +25,7 @@
 				word-wrap: break-word;
 			    
 			}
-			&+.section{
+			+ .section, + css3-container + .section{
 				margin: @detailsPanel-1stSection-margin; 
 			}
 			.definitions{
@@ -52,6 +52,37 @@
 					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date{
 						label{
 							.bgLeft(@detailsPanel-definition-dueDateBg);
+						}
+					}
+					//no icon anymore in this case
+					//&.started_by, &.deployedby, &.assigned_id_firstname_lastname, &.assigned_id{
+					//	label {
+					//		.bgLeft(@detailsPanel-definition-userBg);
+					//	}
+					//}
+					&.human_task{
+						label {
+							.bgLeft(@detailsPanel-definition-human-taskBg);
+						}
+					}
+					&.multi_instance_task{
+						label {
+							.bgLeft(@detailsPanel-definition-multi-instance-taskBg);
+						}
+					}
+					&.call_activity_task{
+						label {
+							.bgLeft(@detailsPanel-definition-call-activity-taskBg);
+						}
+					}
+					&.loop_task{
+						label {
+							.bgLeft(@detailsPanel-definition-loop-taskBg);
+						}
+					}
+					&.automatic_task{
+						label {
+							.bgLeft(@detailsPanel-definition-automatic-taskBg);
 						}
 					}
 					&.started_by, &.deployedby{
@@ -178,7 +209,7 @@
 							}
 						}
 					}
-					+ .tr{
+					+ .tr, + css3-container + .tr{
 						margin: @detailsPanel-comments-line-margin;
 					}
 				}

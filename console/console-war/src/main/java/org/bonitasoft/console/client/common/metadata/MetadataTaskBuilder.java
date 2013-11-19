@@ -40,7 +40,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 public class MetadataTaskBuilder extends MetadataBuilder {
 
     public static MetadataTaskBuilder taskQuickDetailsMetadatas() {
-        final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addDueDate(FORMAT.DISPLAY_RELATIVE);
         metadatas.addPriority();
@@ -100,12 +100,16 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata createMetaAppsName() {
-        return new ItemDetailsMetadata(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Apps"),
+        return new ItemDetailsMetadata(
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
+                _("Apps"),
                 _("The app responsible of the creation of this task"));
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
-        return new ItemDetailsMetadata(new DeployedAttributeReader(IActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION), _("Apps version"),
+        return new ItemDetailsMetadata(
+                new DeployedAttributeReader(IActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
+                _("Apps version"),
                 _("Version of the app"));
     }
 
@@ -118,8 +122,10 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata createMetaAssignTo() {
-        return new ItemDetailsMetadata(new DeployedJsId(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, UserItem.ATTRIBUTE_FIRSTNAME, UserItem.ATTRIBUTE_LASTNAME),
-                new DeployedUserReader(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).setDefaultValue(_("Unassigned")), _("Assigned to"),
+        return new ItemDetailsMetadata(
+                new DeployedJsId(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, UserItem.ATTRIBUTE_FIRSTNAME, UserItem.ATTRIBUTE_LASTNAME),
+                new DeployedUserReader(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).setDefaultValue(_("Unassigned")),
+                _("Assigned to"),
                 _("The user name of the user to which the task is assigned"));
     }
 
@@ -129,17 +135,21 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata createMetaAssignedDate(final FORMAT format) {
-        return new ItemDetailsMetadata(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_ASSIGNED_DATE).setDefaultValue(_("No data")), _("Assigned date"),
+        return new ItemDetailsMetadata(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_ASSIGNED_DATE).setDefaultValue(_("No data")),
+                _("Assigned date"),
                 _("The date when while the task has been assigned"));
     }
 
     private ItemDetailsMetadata createMetaExecutedBy() {
-        return new ItemDetailsMetadata(new DeployedUserReader(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Executed by"),
+        return new ItemDetailsMetadata(new DeployedUserReader(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID),
+                _("Executed by"),
                 _("Name of the user which last executed this task"));
     }
 
     private ItemDetailsMetadata createMetaDueDate(final FORMAT format) {
-        return new ItemDetailsMetadata(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, format).setDefaultValue("No data"), _("Due date"),
+        return new ItemDetailsMetadata(
+                new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, format).setDefaultValue("No data"),
+                _("Due date"),
                 _("The date while the task must be finished"));
     }
 

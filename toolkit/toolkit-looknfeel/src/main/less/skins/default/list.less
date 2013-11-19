@@ -3,7 +3,6 @@
 		> H1, .dropdownmenu_sort{
 			display: none;
 		}
-		
 	}
 	
 	.tables_panel{
@@ -26,10 +25,12 @@
 				}
 				.input{
 					padding: @tablesPanel-search-inputContainer-padding;
+					position:relative;
 					input{
 						width: 100%;
 						padding: @tablesPanel-search-input-padding;
 						.boxSizing();
+						position:relative;
 					}
 				}
 			}
@@ -40,6 +41,7 @@
 				position: absolute;
 				.btn{
 					display: @tablesPanel-search-button-display;
+					.verticalGradient(#fff,0,#fff,0); //no gradient CSS PIE
 					.hideText();
 					.bg(@tablesPanel-search-button-bg, no-repeat, transparent, @tablesPanel-search-button-bgX, @tablesPanel-search-button-bgY);
 					width: @tablesPanel-search-button-width;
@@ -61,10 +63,13 @@
 				text-align: @tablesPanel-tableActions-textAlign;
 				margin: @tablesPanel-tableActions-margin;
 				padding: @tablesPanel-tableActions-padding;
+				position: relative;//CSS pie zindex fix
 			}
 		}
 		.table{
 			.thead{
+				position: relative;//CSS pie zindex fix
+				z-index: 1;
 				.borderRadiusLeft(@defaultRadius);
 				background: @tablesPanel-table-thead-bgColor;
 				color: @tablesPanel-table-thead-textColor;
@@ -80,6 +85,7 @@
 					padding-bottom: @tablesPanel-table-thead-paddingBottom;
 					.borderRadiusLeft(@defaultRadius);
 					.noMargin();
+					position: relative;
 					.verticalGradient(@tablesPanel-table-thead-tr-gradientColor1, @tablesPanel-table-thead-tr-gradientPosition1, @tablesPanel-table-thead-tr-gradientColor2, @tablesPanel-table-thead-tr-gradientPosition2);
 					.th{
 						text-align: @tablesPanel-table-sort-textAlign;
@@ -120,18 +126,20 @@
 				}
 			}
 			.tbody{
+				position: relative;//CSS pie zindex fix
 				.tr{
 					.pointerAsLink();
 					.borderRadiusLeft(@defaultRadius);
 					min-height: @tablesPanel-table-line-height;
 					padding-top: @tablesPanel-table-line-paddingTop;
 					padding-bottom: @tablesPanel-table-line-paddingBottom;
-					//.verticalGradient(@tablesPanel-table-line-gradientColor1, @tablesPanel-table-line-gradientPosition1, @tablesPanel-table-line-gradientColor2, @tablesPanel-table-line-gradientPosition2);
-					.boxShadow(@tablesPanel-table-line-shadowX, @tablesPanel-table-line-shadowY, @tablesPanel-table-line-shadowBlur, @tablesPanel-table-line-shadowColor);
-					margin: @tablesPanel-table-line-margin; 
+					//.boxShadow(@tablesPanel-table-line-shadowX, @tablesPanel-table-line-shadowY, @tablesPanel-table-line-shadowBlur, @tablesPanel-table-line-shadowColor);
+					margin: @tablesPanel-table-line-margin;
+					.bgAlphaColor(@tablesPanel-table-line-gradientColor1);
 					display: block;
 					float: left;
 					clear: both;
+					position: relative;//CSS pie zindex fix
 					.td.td_1{
 						padding-left: @tablesPanel-table-1stCell-paddingLeft;
 					}
@@ -139,7 +147,6 @@
 						line-height: @tablesPanel-table-cell-lineHeight;
 						.fontSize(@tablesPanel-table-cell-fontSize);
 						color: @tablesPanel-table-line-textColor;
-						//height: 100%;
 						&_type_checkbox{
 							label{// hide "all" label
 								
@@ -152,13 +159,14 @@
 						
 						display: block;
 						float: left;
-						+ .td{
+						+ .td, + css3-container + .td{
 							margin : 0 0 0 0.25em; 
 						}
 					}
 					&.current{
-						.noIEGradient();
-						background: @tablesPanel-table-currentLine-background;
+						.bgAlphaColor(@tablesPanel-table-currentLine-background);
+						border: @tablesPanel-table-currentLine-border;
+						border-right: none; 
 						position: relative;
 						&:before{
 							position: absolute;
@@ -207,7 +215,7 @@
 	.next{
 		.pagerButton(@button-pager-bgColor, @button-pager-nextBg, @button-pager-nextBg-disable);
 	}
-	a + a{
+	a + a, a + css3-container + a{
 		margin: @button-pager-marginBetween;
 	}
 	
