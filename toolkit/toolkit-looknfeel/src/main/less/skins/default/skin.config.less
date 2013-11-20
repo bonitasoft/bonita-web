@@ -108,7 +108,8 @@
 @inputPaddingLeft: 1*@w;
 @inputHeight: 35px;
 
-@button-action-subsection-size: 80%;
+@button-action-doublesection-size: 80%;
+@button-action-subsection-size : 70%;
 
 @body-padding-bottom: 5*@h;
 // ----------------------------------------------------------------------------
@@ -322,6 +323,9 @@
 @tablesPanel-search-button-height: 17px;
 @tablesPanel-search-button-top: 9px;
 @tablesPanel-search-button-right: @tablesPanel-search-inputContainer-paddingRight + 3*@w;
+
+@tablesPanel-refresh-button-bg: "refresh.png";
+@tablesPanel-refresh-button-min-width: 20px;
 // ----------------------------------------------------------------------------
 // Lists : filters
 // ----------------------------------------------------------------------------
@@ -415,15 +419,16 @@
 @filtersPanel-filtersResourceTitle-display: block;
 @filtersPanel-filtersResourceTitle-fontSize: 22;
 @filtersPanel-filtersResourceTitle-fontStyle: italic;
-@filtersPanel-filtersResourceTitle-margin: 0 @filtersPanel-filters-paddingRight 3*@h 0;
+@filtersPanel-filtersResourceTitle-margin: 3*@h @filtersPanel-filters-paddingRight 0 0;
 @filtersPanel-filters-filtersResourceTitle-padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom 4*@w;
 @filtersPanel-filters-filtersResourceTitle-borderColor1: darken(@mainAccentColor, 7%);
 @filtersPanel-filters-filtersResourceTitle-borderHeight: @border-width;
+@filtersPanel-filters-filtersResourceTitle-top-borderHeight: 3px;
 @filtersPanel-filters-filtersResourceTitle-borderColor2: lighten(@mainAccentColor, 8.5%);
 
 @filtersPanel-filters-filtersResourceTitle-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
-@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
+@filtersPanel-filters-filtersResourceTitleContainer-borderTop: @filtersPanel-filters-filtersResourceTitle-top-borderHeight solid @filtersPanel-filters-filtersResourceTitle-borderColor2;
 @filtersPanel-filters-filtersResourceTitleContainer-borderBottom: @filtersPanel-filters-filtersResourceTitle-borderHeight @filtersPanel-filters-filtersResourceTitle-borderColor1;
 @filtersPanel-filters-filtersResourceTitle-process-bgImage: "filters-resource-process.png";
 @filtersPanel-filters-filtersResourceTitle-process-bgX: 4*@w;
@@ -472,6 +477,11 @@
 @detailsPanel-definition-dueDateBg: "metadata-due-date.png";
 @detailsPanel-definition-dueDateH: "metadata-due-date.png";
 @detailsPanel-definition-userBg: "metadata-user.png";
+@detailsPanel-definition-human-taskBg: "metadata-user.png";
+@detailsPanel-definition-multi-instance-taskBg: "metadata_multi_instance_small.png";
+@detailsPanel-definition-call-activity-taskBg: "metadata_callactivity_small.png";
+@detailsPanel-definition-loop-taskBg: "metadata_loop_small.png";
+@detailsPanel-definition-automatic-taskBg: "metadata_automaticTask_small.png";
 @detailsPanel-section-body-position: relative;
 @detailsPanel-section-body-overflow: inherit;
 @detailsPanel-section-pagerTop-display: none;
@@ -737,6 +747,11 @@
 @moreDetails-metadatas-definition-assignedUser-bgImage: "metadata-assignee-big.png";
 @moreDetails-metadatas-definition-priority-bgImage: "metadata-priority-big.png";
 @moreDetails-metadatas-definition-case-bgImage: "metadata-case-big.png";
+@moreDetails-metadatas-definition-human-task-bgImage: "metadata-human-big.png";
+@moreDetails-metadatas-definition-multi-instance-task-bgImage: "metadata_multi_instance-big.png";
+@moreDetails-metadatas-definition-call-activity-task-bgImage: "metadata_callactivity.png";
+@moreDetails-metadatas-definition-loop-task-bgImage: "metadata-loop.png";
+@moreDetails-metadatas-definition-automatic-task-bgImage: "metadata_automaticTask.png";
 
 
 @moreDetails-section-border: @border-width solid @borderColor;
@@ -1116,3 +1131,11 @@
 @zIndex-header: @zIndex-max - 4;
 @zIndex-currentArrow:  @zIndex-max - 4;
 @zIndex-actionFilter: @zIndex-max - 3;
+
+// ----------------------------------------------------------------------------
+// Connector failure information
+// ----------------------------------------------------------------------------
+@information-bgImage: "information.png";
+@connector-failure-popup-width: 65%;
+@stackTrace-height: 500px;
+@stackTrace-bg-color: #eae4e4;

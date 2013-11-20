@@ -10,7 +10,7 @@ form{
 			input{
 				height: @inputHeight;
 			}
-			&.select .input, textarea, input, #uploader{
+			&.select .input, textarea, input, .uploader{
 				font-family: inherit;
 				.fontSize(@form-input-fontSize);
 				width: 100%;
@@ -74,7 +74,7 @@ form{
 				color: @form-label-color;
 			}
 		}
-		#uploader{
+		.uploader{
 			.bgRight(@form-input-file-bgImg);
 			padding-right: @form-input-file-padding;
 			height: @inputHeight;
@@ -127,7 +127,7 @@ form{
 	min-width: 480px;
 }
 
-.formactions{
+.formactions , .popupcontainer .footer {
 	margin: @form-formactions-margin;
 	text-align: @form-formactions-textAlign;
 }
@@ -207,6 +207,23 @@ form{
 			}
 		}
 	}
+}
+
+form {
+	&.success{
+		.formentries{
+			.formentry {
+				.input{
+					div.alert_message.ERROR{
+						margin :  @form-input-error-margin;
+						color: #000000; 
+						border-color: @form-input-error-borderColor;
+					}
+				}
+			}	
+		}		
+	}
+	
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 .datepicker{
