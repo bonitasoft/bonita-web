@@ -16,8 +16,13 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+
+import java.util.List;
+
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
@@ -25,6 +30,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 
 /**
  * @author Colin PUY
+ * @author Elias Ricken de Medeiros
  * 
  */
 public class HumanTaskEngineClient {
@@ -42,6 +48,14 @@ public class HumanTaskEngineClient {
             return processAPI.searchHumanTaskInstances(search).getCount();
         } catch (Exception e) {
             throw new APIException("Error when counting opened cases");
+        }
+    }
+    
+    public List<ArchivedHumanTaskInstance> searchArchivedHumanTasks(SearchOptions searchOptions) {
+        try {
+            return processAPI.searchArchivedHumanTasks(searchOptions).getResult();
+        } catch (SearchException e) {
+            throw new APIException("Error when searching archived human tasks", e);
         }
     }
 }

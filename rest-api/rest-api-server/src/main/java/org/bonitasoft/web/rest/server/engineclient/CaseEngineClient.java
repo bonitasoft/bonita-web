@@ -19,13 +19,16 @@ package org.bonitasoft.web.rest.server.engineclient;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -33,6 +36,7 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
  * @author Colin PUY
+ * @author Elias Ricken de Medeiros
  * 
  */
 // TODO migrate all engine methods relating to cases (i.e. especially those in CaseDatastore) in this class
@@ -70,6 +74,14 @@ public class CaseEngineClient {
             return processAPI.searchOpenProcessInstances(search).getCount();
         } catch (Exception e) {
             throw new APIException("Error when counting opened cases", e);
+        }
+    }
+    
+    public List<ArchivedProcessInstance> searchArchivedCasesInAllStates(SearchOptions searchOptions) {
+        try {
+            return processAPI.searchArchivedProcessInstancesInAllStates(searchOptions).getResult();
+        } catch (SearchException e) {
+            throw new APIException("Error when searching cases in all state", e);
         }
     }
 }
