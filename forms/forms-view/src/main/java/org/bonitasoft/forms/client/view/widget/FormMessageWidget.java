@@ -123,7 +123,7 @@ public class FormMessageWidget extends Composite {
         // Fix Javascript execution on IE7 and IE8
         if (domUtils.isIE7() || domUtils.isIE8()) {
             final String scriptPattern = "<script.*javascript.*>(.*)</script>";
-            final RegExp regExp = RegExp.compile(scriptPattern, "gi");
+            final RegExp regExp = RegExp.compile(scriptPattern, "gim");
             for (MatchResult result = regExp.exec(content); result != null; result = regExp.exec(content)) {
                 domUtils.javascriptEval(result.getGroup(1));
             }

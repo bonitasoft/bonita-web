@@ -5,12 +5,22 @@
 }
 
 .section {
-	.description {
+	.section_description {
 			width: 90%;
 			padding: 1px 0 4*@h @section-padding-left;
 			/** hack for merging border on tr hover */
 			margin-bottom: -1px;
 			word-wrap: break-word;
+	}
+	&.doublesection {
+		.btn-action{
+			font-size: @button-action-doublesection-size;
+		}
+		.section {
+			.btn-action{
+				font-size: @button-action-subsection-size;
+			}	
+		}
 	}
 }
 
@@ -42,8 +52,27 @@
 		.td_displayname {
 			width: 50%;
 			> span.prepend {
-				.bgLeft("metadata-task.png");
 				padding-left: @section-padding-left;
+				.bgLeft("metadata-task.png");
+				
+				&.user_task{
+					.bgLeft("metadata-user.png");
+				}
+				&.manual_task{
+					.bgLeft("metadata-user.png");
+				}
+				&.automatic_task{
+					.bgLeft("metadata_automaticTask_small.png");
+				}
+				&.call_activity{
+					.bgLeft("metadata_callactivity_small.png");
+				}
+				&.multi_instance_activity{
+					.bgLeft("metadata_multi_instance_small.png");
+				}
+				&.loop_activity{
+					.bgLeft("metadata_loop_small.png");
+				}
 			}
 		}
 		.td_duedate > span.prepend, .td_archiveddate > span.prepend, .td_last_update_date > span.prepend {
@@ -51,7 +80,6 @@
 			padding-left: @section-padding-left;
 		}
 		.td_executedby_executedby > span.prepend {
-			.bgLeft("metadata-user.png");
 			padding-left: @section-padding-left;
 		}
 		.tr {
@@ -100,8 +128,27 @@
 	}
 	.td_started_by_started_by {
 		> span.prepend {
-			.bgLeft("metadata-user.png");
 			padding-left: @section-padding-left;
+			.bgLeft("metadata-task.png");
+				
+			&.user_task{
+				.bgLeft("metadata-user.png");
+			}
+			&.manual_task{
+				.bgLeft("metadata-user.png");
+			}
+			&.automatic_task{
+				.bgLeft("metadata_automaticTask_small.png");
+			}
+			&.call_activity{
+				.bgLeft("metadata_callactivity_small.png");
+			}
+			&.multi_instance_activity{
+				.bgLeft("metadata_multi_instance_small.png");
+			}
+			&.loop_activity{
+				.bgLeft("metadata_loop_small.png");
+			}
 		}
 	}
 	.tr {

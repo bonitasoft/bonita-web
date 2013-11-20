@@ -13,7 +13,8 @@
 					}
 					.th_icon{
 						width: @groupList-header-icon-width;
-						color: transparent;
+						height: 0.01px;//ie8 need a height to display a block with a "invisible" text
+						.hideText();
 						overflow: hidden;
 					}
 					.td{

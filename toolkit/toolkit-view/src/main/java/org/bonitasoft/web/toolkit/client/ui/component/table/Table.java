@@ -14,13 +14,16 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.table;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.GQuery;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Random;
+import static com.google.gwt.query.client.GQuery.$;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ModifierEngine;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -41,11 +44,13 @@ import org.bonitasoft.web.toolkit.client.ui.html.XML;
 import org.bonitasoft.web.toolkit.client.ui.html.XMLAttributes;
 import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 
-import java.util.*;
-import java.util.Map.Entry;
-
-import static com.google.gwt.query.client.GQuery.$;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.CheckBox;
 
 /**
@@ -154,6 +159,10 @@ public class Table extends AbstractTable implements Refreshable {
 
     protected ContainerStyled<TableColumn> columns = new ContainerStyled<TableColumn>();
 
+    public Table addColumn(final String label) {
+        return this.addColumn(null, label, null, false, true);
+    }
+
     public Table addColumn(final JsId jsid, final String label) {
         return this.addColumn(new TableColumn(this, jsid, label, null, false, true));
     }
@@ -167,28 +176,28 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public Table addColumn(TableColumn column) {
-        this.columns.append(column);
+        columns.append(column);
         String sortName = column.getSortName();
         if (sortName != null) {
-            this.order = sortName + (column.isSortAscending() ? " ASC" : " DESC");
+            order = sortName + (column.isSortAscending() ? " ASC" : " DESC");
         }
         return this;
     }
 
     public Table setColumnPos(final JsId jsid, final int index) {
-        this.columns.move(jsid, index);
+        columns.move(jsid, index);
         return this;
     }
 
     public TableColumn getColumn(final JsId jsid) {
-        return this.columns.get(jsid);
+        return columns.get(jsid);
     }
 
     /**
      * @return the columns
      */
     public List<TableColumn> getColumns() {
-        return this.columns.getComponents();
+        return columns.getComponents();
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,9 +237,9 @@ public class Table extends AbstractTable implements Refreshable {
         @Override
         public void execute() {
             clearCheckboxes();
-            setCheckboxesValue(getCheckbox(this.checkboxId), true, false);
-            if (this.defaultAction != null) {
-                this.defaultAction.execute();
+            setCheckboxesValue(getCheckbox(checkboxId), true, false);
+            if (defaultAction != null) {
+                defaultAction.execute();
             }
         }
 
@@ -242,18 +251,18 @@ public class Table extends AbstractTable implements Refreshable {
 
     public Table addLine(String checkboxId, final String className, final Action defaultAction, Boolean allowGroupedAction) {
         if (checkboxId == null) {
-            checkboxId = String.valueOf(this.lines.size() - 1);
+            checkboxId = String.valueOf(lines.size() - 1);
         }
 
         final TableLine line = new TableLine();
         if (className != null) {
             line.addClass(className);
         }
-        if (this.itemIdOnRow) {
+        if (itemIdOnRow) {
             line.addClass("APIID_" + checkboxId);
         }
 
-        if (this.selectLineOnClick) {
+        if (selectLineOnClick) {
             CheckLineAction action = new CheckLineAction(checkboxId);
             action.setDefaultAction(defaultAction);
             line.setDefaultAction(action);
@@ -261,14 +270,14 @@ public class Table extends AbstractTable implements Refreshable {
             line.setDefaultAction(defaultAction);
         }
 
-        this.lines.append(line);
+        lines.append(line);
 
         // If we need checkboxes, we automaticaly had the column
         if (hasGroupedActions()) {
             final XMLAttributes attributes = new XMLAttributes();
             if (allowGroupedAction) {
                 attributes.add("id", HTML.getUniqueId());
-                this.addCell(new Html(HTML.checkbox("id", checkboxId, this.selectedIds.contains(checkboxId), attributes)));
+                this.addCell(new Html(HTML.checkbox("id", checkboxId, selectedIds.contains(checkboxId), attributes)));
             } else {
                 attributes.add("class", "emptyCheckBox");
                 this.addCell(new Html(HTML.div()));
@@ -281,16 +290,16 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public Table addLine(String checkboxId, final String className, final Action defaultAction) {
-        return this.addLine(checkboxId, className, defaultAction, true);
+        return addLine(checkboxId, className, defaultAction, true);
     }
 
     public Table addCell(final AbstractComponent... components) {
-        getLastLine().append(new TableCell(components, this.columns.get(getLastLine().size()).getJsId().toString()));
+        getLastLine().append(new TableCell(components, columns.get(getLastLine().size()).getJsId().toString()));
         return this;
     }
 
     public Table addCell(final String text) {
-        final TableColumn column = this.columns.get(getLastLine().size());
+        final TableColumn column = columns.get(getLastLine().size());
 
         getLastLine().append(new TableCell(
                 ModifierEngine.modify(text, column.getOutputModifiers()),
@@ -300,14 +309,14 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public TableLine getLastLine() {
-        return this.lines.getLast();
+        return lines.getLast();
     }
 
     public TableColumn getLastColumn() {
-        if (this.lines.size() > 0) {
-            return this.columns.get(getLastLine().size());
+        if (lines.size() > 0) {
+            return columns.get(getLastLine().size());
         } else {
-            return this.columns.getLast();
+            return columns.getLast();
         }
     }
 
@@ -316,8 +325,8 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public Table resetLines() {
-        this.lines.empty();
-        this.lines = new ContainerStyled<TableLine>();
+        lines.empty();
+        lines = new ContainerStyled<TableLine>();
         return this;
     }
 
@@ -333,27 +342,27 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public void setPage(final int page) {
-        this.currentPage = page;
+        currentPage = page;
     }
 
     public int getNbResults() {
-        return this.nbResults;
+        return nbResults;
     }
 
     public int getNbPages() {
-        return Double.valueOf(Math.ceil(Integer.valueOf(this.nbResults).doubleValue() / Integer.valueOf(this.nbLinesByPage).doubleValue())).intValue();
+        return Double.valueOf(Math.ceil(Integer.valueOf(nbResults).doubleValue() / Integer.valueOf(nbLinesByPage).doubleValue())).intValue();
     }
 
     public int getNbLinesByPage() {
-        return this.nbLinesByPage;
+        return nbLinesByPage;
     }
 
     public int getPage() {
-        return this.currentPage;
+        return currentPage;
     }
 
     public void changePage(final int page) {
-        this.currentPage = page;
+        currentPage = page;
         refresh();
     }
 
@@ -363,25 +372,25 @@ public class Table extends AbstractTable implements Refreshable {
 
     @Override
     protected Element makeElement() {
-        this.rootElement = DOM.createDiv();
-        this.rootElement.addClassName("datatable");
-        this.rootElement.addClassName("table_view_" + this.defaultView.toString());
+        rootElement = DOM.createDiv();
+        rootElement.addClassName("datatable");
+        rootElement.addClassName("table_view_" + defaultView.toString());
 
-        this.rootElement.appendChild(makePager("pager_top"));
-        if (this.defaultView != VIEW_TYPE.FORM) {
-            this.rootElement.appendChild(makeGroupedActions());
+        rootElement.appendChild(makePager("pager_top"));
+        if (defaultView != VIEW_TYPE.FORM) {
+            rootElement.appendChild(makeGroupedActions());
         }
-        this.rootElement.appendChild(makeFilters());
-        this.rootElement.appendChild(makeTable());
-        this.rootElement.appendChild(makePager("pager_bottom"));
+        rootElement.appendChild(makeFilters());
+        rootElement.appendChild(makeTable());
+        rootElement.appendChild(makePager("pager_bottom"));
 
-        if (this.defaultView == VIEW_TYPE.FORM) {
-            this.rootElement.appendChild(makeGroupedActions());
+        if (defaultView == VIEW_TYPE.FORM) {
+            rootElement.appendChild(makeGroupedActions());
         }
 
         disableActionLinks();
 
-        return this.rootElement;
+        return rootElement;
     }
 
     public void updateHtml() {
@@ -394,51 +403,51 @@ public class Table extends AbstractTable implements Refreshable {
 
         updateTable();
         updatePager();
-        ViewController.updateUI(this.rootElement, true);
+        ViewController.updateUI(rootElement, true);
         // this.updateScript(this.rootElement);
     }
 
     private boolean isCurrentPageTooHigh(final int nbPages) {
-        return this.currentPage >= nbPages && nbPages > 0;
+        return currentPage >= nbPages && nbPages > 0;
     }
 
     private Element makeTable() {
 
         // TABLE
-        this.tableElement = DOM.createDiv();
-        this.tableElement.addClassName("table");
+        tableElement = DOM.createDiv();
+        tableElement.addClassName("table");
 
         // THEAD
         final Element header = DOM.createDiv();
         header.addClassName("thead");
-        this.columns.setRootTag("div", "tr");
-        header.appendChild(this.columns.getElement());
-        this.tableElement.appendChild(header);
+        columns.setRootTag("div", "tr");
+        header.appendChild(columns.getElement());
+        tableElement.appendChild(header);
 
         // TBODY
-        this.lines.setRootTag("div", "tbody");
+        lines.setRootTag("div", "tbody");
 
-        this.linesElement = this.lines.getElement();
-        this.tableElement.appendChild(this.linesElement);
+        linesElement = lines.getElement();
+        tableElement.appendChild(linesElement);
 
-        return this.tableElement;
+        return tableElement;
     }
 
     private Element makeFilters() {
 
-        final TableFilterText filter = new TableFilterText(_("Search"), _("Type to search"), "search", this.defaultSearch);
+        final TableFilterText filter = new TableFilterText(_("Search"), _("Type to search"), "search", defaultSearch);
         filter.setTable(this);
-        this.filters.prepend(filter);
+        filters.prepend(filter);
 
         final Element filtersArea = DOM.createDiv();
         filtersArea.addClassName("tablefilters");
 
-        this.filters.setRootTag("div", "tablefilters");
-        this.filters.setWrapTagName("div");
+        filters.setRootTag("div", "tablefilters");
+        filters.setWrapTagName("div");
 
-        final Element filtersElement = this.filters.getElement();
+        final Element filtersElement = filters.getElement();
 
-        if (!this.showSearch) {
+        if (!showSearch) {
             $(filtersElement.getChild(0)).hide();
             $(filtersElement).hide();
         }
@@ -447,20 +456,20 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private Element makeGroupedActions() {
-        this.groupedActions.setRootTag("div", "actions");
+        groupedActions.setRootTag("div", "actions");
 
-        return this.groupedActions.getElement();
+        return groupedActions.getElement();
     }
 
     private void updateTable() {
 
-        if (!this.saveCheckboxes) {
+        if (!saveCheckboxes) {
             clearSelectedIds();
         }
 
         disableActionLinks();
 
-        if (this.lines.size() == 0) {
+        if (lines.size() == 0) {
             addCheckAllCheckbox();
             addEmptyCssClass();
             replaceLinesElement(createEmptyLinesElement());
@@ -468,15 +477,15 @@ public class Table extends AbstractTable implements Refreshable {
             removeEmptyCssClass();
 
             // Refill header
-            this.columns.resetGeneration();
-            $(".thead", getElement()).empty().append(this.columns.getElement());
+            columns.resetGeneration();
+            $(".thead", getElement()).empty().append(columns.getElement());
             addCheckAllCheckbox();
 
             // Refill body
-            this.lines.setRootTag("div", "tbody");
-            this.tableElement.addClassName(String.valueOf(Random.nextInt()));
+            lines.setRootTag("div", "tbody");
+            tableElement.addClassName(String.valueOf(Random.nextInt()));
 
-            replaceLinesElement(this.lines.getElement());
+            replaceLinesElement(lines.getElement());
             addChangeEventHandler(getAllCheckboxes());
         }
     }
@@ -494,7 +503,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void replaceLinesElement(final Element linesElement) {
-        this.tableElement.replaceChild(linesElement, this.linesElement);
+        tableElement.replaceChild(linesElement, this.linesElement);
         this.linesElement = linesElement;
     }
 
@@ -508,7 +517,7 @@ public class Table extends AbstractTable implements Refreshable {
 
                     @Override
                     public boolean f(Event e) {
-                        Table.this.processEvent($(e));
+                        processEvent($(e));
                         return true;
                     }
                 });
@@ -538,11 +547,12 @@ public class Table extends AbstractTable implements Refreshable {
                     @Override
                     public void f(final Element e) {
                         Object checkedValue = $(e).prop("checked");
-                        Table.this.setCheckboxesValue(Table.this.getAllCheckboxes(), (Boolean) checkedValue, false);
+                        setCheckboxesValue(getAllCheckboxes(), (Boolean) checkedValue, false);
                     }
 
                 })).append(
                 $(HTML.label(_("All"), checkAllId)));
+
     }
 
     private void processEvent(final GQuery cb) {
@@ -577,9 +587,7 @@ public class Table extends AbstractTable implements Refreshable {
         if (labels.length() > 0) {
             labels.removeClass("checked");
         }
-        if (Table.this.selectedIds.contains(itemId)) {
-            Table.this.selectedIds.remove(itemId);
-        }
+        Table.this.selectedIds.remove(itemId);
         fireEvent(new ItemUncheckedEvent(Table.this.selectedIds, itemId));
     }
 
@@ -594,15 +602,15 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public HandlerRegistration addItemCheckedHandler(ItemCheckedHandler handler) {
-        return this.addHandler(handler, ItemCheckedEvent.TYPE);
+        return addHandler(handler, ItemCheckedEvent.TYPE);
     }
 
     public HandlerRegistration addItemUncheckedHandler(ItemUncheckedHandler handler) {
-        return this.addHandler(handler, ItemUncheckedEvent.TYPE);
+        return addHandler(handler, ItemUncheckedEvent.TYPE);
     }
 
     private void disableActionLinks() {
-        for (Link link : this.groupedActions.getComponents()) {
+        for (Link link : groupedActions.getComponents()) {
             if (!link.hasClass(ALWAYS_ENABLE_CLASS)) {
                 link.setEnabled(false);
             }
@@ -610,7 +618,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private void enableActionsLinks() {
-        for (Link link : this.groupedActions.getComponents()) {
+        for (Link link : groupedActions.getComponents()) {
             if (!link.hasClass(ALWAYS_ENABLE_CLASS)) {
                 link.setEnabled(true);
             }
@@ -622,19 +630,19 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private Element makePager(final String className) {
-        final Element pager = new Pager(this, this.currentPage + 1, this.nbResults, this.nbLinesByPage).addClass(className).getElement();
+        final Element pager = new Pager(this, currentPage + 1, nbResults, nbLinesByPage).addClass(className).getElement();
         $(pager).hide();
 
-        this.pagerElements.add(pager);
+        pagerElements.add(pager);
         return pager;
     }
 
     private void updatePager() {
-        for (int i = 0; i < this.pagerElements.size(); i++) {
-            final Element pager = new Pager(this, this.currentPage + 1, this.nbResults, this.nbLinesByPage).addClass(i == 0 ? "pager_top" : "pager_bottom")
+        for (int i = 0; i < pagerElements.size(); i++) {
+            final Element pager = new Pager(this, currentPage + 1, nbResults, nbLinesByPage).addClass(i == 0 ? "pager_top" : "pager_bottom")
                     .getElement();
-            this.pagerElements.get(i).getParentElement().replaceChild(pager, this.pagerElements.get(i));
-            this.pagerElements.set(i, pager);
+            pagerElements.get(i).getParentElement().replaceChild(pager, pagerElements.get(i));
+            pagerElements.set(i, pager);
         }
     }
 
@@ -661,15 +669,15 @@ public class Table extends AbstractTable implements Refreshable {
             link.addClass(ALWAYS_ENABLE_CLASS);
         }
         // Add the action
-        this.groupedActions.append(link);
+        groupedActions.append(link);
         return this;
     }
 
     private void ensureCheckboxesVisibility() {
         // Check if the CheckBoxes column already exists
         final JsId jsid = new JsId("checkboxes");
-        if (this.columns.get(jsid) == null) {
-            this.columns.prepend(new TableColumn(this, jsid, ""));
+        if (columns.get(jsid) == null) {
+            columns.prepend(new TableColumn(this, jsid, ""));
         }
     }
 
@@ -701,7 +709,7 @@ public class Table extends AbstractTable implements Refreshable {
      */
     @Deprecated
     public Table addGroupedAction(final JsId id, final String label, final String tooltip, final Action action, final boolean force) {
-        this.addGroupedAction(new ButtonAction("btn-" + id.toString(), label, tooltip, action), force);
+        addGroupedAction(new ButtonAction("btn-" + id.toString(), label, tooltip, action), force);
         return this;
     }
 
@@ -710,7 +718,7 @@ public class Table extends AbstractTable implements Refreshable {
      */
     public Table addAction(Link link) {
         link.addClass(ALWAYS_ENABLE_CLASS);
-        this.groupedActions.append(link);
+        groupedActions.append(link);
         return this;
     }
 
@@ -719,14 +727,14 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public boolean hasGroupedActions() {
-        return this.groupedActions.size() > 0;
+        return groupedActions.size() > 0;
     }
 
     /**
      * @return the groupedActions
      */
     public List<Link> getGroupedActions() {
-        return this.groupedActions.getComponents();
+        return groupedActions.getComponents();
     }
 
     private final List<String> selectedIds = new ArrayList<String>();
@@ -734,19 +742,19 @@ public class Table extends AbstractTable implements Refreshable {
     private boolean saveCheckboxes = false;
 
     public Table saveCheckboxes(final boolean save) {
-        this.saveCheckboxes = save;
+        saveCheckboxes = save;
         return this;
     }
 
     public boolean isSaveCheckboxes() {
-        return this.saveCheckboxes;
+        return saveCheckboxes;
     }
 
     /**
      * CLear checked lines memory and reset checkboxes
      */
     public void clearSelectedIds() {
-        this.selectedIds.clear();
+        selectedIds.clear();
         clearCheckboxes();
     }
 
@@ -758,7 +766,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public List<String> getSelectedIds() {
-        return this.selectedIds;
+        return selectedIds;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -770,15 +778,15 @@ public class Table extends AbstractTable implements Refreshable {
     private boolean itemIdOnRow = false;
 
     public Table resetFilters() {
-        this.filters.empty();
+        filters.empty();
         return this;
     }
 
     public Table setShowSearch(final boolean show) {
-        this.showSearch = show;
+        showSearch = show;
 
         if (isGenerated()) {
-            final GQuery filter = $(".tablefilters > div:has(input[name=search])", this.rootElement);
+            final GQuery filter = $(".tablefilters > div:has(input[name=search])", rootElement);
             if (!show) {
                 filter.hide();
             } else {
@@ -795,7 +803,7 @@ public class Table extends AbstractTable implements Refreshable {
     public Table addTextFilter(final String label, final String tooltip, final String name, final String defaultValue) {
         final TableFilterText filter = new TableFilterText(label, tooltip, name, defaultValue);
         filter.setTable(this);
-        this.filters.append(filter);
+        filters.append(filter);
 
         return this;
     }
@@ -813,7 +821,7 @@ public class Table extends AbstractTable implements Refreshable {
             select.addOption(entry.getKey(), entry.getValue(), entry.getValue().equals(defaultValue));
         }
 
-        this.filters.append(select);
+        filters.append(select);
         return this;
     }
 
@@ -826,7 +834,7 @@ public class Table extends AbstractTable implements Refreshable {
         select.setTable(this);
         select.setFiller(filler);
 
-        this.filters.append(select);
+        filters.append(select);
         return this;
     }
 
@@ -834,7 +842,7 @@ public class Table extends AbstractTable implements Refreshable {
 
         final TableFilterHidden hidden = new TableFilterHidden(name, value);
         hidden.setTable(this);
-        this.filters.append(hidden);
+        filters.append(hidden);
         return this;
     }
 
@@ -901,10 +909,11 @@ public class Table extends AbstractTable implements Refreshable {
         }
 
         return search;
+
     }
 
     public Table setSearch(final String query) {
-        this.defaultSearch = query;
+        defaultSearch = query;
 
         if (isGenerated()) {
             $(".tablefilters input[name=search]:not(.empty)", getElement()).val(this.defaultSearch);
@@ -932,7 +941,7 @@ public class Table extends AbstractTable implements Refreshable {
     public String getOrder() {
         // TODO call columns
 
-        return this.order;
+        return order;
     }
 
     public Table setOrder(final String sortName) {
@@ -940,11 +949,11 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     public Table setOrder(final String sortName, final boolean sortAscending) {
-        this.order = sortName + (sortAscending ? " ASC" : " DESC");
+        order = sortName + (sortAscending ? " ASC" : " DESC");
 
         if (isGenerated()) {
-            for (int i = 0; i < this.columns.size(); i++) {
-                this.columns.get(i).setSorted(false);
+            for (int i = 0; i < columns.size(); i++) {
+                columns.get(i).setSorted(false);
             }
 
             refresh();
@@ -963,25 +972,25 @@ public class Table extends AbstractTable implements Refreshable {
      */
     public final void setRefreshFiller(final Filler<? extends AbstractTable> refreshFiller) {
         this.refreshFiller = refreshFiller;
-        if (this.refreshEvery != null) {
-            this.refreshFiller.setRepeatEvery(this.refreshEvery);
+        if (refreshEvery != null) {
+            this.refreshFiller.setRepeatEvery(refreshEvery);
         }
     }
 
     public final void setSelectLineOnClick(boolean value) {
-        this.selectLineOnClick = value;
+        selectLineOnClick = value;
     }
 
     @Override
     public void refresh() {
-        if (this.refreshFiller != null) {
-            this.refreshFiller.run();
+        if (refreshFiller != null) {
+            refreshFiller.run();
         }
-        this.runFillers();
+        runFillers();
     }
 
     public void setView(final VIEW_TYPE view) {
-        this.defaultView = view;
+        defaultView = view;
         saveCheckboxes(view == VIEW_TYPE.FORM);
     }
 
@@ -1005,19 +1014,19 @@ public class Table extends AbstractTable implements Refreshable {
      * @param milliseconds
      */
     public void setRefreshEvery(final int milliseconds) {
-        this.refreshEvery = milliseconds;
+        refreshEvery = milliseconds;
 
-        if (this.refreshFiller != null) {
-            this.refreshFiller.setRepeatEvery(milliseconds);
+        if (refreshFiller != null) {
+            refreshFiller.setRepeatEvery(milliseconds);
         }
     }
 
     public int getLinesNumber() {
-        return this.lines.size();
+        return lines.size();
     }
 
     private GQuery getCheckbox(String checkboxId) {
-        return $(".td_checkboxes input[value=\"" + checkboxId + "\"]", this.tableElement);
+        return $(".td_checkboxes input[value=\"" + checkboxId + "\"]", tableElement);
     }
 
     private void setCheckboxesValue(GQuery checkboxes, boolean value, boolean silent) {
@@ -1039,7 +1048,7 @@ public class Table extends AbstractTable implements Refreshable {
     }
 
     private boolean isCheckable(GQuery checkboxes) {
-        return checkboxes != null && checkboxes.length() > 0 && checkboxes.is(":checkbox");
+        return checkboxes != null && checkboxes.length() > 0 && checkboxes.is("input[type='checkbox']");
     }
 
     private native void fireCssLabelEvent(Element e)

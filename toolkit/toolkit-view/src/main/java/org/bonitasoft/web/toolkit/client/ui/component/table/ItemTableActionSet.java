@@ -16,6 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.table;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.HasCounters;
@@ -24,12 +30,6 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.popup.ItemDeletePopupAction;
 import org.bonitasoft.web.toolkit.client.ui.utils.Url;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Firstname Lastname
@@ -53,14 +53,14 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
 
     /**
      * Add an action
-     *
+     * 
      * @param label
      *            The text to display on the component
      * @param tooltip
      *            The tooltip that will help to describe the action
      * @param action
      *            The action to run.
-     * @deprecated preferable to pass an object to a method instead of a lot of parameters.<br/>
+     * @deprecated preferable to pass an object to a method instead of a lot of parameters.<br/> 
      *  use {@link #addAction(ItemTableAction)}
      */
     @Deprecated
@@ -70,7 +70,7 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
 
     /**
      * Add an action
-     *
+     * 
      * @param jsid
      *            The jsid to set on the component displaying the action
      * @param label
@@ -79,7 +79,7 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
      *            The tooltip that will help to describe the action
      * @param action
      *            The action to run.
-     * @deprecated preferable to pass an object to a method instead of a lot of parameters. Furthermore param jsid is not used<br/>
+     * @deprecated preferable to pass an object to a method instead of a lot of parameters. Furthermore param jsid is not used<br/> 
      *  use {@link #addAction(ItemTableAction)}
      */
     @Deprecated
@@ -89,7 +89,7 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
 
     /**
      * Add an action
-     *
+     * 
      * @param label
      *            The text to display on the component
      * @param tooltip
@@ -98,7 +98,7 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
      *            The action to run.
      * @param setAsDefault
      *            Define this action as the action to call while clicking on the line itself
-     * @deprecated preferable to pass an object to a method instead of a lot of parameters.<br/>
+     * @deprecated preferable to pass an object to a method instead of a lot of parameters.<br/> 
      *  use {@link #addAction(ItemTableAction, boolean)}
      */
     @Deprecated
@@ -108,7 +108,7 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
 
     /**
      * Add an action
-     *
+     * 
      * @param jsid
      *            The jsid to set on the component displaying the action
      * @param label
@@ -119,8 +119,8 @@ public abstract class ItemTableActionSet<T extends IItem> implements HasCounters
      *            The action to run.
      * @param setAsDefault
      *            Define this action as the action to call while clicking on the line itself
-     *
-     * @deprecated preferable to pass an object to a method instead of a lot of parameters. Furthermore param jsid is not used<br/>
+     *            
+     * @deprecated preferable to pass an object to a method instead of a lot of parameters. Furthermore param jsid is not used<br/> 
      *  use {@link #addAction(ItemTableAction, boolean)}
      */
     @Deprecated

@@ -27,7 +27,7 @@
 					white-space: nowrap;
 					.boxSizing();
 					&.td_{
-						&displaydescription  {
+						&displaydescription, &displayDescription{
 							top: @processList-description-top;
 							left: @processListAdmin-description-left;
 							color: @processList-description-textColor;
@@ -36,6 +36,7 @@
 							width: @processListAdmin-description-width;
 							text-overflow: ellipsis;
 							white-space: nowrap;
+							height: 1.25em;
 						}
 						&version {
 							width: @processListAdmin-version-width;
@@ -93,7 +94,7 @@
 					white-space: nowrap;
 					.boxSizing();
 					&.td_{
-						&displaydescription  {
+						&displaydescription, &displayDescription {
 							top: @processList-description-top;
 							left: @processListUser-description-left;
 							color: @processList-description-textColor;
@@ -102,6 +103,7 @@
 							width: @processListUser-description-width;
 							text-overflow: ellipsis;
 							white-space: nowrap;
+							height: 1.25em;
 						}
 						&version {
 							width: @processListUser-version-width;
