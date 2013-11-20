@@ -21,5 +21,15 @@
 
 	<!-- Specify the app entry point class. -->
 	<entry-point class='org.bonitasoft.console.client.ConsoleClient' />
-	
+
+	<!-- Detect whether querySelectorAll is available -->
+	<define-property name="selectorCapability" values="native,js" />
+	<property-provider name="selectorCapability">
+       <![CDATA[
+         return !/_force_no_native/.test(document.location.search) && 
+               document.querySelectorAll && 
+                /native/.test(String(document.querySelectorAll)) ? "native" : "js"; 
+      ]]> 
+	</property-provider>
+
 </module>

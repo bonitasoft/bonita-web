@@ -29,12 +29,19 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  */
 public class UserDefinition extends ItemDefinition<UserItem> {
 
-    public static final String TOKEN = "user";
-    private static final String API_URL = "../API/identity/user";
-
+    /**
+     * Singleton
+     */
     public static final UserDefinition get() {
         return (UserDefinition) Definitions.get(TOKEN);
     }
+
+    public static final String TOKEN = "user";
+
+    /**
+     * the URL of user resource
+     */
+    private static final String API_URL = "../API/identity/user";
 
     @Override
     public String defineToken() {

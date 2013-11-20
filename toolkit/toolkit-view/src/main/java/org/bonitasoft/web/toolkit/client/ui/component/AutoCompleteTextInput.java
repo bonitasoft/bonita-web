@@ -18,7 +18,6 @@ package org.bonitasoft.web.toolkit.client.ui.component;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -76,8 +75,8 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     private String valueAttributeName = null;
 
     private Filler<AutoCompleteTextInput> refreshFiller;
-    
-    private HashMap<String, String> searchFilters = new HashMap<String, String>();
+
+    private final HashMap<String, String> searchFilters = new HashMap<String, String>();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
@@ -123,7 +122,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     }
 
     public AutoCompleteTextInput setValue(final String label, final String value) {
-        this.setValue(this.inputElement, label, value);
+        this.setValue(inputElement, label, value);
         return this;
     }
 
@@ -132,16 +131,16 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
         // If the label is not passed, we call the API to get the corresponding label;
         APIID apiid = APIID.makeAPIID(value);
         if (apiid != null) {
-            this.itemDefinition.getAPICaller().get(apiid,
+            itemDefinition.getAPICaller().get(apiid,
                     new APICallback() {
 
                         @Override
                         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                            final IItem item = JSonItemReader.parseItem(response, AutoCompleteTextInput.this.itemDefinition);
+                            final IItem item = JSonItemReader.parseItem(response, itemDefinition);
                             if (item == null) {
                                 return;
                             }
-                            AutoCompleteTextInput.this.setValue(AutoCompleteTextInput.this.labelTemplate.read(item), value);
+                            AutoCompleteTextInput.this.setValue(labelTemplate.read(item), value);
                         }
                     });
         }
@@ -149,7 +148,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     }
 
     public String getValue() {
-        return this.getValue(this.inputElement);
+        return this.getValue(inputElement);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,12 +156,12 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public AutoCompleteTextInput clearResults() {
-        this.dropdown.empty();
+        dropdown.empty();
         return this;
     }
 
     public AutoCompleteTextInput setResults(final java.util.List<IItem> items) {
-        this.dropdown.empty();
+        dropdown.empty();
         addResults(items);
 
         return this;
@@ -173,17 +172,17 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
             addResult(item);
         }
 
-        this.dropdown.open();
+        dropdown.open();
 
         return this;
     }
 
     public AutoCompleteTextInput addResult(final IItem item) {
 
-        final String label = this.labelTemplate.read(item);
-        final String value = item.getAttributeValue(this.valueAttributeName);
+        final String label = labelTemplate.read(item);
+        final String value = item.getAttributeValue(valueAttributeName);
 
-        this.dropdown.append(
+        dropdown.append(
                 new DropDownItem(label, label,
                         new Action() {
 
@@ -200,7 +199,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
 
     private void onItemSelected(final String label, final String value) {
         setValue(label, value);
-        this.dropdown.close();
+        dropdown.close();
         fireEvent(new InputCompleteEvent(value));
     }
 
@@ -215,14 +214,14 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
 
         @Override
         protected void getData(final APICallback callback) {
-            final String search = $(AutoCompleteTextInput.this.inputElement).val();
+            final String search = $(inputElement).val();
             if (search.length() > 0) {
-                AutoCompleteTextInput.this.itemDefinition.getAPICaller().search(
+                itemDefinition.getAPICaller().search(
                         0,
-                        AutoCompleteTextInput.this.nbResults,
-                        AutoCompleteTextInput.this.labelTemplate instanceof CompoundAttributeReader
-                                ? APICaller.orderArrayToString(((CompoundAttributeReader) AutoCompleteTextInput.this.labelTemplate).getAttributes())
-                                : AutoCompleteTextInput.this.labelTemplate.getLeadAttribute(),
+                        nbResults,
+                        labelTemplate instanceof CompoundAttributeReader
+                                ? APICaller.orderArrayToString(((CompoundAttributeReader) labelTemplate).getAttributes())
+                                : labelTemplate.getLeadAttribute(),
                         search,
                         searchFilters,
                         callback
@@ -232,20 +231,20 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
 
         @Override
         protected void setData(final String json, final Map<String, String> headers) {
-            final java.util.List<IItem> items = JSonItemReader.parseItems(json, AutoCompleteTextInput.this.itemDefinition);
+            final java.util.List<IItem> items = JSonItemReader.parseItems(json, itemDefinition);
 
             setResults(items);
         }
     }
 
     private void initFiller() {
-        this.refreshFiller = new RefreshFiller();
+        refreshFiller = new RefreshFiller();
     }
 
     @Override
     public void refresh() {
-        this.refreshFiller.run();
-        this.dropdown.open();
+        refreshFiller.run();
+        dropdown.open();
     }
 
     private native void setValue(Element e, String label, String value)
@@ -259,7 +258,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     }-*/;
 
     private void resetValue() {
-        this.resetValue(this.inputElement);
+        this.resetValue(inputElement);
     }
 
     private native void reset(Element e)
@@ -268,8 +267,8 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     }-*/;
 
     private void reset() {
-        this.dropdown.close();
-        this.reset(this.inputElement);
+        dropdown.close();
+        this.reset(inputElement);
     }
 
     private native String getValue(Element e)
@@ -281,7 +280,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
 
     private void setEvents() {
 
-        final GQuery input = $(this.inputElement);
+        final GQuery input = $(inputElement);
 
         // ON TEXT CHANGE
         input.keypress(new Function() {
@@ -339,17 +338,28 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
                     t.cancel();
                     input.removeData(AUTOCOMPLETE_ONCHANGE_TIMER);
                 }
-
-                if (!$(AutoCompleteTextInput.this.inputElement).is(".completed")
-                        && $(AutoCompleteTextInput.this.dropdown.getElement()).find(":focus").size() == 0) {
+                boolean isFocused = childrenFocused(dropdown.getElement());
+                // && $(AutoCompleteTextInput.this.dropdown.getElement()).find(":focus").size() == 0) {
+                if (!$(inputElement).is(".completed")
+                        && !isFocused) {
 
                     AutoCompleteTextInput.this.reset();
-                    AutoCompleteTextInput.this.dropdown.close();
+                    dropdown.close();
                 }
             }
 
         });
     }
+
+    private native boolean childrenFocused(Element e)
+    /*-{
+        return $wnd.$(e).children(":focus").size() >0;
+    }-*/;
+
+    private native boolean childrenActived(Element e)
+    /*-{
+        return $wnd.$(e).children(":active").size() >0;
+    }-*/;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // HTML GENERATION
@@ -359,19 +369,19 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
     protected java.util.List<Element> makeElements() {
         final LinkedList<Element> elements = new LinkedList<Element>();
 
-        this.inputElement = XML.makeElement(HTML.inputText(
-                this.jsid.toString(),
+        inputElement = XML.makeElement(HTML.inputText(
+                jsid.toString(),
                 new HTMLClass("delegateinput")
                         .addClass("autocomplete")
                         .add("autocomplete", "off")));
 
         setEvents();
 
-        this.dropdown.addClass("autocomplete");
+        dropdown.addClass("autocomplete");
 
-        elements.add(this.inputElement);
-        elements.add(this.dropdown.getElement());
-        this.dropdown.close();
+        elements.add(inputElement);
+        elements.add(dropdown.getElement());
+        dropdown.close();
 
         initFiller();
 

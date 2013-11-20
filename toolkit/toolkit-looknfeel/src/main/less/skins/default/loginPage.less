@@ -7,6 +7,7 @@
 		margin-bottom: 0 - ((@loginPage-formContainer-height + @header-login-height + @header-menu-height)  / 2);
 	}
 	#LoginHeader{
+		position: relative;
 		.verticalGradient(@header-menu-gradientColor1, @header-menu-gradientPosition1, @header-menu-gradientColor2, @header-menu-gradientPosition2);
 		padding: @loginPage-title-padding;
 		h1{
@@ -47,7 +48,6 @@
 			width: @loginPage-logo-width;
 			height: @loginPage-logo-height;
 			.bgLeft(@loginPage-logo-bg);
-			
 			float: left;
 		}
 		
@@ -69,25 +69,33 @@
 			float: left;
 			.formentry{
 				.label{
+					position:relative;
+					.hideText(); 
+					font-size: 100%; /* only for ie8 - show labels */ //TODO check this rule
+					
 					label{
 						.hideText();
 						color: @loginPage-form-label-color;
 					}
 				}
 				.input{
+					position:relative;
 					input[type=text],input[type=password]{
+						line-height: @inputHeight;
 						border: @loginPage-form-input-border;
 						width: 100%;
 						.boxSizing();
 						padding: @loginPage-form-input-padding;
 						.borderRadius(@loginPage-form-input-radius);
-						//.boxShadowInner(@loginPage-form-input-innerShadowX, @loginPage-form-input-innerShadowY, @loginPage-form-input-innerShadowBlur, @loginPage-form-input-innerShadowColor);
+						position: relative;
 					}
 					#password{
-						.bgRight(@loginPage-form-input-password-bg);
+						.bg(@loginPage-form-input-password-bg, no-repeat, white, right, center,"");//TODO check this rule
+						//.bgRight(@loginPage-form-input-password-bg);
 					}
 					#username{
-						.bgRight(@loginPage-form-input-username-bg);
+						.bg(@loginPage-form-input-username-bg, no-repeat, white, right, center,"");//TODO check this rule
+						//.bgRight(@loginPage-form-input-username-bg);
 					}
 				}
 				padding: @loginPage-form-formentry-padding;
@@ -96,7 +104,7 @@
 				margin: 0;
 				text-align: @loginPage-form-formactions-textAlign;
 				button, input[type="submit"], input[type="button"], a.button{
-					
+					position: relative;
 					.loginButton(@loginPage-form-formactions-button-bgColor);
 					
 				}

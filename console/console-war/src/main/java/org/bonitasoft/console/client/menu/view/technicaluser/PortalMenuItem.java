@@ -18,7 +18,7 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.admin.profile.view.ListProfilePage;
+import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 
@@ -31,7 +31,7 @@ public class PortalMenuItem extends MenuFolder {
 
     public PortalMenuItem() {
         super(_("Configuration"));
-        addMenuItem(new MenuLink(_("User rights"), _("Show all profiles of portal"), ListProfilePage.TOKEN));
+        addMenuItem(new MenuLink(_("User rights"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
 }

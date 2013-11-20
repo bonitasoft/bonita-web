@@ -37,7 +37,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
-        PRIVILEGES.add(ListProfilePage.TOKEN);
+        PRIVILEGES.add(ProfileListingPage.TOKEN);
     }
 
     public ProfileMoreDetailsPage() {

@@ -1,12 +1,12 @@
 .fontSize(@pFontSize){
 	//@calcValue: ;
-	font-size: percentage(@pFontSize/@skinFontSize);
+	font-size: percentage(@pFontSize / @skinFontSize);
 }
 
 .revertfontSize(@pFontSize){
 	font-size: percentage((@pFontSize - 6px)/@skinFontSize);
 	//@calcValue: percentage(@pFontSize/@skinFontSize);
-	//@calcValueFinal: 1 - (@calcValue/100);
+	//@calcValueFinal: 1 -(@calcValue/100);
 	//font-size: percentage(@calcValueFinal);
 	//font-size: 100% - @calcValue; 
 }
@@ -20,27 +20,29 @@
 	color: @txtColor;
 	span{
 		color: @txtColor;
-	}	
+	}
 	padding: @button-padding;
 	outline-color: lighten(@btnColor, 10%);
 	min-width: @button-minWidth;
 	border: @button-border;
 	border-color: darken(@btnColor, 15%);
 	text-transform: uppercase;
-	font-family: "Signika-Semibold";
+	font-family: @skinFont;
 	.stroke(1px, @strokeColor);
 	.fontSize(@button-fontSize);
 	.borderRadius(@button-radius);
 	.button(@button-height);
 	.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor, 100%);
-	.setEnable();
+	.pointerAsLink();
 	.boxShadow(@button-shadowX, @button-shadowY, @button-shadowBlur, @button-shadowColor);
-	+a{
-		margin-left: @button-marginBetween; 
+	+ .btn, +css3-container +.btn{
+		margin-left: @button-marginBetween;
 	}
+	overflow: hidden;
+	zoom: 1;
 }
 
-.dynamicStroke (@txtColor) when (lightness(@txtColor) < 50%) {
+.dynamicStroke(@txtColor) when(lightness(@txtColor) < 50%){
 	.stroke(1px, lighten(@txtColor, 100% - lightness(@txtColor)));
 }
 
@@ -55,12 +57,12 @@
 	&:hover{
 		border: @button-pager-borderHover;
 	}
-	&.disable {
+	&.disable{
 		border: @button-pager-border-disable;
-		.bg( @btnImageDisable, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
+		.bg(@btnImageDisable, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
 		cursor: default;
 	}
-	+ a{
+	+ a, + css3-container + a{
 		margin: @button-pager-marginBetween;
 	}
 }
@@ -70,7 +72,7 @@
 		position: absolute;
 		content: "";
 		display: block;
-		left:0;
+		left: 0;
 		top: 0;
 		height: 100%;
 		width: @addbutton-bgWidth;
@@ -83,7 +85,7 @@
 	text-align: @addbutton-txtAlign !important;
 }
 
-.specialButton(@btnColor, @txtColor: #fff, @strokeTxtColor:transparent){
+.specialButton(@btnColor, @txtColor: #fff, @strokeTxtColor: transparent){
 	text-transform: uppercase;
 	color: @txtColor;
 	padding: @button-padding;
@@ -94,7 +96,7 @@
 	.fontSize(@button-fontSize);
 	.borderRadius(@button-radius);
 	.button(@button-height);
-	.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor ,100%);
+	.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor, 100%);
 	.stroke(1px, @strokeTxtColor);
 	position: relative;
 }
@@ -120,8 +122,8 @@
 	border-color: darken(@btnColor, 2%);
 	.fontSize(@button-fontSize);
 	.button(@loginPage-form-formactions-button-height);
-	.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor ,100%);
-	.boxShadowInner(@loginPage-form-formactions-button-shadowInnerX, @loginPage-form-formactions-button-shadowInnerY, @loginPage-form-formactions-button-shadowInnerBlur, lighten(desaturate(@btnColor,25%), 29%));
+	.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor, 100%);
+	.boxShadowInner(@loginPage-form-formactions-button-shadowInnerX, @loginPage-form-formactions-button-shadowInnerY, @loginPage-form-formactions-button-shadowInnerBlur, lighten(desaturate(@btnColor, 25%), 29%));
 }
 
 /* filters */
@@ -135,18 +137,16 @@
 	.bgFilter(@bg, @bgColor, @bgLeft);
 }
 .bgHoverFilter(@bg, @bgLeft: @filtersPanel-filters-currentLine-backgroundLeft, @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -moz-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -ms-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, linear-gradient(to bottom, @c1 @p1, @c2 @p2) !important;
+	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop},-webkit-linear-gradient(top, @{c1} @{p1}, @{c2} @{p2})");
+	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop},-moz-linear-gradient(top, @{c1} @{p1}, @{c2} @{p2})");
+	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop}, -ms-linear-gradient(top, @{c1} @{p1}, @{c2} @{p2})");
+	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop}, linear-gradient(to bottom, @{c1} @{p1}, @{c2} @{p2})");
+	.bgPie(@bg, ~"no-repeat @{bgLeft} @{bgTop}, linear-gradient(to bottom, @{c1} @{p1}, @{c2} @{p2})");
 }
 .bgHoverSubFilter(@bg, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft,  @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
-    padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
+	padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
 	.fontSize(@filtersPanel-subfilters-fontSize);
-	background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -webkit-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -moz-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, -ms-linear-gradient(top, @c1 @p1, @c2 @p2) !important;
-    background: url("../../tools/../skins/@{skinpath}/images/@{bg}") no-repeat  @bgLeft @bgTop, linear-gradient(to bottom, @c1 @p1, @c2 @p2) !important;
+	.bgHoverFilter(@bg, @bgLeft, @bgTop, @c1, @p1, @c2, @p2);
 }
 .bgCurrentFilter(@bg, @bgColor: @filtersPanel-filterHover-bgColor){
 	.bgFilter(@bg,@bgColor);
@@ -158,35 +158,35 @@
 /* avatar sizes */
 
 
-.iconMixin(@context) when (@context = list){
+.iconMixin(@context) when(@context=list){
 	.iconMaxSize(@tablesPanel-table-icon-maxHeight, @tablesPanel-table-icon-maxWidth);
 }
 
-.iconMixin(@context) when (@context = details){
+.iconMixin(@context) when(@context=details){
 	.iconMaxSize(@detailsPanel-table-icon-maxHeight, @detailsPanel-table-icon-maxWidth);
 }
 
-.iconMixin(@context) when (@context = moreDetails){
+.iconMixin(@context) when(@context=moreDetails){
 	.iconMaxSize(@moreDetails-table-icon-maxHeight, @moreDetails-table-icon-maxWidth);
 }
 
-.iconMixin(@context) when (@context = popup){
+.iconMixin(@context) when(@context=popup){
 	.iconMaxSize(@popup-table-icon-maxHeight, @popup-table-icon-maxWidth);
 }
 
-.iconMixin(@context) when (@context = userAvatar){
+.iconMixin(@context) when(@context=userAvatar){
 	.iconMaxSize(@userAvatar-table-icon-maxHeight, @userAvatar-table-icon-maxWidth);
 }
 
-.iconMaxSize(@max-height, @max-width) {
-	img {
+.iconMaxSize(@max-height, @max-width){
+	img{
 		max-height: @max-height;
 		max-width: @max-width;
-	}	
+	}
 }
 
 
-/* more details mixins which are used in specific views (ej. report)*/
+/* more details mixins which are used in specific views(ej. report)*/
 .moreDetails_title(){
 	overflow: hidden;
 	float: @moreDetails-metadatas-title-float;
@@ -204,10 +204,14 @@
 	.boxSizing();
 	text-overflow: ellipsis;
 	word-wrap: break-word;
-	padding-bottom:  @moreDetails-metadatas-description-padding-bottom;
+	padding-bottom: @moreDetails-metadatas-description-padding-bottom;
 }
+
 .label(){
 	color: @mainAccentColor;
+}
+label{
+	.label();
 }
 .moreDetails_section_title{
 	padding: @moreDetails-title-padding;
@@ -219,9 +223,10 @@
 	display: table-header-group;
 	float: none;
 	width: 100%;
-	color: @table-header-color; 
+	color: @table-header-color;
 	border-collapse: separate;
 	.tr{
+		position: relative;
 		display: table-row;
 		float: none;
 		.verticalGradient(@table-header-gradientColor1, @table-header-gradientPosition1, @table-header-gradientColor2, @table-header-gradientPosition2);
@@ -235,7 +240,7 @@
 			float: none;
 			&:before{
 				border-left: @table-header-cell-borderLeft;
-				margin: @table-header-cell-border-top 0 0 (0 - @table-header-cell-paddingX);
+				margin: @table-header-cell-border-top 0 0(0 - @table-header-cell-paddingX);
 				content: "";
 				display: block;
 				width: 0;
@@ -246,11 +251,11 @@
 				display: none;
 			}
 			&_1{
-				.borderRadius(@defaultRadius, 0px, 0px, 0px);			
+				.borderRadius(@defaultRadius, 0px, 0px, 0px);
 			}
 			&_last{
 				.borderRadius(0px, @defaultRadius, 0px, 0px);
-			}						
+			}
 		}
 	}
 }
@@ -259,16 +264,19 @@
 	width: 100%;
 	display: table-row;
 	float: none;
+	position: relative;
+	background: #fff;
 	.td{
+		position: relative;
 		float: none;
 		display: table-cell;
 		border: @table-cell-border;
 		padding: @table-cell-padding;
 		vertical-align: middle;
-		&.td_icon {
+		&.td_icon{
 			.iconMixin(list);
 		}
-		&.td_actions {
+		&.td_actions{
 			a{
 				margin-right: 8px;
 				text-decoration: underline;
@@ -278,9 +286,11 @@
 	&_last{
 		.td{
 			&_1{
+				position: relative;
 				.borderRadius(0px, 0px, 0px, @defaultRadius);
 			}
 			&_last{
+				position: relative;
 				.borderRadius(0px, 0px, @defaultRadius, 0px);
 			}
 		}

@@ -6,7 +6,7 @@
 		.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
 		display: block;
 		padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
-		min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom ;
+		min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
         &.performed{
             .bgFilter(@filtersPanel-filters-bgPerformed);
             &:hover{
@@ -50,8 +50,9 @@
 			position: @filtersPanel-actions-position;
 			top: @filtersPanel-actions-positionTop;
 			left: @filtersPanel-actions-positionLeft;
-			a {
+			a{
 				.addButton(@filtersPanel-actions-addButton-bgColor, @filtersPanel-actions-addButton-txtColor);
+				max-width: @filtersPanel-width -(@filtersPanel-padding-left*2) -(@filtersPanel-actions-positionLeft*2) -(@button-paddingX*2);
 			}
 		}
 	}
@@ -75,15 +76,15 @@
 				.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
 				display: block;
 				padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
-				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom ;
-				
+				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+				position: relative;
                 &.enabledprocesses{
                     .bgFilter(@filtersPanel-filters-bgAvailable);
                     &:hover{
                         .bgHoverFilter(@filtersPanel-filters-bgAvailable);
                     }
                 }
-				&.available {
+				&.available{
 					.bgFilter(@filtersPanel-filters-users-tasks-todo);
                     &:hover{
                         .bgHoverFilter(@filtersPanel-filters-users-tasks-todo);
@@ -101,13 +102,13 @@
                         .bgHoverFilter(@filtersPanel-filters-bgUnassigned);
                     }
 				}
-				&.resolvedprocesses {
+				&.resolvedprocesses{
 					.bgSubFilter("filters-resolved.png");
                     &:hover{
                         .bgHoverSubFilter("filters-resolved.png");
                     }
 				}
-				&.unresolvedprocesses {
+				&.unresolvedprocesses{
 					.bgSubFilter("filters-unresolved.png");
                     &:hover{
                         .bgHoverSubFilter("filters-unresolved.png");
@@ -149,7 +150,7 @@
                         .bgHoverFilter(@filtersPanel-filters-bgArchived);
                     }
 				}
-				&.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all {
+				&.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all{
 					.bgFilter(@filtersPanel-filters-bgAll);
                     &:hover{
                         .bgHoverFilter(@filtersPanel-filters-bgAll);
@@ -181,7 +182,7 @@
 				}
 				&.enabledusers{
                     .bgFilter("filters-user-active.png");
-                    &:hover{
+				&:hover{
                         .bgHoverFilter("filters-user-active.png");
                     }
                 }
@@ -192,23 +193,23 @@
                     }
                 }
 				&:hover{
-					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1,@header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
+					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1, @header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
 			}
 			a.current{
                 &.enabledprocesses{
                     .bgCurrentFilter(@filtersPanel-filters-bgAvailableSelected);
                 }
-				&.available {
+				&.available{
 					.bgCurrentFilter(@filtersPanel-filters-users-tasks-todo-selected);
 				}
 				&.disabledprocesses{
 					.bgCurrentFilter(@filtersPanel-filters-bgUnassignedSelected);
 				}
-				&.resolvedprocesses {
+				&.resolvedprocesses{
 					.bgCurrentSubFilter("filters-resolved-selected.png");
 				}
-				&.unresolvedprocesses {
+				&.unresolvedprocesses{
 					.bgCurrentSubFilter("filters-unresolved-selected.png");
 				}
 				&.assigned{
@@ -257,7 +258,9 @@
 					background: @filtersPanel-filterHover-bgColor;
 				}
 			}
-			.body a.current, .body a.current:hover{
+			.body{
+				position: relative;
+				a.current, .body a.current:hover{
 				position: relative;
 				background-color: @filtersPanel-filtersCurrent-background !important;
 				color: @filtersPanel-filtersCurrent-link-textColor;
@@ -272,6 +275,8 @@
 					margin-right: 0px;
 					height: 100%;
 					z-index: @zIndex-currentArrow;
+				}
+			
 				}
 			}
 		}
@@ -295,7 +300,7 @@
 			position: relative;
 			a{
 				img{
-					position : @filtersPanel-filters-filtersResource-linkImage-position;
+					position: @filtersPanel-filters-filtersResource-linkImage-position;
 					display: @filtersPanel-filters-filtersResource-linkImage-display;
 					margin: @filtersPanel-filters-filtersResource-linkImage-margin;
 					width: @filtersPanel-filters-filtersResource-linkImage-width;

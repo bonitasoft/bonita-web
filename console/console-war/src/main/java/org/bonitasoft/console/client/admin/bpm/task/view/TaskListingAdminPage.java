@@ -99,13 +99,13 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     }
 
     private ItemListingFilter humanFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Human"), _("Tasks "), TABLE_HUMAN_TASK)
-                .addFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_READY);
+        return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Human"), _("Tasks "), TABLE_HUMAN_TASK).addFilter(TaskItem.ATTRIBUTE_STATE,
+                TaskItem.VALUE_STATE_READY);
     }
 
     private ItemListingFilter failedFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_FAILED, _("Failed"), _("Tasks "), TABLE_ALL)
-                .addFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_FAILED);
+        return new ItemListingFilter(FILTER_PRIMARY_FAILED, _("Failed"), _("Tasks "), TABLE_ALL).addFilter(TaskItem.ATTRIBUTE_STATE,
+                TaskItem.VALUE_STATE_FAILED);
     }
 
     private ItemListingFilter performedFilter() {
@@ -139,8 +139,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     }
 
     private ItemListingTable createAllListingTable() {
-        return new ItemListingTable(new JsId(TABLE_ALL), _("All"),
-                new ItemTable(FlowNodeDefinition.get())
+        return new ItemListingTable(new JsId(TABLE_ALL), _("All"), new ItemTable(FlowNodeDefinition.get())
 
                         // columns configuration
                         .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
@@ -154,8 +153,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                                 new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
-                ,
-                new TaskQuickDetailsAdminPage());
+                ,new TaskQuickDetailsAdminPage());
     }
 
     private ItemListingTable createHumanTaskListingTable() {
@@ -172,9 +170,8 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         // Grouped actions
                         .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
                         .addGroupedAction(new JsId("unassign"), _("Unassign"), _("Unassign this task. Other allowed users will see it"),
-                                new TaskRelaseAction())
-                        .addAttributeToCheckForGroupedActions(HumanTaskItem.ATTRIBUTE_TYPE, "MANUAL_TASK")
-                        
+                                new TaskRelaseAction()).addAttributeToCheckForGroupedActions(HumanTaskItem.ATTRIBUTE_TYPE, "MANUAL_TASK")
+
                         // cell formatters
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
                                 new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))

@@ -67,7 +67,7 @@
 			&.tasks, &.cases {
 				padding-bottom: 0;
 			}
-		    + .section{
+			+ .section, + css3-container + .section{
 				padding: @moreDetails-sectionLeft-padding;
 			}
 			&:nth-child(even){
@@ -185,7 +185,7 @@
 								}
 							}
 						}
-						+ .tr{
+						+ .tr, + css3-container + .tr{
 							margin: @moreDetails-comments-line-margin;
 						}
 					}
@@ -233,7 +233,7 @@
 			margin: @moreDetails-toolbar-margin;
 			text-align: @moreDetails-toolbar-txtAlign;
 			a{
-				+a{ margin-left: @button-marginBetween; }
+				+ a, + css3-container + a{ margin-left: @button-marginBetween; }
 				&.back{
 					float: left;
 				}

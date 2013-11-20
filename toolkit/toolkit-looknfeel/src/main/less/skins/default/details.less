@@ -12,7 +12,7 @@
 		.toolbar{
 			text-align: right;
 			margin: @detailsPanel-toolbar-margin;
-			a+a{ margin-left: @button-marginBetween; }
+			a + a, a + css3-container + a{ margin-left: @button-marginBetween; }
 		}
 		.metadatas{
 			H1{
@@ -25,7 +25,7 @@
 				word-wrap: break-word;
 			    
 			}
-			&+.section{
+			+ .section, + css3-container + .section{
 				margin: @detailsPanel-1stSection-margin; 
 			}
 			.definitions{
@@ -204,7 +204,7 @@
 							}
 						}
 					}
-					+ .tr{
+					+ .tr, + css3-container + .tr{
 						margin: @detailsPanel-comments-line-margin;
 					}
 				}

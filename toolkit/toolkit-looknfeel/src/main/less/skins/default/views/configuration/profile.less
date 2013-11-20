@@ -1,4 +1,3 @@
-@import "../../skin.config.less";
 .doublesection .body {
 	.fontSize (@header-menu-fontSize);
 	.menuOptions {
@@ -6,6 +5,7 @@
 	}
 	.menuEditor {
 		overflow-x: auto;
+		overflow-y: hidden;
 		.menu {
 			position: absolute;
 			width: 100%;
@@ -19,13 +19,13 @@
 			position: relative;
 			
 			#btn-addprofileentry {
-                .noBoxShadow()
-            }
-                
+				.noBoxShadow()
+			}
+
 			>.btn-action{
 				margin: @profileMoreDetails-addMenulink-margin;
 				#btn-addprofileentry {
-				    color:red;
+					color:red;
 				}
 			}
 			> .tablePannel {
@@ -38,15 +38,12 @@
 				> .datatable {
 					width: auto;
 					text-align: center;
-					
 					&.resetOption{
 						height: (@header-menu-height);
 					}
-					
 					> .pager {
 						display: none;
 					}
-
 					> .table {
 						width: auto;
 						margin: 0;
@@ -95,17 +92,17 @@
 									a {
 										margin: 0;
 										visibility: hidden;
-                                        display: inline-block;
-                                        width: @profileMoreDetails-deleteProfileEntryLink-width;
-                                        .height(@header-menu-height);
-                                        .hideText();
-                                        vertical-align: middle;
+                                        					display: inline-block;
+                                        					width: @profileMoreDetails-deleteProfileEntryLink-width;
+                                        					.height(@header-menu-height);
+                                        					.hideText();
+                                        					vertical-align: middle;
 										&.deleteProfileEntryLink{
 											.bg(@profileMoreDetails-deleteProfileEntryLink-bg);
 										}
 										&.editProfileEntryLink{
-                                            .bg("pencil.png");
-                                        }
+                                            						.bg("pencil.png");
+                                        					}
 									}
 								}
 								&:hover > .td_actions a {
@@ -148,6 +145,7 @@
 					text-align: left;
 					.borderRadiusBottom(@defaultRadius);
 					background: @profileMoreDetails-linkEditor-bg;
+					margin: 0;
 				}
 				p.addProfileEntryDisabled{
 					color: @header-menu-link-disabled-color;
@@ -166,12 +164,12 @@
 }
 
 .page_AddCustomProfileTab .body {
-    .datatable .actions {
-        display: none;
-    }
-    .form {
-        margin-top: 0;
-    }
+	.datatable .actions {
+		display: none;
+	}
+	.form {
+		margin-top: 0;
+	}
 }
 
 //Temporary fix for description in more details
