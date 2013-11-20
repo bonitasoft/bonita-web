@@ -85,7 +85,7 @@ form{
 			}
 		}
 		.uploader{
-			.bg(@form-input-file-bgImg, no-repeat, white, right, center, "");
+			.bg(@form-input-file-bgImg, no-repeat, transparent, right, center, "");
 			padding: 0;
 			height: @inputHeight;
 			.borderRadius(@form-input-radius);
@@ -93,6 +93,9 @@ form{
 			position: relative;
 			*{
 				border: none !important;
+			}
+			input, .input{
+				behavior: none !important;// ie8 fix, input background is not well rendered and hides the link
 			}
 			a{
 				.pointerAsLink();
