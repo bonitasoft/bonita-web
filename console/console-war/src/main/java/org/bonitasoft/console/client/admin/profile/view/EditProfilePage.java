@@ -49,7 +49,7 @@ public class EditProfilePage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
     
     static {
-        PRIVILEGES.add(ListProfilePage.TOKEN);
+        PRIVILEGES.add(ProfileListingPage.TOKEN);
     }
 
     private static final String ICON_URL = "themeResource?theme=default&location=images/profile.png";

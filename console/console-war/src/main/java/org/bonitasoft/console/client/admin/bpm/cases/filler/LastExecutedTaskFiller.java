@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 public class LastExecutedTaskFiller extends Filler<Text> {
 
     private static final String ORDER_BY_REACHED_STATE_DATE_DESC = ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE + " DESC";
-    
+
     private final CaseItem caseItem;
 
     public LastExecutedTaskFiller(final CaseItem caseItem) {
@@ -69,7 +69,7 @@ public class LastExecutedTaskFiller extends Filler<Text> {
         List<IItem> archivedHumanTasks = JSonItemReader.parseItems(json, ArchivedHumanTaskDefinition.get());
         if (!archivedHumanTasks.isEmpty()) {
             ArchivedHumanTaskItem archivedHumanTask = (ArchivedHumanTaskItem) archivedHumanTasks.get(0);
-            this.target.setText(DateFormat.dateToDisplay(archivedHumanTask.getReachStateDate()));
+            target.getElement().setInnerText(DateFormat.dateToDisplay(archivedHumanTask.getReachStateDate()));
         }
     }
 }

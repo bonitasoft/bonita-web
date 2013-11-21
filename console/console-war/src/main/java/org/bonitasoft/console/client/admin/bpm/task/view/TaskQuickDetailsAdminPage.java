@@ -48,10 +48,10 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNodeItem> {
 
-    public final static String TOKEN = "taskquickdetailsadmin";
-
+    public final static String TOKEN = "taskquickdetailsadmin";    
+    
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-
+    
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
     }
@@ -82,11 +82,12 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
     }
 
     private Clickable moreDetailsButton(final APIID id) {
-        return new Button("btn-more", _("More"), _("Show more details about this task"), new ActionShowView(createMoreDetailsPage(id)));
+        return new Button("btn-more", _("More"), _("Show more details about this task"),
+                new ActionShowView(createMoreDetailsPage(id)));
     }
 
-    private RawView createMoreDetailsPage(final APIID id) {
-        final TaskMoreDetailsAdminPage page = new TaskMoreDetailsAdminPage(isArchived());
+    private RawView createMoreDetailsPage(APIID id) {
+        TaskMoreDetailsAdminPage page = new TaskMoreDetailsAdminPage(isArchived());
         page.addParameter(PARAMETER_ITEM_ID, id.toString());
         return page;
     }
@@ -112,14 +113,18 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
         if (item.isActivity()) {
             addBody(getTaskTechnicalInformation(new IActivityAccessor(item)));
         }
-        addBody(new CommentSectionSnippet(item.getCaseId()).setNbLinesByPage(3).build());
+        addBody(new CommentSectionSnippet(item.getCaseId())
+                .setNbLinesByPage(3)
+                .build());
     }
 
     protected Section getTaskTechnicalInformation(final IActivityAccessor activity) {
         if (activity.isArchived()) {
-            return new ArchivedTaskTechnicalInformationSnippet(activity).build();
+            return new ArchivedTaskTechnicalInformationSnippet(activity)
+                    .build();
         } else {
-            return new TaskTechnicalInformationSnippet(activity).build();
+            return new TaskTechnicalInformationSnippet(activity)
+                    .build();
         }
     }
 

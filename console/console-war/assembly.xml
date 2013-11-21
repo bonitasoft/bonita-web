@@ -1,0 +1,25 @@
+<assembly>
+	<id>replace-css-url-in-jsp</id>
+	<formats>
+		<format>dir</format>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${project.basedir}/src/main/webapp</directory>
+			<outputDirectory>/</outputDirectory>
+			<filtered>true</filtered>
+			<includes>
+				<include>**/*.jsp</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/main/webapp</directory>
+			<outputDirectory>/</outputDirectory>
+			<excludes>
+				<exclude>**/*.jsp</exclude>
+			</excludes>
+		</fileSet>
+	</fileSets>
+</assembly>

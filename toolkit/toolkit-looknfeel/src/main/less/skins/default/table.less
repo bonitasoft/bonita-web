@@ -29,6 +29,7 @@
 			.verticalGradient(@tableForm-filters-gradientColor1, @tableForm-filters-gradientPosition1, @tableForm-filters-gradientColor2, @tableForm-filters-gradientPosition2, @tableForm-filters-gradientColor3, @tableForm-filters-gradientPosition3);
 			border: @tableForm-filters-border;
 			width: 100%;
+			position: relative; //CSS PIE z-index fix 
 			.boxSizing();
 			label{
 				display: none;
@@ -54,7 +55,7 @@
 			margin: @table-margin;
 			border: @table-border;
 			float: none;
-			
+			position: relative;//CSS PIE z-index fix 
 			.boxShadow(@table-shadowX, @table-shadowY, @table-shadowBlur,  @table-shadowColor);
 			.thead{
 				.table_header();

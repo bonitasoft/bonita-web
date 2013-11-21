@@ -30,13 +30,12 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
 
     public static final String TOKEN = "profilequickdetails";
-    
-    public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
-    static {
-        PRIVILEGES.add(ListProfilePage.TOKEN);
-    }
 
+    public static final List<String> PRIVILEGES = new ArrayList<String>();
+
+    static {
+        PRIVILEGES.add(ProfileListingPage.TOKEN);
+    }
 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ProfileItem item) {
@@ -130,7 +129,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
         @Override
         protected void setData(final String json, final Map<String, String> headers) {
             final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
-            this.target.setText(String.valueOf(resultPager.getNbTotalResults()));
+            this.target.getElement().setInnerText(String.valueOf(resultPager.getNbTotalResults()));
         }
     }
 
@@ -157,7 +156,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
         @Override
         protected void setData(final String json, final Map<String, String> headers) {
             final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
-            this.target.setText(String.valueOf(resultPager.getNbTotalResults()));
+            this.target.getElement().setInnerText(String.valueOf(resultPager.getNbTotalResults()));
         }
     }
 
@@ -184,7 +183,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
         @Override
         protected void setData(final String json, final Map<String, String> headers) {
             final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
-            this.target.setText(String.valueOf(resultPager.getNbTotalResults()));
+            this.target.getElement().setInnerText(String.valueOf(resultPager.getNbTotalResults()));
         }
     }
 
@@ -211,7 +210,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
         @Override
         protected void setData(final String json, final Map<String, String> headers) {
             final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
-            this.target.setText(String.valueOf(resultPager.getNbTotalResults()));
+            this.target.getElement().setInnerText(String.valueOf(resultPager.getNbTotalResults()));
         }
     }
 }
