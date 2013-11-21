@@ -119,7 +119,13 @@ public class ThemeResourceServlet extends HttpServlet {
         themeName = URLDecoder.decode(themeName, "UTF-8");
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
-        themesFolder = getThemesParentFolder(request);
+        
+        if (themeName.equals("mobile")) {
+            themesFolder = getThemesDefaultParentFolder(request);
+        } else {
+            themesFolder = getThemesParentFolder(request);
+        }
+        
         try {
 
             final File file = new File(themesFolder.getAbsolutePath() + File.separator + themeName + File.separator + fileName);
@@ -186,6 +192,22 @@ public class ThemeResourceServlet extends HttpServlet {
         }
     }
 
+    private static File getThemesDefaultParentFolder(HttpServletRequest request) throws ServletException {
+        File myThemesParentFolder = null;
+        
+        try {
+            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(1L).getConsoleThemeFolder();
+        } catch (final RuntimeException e) {
+            final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage);
+            }
+            throw new ServletException(errorMessage);
+        }
+        
+        return myThemesParentFolder;
+    }
+    
     public static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
         File myThemesParentFolder = null;
         final HttpSession session = request.getSession();
