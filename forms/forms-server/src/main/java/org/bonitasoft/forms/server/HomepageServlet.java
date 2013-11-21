@@ -191,6 +191,7 @@ public class HomepageServlet extends HttpServlet {
         urlContext.put(FormServiceProviderUtil.PROCESS_UUID, applicationID);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
         try {
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(apiSession.getTenantId());
             final Date deployemenDate = formServiceProvider.getDeployementDate(context);
