@@ -69,7 +69,7 @@ public class LoginBox extends RawView {
 
     public static final String LOGOUT_URL = "../logoutservice";
 
-    private final Text userNameText = new Text("");
+    private MenuFolder userNameMenu = new MenuFolder(new JsId("userName"), null);
 
     private final Image userNameAvatar = new EmptyImage(0, 0);
 
@@ -118,20 +118,25 @@ public class LoginBox extends RawView {
         return "true".equals(Session.getParameter("is_technical_user"));
     }
 
+    private String getTechUserName() {
+        return Session.getParameter("user_name");
+    }
+
     private Container<AbstractComponent> createGreetings() {
         return new Container<AbstractComponent>(new JsId("userData"))
                 .append(new Text(_("Welcome: ")).addClass("welcomeMessage"))
-                .append(this.userNameText.addClass("userName"))
+                .append(createUserNameMenu().addClass("userName"))
                 .append(this.userNameAvatar.addClass("userAvatar"));
     }
 
     private void loadTechUserProfileMenu() {
+        this.userNameMenu.setLabel(getTechUserName());
         ViewController.showView(getTechnicalUserMenu(), NAVIGATION_MENU);
         ViewController.showPopup(TechnicalUserWarningView.TOKEN);
     }
 
     private void addCurrentUserProfileMenu() {
-        this.userNameText.addFiller(new CurrentUserAvatarFiller());
+        this.userNameMenu.addFiller(new CurrentUserAvatarFiller());
         ProfileMenuItem profileMenuItem = new ProfileMenuItem(getMenuListCreator());
         addBody(new Menu(profileMenuItem));
         getProfiles(Session.getUserId(), fillProfileMenuOnCallback(profileMenuItem));
@@ -152,7 +157,7 @@ public class LoginBox extends RawView {
         if (!profiles.isEmpty()) {
             ensureProfileId((ProfileItem) profiles.get(0));
             profileMenuItem.addItems(profiles);
-            for (ProfileItem profile: profiles) {
+            for (ProfileItem profile : profiles) {
                 if (profile.getId().toString().equals(ClientApplicationURL.getProfileId())) {
                     loadNavigationMenu();
                     return;
@@ -183,6 +188,11 @@ public class LoginBox extends RawView {
 
     private void loadNavigationMenu() {
         ViewController.showView(new NavigationMenuView(getMenuListCreator()), NAVIGATION_MENU);
+    }
+
+    private Menu createUserNameMenu() {
+        userNameMenu.addLink(createLogoutLink());
+        return new Menu(userNameMenu);
     }
 
     private Menu createSettingsMenu() {
@@ -233,7 +243,8 @@ public class LoginBox extends RawView {
                             new Arg("firstname", user.getAttributeValue(UserItem.ATTRIBUTE_FIRSTNAME)),
                             new Arg("lastname", user.getAttributeValue(UserItem.ATTRIBUTE_LASTNAME)));
 
-            LoginBox.this.userNameText.setText(displayName);
+            LoginBox.this.userNameMenu.setLabel(displayName);
+            // LoginBox.this.userNameMenu.setLabel(new UserAttributeReader().read(user));
 
             if (!StringUtil.isBlank(user.getIcon())) {
                 LoginBox.this.userNameAvatar

@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.data.item.attribute.reader;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.CompoundAttributeReader;
 
@@ -38,7 +39,7 @@ public class UserAttributeReader extends CompoundAttributeReader {
     }
 
     public static String readUser(final IItem item) {
-        return new UserAttributeReader().read(item);
+        return new UserAttributeReader().setDefaultValue(item.getAttributeValue(UserItem.ATTRIBUTE_USERNAME)).read(item);
     }
 
     @Override
