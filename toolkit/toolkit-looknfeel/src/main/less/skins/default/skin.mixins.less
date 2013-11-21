@@ -141,7 +141,7 @@
 	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop},-moz-linear-gradient(top, @{c1} @{p1}, @{c2} @{p2})");
 	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop}, -ms-linear-gradient(top, @{c1} @{p1}, @{c2} @{p2})");
 	.bg(@bg, ~"no-repeat @{bgLeft} @{bgTop}, linear-gradient(to bottom, @{c1} @{p1}, @{c2} @{p2})");
-	.bgPie(@bg, ~"no-repeat @{bgLeft} @{bgTop}, linear-gradient(to bottom, @{c1} @{p1}, @{c2} @{p2})");
+	.bgPie(@bg, ~"no-repeat @{bgLeft} @{bgTop}, linear-gradient(@{c1} @{p1}, @{c2} @{p2})");
 }
 .bgHoverSubFilter(@bg, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft,  @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
 	padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
