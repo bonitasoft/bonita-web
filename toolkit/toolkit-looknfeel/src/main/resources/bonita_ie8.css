@@ -6,9 +6,12 @@
 
 .table_view_form .table .tbody .tr_last .td_last, .table_view_form .table .tbody .tr_last .td_1,
 .table_view_form .table .thead .tr, .table_view_form .table .thead .tr .th_1, .table_view_form .table .thead .tr .th_last {
-  behavior: none;
+	behavior: none;
 }
 
 .table_view_table .table .thead .tr, .table_view_form .table .thead .tr {
-  background-color: #E6E6E6;
+	background-color: #E6E6E6;
+}
+.pager .next, .pager .prev{
+	background-color: transparent;
 }
