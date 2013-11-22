@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
+import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
 import org.bonitasoft.console.client.menu.view.navigation.MenuListCreator;
 import org.bonitasoft.console.client.menu.view.navigation.NavigationMenuView;
 import org.bonitasoft.console.client.menu.view.profile.ProfileMenuItem;
@@ -34,8 +35,6 @@ import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.UrlBuilder;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -69,7 +68,7 @@ public class LoginBox extends RawView {
 
     public static final String LOGOUT_URL = "../logoutservice";
 
-    private MenuFolder userNameMenu = new MenuFolder(new JsId("userName"), null);
+    private MenuFolder userNameMenu = new MenuFolder(new JsId("userName"), "initializing");
 
     private final Image userNameAvatar = new EmptyImage(0, 0);
 
@@ -80,6 +79,7 @@ public class LoginBox extends RawView {
 
     @Override
     public void buildView() {
+        addBody(new Text(_("Welcome: ")).addClass("welcomeMessage"));
         addBody(createGreetings());
         addProfileMenu();
         addBody(createSettingsMenu());
@@ -124,7 +124,6 @@ public class LoginBox extends RawView {
 
     private Container<AbstractComponent> createGreetings() {
         return new Container<AbstractComponent>(new JsId("userData"))
-                .append(new Text(_("Welcome: ")).addClass("welcomeMessage"))
                 .append(createUserNameMenu().addClass("userName"))
                 .append(this.userNameAvatar.addClass("userAvatar"));
     }
@@ -197,7 +196,6 @@ public class LoginBox extends RawView {
 
     private Menu createSettingsMenu() {
         return new Menu(new MenuFolder(new JsId("options"), _("Settings"),
-                createLogoutLink(),
                 createLanguageLink(),
                 createAboutLink()));
     }
@@ -238,13 +236,9 @@ public class LoginBox extends RawView {
         protected void setData(final String json, final Map<String, String> headers) {
             final UserItem user = JSonItemReader.parseItem(json, UserDefinition.get());
 
-            final String displayName = new TextTemplate("%firstname% %lastname%")
-                    .toString(
-                            new Arg("firstname", user.getAttributeValue(UserItem.ATTRIBUTE_FIRSTNAME)),
-                            new Arg("lastname", user.getAttributeValue(UserItem.ATTRIBUTE_LASTNAME)));
+            final String displayName = new UserAttributeReader().read(user);
 
             LoginBox.this.userNameMenu.setLabel(displayName);
-            // LoginBox.this.userNameMenu.setLabel(new UserAttributeReader().read(user));
 
             if (!StringUtil.isBlank(user.getIcon())) {
                 LoginBox.this.userNameAvatar

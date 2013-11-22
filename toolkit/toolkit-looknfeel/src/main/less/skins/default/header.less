@@ -9,7 +9,7 @@
 			float: @header-login-float;
 			padding: @header-login-padding;
 			.height(@header-login-height);
-			.userData, .dropdownmenu{
+			.welcomeMessage, .userData, .dropdownmenu{
 				float: @header-login-blocks-float;
 				display: @header-login-blocks-display;
 				height: @header-login-blocks-height;
@@ -18,14 +18,10 @@
 				width: auto;
 				.boxSizing();
 			}
+			.welcomeMessage{
+				margin: @header-login-welcomeMessage-margin;
+			}
 			.userData{
-				.welcomeMessage{
-					margin: @header-login-welcomeMessage-margin;
-				}
-				.userName{
-					color: @header-login-userName-textColor;
-					margin: @header-login-userName-margin;
-				}
 				.userAvatar{
 					border: @header-login-avatar-border;
 					margin: @header-login-avatar-margin;
@@ -35,6 +31,14 @@
 			}
 			.dropdownmenu{
 				//padding: @header-login-profileLabel-padding;
+				.menuitem_userName{
+					>a{
+						.bg(@header-login-profileLink-bg, no-repeat, transparent, 90%, 50%);
+						color: @header-login-profileLink-textColor;
+						padding: @header-login-profileLink-padding;
+						color: @header-login-settings-link-textColor;
+					}
+				}
 				.menuitem_profile{
 					>a{
 						.bg(@header-login-profileLink-bg, no-repeat, transparent, 90%, 50%);
@@ -75,6 +79,7 @@
 						border-top: 0;
 						>li{
 							a{
+								white-space : nowrap;
 								display: block;
 								padding: @header-login-dropdown-link-padding;
 								&:hover{
@@ -93,6 +98,10 @@
 	// main menu
 	//-------------------------------------------------------------------------
 	#menu{
+		a{
+			white-space : nowrap;
+		}
+	
 		>div >ul.dropdownmenu.notCustom >li{
 			 &.current, &.current:hover {
 				a{
