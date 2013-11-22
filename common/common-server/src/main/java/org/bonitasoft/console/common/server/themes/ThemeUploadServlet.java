@@ -134,7 +134,7 @@ public class ThemeUploadServlet extends HttpServlet {
     public void validateThemePackage(final long tenantId, final String themePath) throws ThemeStructureException {
         final ThemeValidator validator = new ThemeValidator();
         try {
-            validator.doValidate(tenantId, themePath);
+            validator.doValidate(themePath);
         } catch (final IOException e) {
             final String theErrorMessage = "Exception while getting the themes folder: it may be not exist or path is error.";
             if (LOGGER.isLoggable(Level.SEVERE)) {

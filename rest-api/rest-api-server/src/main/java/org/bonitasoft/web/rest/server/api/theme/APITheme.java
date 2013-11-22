@@ -55,7 +55,7 @@ public class APITheme extends ConsoleAPI<ThemeItem> {
         final APISession apiSession = getEngineSession();
         final ThemeManager manager = new ThemeManager();
         try {
-            manager.applyTheme(apiSession.getId(), id.toLong(), getThemesFolder(apiSession.getId()));
+            manager.applyTheme(id.toLong(), getThemesFolder(apiSession.getId()));
             return get(id);
         } catch (final ThemeStructureException e) {
             throw new APIException(e);

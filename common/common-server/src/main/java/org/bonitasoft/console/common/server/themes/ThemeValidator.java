@@ -29,6 +29,8 @@ public class ThemeValidator {
 
     private static final String CONSOLE_TEMPLATE_FILE = "BonitaConsole.html";
 
+    private static final String FORMS_TEMPLATE_FILE = "BonitaForm.html";
+
     private static final String MAIN_LESS_FILE = "styles.less";
 
     /**
@@ -38,9 +40,10 @@ public class ThemeValidator {
      * @throws IOException
      * @throws FileNotFoundException
      */
-    public void doValidate(final long tenantId, final String themePath) throws ThemeStructureException, IOException {
+    public void doValidate(final String themePath) throws ThemeStructureException, IOException {
         final File themeFolder = new File(themePath);
         boolean hasConsoleTemplateFile = false;
+        boolean hasFormTemplateFile = false;
         boolean hasMainLessFile = false;
         final ThemeStructureState state = new ThemeStructureState();
 
@@ -56,15 +59,19 @@ public class ThemeValidator {
             if (!hasConsoleTemplateFile) {
                 hasConsoleTemplateFile = fileName.equals(CONSOLE_TEMPLATE_FILE);
             }
+            if (!hasFormTemplateFile) {
+                hasFormTemplateFile = fileName.equals(FORMS_TEMPLATE_FILE);
+            }
             if (!hasMainLessFile) {
                 hasMainLessFile = fileName.equals(MAIN_LESS_FILE);
             }
-            if (hasMainLessFile) {
+            if (hasMainLessFile && hasConsoleTemplateFile && hasFormTemplateFile) {
                 break;
             }
         }
 
         state.setMissBonitaConsoleHTML(!hasConsoleTemplateFile);
+        state.setMissBonitaFormHTML(!hasFormTemplateFile);
         state.setMissMainLessFile(!hasMainLessFile);
 
         if (state.hasError()) {

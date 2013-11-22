@@ -31,6 +31,8 @@ public class ThemeStructureState implements Serializable {
 
     boolean missBonitaConsoleHTML = true;
 
+    boolean missBonitaFormHTML = true;
+
     boolean missMainLessFile = true;
 
     /**
@@ -46,6 +48,21 @@ public class ThemeStructureState implements Serializable {
      */
     public void setMissBonitaConsoleHTML(final boolean missBonitaConsoleHTML) {
         this.missBonitaConsoleHTML = missBonitaConsoleHTML;
+    }
+
+    /**
+     * @return the missBonitaFormHTML
+     */
+    public boolean isMissBonitaFormHTML() {
+        return missBonitaFormHTML;
+    }
+
+    /**
+     * @param missBonitaFormHTML
+     *            the missBonitaFormHTML to set
+     */
+    public void setMissBonitaFormHTML(final boolean missBonitaFormHTML) {
+        this.missBonitaFormHTML = missBonitaFormHTML;
     }
 
     /**
