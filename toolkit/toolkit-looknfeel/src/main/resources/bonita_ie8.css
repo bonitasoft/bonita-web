@@ -15,3 +15,14 @@
 .pager .next, .pager .prev, .pager .next.disable, .pager .prev.disable{
 	background-color: transparent !important;
 }
+
+.itemlistingpage .tables_panel .datatable .actions .btn-action.btn{
+	behavior: none;
+}
+
+.datepickerDays tr{
+	behavior: none;
+}
+.datepickerDays .datepickerSelected a{
+	margin: 1px 0 0 1px;
+}
