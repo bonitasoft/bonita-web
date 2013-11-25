@@ -20,9 +20,6 @@
 	behavior: none;
 }
 
-.datepickerDays tr{
-	behavior: none;
-}
-.datepickerDays .datepickerSelected a{
-	margin: 1px 0 0 1px;
+.datepickerDays tr, .datepickerDoW{
+	behavior: none !important;
 }

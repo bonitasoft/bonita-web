@@ -222,7 +222,7 @@ form{
 	.custom-{
 		&checkbox, &radio{
 			label{
-				&, &.checked{
+				&.checked{
 					//overrides datatables properties
 					margin: 0 !important;
 					width: 100%;
@@ -268,19 +268,16 @@ form {
 	display: none;
 	z-index: @zIndex-datepicker !important;
 	&Container{
-		position: relative;
 		.boxShadow(@form-datepicker-shadowX, @form-datepicker-shadowY, @form-datepicker-shadowBlur, @form-datepicker-shadowColor);
 		border: @form-datepicker-container-border;
 		background: @form-datepicker-container-bgColor;
 	}
 	&GoPrev, &Month, &GoNext{
 		.fontSize(@form-datepicker-header-fontSize);
-		position: relative;
 		background: @form-datepicker-header-bgColor;
 		color: @form-datepicker-header-txtColor;
 		a{
 			color: @form-datepicker-header-linkColor;
-			position: relative;
 		}
 		padding: @form-datepicker-header-paddingY 0 @form-datepicker-header-paddingY 0;
 	}
@@ -291,8 +288,6 @@ form {
 		padding-right: @form-datepicker-header-paddingX;
 	}
 	&DoW{
-		position: relative;
-		z-index: (@zIndex-datepicker + 1) !important;
 		.verticalGradient(@form-datepicker-dayHeader-gradientColor1, @form-datepicker-dayHeader-gradientPositon1, @form-datepicker-dayHeader-gradientColor2, @form-datepicker-dayHeader-gradientPositon2);
 		th{
 			padding: @form-datepicker-dayHeader-day-padding;
@@ -300,19 +295,15 @@ form {
 			span{
 				.fontSize(@form-datepicker-dayHeader-fontSize);
 				width: @form-datepicker-day-width;
-				position: relative;
 				display: block;
 			}
 		}
 	}
 	&Days{
 		.fontSize(@form-datepicker-day-fontSize);
-		position: relative;
 		tr{
 			.verticalGradient(@form-datepicker-day-row-gradientColor1, @form-datepicker-day-row-gradientPosition1, @form-datepicker-day-row-gradientColor2, @form-datepicker-day-row-gradientPosition2);
-			position: relative;
 			td, th{
-				position: relative;
 				border: @form-datepicker-day-border;
 				a{
 					display: block;
@@ -320,16 +311,17 @@ form {
 					height: @form-datepicker-day-height - @form-datepicker-day-paddingY - @form-datepicker-day-paddingY;
 					color: @form-datepicker-day-link-txtColor;
 					border: @form-datepicker-day-link-border;
-					position: relative;
 					&:hover{
-						
 						border: @form-datepicker-day-link-hover-border;
 					}
 				}
 			}
 		}
 		.datepickerSelected{
+			position: relative;
 			a{
+				position: relative;
+				z-index: @zIndex-datepicker;
 				color: @form-datepicker-daySelected-txtColor;
 				font-weight: @form-datepicker-daySelected-fontWeight;
 				border-color: @form-datepicker-daySelected-borderColor;
@@ -351,7 +343,7 @@ form {
 				background: @form-datepicker-dayNotInMonth-bg;
 				color: @form-datepicker-dayNotInMonth-txtColor !important;
 				&:hover{
-					border-color: transparent;
+					border-color: transparent !important;
 				}
 			}
 		}
@@ -365,7 +357,7 @@ form {
 		border: @form-datepicker-week-border !important;
 		background: @form-datepicker-week-bg !important;
 		a{
-			&:hover, &{
+			&:hover{
 				border: @form-datepicker-day-link-border !important;
 				color: @form-datepicker-week-txtColor !important;
 			}
