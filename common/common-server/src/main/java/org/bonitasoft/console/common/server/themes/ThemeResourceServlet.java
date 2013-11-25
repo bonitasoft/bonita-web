@@ -59,6 +59,11 @@ public class ThemeResourceServlet extends HttpServlet {
     private final static String THEME = "theme";
 
     /**
+     * tenant request parameter
+     */
+    private final static String TENANT_PARAMETER = "tenant";
+
+    /**
      * file name
      */
     private final static String LOCATION = "location";
@@ -119,13 +124,13 @@ public class ThemeResourceServlet extends HttpServlet {
         themeName = URLDecoder.decode(themeName, "UTF-8");
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
+
         if (themeName.equals("mobile")) {
             themesFolder = getThemesDefaultParentFolder(request);
         } else {
             themesFolder = getThemesParentFolder(request);
         }
-        
+
         try {
 
             final File file = new File(themesFolder.getAbsolutePath() + File.separator + themeName + File.separator + fileName);
@@ -192,9 +197,9 @@ public class ThemeResourceServlet extends HttpServlet {
         }
     }
 
-    private static File getThemesDefaultParentFolder(HttpServletRequest request) throws ServletException {
+    private static File getThemesDefaultParentFolder(final HttpServletRequest request) throws ServletException {
         File myThemesParentFolder = null;
-        
+
         try {
             myThemesParentFolder = WebBonitaConstantsUtils.getInstance(1L).getConsoleThemeFolder();
         } catch (final RuntimeException e) {
@@ -204,16 +209,25 @@ public class ThemeResourceServlet extends HttpServlet {
             }
             throw new ServletException(errorMessage);
         }
-        
+
         return myThemesParentFolder;
     }
-    
+
     public static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
         File myThemesParentFolder = null;
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        long tenantId = 1;
+        final String tenantFromRequest = request.getParameter(TENANT_PARAMETER);
+        if (tenantFromRequest == null) {
+            final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+            if (apiSession != null) {
+                tenantId = apiSession.getTenantId();
+            }
+        } else {
+            tenantId = Long.parseLong(tenantFromRequest);
+        }
         try {
-            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getConsoleThemeFolder();
+            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(tenantId).getConsoleThemeFolder();
         } catch (final RuntimeException e) {
             final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {
