@@ -11,7 +11,6 @@
 	<packaging>jar</packaging>
 	
 	<properties>
-		<wro4j.version>1.7.0</wro4j.version>
 		<output.directory>${project.build.directory}/${project.build.finalName}</output.directory>
 		<wro.config>${basedir}/src/main/wro/wro-build-time</wro.config>
 		<assembly.path>assembly.xml</assembly.path>
@@ -23,12 +22,10 @@
 		<dependency>
 			<groupId>ro.isdc.wro4j</groupId>
 			<artifactId>wro4j-core</artifactId>
-			<version>${wro4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ro.isdc.wro4j</groupId>
 			<artifactId>wro4j-extensions</artifactId>
-			<version>${wro4j.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -57,7 +54,6 @@
 					<plugin>
 						<groupId>ro.isdc.wro4j</groupId>
 						<artifactId>wro4j-maven-plugin</artifactId>
-						<version>${wro4j.version}</version>
 						<executions>
 							<execution>
 								<phase>generate-resources</phase>

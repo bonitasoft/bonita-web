@@ -6,7 +6,7 @@
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>${output.directory}</directory>
+			<directory>${output.directory}/css</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>
 	</fileSets>
