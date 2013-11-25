@@ -12,6 +12,6 @@
 .table_view_table .table .thead .tr, .table_view_form .table .thead .tr {
 	background-color: #E6E6E6;
 }
-.pager .next, .pager .prev{
-	background-color: transparent;
+.pager .next, .pager .prev, .pager .next.disable, .pager .prev.disable{
+	background-color: transparent !important;
 }
