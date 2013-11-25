@@ -96,6 +96,7 @@ form{
 			}
 			input, .input{
 				behavior: none !important;// ie8 fix, input background is not well rendered and hides the link
+				.pointerAsLink();
 			}
 			a{
 				.pointerAsLink();
@@ -221,7 +222,7 @@ form{
 	.custom-{
 		&checkbox, &radio{
 			label{
-				&, &.checked{
+				&.checked{
 					//overrides datatables properties
 					margin: 0 !important;
 					width: 100%;
@@ -311,14 +312,16 @@ form {
 					color: @form-datepicker-day-link-txtColor;
 					border: @form-datepicker-day-link-border;
 					&:hover{
-						
 						border: @form-datepicker-day-link-hover-border;
 					}
 				}
 			}
 		}
 		.datepickerSelected{
+			position: relative;
 			a{
+				position: relative;
+				z-index: @zIndex-datepicker;
 				color: @form-datepicker-daySelected-txtColor;
 				font-weight: @form-datepicker-daySelected-fontWeight;
 				border-color: @form-datepicker-daySelected-borderColor;
@@ -327,7 +330,7 @@ form {
 		}
 		.datepickerNotInMonth{
 			a{
-				background: @form-datepicker-dayNotInMonth-bg;
+				background: @form-datepicker-dayNotInMonth-bg !important;
 				color: @form-datepicker-dayNotInMonth-txtColor !important;
 				&:hover{
 					border: @form-datepicker-day-link-hover-border !important;
@@ -340,7 +343,7 @@ form {
 				background: @form-datepicker-dayNotInMonth-bg;
 				color: @form-datepicker-dayNotInMonth-txtColor !important;
 				&:hover{
-					border-color: transparent;
+					border-color: transparent !important;
 				}
 			}
 		}
@@ -354,7 +357,7 @@ form {
 		border: @form-datepicker-week-border !important;
 		background: @form-datepicker-week-bg !important;
 		a{
-			&:hover, &{
+			&:hover{
 				border: @form-datepicker-day-link-border !important;
 				color: @form-datepicker-week-txtColor !important;
 			}
