@@ -38,9 +38,12 @@
     String redirectUrl = JSP.getParameter("redirectUrl");
 
     StringBuffer actionUrl = new StringBuffer("loginservice?");
+	StringBuffer styleUrl = new StringBuffer("portal/themeResource?theme=portal&location=bonita.css");
     if (tenantId != null) {
         actionUrl.append("tenant=").append(tenantId).append("&");
+		styleUrl.append("&tenant=").append(tenantId);
     }
+    
     if (redirectUrl != null) {
     	if (tenantId != null) {
     		redirectUrl = redirectUrl.replaceAll("[\\?&]tenant=\\d+$", "").replaceAll("tenant=\\d+&", "");
@@ -89,7 +92,7 @@
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
 <!-- Load LESS CSS -->
 <script type="text/javascript" src="portal/scripts/includes/array.prototype.js"></script>
-<link rel="stylesheet" type="text/css" href="portal/css/bonita.css"/>
+<link rel="stylesheet" type="text/css" href="<%= styleUrl %>"/>
 
 
 <script type="text/javascript" src="portal/scripts/jquery/jquery-1.6.4.js"></script>
