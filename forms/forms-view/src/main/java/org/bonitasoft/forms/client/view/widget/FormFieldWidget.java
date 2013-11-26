@@ -883,7 +883,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
             toolTipPopupFrame.setWidget(new Label(widgetData.getPopupTooltip()));
             toolTipPopupFrame.addStyleName("bonita_form_popup_tooltip");
 
-            final Image toolTipIcon = new Image("images/tooltip.gif");
+            final Image toolTipIcon = new Image("themeResource?theme=portal&location=images/tooltip.gif");
             toolTipIcon.setStylePrimaryName("bonita_form_popup_tooltip_img");
             theOuterToolTipPanel.add(toolTipIcon);
             theOuterToolTipPanel.setStylePrimaryName("bonita_form_popup_tooltip_icon");
