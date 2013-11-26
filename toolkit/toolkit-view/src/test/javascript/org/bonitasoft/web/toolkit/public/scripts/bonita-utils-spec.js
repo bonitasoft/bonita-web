@@ -74,7 +74,7 @@ describe("Bonita utils", function () {
             });
             
             it("which fail for undefined", function() {
-                var foo = undefined,
+                var foo,
                     message = "foo can't be undefined";
                 
                 expect(function () {
@@ -101,7 +101,7 @@ describe("Bonita utils", function () {
             });
             
             it("which fail for undefined", function() {
-                var foo = undefined,
+                var foo,
                     message = "foo must be defined";
                 
                 expect(function () {
@@ -180,17 +180,16 @@ describe("Bonita utils", function () {
             var options = [createOption(1), createOption(2)];
 
             select.add(options, renderer);
-
+            
             verifyAppendSequence(element, options);
 
         });
-
+        
         function createOption(value) {
             var label = 'label' + value;
             return {
                 text: label,
                 value: value,
-                outerHTML: "<option value=\"" + value + "\">" + label + "</option>"
             };
         }
 
@@ -200,8 +199,10 @@ describe("Bonita utils", function () {
          */
         function verifyAppendSequence(element, sequence) {
             for (var i = 0; i < sequence.length; i += 1) {
-                expect(element.append.calls[i].args[0].outerHTML)
-                    .toBe(sequence[i].outerHTML);
+                expect(element.append.calls[i].args[0].text)
+                    .toBe(sequence[i].text);
+                expect(+element.append.calls[i].args[0].value)
+                    .toBe(sequence[i].value);
             }
         }
     });
@@ -225,18 +226,18 @@ describe("Bonita utils", function () {
                     bar = ["3", "5"];
 
                 var composite = utils.arrays.merge(foo, bar, function(a, b) {
-                    return a < b;
+                    return +a < +b;
                 });
                 
                 expect(composite).toEqual(["5", "4", "3", "2", "1"]);
             });
 
             it("which throw an exception if foo isn't an array", function () {
-                var foo = undefined,
+                var foo,
                     bar = ["1", "2"];
                 
                 expect(function(){
-                    utils.arrays.merge(foo, bar)
+                    utils.arrays.merge(foo, bar);
                     
                 }).toThrow("a must be an array");
             });

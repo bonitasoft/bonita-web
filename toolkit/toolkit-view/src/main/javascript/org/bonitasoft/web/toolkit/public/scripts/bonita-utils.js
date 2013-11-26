@@ -122,6 +122,8 @@ var bonitasoft = (function (bonitasoft) {
             }
 
             function render(element, items, renderer) {
+                assertion.isDefined(Array.prototype.forEach);
+                
                 items.forEach(function (item) {
                     append(element, renderer(item));
                 });
