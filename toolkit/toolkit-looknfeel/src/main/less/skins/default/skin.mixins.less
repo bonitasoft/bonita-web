@@ -49,6 +49,7 @@
 .pagerButton(@btnColor, @btnImage, @btnImageDisable){
 	outline-color: lighten(@btnColor, 10%);
 	border: @button-pager-border;
+	position: relative; //CSS PIE Z-Index fix
 	.hideText();
 	.borderRadius(@button-radius);
 	.button(@button-pager-height);
@@ -60,7 +61,7 @@
 	&.disable{
 		border: @button-pager-border-disable;
 		.bg(@btnImageDisable, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
-		cursor: default;
+		cursor: default !important;
 	}
 	+ a, + css3-container + a{
 		margin: @button-pager-marginBetween;
@@ -240,7 +241,7 @@ label{
 			float: none;
 			&:before{
 				border-left: @table-header-cell-borderLeft;
-				margin: @table-header-cell-border-top 0 0(0 - @table-header-cell-paddingX);
+				margin: @table-header-cell-border-top 0 0 (0 - @table-header-cell-paddingX);
 				content: "";
 				display: block;
 				width: 0;

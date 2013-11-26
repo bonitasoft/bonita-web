@@ -64,9 +64,6 @@
 				margin: @tablesPanel-tableActions-margin;
 				padding: @tablesPanel-tableActions-padding;
 				position: relative;//CSS pie zindex fix
-				*{
-					behavior: none; //TODO IE FIX TO REFACTOR BECAUSE IT MAKES BUTTON FLATTEN IN THE MIDDLE PANEL
-				}
 			}
 		}
 		.table{
@@ -203,6 +200,7 @@
 	clear: both;
 	text-align: right;
 	padding: @pager-padding;
+	position: relative; //CSS PIE Z-Index fix
 	.results_count{
 		padding: @pager-resultsCount-padding;
 	}
