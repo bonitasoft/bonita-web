@@ -24,6 +24,7 @@ import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FileWidgetInputType;
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
 import org.bonitasoft.forms.client.view.SupportedFieldTypes;
+import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 
 import com.google.gwt.dom.client.FormElement;
@@ -293,7 +294,9 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         final FileUpload fileUpload = new FileUpload();
         fileUpload.setStyleName("bonita_file_upload");
         // mandatory
-        fileUpload.setName(FileUloadName);
+        if (DOMUtils.getInstance().isIE8()) {
+            fileUpload.getElement().setPropertyString("contentEditable", "false");
+        }
         formPanel.add(fileUpload);
         final UploadSubmitHandler uploadHandler = new UploadSubmitHandler();
         formPanel.addSubmitHandler(uploadHandler);
