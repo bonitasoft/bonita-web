@@ -1,12 +1,16 @@
 <assembly>
-	<id>resources</id>
+	<id>less</id>
 	<formats>
 		<format>zip</format>
 	</formats>
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<fileSets>
 		<fileSet>
-			<directory>${output.directory}/css</directory>
+			<directory>${project.basedir}/src/main/less</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/main/resources</directory>
 			<outputDirectory></outputDirectory>
 		</fileSet>
 	</fileSets>

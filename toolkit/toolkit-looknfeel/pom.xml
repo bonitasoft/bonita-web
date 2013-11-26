@@ -13,7 +13,6 @@
 	<properties>
 		<output.directory>${project.build.directory}/${project.build.finalName}</output.directory>
 		<wro.config>${basedir}/src/main/wro/wro-build-time</wro.config>
-		<assembly.path>assembly.xml</assembly.path>
 		<jetty.rewrite.version>7.6.3.v20120416</jetty.rewrite.version>
 		<jetty.servlets.version>7.6.3.v20120416</jetty.servlets.version>
 	</properties>
@@ -80,9 +79,10 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-assembly-plugin</artifactId>
 						<configuration>
-							<appendAssemblyId>false</appendAssemblyId>
+							<appendAssemblyId>true</appendAssemblyId>
 							<descriptors>
-								<descriptor>${assembly.path}</descriptor>
+								<descriptor>assemblyCSS.xml</descriptor>
+								<descriptor>assemblyLESS.xml</descriptor>
 							</descriptors>
 						</configuration>
 						<executions>

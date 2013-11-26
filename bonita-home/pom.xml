@@ -133,6 +133,7 @@
 									<groupId>org.bonitasoft.web.toolkit</groupId>
 									<artifactId>toolkit-looknfeel</artifactId>
 									<version>${project.version}</version>
+									<classifier>css</classifier>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 								</artifactItem>
