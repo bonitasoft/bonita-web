@@ -159,7 +159,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
             fileDownloadWidget = new FileDownloadWidget(formID, contextMap, valueType, attachmentId, hasImagePreview);
 
-            loadingImage = new Image("images/ajax-loader.gif");
+            loadingImage = new Image("themeResource?theme=portal&location=images/ajax-loader.gif");
             loadingImage.setTitle(FormsResourceBundle.getMessages().uploadingLabel());
 
             buttonPanel = new FlowPanel();

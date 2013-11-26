@@ -5,16 +5,20 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.forms.server.accessor.impl;
+
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.forms.client.model.Expression;
@@ -26,10 +30,6 @@ import org.bonitasoft.forms.server.constants.XMLForms;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Haojie Yuan, Anthony Birembaut
@@ -72,7 +72,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
 
         this.tenantID = tenantID;
         this.document = document;
-        
+
         xmlExpressionsUtil = XMLExpressionsUtil.getInstance();
 
         final StringBuilder applicationXpathBuilder = new StringBuilder();
@@ -84,6 +84,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getApplicationErrorTemplate() {
         String applicationErrorTemplate = null;
 
@@ -104,6 +105,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public Expression getApplicationLabelExpression() throws InvalidFormDefinitionException {
 
         Expression applicationLabelExpression = null;
@@ -125,6 +127,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public Expression getApplicationMandatoryLabelExpression() throws InvalidFormDefinitionException {
 
         Expression applicationMandatoryLabelExpression = null;
@@ -137,7 +140,8 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
                 LOGGER.log(Level.FINE, "No mandatory label element was found in the definition file. Default label will be used.");
             }
             final String defaultMandatoryLabel = DefaultFormsPropertiesFactory.getDefaultFormProperties(tenantID).getApplicationMandatoryLabel();
-            applicationMandatoryLabelExpression = new Expression(null, defaultMandatoryLabel, ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null, new ArrayList<Expression>());
+            applicationMandatoryLabelExpression = new Expression(null, defaultMandatoryLabel, ExpressionType.TYPE_CONSTANT.name(), String.class.getName(),
+                    null, new ArrayList<Expression>());
         } else {
             applicationMandatoryLabelExpression = xmlExpressionsUtil.parseExpression(processMandatorySymbolNode);
         }
@@ -147,6 +151,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public Expression getApplicationMandatorySymbolExpression() throws InvalidFormDefinitionException {
 
         Expression applicationMandatorySymbolExpression = null;
@@ -159,7 +164,8 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
                 LOGGER.log(Level.FINE, "No mandatory symbol element was found in the definition file. Default symbol will be used.");
             }
             final String defaultMandatorySymbol = DefaultFormsPropertiesFactory.getDefaultFormProperties(tenantID).getApplicationMandatorySymbol();
-            applicationMandatorySymbolExpression = new Expression(null, defaultMandatorySymbol, ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null, new ArrayList<Expression>());
+            applicationMandatorySymbolExpression = new Expression(null, defaultMandatorySymbol, ExpressionType.TYPE_CONSTANT.name(), String.class.getName(),
+                    null, new ArrayList<Expression>());
         } else {
             applicationMandatorySymbolExpression = xmlExpressionsUtil.parseExpression(applicationMandatorySymbolNode);
         }
@@ -169,6 +175,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getApplicationMandatorySymbolStyle() {
 
         String applicationMandatorySymbolClasses = null;
@@ -178,7 +185,8 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
         final Node applicationMandatorySymbolClassesNode = getNodeByXpath(document, xpath);
         if (applicationMandatorySymbolClassesNode == null) {
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "No CSS classes were found in the definition file for the application mandatory symbol element. Default style will be used");
+                LOGGER.log(Level.FINE,
+                        "No CSS classes were found in the definition file for the application mandatory symbol element. Default style will be used");
             }
         } else {
             applicationMandatorySymbolClasses = applicationMandatorySymbolClassesNode.getTextContent();
@@ -189,6 +197,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getApplicationName() throws InvalidFormDefinitionException {
         String applicationName = null;
 
@@ -209,6 +218,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getApplicationVersion() throws InvalidFormDefinitionException {
         String applicationVersion = null;
 
@@ -229,6 +239,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getApplicationLayout() {
         String applicationLayout = null;
 
@@ -249,6 +260,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getApplicationPermissions() {
         String permissions = null;
         Node permissionsNode = null;
@@ -276,6 +288,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getMigrationProductVersion() {
 
         String migrationProductVersion = null;
@@ -296,18 +309,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
     /**
      * {@inheritDoc}
      */
-    public String getHomePage() {
-
-        String homePage = null;
-        final String xpath = "//" + XMLForms.HOME_PAGE;
-        final Node homePageNode = getNodeByXpath(document, xpath);
-        homePage = homePageNode.getTextContent();
-        return homePage;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public String getProductVersion() {
 
         String productVersion = null;

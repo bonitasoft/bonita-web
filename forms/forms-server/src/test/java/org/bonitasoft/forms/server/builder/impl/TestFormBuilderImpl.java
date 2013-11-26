@@ -85,7 +85,6 @@ public class TestFormBuilderImpl extends FormsTestCase {
     private File buildComplexFormXML() throws Exception {
         formBuilder.createFormDefinition();
         // formBuilder.addWelcomePage("resources/application/welcome.html");
-        formBuilder.addHomePage("resources/application/BonitaApplication.html");
         // formBuilder.addExternalWelcomePage("resources/application/external-welcome.html");
         formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
@@ -219,7 +218,6 @@ public class TestFormBuilderImpl extends FormsTestCase {
         final Document document = builder.parse(inputStream);
         inputStream.close();
         final XMLApplicationConfigDefAccessorImpl applicationConfigDefAccessor = new XMLApplicationConfigDefAccessorImpl(1, document);
-        Assert.assertEquals("resources/application/BonitaApplication.html", applicationConfigDefAccessor.getHomePage());
         Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, applicationConfigDefAccessor.getMigrationProductVersion());
         Assert.assertEquals("process label with accents éèà", applicationConfigDefAccessor.getApplicationLabelExpression().getContent());
         Assert.assertEquals("/process-template.html", applicationConfigDefAccessor.getApplicationLayout());

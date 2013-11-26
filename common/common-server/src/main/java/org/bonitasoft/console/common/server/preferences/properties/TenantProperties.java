@@ -16,14 +16,19 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * @author Ruiheng.Fan
@@ -35,21 +40,6 @@ public class TenantProperties {
      * Default name of the preferences file
      */
     public static final String PROPERTIES_FILENAME = "bonita-web-preferences.properties";
-
-    /**
-     * Key for the case list layout preference
-     */
-    public static final String CASE_LIST_LAYOUT_KEY = "userXP.caseList.layout";
-
-    /**
-     * Key for the case list stretched column preference
-     */
-    public static final String CASE_LIST_STRETCHED_COLUMN_KEY = "userXP.caseList.stretchedColumn";
-
-    /**
-     * key for Current theme
-     */
-    public static final String CURRENT_THEME_KEY = "userXP.currentTheme";
 
     /**
      * Indicates that the preferences have been loaded
@@ -94,17 +84,17 @@ public class TenantProperties {
      * @throws IOException
      */
     protected TenantProperties(final long tenantId) {
-        this.propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), PROPERTIES_FILENAME);
+        propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), PROPERTIES_FILENAME);
         InputStream inputStream = null;
         try {
-            if (!this.propertiesFile.exists()) {
-                initProperties(this.propertiesFile);
+            if (!propertiesFile.exists()) {
+                initProperties(propertiesFile);
             }
-            inputStream = new FileInputStream(this.propertiesFile);
-            this.properties.load(inputStream);
+            inputStream = new FileInputStream(propertiesFile);
+            properties.load(inputStream);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
+                LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
             }
         } finally {
             if (inputStream != null) {
@@ -112,7 +102,7 @@ public class TenantProperties {
                     inputStream.close();
                 } catch (final IOException e) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
+                        LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
                     }
                 }
             }
@@ -122,34 +112,32 @@ public class TenantProperties {
     protected void initProperties(final File aPropertiesFile) throws IOException {
         // Create the file.
         aPropertiesFile.createNewFile();
-        // Add default content.
-        setProperty(CASE_LIST_STRETCHED_COLUMN_KEY, "10");
     }
 
     public String getProperty(final String propertyName) {
-        if (this.properties == null) {
+        if (properties == null) {
             return null;
         }
-        return this.properties.getProperty(propertyName);
+        return properties.getProperty(propertyName);
     }
 
     public String getProperty(final String propertyName, final String defaultValue) {
-        if (this.properties == null) {
+        if (properties == null) {
             return defaultValue;
         }
-        return this.properties.getProperty(propertyName, defaultValue);
+        return properties.getProperty(propertyName, defaultValue);
     }
 
     public void removeProperty(final String propertyName) throws IOException {
-        if (this.properties != null) {
-            this.properties.remove(propertyName);
+        if (properties != null) {
+            properties.remove(propertyName);
             OutputStream outputStream = null;
             try {
-                outputStream = new FileOutputStream(this.propertiesFile);
-                this.properties.store(outputStream, null);
+                outputStream = new FileOutputStream(propertiesFile);
+                properties.store(outputStream, null);
             } catch (final IOException e) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
+                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
                 }
             } finally {
                 if (outputStream != null) {
@@ -157,7 +145,7 @@ public class TenantProperties {
                         outputStream.close();
                     } catch (final IOException e) {
                         if (LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
+                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
                         }
                     }
                 }
@@ -166,15 +154,15 @@ public class TenantProperties {
     }
 
     public void setProperty(final String propertyName, final String propertyValue) throws IOException {
-        if (this.properties != null) {
-            this.properties.setProperty(propertyName, propertyValue);
+        if (properties != null) {
+            properties.setProperty(propertyName, propertyValue);
             OutputStream outputStream = null;
             try {
-                outputStream = new FileOutputStream(this.propertiesFile);
-                this.properties.store(outputStream, null);
+                outputStream = new FileOutputStream(propertiesFile);
+                properties.store(outputStream, null);
             } catch (final IOException e) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + this.propertiesFile.getPath() + " could not be loaded.", e);
+                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
                 }
             } finally {
                 if (outputStream != null) {
@@ -182,7 +170,7 @@ public class TenantProperties {
                         outputStream.close();
                     } catch (final IOException e) {
                         if (LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + this.propertiesFile.getPath() + " could not be closed.", e);
+                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
                         }
                     }
                 }

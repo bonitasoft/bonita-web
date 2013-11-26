@@ -201,22 +201,22 @@
 }
 
 .bg(@img, @repeat: no-repeat, @bgcolor: transparent, @x:center, @y: center, @important: "!important"){
-	background: url("skins/@{skinpath}/images/@{img}") @bgcolor @repeat  @x @y ~"@{important}";
+	background: url("@{skinpath}@{img}") @bgcolor @repeat  @x @y ~"@{important}";
 }
 .bg(@img, @repeat: no-repeat, @bgcolor: transparent, @x:center, @y: center){
 	.bg(@img, @repeat, @bgcolor, @x, @y, "!important");
 }
 .bg(@img, @options){
-	background: url("skins/@{skinpath}/images/@{img}") @options !important;
+	background: url("@{skinpath}@{img}") @options !important;
 }
 .bgPie(@img, @options){
 	.bgPie(@img, @options,"");
 }
 .bg(@img, @options,@important:"!important"){
-	background: url("skins/@{skinpath}/images/@{img}") @options ~"@{important}";
+	background: url("@{skinpath}@{img}") @options ~"@{important}";
 }
 .bgPie(@img, @options,@important:"!important"){
-	-pie-background: url("skins/@{skinpath}/images/@{img}") @options ;
+	-pie-background: url("@{skinpath}@{img}") @options ;
 	.CSSPIE();
 }
 .bgAlphaColor(@c){

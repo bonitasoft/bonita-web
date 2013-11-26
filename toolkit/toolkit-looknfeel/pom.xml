@@ -11,11 +11,8 @@
 	<packaging>jar</packaging>
 	
 	<properties>
-		<wro4j.version>1.7.0</wro4j.version>
 		<output.directory>${project.build.directory}/${project.build.finalName}</output.directory>
 		<wro.config>${basedir}/src/main/wro/wro-build-time</wro.config>
-		<assembly.config>${basedir}/src/main/assembly.xml</assembly.config>
-		<assembly.path>assembly.xml</assembly.path>
 		<jetty.rewrite.version>7.6.3.v20120416</jetty.rewrite.version>
 		<jetty.servlets.version>7.6.3.v20120416</jetty.servlets.version>
 	</properties>
@@ -24,12 +21,10 @@
 		<dependency>
 			<groupId>ro.isdc.wro4j</groupId>
 			<artifactId>wro4j-core</artifactId>
-			<version>${wro4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ro.isdc.wro4j</groupId>
 			<artifactId>wro4j-extensions</artifactId>
-			<version>${wro4j.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -58,7 +53,6 @@
 					<plugin>
 						<groupId>ro.isdc.wro4j</groupId>
 						<artifactId>wro4j-maven-plugin</artifactId>
-						<version>${wro4j.version}</version>
 						<executions>
 							<execution>
 								<phase>generate-resources</phase>
@@ -84,11 +78,11 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-assembly-plugin</artifactId>
-						<version>2.3</version>
 						<configuration>
-							<appendAssemblyId>false</appendAssemblyId>
+							<appendAssemblyId>true</appendAssemblyId>
 							<descriptors>
-								<descriptor>${assembly.path}</descriptor>
+								<descriptor>assemblyCSS.xml</descriptor>
+								<descriptor>assemblyLESS.xml</descriptor>
 							</descriptors>
 						</configuration>
 						<executions>

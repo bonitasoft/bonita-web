@@ -121,6 +121,28 @@
 							</outputDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>unpack-toolkit-looknfeel</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.bonitasoft.web.toolkit</groupId>
+									<artifactId>toolkit-looknfeel</artifactId>
+									<version>${project.version}</version>
+									<classifier>css</classifier>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>
+								${project.build.directory}/bonita-home/bonita/client/platform/tenant-template/work/theme/portal
+							</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			

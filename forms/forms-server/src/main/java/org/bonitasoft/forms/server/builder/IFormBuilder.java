@@ -52,16 +52,6 @@ public interface IFormBuilder {
     IFormBuilder createFormDefinition();
 
     /**
-     * Add an user defined homepage to the webapp
-     * 
-     * @param url
-     *            the absolute URL of the homepage
-     * @return an implementation of {@link IFormBuilder}
-     * @throws InvalidFormDefinitionException
-     */
-    IFormBuilder addHomePage(final String url) throws InvalidFormDefinitionException;
-
-    /**
      * Add an application
      * 
      * @param applicationName
@@ -365,8 +355,7 @@ public interface IFormBuilder {
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
-    IFormBuilder addValidator(String validatorId, String className, String cssClasses, ValidatorPosition position)
-            throws InvalidFormDefinitionException;
+    IFormBuilder addValidator(String validatorId, String className, String cssClasses, ValidatorPosition position) throws InvalidFormDefinitionException;
 
     /**
      * Add an action on an application and create the list of actions if it doesn't exist yet

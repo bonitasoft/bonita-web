@@ -14,28 +14,27 @@
  */
 package org.bonitasoft.console.common.server.themes;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.DateUtil;
-import org.bonitasoft.console.common.server.utils.UnZIPUtil;
-import org.bonitasoft.engine.session.APISession;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.UnZIPUtil;
+import org.bonitasoft.engine.session.APISession;
 
 /**
  * Utility class upload theme
@@ -66,6 +65,7 @@ public class ThemeUploadServlet extends HttpServlet {
         final APISession apiSession = (APISession) request.getSession().getAttribute(API_SESSION_PARAM_KEY);
         response.setContentType("text/html;charset=UTF-8");
         final PrintWriter responsePW = response.getWriter();
+        String themeTempPath = null;
         try {
             if (!ServletFileUpload.isMultipartContent(request)) {
                 final String theErrorMessage = "Error while using the servlet ThemeUploadServlet to upload theme,it is not MultipartContent";
@@ -84,7 +84,7 @@ public class ThemeUploadServlet extends HttpServlet {
                 }
                 final String fileName = item.getName();
 
-                String themeTempPath = getCommonTempFolder(apiSession.getTenantId()) + File.separator + fileName;
+                themeTempPath = getCommonTempFolder(apiSession.getTenantId()) + File.separator + fileName;
                 File uploadedFile = new File(themeTempPath);
                 int suffix = 0;
                 while (uploadedFile.exists()) {
@@ -98,17 +98,8 @@ public class ThemeUploadServlet extends HttpServlet {
                     LOGGER.log(Level.FINEST, "uploaded File Path: " + themeTempPath);
                 }
                 final String encodedUploadedFilePath = URLEncoder.encode(themeTempPath, "UTF-8");
-                // validate and copy
-                validateThemePackage(apiSession.getTenantId(), themeTempPath, true);
-                final String installedBy = (String) request.getSession().getAttribute(apiSession.getUserName());
-
-                // add to theme config
-                final String idStr = String.valueOf(new Date().getTime());
-                final String nameStr = fileName.substring(0, fileName.indexOf(".zip"));
-                final String installedByStr = installedBy;
-                final String installedDateStr = DateUtil.formatDate(new Date());
-                final String applyStr = "false";
-                ThemeConfigManager.getInstance(apiSession.getTenantId()).createTheme(idStr, nameStr, installedByStr, installedDateStr, applyStr);
+                // validate
+                validateThemePackage(apiSession.getTenantId(), themeTempPath);
                 responsePW.print(encodedUploadedFilePath);
                 responsePW.close();
             }
@@ -118,6 +109,11 @@ public class ThemeUploadServlet extends HttpServlet {
                 LOGGER.log(Level.SEVERE, theErrorMessage, e);
             }
             throw new ServletException(theErrorMessage, e);
+        } finally {
+            if (themeTempPath != null) {
+                final ThemeManager themeManager = new ThemeManager();
+                themeManager.deleteFolder(themeTempPath);
+            }
         }
     }
 
@@ -135,10 +131,10 @@ public class ThemeUploadServlet extends HttpServlet {
         return themesParentFolder;
     }
 
-    public void validateThemePackage(final long tenantId, final String themePath, final boolean deleteWhileError) throws ThemeStructureException {
+    public void validateThemePackage(final long tenantId, final String themePath) throws ThemeStructureException {
         final ThemeValidator validator = new ThemeValidator();
         try {
-            validator.doValidate(tenantId, themePath, deleteWhileError);
+            validator.doValidate(themePath);
         } catch (final IOException e) {
             final String theErrorMessage = "Exception while getting the themes folder: it may be not exist or path is error.";
             if (LOGGER.isLoggable(Level.SEVERE)) {

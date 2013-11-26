@@ -52,7 +52,7 @@ public class EditProfilePage extends Page {
         PRIVILEGES.add(ProfileListingPage.TOKEN);
     }
 
-    private static final String ICON_URL = "themeResource?theme=default&location=images/profile.png";
+    private static final String ICON_URL = "themeResource?theme=portal&location=images/profile.png";
 
     @Override
     public void defineTitle() {

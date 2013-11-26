@@ -40,7 +40,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     private String workFolderPath = null;
 
-    private String consoleWorkFolderPath = null;
+    private final String consoleWorkFolderPath = null;
 
     private String formsWorkFolderPath = null;
 
@@ -70,9 +70,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String profilesIconsWorkFolderPath = null;
 
-    public static final String looknfeelWorkFolderName = "looknfeel";
+    public static final String themeWorkFolderName = "theme";
 
-    private String looknfeelWorkFolderPath = null;
+    private String themeWorkFolderPath = null;
 
     public static final String profilesWorkFolderName = "profiles";
 
@@ -93,15 +93,15 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      *            Tenant Id
      */
     public WebBonitaConstantsTenancyImpl(final long tenantId) {
-        this.tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
+        tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
     }
 
     @Override
     public String getTenantsFolderPath() {
-        if (this.tenantsFolderPath == null) {
-            this.tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;;
+        if (tenantsFolderPath == null) {
+            tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;;
         }
-        return this.tenantsFolderPath;
+        return tenantsFolderPath;
     }
 
     /**
@@ -117,10 +117,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getTempFolderPath() {
-        if (this.tempFolderPath == null) {
-            this.tempFolderPath = this.tenantFolderPath + tmpFolderName + File.separator;
+        if (tempFolderPath == null) {
+            tempFolderPath = tenantFolderPath + tmpFolderName + File.separator;
         }
-        return this.tempFolderPath;
+        return tempFolderPath;
     }
 
     /**
@@ -128,10 +128,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getConfFolderPath() {
-        if (this.confFolderPath == null) {
-            this.confFolderPath = this.tenantFolderPath + confFolderName + File.separator;
+        if (confFolderPath == null) {
+            confFolderPath = tenantFolderPath + confFolderName + File.separator;
         }
-        return this.confFolderPath;
+        return confFolderPath;
     }
 
     /**
@@ -139,10 +139,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getWorkFolderPath() {
-        if (this.workFolderPath == null) {
-            this.workFolderPath = this.tenantFolderPath + workFolderName + File.separator;
+        if (workFolderPath == null) {
+            workFolderPath = tenantFolderPath + workFolderName + File.separator;
         }
-        return this.workFolderPath;
+        return workFolderPath;
     }
 
     /**
@@ -150,10 +150,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getProfilesWorkFolderPath() {
-        if (this.profilesWorkFolderPath == null) {
-            this.profilesWorkFolderPath = getWorkFolderPath() + profilesWorkFolderName + File.separator;
+        if (profilesWorkFolderPath == null) {
+            profilesWorkFolderPath = getWorkFolderPath() + profilesWorkFolderName + File.separator;
         }
-        return this.profilesWorkFolderPath;
+        return profilesWorkFolderPath;
     }
 
     /**
@@ -161,10 +161,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getReportsWorkFolderPath() {
-        if (this.reportsWorkFolderPath == null) {
-            this.reportsWorkFolderPath = getWorkFolderPath() + reportsWorkFolderName + File.separator;
+        if (reportsWorkFolderPath == null) {
+            reportsWorkFolderPath = getWorkFolderPath() + reportsWorkFolderName + File.separator;
         }
-        return this.reportsWorkFolderPath;
+        return reportsWorkFolderPath;
     }
 
     /**
@@ -172,80 +172,80 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getFormsWorkFolderPath() {
-        if (this.formsWorkFolderPath == null) {
-            this.formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
+        if (formsWorkFolderPath == null) {
+            formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
         }
-        return this.formsWorkFolderPath;
+        return formsWorkFolderPath;
     }
 
     private String getIconsWorkFolderPath() {
-        if (this.iconsWorkFolderPath == null) {
-            this.iconsWorkFolderPath = getWorkFolderPath() + iconsWorkFolderName + File.separator;
+        if (iconsWorkFolderPath == null) {
+            iconsWorkFolderPath = getWorkFolderPath() + iconsWorkFolderName + File.separator;
         }
-        return this.iconsWorkFolderPath;
+        return iconsWorkFolderPath;
     }
 
     @Override
     public String getConsoleDefaultIconsFolderPath() {
-        if (this.defaultIconsWorkFolderPath == null) {
-            this.defaultIconsWorkFolderPath = getIconsWorkFolderPath() + defaultIconsWorkFolderName + File.separator;
+        if (defaultIconsWorkFolderPath == null) {
+            defaultIconsWorkFolderPath = getIconsWorkFolderPath() + defaultIconsWorkFolderName + File.separator;
         }
-        return this.iconsWorkFolderPath;
+        return iconsWorkFolderPath;
     }
 
     @Override
     public String getConsoleUserIconsFolderPath() {
-        if (this.usersIconsWorkFolderPath == null) {
-            this.usersIconsWorkFolderPath = getIconsWorkFolderPath() + usersIconsWorkFolderName + File.separator;
+        if (usersIconsWorkFolderPath == null) {
+            usersIconsWorkFolderPath = getIconsWorkFolderPath() + usersIconsWorkFolderName + File.separator;
         }
-        return this.usersIconsWorkFolderPath;
+        return usersIconsWorkFolderPath;
     }
 
     @Override
     public String getConsoleRoleIconsFolderPath() {
-        if (this.rolesIconsWorkFolderPath == null) {
-            this.rolesIconsWorkFolderPath = getIconsWorkFolderPath() + ROLES_ICONS_FOLDER_NAME + File.separator;
+        if (rolesIconsWorkFolderPath == null) {
+            rolesIconsWorkFolderPath = getIconsWorkFolderPath() + ROLES_ICONS_FOLDER_NAME + File.separator;
         }
-        return this.rolesIconsWorkFolderPath;
+        return rolesIconsWorkFolderPath;
     }
 
     @Override
     public String getConsoleProcessIconsFolderPath() {
-        if (this.processesIconsWorkFolderPath == null) {
-            this.processesIconsWorkFolderPath = getIconsWorkFolderPath() + processesIconsWorkFolderName + File.separator;
+        if (processesIconsWorkFolderPath == null) {
+            processesIconsWorkFolderPath = getIconsWorkFolderPath() + processesIconsWorkFolderName + File.separator;
         }
-        return this.processesIconsWorkFolderPath;
+        return processesIconsWorkFolderPath;
     }
 
     @Override
     public String getConsoleProfilesIconsFolderPath() {
-        if (this.profilesIconsWorkFolderPath == null) {
-            this.profilesIconsWorkFolderPath = getIconsWorkFolderPath() + profilesIconsWorkFolderName + File.separator;
+        if (profilesIconsWorkFolderPath == null) {
+            profilesIconsWorkFolderPath = getIconsWorkFolderPath() + profilesIconsWorkFolderName + File.separator;
         }
-        return this.profilesIconsWorkFolderPath;
+        return profilesIconsWorkFolderPath;
     }
 
     @Override
     public String getThemeConsoleFolderPath() {
-        if (this.looknfeelWorkFolderPath == null) {
-            this.looknfeelWorkFolderPath = getWorkFolderPath() + looknfeelWorkFolderName + File.separator;
+        if (themeWorkFolderPath == null) {
+            themeWorkFolderPath = getWorkFolderPath() + themeWorkFolderName + File.separator;
         }
-        return this.looknfeelWorkFolderPath;
+        return themeWorkFolderPath;
     }
 
     @Override
     public String getPDFTemplateFolderPath() {
-        if (this.pdfWorkFolderPath == null) {
-            this.pdfWorkFolderPath = getWorkFolderPath() + pdfWorkFolderName + File.separator;
+        if (pdfWorkFolderPath == null) {
+            pdfWorkFolderPath = getWorkFolderPath() + pdfWorkFolderName + File.separator;
         }
-        return this.pdfWorkFolderPath;
+        return pdfWorkFolderPath;
     }
 
     @Override
     public String getConsoleGroupIconsFolderPath() {
-        if (this.groupsIconsWorkFolderPath == null) {
-            this.groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
+        if (groupsIconsWorkFolderPath == null) {
+            groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
         }
-        return this.groupsIconsWorkFolderPath;
+        return groupsIconsWorkFolderPath;
     }
 }

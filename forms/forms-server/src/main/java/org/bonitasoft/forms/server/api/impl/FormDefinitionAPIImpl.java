@@ -171,8 +171,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         context.put(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE, applicationDeploymentDate);
         FormServiceProvider formServiceProvider = null;
         formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
-        final IApplicationFormDefAccessor applicationDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, formDefinitionDocument,
-                context);
+        final IApplicationFormDefAccessor applicationDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, formDefinitionDocument, context);
         return applicationDefAccessor;
     }
 
@@ -191,15 +190,6 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     public String getProductVersion(final Map<String, Object> context) throws FormServiceProviderNotFoundException, SessionTimeoutException,
             ApplicationFormDefinitionNotFoundException {
         return getApplicationConfigDefinition(context).getProductVersion();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getHomePage(final Map<String, Object> context) throws FormServiceProviderNotFoundException, SessionTimeoutException,
-            ApplicationFormDefinitionNotFoundException {
-        return getApplicationConfigDefinition(context).getHomePage();
     }
 
     /**
@@ -245,13 +235,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     @Override
     public String getFormPermissions(final String formID, final Map<String, Object> context) throws ApplicationFormDefinitionNotFoundException,
             InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        String formPermissions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPermissions(formID, locale,
-                applicationDeploymentDate);
+        String formPermissions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPermissions(formID, locale, applicationDeploymentDate);
         if (formPermissions == null) {
             formPermissions = getApplicationFormDefinition(formID, context).getFormPermissions();
             if (formID != null) {
-                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPermissions(formID, locale, applicationDeploymentDate,
-                        formPermissions);
+                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPermissions(formID, locale, applicationDeploymentDate, formPermissions);
             }
         }
         return formPermissions;
@@ -279,13 +267,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     @Override
     public String getFormPageLayout(final String formID, final String pageID, final Map<String, Object> context)
             throws ApplicationFormDefinitionNotFoundException, InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        String formPageLayout = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPageLayout(formID, locale,
-                applicationDeploymentDate, pageID);
+        String formPageLayout = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPageLayout(formID, locale, applicationDeploymentDate, pageID);
         if (formPageLayout == null) {
             formPageLayout = getApplicationFormDefinition(formID, context).getFormPageLayout(pageID);
             if (formID != null) {
-                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPageLayout(formID, locale, applicationDeploymentDate, pageID,
-                        formPageLayout);
+                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPageLayout(formID, locale, applicationDeploymentDate, pageID, formPageLayout);
             }
         }
         return formPageLayout;
@@ -347,8 +333,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             // store bodycontent in the cach using formId PageId
             String bodyContentId = null;
             if (formID != null) {
-                bodyContentId = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageLayoutContent(formID, pageId, locale,
-                        applicationDeploymentDate,
+                bodyContentId = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageLayoutContent(formID, pageId, locale, applicationDeploymentDate,
                         formPage.getPageLayout().getBodyContent());
             }
             formPage.getPageLayout().setBodyContentId(bodyContentId);
@@ -458,13 +443,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     @Override
     public List<TransientData> getFormTransientData(final String formID, final Map<String, Object> context) throws InvalidFormDefinitionException,
             FormNotFoundException, ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        List<TransientData> transientData = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getTransientData(formID, locale,
-                applicationDeploymentDate);
+        List<TransientData> transientData = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getTransientData(formID, locale, applicationDeploymentDate);
         if (transientData == null) {
             transientData = getApplicationFormDefinition(formID, context).getTransientData();
             if (formID != null) {
-                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeTransientData(formID, locale, applicationDeploymentDate,
-                        transientData);
+                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeTransientData(formID, locale, applicationDeploymentDate, transientData);
             }
         }
         return transientData;
@@ -480,14 +463,12 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formID, context);
         for (final String pageId : pageIds) {
-            List<FormAction> pageActions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getPageActions(formID, locale,
-                    applicationDeploymentDate,
+            List<FormAction> pageActions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getPageActions(formID, locale, applicationDeploymentDate,
                     formID, pageId);
             if (pageActions == null) {
                 pageActions = applicationFormDefinition.getActions(pageId);
                 if (formID != null) {
-                    FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageActions(formID, locale, applicationDeploymentDate, formID,
-                            pageId,
+                    FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageActions(formID, locale, applicationDeploymentDate, formID, pageId,
                             pageActions);
                 }
             }
