@@ -16,9 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
@@ -29,10 +26,8 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
-import org.bonitasoft.web.rest.server.engineclient.CaseEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -42,6 +37,9 @@ import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -126,14 +124,8 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
 
     @Override
     public CaseItem add(CaseItem caseItem) {
-        return new CaseSarter(caseItem, createCaseEngineClient(), createProcessEngineClient()).start();
+        EngineClientFactory factory = new EngineClientFactory(new EngineAPIAccessor(getEngineSession()));
+        return new CaseSarter(caseItem, factory.createCaseEngineClient(), factory.createProcessEngineClient()).start();
     }
     
-    private CaseEngineClient createCaseEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor()).createCaseEngineClient(getEngineSession());
-    }
-    
-    private ProcessEngineClient createProcessEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor()).createProcessEngineClient(getEngineSession());
-    }
 }

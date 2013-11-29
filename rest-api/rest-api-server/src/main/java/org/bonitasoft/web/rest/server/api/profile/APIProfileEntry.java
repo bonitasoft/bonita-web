@@ -16,10 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_INDEX;
-
-import java.util.List;
-
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -33,6 +29,10 @@ import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
+
+import java.util.List;
+
+import static org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem.ATTRIBUTE_INDEX;
 
 /**
  * @author Nicolas Tith
@@ -77,6 +77,7 @@ public class APIProfileEntry extends ConsoleAPI<ProfileEntryItem> implements
     @Override
     protected Datastore defineDefaultDatastore() {
         ProfileEntryEngineClient profileEntryClient = createProfileEntryEngineClient();
+
         ComposedDatastore<ProfileEntryItem> datastore = new ComposedDatastore<ProfileEntryItem>();
         datastore.setGetHelper(new GetProfileEntryHelper(profileEntryClient));
         datastore.setSearchHelper(new SearchProfileEntriesHelper(profileEntryClient));
@@ -84,16 +85,8 @@ public class APIProfileEntry extends ConsoleAPI<ProfileEntryItem> implements
     }
 
     protected ProfileEntryEngineClient createProfileEntryEngineClient() {
-        return getEngineClientFactory()
-                .createProfileEntryEngineClient(getEngineSession());
-    }
-
-    private EngineClientFactory getEngineClientFactory() {
-        return new EngineClientFactory(getEngineAPIAccessor());
-    }
-
-    private EngineAPIAccessor getEngineAPIAccessor() {
-        return new EngineAPIAccessor();
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
+                .createProfileEntryEngineClient();
     }
 
 }

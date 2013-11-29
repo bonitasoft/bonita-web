@@ -41,7 +41,9 @@ public class APIProfile extends ConsoleAPI<ProfileItem> implements
 
     @Override
     protected ComposedDatastore<ProfileItem> defineDefaultDatastore() {
+
         ProfileEngineClient profileClient = createProfileEngineClient();
+
         ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<ProfileItem>();
         datastore.setGetHelper(new GetProfileHelper(profileClient));
         datastore.setSearchHelper(new SearchProfilesHelper(profileClient));
@@ -49,12 +51,8 @@ public class APIProfile extends ConsoleAPI<ProfileItem> implements
     }
 
     private ProfileEngineClient createProfileEngineClient() {
-        return new EngineClientFactory(getEngineAPIAccessor())
-                .createProfileEngineClient(getEngineSession());
-    }
-
-    private EngineAPIAccessor getEngineAPIAccessor() {
-        return new EngineAPIAccessor();
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
+                .createProfileEngineClient();
     }
 
     @Override
