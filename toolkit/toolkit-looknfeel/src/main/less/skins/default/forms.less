@@ -81,6 +81,7 @@ form{
 		fieldset{
 			margin: @form-fieldContainer-margin;
 			legend{
+				margin: @form-labelContainer-margin;
 				color: @form-label-color;
 			}
 		}
@@ -221,15 +222,13 @@ form{
 .form{
 	.custom-{
 		&checkbox, &radio{
-			label{
-				&.checked{
+			label, label.checked{
 					//overrides datatables properties
-					margin: 0 !important;
-					width: 100%;
-					background-position: @form-input-checkboxRadio-bgPosition !important;
-					padding-left: @form-label-checkboxRadio-padding !important;
-					.boxSizing();
-				}
+				background-position: @form-input-checkboxRadio-bgPosition !important;
+				.boxSizing();
+				margin: 0 !important;
+				width: 100%;
+				padding-left: @form-label-checkboxRadio-padding !important;
 			}
 			input{
 				height: @form-input-radio-height - 8 !important;
@@ -240,10 +239,10 @@ form{
 	}
 }
 
-form{
+form {
 	&.success{
 		.formentries{
-			.formentry{
+			.formentry {
 				.input{
 					div.alert_message.ERROR{
 						margin :  @form-input-error-margin;
