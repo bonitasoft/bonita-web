@@ -112,7 +112,7 @@ function refreshReport(e, localeDateFormat, prefix) {
         toDate.val(toDateVal);
         fromDate.val(fromDateVal);
     } catch (err) {
-        console.log("An error occured while setting date values");
+        console.log("An error occurred while setting date values");
     }
 
     $.ajax({
