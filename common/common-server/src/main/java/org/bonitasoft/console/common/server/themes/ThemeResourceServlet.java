@@ -201,7 +201,7 @@ public class ThemeResourceServlet extends HttpServlet {
         File myThemesParentFolder = null;
 
         try {
-            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(1L).getConsoleThemeFolder();
+            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(1L).getPortalThemeFolder();
         } catch (final RuntimeException e) {
             final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -227,7 +227,7 @@ public class ThemeResourceServlet extends HttpServlet {
             tenantId = Long.parseLong(tenantFromRequest);
         }
         try {
-            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(tenantId).getConsoleThemeFolder();
+            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder();
         } catch (final RuntimeException e) {
             final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {

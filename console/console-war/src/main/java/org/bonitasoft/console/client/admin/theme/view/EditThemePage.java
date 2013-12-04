@@ -19,12 +19,13 @@ package org.bonitasoft.console.client.admin.theme.view;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.theme.action.ApplyThemeAction;
-import org.bonitasoft.web.rest.model.portal.theme.ThemeDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
+
+import com.bonitasoft.web.rest.model.portal.theme.ThemeDefinition;
 
 /**
  * @author Gai Cuisha

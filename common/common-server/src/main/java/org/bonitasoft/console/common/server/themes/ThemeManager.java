@@ -45,9 +45,9 @@ public class ThemeManager {
      * @throws ThemeStructureException
      * @throws IOException
      */
-    public void applyTheme(final long themeID, final File themesFolder) throws ThemeStructureException, IOException {
+    public void applyTheme(final String type, final File themesFolder) throws ThemeStructureException, IOException {
         final ThemeValidator validator = new ThemeValidator();
-        validator.doValidate(themesFolder.getAbsolutePath() + File.separator + themeID);
+        validator.doValidate(themesFolder.getAbsolutePath() + File.separator + type);
         // TODO engine call
     }
 

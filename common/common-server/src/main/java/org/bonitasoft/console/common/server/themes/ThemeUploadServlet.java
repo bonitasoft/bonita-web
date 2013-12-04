@@ -33,7 +33,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.UnZIPUtil;
+import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -93,7 +93,7 @@ public class ThemeUploadServlet extends HttpServlet {
                 }
                 themeTempPath = uploadedFile.getAbsolutePath();
                 // extract ZIP file
-                UnZIPUtil.unzip(item.getInputStream(), themeTempPath);
+                UnzipUtil.unzip(item.getInputStream(), themeTempPath);
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "uploaded File Path: " + themeTempPath);
                 }

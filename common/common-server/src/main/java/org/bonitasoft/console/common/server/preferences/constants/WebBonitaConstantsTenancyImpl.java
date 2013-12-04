@@ -186,7 +186,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleDefaultIconsFolderPath() {
+    public String getPortalDefaultIconsFolderPath() {
         if (defaultIconsWorkFolderPath == null) {
             defaultIconsWorkFolderPath = getIconsWorkFolderPath() + defaultIconsWorkFolderName + File.separator;
         }
@@ -194,7 +194,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleUserIconsFolderPath() {
+    public String getPortalUserIconsFolderPath() {
         if (usersIconsWorkFolderPath == null) {
             usersIconsWorkFolderPath = getIconsWorkFolderPath() + usersIconsWorkFolderName + File.separator;
         }
@@ -202,7 +202,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleRoleIconsFolderPath() {
+    public String getPortalRoleIconsFolderPath() {
         if (rolesIconsWorkFolderPath == null) {
             rolesIconsWorkFolderPath = getIconsWorkFolderPath() + ROLES_ICONS_FOLDER_NAME + File.separator;
         }
@@ -210,7 +210,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleProcessIconsFolderPath() {
+    public String getPortalProcessIconsFolderPath() {
         if (processesIconsWorkFolderPath == null) {
             processesIconsWorkFolderPath = getIconsWorkFolderPath() + processesIconsWorkFolderName + File.separator;
         }
@@ -218,7 +218,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleProfilesIconsFolderPath() {
+    public String getPortalProfilesIconsFolderPath() {
         if (profilesIconsWorkFolderPath == null) {
             profilesIconsWorkFolderPath = getIconsWorkFolderPath() + profilesIconsWorkFolderName + File.separator;
         }
@@ -226,7 +226,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getThemeConsoleFolderPath() {
+    public String getThemePortalFolderPath() {
         if (themeWorkFolderPath == null) {
             themeWorkFolderPath = getWorkFolderPath() + themeWorkFolderName + File.separator;
         }
@@ -242,7 +242,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleGroupIconsFolderPath() {
+    public String getPortalGroupIconsFolderPath() {
         if (groupsIconsWorkFolderPath == null) {
             groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
         }

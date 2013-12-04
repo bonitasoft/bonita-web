@@ -18,8 +18,6 @@ package org.bonitasoft.console.client.admin.theme.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.web.rest.model.portal.theme.ThemeDefinition;
-import org.bonitasoft.web.rest.model.portal.theme.ThemeItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -31,6 +29,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
+
+import com.bonitasoft.web.rest.model.portal.theme.ThemeDefinition;
+import com.bonitasoft.web.rest.model.portal.theme.ThemeItem;
 
 /**
  * @author Gai Cuisha

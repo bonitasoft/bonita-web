@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.theme.view.ListThemePage;
-import org.bonitasoft.web.rest.model.portal.theme.ThemeItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonUtil;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
@@ -28,6 +27,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.action.form.UpdateItemFormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.form.AbstractForm;
 
+import com.bonitasoft.web.rest.model.portal.theme.ThemeItem;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
