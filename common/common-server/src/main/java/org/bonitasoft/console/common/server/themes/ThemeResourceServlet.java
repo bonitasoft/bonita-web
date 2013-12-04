@@ -125,11 +125,8 @@ public class ThemeResourceServlet extends HttpServlet {
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        if (themeName.equals("mobile")) {
-            themesFolder = getThemesDefaultParentFolder(request);
-        } else {
-            themesFolder = getThemesParentFolder(request);
-        }
+
+        themesFolder = getThemesParentFolder(request);
 
         try {
 
@@ -195,22 +192,6 @@ public class ThemeResourceServlet extends HttpServlet {
             }
             throw new ServletException(e.getMessage(), e);
         }
-    }
-
-    private static File getThemesDefaultParentFolder(final HttpServletRequest request) throws ServletException {
-        File myThemesParentFolder = null;
-
-        try {
-            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(1L).getConsoleThemeFolder();
-        } catch (final RuntimeException e) {
-            final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
-            }
-            throw new ServletException(errorMessage);
-        }
-
-        return myThemesParentFolder;
     }
 
     public static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
