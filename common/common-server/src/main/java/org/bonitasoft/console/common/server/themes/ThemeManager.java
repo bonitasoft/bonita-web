@@ -51,12 +51,29 @@ public class ThemeManager {
         // TODO engine call
     }
 
-    public void compileLess(final File themesFolder, final String lessFileName, final String cssFileName) throws IOException, LessException {
+    /**
+     * @param themesFolder
+     *            the folder of the theme
+     * @param lessFileName
+     *            the name of the less file to compile
+     * @param cssFileName
+     *            the name of the css file in which to write the less
+     * @return the CSS file
+     * @throws IOException
+     *             if the less file doesn't exists or if the CSS file cannot be written
+     * @throws LessException
+     *             if the less file is invalid
+     */
+    public File compileLess(final File themesFolder, final String lessFileName, final String cssFileName) throws IOException, LessException {
+        File cssFile = null;
         // Instantiate the LESS compiler
         final LessCompiler lessCompiler = new LessCompiler();
         // compile LESS input file to CSS output file
         try {
-            lessCompiler.compile(new File(themesFolder, lessFileName), new File(themesFolder, cssFileName));
+            cssFile = new File(themesFolder, cssFileName);
+            cssFile.createNewFile();
+            lessCompiler.compile(new File(themesFolder, lessFileName), cssFile);
+            return cssFile;
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while compiling the less.", e);
@@ -98,7 +115,6 @@ public class ThemeManager {
             throw new IOException("The theme directory does not exist.");
         }
         deleteFolder(themeFolder.getAbsolutePath());
-        // TODO engine call
     }
 
     /**

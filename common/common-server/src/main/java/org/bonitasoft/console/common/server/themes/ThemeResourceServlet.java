@@ -125,11 +125,8 @@ public class ThemeResourceServlet extends HttpServlet {
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        if (themeName.equals("mobile")) {
-            themesFolder = getThemesDefaultParentFolder(request);
-        } else {
-            themesFolder = getThemesParentFolder(request);
-        }
+
+        themesFolder = getThemesParentFolder(request);
 
         try {
 
