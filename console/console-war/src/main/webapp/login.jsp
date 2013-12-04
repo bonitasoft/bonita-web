@@ -37,7 +37,7 @@
     String redirectUrl = JSP.getParameter("redirectUrl");
 
     StringBuffer actionUrl = new StringBuffer("loginservice?");
-	StringBuffer styleUrl = new StringBuffer("portal/themeResource?theme=portal&location=bonita.css");
+    StringBuffer styleUrl = new StringBuffer("portal/themeResource?theme=portal");
     if (tenantId != null) {
         actionUrl.append("tenant=").append(tenantId).append("&");
 		styleUrl.append("&tenant=").append(tenantId);
@@ -91,7 +91,7 @@
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
 <!-- Load LESS CSS -->
 <script type="text/javascript" src="portal/scripts/includes/array.prototype.js"></script>
-<link rel="stylesheet" type="text/css" href="<%= styleUrl %>"/>
+<link rel="stylesheet" type="text/css" href="<%= styleUrl %>&location=bonita.css"/>
 
 
 <script type="text/javascript" src="portal/scripts/jquery/jquery-1.6.4.js"></script>
@@ -109,6 +109,7 @@
 	<div id="floater"></div>
 	<div id="LoginFormContainer" >
 		<div id="logo">
+			<img src="<%= styleUrl %>&location=skin/images/login-logo.png"/>
 		</div>
 		<div class="body">
 			<form id="LoginForm" action="<%=actionUrl%>" method="post">
