@@ -36,15 +36,7 @@ public class ThemeItem extends Item {
 
     public static final String ATTRIBUTE_ID = "id";
 
-    public static final String ATTRIBUTE_ICON = "icon";
-
-    public static final String ATTRIBUTE_NAME = "name";
-
-    public static final String ATTRIBUTE_AUTHOR = "author";
-
-    public static final String ATTRIBUTE_DESCRIPTION = "description";
-
-    public static final String ATTRIBUTE_INSTALLEDBY = "installedBy";
+    public static final String ATTRIBUTE_TYPE = "type";
 
     public static final String ATTRIBUTE_INSTALLEDDATE = "installedDate";
 
@@ -52,21 +44,14 @@ public class ThemeItem extends Item {
 
     // public static final String ATTRIBUTE_imagePreview = "imagePreview";
 
-    public ThemeItem(final String id, final String icon, final String name, final String author, final String description, final String installedBy,
-            final String installedDate, final String isDefault) {
+    public ThemeItem(final String id, final String installedDate, final String isDefault) {
         this.setAttribute(ATTRIBUTE_ID, id);
-        this.setAttribute(ATTRIBUTE_ICON, icon);
-        this.setAttribute(ATTRIBUTE_NAME, name);
-        this.setAttribute(ATTRIBUTE_AUTHOR, author);
-        this.setAttribute(ATTRIBUTE_DESCRIPTION, description);
-        this.setAttribute(ATTRIBUTE_INSTALLEDBY, installedBy);
         this.setAttribute(ATTRIBUTE_INSTALLEDDATE, installedDate);
         this.setAttribute(ATTRIBUTE_ISDEFAULT, isDefault);
     }
 
-    public ThemeItem(final String id, final String name) {
+    public ThemeItem(final String id) {
         this.setAttribute(ATTRIBUTE_ID, id);
-        this.setAttribute(ATTRIBUTE_NAME, name);
     }
 
     @Override

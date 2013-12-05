@@ -1,0 +1,110 @@
+@import "skin.config.less";
+.page.twoCols{
+	>.header{
+		display: none;
+	}
+	>.body{
+		min-width: @twoCols-min-width;
+		top: @twoCols-body-top;
+		padding: @twoCols-body-padding !important;
+		.boxSizing();
+		
+		.sections_panel{
+			li{
+				color: @filtersPanel-textColor;
+				font-weight: @filtersPanel-fontWeight;
+				.fontSize(@filtersPanel-fontSize);
+				.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
+				display: block;
+				padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
+				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+				position: relative;
+				&.current{
+					background: @twoCols-sectionsPanel-section-bgColor;
+					color: @twoCols-filtersCurrent-link-textColor;
+				}
+				&:hover{
+					.pointerAsLink();
+				}
+			}
+		}
+		
+		
+		
+		.section{
+			.boxSizing();
+			float: left;
+			width: @moreDetails-section-width;
+			padding: @moreDetails-sectionLeft-padding;
+			&.doublesection{
+				clear: both;
+				width: @moreDetails-double-section-width;
+				.section{
+					&:nth-child(even){
+						clear: none;
+					}
+					&:nth-child(odd){
+						clear: left;
+					}
+					h1{
+						.revertfontSize(@moreDetails-title-fontSize);
+					}
+					.table, .pager {
+						.fontSize(@skinFontSize - 3px);
+					}
+				}
+			} 
+			+ .section, + css3-container + .section{
+				padding: @moreDetails-sectionLeft-padding;
+			}
+			&.tabSection{
+				width: @twoCols-tabsection-width;
+				display: none;
+				clear: both;
+				&.current{
+					display: block;
+				}
+			}
+			&:first-child{
+				border-top:none;
+			}
+			&:nth-child(even){
+				clear: left;
+			}
+			> .header{
+				.section_border();
+				h1{
+					.moreDetails_section_title();
+				}
+			}
+			> .body{
+				padding: @moreDetails-section-body-padding;
+				position: @moreDetails-section-body-position;
+			}
+			margin: @moreDetails-section-margin;
+		}
+		> .header{
+		    min-width: @moreDetails-min-width; 
+			min-height: @button-globalHeight;
+			padding: @moreDetails-header-padding;
+			margin: @moreDetails-header-margin;
+			position: @moreDetails-header-position;
+			width: 100%;
+			.boxSizing();
+			
+			h1{
+				display: @moreDetails-header-title-display;
+			}
+			.toolbar{
+				margin: @moreDetails-toolbar-margin;
+				text-align: @moreDetails-toolbar-txtAlign;
+				a{
+					+ a, + css3-container + a{ margin-left: @button-marginBetween; }
+					&.back{
+						float: left;
+					}
+				}
+			}
+		}
+	}
+}

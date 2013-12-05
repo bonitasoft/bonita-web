@@ -133,3 +133,69 @@ function resizeSelect(f){
 	}
 	listContainer.addClass("resized");
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$(function() {
+	$.fn.bonitaSectionsInTabs = function() {
+		$(this).each(function(i,e){
+			var panelClass = "sections_panel";
+			var tabListId = "tab_list";
+			var currentClass = "current";
+			var panelSelector = "."+panelClass;
+			var d = document;
+			var section = $(this);
+			var tabTitle = $(">.header:first-child > H1",this);
+			var parentBlock = section.parent();
+			if($(panelSelector).length < 1){
+				var panelSectionInTab = $("<div/>");
+				panelSectionInTab.addClass(panelClass);
+				var tabList = $("<ul/>");
+				tabList.attr("id",tabListId);
+				panelSectionInTab.append(tabList);
+				parentBlock.prepend(panelSectionInTab);
+			}
+			var tabElement = $("<li/>");
+			if(i==0){
+				tabElement.addClass(currentClass);
+				section.addClass(currentClass);
+			}
+			var tabLink = $("<a>"+tabTitle.text()+"</a>");
+			tabElement.click(function(){
+				var currentIndex = $(this).index();
+				$(this).siblings().removeClass(currentClass);
+				$(".tabSection").removeClass(currentClass);
+				$(this).addClass(currentClass);
+				console.log($(".tabSection:eq("+currentIndex+")"));
+				$(".tabSection:eq("+currentIndex+")").addClass(currentClass);
+			});
+			tabTitle.parent().css("display","none");
+			tabElement.append(tabLink);
+			$(panelSelector+" ul").append(tabElement);
+		});
+	};
+	
+	$.uiManager.addMaker(function(c) {
+		$.uiManager.addMaker(function(c) {
+			$(".tabSection", c).bonitaSectionsInTabs();
+		});
+	});
+	
+	
+});
+
+	// Extension:
+	//bonita.fn.sectionsInTabs = function () {
+	//};
+/*$(function() {
+	$.uiManager.addMaker(function(c) {
+		Bonita.skin.sectionsInTabs($(".sectionInTab"), c);
+	});
+});
+*/
+
+
+

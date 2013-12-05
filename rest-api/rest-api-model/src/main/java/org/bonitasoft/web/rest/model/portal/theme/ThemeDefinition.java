@@ -53,11 +53,8 @@ public class ThemeDefinition extends ItemDefinition<ThemeItem> {
 
     @Override
     protected void defineAttributes() {
-        createAttribute(ThemeItem.ATTRIBUTE_ICON, ItemAttribute.TYPE.IMAGE);
-        createAttribute(ThemeItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(ThemeItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
-        createAttribute(ThemeItem.ATTRIBUTE_AUTHOR, ItemAttribute.TYPE.STRING);
-        createAttribute(ThemeItem.ATTRIBUTE_INSTALLEDBY, ItemAttribute.TYPE.STRING);
+        createAttribute(ThemeItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(ThemeItem.ATTRIBUTE_TYPE, ItemAttribute.TYPE.STRING);
         createAttribute(ThemeItem.ATTRIBUTE_INSTALLEDDATE, ItemAttribute.TYPE.STRING);
         createAttribute(ThemeItem.ATTRIBUTE_ISDEFAULT, ItemAttribute.TYPE.STRING);
         // this.createAttribute(ThemeItem.ATTRIBUTE_imagePreview, ItemAttribute.TYPE.IMAGE);
