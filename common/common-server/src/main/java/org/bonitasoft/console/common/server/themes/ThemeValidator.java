@@ -79,16 +79,4 @@ public class ThemeValidator {
         }
     }
     
-    /**
-     * Do theme package validate for Mobile 
-     * 
-     * @param themePath
-     * @throws IOException
-     * @throws FileNotFoundException
-     */
-    public void doMobileValidation(final String themePath){
-    	//TODO implement validation
-    }
-    
-    
 }

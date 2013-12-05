@@ -63,8 +63,6 @@ import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
-import com.bonitasoft.web.rest.server.api.theme.APITheme;
-
 /**
  * @author Séverin Moussel
  * 
@@ -103,8 +101,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
-            } else if ("theme".equals(resourceToken)) {
-                return new APITheme();
             }
         } else if ("bpm".equals(apiToken)) {
             if ("humanTask".equals(resourceToken)) {

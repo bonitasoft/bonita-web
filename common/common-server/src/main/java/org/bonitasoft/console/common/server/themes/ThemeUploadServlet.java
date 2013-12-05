@@ -66,6 +66,7 @@ public class ThemeUploadServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         final PrintWriter responsePW = response.getWriter();
         String themeTempPath = null;
+        File uploadedFile = null;
         try {
             if (!ServletFileUpload.isMultipartContent(request)) {
                 final String theErrorMessage = "Error while using the servlet ThemeUploadServlet to upload theme,it is not MultipartContent";
@@ -85,7 +86,7 @@ public class ThemeUploadServlet extends HttpServlet {
                 final String fileName = item.getName();
 
                 themeTempPath = getCommonTempFolder(apiSession.getTenantId()) + File.separator + fileName;
-                File uploadedFile = new File(themeTempPath);
+                uploadedFile = new File(themeTempPath);
                 int suffix = 0;
                 while (uploadedFile.exists()) {
                     uploadedFile = new File(getCommonTempFolder(apiSession.getTenantId()), fileName + "." + suffix);
@@ -112,7 +113,7 @@ public class ThemeUploadServlet extends HttpServlet {
         } finally {
             if (themeTempPath != null) {
                 final ThemeManager themeManager = new ThemeManager();
-                themeManager.deleteFolder(themeTempPath);
+                themeManager.deleteTempDirectory(uploadedFile);
             }
         }
     }
@@ -134,7 +135,7 @@ public class ThemeUploadServlet extends HttpServlet {
     public void validateThemePackage(final long tenantId, final String themePath) throws ThemeStructureException {
         final ThemeValidator validator = new ThemeValidator();
         try {
-            validator.doValidate(themePath);
+            validator.doPortalValidation(themePath);
         } catch (final IOException e) {
             final String theErrorMessage = "Exception while getting the themes folder: it may be not exist or path is error.";
             if (LOGGER.isLoggable(Level.SEVERE)) {

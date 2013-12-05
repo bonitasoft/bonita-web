@@ -82,7 +82,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getPortalThemeFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getThemeConsoleFolderPath());
+                .getThemePortalFolderPath());
     }
 
     /**

@@ -25,6 +25,9 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FileUtils;
+import org.bonitasoft.engine.io.IOUtil;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.lesscss.LessCompiler;
 import org.lesscss.LessException;
 
@@ -34,6 +37,8 @@ import org.lesscss.LessException;
  */
 public class ThemeManager {
 
+    public static final String THEME_PORTAL_FOLDER_NAME = "portal";
+	
     /**
      * logger
      */
@@ -41,16 +46,31 @@ public class ThemeManager {
 
     /**
      * @param themeID
-     * @param themesFolder
+     * @param unzipThemesFolder
      * @throws ThemeStructureException
      * @throws IOException
      */
-    public void applyTheme(final String type, final File themesFolder) throws ThemeStructureException, IOException {
+    public void applyPortalTheme(final File unzipThemesFolder, final String portalThemeFolder) throws ThemeStructureException, IOException {
         final ThemeValidator validator = new ThemeValidator();
-        validator.doValidate(themesFolder.getAbsolutePath() + File.separator + type);
-        // TODO engine call
+       	validator.doPortalValidation(unzipThemesFolder.getAbsolutePath() + File.separator + THEME_PORTAL_FOLDER_NAME);
+       	copyThemeInBonitahome(unzipThemesFolder, portalThemeFolder);
     }
 
+    /**
+     * Move the folder in the bonitaHome
+     * 
+     * @param zipFile
+     * @throws IOException
+     */
+    private void copyThemeInBonitahome(final File unzipThemeFolder, final String portalThemeFolder) {
+        try {
+            FileUtils.copyDirectoryToDirectory(unzipThemeFolder, new File(portalThemeFolder));
+            unzipThemeFolder.delete();
+        } catch (final IOException e) {
+            throw new APIException(e);
+        }
+    }
+    
     /**
      * @param themesFolder
      *            the folder of the theme
@@ -114,38 +134,18 @@ public class ThemeManager {
             }
             throw new IOException("The theme directory does not exist.");
         }
-        deleteFolder(themeFolder.getAbsolutePath());
+        deleteTempDirectory(themeFolder);
     }
 
-    /**
-     * Delete the directory
-     * 
-     * @param folderName
-     * @throws IOException
-     */
-    public void deleteFolder(final String folderPath) throws IOException {
-        // the theme directory
-        final File dir = new File(folderPath);
-        if (dir.exists()) {
-            final File delFile[] = dir.listFiles();
-            final int i = dir.listFiles().length;
-            for (int j = 0; j < i; j++) {
-                if (delFile[j].isDirectory()) {
-                    deleteFolder(delFile[j].getAbsolutePath());
-                } else {
-                    delFile[j].delete();
-                }
-            }
-            dir.delete();
-        } else {
-            final String theErrorMessage = "The directory does not exist: " + folderPath;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, theErrorMessage);
-            }
-            throw new IOException(theErrorMessage);
-        }
-    }
+	public void deleteTempDirectory(final File unzipReport) {
+		try {
+			IOUtil.deleteDir(unzipReport);
+		} catch (final IOException e) {
+			throw new APIException(e);
+		}
 
+	}
+    
     public void copyDirectory(final File sourceLocation, final File targetLocation) throws IOException {
 
         if (sourceLocation.isDirectory()) {
