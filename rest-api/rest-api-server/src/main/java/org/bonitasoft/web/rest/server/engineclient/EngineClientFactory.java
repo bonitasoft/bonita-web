@@ -64,4 +64,8 @@ public class EngineClientFactory {
         return new GroupEngineClient(apiAccessor.getGroupAPI());
     }
 
+    public FlowNodeEngineClient createFlowNodeEngineClient() {
+        return new FlowNodeEngineClient(apiAccessor.getProcessAPI());
+    }
+
 }
