@@ -124,7 +124,7 @@ function refreshReport(e, localeDateFormat, prefix) {
                 "</div>");
         },
         url: urlRefresh,
-        data: params + "&locale=" + bosCookieObj._l + "&_pf=" + getProfileId(),
+        data: params + "&locale=" + (bosCookieObj ? bosCookieObj._l : "en") + "&_pf=" + getProfileId(),
         cache: false,
         async: true,
         success: function (refreshResponse) {
