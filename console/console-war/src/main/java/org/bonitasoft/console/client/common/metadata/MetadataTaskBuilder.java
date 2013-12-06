@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.common.metadata;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeTypeAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
@@ -84,6 +85,14 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
     public void addState() {
         add(createMetaState());
+    }
+
+    public void addType() {
+        add(createMetaType());
+    }
+
+    private ItemDetailsMetadata createMetaType() {
+        return new ItemDetailsMetadata(new FlowNodeTypeAttributeReader(), _("Type"), _("The type of the task"));
     }
 
     private ItemDetailsMetadata createMetaState() {

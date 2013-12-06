@@ -844,6 +844,7 @@ public class Form extends AbstractForm {
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final String labelAttributeName, final String valueAttributeName, final String defaultValue, final String description) {
         AutoCompleteEntry entry = new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
+        entry.addInputHandler(createInputCompleteHandler(), InputCompleteEvent.TYPE);
         addEntry(entry);
         return this;
     }
@@ -873,6 +874,7 @@ public class Form extends AbstractForm {
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
             final AbstractAttributeReader labelTemplate, final String valueAttributeName, final String defaultValue, final String description) {
         AutoCompleteEntry entry = new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, description);
+        entry.addInputHandler(createInputCompleteHandler(), InputCompleteEvent.TYPE);
         addEntry(entry);
         return this;
     }

@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.servlet.PlatformTenantManager;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -37,7 +37,6 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.engine.session.PlatformSession;
 
 /**
  * Tenant management utils class
@@ -149,18 +148,18 @@ public class TenantsManagementUtils {
     /**
      * Check for user's pofile
      */
-    public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException,
-            BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+    public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException, BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException {
         return !getUserProfiles(apiSession).isEmpty();
     }
 
-    private static List<Profile> getUserProfiles(final APISession session) throws InvalidSessionException, NotFoundException,
-            BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+    private static List<Profile> getUserProfiles(final APISession session) throws InvalidSessionException, NotFoundException, BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException {
         return getProfileApi(session).getProfilesForUser(session.getUserId());
     }
 
-    private static ProfileAPI getProfileApi(final APISession session) throws InvalidSessionException, BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException {
+    private static ProfileAPI getProfileApi(final APISession session) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
+            UnknownAPITypeException {
         return TenantAPIAccessor.getProfileAPI(session);
     }
 
@@ -169,12 +168,10 @@ public class TenantsManagementUtils {
      * 
      * @return true if the tenant directory was created
      * @param tenantId
-     * @param session
-     *            the platform session
      * @throws IOException
      * @throws BonitaException
      */
-    public static synchronized boolean addDirectoryForTenant(final long tenantId, final PlatformSession session) throws IOException, BonitaException {
+    public static synchronized boolean addDirectoryForTenant(final long tenantId) throws IOException, BonitaException {
         // add tenant folder
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
         final String sourceDirPath = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
@@ -210,12 +207,10 @@ public class TenantsManagementUtils {
     }
 
     public static String getTechnicalUserUsername() throws Exception {
-        final PlatformTenantManager platformManager = PlatformTenantManager.getInstance();
-        return platformManager.getPlatformProperties().defaultTenantUserName();
+        return PropertiesFactory.getPlatformTenantConfigProperties().defaultTenantUserName();
     }
 
     public static String getTechnicalUserPassword() throws Exception {
-        final PlatformTenantManager platformManager = PlatformTenantManager.getInstance();
-        return platformManager.getPlatformProperties().defaultTenantPassword();
+        return PropertiesFactory.getPlatformTenantConfigProperties().defaultTenantPassword();
     }
 }

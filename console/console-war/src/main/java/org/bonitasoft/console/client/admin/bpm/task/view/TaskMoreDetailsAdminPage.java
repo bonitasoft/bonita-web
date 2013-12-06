@@ -177,11 +177,14 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         metadatas.addAppsName();
         metadatas.addAppsVersion();
         metadatas.addCaseId();
+        metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();
-        metadatas.addAssignedTo();
-        if (isArchived()) {
-            metadatas.addExecutedBy();
+        if (task.isHumanTask()) {
+            metadatas.addAssignedTo();
+            if (isArchived()) {
+                metadatas.addExecutedBy();
+            }
         }
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addLastUpdateDate(FORMAT.DISPLAY);

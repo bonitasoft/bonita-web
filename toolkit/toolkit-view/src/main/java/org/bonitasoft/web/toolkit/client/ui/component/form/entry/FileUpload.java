@@ -14,18 +14,17 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.form.entry;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.ui.JsId;
-
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Julien Mege
@@ -114,6 +113,10 @@ public class FileUpload extends Input {
     @Override
     public void _setValue(final String value) {
         // Do nothing
+    }
+
+    public void reset() {
+        super._setValue(null);
     }
 
 }

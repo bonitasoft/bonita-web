@@ -24,6 +24,7 @@ import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FileWidgetInputType;
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
 import org.bonitasoft.forms.client.view.SupportedFieldTypes;
+import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 
 import com.google.gwt.dom.client.FormElement;
@@ -158,7 +159,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
             fileDownloadWidget = new FileDownloadWidget(formID, contextMap, valueType, attachmentId, hasImagePreview);
 
-            loadingImage = new Image("images/ajax-loader.gif");
+            loadingImage = new Image("themeResource?theme=portal&location=images/ajax-loader.gif");
             loadingImage.setTitle(FormsResourceBundle.getMessages().uploadingLabel());
 
             buttonPanel = new FlowPanel();
@@ -288,12 +289,15 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         fileUpload = addFileUploalToFormPanel(FileUloadName);
     }
 
-    protected FileUpload addFileUploalToFormPanel(final String FileUloadName) {
+    protected FileUpload addFileUploalToFormPanel(final String fileUloadName) {
 
         final FileUpload fileUpload = new FileUpload();
         fileUpload.setStyleName("bonita_file_upload");
-        // mandatory
-        fileUpload.setName(FileUloadName);
+        // mandatory because we are in a true form with a post action
+        fileUpload.setName(fileUloadName);
+        if (DOMUtils.getInstance().isIE8()) {
+            fileUpload.getElement().setPropertyString("contentEditable", "false");
+        }
         formPanel.add(fileUpload);
         final UploadSubmitHandler uploadHandler = new UploadSubmitHandler();
         formPanel.addSubmitHandler(uploadHandler);

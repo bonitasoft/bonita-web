@@ -63,7 +63,7 @@ public class FormApplicationViewController {
     /**
      * The PICTURE_PLACEHOLDER
      */
-    protected static final String PICTURE_PLACEHOLDER = "images/cleardot.gif";
+    protected static final String PICTURE_PLACEHOLDER = "themeResource?theme=portal&location=images/cleardot.gif";
 
     /**
      * Id of the element of the application template in witch the title has to be injected

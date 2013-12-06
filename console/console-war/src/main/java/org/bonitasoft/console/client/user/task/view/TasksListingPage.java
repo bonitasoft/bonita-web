@@ -201,6 +201,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
               table.setPage(0);
               table.setDefaultSelectedLine(0);
               table.setDefaultSelectedId(null);
+              table.setSearch("");
               table.refresh();
               TasksListingPage.this.tablesSearch.reset();
           }

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -43,13 +43,13 @@ public class AttachmentsFiller extends Filler<Text> {
     @Override
     protected void getData(final APICallback callback) {
         CaseDocumentDefinition.get().getAPICaller().search(0, 0, null, null,
-                MapUtil.asMap(new Arg(CaseDocumentItem.ATTRIBUTE_CASE_ID, this.caseItem.getId())),
+                MapUtil.asMap(new Arg(CaseDocumentItem.ATTRIBUTE_CASE_ID, caseItem.getId())),
                 callback);
     }
 
     @Override
     protected void setData(final String json, final Map<String, String> headers) {
         final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
-        this.target.setText(String.valueOf(resultPager.getNbTotalResults()));
+        target.getElement().setInnerText(String.valueOf(resultPager.getNbTotalResults()));
     }
 }

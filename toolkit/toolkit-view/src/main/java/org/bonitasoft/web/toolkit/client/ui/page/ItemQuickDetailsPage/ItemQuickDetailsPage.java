@@ -95,14 +95,15 @@ public abstract class ItemQuickDetailsPage<T extends IItem> extends PageOnItem<T
 
     private void addMetadata(final T item, final ContainerStyled<Definition> definitions, final ItemDetailsMetadata metadata) {
         final AbstractAttributeReader attributeReader = metadata.getAttributeReader();
-        String cssClass = createMetadataCssClass(attributeReader, metadata);
         final String value = attributeReader.read(item);
+        // the call below must be done after the call to the read method since the CSS class can be determined while reading the attribute
+        final String cssClass = createMetadataCssClass(attributeReader, metadata);
         if (!StringUtil.isBlank(value)) {
             definitions.append(createDefinition(metadata, cssClass, value));
         }
     }
 
-    private Definition createDefinition(final ItemDetailsMetadata metadata, String cssClass, final String value) {
+    private Definition createDefinition(final ItemDetailsMetadata metadata, final String cssClass, final String value) {
         final Definition definition = new Definition(metadata.getLabel() + ": ", metadata.getTooltip(), value);
         if (cssClass != null) {
             definition.addClass(cssClass);
@@ -113,9 +114,9 @@ public abstract class ItemQuickDetailsPage<T extends IItem> extends PageOnItem<T
     /**
      * @return
      */
-    private String createMetadataCssClass(AbstractAttributeReader attributeReader, ItemDetailsMetadata metadata) {
-        if (attributeReader.getLeadAttribute() != null) {
-            return attributeReader.getLeadAttribute().toLowerCase();
+    private String createMetadataCssClass(final AbstractAttributeReader attributeReader, final ItemDetailsMetadata metadata) {
+        if (attributeReader.getClassName() != null) {
+            return attributeReader.getClassName().toLowerCase();
         } else if (metadata.getJsId() != null) {
             return metadata.getJsId().toString();
         } else {
@@ -171,8 +172,8 @@ public abstract class ItemQuickDetailsPage<T extends IItem> extends PageOnItem<T
      * @deprecated prefer overriding {@link #buildToolbar(IItem)}
      */
     @Deprecated
-    protected LinkedList<ItemDetailsAction> defineActions(T item) {
-        return new LinkedList<ItemDetailsAction>(); 
+    protected LinkedList<ItemDetailsAction> defineActions(final T item) {
+        return new LinkedList<ItemDetailsAction>();
     }
 
     protected abstract LinkedList<ItemDetailsMetadata> defineMetadatas(T item);

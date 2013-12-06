@@ -49,6 +49,10 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(engineSession));
     }
 
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // C.R.U.D.
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public UserItem add(final UserItem user) {
         UserCreator userCreator = new UserCreatorConverter().convert(user);
         User createdUser = getUserEngineClient().create(userCreator);
@@ -66,6 +70,21 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         return userItemConverter.convert(user);
     }
 
+    /**
+     * Search for users
+     * 
+     * @param page
+     *            The page to display
+     * @param resultsByPage
+     *            The number of results by page
+     * @param search
+     *            Search terms
+     * @param filters
+     *            The filters to doAuthorize. There will be an AND operand between filters.
+     * @param orders
+     *            The order to doAuthorize to the search
+     * @return This method returns an ItemSearch result containing the returned data and information about the total possible results.
+     */
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
         
@@ -79,9 +98,20 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
                 userItemConverter.convert(engineSearchResults.getResult()));
     }
 
+
+    /**
+     * Delete users
+     * 
+     * @param ids
+     */
     public void delete(final List<APIID> ids) {
         getUserEngineClient().delete(APIID.toLongList(ids));
     }
+
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // CONVERTS
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     // protected for tests
     protected UserEngineClient getUserEngineClient() {

@@ -19,29 +19,35 @@ package org.bonitasoft.console.client.common.formatter;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.web.toolkit.client.ui.component.Span;
-import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
-import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ItemTableCellFormatter;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 
 /**
- * Formatter for archived Display Name
- * Add different CSS Class for the Type
+ * Formatter for FlowNode Display Name
+ * Add different CSS Class and tooltip
  * 
  * @author Julien MEGE
  */
-public class FlowNodeDisplayNameFormatter extends ItemTableCellFormatter {
+public class FlowNodeDisplayNameFormatter extends FlowNodeCellFormatter {
+
+    interface Templates extends SafeHtmlTemplates {
+
+        @SafeHtmlTemplates.Template(
+                "<span title='{2}' class='{1} prepend'>{0}</span>"
+                        + "<span>{3}</span>")
+                SafeHtml cell(String preFix, String cssClass, String tooltip, String displayName);
+
+    }
+
+    private Templates TEMPLATES = GWT.create(Templates.class);
 
     @Override
     public void execute() {
         FlowNodeItem task = (FlowNodeItem) getItem();
-        this.table.addCell(newPrefixSpan(_("Task name:")).addClass(task.getType().toLowerCase()), new Span(getText()));
+        this.table.addCell(new Html(TEMPLATES.cell(_("Task name:"), task.getType().toLowerCase(), getTooltip(), getText())));
     }
 
-    private String getText() {
-        return this.attributeReader.read(this.item);
-    }
-
-    protected Component newPrefixSpan(String prefix) {
-        return new Span(prefix).addClass("prepend");
-    }
 }

@@ -46,19 +46,6 @@ import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 public interface IFormDefinitionAPI {
 
     /**
-     * Retrieve the application home page URL as a string
-     * 
-     * @param context
-     *            Map containing the URL parameters
-     * @return the application home page URL
-     * @throws FormServiceProviderNotFoundException
-     * @throws SessionTimeoutException
-     * @throws ApplicationFormDefinitionNotFoundException
-     */
-    String getHomePage(Map<String, Object> context) throws FormServiceProviderNotFoundException, SessionTimeoutException,
-            ApplicationFormDefinitionNotFoundException;
-
-    /**
      * Retrieve the application permission string
      * 
      * @param formID

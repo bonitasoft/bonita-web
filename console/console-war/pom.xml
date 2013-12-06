@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>console-parent</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
-		<version>6.1.0-SNAPSHOT</version>
+		<version>6.2.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>console-war</artifactId>
@@ -11,8 +11,12 @@
 
 	<properties>
 		<permutations>All</permutations>
+
+		<!-- filtered in web.xml -->
 		<enable.engine.http.api.start>&lt;!--</enable.engine.http.api.start>
-        <enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
+		<enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
+		<enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
+		<enable.engine.listener.end>--&gt;</enable.engine.listener.end>
 	</properties>
 
 	<dependencies>
@@ -141,6 +145,9 @@
 								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html" file="${project.build.directory}/forms-design/html/process.html" />
 								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html" file="${project.build.directory}/forms-design/html/error.html" />
 								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html" file="${project.build.directory}/forms-design/html/confirm.html" />
+								<!--  copy htc  files for IE compatibility -->
+								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc" file="../../toolkit/toolkit-looknfeel/src/main/less/tools/PIE.htc" />
+								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc" file="../../toolkit/toolkit-looknfeel/src/main/less/tools/boxsizing.htc" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -207,6 +214,28 @@
 									<includes>html/</includes>
 								</artifactItem>
 							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>replace-css-url-in-jsp</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>assembly.xml</descriptor>
+							</descriptors>
+							<tarLongFileMode>gnu</tarLongFileMode>
 						</configuration>
 					</execution>
 				</executions>
@@ -309,13 +338,38 @@
 					<version>1.3.170</version>
 				</dependency>
 			</dependencies>
-			
+
 			<properties>
-                 <bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
-            </properties>
+				<bonita.home>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home>
+				<bonita.home.ref>../../bonita-home/target/bonita-home-${project.version}/bonita</bonita.home.ref>
+				<bonita.css>portal/css/bonita.css</bonita.css>
+				<!-- filtered in web.xml -->
+				<enable.engine.listener.start />
+				<enable.engine.listener.end />
+			</properties>
 			<build>
 				<plugins>
 					<!-- configure the GWT-Maven plugin -->
+					<!-- <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>use-good-css</id>
+								<phase>generate-resource</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<copy
+											file="${bonita.home.ref}/client/platform/tenant-template/work/looknfeel/default/BonitaConsole.html"
+											todir="${bonita.home}/client/platform/tenant-template/work/looknfeel/default/" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin> -->
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
@@ -324,7 +378,6 @@
 							<draftCompile>true</draftCompile>
 							<enableAssertions>true</enableAssertions>
 							<extraParam>-deploy=${project.build.directory}</extraParam>
-
 							<module>org.bonitasoft.console.LightBonitaConsole</module>
 							<!-- configuration for gwt:run and gwt:debug -->
 							<systemProperties>
@@ -338,29 +391,46 @@
 							<deploy>${project.build.directory}</deploy>
 						</configuration>
 					</plugin>
-					
 					<!-- add extra projects sources -->
 					<plugin>
-				         <groupId>org.codehaus.mojo</groupId>
-				         <artifactId>build-helper-maven-plugin</artifactId>
-				         <executions>
-				           <execution>
-				             <id>add-source</id>
-				             <phase>generate-sources</phase>
-				             <goals>
-				               <goal>add-source</goal>
-				             </goals>
-				             <configuration>
-				               <sources>
-				                 <source>../../toolkit/toolkit-view/src/main/java</source>
-				                 <source>../../toolkit/toolkit-view/src/main/resources</source>
-				               </sources>
-				             </configuration>
-				           </execution>
-				         </executions>
-				      </plugin> 
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>add-source</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>add-source</goal>
+								</goals>
+								<configuration>
+									<sources>
+										<source>../../toolkit/toolkit-view/src/main/java</source>
+										<source>../../toolkit/toolkit-view/src/main/resources</source>
+									</sources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
 				</plugins>
 			</build>
+		</profile>
+		<!-- default CSS -->
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<bonita.css>portal/css/bonita.css</bonita.css>
+			</properties>
+		</profile>
+		<!-- WRO CSS MANAGEMENT -->
+		<profile>
+			<id>css</id>
+			<properties>
+				<bonita.css>http://127.0.0.1:8081/bonita.css</bonita.css>
+			</properties>
 		</profile>
 	</profiles>
 </project>

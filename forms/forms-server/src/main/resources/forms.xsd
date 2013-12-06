@@ -13,7 +13,6 @@
 
 	<xsd:complexType name="FormsDefinition">
 		<xsd:sequence>
-			<xsd:element name="home-page" type="xsd:string" minOccurs="0" />
 			<xsd:element name="migration-product-version" type="xsd:string" minOccurs="0" />
 			<xsd:element name="application" minOccurs="0" maxOccurs="unbounded">
 				<xsd:complexType>

@@ -180,15 +180,6 @@ public class EngineApplicationConfigDefAccessorImpl implements IApplicationConfi
      * {@inheritDoc}
      */
     @Override
-    public String getHomePage() {
-
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getProductVersion() {
 
         return null;

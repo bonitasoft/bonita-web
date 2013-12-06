@@ -36,6 +36,7 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -168,13 +169,20 @@ public abstract class PageOnItem<T extends IItem> extends Page {
             @SuppressWarnings("unchecked")
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+
+                // fix for IE. Sometime IE add element evenif not in parent anymore.
+                if (!GQuery.contains(PageOnItem.this.getParentElement(), PageOnItem.this.getElement())) {
+                    return;
+                }
+
                 try {
                     PageOnItem.this.item = (T) JSonItemReader.parseItem(response, PageOnItem.this.itemDefinition);
                 } catch (final Exception e) {
                     fail(e.getMessage());
                     return;
                 }
-                $(PageOnItem.this.getElement()).parent().children().not(PageOnItem.this.getElement()).remove();
+
+                $(PageOnItem.this.getParentElement()).children().not(PageOnItem.this.getElement()).remove();
                 $(PageOnItem.this.getElement()).show();
 
                 PageOnItem.super._fillWidget(rootElement);

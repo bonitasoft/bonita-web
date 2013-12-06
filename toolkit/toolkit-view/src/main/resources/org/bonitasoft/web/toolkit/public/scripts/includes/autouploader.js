@@ -9,8 +9,11 @@ $(function() {
 	$.fn.val = function(value) {
 		var inputUploader = $(this).data(PLUGIN_UPLOADER)
 		if ($.isDefined(inputUploader)) {
-			// uploader support only getter
-			return inputUploader.val()
+			if(value === null) {
+                inputUploader.reset();
+			} else {
+			    return inputUploader.val();
+			}
 		} else {
 			if ($.isNull(value)) {
 				// get super value
@@ -74,13 +77,13 @@ $(function() {
 
 		var input = fileInput
 
-		var uploaderEl = $('<div id="uploader"><a id="' + input.attr("name")
+		var uploaderEl = $('<div class="uploader" id="uploader_'+input.attr("name")+'"><a id="' + input.attr("name")
 				+ '"></a></div>')
 
 		var pluploader = new plupload.Uploader({
-			runtimes : 'gears,html5,flash,silverlight,browserplus',
+			runtimes : 'gears,html5,html4,flash,silverlight,browserplus',
 			multipart : true,
-			container : 'uploader',
+			container : 'uploader_'+input.attr("name"),
 			browse_button : input.attr("name"),
 			url : input.getOption('url'),
 			flash_swf_url : 'scripts/ext/plupload.flash.swf',
@@ -92,7 +95,12 @@ $(function() {
 		// private
 		// /////////////////////////////////////////////////////////
 
-		var UPLOADER_VALUE = 'uploader_value', UPLOADING_STATUS = 'uploading_status', CSS_IS_READY = 'ready', CSS_IS_UPLOADING = 'uploading', CSS_IS_FAILED = 'failed', CSS_IS_DONE = 'done'
+		var UPLOADER_VALUE = 'uploader_value',
+		    UPLOADING_STATUS = 'uploading_status',
+		    CSS_IS_READY = 'ready',
+		    CSS_IS_UPLOADING = 'uploading',
+		    CSS_IS_FAILED = 'failed',
+		    CSS_IS_DONE = 'done';
 
 		// object initialization
 		var init = function() {
@@ -115,9 +123,11 @@ $(function() {
 			if (pluploader.files.length > 0) {
 				$('div.alert_message.ERROR').remove();
 				updateUploaderState(true, pluploader.files[0].name,
-						CSS_IS_UPLOADING, pluploader.files[0].name)
+						CSS_IS_UPLOADING, pluploader.files[0].name);
+
+                /* WTF... */
 				var cache = document.createElement("div");
-				cache.id="uploadCache";
+				cache.id="uploadCache_"+input.attr("name");
 				cache.style.position="absolute";
 				cache.style.background="#000000";
 				cache.style.opacity="0.3";
@@ -125,7 +135,9 @@ $(function() {
 				cache.style.height="100%";
 				cache.style.top="0";
 				cache.style.left="0";
-				$('div.page_processupload div.fileupload div.input div#uploader').append(cache);
+				$('div.page_processupload div.fileupload div.input div#uploader'+input.attr("name")).append(cache);
+				/* ...is that?! */
+
 				if (!$("a.installUpload").hasClass("disabled")) {
 					$("a.installUpload").addClass("disabled");
 				}
@@ -140,14 +152,14 @@ $(function() {
 			$('div.alert_message.ERROR').remove();
 			pluploader.removeFile(file)
 			$("a.installUpload").removeClass("disabled");
-			$("#uploadCache").remove();
+			$("#uploadCache_"+input.attr("name")).remove();
 			updateUploaderState(false, response.response, CSS_IS_DONE)
 		}
 
 		var addError = function(message) {
 			$('div.alert_message.ERROR').remove();
-			$('#filepicker', 'uploader').after(
-					'<div class="alert_message ERROR">' + message + '<\div>');
+			$('#filepicker_' + input.attr("name") + ', #uploader_' + input.attr("name")).after(
+					'<div class="alert_message ERROR">' + message + '</div>');
 		}
 
 		/**
@@ -177,13 +189,15 @@ $(function() {
 				$(uploaderEl.children()[0], uploaderEl).text(message)
 			}
 
-			input.data(UPLOADING_STATUS, isUploading).data(UPLOADER_VALUE,
-					value)
+			input.data(UPLOADING_STATUS, isUploading)
+			    .data(UPLOADER_VALUE, value);
 		}
 
 		var cleanAllCssClasses = function() {
-			uploaderEl.removeClass(CSS_IS_READY).removeClass(CSS_IS_UPLOADING)
-					.removeClass(CSS_IS_DONE).removeClass(CSS_IS_FAILED)
+			uploaderEl.removeClass(CSS_IS_READY)
+			        .removeClass(CSS_IS_UPLOADING)
+					.removeClass(CSS_IS_DONE)
+					.removeClass(CSS_IS_FAILED);
 		}
 
 		// /////////////////////////////////////////////////////////
@@ -196,6 +210,11 @@ $(function() {
 
 		__set__.val = function() {
 			return input.data(UPLOADER_VALUE)
+		}
+
+		__set__.reset = function () {
+		    updateUploaderState(false, "", CSS_IS_READY, input.getOption('text.filepicker'));
+
 		}
 
 		// /////////////////////////////////////////////////////////

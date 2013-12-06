@@ -25,13 +25,8 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.TenantProperties;
-import org.bonitasoft.theme.ThemeDescriptorManager;
-import org.bonitasoft.theme.exception.ThemeDescriptorNotFoundException;
-import org.bonitasoft.theme.impl.ThemeDescriptorManagerImpl;
-import org.bonitasoft.theme.model.ThemeDescriptor;
+import org.lesscss.LessCompiler;
+import org.lesscss.LessException;
 
 /**
  * @author Ruiheng.Fan
@@ -45,68 +40,43 @@ public class ThemeManager {
     private final Logger LOGGER = Logger.getLogger(ThemeManager.class.getName());
 
     /**
-     * Theme descriptor file name
-     */
-    private static final String THEME_DESCRIPTOR = "themeDescriptor.xml";
-
-    /**
-     * Get the theme ThemeDescriptor
-     * 
-     * @param themeName
-     * @throws ThemeNotFoundException
-     */
-    public ThemeDescriptor getThemeDescriptor(final String themeName, final File themesFolder) throws ThemeDescriptorNotFoundException, IOException {
-        String themePath = null;
-        ThemeDescriptor themeDescriptor = null;
-        final ThemeDescriptorManager manager = ThemeDescriptorManagerImpl.getInstance();
-        if (themesFolder.exists()) {
-            themePath = themesFolder.getAbsolutePath() + File.separator + themeName + File.separator + THEME_DESCRIPTOR;
-            final File file = new File(themePath);
-            try {
-                if (!file.getCanonicalPath().startsWith(themesFolder.getCanonicalPath())) {
-                    throw new IOException();
-                }
-            } catch (final IOException e) {
-                final String errorMessage = "Error while getting the theme " + themeName + " For security reasons, access to paths other than "
-                        + themesFolder.getName() + " is restricted";
-                if (this.LOGGER.isLoggable(Level.SEVERE)) {
-                    this.LOGGER.log(Level.SEVERE, errorMessage, e);
-                }
-                throw new ThemeDescriptorNotFoundException(errorMessage);
-            }
-            themeDescriptor = manager.getThemeDescriptor(file);
-        } else {
-            if (this.LOGGER.isLoggable(Level.WARNING)) {
-                this.LOGGER.log(Level.WARNING, "The themes directory does not exist.");
-            }
-            throw new IOException("The themes directory does not exist.");
-        }
-        return themeDescriptor;
-    }
-
-    /**
-     * @param tenantId
-     *            the tenant ID
-     * @param themeName
+     * @param themeID
      * @param themesFolder
      * @throws ThemeStructureException
      * @throws IOException
      */
-    public void applyTheme(final long tenantId, final String themeName, final File themesFolder) throws ThemeStructureException, IOException {
+    public void applyTheme(final long themeID, final File themesFolder) throws ThemeStructureException, IOException {
         final ThemeValidator validator = new ThemeValidator();
-        validator.doValidate(tenantId, themesFolder.getAbsolutePath() + File.separator + themeName, false);
-        ThemeConfigManager.getInstance(tenantId).setApplyTheme(themeName);
+        validator.doValidate(themesFolder.getAbsolutePath() + File.separator + themeID);
+        // TODO engine call
+    }
+
+    public void compileLess(final File themesFolder, final String lessFileName, final String cssFileName) throws IOException, LessException {
+        // Instantiate the LESS compiler
+        final LessCompiler lessCompiler = new LessCompiler();
+        // compile LESS input file to CSS output file
+        try {
+            lessCompiler.compile(new File(themesFolder, lessFileName), new File(themesFolder, cssFileName));
+        } catch (final IOException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Error while compiling the less.", e);
+            }
+            throw e;
+        } catch (final LessException e) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Error in the less file.", e);
+            }
+            throw e;
+        }
     }
 
     /**
-     * @param tenantId
-     *            the tenantID
      * @param themeName
      * @param themesFolder
      * @throws IOException
      * @throws SessionTimeOutException
      */
-    public void deleteTheme(final long tenantId, final String themeName, final File themesFolder) throws IOException {
+    public void deleteTheme(final String themeName, final File themesFolder) throws IOException {
         final File themeFolder = new File(themesFolder, themeName);
         if (themeFolder.exists()) {
             try {
@@ -116,32 +86,19 @@ public class ThemeManager {
             } catch (final IOException e) {
                 final String errorMessage = "Error while deleting the theme " + themeName + " For security reasons, access to paths other than "
                         + themesFolder.getName() + " is restricted";
-                if (this.LOGGER.isLoggable(Level.SEVERE)) {
-                    this.LOGGER.log(Level.SEVERE, errorMessage, e);
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
                 }
                 throw new IOException(errorMessage);
             }
         } else {
-            if (this.LOGGER.isLoggable(Level.WARNING)) {
-                this.LOGGER.log(Level.WARNING, "The theme directory does not exist.");
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "The theme directory does not exist.");
             }
             throw new IOException("The theme directory does not exist.");
         }
-        try {
-            final String themePath = themesFolder.getAbsolutePath() + File.separator + themeName + File.separator + THEME_DESCRIPTOR;
-            final File themeDescriptor = new File(themePath);
-            final ThemeDescriptorManager manager = ThemeDescriptorManagerImpl.getInstance();
-            manager.deleteThemeDescriptor(themeDescriptor);
-        } catch (final ThemeDescriptorNotFoundException e) {
-            if (this.LOGGER.isLoggable(Level.WARNING)) {
-                this.LOGGER.log(Level.WARNING, "The theme descriptor file was not found for theme " + themeName);
-            }
-        }
         deleteFolder(themeFolder.getAbsolutePath());
-        final String currentTheme = PropertiesFactory.getTenantProperties(tenantId).getProperty(TenantProperties.CURRENT_THEME_KEY);
-        if (currentTheme != null && currentTheme.equals(themeName)) {
-            PropertiesFactory.getTenantProperties(tenantId).removeProperty(TenantProperties.CURRENT_THEME_KEY);
-        }
+        // TODO engine call
     }
 
     /**
@@ -150,7 +107,7 @@ public class ThemeManager {
      * @param folderName
      * @throws IOException
      */
-    protected void deleteFolder(final String folderPath) throws IOException {
+    public void deleteFolder(final String folderPath) throws IOException {
         // the theme directory
         final File dir = new File(folderPath);
         if (dir.exists()) {
@@ -165,25 +122,12 @@ public class ThemeManager {
             }
             dir.delete();
         } else {
-            final String theErrorMessage = "The directory does not exist: "
-                    + folderPath;
-            if (this.LOGGER.isLoggable(Level.SEVERE)) {
-                this.LOGGER.log(Level.SEVERE, theErrorMessage);
+            final String theErrorMessage = "The directory does not exist: " + folderPath;
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, theErrorMessage);
             }
             throw new IOException(theErrorMessage);
         }
-    }
-
-    /**
-     * @param tenantId
-     *            the tenant Id
-     * @param themeFolder
-     * @param themeFolderName
-     * @throws IOException
-     */
-    public void copyToThemesFolder(final long tenantId, final File themeFolder, final String themeFolderName) throws IOException {
-        final File themeHome = WebBonitaConstantsUtils.getInstance(tenantId).getConsoleThemeFolder();
-        copyDirectory(themeFolder, new File(themeHome, themeFolderName));
     }
 
     public void copyDirectory(final File sourceLocation, final File targetLocation) throws IOException {

@@ -66,7 +66,7 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
 
     private Date deployementDate;
 
-    private Map<String, Object> context = new HashMap<String, Object>();
+    private final Map<String, Object> context = new HashMap<String, Object>();
 
     // private LoginContext loginContext;
 
@@ -76,24 +76,25 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
 
     private Document document;
 
-    private String formID = "processName--1.0$entry";
+    private final String formID = "processName--1.0$entry";
 
-    private String pageID = "processPage1";
+    private final String pageID = "processPage1";
 
     private ProcessAPI processAPI;
 
+    @Override
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        
+
         formBuilder = FormBuilderImpl.getInstance();
 
         complexProcessDefinitionFile = buildComplexFormXML();
-        InputStream inputStream = new FileInputStream(complexProcessDefinitionFile);
-        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        final InputStream inputStream = new FileInputStream(complexProcessDefinitionFile);
+        final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         document = builder.parse(inputStream);
         inputStream.close();
-        
+
         final String actorName = "actor 1";
         final ProcessDefinitionBuilder processBuilder = new ProcessDefinitionBuilder().createNewInstance("processName", "1.0");
         processBuilder.addActor(actorName).addDescription("actor 1 description").addUserTask("task1", actorName);
@@ -103,7 +104,7 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         bonitaProcess = processAPI.deploy(businessArchive);
         deployementDate = processAPI.getProcessDeploymentInfo(bonitaProcess.getId()).getDeploymentDate();
 
-        Map<String, Object> urlContext = new HashMap<String, Object>();
+        final Map<String, Object> urlContext = new HashMap<String, Object>();
         urlContext.put(FormServiceProviderUtil.PROCESS_UUID, bonitaProcess.getId());
         urlContext.put(FormServiceProviderUtil.IS_EDIT_MODE, true);
         urlContext.put(FormServiceProviderUtil.DOCUMENT, document);
@@ -118,111 +119,111 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
 
     }
 
+    @Override
     @After
     public void tearDown() throws Exception {
-        
-        this.processAPI.deleteProcess(bonitaProcess.getId());
+
+        processAPI.deleteProcess(bonitaProcess.getId());
         super.tearDown();
     }
 
     @Test
     public void testGetProductVersion() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
-        String result = api.getProductVersion(context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
+        final String result = api.getProductVersion(context);
         Assert.assertNotNull(result);
         Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, result);
     }
 
     @Test
     public void testGetApplicationPermissions() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
-        String result = api.getApplicationPermissions(formID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
+        final String result = api.getApplicationPermissions(formID, context);
         Assert.assertNotNull(result);
         Assert.assertEquals("application#test", result);
     }
 
     @Test
     public void testGetMigrationProductVersion() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
-        String result = api.getMigrationProductVersion(formID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, null, Locale.ENGLISH.toString());
+        final String result = api.getMigrationProductVersion(formID, context);
         Assert.assertNotNull(result);
         Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, result);
     }
 
     @Test
     public void testGetFormFirstPage() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        Expression result = api.getFormFirstPage(formID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final Expression result = api.getFormFirstPage(formID, context);
         Assert.assertNotNull(result);
         Assert.assertEquals("processPage1", result.getContent());
     }
 
     @Test
     public void testGetFormPage() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        FormPage result = api.getFormPage(formID, pageID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final FormPage result = api.getFormPage(formID, pageID, context);
         Assert.assertNotNull(result);
         Assert.assertEquals("processPage1", result.getPageId());
     }
 
     @Test
     public void testFormPageLayout() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        String result = api.getFormPageLayout(formID, pageID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final String result = api.getFormPageLayout(formID, pageID, context);
         Assert.assertNotNull(result);
         Assert.assertEquals("/process-page1-template.html", result);
     }
 
     @Test
     public void testGetApplicationConfig() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        ApplicationConfig result = api.getApplicationConfig(context, formID, false);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final ApplicationConfig result = api.getApplicationConfig(context, formID, false);
         Assert.assertNotNull(result);
         Assert.assertEquals("mandatory-label", result.getMandatoryLabelExpression().getContent());
     }
 
     @Test
     public void testGetFormTransientData() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        List<TransientData> result = api.getFormTransientData(formID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final List<TransientData> result = api.getFormTransientData(formID, context);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testGetFormActions() throws Exception {
 
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        List<String> pageIds = new ArrayList<String>();
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final List<String> pageIds = new ArrayList<String>();
         pageIds.add(pageID);
-        List<FormAction> result = api.getFormActions(formID, pageIds, context);
+        final List<FormAction> result = api.getFormActions(formID, pageIds, context);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testGetFormConfirmationLayout() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        HtmlTemplate result = api.getFormConfirmationLayout(formID, context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final HtmlTemplate result = api.getFormConfirmationLayout(formID, context);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testGetTransientDataContext() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
         final List<TransientData> transientData = api.getFormTransientData(formID, context);
-        Map<String, Serializable> result = api.getTransientDataContext(transientData, Locale.ENGLISH, context);
+        final Map<String, Serializable> result = api.getTransientDataContext(transientData, Locale.ENGLISH, context);
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testGetApplicationErrorLayout() throws Exception {
-        IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        HtmlTemplate result = api.getApplicationErrorLayout(context);
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final HtmlTemplate result = api.getApplicationErrorLayout(context);
         Assert.assertNotNull(result);
     }
 
     private File buildComplexFormXML() throws Exception {
         formBuilder.createFormDefinition();
-        formBuilder.addHomePage("welcome-page");
         formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression(null, "process label", "TYPE_CONSTANT", String.class.getName(), null);

@@ -12,6 +12,7 @@
 			<filtered>true</filtered>
 			<includes>
 				<include>**/*.html</include>
+				<include>**/*.jsp</include>
 			</includes>
 		</fileSet>
 		<fileSet>
@@ -19,6 +20,7 @@
 			<outputDirectory>/</outputDirectory>
 			<excludes>
 				<exclude>**/*.html</exclude>
+				<exclude>**/*.jsp</exclude>
 			</excludes>
 		</fileSet>
 	</fileSets>

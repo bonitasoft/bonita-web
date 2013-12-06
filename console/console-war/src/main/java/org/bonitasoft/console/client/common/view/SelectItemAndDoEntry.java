@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.console.client.common.view;
 
+import java.util.HashMap;
+
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
 
@@ -35,6 +37,9 @@ public class SelectItemAndDoEntry {
     private final AbstractAttributeReader suggestionLabel;
 
     private final String suggestionValueAttributeName;
+    
+    private HashMap<String, String> autocompleteFilters = new HashMap<String, String>();
+
 
     public SelectItemAndDoEntry(final String name, final String label, final String tooltip, final ItemDefinition definition,
             final AbstractAttributeReader suggestionLabel,
@@ -87,4 +92,11 @@ public class SelectItemAndDoEntry {
         return this.suggestionValueAttributeName;
     }
 
+    public void addFilter(String filterName, String filterValue) {
+        autocompleteFilters.put(filterName, filterValue);
+    }
+    
+    public HashMap<String, String> getFilters() {
+        return autocompleteFilters;
+    }
 }

@@ -35,11 +35,6 @@ public final class XMLForms {
     public static final String FORMS_DEFINITION = "forms-definition";
 
     /**
-     * the forms definition home page
-     */
-    public static final String HOME_PAGE = "home-page";
-
-    /**
      * the application element name
      */
     public static final String APPLICATION = "application";

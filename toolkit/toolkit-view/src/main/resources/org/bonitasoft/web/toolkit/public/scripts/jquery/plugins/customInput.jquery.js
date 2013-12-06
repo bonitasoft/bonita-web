@@ -37,20 +37,20 @@ jQuery.fn.customInput = function(){
 			);
 			
 			//bind custom event, trigger it, bind click,focus,blur events					
-			input.bind('updateState', function(){	
+			input.bind('updateState', function(){
 				if (input.is(':checked')) {
-					if (input.is(':radio')) {				
+					if (input.is(':radio')) {
 						allInputs.each(function(){
 							$('label[for='+$(this).attr('id')+']').removeClass('checked');
-						});		
-					};
+						});
+					}
 					label.addClass('checked');
 				}
 				else { label.removeClass('checked checkedHover checkedFocus'); }
 										
 			})
 			.trigger('updateState')
-			.click(function(){ 
+			.change(function(){ 
 				$(this).trigger('updateState'); 
 			})
 			.focus(function(){ 
@@ -60,6 +60,7 @@ jQuery.fn.customInput = function(){
 				} 
 			})
 			.blur(function(){ label.removeClass('focus checkedFocus'); });
+			
 		}
 	});
 };

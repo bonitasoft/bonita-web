@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>forms-parent</artifactId>
 		<groupId>org.bonitasoft.forms</groupId>
-		<version>6.1.0-SNAPSHOT</version>
+		<version>6.2.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.forms</groupId>
@@ -86,7 +86,7 @@
             			<configuration>
             				<tasks>
 	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
-	            					<fileset dir="${project.build.directory}/forms-config/platform/tenant-template/work/looknfeel/default" />
+	            					<fileset dir="${project.build.directory}/forms-config/platform/tenant-template/work/theme/portal" />
 	            				</copy>
 	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
 	            					<fileset dir="${project.build.directory}/forms-design/application/application" />

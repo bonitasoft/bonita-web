@@ -5,11 +5,6 @@
 	id="console-war" version="2.5">
 	<display-name>Bonita</display-name>
 
-	<!-- Shutdown properly ehcache on tomcat shutdown -->
-	<listener>
-		<listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
-	</listener>
-
 	<!-- Bonita home Filter -->
 	<filter>
 		<filter-name>BonitaHomeFilter</filter-name>
@@ -149,10 +144,19 @@
 	</filter-mapping>
 	<!-- Cache Filter Mapping End -->
 
-	<!-- Platform and tenant context listener -->
+	<!-- Shutdown properly ehcache on tomcat shutdown -->
 	<listener>
-		<listener-class>
-			org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
+		<listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
+	</listener>
+	<!-- Platform and tenant listeners -->
+	<!-- For Apps containing the engine server -->
+${enable.engine.listener.start}
+	<listener>
+		<listener-class>org.bonitasoft.engine.api.internal.servlet.EngineInitializerListener</listener-class>
+	</listener>
+${enable.engine.listener.end}
+	<listener>
+		<listener-class>org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
 	</listener>
 
 	<servlet>

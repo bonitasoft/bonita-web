@@ -36,7 +36,7 @@ public class DeleteProfileMemberPage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
     
     static {
-        PRIVILEGES.add(ListProfilePage.TOKEN);
+        PRIVILEGES.add(ProfileListingPage.TOKEN);
     }
 
     public final static String PARAMETER_PROFILE_ID = "profileId";

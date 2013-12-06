@@ -53,7 +53,7 @@ public class AddRoleToProfileMemberPage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
     
     static {
-        PRIVILEGES.add(ListProfilePage.TOKEN);
+        PRIVILEGES.add(ProfileListingPage.TOKEN);
     }
 
     /**

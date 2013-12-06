@@ -17,10 +17,7 @@
 package org.bonitasoft.console.common.server.themes;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -35,12 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.session.APISession;
 
 /**
- * @author Minghui.Dai
+ * @author Minghui.Dai Anthony Birembaut
  * 
  */
 public class ThemeResourceServlet extends HttpServlet {
@@ -59,6 +57,11 @@ public class ThemeResourceServlet extends HttpServlet {
      * theme name : the theme folder's name
      */
     private final static String THEME = "theme";
+
+    /**
+     * tenant request parameter
+     */
+    private final static String TENANT_PARAMETER = "tenant";
 
     /**
      * file name
@@ -121,7 +124,13 @@ public class ThemeResourceServlet extends HttpServlet {
         themeName = URLDecoder.decode(themeName, "UTF-8");
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
-        themesFolder = getThemesParentFolder(request);
+
+        if (themeName.equals("mobile")) {
+            themesFolder = getThemesDefaultParentFolder(request);
+        } else {
+            themesFolder = getThemesParentFolder(request);
+        }
+
         try {
 
             final File file = new File(themesFolder.getAbsolutePath() + File.separator + themeName + File.separator + fileName);
@@ -137,18 +146,33 @@ public class ThemeResourceServlet extends HttpServlet {
                 }
                 throw new ServletException(errorMessage);
             }
-            if (fileName.toLowerCase().endsWith(".jpg")) {
-                contentType = "image/jpg";
-            } else if (fileName.toLowerCase().endsWith(".gif")) {
+            final String lowerCaseFileName = fileName.toLowerCase();
+            if (lowerCaseFileName.endsWith(".jpg")) {
+                contentType = "image/jpeg";
+            } else if (lowerCaseFileName.endsWith(".jpeg")) {
+                contentType = "image/jpeg";
+            } else if (lowerCaseFileName.endsWith(".gif")) {
                 contentType = "image/gif";
-            } else if (fileName.toLowerCase().endsWith(".png")) {
+            } else if (lowerCaseFileName.endsWith(".png")) {
                 contentType = "image/png";
-            } else if (fileName.toLowerCase().endsWith(".css")) {
+            } else if (lowerCaseFileName.endsWith(".css") || lowerCaseFileName.endsWith(".less")) {
                 contentType = "text/css";
-            } else if (fileName.toLowerCase().endsWith(".js")) {
+            } else if (lowerCaseFileName.endsWith(".js")) {
                 contentType = "application/x-javascript";
-            } else if (fileName.toLowerCase().endsWith(".html")) {
+            } else if (lowerCaseFileName.endsWith(".html")) {
                 contentType = "text/html";
+            } else if (lowerCaseFileName.endsWith(".htc")) {
+                contentType = "text/x-component";
+            } else if (lowerCaseFileName.endsWith(".svg")) {
+                contentType = "image/svg+xml";
+            } else if (lowerCaseFileName.endsWith(".eot")) {
+                contentType = "application/vnd.ms-fontobject";
+            } else if (lowerCaseFileName.endsWith(".woff")) {
+                contentType = "application/x-font-woff";
+            } else if (lowerCaseFileName.endsWith(".ttf")) {
+                contentType = "application/x-font-ttf";
+            } else if (lowerCaseFileName.endsWith(".otf")) {
+                contentType = "application/x-font-opentype";
             } else {
                 final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
                 contentType = mimetypesFileTypeMap.getContentType(file);
@@ -156,8 +180,7 @@ public class ThemeResourceServlet extends HttpServlet {
             if (contentType == null) {
                 contentType = "application/octet-stream";
             }
-            final int fileLength = (int) file.length();
-            content = getFileContent(file, fileLength, fileName);
+            content = FileUtils.readFileToByteArray(file);
             response.setContentType(contentType);
             response.setContentLength(content.length);
             response.setBufferSize(content.length);
@@ -174,57 +197,37 @@ public class ThemeResourceServlet extends HttpServlet {
         }
     }
 
-    /**
-     * get file content
-     * 
-     * @param file
-     * @param fileLength
-     * @param filePath
-     * @return
-     * @throws ServletException
-     */
-    public static byte[] getFileContent(final File file, final int fileLength, final String filePath) throws ServletException {
-        byte[] content = null;
+    private static File getThemesDefaultParentFolder(final HttpServletRequest request) throws ServletException {
+        File myThemesParentFolder = null;
+
         try {
-            final InputStream fileInput = new FileInputStream(file);
-            final byte[] fileContent = new byte[fileLength];
-            try {
-                int offset = 0;
-                int length = fileLength;
-                while (length > 0) {
-                    final int read = fileInput.read(fileContent, offset, length);
-                    if (read <= 0) {
-                        break;
-                    }
-                    length -= read;
-                    offset += read;
-                }
-                content = fileContent;
-            } catch (final FileNotFoundException e) {
-                final String errorMessage = "Error while getting the resource. The file " + filePath + " does not exist.";
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, errorMessage, e);
-                }
-                throw new ServletException(errorMessage, e);
-            } finally {
-                fileInput.close();
+            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(1L).getConsoleThemeFolder();
+        } catch (final RuntimeException e) {
+            final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage);
             }
-        } catch (final IOException e) {
-            final String errorMessage = "Error while reading resource: " + filePath;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
-            }
-            throw new ServletException(errorMessage, e);
+            throw new ServletException(errorMessage);
         }
-        return content;
+
+        return myThemesParentFolder;
     }
 
-    protected static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
+    public static File getThemesParentFolder(final HttpServletRequest request) throws ServletException {
         File myThemesParentFolder = null;
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        long tenantId = 1;
+        final String tenantFromRequest = request.getParameter(TENANT_PARAMETER);
+        if (tenantFromRequest == null) {
+            final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+            if (apiSession != null) {
+                tenantId = apiSession.getTenantId();
+            }
+        } else {
+            tenantId = Long.parseLong(tenantFromRequest);
+        }
         try {
-            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getConsoleThemeFolder();
+            myThemesParentFolder = WebBonitaConstantsUtils.getInstance(tenantId).getConsoleThemeFolder();
         } catch (final RuntimeException e) {
             final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {

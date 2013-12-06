@@ -46,7 +46,7 @@ public class Alert {
         final String div = HTML.div(new HTMLClass("alert_message").addClass(messageType.toString())) + HTML.text(message) + HTML._div();
 
         if ($(target).is(":file")) {
-            $("#uploader", parent).after(div);
+            $(".uploader", parent).after(div);
         } else {
             $(target).after(div);
         }

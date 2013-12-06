@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +30,7 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -60,11 +59,11 @@ public class CaseEngineClient {
                 return processAPI.startProcess(processId, variables);
             }
         } catch (ProcessDefinitionNotFoundException e) {
-            throw new APIException(_("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
+            throw new APIException(new _("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
         } catch (ProcessActivationException e) {
-            throw new APIException(_("Can't start process, process %processId% is not enabled", new Arg("processId", processId)), e);
+            throw new APIException(new _("Can't start process, process %processId% is not enabled", new Arg("processId", processId)), e);
         } catch (ProcessExecutionException e) {
-            throw new APIException(_("Error occured when starting process %processId%", new Arg("processId", processId)), e);
+            throw new APIException(new _("Error occured when starting process %processId%", new Arg("processId", processId)), e);
         }
     }
     
