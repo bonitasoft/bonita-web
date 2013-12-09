@@ -42,12 +42,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 /**
  * Process engine API client
  * 

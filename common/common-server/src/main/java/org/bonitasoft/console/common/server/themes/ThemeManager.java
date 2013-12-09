@@ -18,6 +18,7 @@ package org.bonitasoft.console.common.server.themes;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.lesscss.LessCompiler;
@@ -37,34 +39,39 @@ import org.lesscss.LessException;
  */
 public class ThemeManager {
 
-    public static final String THEME_PORTAL_FOLDER_NAME = "portal";
-	
+    public static final String THEME_FOLDER_NAME = "theme";
+    
     /**
      * logger
      */
     private final Logger LOGGER = Logger.getLogger(ThemeManager.class.getName());
 
     /**
-     * @param themeID
-     * @param unzipThemesFolder
+     * @param unzipThemeFolder
+     * @param themeFolder
      * @throws ThemeStructureException
      * @throws IOException
      */
-    public void applyPortalTheme(final File unzipThemesFolder, final String portalThemeFolder) throws ThemeStructureException, IOException {
-        final ThemeValidator validator = new ThemeValidator();
-       	validator.doPortalValidation(unzipThemesFolder.getAbsolutePath() + File.separator + THEME_PORTAL_FOLDER_NAME);
-       	copyThemeInBonitahome(unzipThemesFolder, portalThemeFolder);
+    public void applyTheme(final File unzipThemeFolder, final String themeFolder) throws ThemeStructureException, IOException {
+       	copyThemeInBonitahome(unzipThemeFolder, themeFolder);
     }
 
+    public File unzipThemeInTempFolder(final File themeZip, final String tempFolderPath, String themeType) throws FileNotFoundException, IOException{
+    	String tmpFolderPath = tempFolderPath + File.separator + THEME_FOLDER_NAME + File.separator + themeType ;
+    	UnzipUtil.unzip(themeZip, tmpFolderPath);
+    	
+    	return new File(tmpFolderPath);
+    }
+    
     /**
      * Move the folder in the bonitaHome
      * 
      * @param zipFile
      * @throws IOException
      */
-    private void copyThemeInBonitahome(final File unzipThemeFolder, final String portalThemeFolder) {
+    private void copyThemeInBonitahome(final File unzipThemeFolder, final String themeFolder) {
         try {
-            FileUtils.copyDirectoryToDirectory(unzipThemeFolder, new File(portalThemeFolder));
+            FileUtils.copyDirectoryToDirectory(unzipThemeFolder, new File(themeFolder));
             unzipThemeFolder.delete();
         } catch (final IOException e) {
             throw new APIException(e);
