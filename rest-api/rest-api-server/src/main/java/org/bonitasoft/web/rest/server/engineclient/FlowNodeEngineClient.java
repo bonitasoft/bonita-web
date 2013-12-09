@@ -20,8 +20,13 @@ import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
+import org.bonitasoft.engine.bpm.flownode.FlowNodeInstance;
+import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 
 /**
@@ -41,6 +46,16 @@ public class FlowNodeEngineClient {
             return processAPI.searchArchivedFlowNodeInstances(searchOptions).getResult();
         } catch (Exception e) {
             throw new APIException("Error when searching arquived flow nodes", e);
+        }
+    }
+    
+    public FlowNodeInstance getFlowNodeInstance(long flowNodeInstanceId) {
+        try {
+            return processAPI.getFlowNodeInstance(flowNodeInstanceId);
+        } catch (FlowNodeInstanceNotFoundException e) {
+            throw new APIItemNotFoundException(FlowNodeDefinition.TOKEN, APIID.makeAPIID(flowNodeInstanceId));
+        } catch (Exception e) {
+            throw new APIException("Error when getting flow node instance", e);
         }
     }
 
