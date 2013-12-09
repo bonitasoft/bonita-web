@@ -44,8 +44,6 @@ public interface WebBonitaConstants {
 
     public static final String workFolderName = "work";
 
-    public static final String consoleFolderName = "console";
-
     public static final String formsFolderName = "forms";
 
     public static final String ROLES_ICONS_FOLDER_NAME = "roles";
@@ -85,7 +83,7 @@ public interface WebBonitaConstants {
      * 
      * @return path
      */
-    public String getThemeConsoleFolderPath();
+    public String getThemePortalFolderPath();
 
     /**
      * Get Tenant ConfFolder Path
@@ -120,35 +118,35 @@ public interface WebBonitaConstants {
      * 
      * @return
      */
-    public String getConsoleDefaultIconsFolderPath();
+    public String getPortalDefaultIconsFolderPath();
 
     /**
      * Get Tenant process icons Path
      * 
      * @return
      */
-    public String getConsoleProcessIconsFolderPath();
+    public String getPortalProcessIconsFolderPath();
 
     /**
      * Get Tenant user icons Path
      * 
      * @return
      */
-    public String getConsoleUserIconsFolderPath();
+    public String getPortalUserIconsFolderPath();
 
     /**
      * Get Tenant user icons Path
      * 
      * @return
      */
-    public String getConsoleRoleIconsFolderPath();
+    public String getPortalRoleIconsFolderPath();
 
     /**
      * Get Tenant profile icons Path
      * 
      * @return
      */
-    public String getConsoleProfilesIconsFolderPath();
+    public String getPortalProfilesIconsFolderPath();
 
     /**
      * Get profilesConsoleWorkFolder Path
@@ -169,6 +167,6 @@ public interface WebBonitaConstants {
      * 
      * @return path
      */
-    public String getConsoleGroupIconsFolderPath();
+    public String getPortalGroupIconsFolderPath();
 
 }

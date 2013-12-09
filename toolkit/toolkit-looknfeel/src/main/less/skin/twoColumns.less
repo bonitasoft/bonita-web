@@ -1,4 +1,4 @@
-@import "skin.config.less";
+//@import "skin.config.less";
 .page.twoCols{
 	>.header{
 		display: none;
@@ -34,11 +34,11 @@
 		.section{
 			.boxSizing();
 			float: left;
-			width: @moreDetails-section-width;
-			padding: @moreDetails-sectionLeft-padding;
+			width: @twoCols-section-width;
+			padding: @twoCols-sectionLeft-padding;
 			&.doublesection{
 				clear: both;
-				width: @moreDetails-double-section-width;
+				width: @twoCols-double-section-width;
 				.section{
 					&:nth-child(even){
 						clear: none;
@@ -47,7 +47,7 @@
 						clear: left;
 					}
 					h1{
-						.revertfontSize(@moreDetails-title-fontSize);
+						.revertfontSize(@twoCols-title-fontSize);
 					}
 					.table, .pager {
 						.fontSize(@skinFontSize - 3px);
@@ -55,10 +55,11 @@
 				}
 			} 
 			+ .section, + css3-container + .section{
-				padding: @moreDetails-sectionLeft-padding;
+				padding: @twoCols-sectionLeft-padding;
 			}
 			&.tabSection{
 				width: @twoCols-tabsection-width;
+				padding: @twoCols-tabsection-padding;
 				display: none;
 				clear: both;
 				&.current{
@@ -67,6 +68,9 @@
 			}
 			&:first-child{
 				border-top:none;
+				> .header{
+					border: none;
+				}
 			}
 			&:nth-child(even){
 				clear: left;
@@ -74,36 +78,29 @@
 			> .header{
 				.section_border();
 				h1{
-					.moreDetails_section_title();
+					padding: @twoCols-title-padding;
+					margin: @twoCols-title-margin;
+					display: inline-block;
+					.fontSize(@twoCols-title-fontSize);
 				}
 			}
 			> .body{
-				padding: @moreDetails-section-body-padding;
-				position: @moreDetails-section-body-position;
+				padding: @twoCols-section-body-padding; 
+				position: @twoCols-section-body-position; 
 			}
-			margin: @moreDetails-section-margin;
+			margin: @twoCols-section-margin;
 		}
 		> .header{
-		    min-width: @moreDetails-min-width; 
+		    min-width: @twoCols-min-width; 
 			min-height: @button-globalHeight;
-			padding: @moreDetails-header-padding;
-			margin: @moreDetails-header-margin;
-			position: @moreDetails-header-position;
+			padding: @twoCols-header-padding;
+			margin: @twoCols-header-margin;
+			position: @twoCols-header-position;
 			width: 100%;
 			.boxSizing();
 			
 			h1{
-				display: @moreDetails-header-title-display;
-			}
-			.toolbar{
-				margin: @moreDetails-toolbar-margin;
-				text-align: @moreDetails-toolbar-txtAlign;
-				a{
-					+ a, + css3-container + a{ margin-left: @button-marginBetween; }
-					&.back{
-						float: left;
-					}
-				}
+				display: @twoCols-header-title-display;
 			}
 		}
 	}

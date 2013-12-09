@@ -33,7 +33,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.UnZIPUtil;
+import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -66,6 +66,7 @@ public class ThemeUploadServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         final PrintWriter responsePW = response.getWriter();
         String themeTempPath = null;
+        File uploadedFile = null;
         try {
             if (!ServletFileUpload.isMultipartContent(request)) {
                 final String theErrorMessage = "Error while using the servlet ThemeUploadServlet to upload theme,it is not MultipartContent";
@@ -85,7 +86,7 @@ public class ThemeUploadServlet extends HttpServlet {
                 final String fileName = item.getName();
 
                 themeTempPath = getCommonTempFolder(apiSession.getTenantId()) + File.separator + fileName;
-                File uploadedFile = new File(themeTempPath);
+                uploadedFile = new File(themeTempPath);
                 int suffix = 0;
                 while (uploadedFile.exists()) {
                     uploadedFile = new File(getCommonTempFolder(apiSession.getTenantId()), fileName + "." + suffix);
@@ -93,7 +94,7 @@ public class ThemeUploadServlet extends HttpServlet {
                 }
                 themeTempPath = uploadedFile.getAbsolutePath();
                 // extract ZIP file
-                UnZIPUtil.unzip(item.getInputStream(), themeTempPath);
+                UnzipUtil.unzip(item.getInputStream(), themeTempPath);
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "uploaded File Path: " + themeTempPath);
                 }
@@ -112,7 +113,7 @@ public class ThemeUploadServlet extends HttpServlet {
         } finally {
             if (themeTempPath != null) {
                 final ThemeManager themeManager = new ThemeManager();
-                themeManager.deleteFolder(themeTempPath);
+                themeManager.deleteTempDirectory(uploadedFile);
             }
         }
     }
@@ -134,7 +135,7 @@ public class ThemeUploadServlet extends HttpServlet {
     public void validateThemePackage(final long tenantId, final String themePath) throws ThemeStructureException {
         final ThemeValidator validator = new ThemeValidator();
         try {
-            validator.doValidate(themePath);
+            validator.doPortalValidation(themePath);
         } catch (final IOException e) {
             final String theErrorMessage = "Exception while getting the themes folder: it may be not exist or path is error.";
             if (LOGGER.isLoggable(Level.SEVERE)) {

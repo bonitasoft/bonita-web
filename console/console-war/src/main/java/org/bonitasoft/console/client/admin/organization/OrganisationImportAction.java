@@ -29,9 +29,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.AbstractForm;
 public class OrganisationImportAction extends SendFormAction {
 
     private static final String IMPORT_REST_API_URL = "../services/organization/import";
-    
+
     private static AbstractForm form;
-    
+
     private final static HttpCallback callBack = new HttpCallback() {
 
         @Override
@@ -42,17 +42,14 @@ public class OrganisationImportAction extends SendFormAction {
 
     };
 
-    
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
         super.execute();
-        form = this.getForm();
+        form = getForm();
     }
 
     @Override
     public void setOnError(Action onError) {
-        // TODO Auto-generated method stub
         super.setOnError(onError);
         form.removeClass("success");
     }
@@ -60,7 +57,5 @@ public class OrganisationImportAction extends SendFormAction {
     public OrganisationImportAction() {
         super(IMPORT_REST_API_URL, callBack);
     }
-    
-    
 
 }

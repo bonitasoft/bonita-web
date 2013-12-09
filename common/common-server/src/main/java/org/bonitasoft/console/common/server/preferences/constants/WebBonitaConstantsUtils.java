@@ -80,9 +80,9 @@ public class WebBonitaConstantsUtils {
      * 
      * @throws ConsoleException
      */
-    public File getConsoleThemeFolder() {
+    public File getPortalThemeFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getThemeConsoleFolderPath());
+                .getThemePortalFolderPath());
     }
 
     /**
@@ -92,7 +92,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getConsoleDefaultIconsFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getConsoleDefaultIconsFolderPath());
+                .getPortalDefaultIconsFolderPath());
     }
 
     /**
@@ -102,7 +102,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getConsoleProcessIconsFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getConsoleProcessIconsFolderPath());
+                .getPortalProcessIconsFolderPath());
     }
 
     /**
@@ -112,7 +112,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getConsoleUserIconsFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getConsoleUserIconsFolderPath());
+                .getPortalUserIconsFolderPath());
     }
 
     /**
@@ -123,7 +123,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getConsoleRoleIconsFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getConsoleRoleIconsFolderPath());
+                .getPortalRoleIconsFolderPath());
     }
 
     /**
@@ -184,7 +184,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getConsoleGroupIconsFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getConsoleGroupIconsFolderPath());
+                .getPortalGroupIconsFolderPath());
     }
 
     /**
@@ -195,7 +195,7 @@ public class WebBonitaConstantsUtils {
      */
     public File getConsoleProfileIconsFolder() {
         return getFolderFromBonitaHome(webBonitaConstants
-                .getConsoleProfilesIconsFolderPath());
+                .getPortalProfilesIconsFolderPath());
     }
 
     private String getBonitaHomePath() {

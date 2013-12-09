@@ -58,7 +58,6 @@ import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
 import org.bonitasoft.web.rest.server.api.system.APII18nTranslation;
 import org.bonitasoft.web.rest.server.api.system.APISession;
-import org.bonitasoft.web.rest.server.api.theme.APITheme;
 import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
@@ -102,8 +101,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
-            } else if ("theme".equals(resourceToken)) {
-                return new APITheme();
             }
         } else if ("bpm".equals(apiToken)) {
             if ("humanTask".equals(resourceToken)) {

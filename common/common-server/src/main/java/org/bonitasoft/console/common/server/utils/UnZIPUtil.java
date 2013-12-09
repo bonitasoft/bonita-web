@@ -19,6 +19,8 @@ package org.bonitasoft.console.common.server.utils;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,17 +29,19 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.bonitasoft.engine.io.IOUtil;
+
 /**
  * Utility class extracting zip file
  * 
  * @author Zhiheng Yang
  */
-public class UnZIPUtil {
+public class UnzipUtil {
 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(UnZIPUtil.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UnzipUtil.class.getName());
 
     static final int BUFFER = 2048;
 
@@ -47,60 +51,27 @@ public class UnZIPUtil {
      * @param InputStream
      *            of SourceFile
      * @param targetPath
+     * @throws IOException 
+     * @throws FileNotFoundException 
      */
-    public static synchronized void unzip(final InputStream sourceFile, final String targetPath) {
-        final File outFile = new File(targetPath);
-        if (!outFile.exists()) {
-            outFile.mkdirs();
-        }
-        BufferedOutputStream dest = null;
-        ZipInputStream zis = null;
-        File f = null;
-        try {
-            zis = new ZipInputStream(new BufferedInputStream(sourceFile));
-            ZipEntry entry;
-            while ((entry = zis.getNextEntry()) != null) {
-                if (entry.isDirectory()) {
-                    String dirName = entry.getName();
-                    dirName = dirName.substring(0, dirName.length() - 1);
-                    f = new File(outFile.getPath() + File.separator + dirName);
-                    f.mkdirs();
-                } else {
-                    f = new File(outFile.getPath() + File.separator + entry.getName());
-                    if (!f.getParentFile().exists()) {
-                        f.getParentFile().mkdirs();
-                    }
-                    f.createNewFile();
-                    int count;
-                    final byte data[] = new byte[BUFFER];
-                    final FileOutputStream fos = new FileOutputStream(f);
-                    dest = new BufferedOutputStream(fos, BUFFER);
-                    while ((count = zis.read(data, 0, BUFFER)) != -1) {
-                        dest.write(data, 0, count);
-                        dest.flush();
-                    }
-                    fos.close();
-                }
-            }
-        } catch (final Exception e) {
-            final String theErrorMessage = "Exception while uploading file.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, theErrorMessage, e);
-            }
-        } finally {
-            try {
-                if (dest != null) {
-                    dest.close();
-                }
-                if (zis != null) {
-                    zis.close();
-                }
-            } catch (final IOException e) {
-                final String theErrorMessage = "Exception while uploading file.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, theErrorMessage, e);
-                }
-            }
-        }
+    public static synchronized void unzip(final InputStream sourceFile, final String targetPath) throws FileNotFoundException, IOException {
+        IOUtil.unzipToFolder(sourceFile, new File(targetPath));
+        sourceFile.close();
     }
+    
+    /**
+     * Unzip a zip file from InputStream
+     * 
+     * @param File
+     *            of SourceFile
+     * @param targetPath
+     * @throws IOException 
+     * @throws FileNotFoundException 
+     */
+    public static synchronized void  unzip(final File zipFile, final String unzipReportPath) throws FileNotFoundException, IOException {
+    	final FileInputStream zipFileInputStream = new FileInputStream(zipFile);
+    	unzip(zipFileInputStream, unzipReportPath);
+        zipFile.delete();
+    }
+    
 }

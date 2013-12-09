@@ -158,44 +158,30 @@ $(function() {
 				panelSectionInTab.append(tabList);
 				parentBlock.prepend(panelSectionInTab);
 			}
-			var tabElement = $("<li/>");
-			if(i==0){
-				tabElement.addClass(currentClass);
-				section.addClass(currentClass);
-			}
-			var tabLink = $("<a>"+tabTitle.text()+"</a>");
-			tabElement.click(function(){
-				var currentIndex = $(this).index();
-				$(this).siblings().removeClass(currentClass);
-				$(".tabSection").removeClass(currentClass);
-				$(this).addClass(currentClass);
-				console.log($(".tabSection:eq("+currentIndex+")"));
-				$(".tabSection:eq("+currentIndex+")").addClass(currentClass);
-			});
-			tabTitle.parent().css("display","none");
-			tabElement.append(tabLink);
-			$(panelSelector+" ul").append(tabElement);
+			
+				var tabElement = $("<li/>");
+				if(i==0){
+					tabElement.addClass(currentClass);
+					section.addClass(currentClass);
+				}
+				var tabLink = $("<a>"+tabTitle.text()+"</a>");
+				tabElement.append(tabLink);
+				tabTitle.parent().css("display","none");
+				tabElement.click(function(){
+					var currentIndex = $(this).index();
+					$(this).siblings().removeClass(currentClass);
+					$(".tabSection").removeClass(currentClass);
+					$(this).addClass(currentClass);
+					$(".tabSection:eq("+currentIndex+")").addClass(currentClass);
+				});
+				$(panelSelector+" ul").append(tabElement);
 		});
 	};
 	
 	$.uiManager.addMaker(function(c) {
-		$.uiManager.addMaker(function(c) {
-			$(".tabSection", c).bonitaSectionsInTabs();
-		});
+		$(".tabSection", c).bonitaSectionsInTabs();
 	});
 	
 	
 });
-
-	// Extension:
-	//bonita.fn.sectionsInTabs = function () {
-	//};
-/*$(function() {
-	$.uiManager.addMaker(function(c) {
-		Bonita.skin.sectionsInTabs($(".sectionInTab"), c);
-	});
-});
-*/
-
-
 

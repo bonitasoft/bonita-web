@@ -840,10 +840,30 @@
 
 @twoCols-min-width: 250 * @w;
 @twoCols-body-top: @header-login-height + @header-menu-height;
-@twoCols-body-padding: (@header-menu-height + @header-login-height) @moreDetails-paddingRight @footer-height 0;
+@twoCols-body-padding: (@header-menu-height + @header-login-height) 5*@w @footer-height 0;
+
 @twoCols-tabsection-width: 100%;
+@twoCols-tabsection-padding: 7*@h 0  5*@h 7*@w;
+
 @twoCols-sectionsPanel-section-bgColor: #fff;
 @twoCols-filtersCurrent-link-textColor: @secondAccentColor;
+@twoCols-section-width: 50%;
+@twoCols-double-section-width: 100%;
+@twoCols-sectionLeft-padding: 0 13*@w 11*@h 0;
+
+@twoCols-title-fontSize: 24;
+@twoCols-title-padding: 0;
+@twoCols-title-margin: 0 0 4*@h 0;
+@twoCols-section-body-padding: 0 2*@w 0 2*@w;
+@twoCols-section-body-position: relative;
+@twoCols-section-margin: 0 0 3*@h 0;
+@twoCols-paddingLeft: 8*@w;
+@twoCols-paddingRight: 7*@w;
+@twoCols-header-padding: 0 @twoCols-paddingRight 0 @twoCols-paddingLeft;
+@twoCols-header-marginBottom: 8*@h;
+@twoCols-header-margin: (@header-menu-height+@header-login-height) 0 @twoCols-header-marginBottom 0;
+@twoCols-header-position: absolute;
+@twoCols-header-title-display: none;
 // ----------------------------------------------------------------------------
 // Footer
 // ----------------------------------------------------------------------------

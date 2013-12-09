@@ -31,4 +31,6 @@ public abstract class CssClass {
     public static final String TAB_SECTION = "tabSection";
 
     public static final String SECTION = "section";
+
+    public static final String FORM_ACTIONS = "formactions";
 }
