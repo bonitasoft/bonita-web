@@ -257,15 +257,11 @@ ${enable.engine.listener.end}
 	<!-- End SSO -->
 	<!-- theme -->
 	<servlet>
-		<servlet-name>org.bonitasoft.console.common.server.themes.ThemeResourceServletconsole/themeResource</servlet-name>
+		<servlet-name>themeResource</servlet-name>
 		<servlet-class>org.bonitasoft.console.common.server.themes.ThemeResourceServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>org.bonitasoft.console.common.server.themes.ThemeUploadServlet/console/themeUpload</servlet-name>
-		<servlet-class>org.bonitasoft.console.common.server.themes.ThemeUploadServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>org.bonitasoft.forms.server.HomepageServletconsole/homepage</servlet-name>
+		<servlet-name>homepage</servlet-name>
 		<servlet-class>org.bonitasoft.forms.server.HomepageServlet</servlet-class>
 	</servlet>
 	<!-- End theme -->
@@ -277,15 +273,11 @@ ${enable.engine.http.api.start}
 	</servlet>
 ${enable.engine.http.api.end}
 	<servlet-mapping>
-		<servlet-name>org.bonitasoft.forms.server.HomepageServletconsole/homepage</servlet-name>
+		<servlet-name>homepage</servlet-name>
 		<url-pattern>/portal/homepage</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>org.bonitasoft.console.common.server.themes.ThemeUploadServlet/console/themeUpload</servlet-name>
-		<url-pattern>/portal/themeUpload</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>org.bonitasoft.console.common.server.themes.ThemeResourceServletconsole/themeResource</servlet-name>
+		<servlet-name>themeResource</servlet-name>
 		<url-pattern>/portal/themeResource</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
