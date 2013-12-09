@@ -112,8 +112,8 @@ public class ThemeUploadServlet extends HttpServlet {
             throw new ServletException(theErrorMessage, e);
         } finally {
             if (themeTempPath != null) {
-                final ThemeManager themeManager = new ThemeManager();
-                themeManager.deleteTempDirectory(uploadedFile);
+                //final ThemeManager themeManager = new PortalThemeManager();
+                //themeManager.deleteTempDirectory(uploadedFile);
             }
         }
     }

@@ -31,7 +31,7 @@ public class ThemeValidator {
 
     private static final String FORMS_TEMPLATE_FILE = "BonitaForm.html";
 
-    private static final String MAIN_LESS_FILE = "styles.less";
+    private static final String MAIN_LESS_FILE = "main.less";
 
     /**
      * Do theme package validate for Portal
