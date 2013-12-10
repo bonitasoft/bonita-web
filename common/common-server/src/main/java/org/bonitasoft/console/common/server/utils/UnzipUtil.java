@@ -32,54 +32,55 @@ import org.bonitasoft.engine.io.IOUtil;
  */
 public class UnzipUtil {
 
-	/**
-	 * Logger
-	 */
-	private static final Logger LOGGER = Logger.getLogger(UnzipUtil.class.getName());
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(UnzipUtil.class.getName());
 
-	static final int BUFFER = 2048;
+    static final int BUFFER = 2048;
 
-	/**
-	 * Unzip a zip file from InputStream
-	 * 
-	 * @param InputStream
-	 *            of SourceFile
-	 * @param targetPath
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
-	public static synchronized void unzip(final InputStream sourceFile, final String targetPath) throws FileNotFoundException, IOException {
-		IOUtil.unzipToFolder(sourceFile, new File(targetPath));
-		sourceFile.close();
-	}
+    /**
+     * Unzip a zip file from InputStream
+     * 
+     * @param InputStream
+     *            of SourceFile
+     * @param targetPath
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
+    public static synchronized void unzip(final InputStream sourceFile, final String targetPath) throws FileNotFoundException, IOException {
+        IOUtil.unzipToFolder(sourceFile, new File(targetPath));
+        sourceFile.close();
+    }
 
-	/**
-	 * Unzip a zip file from InputStream
-	 * 
-	 * @param File
-	 *            of SourceFile
-	 * @param targetPath
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
-	public static synchronized void  unzip(final File zipFile, final String unzipReportPath) throws FileNotFoundException, IOException {
-		final FileInputStream zipFileInputStream = new FileInputStream(zipFile);
-		unzip(zipFileInputStream, unzipReportPath);
-	}
-	
-	public static synchronized void  unzip(final File zipFile, final String unzipReportPath, final boolean deleteFileAfterZip) throws FileNotFoundException, IOException {
-		unzip(zipFile, unzipReportPath);
-		if(deleteFileAfterZip){
-			zipFile.delete();
-		}
-	}
+    /**
+     * Unzip a zip file from InputStream
+     * 
+     * @param File
+     *            of SourceFile
+     * @param targetPath
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
+    public static synchronized void unzip(final File zipFile, final String unzipReportPath) throws FileNotFoundException, IOException {
+        final FileInputStream zipFileInputStream = new FileInputStream(zipFile);
+        unzip(zipFileInputStream, unzipReportPath);
+    }
 
-	public static synchronized String  getZipNameWithoutExtention(final File zipFile){
-		String zipName = zipFile.getName();
-		if (zipName.indexOf(".") > 0)
-			zipName = zipName.substring(0, zipName.lastIndexOf("."));
+    public static synchronized void unzip(final File zipFile, final String unzipReportPath, final boolean deleteFileAfterZip) throws FileNotFoundException,
+            IOException {
+        unzip(zipFile, unzipReportPath);
+        if (deleteFileAfterZip) {
+            zipFile.delete();
+        }
+    }
 
-		return zipName;
-	}
+    public static synchronized String getZipNameWithoutExtention(final File zipFile) {
+        String zipName = zipFile.getName();
+        if (zipName.indexOf(".") > 0)
+            zipName = zipName.substring(0, zipName.lastIndexOf("."));
+
+        return zipName;
+    }
 
 }

@@ -40,7 +40,7 @@ import org.lesscss.LessException;
 public class ThemeManager {
 
     public static final String THEME_FOLDER_NAME = "theme";
-    
+
     /**
      * logger
      */
@@ -53,16 +53,16 @@ public class ThemeManager {
      * @throws IOException
      */
     public void applyTheme(final File unzipThemeFolder, final String themeFolder) throws ThemeStructureException, IOException {
-       	copyThemeInBonitahome(unzipThemeFolder, themeFolder);
+        copyThemeInBonitahome(unzipThemeFolder, themeFolder);
     }
 
-    public File unzipThemeInTempFolder(final File themeZip, final String tempFolderPath, String themeType) throws FileNotFoundException, IOException{
-    	String tmpFolderPath = tempFolderPath + File.separator + THEME_FOLDER_NAME + File.separator + themeType ;
-    	UnzipUtil.unzip(themeZip, tmpFolderPath);
-    	
-    	return new File(tmpFolderPath);
+    public File unzipThemeInTempFolder(final File themeZip, final String tempFolderPath, String themeType) throws FileNotFoundException, IOException {
+        String tmpFolderPath = tempFolderPath + File.separator + THEME_FOLDER_NAME + File.separator + themeType;
+        UnzipUtil.unzip(themeZip, tmpFolderPath);
+
+        return new File(tmpFolderPath);
     }
-    
+
     /**
      * Move the folder in the bonitaHome
      * 
@@ -76,7 +76,7 @@ public class ThemeManager {
             throw new APIException(e);
         }
     }
-    
+
     /**
      * @param themesFolder
      *            the folder of the theme
@@ -97,7 +97,7 @@ public class ThemeManager {
         // compile LESS input file to CSS output file
         try {
             cssFile = new File(themesFolder, cssFileName);
-            cssFile.createNewFile();
+            // cssFile.createNewFile();
             lessCompiler.compile(new File(themesFolder, lessFileName), cssFile);
             return cssFile;
         } catch (final IOException e) {
@@ -143,15 +143,15 @@ public class ThemeManager {
         deleteTempDirectory(themeFolder);
     }
 
-	public void deleteTempDirectory(final File unzipReport) {
-		try {
-			IOUtil.deleteDir(unzipReport);
-		} catch (final IOException e) {
-			throw new APIException(e);
-		}
+    public void deleteTempDirectory(final File unzipReport) {
+        try {
+            IOUtil.deleteDir(unzipReport);
+        } catch (final IOException e) {
+            throw new APIException(e);
+        }
 
-	}
-    
+    }
+
     public void copyDirectory(final File sourceLocation, final File targetLocation) throws IOException {
 
         if (sourceLocation.isDirectory()) {
