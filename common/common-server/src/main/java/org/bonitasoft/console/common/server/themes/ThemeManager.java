@@ -72,7 +72,6 @@ public class ThemeManager {
     private void copyThemeInBonitahome(final File unzipThemeFolder, final String themeFolder) {
         try {
             FileUtils.copyDirectoryToDirectory(unzipThemeFolder, new File(themeFolder));
-            unzipThemeFolder.delete();
         } catch (final IOException e) {
             throw new APIException(e);
         }
