@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<artifactId>console-parent</artifactId>
 		<groupId>org.bonitasoft.console</groupId>
@@ -128,8 +129,11 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<mkdir dir="${project.build.directory}/${project.artifactId}-${project.version}" />
-								<echo file="${project.build.directory}/${project.artifactId}-${project.version}/VERSION" append="false">version : ${project.version}</echo>
+								<mkdir
+									dir="${project.build.directory}/${project.artifactId}-${project.version}" />
+								<echo
+									file="${project.build.directory}/${project.artifactId}-${project.version}/VERSION"
+									append="false">version : ${project.version}</echo>
 							</tasks>
 						</configuration>
 					</execution>
@@ -141,13 +145,25 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html" file="${project.build.directory}/forms-design/html/page.html" />
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html" file="${project.build.directory}/forms-design/html/process.html" />
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html" file="${project.build.directory}/forms-design/html/error.html" />
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html" file="${project.build.directory}/forms-design/html/confirm.html" />
-								<!--  copy htc  files for IE compatibility -->
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc" file="../../toolkit/toolkit-looknfeel/src/main/less/tools/PIE.htc" />
-								<copy tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc" file="../../toolkit/toolkit-looknfeel/src/main/less/tools/boxsizing.htc" />
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html"
+									file="${project.build.directory}/forms-design/html/page.html" />
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html"
+									file="${project.build.directory}/forms-design/html/process.html" />
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html"
+									file="${project.build.directory}/forms-design/html/error.html" />
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html"
+									file="${project.build.directory}/forms-design/html/confirm.html" />
+								<!-- copy htc files for IE compatibility -->
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc"
+									file="../../toolkit/toolkit-looknfeel/src/main/less/tools/PIE.htc" />
+								<copy
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc"
+									file="../../toolkit/toolkit-looknfeel/src/main/less/tools/boxsizing.htc" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -349,27 +365,44 @@
 			</properties>
 			<build>
 				<plugins>
-					<!-- configure the GWT-Maven plugin -->
-					<!-- <plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
+						<artifactId>maven-dependency-plugin</artifactId>
 						<executions>
+							<!-- Portal themes (engine needs them in the classpath) -->
 							<execution>
-								<id>use-good-css</id>
-								<phase>generate-resource</phase>
+								<id>copy-looknfeel</id>
+								<phase>generate-resources</phase>
 								<goals>
-									<goal>run</goal>
+									<goal>copy</goal>
 								</goals>
 								<configuration>
-									<target>
-										<copy
-											file="${bonita.home.ref}/client/platform/tenant-template/work/looknfeel/default/BonitaConsole.html"
-											todir="${bonita.home}/client/platform/tenant-template/work/looknfeel/default/" />
-									</target>
+									<artifactItems>
+										<artifactItem>
+											<groupId>org.bonitasoft.web.toolkit</groupId>
+											<artifactId>toolkit-looknfeel</artifactId>
+											<version>${project.version}</version>
+											<classifier>less</classifier>
+											<type>zip</type>
+											<overWrite>true</overWrite>
+											<destFileName>bonita-portal-theme.zip</destFileName>
+										</artifactItem>
+										<artifactItem>
+											<groupId>org.bonitasoft.web.toolkit</groupId>
+											<artifactId>toolkit-looknfeel</artifactId>
+											<version>${project.version}</version>
+											<classifier>css</classifier>
+											<type>zip</type>
+											<overWrite>true</overWrite>
+											<destFileName>bonita-portal-theme-css.zip</destFileName>
+										</artifactItem>
+									</artifactItems>
+									 <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/lib</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
-					</plugin> -->
+					</plugin>
+					<!-- configure the GWT-Maven plugin -->
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
