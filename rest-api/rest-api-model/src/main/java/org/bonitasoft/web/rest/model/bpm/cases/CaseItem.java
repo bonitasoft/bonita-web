@@ -52,6 +52,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String ATTRIBUTE_PROCESS_ID = "processDefinitionId";
 
+    public static final String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +91,7 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String FILTER_TEAM_MANAGER_ID = "team_manager_id";
 
-    public static final String FILTER_ANY_CALLER = "any_caller";
+    public static final String FILTER_CALLER = "caller";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GETTERS AND SETTERS
@@ -130,6 +132,10 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public APIID getProcessId() {
         return getAttributeValueAsAPIID(ATTRIBUTE_PROCESS_ID);
+    }
+
+    public APIID getRootCaseId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CASE_ID);
     }
 
     // SETTERS
@@ -201,6 +207,10 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public void setProcessId(final APIID processId) {
         setAttribute(ATTRIBUTE_PROCESS_ID, processId);
+    }
+
+    public void setRootCaseId(final long rootCaseId) {
+        setAttribute(ATTRIBUTE_ROOT_CASE_ID, rootCaseId);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

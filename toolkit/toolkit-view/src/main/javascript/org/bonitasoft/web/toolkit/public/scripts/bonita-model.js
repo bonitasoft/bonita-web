@@ -123,6 +123,9 @@
     Case.prototype = {
         get id() {
             return this.item.sourceObjectId || this.item.id;
+        },
+        get rootCaseId() {
+            return this.item.rootCaseId;
         }
     };
 
