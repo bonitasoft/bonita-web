@@ -53,7 +53,7 @@ public class ThemeManager {
      * @throws IOException
      */
     public void applyTheme(final File unzipThemeFolder, final String themeFolder) throws ThemeStructureException, IOException {
-        copyThemeInBonitahome(unzipThemeFolder, themeFolder);
+        overwriteThemeInBonitahome(unzipThemeFolder, themeFolder);
     }
 
     public File unzipThemeInTempFolder(final File themeZip, final String tempFolderPath, String themeType) throws FileNotFoundException, IOException {
@@ -69,10 +69,10 @@ public class ThemeManager {
      * @param zipFile
      * @throws IOException
      */
-    private void copyThemeInBonitahome(final File unzipThemeFolder, final String themeFolder) {
+    private void overwriteThemeInBonitahome(final File unzipThemeFolder, final String themeFolder) {
         try {
+            deleteTempDirectory(new File(themeFolder)); 
             FileUtils.copyDirectoryToDirectory(unzipThemeFolder, new File(themeFolder));
-            unzipThemeFolder.delete();
         } catch (final IOException e) {
             throw new APIException(e);
         }
@@ -114,39 +114,9 @@ public class ThemeManager {
         }
     }
 
-    /**
-     * @param themeName
-     * @param themesFolder
-     * @throws IOException
-     * @throws SessionTimeOutException
-     */
-    public void deleteTheme(final String themeName, final File themesFolder) throws IOException {
-        final File themeFolder = new File(themesFolder, themeName);
-        if (themeFolder.exists()) {
-            try {
-                if (!themeFolder.getCanonicalPath().startsWith(themesFolder.getCanonicalPath())) {
-                    throw new IOException();
-                }
-            } catch (final IOException e) {
-                final String errorMessage = "Error while deleting the theme " + themeName + " For security reasons, access to paths other than "
-                        + themesFolder.getName() + " is restricted";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
-                }
-                throw new IOException(errorMessage);
-            }
-        } else {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "The theme directory does not exist.");
-            }
-            throw new IOException("The theme directory does not exist.");
-        }
-        deleteTempDirectory(themeFolder);
-    }
-
-    public void deleteTempDirectory(final File unzipReport) {
+    public void deleteTempDirectory(final File directory) {
         try {
-            IOUtil.deleteDir(unzipReport);
+            IOUtil.deleteDir(directory);
         } catch (final IOException e) {
             throw new APIException(e);
         }
