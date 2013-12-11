@@ -397,7 +397,7 @@
 											<destFileName>bonita-portal-theme-css.zip</destFileName>
 										</artifactItem>
 									</artifactItems>
-									 <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/lib</outputDirectory>
+									 <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
