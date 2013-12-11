@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.rest.model.bpm.cases;
 
-import java.util.Date;
-
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -24,6 +22,8 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
+
+import java.util.Date;
 
 /**
  * process instance item
@@ -88,6 +88,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public static final String FILTER_SUPERVISOR_ID = "supervisor_id";
 
     public static final String FILTER_TEAM_MANAGER_ID = "team_manager_id";
+
+    public static final String FILTER_ANY_CALLER = "any_caller";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GETTERS AND SETTERS

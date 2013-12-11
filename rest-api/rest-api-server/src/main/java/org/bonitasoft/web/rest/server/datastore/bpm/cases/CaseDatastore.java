@@ -21,6 +21,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -88,6 +89,11 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
 
             if (filters.containsKey(CaseItem.FILTER_SUPERVISOR_ID)) {
                 return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), builder.done());
+            }
+
+            if (filters.containsKey(CaseItem.FILTER_ANY_CALLER)) {
+                builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
+                processAPI.searchProcessInstances(builder.done());
             }
 
             return processAPI.searchOpenProcessInstances(builder.done());
