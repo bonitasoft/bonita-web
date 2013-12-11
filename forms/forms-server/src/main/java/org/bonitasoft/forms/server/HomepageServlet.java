@@ -151,13 +151,16 @@ public class HomepageServlet extends HttpServlet {
             final File themeFolder = new File(themesParentFolder, PORTAL_THEME_NAME);
             final APISession apiSession = getEngineSession(request);
             if (themeFolder.exists()) {
-                long timestamp = 0L;
                 final File timestampFile = new File(themeFolder, LASTUPDATE_FILENAME);
+                final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
+                long timestamp;
                 if (timestampFile.exists()) {
                     final String timestampString = FileUtils.readFileToString(timestampFile);
                     timestamp = Long.parseLong(timestampString);
+                } else {
+                    FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+                    timestamp = lastUpdateTimestamp;
                 }
-                final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
                 if (lastUpdateTimestamp > timestamp) {
                     getThemeFromEngine(apiSession, themeFolder);
                     FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
