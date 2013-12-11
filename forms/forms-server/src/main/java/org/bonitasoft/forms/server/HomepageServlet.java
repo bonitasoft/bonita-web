@@ -36,6 +36,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.themes.ThemeDatastore;
 import org.bonitasoft.console.common.server.themes.ThemeManager;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 import org.bonitasoft.console.common.server.themes.ThemeStructureException;
@@ -162,11 +163,11 @@ public class HomepageServlet extends HttpServlet {
                     timestamp = lastUpdateTimestamp;
                 }
                 if (lastUpdateTimestamp > timestamp) {
-                    getThemeFromEngine(apiSession, themeFolder);
+                    updateThemeFromEngine(apiSession, themeFolder);
                     FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
                 }
             } else {
-                getThemeFromEngine(apiSession, themeFolder);
+                updateThemeFromEngine(apiSession, themeFolder);
             }
             ThemeResourceServlet.getThemePackageFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
@@ -181,20 +182,13 @@ public class HomepageServlet extends HttpServlet {
         return themeAPI.getLastUpdateDate(ThemeType.PORTAL).getTime();
     }
 
-    protected void getThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException, ServerAPIException,
+    protected void updateThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException, ServerAPIException,
             UnknownAPITypeException, IOException, ThemeStructureException {
         final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
-        final Theme theme = themeAPI.getCurrentTheme(ThemeType.PORTAL);
-        final byte[] themeContent = theme.getContent();
-        final WebBonitaConstantsUtils webBonitaConstantsUtils = WebBonitaConstantsUtils.getInstance(apiSession.getTenantId());
-        final File tempFolder = webBonitaConstantsUtils.getTempFolder();
-        final File portalThemeFolder = webBonitaConstantsUtils.getPortalThemeFolder();
-        final File themeZip = File.createTempFile("tempTheme", "zip");
-        FileUtils.writeByteArrayToFile(themeZip, themeContent);
-        final ThemeManager themeManager = new ThemeManager();
-        final File uzippedFolder = themeManager.unzipThemeInTempFolder(themeZip, tempFolder.getPath(), ThemeType.PORTAL.name().toLowerCase());
-        themeZip.delete();
-        themeManager.applyTheme(uzippedFolder, portalThemeFolder.getPath());
+        final ThemeManager themeManager = new ThemeManager(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()));
+        ThemeDatastore themeDataStore = new ThemeDatastore(themeAPI, themeManager);
+        themeDataStore.updateCurrentThemeFromEngine();
+
     }
 
     protected String getFileName(final boolean isForm) {
