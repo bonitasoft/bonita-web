@@ -19,7 +19,7 @@
             http.get(self.url + '/' + id, callback);
         };
     };
-
+    
     /*
      * Search object definition.
      */
@@ -29,7 +29,6 @@
             return this.init();
         }
         return new Search(url);
-
     };
     Search.prototype.init = function () {
         var self = this;
@@ -38,7 +37,13 @@
             target += parameters.page ? '?p=' + parameters.page : '?p=0';
             target += parameters.count ? '&c=' + parameters.count : '&c=100';
             target += parameters.order ? '&o=' + parameters.order : '';
-            target += parameters.filter ? '&f=' + parameters.filter : '';
+            if(parameters.filter instanceof Array) {
+                parameters.filter.forEach(function(filter) {
+                    target += filter ? '&f=' + filter : '';
+                });
+            } else {
+                target += parameters.filter ? '&f=' + parameters.filter : '';
+            }
             http.get(target, callback);
         };
     };

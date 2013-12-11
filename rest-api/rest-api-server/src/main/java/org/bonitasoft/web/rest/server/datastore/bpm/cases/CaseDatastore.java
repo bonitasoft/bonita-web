@@ -93,7 +93,7 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
 
             if (filters.containsKey(CaseItem.FILTER_ANY_CALLER)) {
                 builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
-                processAPI.searchProcessInstances(builder.done());
+                return processAPI.searchProcessInstances(builder.done());
             }
 
             return processAPI.searchOpenProcessInstances(builder.done());
