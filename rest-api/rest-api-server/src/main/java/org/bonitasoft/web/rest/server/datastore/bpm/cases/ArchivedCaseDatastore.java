@@ -19,7 +19,9 @@ package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -102,6 +104,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
             }
 
             if(filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
+                builder.filter(ArchivedProcessInstancesSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
                 return processAPI.searchArchivedProcessInstancesInAllStates(builder.done());
             }
 
