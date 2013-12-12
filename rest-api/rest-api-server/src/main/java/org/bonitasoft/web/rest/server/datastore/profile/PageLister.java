@@ -35,6 +35,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("importexportorganization", _("import/export organization"), "", _("Import/Export")));
         pages.add(new BonitaPageItem("profilelisting", _("user privilege settings"), "", _("User rights")));
         pages.add(new BonitaPageItem("reportlistingadminext", _("Monitoring"), "", _("Analytics")));
+        pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), "", _("Look and Feel")));
     }
 
     public List<BonitaPageItem> getPages() {
