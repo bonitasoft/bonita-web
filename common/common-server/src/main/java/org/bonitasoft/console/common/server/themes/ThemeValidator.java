@@ -40,7 +40,7 @@ public class ThemeValidator {
      * @throws IOException
      * @throws FileNotFoundException
      */
-    public void doPortalValidation(final String themePath) throws ThemeStructureException, IOException {
+    public void doPortalValidation(final String themePath) throws ThemeStructureException {
     	final File themeFolder = new File(themePath);
         boolean hasConsoleTemplateFile = false;
         boolean hasFormTemplateFile = false;
