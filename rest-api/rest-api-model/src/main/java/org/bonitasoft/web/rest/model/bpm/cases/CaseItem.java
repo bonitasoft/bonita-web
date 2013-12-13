@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.rest.model.bpm.cases;
 
-import java.util.Date;
-
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -24,6 +22,8 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
+
+import java.util.Date;
 
 /**
  * process instance item
@@ -51,6 +51,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public static final String ATTRIBUTE_END_DATE = "end_date";
 
     public static final String ATTRIBUTE_PROCESS_ID = "processDefinitionId";
+
+    public static final String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -88,6 +90,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public static final String FILTER_SUPERVISOR_ID = "supervisor_id";
 
     public static final String FILTER_TEAM_MANAGER_ID = "team_manager_id";
+
+    public static final String FILTER_CALLER = "caller";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GETTERS AND SETTERS
@@ -128,6 +132,10 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public APIID getProcessId() {
         return getAttributeValueAsAPIID(ATTRIBUTE_PROCESS_ID);
+    }
+
+    public APIID getRootCaseId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CASE_ID);
     }
 
     // SETTERS
@@ -199,6 +207,10 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public void setProcessId(final APIID processId) {
         setAttribute(ATTRIBUTE_PROCESS_ID, processId);
+    }
+
+    public void setRootCaseId(final long rootCaseId) {
+        setAttribute(ATTRIBUTE_ROOT_CASE_ID, rootCaseId);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -16,23 +16,19 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
-import org.bonitasoft.web.rest.server.engineclient.CaseEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -42,6 +38,9 @@ import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -61,12 +60,25 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
     @Override
     public ItemSearchResult<CaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
+        /*
+         * By default we add a caller filter of -1 to avoid having sub processes.
+         * If caller is forced to any then we don't need to add the filter.
+         */
+        if(!filters.containsKey(CaseItem.FILTER_CALLER)) {
+            filters.put(CaseItem.FILTER_CALLER, "-1");
+        } else if ("any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))){
+            filters.remove(CaseItem.FILTER_CALLER);
+        }
 
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
         addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
+
+        if(filters.containsKey(CaseItem.FILTER_CALLER)) {
+            builder.filter(ProcessInstanceSearchDescriptor.CALLER_ID, MapUtil.getValueAsLong(filters, CaseItem.FILTER_CALLER));
+        }
 
         // Run search depending on filters passed
         final SearchResult<ProcessInstance> searchResult = runSearch(filters, builder);
@@ -84,6 +96,8 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         try {
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getEngineSession());
 
+            builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
+
             if (filters.containsKey(CaseItem.FILTER_USER_ID)) {
                 return processAPI.searchOpenProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, CaseItem.FILTER_USER_ID), builder.done());
             }
@@ -92,11 +106,10 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
                 return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), builder.done());
             }
 
-            return processAPI.searchOpenProcessInstances(builder.done());
+            return processAPI.searchProcessInstances(builder.done());
         } catch (final Exception e) {
             throw new APIException(e);
         }
-
     }
 
     @Override
@@ -126,14 +139,8 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
 
     @Override
     public CaseItem add(CaseItem caseItem) {
-        return new CaseSarter(caseItem, createCaseEngineClient(), createProcessEngineClient()).start();
+        EngineClientFactory factory = new EngineClientFactory(new EngineAPIAccessor(getEngineSession()));
+        return new CaseSarter(caseItem, factory.createCaseEngineClient(), factory.createProcessEngineClient()).start();
     }
     
-    private CaseEngineClient createCaseEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor()).createCaseEngineClient(getEngineSession());
-    }
-    
-    private ProcessEngineClient createProcessEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor()).createProcessEngineClient(getEngineSession());
-    }
 }

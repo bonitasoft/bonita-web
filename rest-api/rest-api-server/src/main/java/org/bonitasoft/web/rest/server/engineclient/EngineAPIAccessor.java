@@ -35,9 +35,19 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidE
  */
 public class EngineAPIAccessor {
 
-    public ProfileAPI getProfileAPI(APISession session) {
+    private APISession session;
+
+    public EngineAPIAccessor(APISession session) {
+        this.session = session;
+    }
+
+    public APISession getSession() {
+        return session;
+    }
+
+    public ProfileAPI getProfileAPI() {
         try {
-            return TenantAPIAccessor.getProfileAPI(session);
+            return TenantAPIAccessor.getProfileAPI(getSession());
         } catch (InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (BonitaHomeNotSetException e) {
@@ -49,25 +59,25 @@ public class EngineAPIAccessor {
         }
     }
     
-    public ProcessAPI getProcessAPI(APISession session) {
+    public ProcessAPI getProcessAPI() {
         try {
-            return TenantAPIAccessor.getProcessAPI(session);
+            return TenantAPIAccessor.getProcessAPI(getSession());
         } catch (Exception e) {
             throw new APIException("Error when getting engine process API", e);
         }
     }
     
-    public IdentityAPI getIdentityAPI(APISession session) {
+    public IdentityAPI getIdentityAPI() {
         try {
-            return TenantAPIAccessor.getIdentityAPI(session);
+            return TenantAPIAccessor.getIdentityAPI(getSession());
         } catch (Exception e) {
             throw new APIException("Error when getting engine identity API", e);
         }
     }
 
-   public GroupAPI getGroupAPI(APISession session) {
+   public GroupAPI getGroupAPI() {
         try {
-            return TenantAPIAccessor.getIdentityAPI(session);
+            return TenantAPIAccessor.getIdentityAPI(getSession());
         } catch (Exception e) {
             throw new APIException("Error when getting engine group API", e);
         }

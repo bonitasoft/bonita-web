@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import org.bonitasoft.engine.session.APISession;
-
 /**
  * @author Vincent Elcrin
  * 
@@ -30,40 +28,44 @@ public class EngineClientFactory {
         this.apiAccessor = apiAccessor;
     }
 
-    public ProfileEngineClient createProfileEngineClient(APISession session) {
-        return new ProfileEngineClient(apiAccessor.getProfileAPI(session));
+    public ProfileEngineClient createProfileEngineClient() {
+        return new ProfileEngineClient(apiAccessor.getProfileAPI());
     }
 
-    public ProfileEntryEngineClient createProfileEntryEngineClient(APISession session) {
-        return new ProfileEntryEngineClient(apiAccessor.getProfileAPI(session));
+    public ProfileEntryEngineClient createProfileEntryEngineClient() {
+        return new ProfileEntryEngineClient(apiAccessor.getProfileAPI());
     }
 
-    public ProfileMemberEngineClient createProfileMemberEngineClient(APISession session) {
-        return new ProfileMemberEngineClient(apiAccessor.getProfileAPI(session));
+    public ProfileMemberEngineClient createProfileMemberEngineClient() {
+        return new ProfileMemberEngineClient(apiAccessor.getProfileAPI());
     }
 
-    public ProcessEngineClient createProcessEngineClient(APISession session) {
-        return new ProcessEngineClient(apiAccessor.getProcessAPI(session));
+    public ProcessEngineClient createProcessEngineClient() {
+        return new ProcessEngineClient(apiAccessor.getProcessAPI());
     }
     
-    public CaseEngineClient createCaseEngineClient(APISession session) {
-        return new CaseEngineClient(apiAccessor.getProcessAPI(session));
+    public CaseEngineClient createCaseEngineClient() {
+        return new CaseEngineClient(apiAccessor.getProcessAPI());
     }
     
-    public HumanTaskEngineClient createHumanTaskEngineClient(APISession session) {
-        return new HumanTaskEngineClient(apiAccessor.getProcessAPI(session));
+    public HumanTaskEngineClient createHumanTaskEngineClient() {
+        return new HumanTaskEngineClient(apiAccessor.getProcessAPI());
     }
     
-    public ActivityEngineClient createActivityEngineClient(APISession session) {
-        return new ActivityEngineClient(apiAccessor.getProcessAPI(session));
+    public ActivityEngineClient createActivityEngineClient() {
+        return new ActivityEngineClient(apiAccessor.getProcessAPI());
     }
     
-    public UserEngineClient createUserEngineClient(APISession session) {
-        return new UserEngineClient(apiAccessor.getIdentityAPI(session));
+    public UserEngineClient createUserEngineClient() {
+        return new UserEngineClient(apiAccessor.getIdentityAPI());
     }
 
-    public GroupEngineClient createGroupEngineClient(APISession session) {
-        return new GroupEngineClient(apiAccessor.getGroupAPI(session));
+    public GroupEngineClient createGroupEngineClient() {
+        return new GroupEngineClient(apiAccessor.getGroupAPI());
+    }
+
+    public FlowNodeEngineClient createFlowNodeEngineClient() {
+        return new FlowNodeEngineClient(apiAccessor.getProcessAPI());
     }
 
 }

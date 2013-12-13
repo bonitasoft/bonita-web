@@ -289,11 +289,12 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         fileUpload = addFileUploalToFormPanel(FileUloadName);
     }
 
-    protected FileUpload addFileUploalToFormPanel(final String FileUloadName) {
+    protected FileUpload addFileUploalToFormPanel(final String fileUloadName) {
 
         final FileUpload fileUpload = new FileUpload();
         fileUpload.setStyleName("bonita_file_upload");
-        // mandatory
+        // mandatory because we are in a true form with a post action
+        fileUpload.setName(fileUloadName);
         if (DOMUtils.getInstance().isIE8()) {
             fileUpload.getElement().setPropertyString("contentEditable", "false");
         }

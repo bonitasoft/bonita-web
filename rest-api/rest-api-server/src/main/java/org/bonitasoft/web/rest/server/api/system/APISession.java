@@ -14,9 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.server.api.CommonAPI;
@@ -30,6 +27,9 @@ import org.bonitasoft.web.toolkit.client.common.session.SessionItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Julien Mege
@@ -69,8 +69,8 @@ public class APISession extends CommonAPI<SessionItem> {
     }
 
     private List<Profile> getProfilesForUser(long userId, org.bonitasoft.engine.session.APISession apiSession) {
-        EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
-        ProfileEngineClient profileApi = engineClientFactory.createProfileEngineClient(apiSession);
+        EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
+        ProfileEngineClient profileApi = engineClientFactory.createProfileEngineClient();
         return profileApi.listProfilesForUser(apiSession.getUserId());
     }
     
@@ -93,8 +93,8 @@ public class APISession extends CommonAPI<SessionItem> {
     }
 
     private List<ProfileEntry> getProfileEntriesForProfile(Long profileId, org.bonitasoft.engine.session.APISession apiSession) {
-        EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
-        ProfileEntryEngineClient profileEntryApi = engineClientFactory.createProfileEntryEngineClient(apiSession);
+        EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
+        ProfileEntryEngineClient profileEntryApi = engineClientFactory.createProfileEntryEngineClient();
         return profileEntryApi.getProfileEntriesByProfile(profileId);
     }
 
