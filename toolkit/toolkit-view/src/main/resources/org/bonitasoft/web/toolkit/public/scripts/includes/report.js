@@ -111,7 +111,7 @@ function refreshReport(e, localeDateFormat, prefix){
 	
 	$.ajax({
 		beforeSend: function() {
-			$("div.report").html("<div id=\"initloader\">" +
+			$("div.report").html("<div id=\"reportloader\">" +
 		            "<div class=\"loader\">" +
 		            "<img src=\"images/loader.gif\" />" +
 		            "</div>" +

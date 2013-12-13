@@ -34,7 +34,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.DeleteItemPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
-import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
@@ -159,7 +158,6 @@ public class ViewController {
         }
 
         if (rootElement != null) {
-            Loader.showLoader(rootElement);
             return showView(token, rootElement, params);
         }
         return null;
@@ -170,7 +168,6 @@ public class ViewController {
 
         final Element rootElement = DOM.getElementById(parentId);
         if (rootElement != null) {
-            Loader.showLoader(rootElement);
             return showView(view, rootElement, params);
         }
 
@@ -190,8 +187,6 @@ public class ViewController {
     }
 
     public static RawView showView(final RawView view, final Element rootElement, final TreeIndexed<String> params) {
-        Loader.showLoader(rootElement);
-
         // Set the parent Element to the view that will be displayed
         view.setParentElement(rootElement);
 
@@ -222,13 +217,11 @@ public class ViewController {
         widget.onLoad();
         ViewController.updateUI(rootElement, true);
 
-        Loader.hideLoader(rootElement, true);
-
         MainEventBus.getInstance().fireEventFromSource(new ChangeViewEvent(view), getInstance());
 
         return view;
     }
-
+    
     public static void showPopup(final String token) {
         showPopup(token, new TreeIndexed<String>());
     }
