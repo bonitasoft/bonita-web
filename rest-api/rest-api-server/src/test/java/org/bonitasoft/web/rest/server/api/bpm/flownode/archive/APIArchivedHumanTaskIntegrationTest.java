@@ -11,8 +11,10 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
@@ -21,7 +23,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.WaitUntil;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.APIArchivedHumanTask;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
@@ -119,8 +120,9 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     
             @Override
             protected boolean check() throws Exception {
-                return getProcessAPI().getArchivedActivityInstances(processInstanceId, 0, 10,
-                        ActivityInstanceCriterion.DEFAULT).size() >= 1;
+                SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 10);
+                builder.filter(ArchivedActivityInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID, processInstanceId);
+                return getProcessAPI().searchArchivedActivities(builder.done()).getCount() > 0;
             }
         }.waitUntil());
     }
