@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import java.util.List;
-
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
@@ -30,6 +28,8 @@ import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProfileMemberEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+
+import java.util.List;
 
 /**
  * @author Nicolas Tith
@@ -45,7 +45,9 @@ public class APIProfileMember extends AbstractAPIMember<ProfileMemberItem> {
 
     @Override
     protected Datastore defineDefaultDatastore() {
+
         ProfileMemberEngineClient engineClient = createProfileMemberEngineClient();
+
         ComposedDatastore<ProfileMemberItem> datastore = new ComposedDatastore<ProfileMemberItem>();
         datastore.setAddHelper(new AddProfileMemberHelper(engineClient));
         datastore.setDeleteHelper(new DeleteProfileMemberHelper(engineClient));
@@ -75,15 +77,8 @@ public class APIProfileMember extends AbstractAPIMember<ProfileMemberItem> {
     }
 
     private ProfileMemberEngineClient createProfileMemberEngineClient() {
-        return getEngineClientFactory()
-                .createProfileMemberEngineClient(getEngineSession());
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
+                .createProfileMemberEngineClient();
     }
 
-    private EngineClientFactory getEngineClientFactory() {
-        return new EngineClientFactory(getEngineAPIAccessor());
-    }
-
-    private EngineAPIAccessor getEngineAPIAccessor() {
-        return new EngineAPIAccessor();
-    }
 }

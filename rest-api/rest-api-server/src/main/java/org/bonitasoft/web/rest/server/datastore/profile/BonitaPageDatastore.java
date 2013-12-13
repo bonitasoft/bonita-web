@@ -36,7 +36,8 @@ public class BonitaPageDatastore {
     }
 
     public ItemSearchResult<BonitaPageItem> search(int page, int resultsByPage, String search, Map<String, String> filters, String orders) {
-        return new ItemSearchResult<BonitaPageItem>(page, resultsByPage, 12, new ArrayList<BonitaPageItem>(new PageLister().getPages()));
+        List<BonitaPageItem> pages = new PageLister().getPages();
+        return new ItemSearchResult<BonitaPageItem>(page, resultsByPage, pages.size(), new ArrayList<BonitaPageItem>(pages));
     }
 
     /**

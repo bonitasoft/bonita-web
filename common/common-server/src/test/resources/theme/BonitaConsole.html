@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=8; IE=9; IE=10" />
 		<meta name="version" content="${project.version}" />
 
 		<title>Bonita BPM Portal</title>
@@ -13,7 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="scripts/ext/github.css?v=${project.version}">
 		<!--[if lte IE 8]>
 			<script language="javascript" type="text/javascript" src="scripts/ext/excanvas.min.js?v=${project.version}"></script>
-			<link rel="stylesheet" type="text/css" href="css/bonita_ie8.css?v=${project.version}">
+			<link rel="stylesheet" type="text/css" href="themeResource?theme=portal&location=bonita_ie8.css&v=${project.version}">
 		<![endif]-->
 		
 
@@ -34,6 +35,7 @@
 		<script type="text/javascript" src="scripts/ext/datepicker/js/datepicker.js?v=${project.version}"></script>
 		<script type="text/javascript" src="scripts/ext/highlight.pack.js?v=${project.version}"></script>
 		<script type="text/javascript" src="scripts/ext/noty.pack.js?v=${project.version}"></script>
+        	<script type="text/javascript" src="scripts/ext/es5-shim.min.js?v=${project.version}"></script>
 		<!-- Load jQuery+ -->
 		<script type="text/javascript" src="scripts/jquery/jquery+/extend.js?v=${project.version}"></script>
 		<script type="text/javascript" src="scripts/jquery/jquery+/debug.js?v=${project.version}"></script>
@@ -68,11 +70,13 @@
 		<script type="text/javascript" src="scripts/includes/datepicker.js?v=${project.version}"></script>
 		<script type="text/javascript" src="scripts/includes/autouploader.js?v=${project.version}"></script>
 
-		<!-- Reporting -->
-		<script type="text/javascript" src="scripts/includes/report.js?v=${project.version}"></script>
-		<script type="text/javascript" src="scripts/jquery/daterangepicker.jQuery.js?v=${project.version}"></script>
-		<script type="text/javascript" src="scripts/jquery/date.js?v=${project.version}"></script>
-		
+        	<!-- Reporting -->
+        	<script type="text/javascript" src="scripts/bonita-utils.js?v=${project.version}"></script>
+        	<script type="text/javascript" src="scripts/includes/report.js?v=${project.version}"></script>
+        	<script type="text/javascript" src="scripts/jquery/daterangepicker.jQuery.js?v=${project.version}"></script>
+        	<script type="text/javascript" src="scripts/jquery/date.js?v=${project.version}"></script>
+        	<script type="text/javascript" src="scripts/bonita-model.js?v=${project.version}"></script>
+
 		<!-- Profile -->
 		<script type="text/javascript" src="scripts/includes/profile.js?v=${project.version}"></script>
 

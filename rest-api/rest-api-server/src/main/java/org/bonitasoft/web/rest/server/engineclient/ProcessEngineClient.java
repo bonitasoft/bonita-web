@@ -81,9 +81,8 @@ public class ProcessEngineClient {
             return getProcessApi().deploy(businessArchive);
         } catch (final AlreadyExistsException e) {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
-            throw new APIException(new _("Apps %appName% in version %version% already exists",
-                    new Arg("appName", processDefinition.getName()),
-                    new Arg("version", processDefinition.getVersion())), e);
+            throw new APIException(new _("Apps %appName% in version %version% already exists", new Arg("appName", processDefinition.getName()), new Arg(
+                    "version", processDefinition.getVersion())), e);
         } catch (final Exception e) {
             throw new APIException(new _("Unable to deploy business archive"), e);
         }
@@ -231,11 +230,11 @@ public class ProcessEngineClient {
             throw new APIException("Error when searching process user can start", e);
         }
     }
-    
-    public List<DataDefinition> getProcessDataDefinitions(long processId) {
+
+    public List<DataDefinition> getProcessDataDefinitions(final long processId) {
         try {
             return processAPI.getProcessDataDefinitions(processId, 0, Integer.MAX_VALUE);
-        } catch (ProcessDefinitionNotFoundException e) {
+        } catch (final ProcessDefinitionNotFoundException e) {
             throw new APIException(new _("Unable to get process data definitions, process %processId% not found", new Arg("processId", processId)));
         }
     }
