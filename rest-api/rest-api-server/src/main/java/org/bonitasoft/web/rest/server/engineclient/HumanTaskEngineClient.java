@@ -16,15 +16,23 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.flownode.*;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
 
 /**
  * @author Colin PUY
+ * @author Elias Ricken de Medeiros
  * 
  */
 public class HumanTaskEngineClient {
@@ -44,4 +52,23 @@ public class HumanTaskEngineClient {
             throw new APIException("Error when counting opened cases");
         }
     }
+    
+    public List<ArchivedHumanTaskInstance> searchArchivedHumanTasks(SearchOptions searchOptions) {
+        try {
+            return processAPI.searchArchivedHumanTasks(searchOptions).getResult();
+        } catch (SearchException e) {
+            throw new APIException("Error when searching archived human tasks", e);
+        }
+    }
+
+    public HumanTaskInstance getHumanTaskInstance(long humanTaskInstanceId) {
+        try {
+            return processAPI.getHumanTaskInstance(humanTaskInstanceId);
+        } catch (ActivityInstanceNotFoundException e) {
+            throw new APIItemNotFoundException(HumanTaskDefinition.TOKEN, APIID.makeAPIID(humanTaskInstanceId));
+        } catch (Exception e) {
+            throw new APIException("Error when getting human task instance", e);
+        }
+    }
+
 }

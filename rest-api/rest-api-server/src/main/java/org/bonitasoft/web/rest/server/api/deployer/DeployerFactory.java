@@ -26,8 +26,6 @@ import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.web.rest.server.datastore.profile.entry.GetProfileEntryHelper;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
-import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.web.rest.server.framework.Deployer;
 
 /**
@@ -38,12 +36,15 @@ public class DeployerFactory {
 
     private APISession apiSession;
 
+    private EngineClientFactory factory;
+
     public DeployerFactory(APISession apiSession) {
         this.apiSession = apiSession;
+        factory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
     }
 
     public UserDeployer createUserDeployer(String attribute) {
-        return new UserDeployer(createUserDatastore(), attribute);
+        return new UserDeployer(new UserDatastore(apiSession), attribute);
     }
 
     public Deployer createProfileDeployer(String attribute) {
@@ -55,40 +56,15 @@ public class DeployerFactory {
     }
 
     public Deployer createBonitaPageDeployer(String attribute) {
-        return new GenericDeployer<BonitaPageItem>(createBonitaPageGetter(), attribute);
-    }
-
-    private UserDatastore createUserDatastore() {
-        return new UserDatastore(apiSession);
+        return new GenericDeployer<BonitaPageItem>(new GetBonitaPageHelper(), attribute);
     }
 
     private GetProfileHelper createProfileGetter() {
-        return new GetProfileHelper(createProfileEngineClient());
-    }
-
-    private ProfileEngineClient createProfileEngineClient() {
-        return getEngineClientFactory()
-                .createProfileEngineClient(apiSession);
-    }
-
-    private GetBonitaPageHelper createBonitaPageGetter() {
-        return new GetBonitaPageHelper();
+        return new GetProfileHelper(factory.createProfileEngineClient());
     }
 
     private GetProfileEntryHelper createProfileEntryGetter() {
-        return new GetProfileEntryHelper(createProfileEntryEngineClient());
+        return new GetProfileEntryHelper(factory.createProfileEntryEngineClient());
     }
 
-    private ProfileEntryEngineClient createProfileEntryEngineClient() {
-        return getEngineClientFactory()
-                .createProfileEntryEngineClient(apiSession);
-    }
-
-    private EngineClientFactory getEngineClientFactory() {
-        return new EngineClientFactory(getEngineAPIAccessor());
-    }
-
-    private EngineAPIAccessor getEngineAPIAccessor() {
-        return new EngineAPIAccessor();
-    }
 }

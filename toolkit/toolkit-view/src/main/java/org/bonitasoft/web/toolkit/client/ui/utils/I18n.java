@@ -16,11 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.utils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nTranslationDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nTranslationItem;
@@ -29,15 +24,16 @@ import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @author Séverin Moussel
  * 
  */
 public class I18n extends AbstractI18n {
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // SINGLETON
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static I18n getInstance() {
         if (I18N_instance == null) {
@@ -89,21 +85,4 @@ public class I18n extends AbstractI18n {
         this.loadLocale(locale, null);
     }
 
-    // @Override
-    // public void getAvailableLocales(final Action callback) {
-    // new HttpRequest().send(RequestBuilder.GET, "../REST/i18n/", new HttpCallback() {
-    // @Override
-    // public void onSuccess(final int httpStatusCode, final String response, final HashMap<String, String> headers) {
-    // final AbstractTreeNode<String> tree = JSonUnserializer.unserializeTree(response);
-    //
-    //
-    //
-    // if (callback != null) {
-    // callback.execute();
-    // }
-    //
-    // }
-    // }
-    //
-    // }
 }

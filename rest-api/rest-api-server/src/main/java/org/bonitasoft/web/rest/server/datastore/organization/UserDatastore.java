@@ -14,20 +14,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
-import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.engine.identity.UserUpdater;
-import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
-import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
@@ -36,6 +30,9 @@ import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -49,7 +46,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     public UserDatastore(final APISession engineSession) {
         super(engineSession);
         userItemConverter = new UserItemConverter();
-        engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
+        engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(engineSession));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +115,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
     // protected for tests
     protected UserEngineClient getUserEngineClient() {
-        return engineClientFactory.createUserEngineClient(getEngineSession());
+        return engineClientFactory.createUserEngineClient();
     }
 
     @Override
