@@ -121,10 +121,10 @@
         return new Case(item);
     };
     Case.prototype = {
-        get id() {
+        id:function() {
             return this.item.sourceObjectId || this.item.id;
         },
-        get rootCaseId() {
+        rootCaseId: function() {
             return this.item.rootCaseId;
         }
     };
