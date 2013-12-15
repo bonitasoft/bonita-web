@@ -199,7 +199,7 @@ describe("Bonita utils", function () {
          */
         function verifyAppendSequence(element, sequence) {
             for (var i = 0; i < sequence.length; i += 1) {
-                expect(element.append.calls[i].args[0].text)
+                expect(element.append.calls[i].args[0].innerHTML)
                     .toBe(sequence[i].text);
                 expect(+element.append.calls[i].args[0].value)
                     .toBe(sequence[i].value);

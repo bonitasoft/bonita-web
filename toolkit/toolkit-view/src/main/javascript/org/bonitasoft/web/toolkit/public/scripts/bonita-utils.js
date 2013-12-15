@@ -110,7 +110,7 @@ var bonitasoft = (function (bonitasoft) {
             function append(element, option) {
                 if (option) {
                     var optionElement = document.createElement("option");
-                    optionElement.text = option.text;
+                    optionElement.innerHTML = option.text;
                     optionElement.value = option.value;
                     element.append(optionElement);
                 }
