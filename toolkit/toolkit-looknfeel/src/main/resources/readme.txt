@@ -1,8 +1,8 @@
-This is a look & feel archive for Bonita Portal
+This is a look & feel archive for Bonita BPM Portal.
 
-BonitaConsole.html is the entry point for the portal and BonitaForm.html is the entry point for the process forms
-You can customize this look & feel by modifying the existing resources or by adding/removing some (as long as you declare them in the header of the HTML pages).
-The easiest way to configure the portal look & feel is to modify the file skin/skin.config.less
+BonitaConsole.html is the entry point for the portal and BonitaForm.html is the entry point for process forms.
+You can customize this look & feel by modifying the existing resources or by adding or removing some. If you add a resource, you must declare it in the header of the HTML pages).
+The easiest way to configure the portal look & feel is to modify the skin/skin.config.less file.
 
 Content detail:
 css						Directory containing default CSS files used by the process forms.
