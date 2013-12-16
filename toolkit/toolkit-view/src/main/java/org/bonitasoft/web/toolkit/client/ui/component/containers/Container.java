@@ -51,6 +51,8 @@ public class Container<T extends Node> extends Component {
 
     private Integer incrementDefaultId = 0;
 
+    private int evenOddCounter = 0;
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,21 +95,20 @@ public class Container<T extends Node> extends Component {
     }
 
     public Container<T> append(final T... components) {
-        int i = 0;
         for (final T component : components) {
             if (component == null) {
                 continue;
             }
 
             if (component instanceof DoubleSection) {
-                i = 0;
-            } else if (component instanceof Section && components.length > 1) {
-                if (i % 2 == 0) {
+                evenOddCounter = 0;
+            } else if (component instanceof Section) {
+                if (evenOddCounter % 2 == 0) {
                     ((Section) component).addClass("even");
                 } else {
                     ((Section) component).addClass("odd");
                 }
-                i++;
+                evenOddCounter++;
             }
 
             if (component.getJsId() == null) {
