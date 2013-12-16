@@ -101,7 +101,7 @@ public class Container<T extends Node> extends Component {
 
             if (component instanceof DoubleSection) {
                 i = 0;
-            } else if (component instanceof Section) {
+            } else if (component instanceof Section && components.length > 1) {
                 if (i % 2 == 0) {
                     ((Section) component).addClass("even");
                 } else {
