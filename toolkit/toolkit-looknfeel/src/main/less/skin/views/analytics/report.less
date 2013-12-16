@@ -34,7 +34,9 @@
 								position: @reportListAdmin-description-position;
 								width: @reportListAdmin-description-width;
 								text-overflow: ellipsis;
+								overflow: hidden;
 								white-space: nowrap;
+								height: 1.15em;
 							}
 						}
 					}
@@ -114,6 +116,7 @@
 		a{
 			.skinButton(@btnColor, @btnTxtColor, @btnTxtStrokeColor);
 			float: right;
+			position: relative;
 		}
 	}
 	form#report-form{

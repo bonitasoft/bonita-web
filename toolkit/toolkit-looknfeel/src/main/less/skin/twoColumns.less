@@ -38,6 +38,7 @@
 			&.doublesection{
 				clear: both;
 				width: @twoCols-double-section-width;
+				.boxSizing();
 				.section{
 					&:nth-child(even){
 						clear: none;
@@ -55,8 +56,10 @@
 			} 
 			+ .section, + css3-container + .section{
 				padding: @twoCols-sectionLeft-padding;
+				.boxSizing();
 			}
 			&.tabSection{
+				.boxSizing();
 				width: @twoCols-tabsection-width;
 				padding: @twoCols-tabsection-padding;
 				display: none;
@@ -86,6 +89,7 @@
 			> .body{
 				padding: @twoCols-section-body-padding; 
 				position: @twoCols-section-body-position; 
+				.boxSizing();
 			}
 			margin: @twoCols-section-margin;
 		}

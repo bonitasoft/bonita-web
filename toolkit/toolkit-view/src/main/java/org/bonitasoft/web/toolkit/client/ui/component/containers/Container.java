@@ -21,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.component.DoubleSection;
+import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Node;
 import org.bonitasoft.web.toolkit.client.ui.html.HTML;
@@ -84,16 +86,28 @@ public class Container<T extends Node> extends Component {
 
         this.components.clear();
         if (isGenerated()) {
-            $(this.element).empty();
+            $(element).empty();
             this.incrementDefaultId = 0;
         }
         return this;
     }
 
     public Container<T> append(final T... components) {
+        int i = 0;
         for (final T component : components) {
             if (component == null) {
                 continue;
+            }
+
+            if (component instanceof DoubleSection) {
+                i = 0;
+            } else if (component instanceof Section) {
+                if (i % 2 == 0) {
+                    ((Section) component).addClass("even");
+                } else {
+                    ((Section) component).addClass("odd");
+                }
+                i++;
             }
 
             if (component.getJsId() == null) {
@@ -146,7 +160,7 @@ public class Container<T extends Node> extends Component {
         int nextIndex = index;
         Element prev = null;
         if (isGenerated()) {
-            prev = (Element) $(this.element).children().get(index - 1);
+            prev = (Element) $(element).children().get(index - 1);
         }
 
         for (final T component : components) {
@@ -296,7 +310,7 @@ public class Container<T extends Node> extends Component {
      */
     protected final void prependItemToHtml(final T item) {
         // this.element.removeClassName("empty");
-        HTML.prepend(this.element, this.prepareItem(item.getElements()));
+        HTML.prepend(element, this.prepareItem(item.getElements()));
     }
 
     /**
@@ -307,7 +321,7 @@ public class Container<T extends Node> extends Component {
      */
     protected final void appendItemToHtml(final T item) {
         // this.element.removeClassName("empty");
-        HTML.append(this.element, this.prepareItem(item.getElements()));
+        HTML.append(element, this.prepareItem(item.getElements()));
     }
 
     /**
@@ -325,23 +339,23 @@ public class Container<T extends Node> extends Component {
 
     @Override
     protected Element makeElement() {
-        this.element = DOM.createElement(this.rootTagName);
+        element = DOM.createElement(this.rootTagName);
         if (this.rootTagClass != null) {
-            this.element.addClassName(this.rootTagClass);
+            element.addClassName(this.rootTagClass);
         }
         if (getJsId() != null) {
-            this.element.addClassName(getJsId().toString());
+            element.addClassName(getJsId().toString());
         }
 
         if (this.components.size() == 0) {
-            this.element.addClassName("empty");
+            element.addClassName("empty");
         } else {
             for (final T next : this.components) {
                 this.appendItemToHtml(next);
             }
         }
 
-        return this.element;
+        return element;
     }
 
     @Override
