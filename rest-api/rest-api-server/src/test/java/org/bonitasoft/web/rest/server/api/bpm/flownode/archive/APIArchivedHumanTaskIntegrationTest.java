@@ -11,8 +11,11 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.descriptor.SearchArchivedActivityInstanceDescriptor;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
@@ -119,8 +122,9 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     
             @Override
             protected boolean check() throws Exception {
-                return getProcessAPI().getArchivedActivityInstances(processInstanceId, 0, 10,
-                        ActivityInstanceCriterion.DEFAULT).size() >= 1;
+                SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+                searchOptionsBuilder.filter(ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, processInstanceId);
+                return getProcessAPI().searchArchivedActivities(searchOptionsBuilder.done()).getCount() >= 1L;
             }
         }.waitUntil());
     }
