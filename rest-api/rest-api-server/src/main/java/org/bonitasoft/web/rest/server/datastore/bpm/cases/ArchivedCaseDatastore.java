@@ -16,16 +16,17 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import java.util.Map;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
@@ -34,6 +35,8 @@ import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -59,6 +62,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         result.setProcessId(item.getProcessDefinitionId());
         result.setArchivedDate(item.getArchiveDate());
         result.setSourceObjectId(item.getSourceObjectId());
+        result.setRootCaseId(item.getRootProcessInstanceId());
 
         return result;
     }
@@ -97,6 +101,11 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
             if (filters.containsKey(ArchivedCaseItem.FILTER_SUPERVISOR_ID)) {
                 return processAPI
                         .searchArchivedProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_SUPERVISOR_ID), builder.done());
+            }
+
+            if(filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
+                builder.filter(ArchivedProcessInstancesSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
+                return processAPI.searchArchivedProcessInstancesInAllStates(builder.done());
             }
 
             return processAPI.searchArchivedProcessInstances(builder.done());

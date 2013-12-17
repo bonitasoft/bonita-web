@@ -73,7 +73,7 @@ public class Section extends Component {
     public Section(final JsId jsId, final String title, final AbstractComponent... body) {
         super(jsId);
         if (title != null) {
-            this.header.append(new Title(title));
+            header.append(new Title(title));
         }
         if (body != null && body.length > 0) {
             this.body.append(body);
@@ -87,33 +87,33 @@ public class Section extends Component {
     @Override
     protected final Element makeElement() {
 
-        this.element = DOM.createDiv();
-        this.element.addClassName(getClassName());
+        element = DOM.createDiv();
+        element.addClassName(getClassName());
 
         if (getJsId() != null) {
-            this.element.addClassName(getJsId().toString("section"));
+            element.addClassName(getJsId().toString("section"));
         }
 
-        this.header.setRootTag("div", "header");
-        if (this.header.size() > 0) {
-            this.element.appendChild(this.header.getElement());
-            this.headerIncluded = true;
+        header.setRootTag("div", "header");
+        if (header.size() > 0) {
+            element.appendChild(header.getElement());
+            headerIncluded = true;
         }
-        this.body.setRootTag("div", "body");
-        if (this.body.size() > 0) {
-            if (this.descriptionContainer != null) {
-                this.element.appendChild(descriptionContainer.getElement());
+        body.setRootTag("div", "body");
+        if (body.size() > 0) {
+            if (descriptionContainer != null) {
+                element.appendChild(descriptionContainer.getElement());
             }
-            this.element.appendChild(this.body.getElement());
-            this.bodyIncluded = true;
+            element.appendChild(body.getElement());
+            bodyIncluded = true;
         }
-        this.footer.setRootTag("div", "footer");
-        if (this.footer.size() > 0) {
-            this.element.appendChild(this.footer.getElement());
-            this.footerIncluded = true;
+        footer.setRootTag("div", "footer");
+        if (footer.size() > 0) {
+            element.appendChild(footer.getElement());
+            footerIncluded = true;
         }
 
-        return this.element;
+        return element;
     }
 
     /**
@@ -140,18 +140,18 @@ public class Section extends Component {
      *            The list of Components to add in the header part of the section.
      */
     public final Section addHeader(final AbstractComponent... components) {
-        this.header.append(components);
+        header.append(components);
 
-        if (isGenerated() && !this.headerIncluded) {
-            HTML.prepend(this.element, this.header.getElement());
-            this.headerIncluded = true;
+        if (isGenerated() && !headerIncluded) {
+            HTML.prepend(element, header.getElement());
+            headerIncluded = true;
         }
 
         return this;
     }
 
     public final Section emptyHeader() {
-        this.header.empty();
+        header.empty();
         return this;
     }
 
@@ -162,23 +162,23 @@ public class Section extends Component {
      *            The list of Components to add in the Body part of the section.
      */
     public final Section addBody(final AbstractComponent... components) {
-        this.body.append(components);
- 
-        if (isGenerated() && !this.bodyIncluded) {
-            if (!this.headerIncluded) {
-                HTML.prepend(this.element, this.body.getElement());
+        body.append(components);
+
+        if (isGenerated() && !bodyIncluded) {
+            if (!headerIncluded) {
+                HTML.prepend(element, body.getElement());
             } else {
-                $(this.element).children(".header").after(this.body.getElement());
+                $(element).children(".header").after(body.getElement());
             }
 
-            this.bodyIncluded = true;
+            bodyIncluded = true;
         }
 
         return this;
     }
 
     public final Section emptyBody() {
-        this.body.empty();
+        body.empty();
         return this;
     }
 
@@ -189,27 +189,26 @@ public class Section extends Component {
      *            The list of Components to add in the Footer part of the section.
      */
     public final Section addFooter(final AbstractComponent... components) {
-        this.footer.append(components);
+        footer.append(components);
 
-        if (isGenerated() && !this.footerIncluded) {
-            HTML.append(this.element, this.footer.getElement());
-            this.footerIncluded = true;
+        if (isGenerated() && !footerIncluded) {
+            HTML.append(element, footer.getElement());
+            footerIncluded = true;
         }
 
         return this;
     }
 
     public final Section emptyFooter() {
-        this.footer.empty();
+        footer.empty();
         return this;
     }
 
     public final void addDescription(final String description) {
-        if (this.descriptionContainer == null) {
-            this.descriptionContainer = new Container<Paragraph>(new JsId("section_description"));
+        if (descriptionContainer == null) {
+            descriptionContainer = new Container<Paragraph>(new JsId("section_description"));
         }
-
-        this.descriptionContainer.append(new Paragraph(description));
+        descriptionContainer.append(new Paragraph(description));
     }
 
 }

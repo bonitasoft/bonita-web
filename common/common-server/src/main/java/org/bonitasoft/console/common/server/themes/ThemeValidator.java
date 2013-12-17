@@ -31,17 +31,17 @@ public class ThemeValidator {
 
     private static final String FORMS_TEMPLATE_FILE = "BonitaForm.html";
 
-    private static final String MAIN_LESS_FILE = "styles.less";
+    private static final String MAIN_LESS_FILE = "main.less";
 
     /**
-     * Do theme package validate
+     * Do theme package validate for Portal
      * 
      * @param themePath
      * @throws IOException
      * @throws FileNotFoundException
      */
-    public void doValidate(final String themePath) throws ThemeStructureException, IOException {
-        final File themeFolder = new File(themePath);
+    public void doPortalValidation(final String themePath) throws ThemeStructureException {
+    	final File themeFolder = new File(themePath);
         boolean hasConsoleTemplateFile = false;
         boolean hasFormTemplateFile = false;
         boolean hasMainLessFile = false;
@@ -77,6 +77,6 @@ public class ThemeValidator {
         if (state.hasError()) {
             throw new ThemeStructureException(state);
         }
-
     }
+    
 }

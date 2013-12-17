@@ -18,6 +18,7 @@
 package org.bonitasoft.forms.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,8 +35,19 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.themes.ThemeDatastore;
+import org.bonitasoft.console.common.server.themes.ThemeManager;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
+import org.bonitasoft.console.common.server.themes.ThemeStructureException;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.api.ThemeAPI;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.theme.Theme;
+import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
@@ -94,7 +106,8 @@ public class HomepageServlet extends HttpServlet {
 
     protected void showApplicationPage(final HttpServletRequest request, final HttpServletResponse response, final String themeName) {
         try {
-            final File applicationDir = getApplicationFolder(request, themeName);
+            final APISession apiSession = getEngineSession(request);
+            final File applicationDir = getApplicationFolder(apiSession, themeName);
             final File homepageFile = new File(applicationDir, DEFAULT_FORM_HOME_PAGE_FILENAME);
             if (homepageFile.exists()) {
                 final byte[] content = FileUtils.readFileToByteArray(homepageFile);
@@ -137,21 +150,24 @@ public class HomepageServlet extends HttpServlet {
             // if the last update date is more recent, retrieve the theme again from the engine
             final File themesParentFolder = ThemeResourceServlet.getThemesParentFolder(request);
             final File themeFolder = new File(themesParentFolder, PORTAL_THEME_NAME);
+            final APISession apiSession = getEngineSession(request);
             if (themeFolder.exists()) {
-                long timestamp = 0L;
                 final File timestampFile = new File(themeFolder, LASTUPDATE_FILENAME);
+                final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
+                long timestamp;
                 if (timestampFile.exists()) {
                     final String timestampString = FileUtils.readFileToString(timestampFile);
                     timestamp = Long.parseLong(timestampString);
+                } else {
+                    FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+                    timestamp = lastUpdateTimestamp;
                 }
-                // TODO retrieve the last update date from the engine instead
-                final long lastUpdateTimestamp = new Date().getTime();
                 if (lastUpdateTimestamp > timestamp) {
-                    getThemeFromEngine(themeFolder);
+                    updateThemeFromEngine(apiSession, themeFolder);
                     FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
                 }
             } else {
-                getThemeFromEngine(themeFolder);
+                updateThemeFromEngine(apiSession, themeFolder);
             }
             ThemeResourceServlet.getThemePackageFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
@@ -161,8 +177,18 @@ public class HomepageServlet extends HttpServlet {
         }
     }
 
-    protected void getThemeFromEngine(final File themeDestinationDirectory) {
-        // TODO retrieve the theme from the engine and unzip it in themeDestinationDirectory
+    protected long getThemeLastUpdateDateFromEngine(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
+        return themeAPI.getLastUpdateDate(ThemeType.PORTAL).getTime();
+    }
+
+    protected void updateThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException, ServerAPIException,
+            UnknownAPITypeException, IOException, ThemeStructureException {
+        final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
+        final ThemeManager themeManager = new ThemeManager(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()));
+        ThemeDatastore themeDataStore = new ThemeDatastore(themeAPI, themeManager);
+        themeDataStore.updateCurrentThemeFromEngine();
+
     }
 
     protected String getFileName(final boolean isForm) {
@@ -173,10 +199,8 @@ public class HomepageServlet extends HttpServlet {
         return ui != null && ui.equals("form");
     }
 
-    public static File getApplicationFolder(final HttpServletRequest request, final String applicationIDString) throws ServletException {
+    public static File getApplicationFolder(final APISession apiSession, final String applicationIDString) throws ServletException {
         File myApplicationsFolder = null;
-        final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         long applicationID = 0;
         try {
             applicationID = Long.parseLong(applicationIDString);
@@ -206,5 +230,10 @@ public class HomepageServlet extends HttpServlet {
             throw new ServletException(errorMessage);
         }
         return myApplicationsFolder;
+    }
+
+    protected static APISession getEngineSession(final HttpServletRequest request) {
+        final HttpSession session = request.getSession();
+        return (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
     }
 }

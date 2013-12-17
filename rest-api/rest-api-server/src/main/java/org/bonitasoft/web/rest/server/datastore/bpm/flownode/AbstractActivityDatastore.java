@@ -16,12 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
@@ -46,6 +40,12 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 /**
  * @author Séverin Moussel
@@ -143,7 +143,7 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
     }
 
     private ActivityEngineClient getActivityEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor()).createActivityEngineClient(getEngineSession());
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession())).createActivityEngineClient();
     }
 
     private HashMap<String, Serializable> buildVariablesMap(long activityId,  String jsonValue, ActivityEngineClient client) {

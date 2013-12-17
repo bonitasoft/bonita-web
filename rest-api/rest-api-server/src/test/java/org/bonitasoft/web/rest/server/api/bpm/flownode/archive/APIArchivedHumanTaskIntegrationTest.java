@@ -15,6 +15,7 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescript
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.descriptor.SearchArchivedActivityInstanceDescriptor;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
@@ -120,9 +121,9 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     
             @Override
             protected boolean check() throws Exception {
-                SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 10);
-                builder.filter(ArchivedActivityInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID, processInstanceId);
-                return getProcessAPI().searchArchivedActivities(builder.done()).getCount() > 0;
+                SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+                searchOptionsBuilder.filter(ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, processInstanceId);
+                return getProcessAPI().searchArchivedActivities(searchOptionsBuilder.done()).getCount() >= 1L;
             }
         }.waitUntil());
     }

@@ -51,9 +51,6 @@ public abstract class Filler<TARGET_CLASS extends Object> {
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             super.onSuccess(httpStatusCode, response, headers);
             Filler.this.setData(response, headers);
-            if (Filler.this.showLoader) {
-                Filler.this.hideLoader();
-            }
             if (Filler.this.onFinishCallback != null) {
                 Filler.this.onFinishCallback.execute();
             }
@@ -66,10 +63,6 @@ public abstract class Filler<TARGET_CLASS extends Object> {
                 Filler.this.onFail(errorCode, message, new HashMap<String, String>());
             } else {
                 Filler.this.onError(parseException(message, errorCode));
-            }
-
-            if (Filler.this.showLoader) {
-                Filler.this.hideLoader();
             }
         }
     }
@@ -189,8 +182,6 @@ public abstract class Filler<TARGET_CLASS extends Object> {
 
     private boolean showLoader = true;
 
-    private Loader.POSITION loaderPosition = null;
-
     public final boolean isShowLoader() {
         return this.showLoader;
     }
@@ -204,10 +195,6 @@ public abstract class Filler<TARGET_CLASS extends Object> {
      */
     public final void setShowLoader(final boolean showLoader) {
         this.showLoader = showLoader;
-    }
-
-    public final Loader.POSITION getLoaderPosition() {
-        return this.loaderPosition;
     }
 
     /**
@@ -226,37 +213,11 @@ public abstract class Filler<TARGET_CLASS extends Object> {
      *            <dt>Display a loader with an overlay over the target of this filler if the target is a component otherwise, MAIN_LOADER will be used.</dt>
      *            </dl>
      */
-    public final void setLoaderPosition(final Loader.POSITION loaderPosition) {
-        this.loaderPosition = loaderPosition;
+    public final void setLoaderPosition() {
         this.setShowLoader(true);
     }
 
-    protected final void showLoader() {
-        if (this.loaderPosition == null) {
-            if (this.target instanceof AbstractComponent) {
-                Loader.showLoader((AbstractComponent) this.target);
-            } else if (this.target instanceof Element) {
-                Loader.showLoader((Element) this.target);
-            } else {
-                Loader.showLoader(Loader.POSITION.MAIN_LOADER);
-            }
-        } else {
-            Loader.showLoader(this.loaderPosition);
-        }
-    }
 
-    protected final void hideLoader() {
-        if (this.loaderPosition == null) {
-            if (this.target instanceof AbstractComponent) {
-                Loader.hideLoader((AbstractComponent) this.target);
-            } else if (this.target instanceof Element) {
-                Loader.hideLoader((Element) this.target);
-            } else {
-                Loader.hideLoader(Loader.POSITION.MAIN_LOADER);
-            }
-        } else {
-            Loader.hideLoader(this.loaderPosition);
-        }
-    }
+
 
 }

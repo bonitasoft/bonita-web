@@ -16,11 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
-
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCreator;
@@ -34,15 +29,16 @@ import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.GroupEngineClient;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.api.*;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
 
 /**
  * @author Nicolas Tith
@@ -54,14 +50,13 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         DatastoreHasGet<GroupItem>,
         DatastoreHasSearch<GroupItem>, DatastoreHasDelete {
 
-    private EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor());
-    
     public GroupDatastore(final APISession engineSession) {
         super(engineSession);
     }
 
     private GroupEngineClient getGroupEngineClient() {
-        return engineClientFactory.createGroupEngineClient(getEngineSession()); 
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
+                .createGroupEngineClient();
     }
     
     @Override

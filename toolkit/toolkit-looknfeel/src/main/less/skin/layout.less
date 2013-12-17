@@ -1,24 +1,38 @@
-.filters_panel,
-.tables_panel,
-.details_panel{
-	vertical-align: top;
-	display: table-cell;
-	.boxSizing();
+@import "skin.config.less";
+.filters,
+.tables,
+.details,
+.sections{
+	&_panel{
+		vertical-align: top;
+		display: table-cell;
+		.boxSizing();
+	}
 }
 
+.filters, .sections{
+	&_panel{
+		position: relative;
+		table-layout: fixed;
+	}
+}
 .filters_panel{
 	min-width: @filtersPanel-minWidth;
 	width: @filtersPanel-minWidth;
 	max-width: @filtersPanel-minWidth;
-	background: @mainAccentColor;
-	position: relative;
-	table-layout: fixed;
+	background: @filtersPanel-bgColor;
+}
+.sections_panel{
+	min-width: @sectionsPanel-width;
+	width: @sectionsPanel-width;
+	max-width: @sectionsPanel-width;
+	padding: @sectionsPanel-padding;
+	background: @sectionsPanel-bgColor;
 }
 .tables_panel{
 	max-width: @tablesPanel-maxWidth;
 	min-width: @tablesPanel-minWidth;
 	width: @tablesPanel-width;
-	
 }
 .details_panel{
 	background: #fff;

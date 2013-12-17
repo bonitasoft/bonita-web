@@ -251,7 +251,6 @@ public class ClientApplicationURL {
         AbstractI18n.setDefaultLocale(lang);
 
         if (refresh) {
-            Loader.showLoader($("body").get(0));
             Window.Location.reload();
         }
     }
@@ -374,7 +373,7 @@ public class ClientApplicationURL {
     // First display of a view
     protected void initView() {
         // Hide global loader
-        $("#initloader").remove();
+        Loader.getInstance().hideLoader();
 
         if (_getPageToken() != null && _getProfileId() != null) {
             ViewController.showView(_getPageToken(), _getPageAttributes());

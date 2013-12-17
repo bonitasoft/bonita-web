@@ -8,6 +8,17 @@
 		<fileSet>
 			<directory>${output.directory}/css</directory>
 			<outputDirectory></outputDirectory>
+			<filtered>true</filtered>
+			<includes>
+				<include>**/*.html</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${output.directory}/css</directory>
+			<outputDirectory></outputDirectory>
+			<excludes>
+				<exclude>**/*.html</exclude>
+			</excludes>
 		</fileSet>
 	</fileSets>
 </assembly>

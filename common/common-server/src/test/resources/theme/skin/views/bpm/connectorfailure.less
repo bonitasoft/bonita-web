@@ -1,0 +1,33 @@
+.connectors .td_state {
+    text-transform: lowercase;
+}
+
+.connector-failure-popup {
+    width: @connector-failure-popup-width;
+}
+
+.connector-failure-link {
+    padding-right: 20px;
+    .bgRight(@information-bgImage);
+}
+
+.connector-failure {
+
+    .error-message, .error-log {
+        margin: 15px 0;
+    }
+
+    .error-log {
+        width: 100%;
+        height: @stackTrace-height;
+        overflow: scroll;
+        overflow-x: hidden;
+        background: @stackTrace-bg-color;
+        resize: none;
+	}
+
+	.connector-name {
+		font-weight: bold;
+	}
+}
+

@@ -34,7 +34,9 @@
 								position: @reportListAdmin-description-position;
 								width: @reportListAdmin-description-width;
 								text-overflow: ellipsis;
+								overflow: hidden;
 								white-space: nowrap;
+								height: 1.15em;
 							}
 						}
 					}
@@ -112,9 +114,9 @@
 	
 	.exportCell{
 		a{
-			position: relative;
 			.skinButton(@btnColor, @btnTxtColor, @btnTxtStrokeColor);
 			float: right;
+			position: relative;
 		}
 	}
 	form#report-form{
@@ -138,21 +140,37 @@
 		.report-form {
 			text-align: left;
 		}
-		
-		.formentries .formentry {
-			height: auto;
-			float: left;
-			width: 250px;
-			&.select .input select{
-				background: none repeat scroll 0 0 transparent;
-				border: 0 none;
-				border-radius: 0 0 0 0;
-				font-family: inherit;
-				font-size: inherit;
-				padding: 4px 5px;
-				width: 120%;
-			}
-		}
+        
+		.formentries {
+            .buttons {
+                width: 100%;
+                text-align: center;
+                vertical-align: middle;
+                input.btn {
+                    height: @button-height + @border-width + @border-width;
+                }
+                .btn {
+                    height: @button-height;
+                }
+            }
+            
+            .formentry {
+                height: auto;
+                float: left;
+                width: 250px;
+                margin: 5px;
+                
+                &.select .input select{
+                    background: none repeat scroll 0 0 transparent;
+                    border: 0 none;
+                    border-radius: 0 0 0 0;
+                    font-family: inherit;
+                    font-size: inherit;
+                    padding: 4px 5px;
+                    width: 120%;
+                }
+            }  
+        } 
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// CHARLY REPORT CSS IMPLEMENTATION
@@ -161,7 +179,7 @@
 	.table_report {
 		-moz-box-sizing: border-box;
 		border: 1px solid #C2C2C2;
-		box-shadow: -2px 2px 3px #F7F7F7;
+		box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.17);
 		display: table;
 		float: none;
 		table-layout: fixed;
@@ -196,7 +214,7 @@
 	.table_report .thead .tr .th_last:before {
 		display: none;
 	}
-	.table_report .thead .tr .th{
+	.table_report .thead .tr .th {
 		border-left: 1px solid #D9D9D9;
 	    content: "";
 	    display: block;
@@ -205,13 +223,18 @@
 	    width: 0;
 	    display: table-cell;
 	    float: none;
-	    font-size: 138.462%;
 	    height: 20px;
-	    padding: 10px 20px;
+	    padding: 5px 10px;
 	    position: relative;
 		text-align: left;
-	} 
-		
+        vertical-align: middle;
+        font-size: 120%;
+	}
+    
+    .table_report.small-table-header .thead .tr .th {
+        font-size: 110%;
+    }
+    
 	.table_report .tbody {
 		display: table-row-group;
 	    float: none;
@@ -228,7 +251,7 @@
 		border: 1px solid #EDEDED;
 	    display: table-cell;
 	    float: none;
-	    padding: 15px 20px;
+	    padding: 5px 10px;
 	    vertical-align: middle;
 	}
 	
