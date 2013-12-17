@@ -172,7 +172,7 @@ $(function() {
 					$(this).siblings().removeClass(currentClass);
 					$(".tabSection").removeClass(currentClass);
 					$(this).addClass(currentClass);
-					$(".tabSection:eq("+currentIndex+")").addClass(currentClass);
+					$(".tabSection:eq("+(currentIndex-1)+")").addClass(currentClass);
 				});
 				$(panelSelector+" ul").append(tabElement);
 		});
