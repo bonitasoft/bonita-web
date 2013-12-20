@@ -27,7 +27,6 @@ public class JsInjector {
     public void inject(String script) {
         ScriptInjector.fromString(script)
                 .setWindow(ScriptInjector.TOP_WINDOW)
-                .setRemoveTag(false)
                 .inject();
     }
 }

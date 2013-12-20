@@ -33,22 +33,18 @@ public abstract class FormFiller extends Filler<AbstractForm> {
 
     public FormFiller() {
         super();
-        setLoaderPosition(null);
     }
 
     public FormFiller(final int repeatEvery) {
         super(repeatEvery);
-        setLoaderPosition(null);
     }
 
     public FormFiller(final Object target, final int repeatEvery) {
         super(target, repeatEvery);
-        setLoaderPosition(null);
     }
 
     public FormFiller(final AbstractForm target) {
         super(target);
-        setLoaderPosition(null);
     }
 
     @Override

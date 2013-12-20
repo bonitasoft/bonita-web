@@ -106,7 +106,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getThemeConsoleFolderPath() {
+    public String getThemePortalFolderPath() {
         return null;
     }
 
@@ -122,27 +122,27 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleDefaultIconsFolderPath() {
+    public String getPortalDefaultIconsFolderPath() {
         return null;
     }
 
     @Override
-    public String getConsoleProcessIconsFolderPath() {
+    public String getPortalProcessIconsFolderPath() {
         return null;
     }
 
     @Override
-    public String getConsoleUserIconsFolderPath() {
+    public String getPortalUserIconsFolderPath() {
         return null;
     }
 
     @Override
-    public String getConsoleRoleIconsFolderPath() {
+    public String getPortalRoleIconsFolderPath() {
         return null;
     }
 
     @Override
-    public String getConsoleProfilesIconsFolderPath() {
+    public String getPortalProfilesIconsFolderPath() {
         return null;
     }
 
@@ -190,7 +190,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getConsoleGroupIconsFolderPath() {
+    public String getPortalGroupIconsFolderPath() {
         return null;
     }
 

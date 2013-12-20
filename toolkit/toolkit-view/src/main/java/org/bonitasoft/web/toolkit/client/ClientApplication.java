@@ -21,8 +21,6 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.ui.ClientDateFormater;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.utils.I18n;
-import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
-import org.bonitasoft.web.toolkit.client.ui.utils.Loader.POSITION;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -126,11 +124,9 @@ public abstract class ClientApplication implements EntryPoint {
     }
 
     public static void startLoading() {
-        Loader.showLoader(POSITION.FULL_OVERLAY);
     }
 
     public static void stopLoading() {
-        Loader.hideLoader(POSITION.FULL_OVERLAY);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

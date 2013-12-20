@@ -192,7 +192,6 @@ public abstract class AbstractComponent extends Widget implements Node {
      * @return This method returns the component itself to allow cascading calls.
      */
     public final AbstractComponent startLoading() {
-        Loader.showLoader(this);
         return this;
     }
 
@@ -202,7 +201,6 @@ public abstract class AbstractComponent extends Widget implements Node {
      * @return This method returns the component itself to allow cascading calls.
      */
     public final AbstractComponent stopLoading() {
-        Loader.hideLoader(this);
         return this;
     }
 

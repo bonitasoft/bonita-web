@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -653,10 +654,13 @@ public abstract class Item implements IItem {
             if (rawValue != null && !rawValue.equals(cleanValue)) {
                 sb.append(" >> ").append(cleanValue);
             }
-
             sb.append("\r\n");
         }
 
+        for (Entry<String, IItem> entry : deploys.entrySet()) {
+            sb.append(entry.getKey()).append(" : ").append(entry.getValue());
+            sb.append("\r\n");
+        }
         return sb.toString();
     }
 

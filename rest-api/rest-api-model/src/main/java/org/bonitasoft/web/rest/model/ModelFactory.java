@@ -58,7 +58,6 @@ import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.web.rest.model.portal.theme.ThemeDefinition;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -167,8 +166,6 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ProfileEntryDefinition();
         } else if (ProfileMemberDefinition.TOKEN.equals(token)) {
             return new ProfileMemberDefinition();
-        } else if (ThemeDefinition.TOKEN.equals(token)) {
-            return new ThemeDefinition();
         } else if (SessionDefinition.TOKEN.equals(token)) {
             return new SessionDefinition();
         } else if (ArchivedCaseDefinition.TOKEN.equals(token)) {

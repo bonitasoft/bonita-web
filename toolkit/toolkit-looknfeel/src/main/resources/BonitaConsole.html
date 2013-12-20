@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=8; IE=9; IE=10" />
+		<meta name="version" content="${project.version}" />
+
+		<title>Bonita BPM Portal</title>
+		<link rel="icon" type="image/png" href="themeResource?theme=portal&location=images/favicon2.ico&v=${project.version}" />
+
+		<link rel="stylesheet" type="text/css" href="themeResource?theme=portal&location=bonita.css&v=${project.version}">
+
+		<!-- used by highlight.pack.js -->
+		<link rel="stylesheet" type="text/css" href="scripts/ext/github.css?v=${project.version}">
+		<!--[if lte IE 8]>
+			<script language="javascript" type="text/javascript" src="scripts/ext/excanvas.min.js?v=${project.version}"></script>
+			<link rel="stylesheet" type="text/css" href="themeResource?theme=portal&location=bonita_ie8.css&v=${project.version}">
+		<![endif]-->
+		
+
+		<!-- Load JQuery -->
+		<script type="text/javascript" src="scripts/jquery/jquery-1.6.4.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery-ui-1.10.3.custom.min.js?v=${project.version}"></script>
+		<!-- Load JQuery plugins -->
+		<script type="text/javascript" src="scripts/jquery/plugins/color-animation.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/plugins/jquery.form.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/plugins/jquery.pseudo.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/plugins/customInput.jquery.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/plugins/jquery.flot.min.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/plugins/jquery.flot.pie.min.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/plugins/jquery.placeholder.min.js?v=${project.version}"></script>
+		<!-- Load external tools -->
+		<script type="text/javascript" src="scripts/ext/plupload.full.min.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/ext/date.format.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/ext/datepicker/js/datepicker.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/ext/highlight.pack.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/ext/noty.pack.js?v=${project.version}"></script>
+		<!-- Load jQuery+ -->
+		<script type="text/javascript" src="scripts/jquery/jquery+/extend.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/debug.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/vartypes.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/compatibility.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/dom.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/options.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/css.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/uiManager.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/togglePanel.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/enable.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/selectors.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/color.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/events.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/manipulation.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/checkbox.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/tabs.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/jquery+/loading.js?v=${project.version}"></script>
+		<!--Load Portal JS-->
+		<script type="text/javascript" src="scripts/includes/array.prototype.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/common.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/popup.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/dashboard.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/form.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/skin.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/table.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/menu.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/switchPanel.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/wizard.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/socialbar.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/gwt.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/datepicker.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/autouploader.js?v=${project.version}"></script>
+
+		<!-- Reporting -->
+		<script type="text/javascript" src="scripts/bonita-utils.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/includes/report.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/daterangepicker.jQuery.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/jquery/date.js?v=${project.version}"></script>
+		<script type="text/javascript" src="scripts/bonita-model.js?v=${project.version}"></script>
+
+		<!-- Profile -->
+		<script type="text/javascript" src="scripts/includes/profile.js?v=${project.version}"></script>
+
+		<script type="text/javascript" src="portal.nocache.js"></script>
+	</head>
+	<body>
+		<div class="footerpusher">
+
+			<div id="initloader">
+				<div class="loader">
+					<img src="themeResource?theme=portal&location=skin/images/loader.gif" />
+				</div>
+			</div>
+
+			<div class="header" id="header">
+				<div id="login"></div>
+				<div id="menu"></div>
+			</div>
+
+			<div class="body">
+				<div id="body"></div>
+			</div>
+
+			<div id="socialbar"></div>
+			<div class="footerpush"></div>
+		</div>
+		<!-- OPTIONAL: include this if you want history support -->
+		<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+			style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+	</body>
+</html>

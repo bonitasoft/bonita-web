@@ -41,4 +41,16 @@ public class ListUtil {
 
         return list.subList(startIndex, endIndex);
     }
+
+    public static <T> String stringify(List<T> entries) {
+        if (entries == null || entries.isEmpty()) {
+            return "";
+        }
+        StringBuilder stb = new StringBuilder();
+        for (T entry : entries) {
+            stb.append(String.valueOf(entry));
+            stb.append(",");
+        }
+        return stb.substring(0, stb.length() - 1); // substring to remove last comma
+    }
 }

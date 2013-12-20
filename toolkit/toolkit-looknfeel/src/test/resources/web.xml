@@ -18,5 +18,25 @@
 	<listener>
 		<listener-class>ro.isdc.wro.http.WroServletContextListener</listener-class>
 	</listener>
+	
+	<!-- THEME RESOURCE PROXY -->
+	<servlet>
+		<servlet-name>themeResource</servlet-name>
+		<servlet-class>org.eclipse.jetty.servlets.ProxyServlet$Transparent</servlet-class>
+		<load-on-startup>2</load-on-startup>
+		<init-param>
+			<param-name>ProxyTo</param-name>
+			<param-value>http://localhost:8888/portal/themeResource</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Prefix</param-name>
+			<param-value>/css/themeResource</param-value>
+		</init-param>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>themeResource</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

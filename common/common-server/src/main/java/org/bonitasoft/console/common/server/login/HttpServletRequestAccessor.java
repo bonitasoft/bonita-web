@@ -17,6 +17,7 @@
 package org.bonitasoft.console.common.server.login;
 
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -105,5 +106,13 @@ public class HttpServletRequestAccessor {
 
     public HttpServletRequest asHttpServletRequest() {
         return httpServletRequest;
+    }
+
+    public String getUserAgent() {
+        return httpServletRequest.getHeader("User-Agent");
+    }
+
+    public String getLocale() {
+        return LocaleUtils.getUserLocale(httpServletRequest);
     }
 }

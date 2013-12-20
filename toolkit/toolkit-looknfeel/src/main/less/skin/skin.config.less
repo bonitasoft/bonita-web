@@ -250,6 +250,7 @@
 @filtersPanel-width: 40*@w;
 @filtersPanel-minWidth: @filtersPanel-width;
 @filtersPanel-maxWidth: @filtersPanel-width;
+@filtersPanel-bgColor: @mainAccentColor;
 
 @detailsPanel-width: 50%;
 
@@ -798,9 +799,7 @@
 @moreDetails-configurationState-padding: 0 7*@w 0 0;
 @moreDetails-configurationState-lineHeight: 32px; 
 @moreDetails-configurationState-resolved-txtColor: green;
-@moreDetails-configurationState-resolved-bgImg: "configuration-state-resolved.png";
 @moreDetails-configurationState-unresolved-txtColor: #D87E06;
-@moreDetails-configurationState-unresolved-bgImg: "configuration-state-unresolved.png";
 
 
 @moreDetails-subTasks-addButton-bgColor: @btnPrimaryActionColor;
@@ -831,6 +830,39 @@
 @moreDetails-form-button-textAlign: right;
 @moreDetails-form-action-margin: 1*@h 0 0 0;
 // ----------------------------------------------------------------------------
+// Two Cols page
+// ----------------------------------------------------------------------------
+@sectionsPanel-width: 40*@w;
+@sectionsPanel-padding: 7*@h 0 0 1*@w;
+@sectionsPanel-bgColor: @mainAccentColor;
+
+@twoCols-min-width: 250 * @w;
+@twoCols-body-top: @header-login-height + @header-menu-height;
+@twoCols-body-padding: (@header-menu-height + @header-login-height) 5*@w @footer-height 0;
+
+@twoCols-tabsection-width: 100%;
+@twoCols-tabsection-padding: 7*@h 0  5*@h 7*@w;
+
+@twoCols-sectionsPanel-section-bgColor: #fff;
+@twoCols-filtersCurrent-link-textColor: @secondAccentColor;
+@twoCols-section-width: 50%;
+@twoCols-double-section-width: 100%;
+@twoCols-sectionLeft-padding: 0 13*@w 11*@h 0;
+
+@twoCols-title-fontSize: 24;
+@twoCols-title-padding: 0;
+@twoCols-title-margin: 0 0 4*@h 0;
+@twoCols-section-body-padding: 0 2*@w 0 2*@w;
+@twoCols-section-body-position: relative;
+@twoCols-section-margin: 0 0 3*@h 0;
+@twoCols-paddingLeft: 8*@w;
+@twoCols-paddingRight: 7*@w;
+@twoCols-header-padding: 0 @twoCols-paddingRight 0 @twoCols-paddingLeft;
+@twoCols-header-marginBottom: 8*@h;
+@twoCols-header-margin: (@header-menu-height+@header-login-height) 0 @twoCols-header-marginBottom 0;
+@twoCols-header-position: absolute;
+@twoCols-header-title-display: none;
+// ----------------------------------------------------------------------------
 // Footer
 // ----------------------------------------------------------------------------
 @dropdown-shadowX: 2px;
@@ -843,7 +875,7 @@
 // Login Page
 // ----------------------------------------------------------------------------
 
-@loginPage-bgColor:@secondary-background;
+@loginPage-bgColor: @secondary-background;
 
 @loginPage-formContainer-shadowX: 0;
 @loginPage-formContainer-shadowY: 0;
@@ -854,7 +886,6 @@
 @loginPage-formContainer-border: @border-width solid #bab9b9;
 @loginPage-formContainer-bgColor: #fff;
 @loginPage-formContainer-width: 110*@w;
-//@loginPage-formContainer-height: 59*@h;
 @loginPage-formContainer-height: 59*@h;
 @loginPage-formContainer-paddingTop: 8*@h;
 @loginPage-formContainer-paddingBottom: 8*@h;
