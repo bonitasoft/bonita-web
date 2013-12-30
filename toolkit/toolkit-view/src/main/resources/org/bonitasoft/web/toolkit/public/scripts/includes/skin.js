@@ -65,73 +65,67 @@ $(function() {
 });
 
 function resizeSelect(f){
+	//init vars
 	var listContainer = $(f);
-	if(listContainer.hasClass("resized")){
-		return;
-	}
 	var arrowBgWidth = 35;
 	var paddingRight = 10;
+	var browserElevatorWidth = 15;
 	var containerWidth = listContainer.outerWidth();
-	var list = listContainer.find('select:first');
-	var selectedOption = listContainer.find('select:first').prop("selectedIndex"); // backup the selected index
+	var maxAvailableWidth = 0;
+	var listWidth = 0;
 
+	var list = $("select", listContainer);
+	list.css("width","");
+	listContainer.css("width","");
 	//get the label
 	var label = listContainer.siblings(".bonita_form_label:first");
-	if(label.length == 0) label = listContainer.siblings(".label:first");
-	var maxAvailable = 0;
-	//if label position is top or bottom the max width of the select container will be the label width (100% of available space in the form width)
-	if(label.hasClass("bonita_form_label_top") || label.hasClass("bonita_form_label_bottom")){
-		maxAvailable = label.outerWidth();
-	}else if(label.hasClass("bonita_form_label_left") || label.hasClass("bonita_form_label_right")){
-		//else if label position is left or right the max width of the select container will be 66% of available space in the form width because the label takes 33%
-		maxAvailable = label.outerWidth() * 2;
-	}else{//default
-		maxAvailable = label.outerWidth();
+
+	// if the label is not found with the class bonita_form_label, let's try with portal class .label
+	if (label.length == 0 && listContainer.siblings(".label").length == 1) {
+		label = listContainer.siblings(".label:first");
 	}
 	
-	// remove css width to calculate max size
-	list.css("width","100%");
-		
-	// init vars to search the longer string in options
-	var lengths = Array();
-	var maxI = 0;
-	var max = 0;
+	//if label position is top or bottom the max width of the select container will be the label width (100% of available space in the form width)
+	if (label.hasClass("bonita_form_label_top") || label.hasClass("bonita_form_label_bottom")) {
+		maxAvailableWidth = label.outerWidth();
+	}//else if label position is left or right the max width of the select container will be 66% of available space in the form width because the label takes 33%
+	else {
+		maxAvailableWidth = label.outerWidth() * 2;
+	}
+
+  var listClone = list.clone();
+  
+  listClone.appendTo(listContainer);
+  listClone.css("width","auto");
+
+
+	// transform unique choice select into a multiple to get the final size
+	listClone.prop("multiple", true);
+
+	//get the width
+	listWidth = listClone.outerWidth();
+	listClone.prop("multiple", true);
+	listClone.remove();
+
+	// revert to unique choice the select box
+	list.prop("multiple", false);
 	
-	// retreive max characters and index in options value
-	list.find('option').each(function(index, element){
-		if(index==0 || $(this).text().length > max){
-			maxI = index;
-			max = $(this).text().length;
-		}
-	});
-	// select the option with the highest number of character
-	list.prop("selectedIndex",maxI);
-	
-	//get the size of the highest option
-	var listWidth = list.outerWidth();
-	
-	// reselect the initial option
-	list.prop("selectedIndex",selectedOption);
-	
-	//set the with of the select to the max select width including the arrow width	
-	list.outerWidth(listWidth+ arrowBgWidth*2);
-	
-	//if the options has value
-	if(listWidth>0){
+	//if select has options
+	if ($("option", list).length > 0) {
+		list.outerWidth(listWidth + paddingRight + arrowBgWidth*2 + browserElevatorWidth);// arrow width is added twice because if we remove this width to the parent container, the container will not have enough space to display this arrow without text overlap
+		var newListWidth = list.outerWidth();
 		// set the container width to list width including arrow width & padding if the max available width is not reached
-		var newListContainerWidth = listWidth + arrowBgWidth + paddingRight;
-		if(maxAvailable<newListContainerWidth){
+		if (newListWidth < maxAvailableWidth) {
+			listContainer.css("width", newListWidth - arrowBgWidth);
+		} else {
 			//if the width is higher set to max available width
-			newListContainerWidth =  maxAvailable;
-			listContainer.css("width", newListContainerWidth);
-		}else{
-			listContainer.css("width", listWidth+arrowBgWidth+paddingRight);
+			listContainer.css("width", maxAvailableWidth);
 		}
-	}else{
+	} else {
 		// if there is no option or options has no value, set only the arrow width
+		list.outerWidth(arrowBgWidth * 2);
 		listContainer.css("width", arrowBgWidth);
 	}
-	listContainer.addClass("resized");
 }
 
 
