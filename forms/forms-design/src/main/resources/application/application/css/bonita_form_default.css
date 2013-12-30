@@ -25,6 +25,14 @@ div.bonita_form_container {
 	margin: 0 auto;
 }
 
+div.bonita_form_container select{
+	font-family: arial;
+}
+
+div.bonita_form_container select option{
+	font-family: Signika-Regular;
+}
+
 @media screen and (max-width: 1250px) {
 	div.bonita_form_container {
 		width: 100%;
@@ -107,9 +115,14 @@ button.bonita_form_button + button.bonita_form_button {
 	-webkit-appearance: none;
 	border: 0;
 	border-radius: 0;
-	font-family: Signika-Regular;
+	font-family: arial;	
 	font-size: 100%;
 }
+
+.bonita_form_field.list_container select option{
+	font-family: Signika-Regular;
+}
+
 .bonita_form_field.list_container{
 	background: url(../images/form-select.png) no-repeat right center;
 	overflow: hidden;
