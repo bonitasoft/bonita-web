@@ -12,7 +12,6 @@
 		<module>rest-api</module>
 		<module>forms</module>
 		<module>console</module>
-		<module>platform</module>
 		<module>bonita-home</module>
 	</modules>
 

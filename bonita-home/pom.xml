@@ -101,27 +101,6 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>unpack-platform-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.platform</groupId>
-									<artifactId>platform-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
 						<id>unpack-toolkit-looknfeel</id>
 						<phase>generate-resources</phase>
 						<goals>
