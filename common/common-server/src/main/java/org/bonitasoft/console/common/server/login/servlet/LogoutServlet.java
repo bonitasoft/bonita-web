@@ -98,12 +98,12 @@ public class LogoutServlet extends HttpServlet {
             tenantId = apiSession.getTenantId();
         }
         String loginPage = null;
-        
+
         try {
             boolean redirectAfterLogin = true;
             final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
             final String localeStr = request.getParameter(UrlOption.LANG);
-            
+            // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
             if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
                 redirectAfterLogin = false;
             }
@@ -119,7 +119,7 @@ public class LogoutServlet extends HttpServlet {
                     } else {
                         if (localeStr != null) {
                             // Append tenant parameter in url parameters
-                            loginPage = LOGIN_PAGE + "?" + UrlOption.LANG + "=" + localeStr + "&" +LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
+                            loginPage = LOGIN_PAGE + "?" + UrlOption.LANG + "=" + localeStr + "&" + LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
                         } else {
                             loginPage = LOGIN_PAGE + "?" + LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
                         }
@@ -144,13 +144,12 @@ public class LogoutServlet extends HttpServlet {
      * Used in SP
      */
     protected String createRedirectUrl(final HttpServletRequest request) {
-        return new RedirectUrlBuilder(getRedirectUrl(request))
-                .build().getUrl();
+        return new RedirectUrlBuilder(getRedirectUrl(request)).build().getUrl();
     }
 
-    private String getRedirectUrl(HttpServletRequest request) {
-        HttpServletRequestAccessor accessor = new HttpServletRequestAccessor(request);
-        String redirectUrl = accessor.getRedirectUrl();
+    private String getRedirectUrl(final HttpServletRequest request) {
+        final HttpServletRequestAccessor accessor = new HttpServletRequestAccessor(request);
+        final String redirectUrl = accessor.getRedirectUrl();
         return redirectUrl != null ? redirectUrl : getDefaultRedirectUrl();
     }
 
