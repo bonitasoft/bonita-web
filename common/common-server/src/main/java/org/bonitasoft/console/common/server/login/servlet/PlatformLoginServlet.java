@@ -14,20 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.platform.server.servlet;
+package org.bonitasoft.console.common.server.login.servlet;
 
-import org.bonitasoft.engine.api.PlatformAPI;
-import org.bonitasoft.engine.api.PlatformAPIAccessor;
-import org.bonitasoft.engine.api.PlatformLoginAPI;
-import org.bonitasoft.engine.session.PlatformSession;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.engine.api.PlatformAPIAccessor;
+import org.bonitasoft.engine.api.PlatformLoginAPI;
+import org.bonitasoft.engine.session.PlatformSession;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
@@ -65,8 +66,6 @@ public class PlatformLoginServlet extends HttpServlet {
      */
     protected String LOGIN_PAGE = "/platformLogin.jsp";
 
-    protected String PLATFORM_HOMEPAGE = "platform/BonitaPlatform.html#?_p=Home";
-
     protected String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
 
     protected static final String PLATFORMSESSION = "platformSession";
@@ -78,6 +77,13 @@ public class PlatformLoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+
+        boolean redirectAfterLogin = true;
+        final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
+        if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
+            redirectAfterLogin = false;
+        }
         PlatformSession platformSession = null;
         PlatformLoginAPI platformLoginAPI = null;
         final String username = request.getParameter(USERNAME_PARAM);
@@ -87,33 +93,26 @@ public class PlatformLoginServlet extends HttpServlet {
             platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
             platformSession = platformLoginAPI.login(username, password);
             request.getSession().setAttribute(PLATFORMSESSION, platformSession);
-            final PlatformAPI platformAPI = PlatformAPIAccessor.getPlatformAPI(platformSession);
-            if (platformAPI.isPlatformCreated()) {
-                platformAPI.startNode();
-                // FIXME Add to SP version if needed
-                // if (platformAPI.getNumberOfTenants() > 0) {
-                // response.sendRedirect(this.PLATFORM_HOMEPAGE);
-                // } else {
-                platformAPI.stopNode();
-                platformAPI.cleanAndDeletePlaftorm();
-                response.sendRedirect(this.PLATFORM_PAGE);
-                // }
-            } else {
-                response.sendRedirect(this.PLATFORM_PAGE);
+            if (redirectAfterLogin) {
+                response.sendRedirect(PLATFORM_PAGE);
             }
         } catch (final Exception e) {
-            final String errorMessage = "Error while logging to the platform";
+            final String errorMessage = "Error while logging in to the platform";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, errorMessage, e);
             }
-            try {
-                request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
-                getServletContext().getRequestDispatcher(this.LOGIN_PAGE).forward(request, response);
-            } catch (final IOException ioe) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    final String error = "Error while redirecting to login.jsp";
-                    LOGGER.log(Level.SEVERE, error, ioe);
+            if (redirectAfterLogin) {
+                try {
+                    request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
+                    getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+                } catch (final IOException ioe) {
+                    if (LOGGER.isLoggable(Level.SEVERE)) {
+                        final String error = "Error while redirecting to login.jsp";
+                        LOGGER.log(Level.SEVERE, error, ioe);
+                    }
+                    throw new ServletException(errorMessage, e);
                 }
+            } else {
                 throw new ServletException(errorMessage, e);
             }
         }

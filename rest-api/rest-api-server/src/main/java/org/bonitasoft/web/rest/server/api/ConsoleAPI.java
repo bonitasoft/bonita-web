@@ -16,12 +16,25 @@
  */
 package org.bonitasoft.web.rest.server.api;
 
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Séverin Moussel
  * 
  */
-public abstract class ConsoleAPI<T extends IItem> extends CommonAPI<T> {
+public abstract class ConsoleAPI<T extends IItem> extends API<T> {
 
+    private APISession sessionSingleton = null;
+
+    /**
+     * Get the session to access the engine SDK
+     */
+    protected final APISession getEngineSession() {
+        if (this.sessionSingleton == null) {
+            this.sessionSingleton = (APISession) getHttpSession().getAttribute("apiSession");
+        }
+        return this.sessionSingleton;
+    }
 }

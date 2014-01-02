@@ -211,6 +211,14 @@ ${enable.engine.listener.end}
 		<servlet-name>logoutService</servlet-name>
 		<servlet-class>org.bonitasoft.console.common.server.login.servlet.LogoutServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>platformLoginService</servlet-name>
+		<servlet-class>org.bonitasoft.console.common.server.login.servlet.PlatformLoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>platformLogoutService</servlet-name>
+		<servlet-class>org.bonitasoft.console.common.server.login.servlet.PlatformLogoutServlet</servlet-class>
+	</servlet>
     <servlet>
         <servlet-name>exportOrganizationServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.server.servlet.OrganizationExportServlet</servlet-class>
@@ -331,6 +339,14 @@ ${enable.engine.http.api.end}
 	<servlet-mapping>
 		<servlet-name>logoutService</servlet-name>
 		<url-pattern>/logoutservice</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>platformLoginService</servlet-name>
+		<url-pattern>/platformloginservice</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>platformLogoutService</servlet-name>
+		<url-pattern>/platformlogoutservice</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>BonitaRestAPIServlet</servlet-name>

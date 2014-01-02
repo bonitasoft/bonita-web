@@ -13,28 +13,25 @@
  **/
 package org.bonitasoft.console.common.server.login.servlet;
 
-import org.bonitasoft.console.common.server.login.*;
-import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
-import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
-import org.bonitasoft.console.common.server.preferences.properties.PlatformTenantConfigProperties;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
-import org.bonitasoft.engine.api.PlatformAPI;
-import org.bonitasoft.engine.api.PlatformAPIAccessor;
-import org.bonitasoft.engine.api.PlatformLoginAPI;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.platform.PlatformLogoutException;
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.session.PlatformSession;
-import org.bonitasoft.engine.session.SessionNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.login.LoginManagerFactory;
+import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
+import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
+import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Anthony Birembaut, Ruiheng Fan, Chong Zhao, Haojie Yuan
@@ -75,6 +72,7 @@ public class LoginServlet extends HttpServlet {
 
         boolean redirectAfterLogin = true;
         final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
         if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
             redirectAfterLogin = false;
         }
@@ -131,20 +129,16 @@ public class LoginServlet extends HttpServlet {
     }
 
     private String createRedirectUrl(final HttpServletRequest request, final String redirectURL) {
-        return new RedirectUrlBuilder(redirectURL).build()
-                .getUrl();
+        return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }
 
     protected void doLogin(final HttpServletRequest request, final long tenantId) throws LoginManagerNotFoundException, LoginFailedException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-        getLoginManager(tenantId).login(requestAccessor,
-                createUserCredentials(tenantId, requestAccessor));
+        getLoginManager(tenantId).login(requestAccessor, createUserCredentials(tenantId, requestAccessor));
     }
 
     private UserCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
-        return new UserCredentials(requestAccessor.getUsername(),
-                requestAccessor.getPassword(),
-                tenantId);
+        return new UserCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
     }
 
     private LoginManager getLoginManager(final long tenantId) throws LoginManagerNotFoundException {
@@ -165,9 +159,9 @@ public class LoginServlet extends HttpServlet {
         return tenantId;
     }
 
-    public String dropPassword(String content) {
+    public String dropPassword(final String content) {
         String tmp = content;
-        if(content.contains("password")) {
+        if (content.contains("password")) {
             tmp = tmp.replaceAll("[&]?password=([^&|#]*)?", "");
         }
         return tmp;
