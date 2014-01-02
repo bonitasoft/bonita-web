@@ -51,7 +51,7 @@ public abstract class Page extends View {
         super();
 
         // FIXME dont set footer when it is a quickdetails page
-        final Text footerTxt = new Text(String.format("Bonitasoft © 2014 %s.", _("All rights reserved")));
+        final Text footerTxt = new Text("Bonitasoft © 2014 " +  _("All rights reserved") + ".");
         footerTxt.getElement().setAttribute("id", "footer");
         super.setFooter(footerTxt);
     }
