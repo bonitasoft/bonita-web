@@ -16,10 +16,8 @@ package org.bonitasoft.web.toolkit.client.ui;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.Date;
 import java.util.List;
 
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
@@ -31,7 +29,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -50,21 +47,13 @@ public abstract class Page extends View {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public Page() {
         super();
 
         // FIXME dont set footer when it is a quickdetails page
-        final Text footerTxt = new Text(_("Bonitasoft © %year% %All rights reserved%.",
-                new Arg("year", getYear()),
-                new Arg("All rights reserved", _("All rights reserved"))
-                ));
+        final Text footerTxt = new Text("Bonitasoft © 2014 "+ _("All rights reserved") + ".");
         footerTxt.getElement().setAttribute("id", "footer");
         super.setFooter(footerTxt);
-    }
-
-    private String getYear() {
-        return DateTimeFormat.getFormat("yyyy").format(new Date());
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
