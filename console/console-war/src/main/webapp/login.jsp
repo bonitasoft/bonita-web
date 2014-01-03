@@ -12,13 +12,8 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>. --%>
-<%@page import="java.net.URLDecoder"%>
 <%@page language="java"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="org.bonitasoft.web.toolkit.client.common.texttemplate.Arg"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.LinkedList"%>
-<%@page import="java.util.Locale"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPUtils"%>
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPI18n"%>
