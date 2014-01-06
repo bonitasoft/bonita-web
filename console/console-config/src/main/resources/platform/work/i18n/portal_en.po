@@ -2893,11 +2893,11 @@ msgstr "Unsupported file."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:99
 msgid "Click here to choose your file."
-msgstr "Click here to browse to your .zip file."
+msgstr "Click here to choose your file."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:101
 msgid "Click here to choose your file. "
-msgstr "Click here to browse to your .zip file."
+msgstr "Click here to choose your file. "
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/ReportUploadFilter.java:34
 msgid "Jasper Archive"
