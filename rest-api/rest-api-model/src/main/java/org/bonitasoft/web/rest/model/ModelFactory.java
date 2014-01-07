@@ -43,7 +43,6 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
-import org.bonitasoft.web.rest.model.bpm.process.UserActorPrivilegeDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
@@ -104,11 +103,9 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new DelegationDefinition();
         } else if (ProcessActorPrivilegeDefinition.TOKEN.equals(token)) {
             return new ProcessActorPrivilegeDefinition();
-        } else if (UserActorPrivilegeDefinition.TOKEN.equals(token)) {
-            return new UserActorPrivilegeDefinition();
         } else if (ProcessResolutionProblemDefinition.TOKEN.equals(token)) {
             return new ProcessResolutionProblemDefinition();
-        } 
+        }
 
         // bpm.cases
         else if (CaseDefinition.TOKEN.equals(token)) {
@@ -119,12 +116,10 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ArchivedCommentDefinition();
         } else if (ArchivedCaseDefinition.TOKEN.equals(token)) {
             return new ArchivedCaseDefinition();
-        } else if (DocumentDefinition.TOKEN.equals(token)) {
-            return new DocumentDefinition();
-        } else if (ArchivedDocumentDefinition.TOKEN.equals(token)) {
-            return new ArchivedDocumentDefinition();
         } else if (CaseVariableDefinition.TOKEN.equals(token)) {
             return new CaseVariableDefinition();
+        } else if (CaseDocumentDefinition.TOKEN.equals(token)) {
+            return new CaseDocumentDefinition();
         }
 
         // bpm.flownode
@@ -140,6 +135,8 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new UserTaskDefinition();
         } else if (HiddenUserTaskDefinition.TOKEN.equals(token)) {
             return new HiddenUserTaskDefinition();
+        } else if (ConnectorInstanceDefinition.TOKEN.equals(token)) {
+            return new ConnectorInstanceDefinition();
         }
 
         // bpm.flownode.archive
@@ -153,14 +150,14 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ArchivedHumanTaskDefinition();
         } else if (ArchivedUserTaskDefinition.TOKEN.equals(token)) {
             return new ArchivedUserTaskDefinition();
-        } else if (HiddenUserTaskDefinition.TOKEN.equals(token)) {
-            return new HiddenUserTaskDefinition();
+        } else if (ArchivedConnectorInstanceDefinition.TOKEN.equals(token)) {
+            return new ArchivedConnectorInstanceDefinition();
         }
 
         // system
         else if (ProfileDefinition.TOKEN.equals(token)) {
             return new ProfileDefinition();
-        } else if(BonitaPageDefinition.TOKEN.equals(token)) {
+        } else if (BonitaPageDefinition.TOKEN.equals(token)) {
             return new BonitaPageDefinition();
         } else if (ProfileEntryDefinition.TOKEN.equals(token)) {
             return new ProfileEntryDefinition();
@@ -168,41 +165,25 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ProfileMemberDefinition();
         } else if (SessionDefinition.TOKEN.equals(token)) {
             return new SessionDefinition();
-        } else if (ArchivedCaseDefinition.TOKEN.equals(token)) {
-            return new ArchivedCaseDefinition();
-        } else if (DocumentDefinition.TOKEN.equals(token)) {
-            return new DocumentDefinition();
-        } else if (CaseDocumentDefinition.TOKEN.equals(token)) {
-            return new CaseDocumentDefinition();
-        } else if (ArchivedDocumentDefinition.TOKEN.equals(token)) {
-            return new ArchivedDocumentDefinition();
-        } else if (ProcessActorPrivilegeDefinition.TOKEN.equals(token)) {
-            return new ProcessActorPrivilegeDefinition();
-        } else if (UserActorPrivilegeDefinition.TOKEN.equals(token)) {
-            return new UserActorPrivilegeDefinition();
-        } else if (ConnectorInstanceDefinition.TOKEN.equals(token)) {
-            return new ConnectorInstanceDefinition();
-        } else if (ArchivedConnectorInstanceDefinition.TOKEN.equals(token)) {
-            return new ArchivedConnectorInstanceDefinition();
         }
 
         // monitoring
         else if (ReportDefinition.TOKEN.equals(token)) {
             return new ReportDefinition();
         }
-        
-        // platform 
+
+        // platform
         else if (PlatformDefinition.TOKEN.equals(token)) {
             return new PlatformDefinition();
         }
-        
+
         // documents
         else if (DocumentDefinition.TOKEN.equals(token)) {
             return new DocumentDefinition();
         } else if (ArchivedDocumentDefinition.TOKEN.equals(token)) {
             return new ArchivedDocumentDefinition();
         }
-        
+
         // default
         else {
             return null;

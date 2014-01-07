@@ -135,7 +135,6 @@ function resizeSelect(f){
 }
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,22 +158,22 @@ $(function() {
 				parentBlock.prepend(panelSectionInTab);
 			}
 			
-				var tabElement = $("<li/>");
-				if(i==0){
-					tabElement.addClass(currentClass);
-					section.addClass(currentClass);
-				}
-				var tabLink = $("<a>"+tabTitle.text()+"</a>");
-				tabElement.append(tabLink);
-				tabTitle.parent().css("display","none");
-				tabElement.click(function(){
-					var currentIndex = $(this).index();
-					$(this).siblings().removeClass(currentClass);
-					$(".tabSection").removeClass(currentClass);
-					$(this).addClass(currentClass);
-					$(".tabSection:eq("+currentIndex+")").addClass(currentClass);
-				});
-				$(panelSelector+" ul").append(tabElement);
+			var tabElement = $("<li/>");
+			if(i==0){
+				tabElement.addClass(currentClass);
+				section.addClass(currentClass);
+			}
+			var tabLink = $("<a>"+tabTitle.text()+"</a>");
+			tabElement.append(tabLink);
+			tabTitle.parent().css("display","none");
+			tabElement.click(function(){
+				var currentIndex = $("li", $(panelSelector+" ul")).index(this);
+				$(this).siblings().removeClass(currentClass);
+				$(".tabSection").removeClass(currentClass);
+				$(this).addClass(currentClass);
+				$($(".tabSection").get(currentIndex)).addClass(currentClass);
+			});
+			$(panelSelector+" ul").append(tabElement);
 		});
 	};
 	
@@ -184,4 +183,5 @@ $(function() {
 	
 	
 });
+
 

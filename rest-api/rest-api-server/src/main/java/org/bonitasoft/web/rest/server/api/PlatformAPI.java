@@ -17,23 +17,24 @@
 package org.bonitasoft.web.rest.server.api;
 
 import org.bonitasoft.engine.session.PlatformSession;
+import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Julien Mege
  * 
  */
-public abstract class PlatformAPI<T extends IItem> extends CommonAPI<T> {
+public abstract class PlatformAPI<T extends IItem> extends API<T> {
 
-    /**
-     * platform session
-     */
-    private static final String PLATFORMSESSION = "platformSession";
+    private PlatformSession sessionSingleton = null;
 
     /**
      * Get the session
      */
-    protected final PlatformSession getSession() {
-        return (PlatformSession) getHttpSession().getAttribute(PLATFORMSESSION);
+    protected final PlatformSession getPlatformSession() {
+        if (this.sessionSingleton == null) {
+            this.sessionSingleton = (PlatformSession) getHttpSession().getAttribute("platformSession");
+        }
+        return this.sessionSingleton;
     }
 }

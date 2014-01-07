@@ -28,7 +28,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentItem;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
-import org.bonitasoft.web.rest.server.api.CommonAPI;
+import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
@@ -40,7 +40,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 /**
  * @author Julien Mege
  */
-public class APIArchivedDocument extends CommonAPI<ArchivedDocumentItem> {
+public class APIArchivedDocument extends ConsoleAPI<ArchivedDocumentItem> {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
