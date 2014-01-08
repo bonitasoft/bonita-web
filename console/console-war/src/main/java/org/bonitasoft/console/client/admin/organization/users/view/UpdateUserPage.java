@@ -49,9 +49,9 @@ import com.google.gwt.core.client.GWT;
 public class UpdateUserPage extends Page {
 
     public static final String TOKEN = "updateuser";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
         PRIVILEGES.add(GroupListingAdminPage.TOKEN);
@@ -82,7 +82,7 @@ public class UpdateUserPage extends Page {
         final ItemDefinition itemDef = UserDefinition.get();
 
         Form form = new Form()
-                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Login"), _("Enter the login for this user"))
+                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Username"), _("Enter the username for this user"))
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
                 .addPasswordEntry(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Confirm password"), _("Confirm the password for this user"))
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_ICON), _("Avatar"), _("Select an avatar for this user"),
@@ -189,7 +189,7 @@ public class UpdateUserPage extends Page {
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"))
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"))
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_TITLE), _("Title"), _("Enter the title of this user"))
-                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_JOB_TITLE), _("Job title"),_("Enter the job title of this user"))
+                .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_JOB_TITLE), _("Job title"), _("Enter the job title of this user"))
 
                 .addAutoCompleteEntry(
                         new JsId(UserItem.ATTRIBUTE_MANAGER_ID),

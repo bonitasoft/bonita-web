@@ -112,7 +112,7 @@
 							<label for="username"><%=i18n._("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Login")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=i18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=i18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 					</div>
 					<div class="formentry" title="<%=i18n._("Enter your password")%>">
@@ -126,7 +126,7 @@
 					</div>
 				</div>
 				<div class="formactions">
-					<input type="submit" value="Login" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+					<input type="submit" value="<%=i18n._("Login")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 				</div>
 			</form>
 		</div>

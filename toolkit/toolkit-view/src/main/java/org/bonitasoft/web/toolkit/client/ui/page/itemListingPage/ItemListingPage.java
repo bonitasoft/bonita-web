@@ -79,12 +79,11 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     protected boolean showSearchBar = true;
 
-    
     /**
      * The search form for all tables.
      */
     protected final Form tablesSearch = new Form(new JsId("search"));
-    
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -617,8 +616,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     private final MenuFolder menuSorts = new MenuFolder(_("Sort by"));
 
-    
-
     /**
      * Initialize the table search form.
      */
@@ -628,7 +625,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
             this.tablesSearch
                     .addTextEntryWithPlaceholder(new JsId("query"), "", _("Enter the text to search for"), _("Search..."))
-                    .addButton(new JsId("search"), _("Search"), _("Update this page using the defined serach query"), new FormAction() {
+                    .addButton(new JsId("search"), _("Search"), _("Update this page using the defined search query"), new FormAction() {
 
                         @Override
                         public void execute() {
@@ -748,7 +745,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         // $(getCurrentFilter().getLink().getElement()).click();
 
     }
-    
+
     void selectRightResourceFilter() {
         if (hasResourceFilterParameter()) {
             selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
@@ -756,6 +753,5 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
             selectFirstFilter();
         }
     }
-
 
 }
