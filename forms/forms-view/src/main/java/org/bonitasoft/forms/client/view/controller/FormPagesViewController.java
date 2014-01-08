@@ -1323,16 +1323,8 @@ public class FormPagesViewController {
             @Override
             public void run() {
                 if (domUtils.isPageInFrame()) {
-                    if (formID != null) {
-                        final String frameIdString = formID.split("$")[0];
-                        for (int i = frameIdString.length(); i > 0; i--) {
-                            final String frameId = frameIdString.substring(0, i);
-                            if (domUtils.resizeFrame(frameId)) {
-                                break;
-                            };
-                        }
-                    }
-                }
+                	domUtils.resizeFrame(DOMUtils.FORM_FRAME_ID);
+               }
             }
         };
         timer.schedule(300);
