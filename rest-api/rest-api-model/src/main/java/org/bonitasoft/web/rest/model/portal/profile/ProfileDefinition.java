@@ -42,7 +42,7 @@ public class ProfileDefinition extends ItemDefinition<ProfileItem> {
     /**
      * the URL of profile resource
      */
-    protected static final String API_URL = "../API/userXP/profile";
+    protected static final String API_URL = "../API/portal/profile";
 
     @Override
     public String defineToken() {
