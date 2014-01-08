@@ -38,7 +38,7 @@ public class ProfileMemberDefinition extends AbstractMemberDefinition<ProfileMem
     /**
      * the URL of UserProfileAssociation resource
      */
-    protected static final String API_URL = "../API/userXP/profileMember";
+    protected static final String API_URL = "../API/portal/profileMember";
 
     @Override
     public String defineToken() {
