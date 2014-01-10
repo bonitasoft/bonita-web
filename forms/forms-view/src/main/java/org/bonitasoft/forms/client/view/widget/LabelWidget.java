@@ -20,7 +20,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
-import com.google.gwt.safehtml.shared.SimpleHtmlSanitizer;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -35,13 +34,7 @@ public class LabelWidget extends HTML {
 
     interface Templates extends SafeHtmlTemplates {
 
-        @SafeHtmlTemplates.Template(
-                "<div class='bonita_form_label'>{0}</div>")
-        SafeHtml label(SafeHtml label);
-
-        @SafeHtmlTemplates.Template(
-                "<div class='bonita_form_label'>" +
-                        "<div class='bonita_richTextArea'>{0}</div></div>")
+        @SafeHtmlTemplates.Template("<div class='bonita_richTextArea'>{0}</div>")
         SafeHtml richTextAreaLabel(SafeHtml label);
     }
 
@@ -54,9 +47,11 @@ public class LabelWidget extends HTML {
             if(WidgetType.RICH_TEXTAREA.equals(widgetData.getType())) {
                 setHTML(TEMPLATES.richTextAreaLabel(getSafeHtml(widgetData)));
             } else {
-                setHTML(TEMPLATES.label(getSafeHtml(widgetData)));
+                setHTML(getSafeHtml(widgetData));
             }
         }
+
+        setStyleName("bonita_form_label");
 
         // mandatory fields symbol display
         if (isMandatory(widgetData)) {
@@ -73,7 +68,7 @@ public class LabelWidget extends HTML {
         if (widgetData.allowHTMLInLabel()) {
             return SafeHtmlUtils.fromTrustedString(widgetData.getLabel() + " ");
         } else {
-            return SimpleHtmlSanitizer.sanitizeHtml(widgetData.getLabel() + " ");
+            return SafeHtmlUtils.fromString(widgetData.getLabel() + " ");
         }
     }
 
