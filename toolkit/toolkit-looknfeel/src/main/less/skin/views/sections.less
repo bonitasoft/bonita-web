@@ -176,45 +176,49 @@
 }
 
 // ****************************************************//
-//                  USERS MAPPING SECTION
+//				  USERS MAPPING SECTION
 // ****************************************************//
 .section.usersmapping {
 	.datatable { 
-	   .td {
-	       float: none;
-	       vertical-align: middle;
-	   }
-	   .td_firstname {
-	       width: 150px;
-	   }
-	   .tr {
-	       padding: 5px 0 2px 2*@w;
-	       .pointerAsLink();
-            border: 1px solid transparent;
-           .borderRadius(5px);
-	       &:hover {
-                .sectionTableLineHover();
-           }
-        }
+		.td {
+			float: none;
+			vertical-align: middle;
+		}
+		.td_firstname {
+			width: 150px;
+		}
+		.tr {
+			padding: 5px 0 2px 2*@w;
+			.pointerAsLink();
+			border: 1px solid transparent;
+			.borderRadius(5px);
+			&:hover {
+				.sectionTableLineHover();
+			}
+			.td_icon{
+				.iconMixin(list);
+			}
+		}
 	}
 }
 
 // ****************************************************//
-//                  SUB GROUPS SECTION
+//				  SUB GROUPS SECTION
 // ****************************************************//
 .section.subgroups {
 	.datatable { 
-	   .td {
-           float: none;
-           vertical-align: middle;
-       }
-	   .td_icon {
-            height: 6*@h;
-            width: 10*@h;
-	       img {
-                max-height: 25px;
-                max-width: 25px;
-    	   }
-        }
-    }
+		.td {
+			float: none;
+			vertical-align: middle;
+		}
+		.td_icon {
+			height: 6*@h;
+			width: 10*@h;
+			.iconMixin(list);
+			img {
+				max-height: 25px;
+				max-width: 25px;
+			}
+		}
+	}
 }
