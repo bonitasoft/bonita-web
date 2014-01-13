@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.platform.server.servlet;
+package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.api.PlatformLoginAPI;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -43,11 +44,6 @@ public class PlatformLogoutServlet extends HttpServlet {
      * UID
      */
     private static final long serialVersionUID = 739607235407639011L;
-
-    /**
-     * the URL param for the redirection URL after login
-     */
-    protected static final String REDIRECT_URL_PARAM = "redirectUrl";
 
     /**
      * the URL of the login page
@@ -95,7 +91,10 @@ public class PlatformLogoutServlet extends HttpServlet {
         session.removeAttribute(PlatformLoginServlet.PLATFORMSESSION);
         session.invalidate();
 
-        response.sendRedirect(this.PLATFORM_LOGIN_PAGE);
-
+        final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
+        if (!Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
+            response.sendRedirect(PLATFORM_LOGIN_PAGE);
+        }
     }
 }

@@ -29,11 +29,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.PlatformSession;
 
 /**
  * @author Zhiheng Yang, Chong Zhao
  */
 public class FilterManager implements Filter {
+
+    private static final String PLATFORM_API_URI = "API/platform/";
+
+    protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
 
     /**
      * Logger
@@ -49,7 +54,7 @@ public class FilterManager implements Filter {
      */
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
-        this.excludePatterns = filterConfig.getInitParameter("excludePatterns");
+        excludePatterns = filterConfig.getInitParameter("excludePatterns");
     }
 
     /**
@@ -62,7 +67,7 @@ public class FilterManager implements Filter {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final String requestURL = httpRequest.getRequestURI();
 
-        if (matchURL(requestURL, this.excludePatterns)) {
+        if (matchURL(requestURL, excludePatterns)) {
             chain.doFilter(request, response);
         } else {
             pageRedirect(request, response, chain);
@@ -81,13 +86,22 @@ public class FilterManager implements Filter {
 
     private void pageRedirect(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
-        final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         try {
-            if (apiSession != null) {
-                chain.doFilter(request, response);
+            if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
+                final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
+                if (platformSession != null) {
+                    chain.doFilter(request, response);
+                } else {
+                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                }
             } else {
-                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+                if (apiSession != null) {
+                    chain.doFilter(request, response);
+                } else {
+                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                }
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {

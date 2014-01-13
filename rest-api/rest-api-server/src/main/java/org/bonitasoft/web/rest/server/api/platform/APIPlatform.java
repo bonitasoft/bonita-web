@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.api.platform;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.utils.DateUtil;
 import org.bonitasoft.engine.api.PlatformAPI;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.platform.Platform;
@@ -28,17 +28,23 @@ import org.bonitasoft.engine.platform.PlatformState;
 import org.bonitasoft.engine.platform.StartNodeException;
 import org.bonitasoft.web.rest.model.platform.PlatformDefinition;
 import org.bonitasoft.web.rest.model.platform.PlatformItem;
+import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
 /**
  * @author Séverin Moussel
  * 
- *         this class might be transform in NON-REST API
  */
-public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<PlatformItem> {
+public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<PlatformItem> implements APIHasGet<PlatformItem>, APIHasUpdate<PlatformItem>,
+        APIHasAdd<PlatformItem>, APIHasDelete {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
@@ -51,8 +57,12 @@ public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<
             final PlatformAPI platformAPI = getPlatformAPI();
             if (!platformAPI.isPlatformCreated()) {
                 platformAPI.createAndInitializePlatform();
+            } else {
+                throw new APIException(new _("The platform already exist !"));
             }
             return get(null);
+        } catch (final APIException apie) {
+            throw apie;
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -80,14 +90,13 @@ public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public PlatformItem get(final APIID id) {
         PlatformItem clientItem = null;
         try {
             final PlatformAPI platformAPI = getPlatformAPI();
-            final Platform platform = platformAPI.getPlatform();// engine team have to clean it
-            final String createdDate = DateUtil.convertLongToDate(platform.getCreated());
+            final Platform platform = platformAPI.getPlatform();
+            final String createdDate = DateFormat.dateToSql(new Date(platform.getCreated()));
             final PlatformState platformState = platformAPI.getPlatformState();
             String platformStateStr = "";
             if (platformState != null) {
@@ -106,8 +115,8 @@ public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<
 
     private PlatformAPI getPlatformAPI() {
         try {
-            return PlatformAPIAccessor.getPlatformAPI(getSession());
-        } catch (Exception e) {
+            return PlatformAPIAccessor.getPlatformAPI(getPlatformSession());
+        } catch (final Exception e) {
             throw new APIException(e);
         }
     }
@@ -118,6 +127,7 @@ public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<
             final PlatformAPI platformAPI = getPlatformAPI();
             if (platformAPI.isPlatformCreated()) {
                 platformAPI.cleanAndDeletePlaftorm();
+                // TODO delete tenant directories in bonita home client-side
             }
         } catch (final Exception e) {
             throw new APIException(e);

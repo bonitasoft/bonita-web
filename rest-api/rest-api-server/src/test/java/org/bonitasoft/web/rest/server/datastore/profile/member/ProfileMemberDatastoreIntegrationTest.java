@@ -27,7 +27,7 @@ public class ProfileMemberDatastoreIntegrationTest extends AbstractConsoleTest {
     @Override
     public void consoleTestSetUp() throws Exception {
         this.apiProfileMember = new APIProfileMember();
-        this.apiProfileMember.setCaller(getAPICaller(getInitiator().getSession(), "API/userXP/profileMember"));
+        this.apiProfileMember.setCaller(getAPICaller(getInitiator().getSession(), "API/portal/profileMember"));
     }
 
     @Override

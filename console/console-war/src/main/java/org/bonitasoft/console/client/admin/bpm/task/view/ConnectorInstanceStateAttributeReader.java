@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api;
+package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import org.bonitasoft.engine.session.PlatformSession;
-import org.bonitasoft.web.rest.server.framework.API;
+import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
 
 /**
- * @author Julien Mege
- * 
+ * Replace underscore by space in  ConnectorInstanceItem state attribute
  */
-public abstract class PlatformAPI<T extends IItem> extends API<T> {
+public class ConnectorInstanceStateAttributeReader extends AbstractAttributeReader {
+	
+	public ConnectorInstanceStateAttributeReader() {
+		// set lead attribute to set column jsID
+		super(ConnectorInstanceItem.ATTRIBUTE_STATE);
+	}
+	
+	@Override
+	protected String _read(IItem item) {
+		String state = item.getAttributeValue(ConnectorInstanceItem.ATTRIBUTE_STATE);
+		return state == null ? "" : state.replaceAll("_", " ").toLowerCase();
+	}
 
-    private PlatformSession sessionSingleton = null;
-
-    /**
-     * Get the session
-     */
-    protected final PlatformSession getPlatformSession() {
-        if (this.sessionSingleton == null) {
-            this.sessionSingleton = (PlatformSession) getHttpSession().getAttribute("platformSession");
-        }
-        return this.sessionSingleton;
-    }
 }

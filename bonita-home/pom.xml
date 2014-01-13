@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.bonitasoft.console</groupId>
 		<artifactId>bonita-console</artifactId>
-		<version>6.2.0-SNAPSHOT</version>
+		<version>6.3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>bonita-home</artifactId>
@@ -90,27 +90,6 @@
 								<artifactItem>
 									<groupId>org.bonitasoft.console</groupId>
 									<artifactId>console-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-platform-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.platform</groupId>
-									<artifactId>platform-config</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
 									<overWrite>true</overWrite>
