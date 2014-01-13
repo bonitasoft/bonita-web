@@ -1266,7 +1266,7 @@ msgstr "Warnung"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:58
 msgid "You risk interrupting one or more apps.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n\nBefore proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "You risk interrupting one or more apps.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n\nBefore proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
+msgstr "Sie riskieren, eine oder mehrere Apps zu.\n\nWenn Sie den einzigen Benutzer deaktivieren, der eine Aufgabe ausführen kann, führt dies zur Unterbrechung der App(s).\n\nBevor Sie dies durchführen, möchten Sie vielleicht zur Seite "Mehr" der App gehen und das Entitätsmapping überprüfen.\n\nSind Sie sicher, dass Sie diesen Benutzer jetzt deaktivieren möchten?"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:77
 msgid "Dactivate selected user"
