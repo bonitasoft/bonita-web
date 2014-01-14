@@ -93,18 +93,12 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     @Override
     public void buildView(final HumanTaskItem task) {
         if (task.getAssignedId() == null) {
-            TaskAPI.claim(task.getId(), this.getUserId(), new Action() {
-
-                @Override
-                public void execute() {
-                    PerformTaskPage.this.addBody(PerformTaskPage.this.createFormIframe(task));
-                }
-            });
+            addBody(createFormIframe(task, true));
         } else if (!task.getAssignedId().equals(this.getUserId())) {
             ViewController.showView(TasksListingPage.TOKEN);
             throw new APIException(_("You can't perform this task, it has already been assigned to someone else."));
         } else {
-            this.addBody(this.createFormIframe(task));
+            this.addBody(this.createFormIframe(task, false));
         }
     }
 
@@ -115,11 +109,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         return Session.getUserId();
     }
 
-    private IFrame createFormIframe(final HumanTaskItem item) {
-        return new IFrame("formframe", buildTasksFormURL(item), "100%", "700px");
+    private IFrame createFormIframe(final HumanTaskItem item, final boolean assignTask) {
+        return new IFrame(DOMUtils.FORM_FRAME_ID, buildTasksFormURL(item, assignTask), "100%", "700px");
     }
 
-    private String buildTasksFormURL(final HumanTaskItem item) {
+    private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
         final StringBuilder frameURL = new StringBuilder()
 
                 .append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=")
@@ -140,6 +134,10 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
                 .append("&task=").append(item.getId())
                 .append("&mode=form");
+        
+        if (assignTask) {
+            frameURL.append("&assignTask=true");
+        }
 
         return frameURL.toString();
     }
