@@ -16,9 +16,17 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
 import org.bonitasoft.engine.session.APISession;
@@ -29,14 +37,14 @@ import org.bonitasoft.web.rest.server.datastore.bpm.process.helper.SearchProcess
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
-import org.bonitasoft.web.rest.server.framework.api.*;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Process data store
@@ -64,10 +72,23 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
     @Override
     public ProcessItem add(final ProcessItem process) {
         final ProcessEngineClient engineClient = getEngineClientFactory().createProcessEngineClient();
-        final File barFile = new File(process.getAttributes().get(FILE_UPLOAD));
-        final BusinessArchive businessArchive = readBusinessArchive(barFile);
+        final BusinessArchive businessArchive = readBusinessArchive(new File(process.getAttributes().get(FILE_UPLOAD)));
         final ProcessDefinition deployedArchive = engineClient.deploy(businessArchive);
         final ProcessDeploymentInfo processDeploymentInfo = engineClient.getProcessDeploymentInfo(deployedArchive.getId());
+
+        try {
+            FormsResourcesUtils.retrieveApplicationFiles(
+                    getEngineSession(),
+                    processDeploymentInfo.getProcessId(),
+                    processDeploymentInfo.getDeploymentDate());
+        } catch (IOException e) {
+            throw new APIException("", e);
+        } catch (ProcessDefinitionNotFoundException e) {
+            throw new APIException("", e);
+        } catch (BPMEngineException e) {
+            throw new APIException("", e);
+        }
+
         return convertEngineToConsoleItem(processDeploymentInfo);
     }
 

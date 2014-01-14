@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.forms.server.accessor.api;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 
 /**
  * @author Colin PUY
