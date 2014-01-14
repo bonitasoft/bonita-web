@@ -13,6 +13,10 @@
  **/
 package org.bonitasoft.forms.server;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,22 +28,17 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.accessor.impl.util.ApplicationResourcesUtils;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
 
 /**
  * Servlet allowing to download process instances attachments
@@ -191,7 +190,7 @@ public class DocumentDownloadServlet extends HttpServlet {
                 if (processDeployementDate == null) {
                     processDeployementDate = workflowAPI.getProcessDefinitionDate(apiSession, processDefinitionID);
                 }
-                final File processDir = ApplicationResourcesUtils.getApplicationResourceDir(apiSession, processDefinitionID, processDeployementDate);
+                final File processDir = FormsResourcesUtils.getApplicationResourceDir(apiSession, processDefinitionID, processDeployementDate);
                 final File resource = new File(processDir, BUSINESS_ARCHIVE_RESOURCES_DIRECTORY + File.separator + resourcePath);
                 if (resource.exists()) {
                     fileName = resource.getName();

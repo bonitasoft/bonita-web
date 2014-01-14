@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.forms.server.provider.impl;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,8 +31,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpSession;
-
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
@@ -76,14 +77,12 @@ import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
 import org.bonitasoft.forms.server.accessor.impl.EngineApplicationConfigDefAccessorImpl;
 import org.bonitasoft.forms.server.accessor.impl.XMLApplicationConfigDefAccessorImpl;
-import org.bonitasoft.forms.server.accessor.impl.util.ApplicationResourcesUtils;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormValidationAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormSubmissionException;
@@ -201,7 +200,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * 
      * @param context
      *            Map of context
-     * @return the {@link ProcessDefinitionUUID}
+     * @return the ProcessDefinitionID
      * @throws FormNotFoundException
      * @throws SessionTimeoutException
      */
@@ -651,7 +650,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     /**
      * Parse the formId to extract the form type
      * 
-     * @param formIdn
+     * @param formId
      *            the form ID
      * @return "entry", "view" or "recap"
      * @throws FormNotFoundException
@@ -1581,8 +1580,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * 
      * @param session
      *            the API session
-     * @param processDefinitionUUID
-     *            the process definition UUID
+     * @param processDefinitionID
+     *            the process definition ID
      * @return a {@link Date}
      * @throws ProcessDefinitionNotFoundException
      * @throws IOException
@@ -1598,10 +1597,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 if (processDeployementDate == null) {
                     processDeployementDate = workflowAPI.getProcessDefinitionDate(session, processDefinitionID);
                 } else {
-                    final File oldFormsDir = ApplicationResourcesUtils.getApplicationResourceDir(session, processDefinitionID,
+                    final File oldFormsDir = FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID,
                             workflowAPI.getProcessDefinitionDate(session, processDefinitionID));
                     if (oldFormsDir.exists()) {
-                        ApplicationResourcesUtils.removeApplicationFiles(session, processDefinitionID);
+                        FormsResourcesUtils.removeApplicationFiles(session, processDefinitionID);
                         FormCacheUtilFactory.getTenantFormCacheUtil(session.getTenantId()).clearAll();
                     }
                 }
@@ -1782,7 +1781,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         try {
             processDefinitionID = getProcessDefinitionID(context);
             final APISession session = getAPISessionFromContext(context);
-            return ApplicationResourcesUtils.getApplicationResourceDir(session, processDefinitionID, applicationDeploymentDate);
+            return FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID, applicationDeploymentDate);
         } catch (final FormNotFoundException e) {
             throw new ApplicationFormDefinitionNotFoundException(e);
         } catch (final ProcessDefinitionNotFoundException e) {
@@ -2166,7 +2165,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         try {
             final long processDefinitionID = getProcessDefinitionID(context);
             final APISession session = getAPISessionFromContext(context);
-            return ApplicationResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
             if (LOGGER.isLoggable(Level.INFO)) {

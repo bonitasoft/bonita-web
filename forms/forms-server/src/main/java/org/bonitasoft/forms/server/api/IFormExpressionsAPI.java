@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.expression.ExpressionEvaluationException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -28,7 +29,6 @@ import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.InitialAttachment;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 
 /**
@@ -449,8 +449,6 @@ public interface IFormExpressionsAPI {
      *            the map of expressions to evaluate
      * @param locale
      *            the user's locale
-     * @param isCurrentValue
-     *            if true, values returned are the current values for the instance. otherwise, it's the values at process instantiation
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
@@ -471,8 +469,6 @@ public interface IFormExpressionsAPI {
      *            the form field values
      * @param locale
      *            the user's locale
-     * @param isCurrentValue
-     *            if true, values returned are the current values for the instance. otherwise, it's the values at process instantiation
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
