@@ -55,6 +55,11 @@ public class DOMUtils {
     public static final String PAGE_LABEL_ELEMENT_ID = "bonita_form_page_label";
 
     /**
+     * Id of the element of the form frame
+     */
+    public static final String FORM_FRAME_ID = "formframe";
+
+    /**
      * Instance attribute
      */
     protected static DOMUtils INSTANCE = null;
