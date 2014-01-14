@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
@@ -37,11 +39,9 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.server.accessor.impl.util.ApplicationResourcesUtils;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormValidationAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
 import org.bonitasoft.forms.server.validator.AbstractFormFieldValidator;
@@ -85,8 +85,6 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * @param transientDataContext
      * @param parameter
      *            expression passed to the validator
-     * @param regex
-     *            the regex for regex field validators
      * @return true if the field value comply with the validation. false otherwise
      * @throws FormValidationException
      */
@@ -96,7 +94,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
 
         boolean valid = true;
         try {
-            final ClassLoader processClassLoader = ApplicationResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            final ClassLoader processClassLoader = FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
             Class<?> validatorClass;
             if (processClassLoader != null) {
                 validatorClass = Class.forName(validatorClassName, true, processClassLoader);
@@ -172,7 +170,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
 
         boolean valid = true;
         try {
-            final ClassLoader processClassLoader = ApplicationResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            final ClassLoader processClassLoader = FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
             Class<?> validatorClass;
             if (processClassLoader != null) {
                 validatorClass = Class.forName(validatorClassName, true, processClassLoader);
@@ -227,7 +225,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      *            the process definition ID
      * @param validators
      *            the list of validators
-     * @param fieldID
+     * @param fieldId
      *            the ID of the field
      * @param value
      *            the form field value
@@ -289,7 +287,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      *            the process definition ID
      * @param validators
      *            the list of validators
-     * @param value
+     * @param fields
      *            the form field value
      * @param submitButtonId
      *            the submit button id

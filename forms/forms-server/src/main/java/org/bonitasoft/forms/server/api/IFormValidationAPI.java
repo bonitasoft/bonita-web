@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
@@ -32,7 +33,6 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormValidator;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
 
