@@ -1076,11 +1076,16 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public void assignTask(final APISession session, final long taskId) throws TaskAssignationException, InvalidSessionException {
         try {
-            getProcessAPI(session).assignUserTask(taskId, session.getUserId());
+            final HumanTaskInstance humanTaskInstance = getProcessAPI(session).getHumanTaskInstance(taskId);
+            if (humanTaskInstance.getAssigneeId() != session.getUserId()) {
+                getProcessAPI(session).assignUserTask(taskId, session.getUserId());
+            }
         } catch (final BPMEngineException e) {
             throw new TaskAssignationException("An error occured while communicating with the engine", e);
         } catch (final UpdateException e) {
             throw new TaskAssignationException("Couldn't assign task " + taskId + " to user " + session.getUserId(), e);
+        } catch (final ActivityInstanceNotFoundException e) {
+            throw new TaskAssignationException("Couldn't assign task " + taskId + " to user " + session.getUserId() + " : Task not found !", e);
         }
     }
 

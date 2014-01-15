@@ -15,6 +15,7 @@ function resizeSelect(f){
 	var arrowBgWidth = 35;
 	var paddingRight = 10;
 	var browserElevatorWidth = 15;
+	var containerPadding = 10; // the padding left & right set in the css
 	var containerWidth = listContainer.outerWidth();
 	var maxAvailableWidth = 0;
 	var listWidth = 0;
@@ -38,10 +39,10 @@ function resizeSelect(f){
 		maxAvailableWidth = label.outerWidth() * 2;
 	}
 
-	var listClone = list.clone();
-
-	listClone.appendTo(listContainer);
-	listClone.css("width","auto");
+  var listClone = list.clone();
+  
+  listClone.appendTo(listContainer);
+  listClone.css("width","auto");
 
 
 	// transform unique choice select into a multiple to get the final size
@@ -57,7 +58,7 @@ function resizeSelect(f){
 	
 	//if select has options
 	if ($("option", list).length > 0) {
-		list.outerWidth(listWidth + paddingRight + arrowBgWidth*2 + browserElevatorWidth);// arrow width is added twice because if we remove this width to the parent container, the container will not have enough space to display this arrow without text overlap
+		list.outerWidth(listWidth + paddingRight + arrowBgWidth*2 + browserElevatorWidth + containerPadding);// arrow width is added twice because if we remove this width to the parent container, the container will not have enough space to display this arrow without text overlap
 		var newListWidth = list.outerWidth();
 		// set the container width to list width including arrow width & padding if the max available width is not reached
 		if (newListWidth < maxAvailableWidth) {

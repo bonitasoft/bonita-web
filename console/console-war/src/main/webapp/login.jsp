@@ -12,25 +12,14 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>. --%>
-<%@page import="java.net.URLDecoder"%>
 <%@page language="java"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="org.bonitasoft.web.toolkit.client.common.texttemplate.Arg"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.LinkedList"%>
-<%@page import="java.util.Locale"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="org.bonitasoft.console.common.server.i18n.I18n"%>
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPUtils"%>
+<%@page import="org.bonitasoft.console.common.server.jsp.JSPI18n"%>
 <%
     JSPUtils JSP = new JSPUtils(request, session);
-
-    // Define Locale
-    String defaultLocale = JSP.getParameter("_l") != null ? JSP.getParameter("_l") : JSP.getSessionOrCookie("BOS_Locale", "en_US");
-    defaultLocale = "default".equals(defaultLocale) ? "en_US" : defaultLocale;
-
-    I18n.getInstance().loadLocale(I18n.stringToLocale(defaultLocale));
-    I18n.setDefaultLocale(I18n.stringToLocale(defaultLocale));
+    JSPI18n i18n = new JSPI18n(JSP); 
 
     // Build Action URL
     final String tenantId = JSP.getParameter("tenant");
@@ -71,16 +60,16 @@
 		"noBonitaHomeMessage".equals(noBonitaHomeMessage) ||
 		"noBonitaClientFileMessage".equals(noBonitaClientFileMessage)
 	) {
-        errorMessage = I18n._("The server is not available") + "<br />" + I18n._("Please, contact your administrator.");
+        errorMessage = i18n._("The server is not available") + "<br />" + i18n._("Please, contact your administrator.");
         disableLogin = true;
     }
     // No profile for this user
     else if ("noProfileForUser".equals(loginFailMessage)) {
-        errorMessage = I18n._("Login failed. No profile has been set up for this user. Contact your administrator.");
+        errorMessage = i18n._("Login failed. No profile has been set up for this user. Contact your administrator.");
     }
  	// Login or password error
     else if ("loginFailMessage".equals(loginFailMessage)) {
-        errorMessage = I18n._("Unable to log in. Please check your username and password.");
+        errorMessage = i18n._("Unable to log in. Please check your username and password.");
     }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -105,7 +94,7 @@
 
 </head>
 <body id="LoginPage">
-	<div id="LoginHeader"><h1><span><%= I18n._("Welcome to") %></span> <%= I18n._("Bonita BPM Portal") %></h1></div>
+	<div id="LoginHeader"><h1><span><%= i18n._("Welcome to") %></span> <%= i18n._("Bonita BPM Portal") %></h1></div>
 	<div id="floater"></div>
 	<div id="LoginFormContainer" >
 		<div id="logo">
@@ -114,30 +103,30 @@
 		<div class="body">
 			<form id="LoginForm" action="<%=actionUrl%>" method="post">
 				<div class="header">
-					<h2><%=I18n._("Login form")%></h2>
+					<h2><%=i18n._("Login form")%></h2>
 				</div>
 				<p class="error"><%=errorMessage.length() > 0 ? errorMessage  : ""%></p>
 				<div class="formentries">
-					<div class="formentry" title="<%=I18n._("Enter your login (username)")%>">
+					<div class="formentry" title="<%=i18n._("Enter your login (username)")%>">
 						<div class="label">
-							<label for="username"><%=I18n._("User")%></label>
+							<label for="username"><%=i18n._("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=I18n._("Login")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=I18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=i18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 					</div>
-					<div class="formentry" title="<%=I18n._("Enter your password")%>">
+					<div class="formentry" title="<%=i18n._("Enter your password")%>">
 						<div class="label">
-							<label for="password"><%=I18n._("Password")%></label>
+							<label for="password"><%=i18n._("Password")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=I18n._("Password")%>" id="password" name="password" type="password" tabindex="2" maxlength="50" placeholder="<%=I18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Password")%>" id="password" name="password" type="password" tabindex="2" maxlength="50" placeholder="<%=i18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
-						<input name="_l" type="hidden" value="<%=defaultLocale%>" />
+						<input name="_l" type="hidden" value="<%=i18n.getLocale()%>" />
 					</div>
 				</div>
 				<div class="formactions">
-					<input type="submit" value="Login" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+					<input type="submit" value="<%=i18n._("Login")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 				</div>
 			</form>
 		</div>

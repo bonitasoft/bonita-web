@@ -95,7 +95,7 @@ public class UploadProcessPage extends Page {
 
     private FileUpload uploadProcessFileUpload() {
         FileUpload fileUpload = new FileUpload(GWT.getModuleBaseURL() + "processUpload", new JsId("fileupload"),
-                "Business archive", _("A business archive has a .bar extension"));
+                _("Business archive"), _("A business archive has a .bar extension"));
         fileUpload.addFilter(new BarUploadFilter());
         fileUpload.addValidator(new FileExtensionAllowedValidator("bar"));
         fileUpload.addValidator(new MandatoryValidator());

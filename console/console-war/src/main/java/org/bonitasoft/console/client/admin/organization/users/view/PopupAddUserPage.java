@@ -57,7 +57,7 @@ public class PopupAddUserPage extends Page {
 
         final Form form = new Form()
                 .addHiddenEntry(UserItem.ATTRIBUTE_ENABLED, "true")
-                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Login"), _("Enter the login for this user"))
+                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Username"), _("Enter the username for this user"))
                 .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
                 .addPasswordEntry(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Confirm password"), _("Confirm the password for this user"))
 

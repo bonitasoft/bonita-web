@@ -41,7 +41,7 @@ public class ConnectorInstanceTable extends ItemTable {
 
         addHiddenFilter(ConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID, item.getId());
         addColumn(ConnectorInstanceItem.ATTRIBUTE_NAME, _("Name"));
-        addColumn(ConnectorInstanceItem.ATTRIBUTE_STATE, _("State"));
+        addColumn(new ConnectorInstanceStateAttributeReader(), _("State"));
     }
 
     public ConnectorInstanceTable addStateCellFormatter(ItemTableCellFormatter formatter) {

@@ -32,7 +32,7 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
     /**
      * the URL of profile resource
      */
-    protected static final String API_URL = "../API/userXP/bonitaPage";
+    protected static final String API_URL = "../API/portal/bonitaPage";
 
     @Override
     protected String defineToken() {
