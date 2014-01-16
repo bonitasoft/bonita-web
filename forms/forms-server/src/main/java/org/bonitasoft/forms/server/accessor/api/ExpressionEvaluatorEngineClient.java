@@ -19,10 +19,10 @@ package org.bonitasoft.forms.server.accessor.api;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProcessRuntimeAPI;
 import org.bonitasoft.engine.expression.Expression;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 
 /**
  * @author Colin PUY

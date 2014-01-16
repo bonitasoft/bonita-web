@@ -200,9 +200,9 @@ public class ViewController {
             getInstance().setCurrentPageToken(view.getToken());
 
             // Set the URL
-            if (!BlankPage.TOKEN.equals(view.getToken())) {
-                ClientApplicationURL.setPageToken(view.getToken(), false);
-            }
+            //if (!BlankPage.TOKEN.equals(view.getToken())) {
+            ClientApplicationURL.setPageToken(view.getToken(), false);
+            //}
             ClientApplicationURL.setPageAttributes(params);
             ClientApplicationURL.refreshUrl(false);
         }

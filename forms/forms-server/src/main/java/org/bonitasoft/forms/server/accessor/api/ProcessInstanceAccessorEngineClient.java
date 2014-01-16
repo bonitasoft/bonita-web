@@ -16,11 +16,11 @@
  */
 package org.bonitasoft.forms.server.accessor.api;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 
 /**
  * @author Vincent Elcrin

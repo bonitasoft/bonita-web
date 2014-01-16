@@ -13,6 +13,8 @@
  **/
 package org.bonitasoft.forms.server.api.impl;
 
+import javax.activation.FileTypeMap;
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,9 +27,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.activation.FileTypeMap;
-import javax.activation.MimetypesFileTypeMap;
-
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.DocumentUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -50,9 +51,7 @@ import org.bonitasoft.forms.server.accessor.api.ExpressionEvaluatorEngineClient;
 import org.bonitasoft.forms.server.accessor.api.ProcessInstanceAccessorEngineClient;
 import org.bonitasoft.forms.server.accessor.api.utils.ProcessInstanceAccessor;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
 import org.bonitasoft.forms.server.api.impl.util.ExpressionAdapter;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 
 /**
@@ -233,14 +232,12 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     /**
      * evaluate an initial value expression (at form construction)
      * 
-     * @param activityInstanceID
-     *            the activity instance ID
+     * @param processDefinitionID
+     *            the process definition ID
      * @param expression
      *            the expression
      * @param locale
      *            the user's locale
-     * @param isCurrentValue
-     *            if true, value returned is the current value for the instance. otherwise, it's the value at step end
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
@@ -886,7 +883,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     /**
      * Evaluate an expression (at form construction)
      * 
-     * @param processInstanceID
+     * @param processInstanceId
      *            the process instance ID
      * @param expressions
      *            the map of expressions to evaluate
@@ -1002,8 +999,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      *            the map of expressions to evaluate
      * @param locale
      *            the user's locale
-     * @param isCurrentValue
-     *            if true, values returned are the current values for the instance. otherwise, it's the values at process instantiation
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
@@ -1049,8 +1044,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      *            the form field values
      * @param locale
      *            the user's locale
-     * @param isCurrentValue
-     *            if true, values returned are the current values for the instance. otherwise, it's the values at process instantiation
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
