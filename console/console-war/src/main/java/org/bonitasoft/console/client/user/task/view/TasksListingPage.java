@@ -232,6 +232,11 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     @Override
+    protected Title definePrimaryFiltersTitle() {
+    	return new Title(_("Status"));
+    }
+    
+    @Override
     protected LinkedList<ItemListingFilter> definePrimaryFilters() {
         final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
         filters.add(toDoFilter());
