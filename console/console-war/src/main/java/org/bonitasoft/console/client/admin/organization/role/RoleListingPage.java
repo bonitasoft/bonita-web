@@ -70,8 +70,11 @@ public class RoleListingPage extends ItemListingPage<RoleItem> {
     }
 
     private Clickable addRoleLink() {
-        return new Link(_("Create"), _("Opens a popup to create a role"), 
+        Link createButton = new Link(_("Create a role"), _("Opens a popup to create a role"), 
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new AddRolePage())));
+        //workaround for BS-448
+        createButton.addClass("bigAddButton");
+        return createButton;
     }
 
     @Override
