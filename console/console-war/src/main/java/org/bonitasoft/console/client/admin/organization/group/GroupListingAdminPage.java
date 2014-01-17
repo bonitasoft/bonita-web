@@ -107,8 +107,11 @@ public class GroupListingAdminPage extends ItemListingPage<GroupItem> {
     }
 
     private Clickable addGroupLink() {
-        return new Link(_("Create"), _("Opens a popup to create a group"), 
+        Link createButton = new Link(_("Create a group"), _("Opens a popup to create a group"), 
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new AddGroupPage())));
+        //workaround for BS-448
+        createButton.addClass("bigAddButton");
+        return createButton;
     }
 
     @Override
