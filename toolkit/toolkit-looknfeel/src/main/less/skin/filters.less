@@ -56,6 +56,9 @@
 			}
 		}
 	}
+  .section .body {
+    padding-left: 1*@w;
+  }
 	
 	h1, h2, h3, h4, h5, h6, h7, label{
 		color: @filtersPanel-titleColor;
@@ -283,18 +286,17 @@
 	}
 	.resource_filters{
 		.header{
-			margin: @filtersPanel-filtersResourceTitle-margin;
+      background-color: #930000;
+      border-bottom: 1px solid #890000;
+      border-top: 1px solid #890000;
+			margin-top: 3*@h;
 			h1{
-				margin: 0;
-				display: @filtersPanel-filtersResourceTitle-display;
-				padding: @filtersPanel-filtersResourceTitle-padding;
-				.fontSize(@filtersPanel-filtersResourceTitle-fontSize);
-				font-style: @filtersPanel-filtersResourceTitle-fontStyle;
-				border-top: @filtersPanel-filters-filtersResourceTitle-borderTop;
-				border-bottom: @filtersPanel-filters-filtersResourceTitle-borderBottom;
+        display: block;
+        font-size: 140%;
+        font-style: italic;
+        margin: 0;
+        padding: 2*@h 1*@w 2*@h 4*@w;
 			}
-			border-top: @filtersPanel-filters-filtersResourceTitleContainer-borderTop;
-			border-bottom: @filtersPanel-filters-filtersResourceTitleContainer-borderBottom;
 		}
 		.body{
 			position: relative;
@@ -317,21 +319,6 @@
 	}
 }
 .page_{
-	&tasklistinguser, 
-	&tasklistingadmin, 
-	&caselistinguser, 
-	&caselistingadmin{
-		.filters_panel{
-			.resource_filters{
-				.header{
-					h1{
-						.bg(@filtersPanel-filters-filtersResourceTitle-process-bgImage, @filtersPanel-filters-filtersResourceTitle-process-bgRepeat, @filtersPanel-filters-filtersResourceTitle-process-bgColor, @filtersPanel-filters-filtersResourceTitle-process-bgX, @filtersPanel-filters-filtersResourceTitle-process-bgY);
-					}	
-				}
-			}
-		}
-		
-	}
 	&processlistingadmin{
 		.filters_panel{
 			.resource_filters{
