@@ -88,7 +88,7 @@
 	/* Add url hash to form action url */
 	$(document).ready(function() {
 		var form = $('#LoginForm');
-		form.attr('action', form.attr('action') + encodeURI(window.location.hash));
+		form.attr('action', form.attr('action') + window.location.hash);
 	});
 </script>
 
