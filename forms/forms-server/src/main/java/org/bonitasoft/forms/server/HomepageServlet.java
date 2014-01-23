@@ -46,7 +46,6 @@ import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.theme.Theme;
 import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -154,16 +153,14 @@ public class HomepageServlet extends HttpServlet {
             if (themeFolder.exists()) {
                 final File timestampFile = new File(themeFolder, LASTUPDATE_FILENAME);
                 final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
-                long timestamp;
                 if (timestampFile.exists()) {
                     final String timestampString = FileUtils.readFileToString(timestampFile);
-                    timestamp = Long.parseLong(timestampString);
+                    final long timestamp = Long.parseLong(timestampString);
+                    if (lastUpdateTimestamp != timestamp) {
+                        updateThemeFromEngine(apiSession, themeFolder);
+                        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+                    }
                 } else {
-                    FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
-                    timestamp = lastUpdateTimestamp;
-                }
-                if (lastUpdateTimestamp > timestamp) {
-                    updateThemeFromEngine(apiSession, themeFolder);
                     FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
                 }
             } else {
@@ -182,11 +179,11 @@ public class HomepageServlet extends HttpServlet {
         return themeAPI.getLastUpdateDate(ThemeType.PORTAL).getTime();
     }
 
-    protected void updateThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException, ServerAPIException,
-            UnknownAPITypeException, IOException, ThemeStructureException {
+    protected void updateThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException, IOException, ThemeStructureException {
         final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
         final ThemeManager themeManager = new ThemeManager(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()));
-        ThemeDatastore themeDataStore = new ThemeDatastore(themeAPI, themeManager);
+        final ThemeDatastore themeDataStore = new ThemeDatastore(themeAPI, themeManager);
         themeDataStore.updateCurrentThemeFromEngine();
 
     }

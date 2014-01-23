@@ -94,7 +94,7 @@ public class ProcessListingPage extends ItemListingPage<ProcessItem> implements 
                 new ItemListingResourceFilter(
                         new APISearchRequest(CategoryDefinition.get()),
                         CategoryItem.ATTRIBUTE_NAME,
-                        null,
+                        "default-image", // fake attribute to display default image
                         TABLE_ALL)
                         .addFilterMapping(ProcessItem.FILTER_CATEGORY_ID, CategoryItem.ATTRIBUTE_ID);
 

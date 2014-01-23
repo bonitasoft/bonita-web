@@ -75,7 +75,8 @@ public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller
                     );
             resourceFilter.setIsResourceFilter(true);
             if (!StringUtil.isBlank(this.filter.getIconAttributeName())) {
-                resourceFilter.setImage(item.getAttributeValue(this.filter.getIconAttributeName()));
+                String iconUrl = item.getAttributeValue(this.filter.getIconAttributeName());
+				resourceFilter.setImage(iconUrl != null ? iconUrl : "");
             }
             resourceFilter.setFilters(additionalFilters);
 

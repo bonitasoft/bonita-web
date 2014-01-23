@@ -27,54 +27,54 @@ public interface JQueryPlusRes extends ResourceClientBunble {
 
     JQueryPlusRes INSTANCE = GWT.create(JQueryPlusRes.class);
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/extend.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/extend.js")
     TextResource extend();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/debug.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/debug.js")
     TextResource debug();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/vartypes.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/vartypes.js")
     TextResource vartypes();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/compatibility.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/compatibility.js")
     TextResource compatibility();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/dom.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/dom.js")
     TextResource dom();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/options.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/options.js")
     TextResource options();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/css.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/css.js")
     TextResource css();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/uiManager.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/uiManager.js")
     TextResource uiManager();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/togglePanel.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/togglePanel.js")
     TextResource togglePanel();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/enable.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/enable.js")
     TextResource enable();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/selectors.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/selectors.js")
     TextResource selectors();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/color.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/color.js")
     TextResource color();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/events.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/events.js")
     TextResource events();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/manipulation.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/manipulation.js")
     TextResource manipulation();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/checkbox.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/checkbox.js")
     TextResource checkbox();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/tabs.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/tabs.js")
     TextResource tabs();
 
-    @Source(RESOURCES_PATH + "scripts/jquery/jquery+/loading.js")
+    @Source(RESOURCES_PATH + "scripts/jquery/jqueryplus/loading.js")
     TextResource loading();
 }
