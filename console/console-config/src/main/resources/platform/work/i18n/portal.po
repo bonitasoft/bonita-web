@@ -17,6 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "mytestkey"
+msgstr ""
+
+msgid "mytestkeytranslated"
+msgstr "mytestkeytranslation"
+
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/MemberAttributeReader.java:39
 #: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/UserAttributeReader.java:30
 msgid "%firstname% %lastname%"
