@@ -50,7 +50,7 @@ public interface BonitaAPIClient {
     String ACTORMEMBER_API_PATH = "API/bpm/actorMember";
 
     /** Profile. */
-    String PROFILE_API_PATH = "API/userXP/profile";
+    String PROFILE_API_PATH = "API/portal/profile";
 
     /** Translation. */
     String TRANSLATION_API_PATH = "API/system/i18ntranslation";
@@ -184,7 +184,7 @@ public interface BonitaAPIClient {
      * @return
      */
     @POST
-    @Path("API/userXP/profileMember")
+    @Path("API/portal/profileMember")
     @Consumes("application/json")
     ClientResponse<String> addToProfile(String pBody);
 

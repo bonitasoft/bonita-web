@@ -38,7 +38,7 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
     /**
      * the URL of profile entries resource
      */
-    protected static final String API_URL = "../API/userXP/" + TOKEN;
+    protected static final String API_URL = "../API/portal/" + TOKEN;
 
     @Override
     public String defineToken() {

@@ -7,7 +7,7 @@ html,body {
 
 * {margin:0;padding:0;}
 
-#wrap {min-height: 100%;}
+#footerpusher{min-height: 100%;}
 
 #main {overflow:auto;
 	padding-bottom: 35px;}  /* must be same height as the footer */

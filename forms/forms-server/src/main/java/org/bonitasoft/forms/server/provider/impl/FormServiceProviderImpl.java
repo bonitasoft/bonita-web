@@ -278,7 +278,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     /**
      * {@inheritDoc}
      * 
-     * @throws TaskAssignationException
      */
     @Override
     public boolean isAllowed(final String formId, final String permissions, final String productVersion, final String migrationProductVersion,

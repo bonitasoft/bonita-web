@@ -55,6 +55,11 @@ public class DOMUtils {
     public static final String PAGE_LABEL_ELEMENT_ID = "bonita_form_page_label";
 
     /**
+     * Id of the element of the form frame
+     */
+    public static final String FORM_FRAME_ID = "formframe";
+    
+    /**
      * Instance attribute
      */
     protected static DOMUtils INSTANCE = null;
@@ -472,7 +477,7 @@ public class DOMUtils {
     native public boolean resizeFrame(String frameId)
     /*-{
         var formFrameWindow = window.parent;
-        var framePageHeight = formFrameWindow.document.body.offsetHeight + 10;
+        var framePageHeight = formFrameWindow.document.getElementById("footerpusher").offsetHeight;
         if (formFrameWindow != window.top) {
             var parentWindow = formFrameWindow.parent;
             var formFrame = parentWindow.document.getElementById(frameId);
@@ -497,7 +502,7 @@ public class DOMUtils {
         var applicationWindow = window.parent;
         if (applicationWindow == window.top) {
             return false;
-        } else {
+        } else {	
             return true;
         }
     }-*/;

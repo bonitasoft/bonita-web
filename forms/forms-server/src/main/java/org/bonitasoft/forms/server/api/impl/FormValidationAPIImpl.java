@@ -260,13 +260,13 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
                 fields.put(fieldId, value);
                 if (activityInstanceID != -1) {
                     fieldValidator.setLabel((String) formWorkflowAPI.getActivityFieldValue(session, activityInstanceID, fieldValidator.getLabelExpression(),
-                            fields, userLocale, true));
+                            fields, userLocale, true, transientDataContext));
                 } else if (processInstanceID != -1) {
                     fieldValidator.setLabel((String) formWorkflowAPI.getInstanceFieldValue(session, processInstanceID, fieldValidator.getLabelExpression(),
-                            fields, userLocale, true));
+                            fields, userLocale, true, transientDataContext));
                 } else {
                     fieldValidator.setLabel((String) formWorkflowAPI.getProcessFieldValue(session, processDefinitionID, fieldValidator.getLabelExpression(),
-                            fields, userLocale));
+                            fields, userLocale, transientDataContext));
                 }
                 nonCompliantValidators.add(fieldValidator);
             }
@@ -318,13 +318,13 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
                     userLocale, transientDataContext, pageValidator.getParameterExpression())) {
                 if (activityInstanceID != -1) {
                     pageValidator.setLabel((String) formWorkflowAPI.getActivityFieldValue(session, activityInstanceID, pageValidator.getLabelExpression(),
-                            fields, userLocale, true));
+                            fields, userLocale, true, transientDataContext));
                 } else if (processInstanceID != -1) {
                     pageValidator.setLabel((String) formWorkflowAPI.getInstanceFieldValue(session, processInstanceID, pageValidator.getLabelExpression(),
-                            fields, userLocale, true));
+                            fields, userLocale, true, transientDataContext));
                 } else {
                     pageValidator.setLabel((String) formWorkflowAPI.getProcessFieldValue(session, processDefinitionID, pageValidator.getLabelExpression(),
-                            fields, userLocale));
+                            fields, userLocale, transientDataContext));
                 }
                 nonCompliantValidators.add(pageValidator);
             }

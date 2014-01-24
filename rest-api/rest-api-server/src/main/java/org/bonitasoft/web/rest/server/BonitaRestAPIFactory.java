@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.server;
 
+import java.util.logging.Logger;
+
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCase;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedComment;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICase;
@@ -68,10 +70,12 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  * 
  */
 public class BonitaRestAPIFactory extends RestAPIFactory {
-
+	
+	private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
+	
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
-
+    	
         if ("identity".equals(apiToken)) {
             if ("user".equals(resourceToken)) {
                 return new APIUser();
@@ -94,14 +98,34 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
             } else if ("session".equals(resourceToken)) {
                 return new APISession();
             }
+            
+        // FIXME : userXP deprecated    (BS-500)
+        //    - replaced by 'portal'
+        //    - Do not add any API here
+        //    - userXP section must be deleted in 6.4.0 version
+        //    - duplication not removed because userXp must stay like this
         } else if ("userXP".equals(apiToken)) {
             if ("profile".equals(resourceToken)) {
+            	LOGGER.warning("Deprecated API path, please use /API/portal/profile instead");
+                return new APIProfile();
+            } else if ("profileEntry".equals(resourceToken)) {
+            	LOGGER.warning("Deprecated API path, please use /API/portal/profileEntry instead");
+                return new APIProfileEntry();
+            } else if ("profileMember".equals(resourceToken)) {
+            	LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
+                return new APIProfileMember();
+            }
+        // --------------------------------------------------------
+            
+        } else if ("portal".equals(apiToken)) {
+        	if ("profile".equals(resourceToken)) {
                 return new APIProfile();
             } else if ("profileEntry".equals(resourceToken)) {
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
             }
+        	
         } else if ("bpm".equals(apiToken)) {
             if ("humanTask".equals(resourceToken)) {
                 return new APIHumanTask();

@@ -30,6 +30,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Refreshable;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.CustomPanel;
+import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.DeleteItemPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
@@ -199,7 +200,9 @@ public class ViewController {
             getInstance().setCurrentPageToken(view.getToken());
 
             // Set the URL
+            // if (!BlankPage.TOKEN.equals(view.getToken())) {
             ClientApplicationURL.setPageToken(view.getToken(), false);
+            // }
             ClientApplicationURL.setPageAttributes(params);
             ClientApplicationURL.refreshUrl(false);
         }
