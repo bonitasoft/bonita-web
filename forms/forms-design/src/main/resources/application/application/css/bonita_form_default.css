@@ -234,8 +234,13 @@ div#bonita-identification-area {
 	padding: 0 20px;
 }
 
+.bonita_user_xp_link {
+    padding: 0 10px;
+}
+
 .bonita_user_xp_label {
 	padding: 0 10px 0 20px;
+	cursor: pointer;
 }
 
 .bonita_logout_button,
@@ -243,7 +248,7 @@ div#bonita-identification-area {
 	border-left: 1px solid #323232;
 }
 
-.bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover {
+.bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover, .bonita_user_xp_label, .bonita_user_xp_label:visited, .bonita_user_xp_label:hover {
 	text-decoration: none;
 	color: #B20706;
 }
