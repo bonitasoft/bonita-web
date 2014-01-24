@@ -22,6 +22,8 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.AbstractJUnitWebTest;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.test.toolkit.organization.TestUser;
+import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
 import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
@@ -46,6 +48,11 @@ public abstract class AbstractConsoleTest extends AbstractJUnitWebTest {
         consoleTestSetUp();
     }
 
+    @Override
+    protected TestUser getInitiator() {
+        return TestUserFactory.getJohnCarpenter();
+    }
+    
     public APIServletCall getAPICaller(final APISession apiSession, final String apiPath) {
 
         // Get the httpSession and set attributes
