@@ -361,8 +361,8 @@ public class FormApplicationViewController {
                                         }
                                     }
                                 });
-                                applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                                 applicationHTMLPanel.add(userXPIcon, OPEN_USER_XP_ELEMENT_ID);
+                                applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                             }
                             if (onloadAttributeValue != null) {
                                 domUtils.javascriptEval(onloadAttributeValue);
