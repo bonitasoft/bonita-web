@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-23 17:54+0100\n"
+"POT-Creation-Date: 2014-01-24 12:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
-#: console/console-war/src/main/webapp/login.jsp:112
+#: console/console-war/src/main/webapp/login.jsp:115
 msgid "User"
 msgstr ""
 
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
-#: console/console-war/src/main/webapp/login.jsp:120
+#: console/console-war/src/main/webapp/login.jsp:123
 msgid "Password"
 msgstr ""
 
@@ -3321,6 +3321,14 @@ msgstr ""
 msgid "Bonita BPM Portal"
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:106
+#: console/console-war/src/main/webapp/login.jsp:101
+msgid "mytestkey"
+msgstr ""
+
+#: console/console-war/src/main/webapp/login.jsp:102
+msgid "mytestkeytranslated"
+msgstr ""
+
+#: console/console-war/src/main/webapp/login.jsp:109
 msgid "Login form"
 msgstr ""
