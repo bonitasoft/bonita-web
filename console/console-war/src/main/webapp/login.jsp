@@ -101,6 +101,7 @@
     <%=i18n._("mytestkey")%>
     <%=i18n._("mytestkeytranslated")%>
     <%=i18n._("mytestkeytranslated2")%>
+    <%=i18n._("mytestkey2colin")%>
 			<img src="<%= styleUrl %>&location=skin/images/login-logo.png"/>
 		</div>
 		<div class="body">
