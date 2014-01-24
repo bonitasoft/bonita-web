@@ -257,7 +257,7 @@ div#bonita-identification-area {
 	cursor: pointer;
 	height: 16px;
 	width: 20px;
-	background: transparent url(../images/sprite.png) no-repeat scroll
+	background: transparent url(../themeResource?theme=portal&location=images/sprite.png) no-repeat scroll
 		-584px 0px;
 }
 
@@ -280,7 +280,7 @@ div#bonita_form {
 	width: 230px;
 	margin-top: 5px;
 	float: right;
-	background-image: url(../images/bloc-identification.png);
+	background-image: url(../themeResource?theme=portal&location=images/bloc-identification.png);
 }
 
 .bonita_avatar {
