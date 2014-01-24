@@ -234,8 +234,13 @@ div#bonita-identification-area {
 	padding: 0 20px;
 }
 
+.bonita_user_xp_link {
+    padding: 0 10px;
+}
+
 .bonita_user_xp_label {
 	padding: 0 10px 0 20px;
+	cursor: pointer;
 }
 
 .bonita_logout_button,
@@ -243,7 +248,7 @@ div#bonita-identification-area {
 	border-left: 1px solid #323232;
 }
 
-.bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover {
+.bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover, .bonita_user_xp_label, .bonita_user_xp_label:visited, .bonita_user_xp_label:hover {
 	text-decoration: none;
 	color: #B20706;
 }
@@ -252,7 +257,7 @@ div#bonita-identification-area {
 	cursor: pointer;
 	height: 16px;
 	width: 20px;
-	background: transparent url(../images/sprite.png) no-repeat scroll
+	background: transparent url(../themeResource?theme=portal&location=images/sprite.png) no-repeat scroll
 		-584px 0px;
 }
 
@@ -275,7 +280,7 @@ div#bonita_form {
 	width: 230px;
 	margin-top: 5px;
 	float: right;
-	background-image: url(../images/bloc-identification.png);
+	background-image: url(../themeResource?theme=portal&location=images/bloc-identification.png);
 }
 
 .bonita_avatar {
