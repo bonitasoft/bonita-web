@@ -231,15 +231,15 @@ div#bonita-identification-area {
 
 .bonita_username,
 .bonita_logout_button {
-	padding: 0 20px;
+	padding: 0 7px;
 }
 
 .bonita_user_xp_link {
-    padding: 0 10px;
+    padding: 0 7px;
 }
 
 .bonita_user_xp_label {
-	padding: 0 10px 0 20px;
+	padding: 0 2px;
 	cursor: pointer;
 }
 
