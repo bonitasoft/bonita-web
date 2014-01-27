@@ -35,15 +35,9 @@
 		<gwtVersion>${gwt.version}</gwtVersion>
 		<wro4j.version>1.7.0</wro4j.version>
 		<!-- Properties to enable jacoco code coverage analysis -->
-        <sonar.branch>MasterBugFixing</sonar.branch>
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <!-- The destination file for the code coverage report has to be set to the same value in the parent pom and in each module pom.
-         Then JaCoCo will add up information in the same report, so that, it will give the cross-module code coverage. -->
-		<!-- Tells SonarQube where the integration tests code coverage report is -->
-        <sonar.jacoco.itReportPath>${user.home}/reports/jacoco/bonita-web-it.exec</sonar.jacoco.itReportPath>
-		<!-- Tells SonarQube where the unit tests code coverage report is -->
-        <sonar.jacoco.reportPath>${user.home}/reports/jacoco/bonita-web.exec</sonar.jacoco.reportPath>
+		<sonar.branch>MasterBugFixing</sonar.branch>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 	</properties>
 
 	<dependencyManagement>
@@ -461,8 +455,6 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<configuration>
-					<!-- Where to put jacoco coverage report -->
-					<destFile>${sonar.jacoco.reportPath}</destFile>
 					<includes>
 						<include>org.bonitasoft.console.*</include>
 						<include>com.bonitasoft.console.*</include>
