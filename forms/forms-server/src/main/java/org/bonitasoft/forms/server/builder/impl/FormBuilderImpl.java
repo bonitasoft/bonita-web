@@ -63,7 +63,7 @@ public class FormBuilderImpl implements IFormBuilder {
     /**
      * the product version constant
      */
-    public static final String PRODUCT_VERSION = "6.1";
+    public static final String PRODUCT_VERSION = "6.2";
 
     /**
      * the product version
