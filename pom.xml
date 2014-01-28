@@ -44,9 +44,9 @@
 			add up information in the same report, so that, it will give the cross-module 
 			code coverage. -->
 		<!-- Tells SonarQube where the integration tests code coverage report is -->
-		<sonar.jacoco.itReportPath>${project.basedir}/jacoco-reports/web-it.exec</sonar.jacoco.itReportPath>
+		<sonar.jacoco.itReportPath>${project.build.directory}/jacoco-reports/web-it.exec</sonar.jacoco.itReportPath>
 		<!-- Tells SonarQube where the unit tests code coverage report is -->
-		<sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+		<!--sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath -->
 
 	</properties>
 
@@ -477,17 +477,53 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>pre-test</id>
+						<id>pre-integration-test</id>
+						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+						<configuration>
+							<destFile>${sonar.jacoco.itReportPath}</destFile>
+							<propertyName>failsafe.argLine</propertyName>
+						</configuration>
 					</execution>
 					<execution>
-						<id>post-test</id>
-						<phase>test</phase>
+						<id>post-integration-test</id>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<dataFile>${sonar.jacoco.itReportPath}</dataFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- after setting up jacoco we can run our tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+ 						<configuration>
+							<includes>
+								<!--run all possible tests
+								maven failsafe plugin filters classes by name
+								add those includes if you want to preserve surefire conventions-->
+								<include>**/Test*.java</include>
+								<include>**/*Test.java</include>
+
+								<!--the following are failsafe conventions -->
+								<!--<include>**/IT*.java</include>
+								<include>**/*IT.java</include>
+								<include>**/*ITCase.java</include>-->
+							</includes>
+						</configuration> 
 					</execution>
 				</executions>
 			</plugin>
