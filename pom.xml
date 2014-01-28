@@ -460,6 +460,10 @@
 						<include>org.bonitasoft.console.*</include>
 						<include>com.bonitasoft.console.*</include>
 					</includes>
+					<excludes>
+						<include>org.bonitasoft.console.client.*</include>
+						<include>com.bonitasoft.console.client.*</include>
+					</excludes>
 					<append>true</append>
 				</configuration>
 				<executions>
