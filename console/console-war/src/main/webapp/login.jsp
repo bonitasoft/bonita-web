@@ -98,7 +98,7 @@
 	<div id="floater"></div>
 	<div id="LoginFormContainer" >
 		<div id="logo">
-    <%=i18n._("testkey_niko4")%>
+    <%=i18n._("testkey_niko5")%>
 			<img src="<%= styleUrl %>&location=skin/images/login-logo.png"/>
 		</div>
 		<div class="body">
