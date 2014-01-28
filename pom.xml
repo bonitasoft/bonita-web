@@ -461,8 +461,8 @@
 						<include>com.bonitasoft.console.*</include>
 					</includes>
 					<excludes>
-						<include>org.bonitasoft.console.client.*</include>
-						<include>com.bonitasoft.console.client.*</include>
+						<exclude>org.bonitasoft.console.client.*</exclude>
+						<exclude>com.bonitasoft.console.client.*</exclude>
 					</excludes>
 					<append>true</append>
 				</configuration>
