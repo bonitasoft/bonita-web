@@ -340,10 +340,10 @@ public class FormApplicationViewController {
                                 applicationHTMLPanel.add(refreshButton, REFRESH_BUTTON_ELEMENT_ID);
                             }
                             if (DOM.getElementById(OPEN_USER_XP_ELEMENT_ID) != null && !user.isAutoLogin()) {
-                                final Label userXPLabel = new Label(FormsResourceBundle.getMessages().openUserXPButtonLabel());
-                                userXPLabel.setStyleName("bonita_user_xp_label");
                                 final Image userXPIcon = new Image(PICTURE_PLACEHOLDER);
                                 userXPIcon.setStyleName("bonita_user_xp_icon");
+                                final Label userXPLabel = new Label(FormsResourceBundle.getMessages().openUserXPButtonLabel());
+                                userXPLabel.setStyleName("bonita_user_xp_label");
                                 userXPIcon.setTitle(FormsResourceBundle.getMessages().openUserXPButtonTitle());
                                 userXPIcon.addClickHandler(new ClickHandler() {
 
@@ -361,8 +361,8 @@ public class FormApplicationViewController {
                                         }
                                     }
                                 });
-                                applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                                 applicationHTMLPanel.add(userXPIcon, OPEN_USER_XP_ELEMENT_ID);
+                                applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                             }
                             if (onloadAttributeValue != null) {
                                 domUtils.javascriptEval(onloadAttributeValue);

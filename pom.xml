@@ -84,13 +84,6 @@
 				<type>zip</type>
 			</dependency>
 
-			<!-- BONITA WEB -->
-			<dependency>
-				<groupId>org.bonitasoft.web</groupId>
-				<artifactId>theme-builder</artifactId>
-				<version>6.1.0</version>
-			</dependency>
-
 			<!-- MISCELLANEOUS -->
 			<dependency>
 				<groupId>commons-fileupload</groupId>
@@ -239,21 +232,6 @@
 	</dependencies>
 
 	<repositories>
-		<!-- include repository for GWT maven plugin -->
-		<repository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Maven Repository Group</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
 		<repository>
 			<id>oauth</id>
 			<url>http://oauth.googlecode.com/svn/code/maven/</url>
