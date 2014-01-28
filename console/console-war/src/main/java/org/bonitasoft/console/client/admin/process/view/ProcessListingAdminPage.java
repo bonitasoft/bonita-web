@@ -122,7 +122,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
     protected ItemListingResourceFilter defineResourceFilters() {
         final ItemListingResourceFilter categories = new ItemListingResourceFilter(
                 new APISearchRequest(Definitions.get(CategoryDefinition.TOKEN)),
-                CategoryItem.ATTRIBUTE_NAME, null, TABLE_NO_ACTION)
+                CategoryItem.ATTRIBUTE_NAME, "default-image" /* fake attribute to display default image*/, TABLE_NO_ACTION)
                 .addFilterMapping(ProcessItem.FILTER_CATEGORY_ID, CategoryItem.ATTRIBUTE_ID);
         return categories;
     }
