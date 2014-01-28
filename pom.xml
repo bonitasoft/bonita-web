@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.console</groupId>
 	<artifactId>bonita-console</artifactId>
@@ -24,7 +25,7 @@
 		<bonita.engine.version>6.3.0-SNAPSHOT</bonita.engine.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<slf4j.version>1.6.1</slf4j.version>
 		<gwt.version>2.5.1</gwt.version>
 		<!-- The following property is used by the gwt-maven plugin. As it does 
@@ -33,6 +34,20 @@
 			to the same value. -->
 		<gwtVersion>${gwt.version}</gwtVersion>
 		<wro4j.version>1.7.0</wro4j.version>
+		<!-- Properties to enable jacoco code coverage analysis -->
+		<sonar.branch>MasterBugFixing</sonar.branch>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.skippedModules>bonita-home,console-war</sonar.skippedModules>
+		<!-- The destination file for the code coverage report has to be set to 
+			the same value in the parent pom and in each module pom. Then JaCoCo will 
+			add up information in the same report, so that, it will give the cross-module 
+			code coverage. -->
+		<!-- Tells SonarQube where the integration tests code coverage report is -->
+		<sonar.jacoco.itReportPath>${project.build.directory}/jacoco-reports/web-it.exec</sonar.jacoco.itReportPath>
+		<!-- Tells SonarQube where the unit tests code coverage report is -->
+		<!--sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath -->
+
 	</properties>
 
 	<dependencyManagement>
@@ -291,10 +306,10 @@
 					<version>${gwt.version}</version>
 				</plugin>
 				<plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.8</version>
-                </plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -445,6 +460,72 @@
 				<configuration>
 					<deployAtEnd>true</deployAtEnd>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>org.bonitasoft.console.*</include>
+						<include>com.bonitasoft.console.*</include>
+					</includes>
+					<excludes>
+						<exclude>org.bonitasoft.console.client.*</exclude>
+						<exclude>com.bonitasoft.console.client.*</exclude>
+					</excludes>
+					<append>true</append>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pre-integration-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${sonar.jacoco.itReportPath}</destFile>
+							<propertyName>failsafe.argLine</propertyName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-integration-test</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${sonar.jacoco.itReportPath}</dataFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- after setting up jacoco we can run our tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+ 						<configuration>
+							<includes>
+								<!--run all possible tests
+								maven failsafe plugin filters classes by name
+								add those includes if you want to preserve surefire conventions-->
+								<include>**/Test*.java</include>
+								<include>**/*Test.java</include>
+
+								<!--the following are failsafe conventions -->
+								<!--<include>**/IT*.java</include>
+								<include>**/*IT.java</include>
+								<include>**/*ITCase.java</include>-->
+							</includes>
+						</configuration> 
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
