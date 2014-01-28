@@ -38,6 +38,7 @@
 		<sonar.branch>MasterBugFixing</sonar.branch>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.skippedModules>bonita-home,console-war</sonar.skippedModules>
 	</properties>
 
 	<dependencyManagement>
@@ -459,6 +460,10 @@
 						<include>org.bonitasoft.console.*</include>
 						<include>com.bonitasoft.console.*</include>
 					</includes>
+					<excludes>
+						<exclude>org.bonitasoft.console.client.*</exclude>
+						<exclude>com.bonitasoft.console.client.*</exclude>
+					</excludes>
 					<append>true</append>
 				</configuration>
 				<executions>
