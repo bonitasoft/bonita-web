@@ -11,6 +11,10 @@
 
 	<name>web bonita-home</name>
 
+  	<properties>
+    	<jacoco.skip>true</jacoco.skip>
+  	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
