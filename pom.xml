@@ -511,6 +511,9 @@
 							<goal>verify</goal>
 						</goals>
  						<configuration>
+							<systemPropertyVariables>
+								<bonita.home>${project.build.directory}/bonita/home</bonita.home>
+							</systemPropertyVariables>
 							<includes>
 								<!--run all possible tests
 								maven failsafe plugin filters classes by name
@@ -526,6 +529,14 @@
 						</configuration> 
 					</execution>
 				</executions>
+			</plugin>
+			<!-- Avoid executing the tests twice (they are already launched with failsafe) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -598,11 +609,24 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
+							<skipTests>false</skipTests>
 							<excludes>
 								<exclude>**/*IntegrationTest*</exclude>
 							</excludes>
 						</configuration>
 					</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>integration-test</phase>
+	 						<configuration>
+								<skipITs>true</skipITs>
+							</configuration> 
+						</execution>
+					</executions>
+				</plugin>
 				</plugins>
 			</build>
 		</profile>
