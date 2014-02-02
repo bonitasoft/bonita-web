@@ -344,23 +344,9 @@ public class FormApplicationViewController {
                                 userXPIcon.setStyleName("bonita_user_xp_icon");
                                 final Label userXPLabel = new Label(FormsResourceBundle.getMessages().openUserXPButtonLabel());
                                 userXPLabel.setStyleName("bonita_user_xp_label");
+                                userXPLabel.addClickHandler(goToPortalHandler(applicationConfig));
                                 userXPIcon.setTitle(FormsResourceBundle.getMessages().openUserXPButtonTitle());
-                                userXPIcon.addClickHandler(new ClickHandler() {
-
-                                    @Override
-                                    public void onClick(final ClickEvent event) {
-
-                                        String userXPURL = applicationConfig.getUserXPURL();
-                                        if (userXPURL == null) {
-                                            userXPURL = DEFAULT_USER_XP_URL;
-                                        }
-                                        if (user.useCredentialTransmission()) {
-                                            formsServiceAsync.generateTemporaryToken(new GenerateTemporaryTokenHandler(userXPURL));
-                                        } else {
-                                            urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
-                                        }
-                                    }
-                                });
+                                userXPIcon.addClickHandler(goToPortalHandler(applicationConfig));
                                 applicationHTMLPanel.add(userXPIcon, OPEN_USER_XP_ELEMENT_ID);
                                 applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                             }
@@ -369,6 +355,7 @@ public class FormApplicationViewController {
                             }
                             buildPageFlow(applicationConfig, applicationHTMLPanel);
                         }
+
                     });
                     theRequestBuilder.send();
                 } else {
@@ -379,6 +366,7 @@ public class FormApplicationViewController {
                 Window.alert("Error while trying to query the form layout :" + e.getMessage());
             }
         }
+
 
         @Override
         public void onUnhandledFailure(final Throwable caught) {
@@ -406,6 +394,25 @@ public class FormApplicationViewController {
                 formsServiceAsync.getApplicationErrorTemplate(formId, urlContext, new ErrorPageHandler(null, formId, errorMessage, t, elementId));
             }
         }
+    }
+
+    private ClickHandler goToPortalHandler(final ReducedApplicationConfig applicationConfig) {
+        return new ClickHandler() {
+            
+            @Override
+            public void onClick(final ClickEvent event) {
+                
+                String userXPURL = applicationConfig.getUserXPURL();
+                if (userXPURL == null) {
+                    userXPURL = DEFAULT_USER_XP_URL;
+                }
+                if (user.useCredentialTransmission()) {
+                    formsServiceAsync.generateTemporaryToken(new GenerateTemporaryTokenHandler(userXPURL));
+                } else {
+                    urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
+                }
+            }
+        };
     }
 
     void buildPageFlow(final ReducedApplicationConfig applicationConfig, final HTMLPanel applicationHTMLPanel) {
