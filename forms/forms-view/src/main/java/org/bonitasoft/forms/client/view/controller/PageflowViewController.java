@@ -391,7 +391,13 @@ public class PageflowViewController {
     }
 
     private String getDefaultConfirmationMessage() {
-        return FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        String confirmationMessage = null;
+        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            confirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        } else {
+            confirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        }
+        return confirmationMessage;
     }
 
 }

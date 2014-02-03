@@ -1346,7 +1346,12 @@ public class FormPagesViewController {
     }
 
     private void redirectToConfirmationPage() {
-        final String defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        String defaultConfirmationMessage = null;
+        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            defaultConfirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        } else {
+            defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        }
         formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, createConfirmationPageHandler(defaultConfirmationMessage));
     }
 
