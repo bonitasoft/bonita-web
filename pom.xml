@@ -37,7 +37,6 @@
 		<!-- Properties to enable jacoco code coverage analysis -->
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.skippedModules>bonita-home,console-war</sonar.skippedModules>
 		<!-- Report output directory, in Jenkins use: -Djacoco.outputDir=${WORKSPACE}-->
 		<jacoco.outputDir>${user.home}</jacoco.outputDir>
 		<!-- The destination file for the code coverage report has to be set to 
