@@ -473,6 +473,10 @@
 					<includes>
 						<include>org.bonitasoft.console.*</include>
 						<include>com.bonitasoft.console.*</include>
+						<include>org.bonitasoft.web.*</include>
+						<include>com.bonitasoft.web.*</include>
+						<include>org.bonitasoft.forms.*</include>
+						<include>com.bonitasoft.forms.*</include>
 					</includes>
 					<excludes>
 						<exclude>org.bonitasoft.console.client.*</exclude>
