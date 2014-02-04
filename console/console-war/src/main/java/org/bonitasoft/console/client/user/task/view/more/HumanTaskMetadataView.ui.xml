@@ -1,0 +1,57 @@
+<!--~
+  ~ Copyright (C) 2014 BonitaSoft S.A.
+  ~ BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 2.0 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for uib details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
+  -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="messages" type="org.bonitasoft.console.client.user.task.view.more.MetadataMessages"/>
+
+    <g:HTMLPanel styleName="metadatas">
+        <h1 ui:field="name" />
+        <div class="definitions">
+            <div ui:field="appName" class="definition displayname" title="{messages.app_title}">
+                <label><ui:text from="{messages.app_label}" />: </label>
+            </div>
+            <div ui:field="appVersion" class="definition version" title="{messages.app_version_title}">
+                <label><ui:text from="{messages.app_version_label}" />: </label>
+            </div>
+            <a ui:field="caseId" class="definition caseid hover" title="{messages.case_id_title}">
+                <label><ui:text from="{messages.case_id_label}" />: </label>
+            </a>
+            <div ui:field="state" class="definition state" title="{messages.state_title}">
+                <label><ui:text from="{messages.state_label}" />: </label>
+            </div>
+            <div ui:field="priority" class="definition priority" title="{messages.priority_title}">
+                <label><ui:text from="{messages.priority_label}" />: </label>
+            </div>
+            <div ui:field="assignedTo" class="definition assigned_id" title="{messages.assigned_to_title}">
+                <label><ui:text from="{messages.assigned_to_label}" />: </label>
+            </div>
+            <div ui:field="dueDate" class="definition duedate" title="{messages.due_date_title}">
+                <label><ui:text from="{messages.due_date_label}" />: </label>
+            </div>
+            <div ui:field="lastUpdateDate" class="definition last_update_date" title="{messages.last_update_date_title}">
+                <label><ui:text from="{messages.last_update_date_label}" />: </label>
+            </div>
+            <div ui:field="assignedDate" class="definition assigned_date" title="{messages.assigned_date_title}">
+                <label><ui:text from="{messages.assigned_date_label}" />: </label>
+            </div>
+        </div>
+        <div class="description">
+            <p ui:field="description" />
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

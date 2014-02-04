@@ -18,7 +18,12 @@ package org.bonitasoft.console.client.common.metadata;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.forms.client.view.common.URLUtils;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeTypeAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
@@ -27,9 +32,11 @@ import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.PriorityAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedJsId;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
@@ -39,13 +46,16 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class MetadataTaskBuilder extends MetadataBuilder {
 
-    public static MetadataTaskBuilder taskQuickDetailsMetadatas() {
-        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addAppsName();
-        metadatas.addDueDate(FORMAT.DISPLAY_RELATIVE);
-        metadatas.addPriority();
-        return metadatas;
+    interface Templates extends SafeHtmlTemplates {
+
+        @SafeHtmlTemplates.Template(
+                "<a href='#?id={2}&_p=casemoredetails&_pf={3}' class='definition caseid' title='{0}'>" +
+                        "<label>{1}: </label>{2}" +
+                        "</a>")
+        SafeHtml caseId(String title, String label, String id, String profile);
     }
+
+    private static Templates TEMPLATES = GWT.create(Templates.class);
 
     public void addAppsName() {
         add(createMetaAppsName());
@@ -55,8 +65,13 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaAppsVersion());
     }
 
-    public void addCaseId() {
-        add(createMetaCaseId());
+    public void addCaseId(IFlowNodeItem task) {
+        add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID,
+                new Html(TEMPLATES.caseId(
+                        _("The id of the related case"),
+                        _("Case"),
+                        task.getCaseId().toString(),
+                        URLUtils.getInstance().getHashParameter(UrlOption.PROFILE)))));
     }
 
     public void addPriority() {
