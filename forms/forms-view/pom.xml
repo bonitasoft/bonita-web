@@ -9,6 +9,10 @@
 	<artifactId>forms-view</artifactId>
 	<name>forms view</name>
 
+  	<properties>
+    	<jacoco.skip>true</jacoco.skip>
+  	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.bonitasoft.web</groupId>
