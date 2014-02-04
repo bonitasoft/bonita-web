@@ -1,20 +1,35 @@
 /**
- * Copyright (C) 2010 BonitaSoft S.A.
- * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
+ * Copyright (C) 2012 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.forms.server.accessor.impl.util;
+package org.bonitasoft.console.common.server.utils;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
@@ -25,25 +40,12 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.RetrieveException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut
  * 
  */
-public class ApplicationResourcesUtils {
+public class FormsResourcesUtils {
 
     /**
      * The forms directory name in the bar
@@ -73,7 +75,7 @@ public class ApplicationResourcesUtils {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(ApplicationResourcesUtils.class.getName());
+    private static Logger LOGGER = Logger.getLogger(FormsResourcesUtils.class.getName());
 
     /**
      * Util class allowing to work with the BPM engine API
@@ -89,21 +91,20 @@ public class ApplicationResourcesUtils {
      *            the process definition ID
      * @param processDeployementDate
      *            the process deployement date
-     * @throws IOException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws InvalidSessionException
-     * @throws BPMEngineException
-     * @throws RetrieveException
+     * @throws java.io.IOException
+     * @throws org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException
+     * @throws org.bonitasoft.engine.session.InvalidSessionException
+     * @throws org.bonitasoft.engine.exception.RetrieveException
      */
     public static synchronized void retrieveApplicationFiles(final APISession session, final long processDefinitionID, final Date processDeployementDate)
-            throws IOException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException {
+            throws IOException, ProcessDefinitionNotFoundException, InvalidSessionException, RetrieveException, BPMEngineException {
 
+        ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
         final File formsDir = getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
         if (!formsDir.exists()) {
             formsDir.mkdirs();
         }
-        ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        Map<String, byte[]> formsResources = processAPI.getProcessResources(processDefinitionID, FORMS_DIRECTORY_IN_BAR + "/.*");
+        Map<String, byte[]> formsResources = process.getResources(processDefinitionID, FORMS_DIRECTORY_IN_BAR + "/.*");
         for (final Entry<String, byte[]> formResource : formsResources.entrySet()) {
             final String filePath = formResource.getKey().substring(FORMS_DIRECTORY_IN_BAR.length() + 1);
             final byte[] fileContent = formResource.getValue();
@@ -132,29 +133,24 @@ public class ApplicationResourcesUtils {
             }
         }
 
-        clearSecurityProperties(session, processDefinitionID, processAPI);
+        ProcessDefinition definition = process.getDefinition(processDefinitionID);
+        SecurityProperties.cleanProcessConfig(session.getTenantId(),
+                new ProcessIdentifier(definition.getName(), definition.getVersion()));
 
-        final File processApplicationsResourcesDir = ApplicationResourcesUtils.getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
+        final File processApplicationsResourcesDir = FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
         final ClassLoader processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
         PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
     }
 
-    private static void clearSecurityProperties(final APISession session, final long processDefinitionID, ProcessAPI processAPI)
-            throws ProcessDefinitionNotFoundException {
-        ProcessDefinition processDefinition = processAPI.getProcessDefinition(processDefinitionID);
-        SecurityProperties.cleanProcessConfig(session.getTenantId(),
-                new ProcessIdentifier(processDefinition.getName(), processDefinition.getVersion()));
-    }
-
     /**
      * Create a classloader for the process
-     * 
+     *
      * @param processDefinitionID
      *            the process definition ID
      * @param processApplicationsResourcesDir
      *            the process application resources directory
      * @return a Classloader
-     * @throws IOException
+     * @throws java.io.IOException
      */
     private static ClassLoader createProcessClassloader(final long processDefinitionID, final File processApplicationsResourcesDir) throws IOException {
         ClassLoader processClassLoader = null;
@@ -178,22 +174,22 @@ public class ApplicationResourcesUtils {
 
     /**
      * Get the URLs of the validators' jar and their dependencies
-     * 
+     *
      * @param processApplicationsResourcesDir
      *            the process application resources directory
      * @return an array of URL
-     * @throws IOException
+     * @throws java.io.IOException
      */
     private static URL[] getLibrariesURLs(final File processApplicationsResourcesDir) throws IOException {
         final List<URL> urls = new ArrayList<URL>();
-        final File libDirectory = new File(processApplicationsResourcesDir, ApplicationResourcesUtils.LIB_DIRECTORY_IN_BAR + File.separator);
+        final File libDirectory = new File(processApplicationsResourcesDir, FormsResourcesUtils.LIB_DIRECTORY_IN_BAR + File.separator);
         if (libDirectory.exists()) {
             final File[] libFiles = libDirectory.listFiles();
             for (int i = 0; i < libFiles.length; i++) {
                 urls.add(libFiles[i].toURL());
             }
         }
-        final File validatorsDirectory = new File(processApplicationsResourcesDir, ApplicationResourcesUtils.VALIDATORS_DIRECTORY_IN_BAR + File.separator);
+        final File validatorsDirectory = new File(processApplicationsResourcesDir, FormsResourcesUtils.VALIDATORS_DIRECTORY_IN_BAR + File.separator);
         if (validatorsDirectory.exists()) {
             final File[] validatorsFiles = validatorsDirectory.listFiles();
             for (int i = 0; i < validatorsFiles.length; i++) {
@@ -211,7 +207,7 @@ public class ApplicationResourcesUtils {
 
     /**
      * Retrieve the class loader associated with the process or create it if there is no classloader associated with this process yet
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -271,7 +267,7 @@ public class ApplicationResourcesUtils {
 
     /**
      * Delete the the web resources directory if it exists
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -301,22 +297,21 @@ public class ApplicationResourcesUtils {
 
     /**
      * Get the application resource directory
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
      * @param processDeployementDate
      * @return
-     * @throws IOException
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws RetrieveException
+     * @throws java.io.IOException
+     * @throws org.bonitasoft.engine.session.InvalidSessionException
+     * @throws org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException
+     * @throws org.bonitasoft.engine.exception.RetrieveException
      */
     public static File getApplicationResourceDir(final APISession session, final long processDefinitionID, final Date processDeployementDate)
-            throws IOException, InvalidSessionException, BPMEngineException, ProcessDefinitionNotFoundException, RetrieveException {
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        final ProcessDefinition processDefinition = processAPI.getProcessDefinition(processDefinitionID);
+            throws IOException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException, BPMEngineException {
+        final ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
+        final ProcessDefinition processDefinition = process.getDefinition(processDefinitionID);
         final String processUUID = processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion();
         return new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder(), processUUID + File.separator
                 + processDeployementDate.getTime());

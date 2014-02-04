@@ -48,7 +48,7 @@ span.bonita_form_radio, .bonita_form_text {
 	font-weight: normal;
 }
 
-button.bonita_form_button {
+.bonita_form_button {
 	text-align: center;
 	outline-color: #F9F9F9;
 	text-transform: uppercase;
@@ -100,11 +100,11 @@ button.bonita_form_button {
 	-o-box-shadow: 2px 2px 2px #d8d8d8;
 	behavior: url(PIE.htc);
 }
-button.bonita_form_button * {
+.bonita_form_button * {
 	vertical-align: middle;
 }
 
-button.bonita_form_button + button.bonita_form_button {
+.bonita_form_button + button.bonita_form_button {
 	margin-left: 5px;
 }
 
@@ -166,7 +166,7 @@ textarea.bonita_form_field, div.bonita_form_field div.bonita_rich_text {
 	height:75px;
 }
 
-div.bonita_form_label {
+.bonita_form_label {
 	color: #282626;
 	font-size: 100%;
 	font-weight: normal;
