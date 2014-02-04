@@ -36,7 +36,7 @@ public class Session extends ParametersStorage {
 
     private static Cookie SINGLETON = new Cookie();
 
-    public static Object getCurrentProfile() {
+    public static String getCurrentProfile() {
         return URLUtils.getInstance().getHashParameter(UrlOption.PROFILE);
     }
 

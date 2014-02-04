@@ -18,11 +18,17 @@ package org.bonitasoft.console.client.common.metadata;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.console.client.uib.databinder.SafeHtmlParser;
 import org.bonitasoft.forms.client.view.common.URLUtils;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeTypeAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
@@ -32,7 +38,11 @@ import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.PriorityAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.data.api.request.APIGetRequest;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedJsId;
@@ -49,10 +59,10 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     interface Templates extends SafeHtmlTemplates {
 
         @SafeHtmlTemplates.Template(
-                "<a href='#?id={2}&_p=casemoredetails&_pf={3}' class='definition caseid' title='{0}'>" +
+                "<a class='definition caseid' title='{0}'>" +
                         "<label>{1}: </label>{2}" +
                         "</a>")
-        SafeHtml caseId(String title, String label, String id, String profile);
+        SafeHtml caseId(String title, String label, String id);
     }
 
     private static Templates TEMPLATES = GWT.create(Templates.class);
@@ -65,13 +75,35 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaAppsVersion());
     }
 
-    public void addCaseId(IFlowNodeItem task) {
-        add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID,
-                new Html(TEMPLATES.caseId(
-                        _("The id of the related case"),
-                        _("Case"),
-                        task.getCaseId().toString(),
-                        URLUtils.getInstance().getHashParameter(UrlOption.PROFILE)))));
+    public void addCaseId(final IFlowNodeItem task) {
+        final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.caseId(
+                _("The id of the related case"),
+                _("Case"),
+                task.getCaseId().toString()))));
+        add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, new Html(anchor)));
+        setCaseHref(anchor, task.getCaseId());
+    }
+
+    /**
+     * Is static to be accessible in HumanTaskMetadataView which is the same code but really shouldn't.
+     *
+     * @param anchor
+     * @param caseId
+     */
+    public static void setCaseHref(final AnchorElement anchor, final APIID caseId) {
+        APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(caseId);
+        request.run(new APICallback() {
+
+            @Override
+            public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+                anchor.setHref("#?id=" + caseId + "&_p=casemoredetails&_pf=" + Session.getCurrentProfile());
+            }
+
+            @Override
+            protected void on404NotFound(String message) {
+                anchor.setHref("#?id=" + caseId + "&_p=archivedcasemoredetails&_pf=" + Session.getCurrentProfile());
+            }
+        });
     }
 
     public void addPriority() {
