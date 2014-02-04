@@ -415,7 +415,7 @@ a.bonita_download_link:hover {
 	float: left;
 }
 
-button.bonita_form_button {
+.bonita_form_button {
 	text-align: center;
 	outline-color: #F9F9F9;
 	text-transform: uppercase;
@@ -469,7 +469,7 @@ button.bonita_form_button {
 	behavior: url(PIE.htc);
 }
 
-button.bonita_form_button * {
+.bonita_form_button * {
 	vertical-align: middle;
 }
 

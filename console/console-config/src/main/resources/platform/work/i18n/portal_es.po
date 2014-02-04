@@ -704,7 +704,7 @@ msgstr "grupos"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:110
 msgid "Opens a popup to create a group"
-msgstr "Se abre una ventana emergente para crear un papel"
+msgstr "Se abre una ventana emergente para crear un grupo"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:58
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
@@ -813,11 +813,11 @@ msgstr "Roles"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:73
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/AddRolePage.java:47
 msgid "Create a role"
-msgstr "Crear un papel"
+msgstr "Crear un rol"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:73
 msgid "Opens a popup to create a role"
-msgstr "Se abre una ventana emergente para crear un papel"
+msgstr "Se abre una ventana emergente para crear un rol"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:80
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:92

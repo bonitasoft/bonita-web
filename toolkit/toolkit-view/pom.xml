@@ -46,7 +46,6 @@
                 <configuration>
                     <jsSrcDir>src/main/javascript/org/bonitasoft/web/toolkit/public/scripts</jsSrcDir>
                     <sourceIncludes>
-                        <include>ext/es5-shim.min.js</include>
                         <include>bonita-utils.js</include>
                         <include>bonita-model.js</include>
                     </sourceIncludes>

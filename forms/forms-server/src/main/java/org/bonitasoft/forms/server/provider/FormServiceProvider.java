@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.forms.server.provider;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -23,8 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
@@ -156,7 +155,7 @@ public interface FormServiceProvider {
     /**
      * Resolve a group of expressions (Groovy in the default implementation, but it can be anything in another implementation).
      * 
-     * @param expression
+     * @param expressions
      *            The expressions to be resolved
      * @param context
      *            Map of context (containing the URL parameters and other data)
@@ -178,8 +177,6 @@ public interface FormServiceProvider {
      * @param context
      *            Map of context (containing the URL parameters and other data)
      * @return the new context
-     * @throws VariableNotFoundException
-     *             if a data to set cannot be found
      * @throws FileTooBigException
      *             if a file is too big to be uploaded
      * @throws FormNotFoundException
@@ -381,8 +378,6 @@ public interface FormServiceProvider {
      * @return a {@link Map} of URL parameters
      * @throws FormNotFoundException
      *             if the form cannot be found
-     * @throws FormAlreadySubmittedExceptionif
-     *             this form has already been submitted and cannot be submitted twice
      * @throws IllegalActivityTypeException
      *             if something prevent the form to be skipped
      * @throws FormSubmissionException

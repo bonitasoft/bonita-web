@@ -19,6 +19,8 @@ package org.bonitasoft.forms.server.accessor.impl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.expression.ExpressionType;
@@ -26,8 +28,6 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 

@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.forms.server.accessor.impl.util;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,15 +30,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.RetrieveException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Document;
 
@@ -122,12 +122,9 @@ public class FormDocumentBuilder {
      * @param processDeployementDate
      *            the deployement date of the process
      * @throws IOException
-     * @throws ProcessNotFoundException
      * @throws InvalidFormDefinitionException
      * @throws BPMEngineException
-     * @throws ProcessResourceException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
      */
     public static synchronized FormDocumentBuilder getInstance(final APISession session, final long processDefinitionID, final String locale,
             final Date processDeployementDate) throws ProcessDefinitionNotFoundException, IOException, InvalidFormDefinitionException, BPMEngineException,
@@ -152,12 +149,9 @@ public class FormDocumentBuilder {
      * @param getFormDefinitionFromBAR
      *            indicate if the form definition file should be retrieved from the business archive only (if false, it's sought in the classpath first)
      * @throws IOException
-     * @throws ProcessNotFoundException
      * @throws InvalidFormDefinitionException
      * @throws BPMEngineException
-     * @throws ProcessResourceException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
      */
     public static synchronized FormDocumentBuilder getInstance(final APISession session, final long processDefinitionID, final String locale,
             final Date processDeployementDate, final boolean getFormDefinitionFromBAR) throws ProcessDefinitionNotFoundException, IOException,
@@ -244,15 +238,12 @@ public class FormDocumentBuilder {
      *            the deployement date of the process
      * @param getFormDefinitionFromBAR
      *            indicate if the form definition file should be retrieved from the business archive only
-     * @throws ProcessNotFoundException
      * @throws IOException
      *             if the forms definition file is not found
      * @throws InvalidFormDefinitionException
      *             if the form definition file cannot be parsed
      * @throws BPMEngineException
-     * @throws ProcessResourceException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
      */
     protected FormDocumentBuilder(final APISession session, final long processDefinitionID, final String locale, final Date processDeployementDate,
             final boolean getFormDefinitionFromBAR) throws ProcessDefinitionNotFoundException, IOException, InvalidFormDefinitionException, BPMEngineException,
@@ -288,10 +279,7 @@ public class FormDocumentBuilder {
      *            the engine APISession
      * @throws IOException
      * @throws BPMEngineException
-     * @throws ProcessResourceException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
-     * @throws ProcessNotFoundException
      */
     protected InputStream getFormsDefinitionInputStream(final APISession session) throws IOException, ProcessDefinitionNotFoundException, BPMEngineException,
             InvalidSessionException, RetrieveException {
@@ -313,10 +301,10 @@ public class FormDocumentBuilder {
                 throw new FileNotFoundException("The forms definition file for the process was not found.");
             }
             // try to get the form file from the application resource directory where files from the bar are exctracted
-            final File processApplicationsResourcesDir = ApplicationResourcesUtils.getApplicationResourceDir(session, processDefinitionID,
+            final File processApplicationsResourcesDir = FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID,
                     processDeployementDate);
             if (!processApplicationsResourcesDir.exists()) {
-                ApplicationResourcesUtils.retrieveApplicationFiles(session, processDefinitionID, processDeployementDate);
+                FormsResourcesUtils.retrieveApplicationFiles(session, processDefinitionID, processDeployementDate);
             }
             File formsFile = null;
             if (locale != null) {
@@ -346,7 +334,7 @@ public class FormDocumentBuilder {
     /**
      * Determinates whether the current instance has expired or not
      * 
-     * @param tenantId
+     * @param tenantID
      *            the tenant ID
      * @return true if the current instance has expired, false otherwise
      */

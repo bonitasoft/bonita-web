@@ -30,6 +30,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -78,10 +80,8 @@ import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
 import org.bonitasoft.forms.server.api.impl.util.FormActionAdapter;
 import org.bonitasoft.forms.server.api.impl.util.FormWorkflowUtil;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
 
@@ -421,7 +421,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      * 
      * @throws BPMEngineException
-     * @throws ProcessInstanceReadException
      * @throws InvalidSessionException
      * @throws UserNotFoundException
      * @throws SearchException
@@ -447,12 +446,11 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     /**
      * Retrieve the root process instance ID
      * 
-     * @param session
+     * @param processApi
      * @param processInstanceId
      * @return
      * @throws ProcessInstanceNotFoundException
      * @throws InvalidSessionException
-     * @throws ProcessInstanceReadException
      * @throws BPMEngineException
      * @throws ProcessDefinitionNotFoundException
      */

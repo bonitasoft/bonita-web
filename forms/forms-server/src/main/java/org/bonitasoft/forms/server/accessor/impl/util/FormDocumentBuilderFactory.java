@@ -19,11 +19,11 @@ package org.bonitasoft.forms.server.accessor.impl.util;
 import java.io.IOException;
 import java.util.Date;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.RetrieveException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 
 /**
@@ -34,17 +34,13 @@ public class FormDocumentBuilderFactory {
 
     /**
      * @param session
-     * @param processDefinitionUUID
      * @param locale
      * @param processDeployementDate
      * @return
-     * @throws ProcessNotFoundException
      * @throws IOException
      * @throws InvalidFormDefinitionException
      * @throws BPMEngineException
-     * @throws ProcessResourceException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
      */
     public static FormDocumentBuilder getFormDocumentBuilder(final APISession session, final long processDefinitionID, final String locale,
             final Date processDeployementDate) throws ProcessDefinitionNotFoundException, IOException, InvalidFormDefinitionException, BPMEngineException,

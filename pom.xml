@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.console</groupId>
 	<artifactId>bonita-console</artifactId>
@@ -24,7 +25,7 @@
 		<bonita.engine.version>6.3.0-SNAPSHOT</bonita.engine.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<slf4j.version>1.6.1</slf4j.version>
 		<gwt.version>2.5.1</gwt.version>
 		<!-- The following property is used by the gwt-maven plugin. As it does 
@@ -33,6 +34,20 @@
 			to the same value. -->
 		<gwtVersion>${gwt.version}</gwtVersion>
 		<wro4j.version>1.7.0</wro4j.version>
+		<!-- Properties to enable jacoco code coverage analysis -->
+		<sonar.branch>MasterBugFixing</sonar.branch>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.skippedModules>bonita-home,console-war</sonar.skippedModules>
+		<!-- The destination file for the code coverage report has to be set to 
+			the same value in the parent pom and in each module pom. Then JaCoCo will 
+			add up information in the same report, so that, it will give the cross-module 
+			code coverage. -->
+		<!-- Tells SonarQube where the integration tests code coverage report is -->
+		<sonar.jacoco.itReportPath>${project.basedir}/jacoco-reports/web-it.exec</sonar.jacoco.itReportPath>
+		<!-- Tells SonarQube where the unit tests code coverage report is -->
+		<sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+
 	</properties>
 
 	<dependencyManagement>
@@ -82,13 +97,6 @@
 				<artifactId>bonita-home</artifactId>
 				<version>${bonita.engine.version}</version>
 				<type>zip</type>
-			</dependency>
-
-			<!-- BONITA WEB -->
-			<dependency>
-				<groupId>org.bonitasoft.web</groupId>
-				<artifactId>theme-builder</artifactId>
-				<version>6.1.0</version>
 			</dependency>
 
 			<!-- MISCELLANEOUS -->
@@ -239,21 +247,6 @@
 	</dependencies>
 
 	<repositories>
-		<!-- include repository for GWT maven plugin -->
-		<repository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Maven Repository Group</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
 		<repository>
 			<id>oauth</id>
 			<url>http://oauth.googlecode.com/svn/code/maven/</url>
@@ -313,10 +306,10 @@
 					<version>${gwt.version}</version>
 				</plugin>
 				<plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.8</version>
-                </plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -467,6 +460,36 @@
 				<configuration>
 					<deployAtEnd>true</deployAtEnd>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>org.bonitasoft.console.*</include>
+						<include>com.bonitasoft.console.*</include>
+					</includes>
+					<excludes>
+						<exclude>org.bonitasoft.console.client.*</exclude>
+						<exclude>com.bonitasoft.console.client.*</exclude>
+					</excludes>
+					<append>true</append>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pre-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
