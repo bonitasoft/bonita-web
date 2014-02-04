@@ -23,6 +23,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY_RELATIVE;
 
+import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
@@ -34,9 +36,11 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import org.bonitasoft.console.client.uib.databinder.Data;
 import org.bonitasoft.console.client.uib.formatter.FormatterFactory;
-import org.bonitasoft.forms.client.view.common.URLUtils;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
-import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
+import org.bonitasoft.web.toolkit.client.Session;
+import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.data.api.request.APIGetRequest;
 
 public class HumanTaskMetadataView extends Composite {
 
@@ -72,10 +76,7 @@ public class HumanTaskMetadataView extends Composite {
 
     public HumanTaskMetadataView(final IHumanTaskItem task) {
         initWidget(binder.createAndBindUi(this));
-        render(task);
-    }
 
-    private HumanTaskMetadataView render(final IHumanTaskItem task) {
         bind(new Data(task.ensureName())).to(name);
         bind(new Data(task.getProcess().ensureName())).to(appName);
         bind(new Data(task.getProcess().getVersion())).to(appVersion);
@@ -88,7 +89,18 @@ public class HumanTaskMetadataView extends Composite {
         bind(createDate(task.getAssignedDate(), DISPLAY)).to(assignedDate);
         bind(new Data(task.ensureDescription()).or(_("No description."))).to(description);
 
-        caseId.setHref("#?id=" + task.getCaseId() +"&_p=casemoredetails&_pf=" + URLUtils.getInstance().getHashParameter(UrlOption.PROFILE));
-        return this;
+        APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(task.getId());
+        request.run(new APICallback() {
+
+            @Override
+            public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+                caseId.setHref("#?id=" + task.getCaseId() + "&_p=casemoredetails&_pf=" + Session.getCurrentProfile());
+            }
+
+            @Override
+            protected void on404NotFound(String message) {
+                caseId.setHref("#?id=" + task.getCaseId() + "&_p=archivedcasemoredetails&_pf=" + Session.getCurrentProfile());
+            }
+        });
     }
 }
