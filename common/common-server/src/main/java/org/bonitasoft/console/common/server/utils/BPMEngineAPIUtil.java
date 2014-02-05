@@ -5,16 +5,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.forms.server.api.impl.util;
+package org.bonitasoft.console.common.server.utils;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -33,13 +33,12 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 
 /**
  * Util class to work with the BPM engine API
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public class BPMEngineAPIUtil {
 
@@ -50,7 +49,7 @@ public class BPMEngineAPIUtil {
 
     /**
      * Get the engine command API
-     * 
+     *
      * @param session
      *            API session
      * @return an instance of {@link CommandAPI}
@@ -83,7 +82,7 @@ public class BPMEngineAPIUtil {
 
     /**
      * Get the engine process API
-     * 
+     *
      * @param session
      *            API session
      * @return an instance of {@link ProcessAPI}
@@ -116,7 +115,7 @@ public class BPMEngineAPIUtil {
 
     /**
      * Get the engine identity API
-     * 
+     *
      * @param session
      *            API session
      * @return an instance of {@link ProcessAPI}

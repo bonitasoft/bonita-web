@@ -18,6 +18,8 @@
 		<enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
 		<enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
 		<enable.engine.listener.end>--&gt;</enable.engine.listener.end>
+    	<jacoco.skip>true</jacoco.skip>
+
 	</properties>
 
 	<dependencies>
@@ -253,6 +255,18 @@
 							</descriptors>
 							<tarLongFileMode>gnu</tarLongFileMode>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+ 						<configuration>
+							<skipITs>true</skipITs>
+						</configuration> 
 					</execution>
 				</executions>
 			</plugin>

@@ -82,8 +82,8 @@
 @addCommentButton-padding: 0.2*@h 2*@w 0*@h 6*@w;
 @addSubtaskButton-padding: 0.2*@h 2*@w 0*@h 6*@w;
 @addbutton-width: 20*@w;
-@addbutton-padding: 1*@h 2*@w 1*@h 6*@w;
-@addbutton-txtAlign: left;
+@addbutton-padding: 0 2*@w;
+@addbutton-txtAlign: center;
 @addbutton-bg: "button-add.png";
 @addbutton-bgWidth: 30px;
 
@@ -163,8 +163,9 @@
 @header-login-profileLink-bg: "arrow-down.png";
 @header-login-profileLink-margin: 0 2*@w;
 @header-menu-font: @skinFont;
-@header-menu-fontSize: 15;
-@header-menu-height: 7 * @h;
+@header-menu-fontSize: 18;
+@header-menu-submenu-fontSize: 12;
+@header-menu-height: @header-menu-fontSize + @header-menu-link-paddingY * 2;
 @header-menu-margin: 0 0 0 @filtersPanel-width;
 @header-menu-background: @mainAccentColor;
 @header-menu-gradientColor1: lighten(@mainAccentColor, 5.5%);
@@ -341,7 +342,7 @@
 @filtersPanel-font: @skinFont;
 @filtersPanel-position: relative;
 @filtersPanel-actions-position: absolute;
-@filtersPanel-actions-positionTop: -11*@h;
+@filtersPanel-actions-positionTop: -10*@h;
 @filtersPanel-actions-positionLeft: 6*@w;
 @filtersPanel-actions-addButton-bgColor: @btnPrimaryActionColor;
 @filtersPanel-actions-addButton-txtColor: #fff;
@@ -351,7 +352,7 @@
 @filtersPanel-subfilters-fontSize: 13;
 @filtersPanel-subfilters-currentLine-backgroundLeft: 7*@w;
 @filtersPanel-filters-currentLine-backgroundLeft: 4*@w;
-@filtersPanel-filters-currentLine-backgroundTop: 2*@w;
+@filtersPanel-filters-currentLine-backgroundTop: center;
 
 @filtersPanel-filters-height: 9*@h;
 @filtersPanel-filters-paddingTop: 3*@h;
@@ -422,7 +423,7 @@
 @filtersPanel-filtersResourceTitle-paddingRight: 1*@w;
 @filtersPanel-filtersResourceTitle-padding: @filtersPanel-filtersResourceTitle-paddingTop @filtersPanel-filtersResourceTitle-paddingRight @filtersPanel-filtersResourceTitle-paddingBottom @filtersPanel-filtersResourceTitle-paddingLeft;
 @filtersPanel-filtersResourceTitle-display: block;
-@filtersPanel-filtersResourceTitle-fontSize: 22;
+@filtersPanel-filtersResourceTitle-fontSize: 18;
 @filtersPanel-filtersResourceTitle-fontStyle: italic;
 @filtersPanel-filters-filtersResourceTitle-padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom 4*@w;
 @filtersPanel-filters-filtersResourceTitle-borderColor1: darken(@mainAccentColor, 7%);

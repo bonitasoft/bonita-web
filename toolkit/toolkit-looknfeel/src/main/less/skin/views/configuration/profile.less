@@ -1,5 +1,4 @@
 .doublesection .body {
-	.fontSize (@header-menu-fontSize);
 	.menuOptions {
 		padding-top: @h;
 	}
@@ -60,6 +59,10 @@
 								text-align: left;
 								&:hover{
 									cursor: move;
+								}
+								/* menu editor, Perent menu font size*/
+								&_1 {
+								    .fontSize (@header-menu-fontSize); 
 								}
 								&_last{
 									.td{
