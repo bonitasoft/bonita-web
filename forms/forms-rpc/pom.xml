@@ -9,6 +9,10 @@
 	<artifactId>forms-rpc</artifactId>
 	<name>forms rpc</name>
 	
+  	<properties>
+    	<jacoco.skip>true</jacoco.skip>
+  	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>

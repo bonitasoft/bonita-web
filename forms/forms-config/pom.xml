@@ -8,7 +8,12 @@
 	<groupId>org.bonitasoft.forms</groupId>
 	<artifactId>forms-config</artifactId>
 	<name>forms config</name>
-	<packaging>jar</packaging>	
+	<packaging>jar</packaging>
+	
+  	<properties>
+    	<jacoco.skip>true</jacoco.skip>
+  	</properties>
+	
 	<build>
 		<resources>
 			<resource>
