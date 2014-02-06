@@ -9,6 +9,11 @@
 	<artifactId>common-config</artifactId>
 	<name>common config</name>
 	<packaging>jar</packaging>
+	
+	<properties>
+    	<jacoco.skip>true</jacoco.skip>
+  	</properties>
+	
 	<build>
 		<resources>
 			<resource>
