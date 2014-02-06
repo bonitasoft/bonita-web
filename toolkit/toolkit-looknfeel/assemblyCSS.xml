@@ -11,6 +11,7 @@
 			<filtered>true</filtered>
 			<includes>
 				<include>**/*.html</include>
+				<include>VERSION</include>
 			</includes>
 		</fileSet>
 		<fileSet>

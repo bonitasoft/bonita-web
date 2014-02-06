@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.bar.BarResource;
@@ -104,13 +105,13 @@ public class TestFormDocumentBuilder extends FormsTestCase {
         try {
             FormDocumentBuilder.getInstance(getSession(), bonitaProcess.getId(), "en", deploymentDate, true).getDocument();
 
-            File resourcesDir = ApplicationResourcesUtils.getApplicationResourceDir(getSession(), bonitaProcess.getId(), deploymentDate);
+            File resourcesDir = FormsResourcesUtils.getApplicationResourceDir(getSession(), bonitaProcess.getId(), deploymentDate);
             File formsFile = new File(resourcesDir, FormDocumentBuilder.FORM_DEFINITION_DEFAULT_FILE_NAME);
             if (!formsFile.exists()) {
                 Assert.fail();
             }
 
-            ApplicationResourcesUtils.removeApplicationFiles(getSession(), bonitaProcess.getId());
+            FormsResourcesUtils.removeApplicationFiles(getSession(), bonitaProcess.getId());
             if (formsFile.exists()) {
                 Assert.fail();
             }

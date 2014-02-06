@@ -66,24 +66,24 @@ public class StringMinMaxLengthValidator extends AbstractStringValidator {
         final int length = attributeValue.length();
 
         // Checking for including the minLength
-        if (this.includeMin) {
-            if (this.minLength != null && length < this.minLength) {
-                addError(_("%attribute% must be more or equal than %value%", new Arg("value", attributeValue)));
+        if (includeMin) {
+            if (minLength != null && length < minLength) {
+                addError(_("%attribute% must be more or equal than %value%", new Arg("value", minLength)));
             }
         } else {
-            if (this.minLength != null && length <= this.minLength) {
-                addError(_("%attribute% must be more than %value%", new Arg("value", attributeValue)));
+            if (minLength != null && length <= minLength) {
+                addError(_("%attribute% must be more than %value%", new Arg("value", minLength)));
             }
         }
 
         // Checking for including the maxLength
-        if (this.includeMax) {
-            if (this.maxLength != null && length > this.maxLength) {
-                addError(_("%attribute% must be less or equal than %value%", new Arg("value", attributeValue)));
+        if (includeMax) {
+            if (maxLength != null && length > maxLength) {
+                addError(_("%attribute% must be less or equal than %value%", new Arg("value", maxLength)));
             }
         } else {
-            if (this.maxLength != null && length >= this.maxLength) {
-                addError(_("%attribute% must be less than %value%", new Arg("value", attributeValue)));
+            if (maxLength != null && length >= maxLength) {
+                addError(_("%attribute% must be less than %value%", new Arg("value", maxLength)));
             }
         }
 
