@@ -35,4 +35,6 @@ public interface CssClass {
     public static final String FORM_ACTIONS = "formactions";
     
     public static final String NO_FILTER_PAGE = "nofilterpage";
+
+    public static final String CELL = "cell";
 }
