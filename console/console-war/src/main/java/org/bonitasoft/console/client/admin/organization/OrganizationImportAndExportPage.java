@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
+import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
@@ -53,6 +54,10 @@ public class OrganizationImportAndExportPage extends Page {
         PRIVILEGES.add(OrganizationImportAndExportPage.TOKEN);
     }
 
+    public OrganizationImportAndExportPage() {
+        addClass(CssClass.NO_FILTER_PAGE);
+    }
+    
     @Override
     public void defineTitle() {
         this.setTitle(_("Import / Export"));

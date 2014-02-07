@@ -20,7 +20,7 @@ package org.bonitasoft.web.toolkit.client.ui;
  * @author Vincent Elcrin
  * 
  */
-public abstract class CssClass {
+public interface CssClass {
 
     public static final String MORE_DETAILS = "moredetails";
 
@@ -33,4 +33,6 @@ public abstract class CssClass {
     public static final String SECTION = "section";
 
     public static final String FORM_ACTIONS = "formactions";
+    
+    public static final String NO_FILTER_PAGE = "nofilterpage";
 }
