@@ -8,6 +8,10 @@
 	<artifactId>toolkit-view</artifactId>
 	<name>toolkit view</name>
 	<packaging>jar</packaging>
+	
+	<properties>
+    	<jacoco.skip>true</jacoco.skip>
+  	</properties>
 
 	<dependencies>
 		<!-- GWT deps -->

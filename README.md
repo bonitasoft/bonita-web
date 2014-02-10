@@ -13,6 +13,7 @@ For develoment purpose use the *dev* profile (don't compile every gwt permutatio
 In console-war module :
     
     mvn -Pdev gwt:run [-Dbonita.home=/path/to/bonita/home]
+    mvn -Pdev gwt:debug [-Dbonita.home=/path/to/bonita/home]
     
 ## Structure ##
 
@@ -68,8 +69,6 @@ Contains the back-end business logic, i.e., the code executed on the server side
 #### forms-view
 Contains the source code of the client, i.e., the code cross-compiled to javascript and all the resources; 
 
-### Platform module
-Not maintained anymore
 
 ### Rest-api module ###
 Module containing rest api implementation over engine api
