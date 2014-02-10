@@ -580,12 +580,8 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<configuration>
 							<includes>
-								<include>org.bonitasoft.console.*</include>
-								<include>com.bonitasoft.console.*</include>
-								<include>org.bonitasoft.web.*</include>
-								<include>com.bonitasoft.web.*</include>
-								<include>org.bonitasoft.forms.*</include>
-								<include>com.bonitasoft.forms.*</include>
+								<include>org.bonitasoft.*</include>
+								<include>com.bonitasoft.*</include>
 							</includes>
 							<excludes>
 								<exclude>org.bonitasoft.console.client.*</exclude>
@@ -643,11 +639,12 @@
 										add those includes if you want to preserve surefire conventions-->
 										<include>**/Test*.java</include>
 										<include>**/*Test.java</include>
+										<include>**/*Test*.java</include>
 		
 										<!--the following are failsafe conventions -->
-										<!--<include>**/IT*.java</include>
+										<include>**/IT*.java</include>
 										<include>**/*IT.java</include>
-										<include>**/*ITCase.java</include>-->
+										<include>**/*ITCase.java</include>
 									</includes>
 								</configuration> 
 							</execution>
