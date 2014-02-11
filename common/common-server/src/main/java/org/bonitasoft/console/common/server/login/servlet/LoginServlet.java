@@ -83,6 +83,8 @@ public class LoginServlet extends HttpServlet {
         }
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = LoginManager.DEFAULT_DIRECT_URL;
+        } else {
+            redirectURL = protectRedirectUrl(redirectURL);
         }
         try {
             doLogin(request, tenantId);
@@ -126,6 +128,15 @@ public class LoginServlet extends HttpServlet {
             }
             throw new ServletException(e);
         }
+    }
+    
+    private String protectRedirectUrl(String redirectUrl) {
+        redirectUrl = redirectUrl.replaceAll("https", "");
+        redirectUrl = redirectUrl.replaceAll("http", "");
+        redirectUrl = redirectUrl.replaceAll("www", "");
+        redirectUrl = redirectUrl.replaceAll("//", "");
+        redirectUrl = redirectUrl.replaceAll(".", "");
+        return redirectUrl;
     }
 
     private String createRedirectUrl(final HttpServletRequest request, final String redirectURL) {
