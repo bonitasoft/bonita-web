@@ -385,4 +385,52 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         Assert.assertNotSame(0, urlFieldValue.getDocumentId());
     }
 
+    @Test
+    public void testGetArchivedAttachmentFormFieldValue() throws Exception {
+        final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
+        final Map<String, Object> urlContext = new HashMap<String, Object>();
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+            }
+        }.waitUntil());
+        long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
+        processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
+        processAPI.executeFlowNode(activityInstanceId);
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+            }
+        }.waitUntil());
+        activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
+        processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
+        processAPI.executeFlowNode(activityInstanceId);
+        Assert.assertTrue("no archived process isnatnce was found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getArchivedProcessInstances(processInstanceId, 0, 1).size() == 1;
+            }
+        }.waitUntil());
+        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
+        urlContext.put(FormServiceProviderUtil.RECAP_FORM_TYPE, Boolean.TRUE.toString());
+        final Map<String, Object> context = new HashMap<String, Object>();
+        context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
+        context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
+        context.put(FormServiceProviderUtil.API_SESSION, getSession());
+        final FormFieldValue urlFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc1", context);
+        Assert.assertEquals("the value type for a URL document should be a String", String.class.getName(), urlFieldValue.getValueType());
+        Assert.assertEquals("the URL is not right", "www.bonitasoft.org", urlFieldValue.getValue());
+        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+
+        final FormFieldValue fileFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc2", context);
+        Assert.assertEquals("the value type for a File document should be a File", File.class.getName(), fileFieldValue.getValueType());
+        Assert.assertEquals("the filename is not right", "filename.txt", fileFieldValue.getValue());
+        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+    }
+
 }
