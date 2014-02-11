@@ -21,7 +21,7 @@
 	<!-- H2 lifecycle -->
 	<Call name="addLifeCycle">
 		<Arg>
-			<New class="org.bonitasoft.tools.gwt.jetty.H2LifeCycle" />
+			<New class="org.bonitasoft.web.tools.jetty.H2LifeCycle" />
 		</Arg>
 	</Call>
 	
