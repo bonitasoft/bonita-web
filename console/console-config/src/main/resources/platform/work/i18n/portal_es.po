@@ -127,7 +127,7 @@ msgid "Post time"
 msgstr "Tiempo publicado"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:105
-msgid "You can't perform this task, it has already been assigned to someone else."
+msgid "This task has already been assigned to someone else."
 msgstr "No puede realizar esta tarea, ya ha sido asignado a otra persona."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/SelectMembershipAndDoPageOnItem.java:78
@@ -324,7 +324,7 @@ msgstr "Última actualización"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:80
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:114
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseMoreDetailsPage.java:79
-msgid "The date while the case has been last updated"
+msgid "The date when the case was updated"
 msgstr "La fecha, mientras que el caso ha sido actualizado por última vez"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:37
@@ -347,7 +347,7 @@ msgstr "Última actualización"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:53
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:75
-msgid "The date while the app has been updated"
+msgid "The date when the app was updated"
 msgstr "La fecha cuando la aplicación se ha actualizado"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:61
@@ -394,7 +394,7 @@ msgid "Apps"
 msgstr "Aplicaciones"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:97
-msgid "The app responsible of the creation of this task"
+msgid "The app responsible for the creation of this task"
 msgstr "La aplicación responsable de la creación de esta tarea"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:104
@@ -431,7 +431,7 @@ msgid "Assigned to"
 msgstr "Asignado a"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:120
-msgid "The user name of the user to which the task is assigned"
+msgid "The username to which the task is assigned."
 msgstr "El nombre de usuario del usuario al que se le ha asignado la tarea"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:125
@@ -447,7 +447,7 @@ msgid "Assigned date"
 msgstr "Fecha asignada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:131
-msgid "The date when while the task has been assigned"
+msgid "The date when the task was assigned"
 msgstr "La fecha cuando se ha asignado la tarea"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:136
@@ -456,7 +456,7 @@ msgid "Executed by"
 msgstr "Ejecutado por"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:137
-msgid "Name of the user which last executed this task"
+msgid "Name of the user which executed this task"
 msgstr "Nombre del usuario que ejecutó esta tarea por última vez"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:143
@@ -469,7 +469,7 @@ msgid "Due date"
 msgstr "Fecha de vencimiento"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:144
-msgid "The date while the task must be finished"
+msgid "The date when the task must be finished"
 msgstr "La fecha en la que la tarea debe ser terminada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:34
@@ -850,7 +850,7 @@ msgid "Inactive user"
 msgstr "Usuario Inactivo"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:111
-msgid "Update user"
+msgid "Edit user"
 msgstr "Actualizar usuario"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:111
@@ -1133,7 +1133,7 @@ msgid "Create this user"
 msgstr "Crear este usuario"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:73
-msgid "Update a user"
+msgid "Edit a user"
 msgstr "Actualizar un usuario"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
@@ -1235,7 +1235,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:124
-msgid "Last login date"
+msgid "Last login"
 msgstr "Última sesión"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserQuickDetailsAdminPage.java:65
@@ -1770,7 +1770,7 @@ msgid "Display the case form"
 msgstr "Mostrar el formulario del caso"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:19
-msgid "Case variable"
+msgid "Case variables"
 msgstr "Caso variable"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:34
@@ -1833,7 +1833,7 @@ msgid "Technical details"
 msgstr "Detalles técnicos"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:119
-msgid "No task performed"
+msgid "No task done"
 msgstr "Ninguna tarea realizada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:121
@@ -1917,7 +1917,7 @@ msgid "Performed date"
 msgstr "Fecha realizada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:151
-msgid "Preformed by"
+msgid "Performed by"
 msgstr "Realizado por"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:170
@@ -1937,7 +1937,7 @@ msgstr "Listo desde %task_last_update%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:52
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedTaskTechnicalInformationSnippet.java:48
-msgid "Completed on %task_last_update% by %executed_by%"
+msgid "Done the %task_last_update% by %executed_by%"
 msgstr "Completado en %task_last_update% por %executed_by%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:57
@@ -2211,7 +2211,7 @@ msgstr "Acerca"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:56
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
-msgid "User rights"
+msgid "Profiles"
 msgstr "Privilegios"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
@@ -2220,7 +2220,7 @@ msgstr "Mostrar todos los perfiles del portal"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:35
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:42
-msgid "Directory"
+msgid "Organization"
 msgstr "Directorio"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
@@ -2352,7 +2352,7 @@ msgid "Available tasks"
 msgstr "tareas disponibles"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:254
-msgid "Unassigned tasks I can perform"
+msgid "Unassigned tasks I can do"
 msgstr "Tareas no asignadas que puedo realizar"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:260
@@ -2360,7 +2360,7 @@ msgid "To do"
 msgstr "Por hacer"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:260
-msgid "Tasks I can perform"
+msgid "Tasks I can do"
 msgstr "Tareas que puedo realizar"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:273
@@ -2368,7 +2368,7 @@ msgid "Done"
 msgstr "Hecho"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:273
-msgid "Display tasks I have performed"
+msgid "Display tasks I have done"
 msgstr "Mostrar las tareas que he realizado"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:277
@@ -2380,7 +2380,7 @@ msgid "Display tasks I'm ignoring"
 msgstr "Mostrar las tareas que estoy ignorando"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:70
-msgid "The date while this app has been installed"
+msgid "The date when this app was installed"
 msgstr "La fecha cuando esta aplicación se ha instalado"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:74
@@ -2392,7 +2392,7 @@ msgid "Do it"
 msgstr "hacer"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:38
-msgid "Perform"
+msgid "Done"
 msgstr "Realizar"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:46
@@ -2408,7 +2408,7 @@ msgid "Hide"
 msgstr "Ocultar"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:53
-msgid "Ignore this task so I will no longer see it. Other allowed users will still see it"
+msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
 msgstr "Ignorar esta tarea así ya no la vere. Otros usuarios no autorizados aún lo verán"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:58
@@ -2583,7 +2583,7 @@ msgid "MM/dd/yyyy"
 msgstr "dd/MM/yyyy"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/utils/DateFormat.java:56
-msgid "MM/dd/yyyy 'at' HH:mm"
+msgid "MM/dd/yyyy h:mm a"
 msgstr "dd/MM/yyyy HH:mm"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/utils/DateFormat.java:57
@@ -2738,7 +2738,7 @@ msgid "mm/dd/yy"
 msgstr "dd/mm/yy"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/chart/SerieChart.java:364
-msgid "mm/dd/yyyy hh:MM:ss"
+msgid "MM/dd/yyyy h:mm:ss a"
 msgstr "dd/mm/yyyy hh:MM:ss"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/DatePicker.java:66
@@ -2827,7 +2827,7 @@ msgid "Go to page %pagenumber%"
 msgstr "ir a la pagina %pagenumber%"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:641
-msgid "actions"
+msgid "Actions"
 msgstr "acciones"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableFiller.java:88
@@ -3017,7 +3017,7 @@ msgid "User"
 msgstr "Usuario"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:25
-msgid "The user can view and perform tasks and can start a new case of an app."
+msgid "The user can view and perform tasks as well as start a new case of an app."
 msgstr "El usuario puede ver y realizar tareas, y puede iniciar un nuevo caso de una aplicación."
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:30
