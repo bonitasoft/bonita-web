@@ -127,7 +127,7 @@ msgid "Post time"
 msgstr "Tiempo publicado"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:105
-msgid "This task has already been assigned to someone else."
+msgid "This task is already assigned to someone else.""
 msgstr "No puede realizar esta tarea, ya ha sido asignado a otra persona."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/SelectMembershipAndDoPageOnItem.java:78
@@ -456,7 +456,7 @@ msgid "Executed by"
 msgstr "Ejecutado por"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:137
-msgid "Name of the user which executed this task"
+msgid "Name of the user who executed this task"
 msgstr "Nombre del usuario que ejecutó esta tarea por última vez"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:143
@@ -1937,7 +1937,7 @@ msgstr "Listo desde %task_last_update%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:52
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedTaskTechnicalInformationSnippet.java:48
-msgid "Done the %task_last_update% by %executed_by%"
+msgid "Done %task_last_update% by %executed_by%"
 msgstr "Completado en %task_last_update% por %executed_by%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:57
