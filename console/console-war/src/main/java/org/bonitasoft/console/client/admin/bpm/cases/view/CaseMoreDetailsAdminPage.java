@@ -111,7 +111,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     }
 
     private ItemDetailsMetadata lastUpdateDate() {
-        return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"), _("The date while the case has been last updated"));
+        return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"), _("The date when the case was updated"));
     }
 
     @Override
@@ -148,7 +148,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
 
                 .addColumn(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
                 .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE), _("Performed date"))
-                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Preformed by"))
+                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Performed by"))
                 .addColumn(new DescriptionAttributeReader(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())

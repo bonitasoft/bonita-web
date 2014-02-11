@@ -39,7 +39,7 @@ public class ProfileEntriesI18N {
     // // ADMIN
     // /////////////////////////////////////////
 
-    protected static final String DIRECTORY = _("Directory");
+    protected static final String DIRECTORY = _("Organization");
 
     protected static final String USERS = _("Users");
 
@@ -53,7 +53,7 @@ public class ProfileEntriesI18N {
 
     protected static final String CONFIGURATION = _("Configuration");
 
-    protected static final String USER_RIGHTS = _("User rights");
+    protected static final String USER_RIGHTS = _("Profiles");
 
     protected static final String ANALYTICS = _("Analytics");
 

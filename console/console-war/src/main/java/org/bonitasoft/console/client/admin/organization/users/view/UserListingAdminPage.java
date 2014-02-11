@@ -121,7 +121,7 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
                 .addColumn(UserItem.ATTRIBUTE_ICON, _("Icon"))
                 .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("First name"), true)
                 .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Last name"), true)
-                .addColumn(new DateAttributeReader(UserItem.ATTRIBUTE_LAST_CONNECTION_DATE, FORMAT.DISPLAY_RELATIVE), _("Last login date"))
+                .addColumn(new DateAttributeReader(UserItem.ATTRIBUTE_LAST_CONNECTION_DATE, FORMAT.DISPLAY_RELATIVE), _("Last login"))
                 .addColumn(UserItem.ATTRIBUTE_JOB_TITLE, _("Job title"), false);
     }
 
