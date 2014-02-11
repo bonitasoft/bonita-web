@@ -143,7 +143,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     private ItemDetailsMetadata createMetaExecutedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID),
                 _("Executed by"),
-                _("Name of the user which executed this task"));
+                _("Name of the user who executed this task"));
     }
 
     private ItemDetailsMetadata createMetaDueDate(final FORMAT format) {

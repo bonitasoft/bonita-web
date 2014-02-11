@@ -49,7 +49,7 @@ public class TaskTechnicalInformationSnippet implements SectionSnippet {
                     new Arg("task_last_update", DateFormat.dateToDisplayShort(this.activity.getLastUpdateDate())));
 
         } else if (TaskItem.VALUE_STATE_COMPLETED.equals(this.activity.getState())) {
-            template = _("Done the %task_last_update% by %executed_by%",
+            template = _("Done %task_last_update% by %executed_by%",
                     new Arg("task_last_update", DateFormat.dateToDisplayShort(this.activity.getLastUpdateDate())),
                     executedByArg);
 
