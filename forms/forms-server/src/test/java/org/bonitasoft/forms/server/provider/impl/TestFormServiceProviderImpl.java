@@ -38,11 +38,13 @@ import org.bonitasoft.engine.bpm.bar.BarResource;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.expression.ExpressionBuilder;
 import org.bonitasoft.engine.expression.ExpressionType;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -413,7 +415,9 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getArchivedProcessInstances(processInstanceId, 0, 1).size() == 1;
+                SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
+                builder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+                return processAPI.searchArchivedProcessInstances(builder.done()).getCount() == 1;
             }
         }.waitUntil());
         urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
