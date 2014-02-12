@@ -25,9 +25,9 @@ import java.util.List;
  * @author Paul AMAR
  *
  */
-public class URLProtecter {
+public class URLProtector {
 
-    List<String> tokens = Arrays.asList("https", "http", "www", "//", "\\.", ":");
+    protected List<String> tokens = Arrays.asList("https", "http", "www", "//", "\\.", ":");
         
     public String protectRedirectUrl(String redirectUrl) {
         return removeTokenFromUrl(redirectUrl, new ArrayList<String>(tokens));

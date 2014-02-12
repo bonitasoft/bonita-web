@@ -6,9 +6,9 @@ import org.junit.Test;
 
 
 
-public class URLProtecterTest {
+public class URLProtectorTest {
 
-    URLProtecter urlProtecter = new URLProtecter();
+    URLProtector urlProtecter = new URLProtector();
     
     @Test
     public void testProtectRedirectUrlShouldRemoveHTTPFromURL() {
