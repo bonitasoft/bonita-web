@@ -85,6 +85,8 @@ public class LoginServlet extends HttpServlet {
         }
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = LoginManager.DEFAULT_DIRECT_URL;
+        } else {
+            redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
         }
         try {
             doLogin(request, tenantId);
@@ -129,7 +131,7 @@ public class LoginServlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
+    
     private String createRedirectUrl(final HttpServletRequest request, final String redirectURL) {
         return new RedirectUrlBuilder(redirectURL).build()
                 .getUrl();
