@@ -71,7 +71,7 @@ public class UserListingAdminPage extends ItemListingPage<UserItem> {
     }
 
     private Clickable addUserLink() {
-        return new Link(_("Create"), _("Opens a popup to create a user"), 
+        return new Link(_("Create my key"), _("Opens a popup to create a user"), 
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new PopupAddUserPage())));
     }
 
