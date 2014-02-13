@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.uib.databinder;
+package org.bonitasoft.console.client.uib.formatter;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
@@ -24,26 +24,30 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
-public class DataFactory {
+public class Formatter {
 
-    public static Data createAssignedTo(UserItem user) {
+    public static String formatPriority(String value) {
+        return new PriorityFormatter().format(value);
+    }
+
+    public static String formatUser(final UserItem user) {
         if(user == null) {
-            return new Data(_("Unassigned"));
+            return _("Unassigned");
         }
-        return new Data(user.getFirstName() + " " + user.getLastName());
+        return user.getFirstName() + " " + user.getLastName();
     }
 
-    public static Data createDate(String date, DateFormat.FORMAT format) {
+    public static String formatDate(final String date, final DateFormat.FORMAT format) {
         if(StringUtil.isBlank(date)) {
-            return new Data(_("No data."));
+            return _("No data.");
         }
-        return new Data(DateFormat.formatToFormat(date, DateFormat.FORMAT.SQL, format));
+        return DateFormat.formatToFormat(date, DateFormat.FORMAT.SQL, format);
     }
 
-    public static Data createDate(Date date, DateFormat.FORMAT format) {
+    public static String formatDate(final Date date, final DateFormat.FORMAT format) {
         if(date == null) {
-            return new Data(_("No data."));
+            return _("No data.");
         }
-        return new Data(DateFormat.dateToFormat(date, format));
+        return DateFormat.dateToFormat(date, format);
     }
 }

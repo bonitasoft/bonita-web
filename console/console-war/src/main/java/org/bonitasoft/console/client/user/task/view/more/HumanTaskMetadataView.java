@@ -16,53 +16,52 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
-import static org.bonitasoft.console.client.uib.databinder.DataBinder.bind;
-import static org.bonitasoft.console.client.uib.databinder.DataFactory.createAssignedTo;
-import static org.bonitasoft.console.client.uib.databinder.DataFactory.createDate;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY_RELATIVE;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.HeadingElement;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
-import org.bonitasoft.console.client.uib.databinder.Data;
-import org.bonitasoft.console.client.uib.formatter.FormatterFactory;
+import org.bonitasoft.console.client.uib.formatter.Formatter;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class HumanTaskMetadataView extends Composite {
 
     @UiField(provided = true)
     MetadataMessages messages = new MetadataMessages();
-    @UiField
-    DivElement appName;
-    @UiField
-    DivElement appVersion;
+
+    @UiField(provided = true)
+    IHumanTaskItem task;
+
     @UiField
     AnchorElement caseId;
-    @UiField
-    DivElement state;
+
     @UiField
     DivElement priority;
+
     @UiField
     DivElement assignedTo;
+
     @UiField
     DivElement dueDate;
+
     @UiField
     DivElement lastUpdateDate;
+
     @UiField
     DivElement assignedDate;
+
     @UiField
     ParagraphElement description;
-    @UiField
-    HeadingElement name;
 
     interface Binder extends UiBinder<HTMLPanel, HumanTaskMetadataView> {
     }
@@ -70,20 +69,24 @@ public class HumanTaskMetadataView extends Composite {
     private static Binder binder = GWT.create(Binder.class);
 
     public HumanTaskMetadataView(final IHumanTaskItem task) {
+        this.task = task;
         initWidget(binder.createAndBindUi(this));
 
-        bind(new Data(task.ensureName())).to(name);
-        bind(new Data(task.getProcess().ensureName())).to(appName);
-        bind(new Data(task.getProcess().getVersion())).to(appVersion);
-        bind(new Data(task.getCaseId())).to(caseId);
-        bind(new Data(task.getState())).to(state);
-        bind(new Data(FormatterFactory.formatPriority(task.getPriority()))).to(priority);
-        bind(createAssignedTo(task.getAssignedUser())).to(assignedTo);
-        bind(createDate(task.getDueDate(), DISPLAY_RELATIVE)).to(dueDate);
-        bind(createDate(task.getLastUpdateDate(), DISPLAY)).to(lastUpdateDate);
-        bind(createDate(task.getAssignedDate(), DISPLAY)).to(assignedDate);
-        bind(new Data(task.ensureDescription()).or(_("No description."))).to(description);
+        append(caseId, task.getCaseId().toString());
+        append(priority, Formatter.formatPriority(task.getPriority()));
+        append(assignedTo, Formatter.formatUser(task.getAssignedUser()));
+        append(dueDate, Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
+        append(lastUpdateDate, Formatter.formatDate(task.getLastUpdateDate(), DISPLAY));
+        append(assignedDate, Formatter.formatDate(task.getAssignedDate(), DISPLAY));
 
-        MetadataTaskBuilder.setCaseHref(caseId, task.getCaseId());
+        if(!StringUtil.isBlank(task.ensureDescription())) {
+            description.setInnerText(task.ensureDescription());
+        }
+
+        MetadataTaskBuilder.setCaseHref(caseId, task.getCaseId(), false);
+    }
+
+    private void append(Node node, String text) {
+        node.appendChild(Document.get().createTextNode(text));
     }
 }

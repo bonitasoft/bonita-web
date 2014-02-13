@@ -80,7 +80,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ArchivedHumanTaskItem task) {
         MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addCaseId(task);
+        metadatas.addCaseId(task, false);
         metadatas.addAppsName();
         metadatas.addDueDate(DateFormat.FORMAT.DISPLAY_RELATIVE);
         metadatas.addPriority();

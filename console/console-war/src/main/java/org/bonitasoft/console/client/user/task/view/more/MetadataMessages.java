@@ -28,14 +28,6 @@ public class MetadataMessages {
         return _("Apps");
     }
 
-    String type_title() {
-        return _("The type of the task");
-    }
-
-    String type_label() {
-        return _("Type");
-    }
-
     String state_title() {
         return _("The state of the task");
     }
@@ -92,14 +84,6 @@ public class MetadataMessages {
         return _("Assigned date");
     }
 
-    String executed_by_title() {
-        return _("Name of the user which last executed this task");
-    }
-
-    String executed_by_label() {
-        return _("Executed by");
-    }
-
     String due_date_title() {
         return _("The date while the task must be finished");
     }
@@ -107,4 +91,9 @@ public class MetadataMessages {
     String due_date_label() {
         return _("Due date");
     }
+
+    String no_description() {
+        return _("No description.");
+    }
+
 }

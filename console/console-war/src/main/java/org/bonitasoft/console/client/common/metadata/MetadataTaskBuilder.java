@@ -25,8 +25,12 @@ import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Element;
+import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.uib.databinder.SafeHtmlParser;
+import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
+import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
@@ -75,13 +79,13 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaAppsVersion());
     }
 
-    public void addCaseId(final IFlowNodeItem task) {
+    public void addCaseId(final IFlowNodeItem task, boolean admin) {
         final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.caseId(
                 _("The id of the related case"),
                 _("Case"),
                 task.getCaseId().toString()))));
         add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, new Html(anchor)));
-        setCaseHref(anchor, task.getCaseId());
+        setCaseHref(anchor, task.getCaseId(), admin);
     }
 
     /**
@@ -90,18 +94,19 @@ public class MetadataTaskBuilder extends MetadataBuilder {
      * @param anchor
      * @param caseId
      */
-    public static void setCaseHref(final AnchorElement anchor, final APIID caseId) {
+    public static void setCaseHref(final AnchorElement anchor, final APIID caseId, final boolean admin) {
         APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(caseId);
         request.run(new APICallback() {
 
             @Override
             public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-                anchor.setHref("#?id=" + caseId + "&_p=casemoredetails&_pf=" + Session.getCurrentProfile());
+                anchor.setHref("#?id=" + caseId + "&_p=" + ((admin) ? CaseMoreDetailsAdminPage.TOKEN : CaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
             }
 
             @Override
             protected void on404NotFound(String message) {
-                anchor.setHref("#?id=" + caseId + "&_p=archivedcasemoredetails&_pf=" + Session.getCurrentProfile());
+
+                anchor.setHref("#?id=" + caseId + "&_p=" + ((admin) ? ArchivedCaseMoreDetailsAdminPage.TOKEN : ArchivedCaseMoreDetailsPage.TOKEN) +"&_pf=" + Session.getCurrentProfile());
             }
         });
     }

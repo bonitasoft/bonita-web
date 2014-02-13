@@ -18,21 +18,27 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="messages" type="org.bonitasoft.console.client.user.task.view.more.MetadataMessages"/>
+    <ui:with field="task" type="org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem" />
 
     <g:HTMLPanel styleName="metadatas">
-        <h1 ui:field="name" />
+        <h1>
+            <ui:text from="{task.ensureName}" />
+        </h1>
         <div class="definitions">
             <a ui:field="caseId" class="definition caseid" title="{messages.case_id_title}">
                 <label><ui:text from="{messages.case_id_label}" />: </label>
             </a>
-            <div ui:field="appName" class="definition displayname" title="{messages.app_title}">
+            <div class="definition displayname" title="{messages.app_title}">
                 <label><ui:text from="{messages.app_label}" />: </label>
+                <ui:text from="{task.getProcess.ensureName}" />
             </div>
-            <div ui:field="appVersion" class="definition version" title="{messages.app_version_title}">
+            <div class="definition version" title="{messages.app_version_title}">
                 <label><ui:text from="{messages.app_version_label}" />: </label>
+                <ui:text from="{task.getProcess.getVersion}" />
             </div>
-            <div ui:field="state" class="definition state" title="{messages.state_title}">
+            <div class="definition state" title="{messages.state_title}">
                 <label><ui:text from="{messages.state_label}" />: </label>
+                <ui:text from="{task.getState}" />
             </div>
             <div ui:field="priority" class="definition priority" title="{messages.priority_title}">
                 <label><ui:text from="{messages.priority_label}" />: </label>
@@ -51,7 +57,7 @@
             </div>
         </div>
         <div class="description">
-            <p ui:field="description" />
+            <p ui:field="description"><ui:text from="{messages.no_description}" /></p>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>
