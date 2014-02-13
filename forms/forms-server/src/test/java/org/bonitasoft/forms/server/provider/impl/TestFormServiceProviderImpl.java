@@ -38,11 +38,13 @@ import org.bonitasoft.engine.bpm.bar.BarResource;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.expression.ExpressionBuilder;
 import org.bonitasoft.engine.expression.ExpressionType;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -370,6 +372,56 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
                 .get(0).getId();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
+        final Map<String, Object> context = new HashMap<String, Object>();
+        context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
+        context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
+        context.put(FormServiceProviderUtil.API_SESSION, getSession());
+        final FormFieldValue urlFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc1", context);
+        Assert.assertEquals("the value type for a URL document should be a String", String.class.getName(), urlFieldValue.getValueType());
+        Assert.assertEquals("the URL is not right", "www.bonitasoft.org", urlFieldValue.getValue());
+        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+
+        final FormFieldValue fileFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc2", context);
+        Assert.assertEquals("the value type for a File document should be a File", File.class.getName(), fileFieldValue.getValueType());
+        Assert.assertEquals("the filename is not right", "filename.txt", fileFieldValue.getValue());
+        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+    }
+
+    @Test
+    public void testGetArchivedAttachmentFormFieldValue() throws Exception {
+        final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
+        final Map<String, Object> urlContext = new HashMap<String, Object>();
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+            }
+        }.waitUntil());
+        long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
+        processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
+        processAPI.executeFlowNode(activityInstanceId);
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+            }
+        }.waitUntil());
+        activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
+        processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
+        processAPI.executeFlowNode(activityInstanceId);
+        Assert.assertTrue("no archived process isnatnce was found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
+                builder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+                return processAPI.searchArchivedProcessInstances(builder.done()).getCount() == 1;
+            }
+        }.waitUntil());
+        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
+        urlContext.put(FormServiceProviderUtil.RECAP_FORM_TYPE, Boolean.TRUE.toString());
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
