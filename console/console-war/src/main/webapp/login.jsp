@@ -15,6 +15,7 @@
 <%@page language="java"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.net.URLEncoder"%>
+<%@page import="org.apache.commons.lang3.StringEscapeUtils"%>
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPUtils"%>
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPI18n"%>
 <%
@@ -22,7 +23,7 @@
     JSPI18n i18n = new JSPI18n(JSP); 
 
     // Build Action URL
-    final String tenantId = JSP.getParameter("tenant");
+    final String tenantId = StringEscapeUtils.escapeHtml4(JSP.getParameter("tenant"));
     String redirectUrl = JSP.getParameter("redirectUrl");
 
     StringBuffer actionUrl = new StringBuffer("loginservice?");
@@ -112,7 +113,7 @@
 							<label for="username"><%=i18n._("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%=JSP.getSessionOrCookie("username", "")%>" placeholder="<%=i18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>" placeholder="<%=i18n._("User")%>" type="text" tabindex="1" maxlength="50" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 					</div>
 					<div class="formentry" title="<%=i18n._("Enter your password")%>">

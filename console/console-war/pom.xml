@@ -18,7 +18,7 @@
 		<enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
 		<enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
 		<enable.engine.listener.end>--&gt;</enable.engine.listener.end>
-    	<jacoco.skip>true</jacoco.skip>
+		<jacoco.skip>true</jacoco.skip>
 
 	</properties>
 
@@ -87,6 +87,12 @@
 			<artifactId>gwt-user</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<resources>
@@ -264,9 +270,9 @@
 				<executions>
 					<execution>
 						<phase>integration-test</phase>
- 						<configuration>
+						<configuration>
 							<skipITs>true</skipITs>
-						</configuration> 
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -409,7 +415,7 @@
 											<destFileName>bonita-portal-theme-css.zip</destFileName>
 										</artifactItem>
 									</artifactItems>
-									 <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
+									<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
