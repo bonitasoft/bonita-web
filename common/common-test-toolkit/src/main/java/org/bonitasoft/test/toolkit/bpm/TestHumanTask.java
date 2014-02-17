@@ -84,6 +84,10 @@ public class TestHumanTask extends AbstractManualTask {
         return this.humanTaskInstance.getId();
     }
 
+    public long getCaseId() {
+        return humanTaskInstance.getParentProcessInstanceId();
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.bonitasoft.test.toolkit.bpm.AbstractManualTask#getDescription()
