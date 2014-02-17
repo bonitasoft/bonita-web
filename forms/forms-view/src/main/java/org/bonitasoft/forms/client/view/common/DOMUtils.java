@@ -476,17 +476,11 @@ public class DOMUtils {
      */
     native public boolean resizeFrame(String frameId)
     /*-{
-        var formFrameWindow = window.parent;
-        var framePageHeight = formFrameWindow.document.getElementById("footerpusher").offsetHeight;
-        if (formFrameWindow != window.top) {
-            var parentWindow = formFrameWindow.parent;
-            var formFrame = parentWindow.document.getElementById(frameId);
-            if (formFrame != null) {
-                if (formFrame.scrollHeight < framePageHeight) {
-                    formFrame.style.height = framePageHeight + "px";
-                }
-                return true;
-            }
+        var frame = window.top.document.getElementById(frameId),
+            form = frame.contentDocument.getElementById("main");
+        if (window.parent != window.top && frame) {
+            frame.height = form.offsetHeight;
+            return true;
         }
         return false;
     }-*/;
