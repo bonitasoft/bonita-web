@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-test\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-14 17:24+0100\n"
-"PO-Revision-Date: 2014-02-14 11:47-0500\n"
+"POT-Creation-Date: 2014-02-17 11:03+0100\n"
+"PO-Revision-Date: 2014-02-17 08:00-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -104,6 +104,7 @@ msgstr "Configuration"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:56
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
 msgid "Profiles"
 msgstr "Privilèges"
 
@@ -3131,10 +3132,6 @@ msgstr "Importer/Exporter"
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
 msgid "user privilege settings"
 msgstr "Paramètres des privilèges utilisateur"
-
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
-msgid "User rights"
-msgstr "User rights"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:37
 msgid "Monitoring"
