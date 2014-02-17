@@ -25,6 +25,7 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.ParagraphElement;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -46,19 +47,19 @@ public class HumanTaskMetadataView extends Composite {
     AnchorElement caseId;
 
     @UiField
-    DivElement priority;
+    SpanElement priority;
 
     @UiField
-    DivElement assignedTo;
+    SpanElement assignedTo;
 
     @UiField
-    DivElement dueDate;
+    SpanElement dueDate;
 
     @UiField
-    DivElement lastUpdateDate;
+    SpanElement lastUpdateDate;
 
     @UiField
-    DivElement assignedDate;
+    SpanElement assignedDate;
 
     @UiField
     ParagraphElement description;
@@ -72,21 +73,16 @@ public class HumanTaskMetadataView extends Composite {
         this.task = task;
         initWidget(binder.createAndBindUi(this));
 
-        append(caseId, task.getCaseId().toString());
-        append(priority, Formatter.formatPriority(task.getPriority()));
-        append(assignedTo, Formatter.formatUser(task.getAssignedUser()));
-        append(dueDate, Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
-        append(lastUpdateDate, Formatter.formatDate(task.getLastUpdateDate(), DISPLAY));
-        append(assignedDate, Formatter.formatDate(task.getAssignedDate(), DISPLAY));
+        priority.setInnerText(Formatter.formatPriority(task.getPriority()));
+        assignedTo.setInnerText(Formatter.formatUser(task.getAssignedUser()));
+        dueDate.setInnerText(Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
+        lastUpdateDate.setInnerText(Formatter.formatDate(task.getLastUpdateDate(), DISPLAY));
+        assignedDate.setInnerText(Formatter.formatDate(task.getAssignedDate(), DISPLAY));
 
         if(!StringUtil.isBlank(task.ensureDescription())) {
             description.setInnerText(task.ensureDescription());
         }
 
         MetadataTaskBuilder.setCaseHref(caseId, task.getCaseId(), false);
-    }
-
-    private void append(Node node, String text) {
-        node.appendChild(Document.get().createTextNode(text));
     }
 }

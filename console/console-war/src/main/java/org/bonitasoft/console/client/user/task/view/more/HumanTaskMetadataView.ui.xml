@@ -27,33 +27,39 @@
         <div class="definitions">
             <a ui:field="caseId" class="definition caseid" title="{messages.case_id_title}">
                 <label><ui:text from="{messages.case_id_label}" />: </label>
+                <span><ui:text from="{task.getCaseId.toString}" /></span>
             </a>
             <div class="definition displayname" title="{messages.app_title}">
                 <label><ui:text from="{messages.app_label}" />: </label>
-                <ui:text from="{task.getProcess.ensureName}" />
+                <span><ui:text from="{task.getProcess.ensureName}" /></span>
             </div>
             <div class="definition version" title="{messages.app_version_title}">
                 <label><ui:text from="{messages.app_version_label}" />: </label>
-                <ui:text from="{task.getProcess.getVersion}" />
+                <span><ui:text from="{task.getProcess.getVersion}" /></span>
             </div>
             <div class="definition state" title="{messages.state_title}">
                 <label><ui:text from="{messages.state_label}" />: </label>
-                <ui:text from="{task.getState}" />
+                <span><ui:text from="{task.getState}" /></span>
             </div>
-            <div ui:field="priority" class="definition priority" title="{messages.priority_title}">
+            <div class="definition priority" title="{messages.priority_title}">
                 <label><ui:text from="{messages.priority_label}" />: </label>
+                <span ui:field="priority" />
             </div>
-            <div ui:field="assignedTo" class="definition assigned_id" title="{messages.assigned_to_title}">
+            <div class="definition assigned_id" title="{messages.assigned_to_title}">
                 <label><ui:text from="{messages.assigned_to_label}" />: </label>
+                <span ui:field="assignedTo" />
             </div>
-            <div ui:field="dueDate" class="definition duedate" title="{messages.due_date_title}">
+            <div class="definition duedate" title="{messages.due_date_title}">
                 <label><ui:text from="{messages.due_date_label}" />: </label>
+                <span ui:field="dueDate" />
             </div>
-            <div ui:field="lastUpdateDate" class="definition last_update_date" title="{messages.last_update_date_title}">
+            <div class="definition last_update_date" title="{messages.last_update_date_title}">
                 <label><ui:text from="{messages.last_update_date_label}" />: </label>
+                <span ui:field="lastUpdateDate" />
             </div>
-            <div ui:field="assignedDate" class="definition assigned_date" title="{messages.assigned_date_title}">
+            <div class="definition assigned_date" title="{messages.assigned_date_title}">
                 <label><ui:text from="{messages.assigned_date_label}" />: </label>
+                <span ui:field="assignedDate" />
             </div>
         </div>
         <div class="description">

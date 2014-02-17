@@ -64,7 +64,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
         @SafeHtmlTemplates.Template(
                 "<a class='definition caseid' title='{0}'>" +
-                        "<label>{1}: </label>{2}" +
+                        "<label>{1}: </label><span>{2}</span>" +
                         "</a>")
         SafeHtml caseId(String title, String label, String id);
     }
