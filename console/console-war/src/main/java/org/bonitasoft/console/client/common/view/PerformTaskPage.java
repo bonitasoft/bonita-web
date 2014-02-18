@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
@@ -41,6 +42,8 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
+import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
+import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
@@ -80,6 +83,17 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     public PerformTaskPage(final APIID taskId) {
         this();
         this.addParameter(PARAMETER_ITEM_ID, taskId.toString());
+    }
+
+    /**
+     * We don't need any header and it screw up the page's size.
+     *
+     * @param header
+     * @return
+     */
+    @Override
+    protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
+        return null;
     }
 
     @Override

@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -59,6 +60,14 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     }
 
     @Override
+    public String ensureDescription() {
+        if(StringUtil.isBlank(getDisplayDescription())) {
+            return getDescription();
+        }
+        return getDisplayDescription();
+    }
+
+    @Override
     public final void setName(final String name) {
         this.setAttribute(ATTRIBUTE_NAME, name);
     }
@@ -76,6 +85,14 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     @Override
     public final String getDisplayName() {
         return getAttributeValue(ATTRIBUTE_DISPLAY_NAME);
+    }
+
+    @Override
+    public String ensureName() {
+        if(StringUtil.isBlank(getDisplayName())) {
+            return getName();
+        }
+        return getDisplayName();
     }
 
     @Override

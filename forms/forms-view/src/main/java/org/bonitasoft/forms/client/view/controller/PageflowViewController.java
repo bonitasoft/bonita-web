@@ -18,8 +18,10 @@ package org.bonitasoft.forms.client.view.controller;
 
 import java.util.Map;
 
+import com.google.gwt.user.client.Timer;
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.ReducedFormPage;
+import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
 import org.bonitasoft.forms.client.model.exception.AbortedFormException;
 import org.bonitasoft.forms.client.model.exception.CanceledFormException;
 import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
@@ -386,12 +388,41 @@ public class PageflowViewController {
         formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, confirmationPageHandler);
     }
 
+    /**
+     * If the page is containned in a form, resize the frame to fit the page height
+     */
+    protected void resizeFrame() {
+
+        final Timer timer = new Timer() {
+
+            @Override
+            public void run() {
+                if (domUtils.isPageInFrame()) {
+                    domUtils.resizeFrame(DOMUtils.FORM_FRAME_ID);
+                }
+            }
+        };
+        timer.schedule(300);
+    }
+
     protected ConfirmationPageHandler createConfirmationPageHandler() {
-        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, getDefaultConfirmationMessage(), formID, urlContext);
+        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, getDefaultConfirmationMessage(), formID, urlContext) {
+            @Override
+            public void onSuccess(final ReducedHtmlTemplate result) {
+                super.onSuccess(result);
+                resizeFrame();
+            }
+        };
     }
 
     private String getDefaultConfirmationMessage() {
-        return FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        String confirmationMessage = null;
+        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            confirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        } else {
+            confirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        }
+        return confirmationMessage;
     }
 
 }

@@ -174,9 +174,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final IFlowNodeItem task) {
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        metadatas.addCaseId(task, true);
         metadatas.addAppsName();
         metadatas.addAppsVersion();
-        metadatas.addCaseId();
         metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();

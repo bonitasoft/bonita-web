@@ -46,7 +46,7 @@ import org.bonitasoft.web.toolkit.client.common.TreeNode;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.FlowNodeContextAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
@@ -144,7 +144,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         // columns configuration
                         .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
                         .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(FlowNodeItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addColumn(new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
                         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), false)
 
@@ -163,7 +163,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         // columns configuration
                         .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
                         .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), true, true)
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
 
@@ -188,7 +188,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
                         .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
                         .addColumn(ArchivedActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(ArchivedActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addColumn(new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
                         .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
 

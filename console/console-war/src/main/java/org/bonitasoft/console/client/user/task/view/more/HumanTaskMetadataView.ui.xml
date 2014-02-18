@@ -1,0 +1,69 @@
+<!--~
+  ~ Copyright (C) 2014 BonitaSoft S.A.
+  ~ BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 2.0 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for uib details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
+  -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="messages" type="org.bonitasoft.console.client.user.task.view.more.MetadataMessages"/>
+    <ui:with field="task" type="org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem" />
+
+    <g:HTMLPanel styleName="metadatas">
+        <h1>
+            <ui:text from="{task.ensureName}" />
+        </h1>
+        <div class="definitions">
+            <a ui:field="caseId" class="definition caseid" title="{messages.case_id_title}">
+                <label><ui:text from="{messages.case_id_label}" />: </label>
+                <span><ui:text from="{task.getCaseId.toString}" /></span>
+            </a>
+            <div class="definition displayname" title="{messages.app_title}">
+                <label><ui:text from="{messages.app_label}" />: </label>
+                <span><ui:text from="{task.getProcess.ensureName}" /></span>
+            </div>
+            <div class="definition version" title="{messages.app_version_title}">
+                <label><ui:text from="{messages.app_version_label}" />: </label>
+                <span><ui:text from="{task.getProcess.getVersion}" /></span>
+            </div>
+            <div class="definition state" title="{messages.state_title}">
+                <label><ui:text from="{messages.state_label}" />: </label>
+                <span><ui:text from="{task.getState}" /></span>
+            </div>
+            <div class="definition priority" title="{messages.priority_title}">
+                <label><ui:text from="{messages.priority_label}" />: </label>
+                <span ui:field="priority" />
+            </div>
+            <div class="definition assigned_id" title="{messages.assigned_to_title}">
+                <label><ui:text from="{messages.assigned_to_label}" />: </label>
+                <span ui:field="assignedTo" />
+            </div>
+            <div class="definition duedate" title="{messages.due_date_title}">
+                <label><ui:text from="{messages.due_date_label}" />: </label>
+                <span ui:field="dueDate" />
+            </div>
+            <div class="definition last_update_date" title="{messages.last_update_date_title}">
+                <label><ui:text from="{messages.last_update_date_label}" />: </label>
+                <span ui:field="lastUpdateDate" />
+            </div>
+            <div class="definition assigned_date" title="{messages.assigned_date_title}">
+                <label><ui:text from="{messages.assigned_date_label}" />: </label>
+                <span ui:field="assignedDate" />
+            </div>
+        </div>
+        <div class="description">
+            <p ui:field="description"><ui:text from="{messages.no_description}" /></p>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

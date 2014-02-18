@@ -1,16 +1,16 @@
 /**
- * Copyright (C) 2009 BonitaSoft S.A.
- * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
+ * Copyright (C) 2014 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -1314,7 +1314,7 @@ public class FormPagesViewController {
     }
 
     /**
-     * If the page is containned in a form, resize the frame to fit the page height
+     * If the page is contained in a form, resize the frame to fit the page height
      */
     protected void resizeFrame() {
 
@@ -1346,13 +1346,23 @@ public class FormPagesViewController {
     }
 
     private void redirectToConfirmationPage() {
-        final String defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        String defaultConfirmationMessage = null;
+        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            defaultConfirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        } else {
+            defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        }
         formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, createConfirmationPageHandler(defaultConfirmationMessage));
     }
 
     private ConfirmationPageHandler createConfirmationPageHandler(final String defaultConfirmationMessage) {
-        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, defaultConfirmationMessage, formID, urlContext)
-                .setCurrentPageHTMLPanel(pageHTMLPanel);
+        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, defaultConfirmationMessage, formID, urlContext) {
+            @Override
+            public void onSuccess(final ReducedHtmlTemplate result) {
+                super.onSuccess(result);
+                resizeFrame();
+            }
+        }.setCurrentPageHTMLPanel(pageHTMLPanel);
     }
 
 }

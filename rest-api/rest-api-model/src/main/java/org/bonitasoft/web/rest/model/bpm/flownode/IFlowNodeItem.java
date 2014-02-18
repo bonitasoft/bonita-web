@@ -176,4 +176,8 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
      */
     boolean isMultiInsatnceActivity();
 
+    public String ensureName();
+
+    public String ensureDescription();
+
 }
