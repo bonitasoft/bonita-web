@@ -39,14 +39,14 @@ public class Formatter {
 
     public static String formatDate(final String date, final DateFormat.FORMAT format) {
         if(StringUtil.isBlank(date)) {
-            return _("No data.");
+            return _("No data");
         }
         return DateFormat.formatToFormat(date, DateFormat.FORMAT.SQL, format);
     }
 
     public static String formatDate(final Date date, final DateFormat.FORMAT format) {
         if(date == null) {
-            return _("No data.");
+            return _("No data");
         }
         return DateFormat.dateToFormat(date, format);
     }
