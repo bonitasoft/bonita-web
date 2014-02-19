@@ -290,7 +290,7 @@
 				<dependency>
 					<groupId>org.bonitasoft.web.tooling</groupId>
 					<artifactId>bonita-web-devtools</artifactId>
-					<version>1.0.0</version>
+					<version>1.0.1</version>
 					<scope>runtime</scope>
 				</dependency>
 
