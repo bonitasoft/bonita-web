@@ -30,14 +30,17 @@ import org.junit.Test;
  */
 public class SecurityPropertiesTest {
 
+    String initialBonitaHome = "";
+
     @Before
     public void setUp() throws Exception {
+        initialBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
     }
 
     @After
     public void tearDown() {
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, initialBonitaHome);
     }
 
     /*

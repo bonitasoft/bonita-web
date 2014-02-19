@@ -35,16 +35,20 @@ public class WebBonitaConstantsUtilsTest {
 
     private WebBonitaConstantsTenancyImpl constants;
 
+    String initialBonitaHome = "";
+
     @Before
     public void setUp() throws Exception {
-        // Those tests depends on files in test resources!
-        System.setProperty(WebBonitaConstants.BONITA_HOME, TEST_BONITA_HOME);
+        initialBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
         constants = new WebBonitaConstantsTenancyImpl(1L);
     }
 
     @After
     public void tearDown() {
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        if (initialBonitaHome != null) {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, initialBonitaHome);
+        }
     }
 
     @Test
