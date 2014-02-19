@@ -108,7 +108,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     }
 
     private Clickable newEditUserButton() {
-        return new ButtonAction("btn-edituser", _("Update user"), _("Update the user"), new CheckValidSessionBeforeAction(createEditUserAction()));
+        return new ButtonAction("btn-edituser", _("Edit user"), _("Update the user"), new CheckValidSessionBeforeAction(createEditUserAction()));
     }
 
     private Action createEditUserAction() {

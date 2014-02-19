@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 BonitaSoft S.A.
+ * Copyright (C) 2013 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,24 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.menu.view.technicaluser;
+package org.bonitasoft.console.common.server.login.servlet;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
-import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
-import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
- * @author Colin PUY
+ * @author Paul AMAR
  *
  */
-public class PortalMenuItem extends MenuFolder {
+public class URLProtector {
 
-    public PortalMenuItem() {
-        super(_("Configuration"));
-        addMenuItem(new MenuLink(_("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
+    protected List<String> tokens = Arrays.asList("https", "http", "www", "//", "\\.", ":");
+        
+    public String protectRedirectUrl(String redirectUrl) {
+        return removeTokenFromUrl(redirectUrl, new ArrayList<String>(tokens));
     }
-
+    
+    private String removeTokenFromUrl(String redirectUrl, List<String> tokens){
+        if (tokens.size() > 0) {
+            return removeTokenFromUrl(redirectUrl.replaceAll(tokens.remove(0), ""), tokens);
+        }
+        return redirectUrl;
+    }
+    
 }

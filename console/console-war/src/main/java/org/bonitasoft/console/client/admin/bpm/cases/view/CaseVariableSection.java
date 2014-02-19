@@ -16,7 +16,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
 public class CaseVariableSection extends Section {
 
     public CaseVariableSection(CaseItem item) {
-        super(new JsId("casevariable"), _("Case variable"));
+        super(new JsId("casevariable"), _("Case variables"));
         addBody(caseVariableTable(item));
     }
 

@@ -252,13 +252,13 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemListingFilter availableTasksFilter() {
-        return new ItemListingFilter(FILTER_UNASSIGNED, _("Available tasks"), _("Unassigned tasks I can perform"), TABLE_UNASSIGNED)
+        return new ItemListingFilter(FILTER_UNASSIGNED, _("Available tasks"), _("Unassigned tasks I can do"), TABLE_UNASSIGNED)
                 .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
                 .addFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, "0");
     }
 
     private ItemListingFilter toDoFilter() {
-        return new ItemListingFilter(FILTER_AVAILABLE, _("To do"), _("Tasks I can perform"), TABLE_AVAILABLE)
+        return new ItemListingFilter(FILTER_AVAILABLE, _("To do"), _("Tasks I can do"), TABLE_AVAILABLE)
                 .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());
     }
 
@@ -271,7 +271,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemListingFilter doneFilter() {
-        return new ItemListingFilter(FILTER_PERFORMED, _("Done"), _("Display tasks I have performed"), TABLE_PERFORMED);
+        return new ItemListingFilter(FILTER_PERFORMED, _("Done"), _("Display tasks I have done"), TABLE_PERFORMED);
     }
 
     private ItemListingFilter hiddenFilter() {

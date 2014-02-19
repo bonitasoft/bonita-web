@@ -202,8 +202,20 @@ public class TestProcess {
         return setEnable(initiator.getSession(), enabled);
     }
 
+    /**
+     * Deprecated, use {@link #enable()} or {@link #disable()}
+     */
+    @Deprecated
     public TestProcess setEnable(final boolean enabled) {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), enabled);
+    }
+    
+    public TestProcess enable() {
+        return setEnable(TestToolkitCtx.getInstance().getInitiator(), true);
+    }
+    
+    public TestProcess disable() {
+        return setEnable(TestToolkitCtx.getInstance().getInitiator(), false);
     }
 
     /**
@@ -289,7 +301,7 @@ public class TestProcess {
         testCase.waitProcessState(apiSession, TestCase.READY_STATE);
         return testCase;
     }
-
+    
     protected ProcessInstance createProcesInstance(final APISession apiSession) {
         try {
             return getProcessAPI(apiSession).startProcess(apiSession.getUserId(), processDefinition.getId());

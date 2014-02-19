@@ -361,7 +361,7 @@ public class SerieChart extends Chart {
 
             case DATETIME:
                 format = AXIS_FORMAT.DATE_CUSTOM;
-                formatter = _("mm/dd/yyyy hh:MM:ss");
+                formatter = _("MM/dd/yyyy h:mm:ss a");
                 break;
 
             case TIME:
