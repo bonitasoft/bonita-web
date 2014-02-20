@@ -42,7 +42,7 @@ public class URLProtectorTest {
     
     @Test
     public void testProtectRedirectUrlIsNotChangedIfStartingWithBonitaPortal() {
-        assertEquals("bonita/portal#?_p=caselistinguser&test=http://www.google.fr", urlProtecter.protectRedirectUrl("bonita/portal#?_p=caselistinguser&test=http://www.google.fr"));        
+        assertEquals("portal/homepage#?_p=caselistinguser&test=http://www.google.fr", urlProtecter.protectRedirectUrl("portal/homepage#?_p=caselistinguser&test=http://www.google.fr"));        
     }
     
 }
