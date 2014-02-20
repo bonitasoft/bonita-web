@@ -570,7 +570,7 @@ public class DOMUtils {
         Element theElement;
         theElement = DOM.getElementById("loading");
         if (theElement != null) {
-            theElement.getStyle().setProperty("display", "block");
+            theElement.getStyle().setProperty("display", "table");
             theElement.getStyle().setProperty("zIndex", "999");
         }
     }
