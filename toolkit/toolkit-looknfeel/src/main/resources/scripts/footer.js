@@ -5,18 +5,10 @@
 * 
 */
  
-window.onload = function(e){
-	var hash = window.location.hash;
-	var re = new RegExp("mode=([a-zA-Z0-9]*)");
-	var m = re.exec(hash);
-	if (m == null) {
-		alert("No match");
-	} else {	
-		var mode = m[1];
-		if (mode == "form") {
-			document.getElementById("footer").style.display="none";
-		} else {
-			document.getElementById("footer").style.display="block";
-		}
-	}
-}
+window.onload = function(){
+    "use strict";
+
+    if($(window.top.document).find("html").is(".ui-mobile") === true) {
+        $(".footer").hide();
+    }
+};

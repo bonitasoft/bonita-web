@@ -28,6 +28,7 @@ import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
+import org.bonitasoft.console.client.user.cases.view.FormsView;
 import org.bonitasoft.console.client.user.task.model.TaskAPI;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
@@ -42,8 +43,11 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
+import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
@@ -85,17 +89,6 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         this.addParameter(PARAMETER_ITEM_ID, taskId.toString());
     }
 
-    /**
-     * We don't need any header and it screw up the page's size.
-     *
-     * @param header
-     * @return
-     */
-    @Override
-    protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
-        return null;
-    }
-
     @Override
     public String defineToken() {
         return TOKEN;
@@ -125,8 +118,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         return Session.getUserId();
     }
 
-    private IFrame createFormIframe(final HumanTaskItem item, final boolean assignTask) {
-        return new IFrame(DOMUtils.FORM_FRAME_ID, buildTasksFormURL(item, assignTask), "100%", "700px");
+    private Component createFormIframe(final HumanTaskItem item, final boolean assignTask) {
+        return new UiComponent(new FormsView(buildTasksFormURL(item, assignTask)));
     }
 
     private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
@@ -156,6 +149,22 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
 
         return frameURL.toString();
+    }
+
+    /**
+     * We don't need any header and it screw up the page's size.
+     *
+     * @param header
+     * @return
+     */
+    @Override
+    protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
+        return null;
+    }
+
+    @Override
+    protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
+        return null;
     }
 
     @Override

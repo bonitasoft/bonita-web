@@ -1,4 +1,4 @@
-package org.bonitasoft.console.client.uib.databinder;
+package org.bonitasoft.console.client.uib;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;

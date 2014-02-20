@@ -398,7 +398,6 @@ public class PageflowViewController {
             @Override
             public void run() {
                 if (domUtils.isPageInFrame()) {
-                    domUtils.resizeFrame(DOMUtils.FORM_FRAME_ID);
                 }
             }
         };

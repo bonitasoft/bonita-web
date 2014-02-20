@@ -467,25 +467,6 @@ public class DOMUtils {
     }
 
     /**
-     * resize a frame to fit its content's height this method is meant to be called in the form frame (not in the
-     * application/console window)
-     * 
-     * @param frameId
-     *            the ID of the frame to resize
-     * @return true if the frame was found, false otherwise
-     */
-    native public boolean resizeFrame(String frameId)
-    /*-{
-        var frame = window.top.document.getElementById(frameId),
-            form = frame.contentDocument.getElementById("main");
-        if (window.parent != window.top && frame) {
-            frame.height = form.offsetHeight;
-            return true;
-        }
-        return false;
-    }-*/;
-
-    /**
      * Indicates whether the page is in a frame or not this method is meant to be called in the form frame (not in the
      * application window)
      * 
