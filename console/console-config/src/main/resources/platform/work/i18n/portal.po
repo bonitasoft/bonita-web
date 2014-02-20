@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-18 14:33+0100\n"
+"POT-Creation-Date: 2014-02-20 10:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
-#: console/console-war/src/main/webapp/login.jsp:113
+#: console/console-war/src/main/webapp/login.jsp:118
 msgid "User"
 msgstr ""
 
@@ -1354,7 +1354,7 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
-#: console/console-war/src/main/webapp/login.jsp:121
+#: console/console-war/src/main/webapp/login.jsp:126
 msgid "Password"
 msgstr ""
 
@@ -3281,30 +3281,34 @@ msgstr ""
 msgid "Error when updating %activityId% activity variables"
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:64
+#: console/console-war/src/main/webapp/login.jsp:65
 msgid "The server is not available"
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:64
+#: console/console-war/src/main/webapp/login.jsp:65
 msgid "Please, contact your administrator."
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:69
+#: console/console-war/src/main/webapp/login.jsp:70
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:73
+#: console/console-war/src/main/webapp/login.jsp:74
+msgid "This service is offline for maintenance. Please try later."
+msgstr ""
+
+#: console/console-war/src/main/webapp/login.jsp:78
 msgid "Unable to log in. Please check your username and password."
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:98
+#: console/console-war/src/main/webapp/login.jsp:103
 msgid "Welcome to"
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:98
+#: console/console-war/src/main/webapp/login.jsp:103
 msgid "Bonita BPM Portal"
 msgstr ""
 
-#: console/console-war/src/main/webapp/login.jsp:107
+#: console/console-war/src/main/webapp/login.jsp:112
 msgid "Login form"
 msgstr ""
