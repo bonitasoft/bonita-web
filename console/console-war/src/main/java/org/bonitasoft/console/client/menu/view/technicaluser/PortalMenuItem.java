@@ -31,7 +31,7 @@ public class PortalMenuItem extends MenuFolder {
 
     public PortalMenuItem() {
         super(_("Configuration"));
-        addMenuItem(new MenuLink(_("User rights"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
+        addMenuItem(new MenuLink(_("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
 }

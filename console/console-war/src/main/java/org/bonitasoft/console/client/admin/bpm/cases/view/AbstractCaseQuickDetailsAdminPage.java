@@ -116,7 +116,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     }
 
     private Definition lastExecutedTaskDefinition(final CaseItem item) {
-        final Text lastExecutedTask = new Text(_("No task performed"));
+        final Text lastExecutedTask = new Text(_("No task done"));
         lastExecutedTask.addFiller(new LastExecutedTaskFiller(item));
         return new Definition(_("Last executed task : ", new Arg("last_executed_Task", "")), "%%", lastExecutedTask);
     }

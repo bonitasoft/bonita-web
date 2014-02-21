@@ -70,7 +70,7 @@ public class UpdateUserPage extends Page {
 
     @Override
     public void defineTitle() {
-        this.setTitle(_("Update a user"));
+        this.setTitle(_("Edit a user"));
     }
 
     @Override

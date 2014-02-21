@@ -76,7 +76,7 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
 
     private ItemDetailsMetadata lastUpdateDate() {
         return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"),
-        		_("The date while the case has been last updated"));
+        		_("The date when the case was updated"));
     }
 
     private ItemDetailsMetadata state() {

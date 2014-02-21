@@ -35,7 +35,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction
 public class TaskButtonFactory {
 
     public Button createPerformTaskButton(Action performTask) {
-        return new ButtonPrimaryAction("btn-perform", _("Do it"), _("Perform"), performTask);
+        return new ButtonPrimaryAction("btn-perform", _("Do it"), _("Done"), performTask);
     }
 
     public Button createMoreDetailsButton(final Action more) {
@@ -50,7 +50,7 @@ public class TaskButtonFactory {
 
     public ButtonAction createIgnoreButton(UserTasksHideAction userTasksHideAction) {
         return new ButtonAction("btn-ignore", _("Hide"),
-                _("Ignore this task so I will no longer see it. Other allowed users will still see it"),
+                _("Hide this task so I will no longer see it. Other allowed users will still see it"),
                 userTasksHideAction);
     }
 

@@ -22,7 +22,7 @@ public class ProfileTypesI18N {
     // /////////////////////////////////////////
     protected static final String USER = _("User");
     
-    protected static final String USER_DESCRIPTION = _("The user can view and perform tasks and can start a new case of an app.");
+    protected static final String USER_DESCRIPTION = _("The user can view and perform tasks as well as start a new case of an app.");
     
     // /////////////////////////////////////////
     // // ADMINISTRATOR

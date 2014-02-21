@@ -81,7 +81,7 @@ public class OrganizationImportAndExportPage extends Page {
         container.addClass(CssClass.CELL);
         container.append(new Paragraph(_("This will import a file containing your whole organization data.")));
         container.append(new Paragraph(_("Be careful, your organization will be merged with existing data.")));
-        container.append(new Paragraph(_("In case of merge, the priority is given to the file")));
+        container.append(new Paragraph(_("In case of conflict, priority is given to the imported file")));
         container.append(uploadForm());
         return container;
     }
