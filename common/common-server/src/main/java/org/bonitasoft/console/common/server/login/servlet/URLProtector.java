@@ -30,7 +30,7 @@ public class URLProtector {
     protected List<String> tokens = Arrays.asList("https", "http", "www", "//", "\\.", ":");
         
     public String protectRedirectUrl(String redirectUrl) {
-        if (!redirectUrl.startsWith("bonita/portal")) {
+        if (!redirectUrl.startsWith("portal")) {
             return removeTokenFromUrl(redirectUrl, new ArrayList<String>(tokens));            
         } 
         return redirectUrl;
