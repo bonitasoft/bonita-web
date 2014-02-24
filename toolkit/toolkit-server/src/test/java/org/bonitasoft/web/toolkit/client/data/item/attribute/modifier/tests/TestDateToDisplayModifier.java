@@ -41,7 +41,7 @@ public class TestDateToDisplayModifier {
     public void testDateToDisplayModifierOK() {
         final DateToDisplayModifier test = new DateToDisplayModifier();
         final String result = test.clean("2012-09-28 01:13:37.666");
-        assertTrue(result.equals("09/28/2012 at 01:13"));
+        assertTrue(result.equals("09/28/2012 1:13 AM"));
     }
 
 }

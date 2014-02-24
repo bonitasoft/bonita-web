@@ -50,7 +50,7 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata lastUpdateDate() {
-        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated on"), _("The date while the app has been updated"));
+        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated on"), _("The date when the app was updated"));
     }
 
     public void addActivationState() {

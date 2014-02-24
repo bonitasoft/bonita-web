@@ -104,7 +104,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         return new ItemDetailsMetadata(
                 new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
                 _("Apps"),
-                _("The app responsible of the creation of this task"));
+                _("The app responsible for the creation of this task"));
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
@@ -127,7 +127,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 new DeployedJsId(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, UserItem.ATTRIBUTE_FIRSTNAME, UserItem.ATTRIBUTE_LASTNAME),
                 new DeployedUserReader(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).setDefaultValue(_("Unassigned")),
                 _("Assigned to"),
-                _("The user name of the user to which the task is assigned"));
+                _("The username to which the task is assigned."));
     }
 
     private ItemDetailsMetadata createMetaLastUpdateDate(final FORMAT format) {
@@ -138,20 +138,20 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     private ItemDetailsMetadata createMetaAssignedDate(final FORMAT format) {
         return new ItemDetailsMetadata(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_ASSIGNED_DATE).setDefaultValue(_("No data")),
                 _("Assigned date"),
-                _("The date when while the task has been assigned"));
+                _("The date when the task was assigned"));
     }
 
     private ItemDetailsMetadata createMetaExecutedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID),
                 _("Executed by"),
-                _("Name of the user which last executed this task"));
+                _("Name of the user who executed this task"));
     }
 
     private ItemDetailsMetadata createMetaDueDate(final FORMAT format) {
         return new ItemDetailsMetadata(
                 new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, format).setDefaultValue("No data"),
                 _("Due date"),
-                _("The date while the task must be finished"));
+                _("The date when the task must be finished"));
     }
 
 }

@@ -98,7 +98,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
             addBody(createFormIframe(task, true));
         } else if (!task.getAssignedId().equals(this.getUserId())) {
             ViewController.showView(TasksListingPage.TOKEN);
-            throw new APIException(_("You can't perform this task, it has already been assigned to someone else."));
+            throw new APIException(_("This task is already assigned to someone else."));
         } else {
             this.addBody(this.createFormIframe(task, false));
         }

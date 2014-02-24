@@ -32,7 +32,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 public class OrganizationMenuItem extends MenuFolder {
 
     public OrganizationMenuItem() {
-        super(_("Directory"));
+        super(_("Organization"));
         addMenuItem(new MenuLink(_("Users"), _("Show the user list"), UserListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(_("Groups"), _("Show the group list"), GroupListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(_("Roles"), _("Show the role list"), RoleListingPage.TOKEN));
