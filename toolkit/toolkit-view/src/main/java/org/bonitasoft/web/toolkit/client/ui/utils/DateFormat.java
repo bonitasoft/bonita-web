@@ -212,6 +212,10 @@ public abstract class DateFormat {
     // DATE OBJECT CONVERSIONS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static String dateToFormat(final Date date, final FORMAT format) {
+        return dateToFormat(date, format.getFormatString());
+    }
+
     public static String dateToFormat(final Date date, final String format) {
         if (date == null) {
             return null;

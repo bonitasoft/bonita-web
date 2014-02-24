@@ -244,7 +244,7 @@
 				 	.definitions{
 				 		min-width: @moreDetails-metadatas-definitions-minWidth;
 				 		.definition{
-							&.displayname{
+							&.displayname, &.parent-task{
 								padding: @moreDetails-metadatas-definitionWithIcon-padding;
 								.bg(@moreDetails-metadatas-definition-process-bgImage, @moreDetails-metadatas-definition-bgRepeat, @moreDetails-metadatas-definition-bgColor, @moreDetails-metadatas-definition-bgX, @moreDetails-metadatas-definition-bgY);
 							}
@@ -306,4 +306,23 @@
 	}
 }
 
+#formframe, .forms-view, .forms-view .frame {
+  height: 100%;
+  width: 100%;
+}
 
+.forms-view .toolbar {
+  margin: 30px 0 40px 0;
+  padding: 0 35px 0 40px;
+}
+
+.forms-view .toolbar.empty {
+  margin: 0;
+  padding: 0;
+}
+
+.page_performTask .body, .page_StartProcess .body, .page_DisplayCaseForm .body {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  overflow: hidden;
+}

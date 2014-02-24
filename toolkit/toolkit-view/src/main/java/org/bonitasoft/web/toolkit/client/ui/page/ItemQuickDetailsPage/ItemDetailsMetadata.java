@@ -19,6 +19,9 @@ package org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.component.Definition;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
+import org.bonitasoft.web.toolkit.client.ui.component.core.Node;
 
 /**
  * @author Séverin Moussel
@@ -26,13 +29,15 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
  */
 public class ItemDetailsMetadata {
 
-    private final AbstractAttributeReader attributeReader;
+    private AbstractAttributeReader attributeReader;
 
-    private final String label;
+    private String label;
 
-    private final String tooltip;
+    private String tooltip;
 
     private JsId jsId;
+
+    private Html representation;
 
     public ItemDetailsMetadata(final AbstractAttributeReader attributeReader, final String label, final String tooltip) {
         this.attributeReader = attributeReader;
@@ -47,6 +52,11 @@ public class ItemDetailsMetadata {
     public ItemDetailsMetadata(final JsId id, final AbstractAttributeReader attributeReader, final String label, final String tooltip) {
         this(attributeReader, label, tooltip);
         this.jsId = id;
+    }
+
+    public ItemDetailsMetadata(final String attributeName, Html html) {
+        this.attributeReader = new AttributeReader(attributeName);
+        representation = html;
     }
 
     /**
@@ -77,4 +87,14 @@ public class ItemDetailsMetadata {
         return this.jsId;
     }
 
+    public Node createDefinition(final String cssClass, final String value) {
+        if(representation != null) {
+            return representation;
+        }
+        final Definition definition = new Definition(getLabel() + ": ", getTooltip(), value);
+        if (cssClass != null) {
+            definition.addClass(cssClass);
+        }
+        return definition;
+    }
 }

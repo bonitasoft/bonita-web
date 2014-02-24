@@ -95,6 +95,7 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final IFlowNodeItem item) {
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        metadatas.addCaseId(item, true);
         metadatas.addAppsName();
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addType();

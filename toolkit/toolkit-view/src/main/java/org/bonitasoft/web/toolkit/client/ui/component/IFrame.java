@@ -31,23 +31,16 @@ public class IFrame extends Component {
     private String id;
     private String url = null;
 
-    private String width = "100%";
-
-    private String height = "100%";
-
-    public IFrame(final String id, final String url, final String width, final String height) {
+    public IFrame(final String id, final String url) {
         super();
         this.id = id;
         this.url = url;
-        this.width = width;
-        this.height = height;
     }
 
     @Override
     protected Element makeElement() {
-
         return (Element) $(
-                HTML.iFrame(this.url, new XMLAttributes("height", this.height).add("width", this.width).add("frameborder", "0").add("id", id)))
+                HTML.iFrame(this.url, new XMLAttributes("id", id).add("frameborder", "0")))
                 .get(0);
     }
 }
