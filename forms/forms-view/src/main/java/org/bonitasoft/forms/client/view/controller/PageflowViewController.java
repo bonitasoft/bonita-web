@@ -388,30 +388,8 @@ public class PageflowViewController {
         formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, confirmationPageHandler);
     }
 
-    /**
-     * If the page is containned in a form, resize the frame to fit the page height
-     */
-    protected void resizeFrame() {
-
-        final Timer timer = new Timer() {
-
-            @Override
-            public void run() {
-                if (domUtils.isPageInFrame()) {
-                }
-            }
-        };
-        timer.schedule(300);
-    }
-
     protected ConfirmationPageHandler createConfirmationPageHandler() {
-        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, getDefaultConfirmationMessage(), formID, urlContext) {
-            @Override
-            public void onSuccess(final ReducedHtmlTemplate result) {
-                super.onSuccess(result);
-                resizeFrame();
-            }
-        };
+        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, getDefaultConfirmationMessage(), formID, urlContext);
     }
 
     private String getDefaultConfirmationMessage() {

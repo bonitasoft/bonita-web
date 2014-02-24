@@ -61,7 +61,7 @@ public class MetadataMessages {
     }
 
     String assigned_to_title() {
-        return _("The user name of the user to which the task is assigned");
+        return _("The username to which the task is assigned.");
     }
 
     String assigned_to_label() {
@@ -77,7 +77,7 @@ public class MetadataMessages {
     }
 
     String assigned_date_title() {
-        return _("The date when while the task has been assigned");
+        return _("The date when the task was assigned");
     }
 
     String assigned_date_label() {
@@ -85,7 +85,7 @@ public class MetadataMessages {
     }
 
     String due_date_title() {
-        return _("The date while the task must be finished");
+        return _("The date when the task must be finished");
     }
 
     String due_date_label() {

@@ -393,7 +393,6 @@ public class FormPagesViewController {
             buildViewMode(pageHTMLPanel, formPage, hasAlreadyBeenDisplayed, isNextPage, onloadAttributeValue);
         }
         domUtils.overrideBrowserNativeInputs();
-        resizeFrame();
         domUtils.hideLoading();
 
     }
@@ -778,7 +777,7 @@ public class FormPagesViewController {
         protected boolean editMode;
 
         /**
-         * @param isEditMode
+         * @param editMode
          */
         public PreviousPageClickHandler(final boolean editMode) {
             this.editMode = editMode;
@@ -846,7 +845,7 @@ public class FormPagesViewController {
     /**
      * disable the buttons
      * 
-     * @param button
+     * @param pressedButton
      *            the button that was pressed
      */
     protected void disableButtons(final Widget pressedButton) {
@@ -958,7 +957,6 @@ public class FormPagesViewController {
                 submitForm(actionAfterValidation);
             }
         } else {
-            resizeFrame();
             enableButtons(true);
         }
     }
@@ -966,7 +964,7 @@ public class FormPagesViewController {
     /**
      * Validate the compliance of a list of widgets with their mandatory attributes
      * 
-     * @param formWidget
+     * @param formWidgets
      */
     protected void validateMandatoryFieldWidgets(final List<ReducedFormWidget> formWidgets) {
         for (final ReducedFormWidget formWidget : formWidgets) {
@@ -1152,7 +1150,6 @@ public class FormPagesViewController {
                     submitForm(actionAfterValidation);
                 }
             } else {
-                resizeFrame();
                 enableButtons(true);
             }
         }
@@ -1200,7 +1197,6 @@ public class FormPagesViewController {
                         Window.alert("An element with id " + validatorId + " is missing from the page template.");
                     }
                 }
-                resizeFrame();
                 enableButtons(true);
             } else {
                 submitForm(actionAfterValidation);
@@ -1313,22 +1309,6 @@ public class FormPagesViewController {
         }
     }
 
-    /**
-     * If the page is contained in a form, resize the frame to fit the page height
-     */
-    protected void resizeFrame() {
-
-        final Timer timer = new Timer() {
-
-            @Override
-            public void run() {
-                if (domUtils.isPageInFrame()) {
-               }
-            }
-        };
-        timer.schedule(300);
-    }
-
     public void setMandatoryFieldSymbol(final String mandatoryFieldSymbol) {
 
         if (mandatoryFieldSymbol != null && mandatoryFieldSymbol.length() > 0) {
@@ -1355,13 +1335,8 @@ public class FormPagesViewController {
     }
 
     private ConfirmationPageHandler createConfirmationPageHandler(final String defaultConfirmationMessage) {
-        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, defaultConfirmationMessage, formID, urlContext) {
-            @Override
-            public void onSuccess(final ReducedHtmlTemplate result) {
-                super.onSuccess(result);
-                resizeFrame();
-            }
-        }.setCurrentPageHTMLPanel(pageHTMLPanel);
+        return new ConfirmationPageHandler(applicationHTMLPanel, elementId, defaultConfirmationMessage, formID, urlContext)
+                .setCurrentPageHTMLPanel(pageHTMLPanel);
     }
 
 }
