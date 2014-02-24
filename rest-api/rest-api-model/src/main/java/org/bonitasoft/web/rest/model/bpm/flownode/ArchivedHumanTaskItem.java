@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -99,6 +100,22 @@ public class ArchivedHumanTaskItem extends ArchivedTaskItem implements IHumanTas
         setAttribute(ATTRIBUTE_ACTOR_ID, actorId);
     }
 
+    
+    @Override
+    public final void setRootContainerId(final APIID rootContainerId) {
+    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
+    }
+
+    @Override
+    public final void setRootContainerId(final String rootContainerId) {
+    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
+    }
+    
+    @Override
+    public final void setRootContainerId(final Long rootContainerId) {
+    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);	
+    }
+
     // Counters
     @Override
     public void setNbOfAttachment(final String count) {
@@ -156,6 +173,11 @@ public class ArchivedHumanTaskItem extends ArchivedTaskItem implements IHumanTas
     public String getAssignedDate() {
         return this.getAttributeValue(ATTRIBUTE_ASSIGNED_DATE);
     }
+    
+    @Override 
+    public APIID getRootContainerId() {
+    	return this.getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CONTAINER_ID);
+    }
 
     // Counters
     @Override
@@ -185,6 +207,11 @@ public class ArchivedHumanTaskItem extends ArchivedTaskItem implements IHumanTas
     @Override
     public final ActorItem getActor() {
         return new ActorItem(getDeploy(ATTRIBUTE_ACTOR_ID));
+    }
+    
+    @Override
+    public final ProcessItem getRootContainerProcess() {
+    	return new ProcessItem(getDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

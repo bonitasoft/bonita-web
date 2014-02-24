@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -42,11 +43,14 @@ public interface IHumanTaskItem extends ITaskItem {
 
     public static final String ATTRIBUTE_ACTOR_ID = "actorId";
     
+    
     /*
      * Same as ATTRIBUTE_PARENT_CONTAINER_ID
      * Should be in manual task but lives there because of deploy restrictions
      */
     public static final String ATTRIBUTE_PARENT_TASK_ID = "parentTaskId";
+
+    public static final String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -112,6 +116,12 @@ public interface IHumanTaskItem extends ITaskItem {
 
     public void setActorId(final Long actorId);
 
+    public void setRootContainerId(final APIID rootContainerId);
+
+    public void setRootContainerId(final String rootContainerId);
+    
+    public void setRootContainerId(final Long rootContainerId);
+
     // Counters
     public void setNbOfAttachment(final String count);
 
@@ -136,6 +146,8 @@ public interface IHumanTaskItem extends ITaskItem {
     public APIID getAssignedId();
 
     public String getAssignedDate();
+    
+    public APIID getRootContainerId();
 
     // Counters
     public Integer getNbOfAttachment();
@@ -151,6 +163,8 @@ public interface IHumanTaskItem extends ITaskItem {
     public UserItem getAssignedUser();
 
     public ActorItem getActor();
+    
+    public ProcessItem getRootContainerProcess();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UTILS

@@ -19,10 +19,16 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
+import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -35,6 +41,19 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractAPITask<ITEM> {
 
     @Override
+	protected void fillDeploys(ITEM item, List<String> deploys) {
+		super.fillDeploys(item, deploys);
+        if (isDeployable(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
+        	CaseItem rootContainerCaseId = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+        	if (rootContainerCaseId == null) {
+        		rootContainerCaseId = new ArchivedCaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+        	}
+    		ProcessItem processItem = new ProcessDatastore(getEngineSession()).get(rootContainerCaseId.getProcessId());
+    		item.setDeploy(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, processItem);
+        }
+	}
+
+	@Override
     protected HumanTaskDefinition defineItemDefinition() {
         return HumanTaskDefinition.get();
     }

@@ -60,6 +60,7 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
         // result.setAssignedDate(item.getClaimedDate());
         result.setPriority(item.getPriority() != null ? item.getPriority().toString().toLowerCase() : null);
         result.setDueDate(item.getExpectedEndDate());
+        result.setRootContainerId(item.getRootContainerId());
 
         return result;
     }

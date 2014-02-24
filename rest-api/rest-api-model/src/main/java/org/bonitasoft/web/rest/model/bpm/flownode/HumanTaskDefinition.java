@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.model.bpm.flownode;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -72,6 +73,8 @@ public class HumanTaskDefinition extends TaskDefinition {
                         ));
 
         createAttribute(HumanTaskItem.ATTRIBUTE_DUE_DATE, ItemAttribute.TYPE.DATETIME);
+        
+        createAttribute(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ItemAttribute.TYPE.ITEM_ID);
 
     }
 
@@ -80,6 +83,7 @@ public class HumanTaskDefinition extends TaskDefinition {
         super.defineDeploys();
         declareDeployable(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Definitions.get(UserDefinition.TOKEN));
         declareDeployable(HumanTaskItem.ATTRIBUTE_ACTOR_ID, Definitions.get(ActorDefinition.TOKEN));
+        declareDeployable(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, Definitions.get(ProcessDefinition.TOKEN));
     }
 
     @Override

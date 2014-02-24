@@ -163,7 +163,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         // columns configuration
                         .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
                         .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), true, true)
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
 

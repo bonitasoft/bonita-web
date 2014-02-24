@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.common.metadata;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeTypeAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
@@ -101,14 +102,14 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
     private ItemDetailsMetadata createMetaAppsName() {
         return new ItemDetailsMetadata(
-                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
                 _("Apps"),
                 _("The app responsible of the creation of this task"));
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
         return new ItemDetailsMetadata(
-                new DeployedAttributeReader(IActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
                 _("Apps version"),
                 _("Version of the app"));
     }
