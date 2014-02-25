@@ -657,7 +657,6 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<argLine>${jacoco.agent.ut.arg}</argLine>
-							<skipTests>true</skipTests>
 						</configuration>
 					</plugin>
 				</plugins>
