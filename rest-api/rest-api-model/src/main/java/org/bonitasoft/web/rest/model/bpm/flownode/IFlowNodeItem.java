@@ -39,6 +39,8 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
 
     public static String ATTRIBUTE_CASE_ID = "caseId";
 
+    public static final String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
+    
     public static String ATTRIBUTE_STATE = "state";
 
     public static String ATTRIBUTE_TYPE = "type";
@@ -114,6 +116,14 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
 
     public APIID getCaseId();
 
+    public void setRootContainerId(final APIID rootContainerId);
+
+    public void setRootContainerId(final String rootContainerId);
+    
+    public void setRootContainerId(final Long rootContainerId);
+    
+    public APIID getRootContainerId();
+
     public void setState(final String state);
 
     public String getState();
@@ -135,6 +145,8 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
     public ProcessItem getProcess();
 
     public CaseItem getCase();
+    
+    public ProcessItem getRootContainerProcess();
 
     public boolean isUserTask();
 

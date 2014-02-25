@@ -227,6 +227,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         deploys.add(IActivityItem.ATTRIBUTE_PROCESS_ID);
         deploys.add(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID);
         deploys.add(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
+        deploys.add(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID);
         return deploys;
     }
 }

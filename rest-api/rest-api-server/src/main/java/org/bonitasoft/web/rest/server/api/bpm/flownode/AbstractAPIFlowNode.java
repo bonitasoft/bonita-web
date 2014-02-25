@@ -26,6 +26,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.TaskDatastore;
@@ -110,6 +111,14 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item)) {
             item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
                     new CaseDatastore(getEngineSession()).get(item.getCaseId()));
+        }
+        
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
+        	CaseItem rootContainerCaseId = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+        	if (rootContainerCaseId == null) {
+        		rootContainerCaseId = new ArchivedCaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+        	}
+        	item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, new ProcessDatastore(getEngineSession()).get(rootContainerCaseId.getProcessId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID, deploys, item)) {
