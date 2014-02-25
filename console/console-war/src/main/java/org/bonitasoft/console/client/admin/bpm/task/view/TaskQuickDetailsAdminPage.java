@@ -96,12 +96,25 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final IFlowNodeItem item) {
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addCaseId(item, true);
-        metadatas.addDueDate(getArchivedDateFormat());
+        metadatas.addCaseId(task, true);
         metadatas.addAppsName();
+        metadatas.addAppsVersion();
         metadatas.addType();
-        if (item.isHumanTask()) {
+        metadatas.addState();
+        metadatas.addPriority();
+        if (task.isHumanTask()) {
             metadatas.addAssignedTo();
+            if (isArchived()) {
+                metadatas.addExecutedBy();
+            }
         }
+        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))){
+        	metadatas.AddSubAppsName();
+        	metadatas.AddSubAppsVersion();
+        }
+        metadatas.addDueDate(getArchivedDateFormat());
+        metadatas.addLastUpdateDate(FORMAT.DISPLAY);
+        metadatas.addAssignedDate(FORMAT.DISPLAY);
         return metadatas.build();
     }
 

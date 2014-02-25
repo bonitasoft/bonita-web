@@ -186,6 +186,10 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                 metadatas.addExecutedBy();
             }
         }
+        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))){
+        	metadatas.AddSubAppsName();
+        	metadatas.AddSubAppsVersion();
+        }
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addLastUpdateDate(FORMAT.DISPLAY);
         metadatas.addAssignedDate(FORMAT.DISPLAY);
