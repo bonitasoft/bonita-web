@@ -628,9 +628,6 @@
 							<systemPropertyVariables>
 								<bonita.home>${project.build.directory}/bonita/home</bonita.home>
 							</systemPropertyVariables>
-							<!-- workaround to have test report for IT in sonar, see http://stackoverflow.com/a/15567782/936729 -->
-							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-							<summaryFile>${project.build.directory}/surefire-reports/failsafe-summary.xml</summaryFile>
 							<includes>
 								<!--run all possible tests
 								maven failsafe plugin filters classes by name
