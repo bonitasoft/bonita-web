@@ -345,11 +345,11 @@ public class ClientApplicationURL {
             // TODO remove lang from URL and replace last history URL
         } else {
             // Check if the lang is in the session
-            newLang = Session.getParameter(ATTRIBUTE_LANG);
+            newLang = Session.getParameter(FORM_LOCALE_COOKIE_NAME);
 
             if (newLang == null) {
                 // Check if the lang is in the cookie
-                newLang = Cookie.getParameter(ATTRIBUTE_LANG);
+                newLang = Cookie.getParameter(FORM_LOCALE_COOKIE_NAME);
 
                 if (newLang == null) {
                     // else we set the default lang

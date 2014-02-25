@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import com.google.gwt.user.client.Cookies;
 
 /**
- * @author Séverin Moussel
+ * @author Séverin Moussel, Paul AMAR
  */
 public class Cookie extends ParametersStorage {
 
@@ -49,8 +49,10 @@ public class Cookie extends ParametersStorage {
      */
     @Override
     protected final void resetParameters() {
-        Cookies.removeCookie(COOKIE_NAME);
         Cookies.removeCookie(LOGIN_COOKIE_NAME);
+        
+        CookiesWrapper.removeCookie(COOKIE_NAME);
+        CookiesWrapper.removeCookie(LOGIN_COOKIE_NAME);
     }
 
     /**
@@ -71,7 +73,7 @@ public class Cookie extends ParametersStorage {
     @Override
     protected final TreeIndexed<String> readParameters(final boolean updateExpiresDate) {
         // Read the parameters as JSON
-        final String cookieContent = Cookies.getCookie(COOKIE_NAME);
+        final String cookieContent = CookiesWrapper.getCookie(COOKIE_NAME);
         TreeIndexed<String> result = null;
         if (cookieContent == null) {
             result = new TreeIndexed<String>();
@@ -94,12 +96,7 @@ public class Cookie extends ParametersStorage {
      */
     @Override
     protected final void writeParameters(final TreeIndexed<String> parameters) {
-        // Set the expires date
-        final Date now = new Date();
-        now.setTime(now.getTime() + COOKIE_EXPIRE);
-
-        // Save the parameters as json
-        Cookies.setCookie(COOKIE_NAME, parameters.toJson(), now);
+        CookiesWrapper.addCookie(COOKIE_NAME, parameters.toJson());
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +167,7 @@ public class Cookie extends ParametersStorage {
      * @return This method returns the value of a parameter or NULL if the parameter doesn't exist or is an array.
      */
     public static String getParameter(final String name) {
-        return SINGLETON._getParameter(name);
+        return Cookies.getCookie(name);
     }
 
     /**
