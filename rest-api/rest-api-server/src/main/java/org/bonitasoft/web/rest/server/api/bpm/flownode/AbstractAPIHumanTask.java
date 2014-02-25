@@ -40,19 +40,6 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractAPITask<ITEM> {
 
-    @Override
-	protected void fillDeploys(ITEM item, List<String> deploys) {
-		super.fillDeploys(item, deploys);
-        if (isDeployable(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
-        	CaseItem rootContainerCaseId = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
-        	if (rootContainerCaseId == null) {
-        		rootContainerCaseId = new ArchivedCaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
-        	}
-    		ProcessItem processItem = new ProcessDatastore(getEngineSession()).get(rootContainerCaseId.getProcessId());
-    		item.setDeploy(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, processItem);
-        }
-	}
-
 	@Override
     protected HumanTaskDefinition defineItemDefinition() {
         return HumanTaskDefinition.get();

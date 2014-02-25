@@ -151,14 +151,14 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
     private ItemDetailsMetadata createMetaAppsName() {
         return new ItemDetailsMetadata(
-                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
                 _("Apps"),
                 _("The app responsible for the creation of this task"));
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
         return new ItemDetailsMetadata(
-                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
                 _("Apps version"),
                 _("Version of the app"));
     }

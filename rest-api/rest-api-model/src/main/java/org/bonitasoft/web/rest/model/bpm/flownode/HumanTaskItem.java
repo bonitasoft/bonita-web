@@ -84,21 +84,6 @@ public class HumanTaskItem extends TaskItem implements IHumanTaskItem {
     public final void setDueDate(final Date date) {
         setAttribute(ATTRIBUTE_DUE_DATE, date);
     }
-    
-    @Override
-    public final void setRootContainerId(final APIID rootContainerId) {
-    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
-    }
-
-    @Override
-    public final void setRootContainerId(final String rootContainerId) {
-    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
-    }
-    
-    @Override
-    public final void setRootContainerId(final Long rootContainerId) {
-    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);	
-    }
 
     @Override
     public final void setActorId(final APIID id) {
@@ -173,11 +158,6 @@ public class HumanTaskItem extends TaskItem implements IHumanTaskItem {
     public final String getAssignedDate() {
         return this.getAttributeValue(ATTRIBUTE_ASSIGNED_DATE);
     }
-    
-    @Override 
-    public APIID getRootContainerId() {
-    	return this.getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CONTAINER_ID);
-    }
 
     // Counters
     @Override
@@ -211,11 +191,6 @@ public class HumanTaskItem extends TaskItem implements IHumanTaskItem {
     @Override
     public final ActorItem getActor() {
         return new ActorItem(getDeploy(ATTRIBUTE_ACTOR_ID));
-    }
-    
-    @Override
-    public final ProcessItem getRootContainerProcess() {
-    	return new ProcessItem(getDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
     }
     
 

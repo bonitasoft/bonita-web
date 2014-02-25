@@ -73,9 +73,6 @@ public class HumanTaskDefinition extends TaskDefinition {
                         ));
 
         createAttribute(HumanTaskItem.ATTRIBUTE_DUE_DATE, ItemAttribute.TYPE.DATETIME);
-        
-        createAttribute(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ItemAttribute.TYPE.ITEM_ID);
-
     }
 
     @Override
@@ -83,7 +80,6 @@ public class HumanTaskDefinition extends TaskDefinition {
         super.defineDeploys();
         declareDeployable(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Definitions.get(UserDefinition.TOKEN));
         declareDeployable(HumanTaskItem.ATTRIBUTE_ACTOR_ID, Definitions.get(ActorDefinition.TOKEN));
-        declareDeployable(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, Definitions.get(ProcessDefinition.TOKEN));
     }
 
     @Override
