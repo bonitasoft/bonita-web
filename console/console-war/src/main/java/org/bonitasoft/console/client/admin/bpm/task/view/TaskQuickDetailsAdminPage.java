@@ -97,6 +97,9 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addCaseId(item, true);
         metadatas.addAppsName();
+        if (!(item.getRootContainerProcess().ensureName().equals(item.getProcess().ensureName()))){
+        	metadatas.AddSubAppsName();
+        }
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addType();
         if (item.isHumanTask()) {

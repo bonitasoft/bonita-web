@@ -20,11 +20,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.AnchorElement;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
@@ -52,6 +47,12 @@ import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Element;
+
 /**
  * @author Vincent Elcrin
  * 
@@ -77,7 +78,16 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaAppsVersion());
     }
 
-    public void addCaseId(final IFlowNodeItem task, boolean admin) {
+    public void AddSubAppsName() {
+    	add(createMetaSubAppsName());
+    }
+    
+    public void AddSubAppsVersion() {
+    	add(createMetaSubAppsVersion());
+    }
+
+
+	public void addCaseId(final IFlowNodeItem task, boolean admin) {
         final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.caseId(
                 _("The id of the related case"),
                 _("Case"),
@@ -157,11 +167,26 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
-        return new ItemDetailsMetadata(
-                new DeployedAttributeReader(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
-                _("Apps version"),
-                _("Version of the app"));
+    	return new ItemDetailsMetadata(
+    			new DeployedAttributeReader(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
+    			_("Apps version"),
+    			_("Version of the app"));
     }
+
+    private ItemDetailsMetadata createMetaSubAppsName() {
+    	return new ItemDetailsMetadata(
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
+                _("Subprocess"),
+                _("The sub process responsible for the creation of this task"));
+    }
+
+    private ItemDetailsMetadata createMetaSubAppsVersion() {
+    	return new ItemDetailsMetadata(
+    			new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
+    			_("Subprocess version"),
+    			_("Version of the app"));
+    }
+
 
     private ItemDetailsMetadata createMetaCaseId() {
         return new ItemDetailsMetadata(IActivityItem.ATTRIBUTE_CASE_ID, _("Case"), _("The id of the related case"));
@@ -202,5 +227,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 _("Due date"),
                 _("The date when the task must be finished"));
     }
+
+
 
 }
