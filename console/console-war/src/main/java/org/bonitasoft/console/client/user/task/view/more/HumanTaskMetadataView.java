@@ -19,21 +19,19 @@ package org.bonitasoft.console.client.user.task.view.more;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY_RELATIVE;
 
+import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
+import org.bonitasoft.console.client.uib.formatter.Formatter;
+import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
-import org.bonitasoft.console.client.uib.formatter.Formatter;
-import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class HumanTaskMetadataView extends Composite {
 

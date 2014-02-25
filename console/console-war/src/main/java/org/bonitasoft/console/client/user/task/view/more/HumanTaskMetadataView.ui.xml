@@ -31,11 +31,11 @@
             </a>
             <div class="definition displayname" title="{messages.app_title}">
                 <label><ui:text from="{messages.app_label}" />: </label>
-                <span><ui:text from="{task.getProcess.ensureName}" /></span>
+                <span><ui:text from="{task.getRootContainerProcess.ensureName}" /></span>
             </div>
             <div class="definition version" title="{messages.app_version_title}">
                 <label><ui:text from="{messages.app_version_label}" />: </label>
-                <span><ui:text from="{task.getProcess.getVersion}" /></span>
+                <span><ui:text from="{task.getRootContainerProcess.getVersion}" /></span>
             </div>
             <div class="definition state" title="{messages.state_title}">
                 <label><ui:text from="{messages.state_label}" />: </label>

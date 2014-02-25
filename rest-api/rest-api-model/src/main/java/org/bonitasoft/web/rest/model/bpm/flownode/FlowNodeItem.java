@@ -146,6 +146,26 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     }
 
     @Override
+    public final void setRootContainerId(final APIID rootContainerId) {
+    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
+    }
+
+    @Override
+    public final void setRootContainerId(final String rootContainerId) {
+    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
+    }
+    
+    @Override
+    public final void setRootContainerId(final Long rootContainerId) {
+    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);	
+    }
+    
+    @Override 
+    public APIID getRootContainerId() {
+    	return this.getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CONTAINER_ID);
+    }
+    
+    @Override
     public final void setState(final String state) {
         setAttribute(ATTRIBUTE_STATE, state);
     }
@@ -200,6 +220,11 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
         return new CaseItem(getDeploy(ATTRIBUTE_CASE_ID));
     }
 
+    @Override
+    public final ProcessItem getRootContainerProcess() {
+    	return new ProcessItem(getDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
+    }
+    
     @Override
     public ItemDefinition getItemDefinition() {
         return FlowNodeDefinition.get();

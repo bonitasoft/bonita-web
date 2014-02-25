@@ -170,7 +170,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
                 .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"), true, true)
-                .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),  _("App"))
+                .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),  _("App"))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
                 .setOrder(HumanTaskItem.ATTRIBUTE_PRIORITY, false);
@@ -185,7 +185,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
                 .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
-                .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                 .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
     }
     
