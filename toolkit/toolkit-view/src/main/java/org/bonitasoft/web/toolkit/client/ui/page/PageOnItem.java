@@ -31,6 +31,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -164,7 +165,8 @@ public abstract class PageOnItem<T extends IItem> extends Page {
             super._fillWidget(rootElement);
             return;
         }
-        this.itemDefinition.getAPICaller().get(this.itemId, defineDeploys(), defineCounters(), new APICallback() {
+
+        new APICaller(itemDefinition).get(this.itemId, defineDeploys(), defineCounters(), new APICallback() {
 
             @SuppressWarnings("unchecked")
             @Override

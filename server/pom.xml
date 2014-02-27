@@ -8,4 +8,11 @@
     <artifactId>server</artifactId>
     <name>Bonita Web Server</name>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

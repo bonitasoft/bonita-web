@@ -28,6 +28,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
@@ -94,7 +95,7 @@ public class ChangeLangPage extends Page {
         
         @Override
         protected void getData(final APICallback callback) {
-            new I18nLocaleDefinition().getAPICaller().search(0, 0, callback);
+            new APICaller(new I18nLocaleDefinition()).search(0, 0, callback);
         }
     
         @Override

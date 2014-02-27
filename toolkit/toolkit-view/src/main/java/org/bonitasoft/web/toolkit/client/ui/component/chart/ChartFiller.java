@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -40,7 +41,7 @@ abstract class ChartFiller<T extends Chart> extends Filler<T> {
 
     @Override
     protected void getData(final APICallback callback) {
-        this.itemDefinition.getAPICaller().search(0, this.target.getMaxPoints(), callback);
+        new APICaller(itemDefinition).search(0, this.target.getMaxPoints(), callback);
     }
 
     abstract protected void setData(List<IItem> items);

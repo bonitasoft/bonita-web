@@ -56,7 +56,7 @@ public class AddItemFormAction<T extends IItem> extends ItemFormAction<T> {
     }
 
     public void execute(final APICallback callback) {
-        ValidatorEngine.validate(this.form, this.itemDefinition.getValidators());
+        ValidatorEngine.validate(this.form.getValues(), this.itemDefinition.getValidators());
         new APICaller<T>(this.itemDefinition).add(this.form, callback);
     }
 

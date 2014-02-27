@@ -25,6 +25,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APISearchIndexOutO
 import org.bonitasoft.web.toolkit.client.common.exception.http.HttpException;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -39,7 +40,7 @@ class ItemTableFiller extends Filler<ItemTable> {
 
     @Override
     protected final void getData(final APICallback callback) {
-        this.target.getItemDefinition().getAPICaller().search(
+        new APICaller(this.target.getItemDefinition()).search(
                 this.target.getPage(),
                 this.target.getNbLinesByPage(),
                 this.target.getOrder(),

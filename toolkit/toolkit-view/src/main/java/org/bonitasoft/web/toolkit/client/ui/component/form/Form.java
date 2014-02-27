@@ -1123,7 +1123,7 @@ public class Form extends AbstractForm {
 
     public final void validate() {
         resetErrors();
-        ValidatorEngine.validate(this, getValidators());
+        ValidatorEngine.validate(this.getValues(), getValidators());
     }
 
     /**

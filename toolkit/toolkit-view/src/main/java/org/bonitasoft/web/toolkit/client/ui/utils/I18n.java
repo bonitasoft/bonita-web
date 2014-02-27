@@ -20,6 +20,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nTranslationDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nTranslationItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -52,7 +53,7 @@ public class I18n extends AbstractI18n {
             filter.put("locale", getDefaultLocale().toString());
         }
 
-        definition.getAPICaller().search(0, 0, "", "", filter, new APICallback() {
+        new APICaller(definition).search(0, 0, "", "", filter, new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

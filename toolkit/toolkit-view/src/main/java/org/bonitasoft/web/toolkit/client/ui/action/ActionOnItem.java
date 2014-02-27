@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -74,7 +75,7 @@ public abstract class ActionOnItem<T extends IItem> extends ActionOnItemId {
             return;
         }
 
-        this.itemDefinition.getAPICaller().get(itemId, new APICallback() {
+        new APICaller(itemDefinition).get(itemId, new APICallback() {
 
             @SuppressWarnings("unchecked")
             @Override

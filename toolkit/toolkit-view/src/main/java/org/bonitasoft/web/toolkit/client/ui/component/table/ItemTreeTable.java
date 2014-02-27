@@ -21,6 +21,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -145,7 +146,7 @@ public final class ItemTreeTable extends ItemTable {
                         public void execute() {
                             final int index = Integer.valueOf(item.getAttributeValue(ItemTreeTable.this.indexAttributeName));
                             item.setAttribute(ItemTreeTable.this.indexAttributeName, String.valueOf(index - 3));
-                            ItemTreeTable.this.itemDefinition.getAPICaller().update(item, new APICallback() {
+                            new APICaller(ItemTreeTable.this.itemDefinition).update(item, new APICallback() {
 
                                 @Override
                                 public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
@@ -162,7 +163,7 @@ public final class ItemTreeTable extends ItemTable {
                         public void execute() {
                             final int index = Integer.valueOf(item.getAttributeValue(ItemTreeTable.this.indexAttributeName));
                             item.setAttribute(ItemTreeTable.this.indexAttributeName, String.valueOf(index + 3));
-                            ItemTreeTable.this.itemDefinition.getAPICaller().update(item, new APICallback() {
+                            new APICaller(ItemTreeTable.this.itemDefinition).update(item, new APICallback() {
 
                                 @Override
                                 public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

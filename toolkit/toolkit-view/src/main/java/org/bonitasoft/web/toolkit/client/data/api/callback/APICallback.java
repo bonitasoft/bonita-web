@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.data.api.callback;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;
@@ -25,6 +23,8 @@ import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 import org.bonitasoft.web.toolkit.client.ui.utils.Url;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * An APICallback define the action to do once an API called has ended (success and error)

@@ -15,6 +15,7 @@
 package org.bonitasoft.web.toolkit.client.ui.action;
 
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallbackAction;
 
 /**
@@ -30,6 +31,6 @@ public class CheckValidSessionBeforeAction extends Action {
 
     @Override
     public void execute() {
-        SessionDefinition.get().getAPICaller().get("unusedId", new APICallbackAction(this.action));
+        new APICaller(SessionDefinition.get()).get("unusedId", new APICallbackAction(this.action));
     }
 }

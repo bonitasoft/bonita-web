@@ -26,11 +26,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
 
+import com.google.gwt.query.client.GQuery;
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.TreeLeaf;
 import org.bonitasoft.web.toolkit.client.common.TreeNode;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.json.JSonUtil;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
@@ -451,7 +453,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     private List<String> getFormArrayParameter(final Element form, final String name) {
         final List<String> result = new ArrayList<String>();
 
-        $(form).find("[name=" + name + "]").each(new Function() {
+        GQuery.$(form).find("[name=" + name + "]").each(new Function() {
 
             @Override
             public void f(final Element e) {
@@ -539,7 +541,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         form.appendChild(this.containers.firstElement().getElement());
         form.appendChild(this.buttons.getElement());
 
-        $(form).submit(new Function() {
+        GQuery.$(form).submit(new Function() {
 
             @Override
             public boolean f(final Event e) {
@@ -670,7 +672,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         for (final String parameterName : messageTemplate.getExpectedParameters()) {
             if (entry instanceof FormEntry) {
                 if (entry.getJsId().toString().equals(parameterName)) {
-                    args.add(new Arg(parameterName, _("this field")));
+                    args.add(new Arg(parameterName, AbstractI18n._("this field")));
                 } else {
                     args.add(new Arg(parameterName, ((FormEntry) entry).getLabel()));
                 }
@@ -684,7 +686,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     }
 
     public void resetErrors() {
-        $("div.alert_message", getElement()).remove();
+        GQuery.$("div.alert_message", getElement()).remove();
     }
 
     public Map<String, List<Validator>> getValidators() {

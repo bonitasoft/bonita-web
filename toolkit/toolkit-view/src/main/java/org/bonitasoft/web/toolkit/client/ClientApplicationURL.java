@@ -28,6 +28,7 @@ import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.common.url.UrlUnserializer;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -314,7 +315,7 @@ public class ClientApplicationURL {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected void initSession(final Action callback) {
-        new SessionDefinition().getAPICaller().get("unusedId", new APICallback() {
+        new APICaller(new SessionDefinition()).get("unusedId", new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

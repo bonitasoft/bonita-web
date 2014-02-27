@@ -20,6 +20,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.toolkit.client.common.exception.http.HttpException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
@@ -53,7 +54,7 @@ public class ItemFormFiller extends FormFiller {
         assert this.target instanceof ItemForm<?> : "Target must be an ItemForm";
 
         try {
-            ((ItemForm<?>) this.target).getItemDefinition().getAPICaller().get(this.itemId, callback);
+            new APICaller(((ItemForm<?>) this.target).getItemDefinition()).get(this.itemId, callback);
         } catch (final HttpException e) {
             Message.error(_("The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."));
         }

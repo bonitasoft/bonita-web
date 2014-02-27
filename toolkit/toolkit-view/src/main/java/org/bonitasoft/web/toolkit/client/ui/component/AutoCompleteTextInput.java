@@ -131,7 +131,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
         // If the label is not passed, we call the API to get the corresponding label;
         APIID apiid = APIID.makeAPIID(value);
         if (apiid != null) {
-            itemDefinition.getAPICaller().get(apiid,
+            new APICaller(itemDefinition).get(apiid,
                     new APICallback() {
 
                         @Override
@@ -216,7 +216,7 @@ public class AutoCompleteTextInput extends Components implements Refreshable {
         protected void getData(final APICallback callback) {
             final String search = $(inputElement).val();
             if (search.length() > 0) {
-                itemDefinition.getAPICaller().search(
+                new APICaller(itemDefinition).search(
                         0,
                         nbResults,
                         labelTemplate instanceof CompoundAttributeReader

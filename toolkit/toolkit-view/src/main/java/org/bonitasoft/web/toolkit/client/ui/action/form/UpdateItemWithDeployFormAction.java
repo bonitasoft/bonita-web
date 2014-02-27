@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -76,10 +77,10 @@ public class UpdateItemWithDeployFormAction<ITEM_TYPE extends IItem> extends Ite
             updateQueue.put(deployDefinition, deployValues);
         }
         // Validate input from the form (mandatory, text format, ...)
-        ValidatorEngine.validate(this.form, this.itemDefinition.getValidators());
+        ValidatorEngine.validate(this.form.getValues(), this.itemDefinition.getValidators());
 
         // Call REST API to update item following by deploys
-        this.itemDefinition.getAPICaller().update(this.getParameter("id"),
+        new APICaller(itemDefinition).update(this.getParameter("id"),
                 values,
                 new UpdateDeploysCallback(updateQueue));
 
@@ -99,7 +100,7 @@ public class UpdateItemWithDeployFormAction<ITEM_TYPE extends IItem> extends Ite
                 ViewController.getInstance().historyBack();
             } else {
                 final ItemDefinition<?> itemDefinition = getNextItem(this.updateQueue);
-                itemDefinition.getAPICaller().update(getParameter("id"),
+                new APICaller(itemDefinition).update(getParameter("id"),
                         popValues(this.updateQueue, itemDefinition),
                         new UpdateDeploysCallback(this.updateQueue));
             }

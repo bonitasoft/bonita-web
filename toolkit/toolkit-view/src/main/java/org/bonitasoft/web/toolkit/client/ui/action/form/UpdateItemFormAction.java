@@ -17,6 +17,7 @@ package org.bonitasoft.web.toolkit.client.ui.action.form;
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -58,10 +59,10 @@ public class UpdateItemFormAction<ITEM_TYPE extends IItem> extends ItemFormActio
     @Override
     public void execute() {
         // Validate input from the form (mandatory, text format, ...)
-        ValidatorEngine.validate(this.form, this.itemDefinition.getValidators());
+        ValidatorEngine.validate(this.form.getValues(), this.itemDefinition.getValidators());
 
         // Call the REST API
-        this.itemDefinition.getAPICaller().update(this.getParameter("id"), this.form, new APICallback() {
+        new APICaller(itemDefinition).update(this.getParameter("id"), this.form, new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
