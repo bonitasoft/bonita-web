@@ -23,12 +23,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.expression.ExpressionEvaluationException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.FormFieldValue;
@@ -70,15 +70,14 @@ public interface IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validateActivityField(APISession session, long activityInstanceID, List<FormValidator> validators, String fieldId,
             FormFieldValue fieldValue, String submitButtonId, Locale userLocale, Map<String, Serializable> transientDataContext)
             throws FormValidationException, ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, FileTooBigException, IOException,
-            ExpressionEvaluationException, ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
+            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException, BPMExpressionEvaluationException;
 
     /**
      * Validate a form page using the validators provided
@@ -105,15 +104,14 @@ public interface IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validateActivityPage(APISession session, long activityInstanceID, List<FormValidator> validators, Map<String, FormFieldValue> fields,
             String submitButtonId, Locale userLocale, Map<String, Serializable> transientDataContext) throws FormValidationException,
             ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException,
-            ExpressionEvaluationException, ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException;
+            InvalidSessionException, FileTooBigException, IOException, ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException, BPMExpressionEvaluationException;
 
     /**
      * Validate a form field value using the validators provided
@@ -143,14 +141,14 @@ public interface IFormValidationAPI {
      * @throws ProcessInstanceReadException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validateInstanceField(APISession session, long processInstanceID, List<FormValidator> validators, String fieldId,
             FormFieldValue fieldValue, String submitButtonId, Locale userLocale, Map<String, Serializable> transientDataContext)
             throws FormValidationException, ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException,
-            ArchivedProcessInstanceNotFoundException;
+            BPMEngineException, InvalidSessionException, FileTooBigException, IOException,
+            ArchivedProcessInstanceNotFoundException, BPMExpressionEvaluationException;
 
     /**
      * Validate a form page using the validators provided
@@ -177,15 +175,15 @@ public interface IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
 
     List<FormValidator> validateInstancePage(APISession session, long processInstanceID, List<FormValidator> validators, Map<String, FormFieldValue> fields,
             String submitButtonId, Locale userLocale, Map<String, Serializable> transientDataContext) throws FormValidationException,
             ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException,
-            ArchivedProcessInstanceNotFoundException;
+            InvalidSessionException, FileTooBigException, IOException,
+            ArchivedProcessInstanceNotFoundException, BPMExpressionEvaluationException;
 
     /**
      * Validate a form field value using the validators provided
@@ -212,12 +210,12 @@ public interface IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validateProcessField(APISession session, long processDefinitionID, List<FormValidator> validators, String fieldId,
             FormFieldValue fieldValue, String submitButtonId, Locale userLocale, Map<String, Serializable> transientDataContext)
             throws FormValidationException, ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException;
+            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException;
 
     /**
      * Validate a form page using the validators provided
@@ -243,10 +241,10 @@ public interface IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validateProcessPage(APISession session, long processDefinitionID, List<FormValidator> validators, Map<String, FormFieldValue> fields,
             String submitButtonId, Locale userLocale, Map<String, Serializable> transientDataContext) throws FormValidationException,
             ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException;
+            InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException;
 }

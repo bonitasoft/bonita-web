@@ -68,6 +68,7 @@ import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -941,11 +942,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws org.bonitasoft.forms.server.exception.FileTooBigException
+     * @throws FormInitializationException 
      */
     private ApplicationConfig resolveApplicationConfigExpressions(final FormServiceProvider formServiceProvider, final Map<String, Object> context,
             final ApplicationConfig applicationConfig) throws FormNotFoundException, SessionTimeoutException,
-            org.bonitasoft.forms.server.exception.FileTooBigException, IOException {
-        try {
+            org.bonitasoft.forms.server.exception.FileTooBigException, IOException, FormInitializationException {
+
             context.put(FormServiceProviderUtil.IS_CONFIG_CONTEXT, true);
 
             String resolvedExpression = (String) formServiceProvider.resolveExpression(applicationConfig.getApplicationLabelExpression(), context);
@@ -957,11 +959,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             resolvedExpression = (String) formServiceProvider.resolveExpression(applicationConfig.getMandatorySymbolExpression(), context);
             applicationConfig.setMandatorySymbol(resolvedExpression);
 
-        } catch (final FormNotFoundException e) {
-            throw new FormNotFoundException(e);
-        } catch (final SessionTimeoutException e) {
-            throw new SessionTimeoutException(e);
-        }
         return applicationConfig;
     }
 
