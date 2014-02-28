@@ -20,7 +20,6 @@ import static junit.framework.Assert.assertEquals;
 
 import org.bonitasoft.engine.profile.ProfileSearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
-import org.bonitasoft.web.rest.server.datastore.profile.ProfileSearchDescriptorConverter;
 import org.junit.Test;
 
 /**

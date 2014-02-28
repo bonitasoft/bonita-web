@@ -22,8 +22,6 @@ import java.util.Map;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseVariable;
-import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseVariableAttributeChecker;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseVariableDatastore;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;

@@ -47,9 +47,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.api.bpm.process.APIActor;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**

@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
-import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseVariableAttributeChecker;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
 import org.junit.Test;

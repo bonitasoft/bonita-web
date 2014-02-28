@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.ViewController.showPopup;
 
 import java.util.ArrayList;

@@ -29,7 +29,6 @@ import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnip
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
-import org.bonitasoft.console.client.user.cases.view.AbstractCaseQuickDetailsPage.CommentsTableAsyncBuilder;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedTasksSection;
 import org.bonitasoft.console.client.user.task.view.AbstractTaskDetailsPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;

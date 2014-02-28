@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.organization.users.action.AddMembershipAction;
-import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;

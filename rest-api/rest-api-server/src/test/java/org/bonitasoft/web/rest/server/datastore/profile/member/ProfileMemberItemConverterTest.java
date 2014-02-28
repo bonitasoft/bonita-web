@@ -23,7 +23,6 @@ import static org.bonitasoft.web.rest.model.builder.profile.member.ProfileMember
 import org.bonitasoft.engine.profile.ProfileMember;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.profile.member.ProfileMemberItemConverter;
 import org.junit.Test;
 
 /**

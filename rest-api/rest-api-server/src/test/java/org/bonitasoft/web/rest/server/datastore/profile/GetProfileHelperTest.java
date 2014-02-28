@@ -25,7 +25,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;

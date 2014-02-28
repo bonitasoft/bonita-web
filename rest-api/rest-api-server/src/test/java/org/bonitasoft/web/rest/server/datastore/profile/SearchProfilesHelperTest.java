@@ -30,8 +30,6 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.profile.ProfileItemConverter;
-import org.bonitasoft.web.rest.server.datastore.profile.SearchProfilesHelper;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchUtils;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;

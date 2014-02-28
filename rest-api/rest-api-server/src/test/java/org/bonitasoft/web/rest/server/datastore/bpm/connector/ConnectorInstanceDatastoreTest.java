@@ -34,8 +34,6 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
-import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceDatastore;
-import org.bonitasoft.web.rest.server.datastore.bpm.connector.ConnectorInstanceItemWrapper;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.junit.Before;

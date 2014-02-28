@@ -20,7 +20,6 @@ import static junit.framework.Assert.assertEquals;
 
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.web.rest.model.identity.UserItem;
-import org.bonitasoft.web.rest.server.datastore.organization.UserSearchAttributeConverter;
 import org.junit.Before;
 import org.junit.Test;
 

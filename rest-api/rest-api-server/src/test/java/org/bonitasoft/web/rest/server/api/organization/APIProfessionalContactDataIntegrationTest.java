@@ -26,7 +26,6 @@ import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.builder.identity.ContactDataBuilder;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactData;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 

@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.bonitasoft.console.client.user.task.view.PluginProcess;
 import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
-import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;

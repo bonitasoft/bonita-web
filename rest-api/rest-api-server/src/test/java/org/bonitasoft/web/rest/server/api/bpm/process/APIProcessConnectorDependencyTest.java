@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnectorDependency;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessConnectorDependencyDatastore;
 import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryException;
 import org.junit.Before;

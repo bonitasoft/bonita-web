@@ -11,7 +11,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.api.bpm.cases.APIComment;
 import org.junit.Test;
 
 public class APICommentIntegrationTest extends AbstractConsoleTest {

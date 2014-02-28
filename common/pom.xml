@@ -8,11 +8,6 @@
 	<artifactId>common</artifactId>
 	<name>Web Common</name>
 
-	<!--<modules>
-		<module>common-config</module>
-		<module>common-test-toolkit</module>
-		<module>common-server</module>
-	</modules>-->
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -21,6 +16,11 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.bonitasoft.engine</groupId>
+            <artifactId>bonita-common</artifactId>
+            <version>6.2.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
