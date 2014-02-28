@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-26 01:11+0100\n"
-"PO-Revision-Date: 2014-02-25 20:30-0500\n"
+"PO-Revision-Date: 2014-02-27 20:31-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -534,7 +534,7 @@ msgstr "Der Zustand der Aufgabe"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:166
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:24
 msgid "The app responsible for the creation of this task"
-msgstr ""
+msgstr "Die App, aus der die Aufgabe stammt"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:173
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:187
@@ -694,7 +694,7 @@ msgstr "Wählen Sie eine Rolle, indem Sie einen Teil des Namens eingeben."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:103
 msgid "This task is already assigned to someone else."
-msgstr ""
+msgstr "Sie können diese Aufgabe nicht ausführen, sie wurde schon jemand anderem zugewiesen."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
 msgid "Welcome: "
@@ -747,7 +747,7 @@ msgstr "Anzeigen der Rollenliste"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:58
 msgid "Import / Export"
-msgstr "Import / Export"
+msgstr "Importieren/Exportieren"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
 msgid "Import or export data"
@@ -2987,7 +2987,7 @@ msgstr "Suche..."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
 msgid "Update this page using the defined search query"
-msgstr ""
+msgstr "Aktualisieren dieser Seite  durch Benutzen der definierten Abfrage"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:51
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:57
@@ -3069,7 +3069,7 @@ msgstr ""
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:42
 msgid "Call activity"
-msgstr ""
+msgstr "Aufruf-Aktivität"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:45
 msgid "Multi-instanciation activity"
@@ -3169,7 +3169,7 @@ msgstr "Import/Export Organisation"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "Import/Export"
-msgstr "Import/Export"
+msgstr "Importieren/Exportieren"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
 msgid "user privilege settings"
@@ -3181,7 +3181,7 @@ msgstr "Monitoring"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Manage Look and Feel"
-msgstr ""
+msgstr "Look n Feel verwalten"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Look and Feel"

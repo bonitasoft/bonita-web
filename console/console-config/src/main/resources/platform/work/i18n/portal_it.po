@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-26 01:11+0100\n"
-"PO-Revision-Date: 2014-02-25 20:30-0500\n"
+"PO-Revision-Date: 2014-02-26 20:33-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -694,7 +694,7 @@ msgstr "Seleziona un ruolo digitando parte del suo nome."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:103
 msgid "This task is already assigned to someone else."
-msgstr ""
+msgstr "Non è possibile eseguire questo task, è già stato assegnato a qualcun altro."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
 msgid "Welcome: "
@@ -1407,7 +1407,7 @@ msgstr "Crea un utente"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:60
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
 msgid "Enter the username for this user"
-msgstr ""
+msgstr "Inserire il nome utente"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
@@ -2987,7 +2987,7 @@ msgstr "Ricerca..."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
 msgid "Update this page using the defined search query"
-msgstr ""
+msgstr "Aggiorna questa pagina utilizzando la query di ricerca definita"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:51
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:57
@@ -3069,19 +3069,19 @@ msgstr ""
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:42
 msgid "Call activity"
-msgstr ""
+msgstr "Attività di chiamata"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:45
 msgid "Multi-instanciation activity"
-msgstr ""
+msgstr "Attività di multi-instanziazione"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:48
 msgid "Loop activity"
-msgstr ""
+msgstr "Attività di ciclo"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:51
 msgid "Service task"
-msgstr ""
+msgstr "Task di servizio"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/framework/json/JacksonDeserializer.java:53
 msgid "Can't parse json, non-well formed content"
@@ -3181,7 +3181,7 @@ msgstr "Monitoraggio"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Manage Look and Feel"
-msgstr ""
+msgstr "Gestire il Look & Feel"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Look and Feel"

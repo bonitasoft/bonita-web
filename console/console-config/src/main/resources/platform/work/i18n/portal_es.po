@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-26 01:11+0100\n"
-"PO-Revision-Date: 2014-02-25 20:31-0500\n"
+"PO-Revision-Date: 2014-02-26 20:34-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -694,7 +694,7 @@ msgstr "Seleccione un rol escribiendo parte de su nombre."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:103
 msgid "This task is already assigned to someone else."
-msgstr ""
+msgstr "No puede realizar esta tarea, ya ha sido asignado a otra persona."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
 msgid "Welcome: "
@@ -2987,7 +2987,7 @@ msgstr "Búsqueda..."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
 msgid "Update this page using the defined search query"
-msgstr ""
+msgstr "Actualizar esta página utilizando la consulta serach definido"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:51
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:57
@@ -3069,7 +3069,7 @@ msgstr ""
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:42
 msgid "Call activity"
-msgstr ""
+msgstr "Actividad de Llamada"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:45
 msgid "Multi-instanciation activity"
@@ -3081,7 +3081,7 @@ msgstr ""
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:51
 msgid "Service task"
-msgstr ""
+msgstr "Tarea de Servicio"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/framework/json/JacksonDeserializer.java:53
 msgid "Can't parse json, non-well formed content"
@@ -3181,7 +3181,7 @@ msgstr "Monitorización"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Manage Look and Feel"
-msgstr ""
+msgstr "Administrar el Look & Feel"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Look and Feel"

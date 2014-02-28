@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-26 01:11+0100\n"
-"PO-Revision-Date: 2014-02-25 20:30-0500\n"
+"PO-Revision-Date: 2014-02-27 20:31-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -256,15 +256,15 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:46
 msgid "Multi-instanciation activity (launches and controls instances execution)"
-msgstr ""
+msgstr "Activité d'instances multiple (démarre et controle les exécutions des instances)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:48
 msgid "Loop activity (launches and controls loop execution)"
-msgstr ""
+msgstr "Activité de boucle (démarre et contrôle les boucles d'exécution)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:51
 msgid "Service task (performed automatically)"
-msgstr ""
+msgstr "Tâche automatique (faite automatiquement)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeDisplayNameFormatter.java:50
 msgid "Task name:"
@@ -524,7 +524,7 @@ msgstr "Type"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:155
 msgid "The type of the task"
-msgstr ""
+msgstr "Le type de la tâche"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:159
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:32
@@ -534,7 +534,7 @@ msgstr "L'état du cas"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:166
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:24
 msgid "The app responsible for the creation of this task"
-msgstr ""
+msgstr "L'app dont est extraite la tâche"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:173
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:187
@@ -694,7 +694,7 @@ msgstr "Sélectionnez un rôle en tapant une partie de son nom."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:103
 msgid "This task is already assigned to someone else."
-msgstr ""
+msgstr "Vous ne pouvez pas effectuer cette tâche, elle a déjà été affectée à quelqu'un d'autre."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
 msgid "Welcome: "
@@ -1407,7 +1407,7 @@ msgstr "Créer un utilisateur"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:60
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
 msgid "Enter the username for this user"
-msgstr ""
+msgstr "Entrez le nom d'utilisateur pour cet utilisateur"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
@@ -1916,7 +1916,7 @@ msgstr "Attention, votre organisation va fusionner avec les données existantes.
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:79
 msgid "In case of conflict, priority is given to the imported file"
-msgstr ""
+msgstr "En cas de conflit, la priorité est donnée au fichier importé"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:87
 msgid "Organisation file"
@@ -2353,7 +2353,7 @@ msgstr "Sélectionnez une app dans la liste ci-dessous pour afficher les tâches
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:236
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:249
 msgid "My tasks"
@@ -2684,7 +2684,7 @@ msgstr "Entrez votre item"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTable.java:668
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/PagerLink.java:64
 msgid "Go to page %pagenumber%"
@@ -2987,7 +2987,7 @@ msgstr "Chercher..."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
 msgid "Update this page using the defined search query"
-msgstr ""
+msgstr "Mettre à jour cette page en utilisant le terme cherché"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:51
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/ChangeLangPage.java:57
@@ -3069,19 +3069,19 @@ msgstr ""
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:42
 msgid "Call activity"
-msgstr ""
+msgstr "Activité appelante"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:45
 msgid "Multi-instanciation activity"
-msgstr ""
+msgstr "Activité d'instances multiple"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:48
 msgid "Loop activity"
-msgstr ""
+msgstr "Activité de boucle"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:51
 msgid "Service task"
-msgstr ""
+msgstr "Tâche automatique"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/framework/json/JacksonDeserializer.java:53
 msgid "Can't parse json, non-well formed content"
@@ -3093,7 +3093,7 @@ msgstr "Json ne peut pas être mappée à"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/platform/APIPlatform.java:61
 msgid "The platform already exist !"
-msgstr ""
+msgstr "La plate-forme existe déjà !"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ProcessCategoryDatastore.java:103
 msgid "This category has already been added to this apps"
@@ -3181,7 +3181,7 @@ msgstr "Monitoring"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Manage Look and Feel"
-msgstr ""
+msgstr "Gérer le look and feel"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Look and Feel"
