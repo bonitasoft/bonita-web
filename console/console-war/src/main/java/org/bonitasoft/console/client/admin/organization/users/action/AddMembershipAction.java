@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.admin.organization.users.action;
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -37,7 +38,7 @@ public class AddMembershipAction extends FormAction {
     
     @Override
     public void execute() {
-        Definitions.get(definition.getToken()).getAPICaller().add(getForm(), new APICallback() {
+        new APICaller(definition).add(getForm(), new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

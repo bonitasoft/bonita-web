@@ -21,12 +21,14 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
@@ -60,7 +62,7 @@ public class ConfigurationSection extends Section {
 
         @Override
         protected void getData(final APICallback callback) {
-            ProcessResolutionProblemDefinition.get().getAPICaller()
+            new APICaller(ProcessResolutionProblemDefinition.get())
                     .search(0, 100, null, null, MapUtil.asMap(new Arg(ProcessResolutionProblemItem.FILTER_PROCESS_ID, this.process.getId())), callback);
         }
 

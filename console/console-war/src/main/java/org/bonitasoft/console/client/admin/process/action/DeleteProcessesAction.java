@@ -22,6 +22,7 @@ import java.util.Map;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
@@ -46,7 +47,7 @@ public class DeleteProcessesAction extends ActionOnItemIds {
 
     @Override
     protected void execute(final List<APIID> ids) {
-        ProcessDefinition.get().getAPICaller().delete(
+        new APICaller(ProcessDefinition.get()).delete(
                 asStringList(ids),
                 new APICallback() {
 

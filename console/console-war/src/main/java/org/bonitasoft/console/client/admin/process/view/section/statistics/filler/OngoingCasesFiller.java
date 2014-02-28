@@ -25,6 +25,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
@@ -44,7 +45,7 @@ public class OngoingCasesFiller extends Filler<Link> {
 
     @Override
     protected void getData(final APICallback callback) {
-        CaseDefinition.get().getAPICaller().search(0, 0, null, null,
+        new APICaller(CaseDefinition.get()).search(0, 0, null, null,
                 MapUtil.asMap(new Arg(CaseItem.ATTRIBUTE_PROCESS_ID, this.process.getId())), callback);
     }
 

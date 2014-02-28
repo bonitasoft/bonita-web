@@ -22,9 +22,11 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
@@ -71,7 +73,7 @@ public class EditGroupForm extends Form {
         @Override
         protected void getData(final APICallback callback) {
             List<String> deploys = Arrays.asList(GroupItem.ATTRIBUTE_PARENT_GROUP_ID);
-            GroupDefinition.get().getAPICaller().get(groupId, deploys, callback);
+            new APICaller(GroupDefinition.get()).get(groupId, deploys, callback);
         }
     }
 }

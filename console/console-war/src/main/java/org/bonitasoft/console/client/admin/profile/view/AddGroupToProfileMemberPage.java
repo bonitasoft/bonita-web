@@ -28,8 +28,10 @@ import org.bonitasoft.web.rest.model.identity.MemberType;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -72,7 +74,7 @@ public class AddGroupToProfileMemberPage extends Page {
     public void defineTitle() {
         this.setTitle("");
         // Load detailed title
-        Definitions.get(ProfileDefinition.TOKEN).getAPICaller().get(this.getParameter(PARAMETER_PROFILE_ID), new APICallback() {
+        new APICaller(ProfileDefinition.get()).get(this.getParameter(PARAMETER_PROFILE_ID), new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

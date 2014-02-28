@@ -22,6 +22,7 @@ import java.util.Map;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 
@@ -46,7 +47,7 @@ public class DeleteReportsAction extends ActionOnItemIds {
     @Override
     protected void execute(final List<APIID> ids) {
         for (final APIID id : ids) {
-            ReportDefinition.get().getAPICaller().delete(
+            new APICaller(ReportDefinition.get()).delete(
                     id,
                     new APICallback() {
 

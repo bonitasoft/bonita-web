@@ -23,6 +23,7 @@ import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 
@@ -50,7 +51,7 @@ public class ChangeUsersStateAction extends Action {
     @Override
     public void execute() {
         HashMap<String, String> updateAttributes = buildAttributesMap();
-        UserDefinition.get().getAPICaller().update(userId, updateAttributes, new ChangeUserStateCallback());
+        new APICaller(UserDefinition.get()).update(userId, updateAttributes, new ChangeUserStateCallback());
     }
     
     private HashMap<String, String> buildAttributesMap() {

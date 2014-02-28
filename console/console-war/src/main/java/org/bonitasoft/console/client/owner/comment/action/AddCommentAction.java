@@ -19,6 +19,8 @@ package org.bonitasoft.console.client.owner.comment.action;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
@@ -43,7 +45,7 @@ public class AddCommentAction extends FormAction {
 
     @Override
     public void execute() {
-        Definitions.get(CommentDefinition.TOKEN).getAPICaller().add(this.form, new APICallback() {
+        new APICaller(CommentDefinition.get()).add(this.form, new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

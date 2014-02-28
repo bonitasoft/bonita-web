@@ -38,6 +38,7 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
@@ -173,7 +174,7 @@ public class LoginBox extends RawView {
 
     private void getProfiles(final APIID userId, final APICallback callback) {
         final Map<String, String> filter = Collections.singletonMap(ProfileItem.FILTER_USER_ID, userId.toString());
-        ProfileDefinition.get().getAPICaller().search(0, 100, null, null, filter, callback);
+        new APICaller(ProfileDefinition.get()).search(0, 100, null, null, filter, callback);
     }
 
     private void ensureProfileId(final ProfileItem profile) {
@@ -229,7 +230,7 @@ public class LoginBox extends RawView {
 
         @Override
         protected void getData(final APICallback callback) {
-            UserDefinition.get().getAPICaller().get(Session.getUserId(), callback);
+            new APICaller(UserDefinition.get()).get(Session.getUserId(), callback);
         }
 
         @Override

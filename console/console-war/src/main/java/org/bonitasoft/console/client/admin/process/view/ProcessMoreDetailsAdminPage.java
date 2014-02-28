@@ -38,6 +38,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
@@ -138,7 +139,7 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
 
     @Override
     protected void buildBody(final ProcessItem item) {
-        ProcessResolutionProblemDefinition.get().getAPICaller()
+        new APICaller(ProcessResolutionProblemDefinition.get())
                 .search(0, 100, null, null, MapUtil.asMap(new Arg(ProcessResolutionProblemItem.FILTER_PROCESS_ID, item.getId())),
                         new APICallback() {
 

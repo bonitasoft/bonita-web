@@ -32,6 +32,7 @@ import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -99,7 +100,7 @@ public class UpdateUserPage extends Page {
 
             @Override
             protected void getData(final APICallback callback) {
-                itemDef.getAPICaller().get(itemId, Arrays.asList(UserItem.DEPLOY_PROFESSIONAL_DATA, UserItem.DEPLOY_PERSONNAL_DATA), callback);
+                new APICaller(itemDef).get(itemId, Arrays.asList(UserItem.DEPLOY_PROFESSIONAL_DATA, UserItem.DEPLOY_PERSONNAL_DATA), callback);
             }
         });
 

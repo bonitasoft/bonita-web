@@ -23,6 +23,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
@@ -42,7 +43,7 @@ public class FailedTasksFiller extends Filler<Link> {
 
     @Override
     protected void getData(final APICallback callback) {
-        HumanTaskDefinition.get().getAPICaller().search(0, 0, null, null,
+        new APICaller(HumanTaskDefinition.get()).search(0, 0, null, null,
                 MapUtil.asMap(
                         new Arg(HumanTaskItem.ATTRIBUTE_PROCESS_ID, this.process.getId()),
                         new Arg(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_FAILED)

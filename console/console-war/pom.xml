@@ -23,6 +23,13 @@
 	</properties>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>common</artifactId>
+            <classifier>sources</classifier>
+            <version>${project.version}</version>
+        </dependency>
+
 		<!-- Compile dependency -->
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
@@ -59,27 +66,27 @@
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.web</groupId>
-			<artifactId>bonita-rest-model</artifactId>
-			<classifier>sources</classifier>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.bonitasoft.web</groupId>-->
+			<!--<artifactId>bonita-rest-model</artifactId>-->
+			<!--<classifier>sources</classifier>-->
+			<!--<version>${project.version}</version>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
 
 		<!-- Runtime dependencies -->
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-server</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-server</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.bonitasoft.console</groupId>-->
+			<!--<artifactId>console-server</artifactId>-->
+			<!--<version>${project.version}</version>-->
+			<!--<scope>runtime</scope>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.bonitasoft.forms</groupId>-->
+			<!--<artifactId>forms-server</artifactId>-->
+			<!--<version>${project.version}</version>-->
+			<!--<scope>runtime</scope>-->
+		<!--</dependency>-->
 
 		<!-- GWT deps -->
 		<dependency>

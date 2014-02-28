@@ -61,7 +61,7 @@ public class LastExecutedTaskFiller extends Filler<Text> {
     }
 
     private APICaller<? extends IHumanTaskItem> getArchivedHumanTaskAPICaller() {
-        return ArchivedHumanTaskDefinition.get().getAPICaller();
+        return new APICaller<IHumanTaskItem>(ArchivedHumanTaskDefinition.get());
     }
 
     @Override

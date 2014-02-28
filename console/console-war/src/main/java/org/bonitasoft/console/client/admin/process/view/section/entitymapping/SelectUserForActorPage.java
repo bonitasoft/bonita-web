@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.data.item.attribute.reader.UserAttributeReader;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
@@ -33,6 +34,7 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -109,7 +111,7 @@ public class SelectUserForActorPage extends PageOnItem<ActorItem> {
             item.setAttribute(ActorMemberItem.ATTRIBUTE_USER_ID, getParameter(ActorMemberItem.ATTRIBUTE_USER_ID));
             item.setAttribute(ActorMemberItem.ATTRIBUTE_ACTOR_ID, getParameter(ActorMemberItem.ATTRIBUTE_ACTOR_ID));
 
-            ActorMemberDefinition.get().getAPICaller().add(item, new AddUserToActorAPICallback());
+            new APICaller(ActorMemberDefinition.get()).add(item, new AddUserToActorAPICallback());
         }
         
     }

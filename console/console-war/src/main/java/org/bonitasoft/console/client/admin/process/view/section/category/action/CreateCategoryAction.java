@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.admin.process.view.section.category.action
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
@@ -40,6 +41,6 @@ public class CreateCategoryAction extends Action {
 
     @Override
     public void execute() {
-        CategoryDefinition.get().getAPICaller().add(form, callback);
+        new APICaller(CategoryDefinition.get()).add(form, callback);
     }
 }

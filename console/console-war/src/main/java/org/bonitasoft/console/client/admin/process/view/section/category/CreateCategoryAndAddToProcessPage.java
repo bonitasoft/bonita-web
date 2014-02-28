@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.section.category.action.CreateCategoryAction;
+import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
@@ -32,6 +33,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
@@ -103,7 +105,7 @@ public class CreateCategoryAndAddToProcessPage extends AddProcessCategoryPage {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                ProcessCategoryDefinition.get().getAPICaller()
+                new APICaller(ProcessCategoryDefinition.get())
                         .add(createAssociationItem(processId, parseCategoryItem(response)),
                                 new AddCategoryToProcessCallback());
             }

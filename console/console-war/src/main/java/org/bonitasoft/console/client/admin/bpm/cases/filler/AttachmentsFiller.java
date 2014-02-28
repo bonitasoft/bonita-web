@@ -23,6 +23,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
@@ -42,7 +43,7 @@ public class AttachmentsFiller extends Filler<Text> {
 
     @Override
     protected void getData(final APICallback callback) {
-        CaseDocumentDefinition.get().getAPICaller().search(0, 0, null, null,
+        new APICaller(CaseDocumentDefinition.get()).search(0, 0, null, null,
                 MapUtil.asMap(new Arg(CaseDocumentItem.ATTRIBUTE_CASE_ID, caseItem.getId())),
                 callback);
     }

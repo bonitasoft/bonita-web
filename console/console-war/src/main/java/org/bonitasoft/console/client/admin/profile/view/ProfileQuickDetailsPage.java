@@ -13,6 +13,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -120,7 +121,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
 
         @Override
         protected void getData(final APICallback callback) {
-            ProfileMemberDefinition.get().getAPICaller().search(0, 1, null, null,
+            new APICaller(ProfileMemberDefinition.get()).search(0, 1, null, null,
                     MapUtil.asMap(new Arg(ProfileMemberItem.ATTRIBUTE_PROFILE_ID, profile.getId()),
                             new Arg(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_USER)),
                     callback);
@@ -147,7 +148,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
 
         @Override
         protected void getData(final APICallback callback) {
-            ProfileMemberDefinition.get().getAPICaller().search(0, 2, null, null,
+            new APICaller(ProfileMemberDefinition.get()).search(0, 2, null, null,
                     MapUtil.asMap(new Arg(ProfileMemberItem.ATTRIBUTE_PROFILE_ID, profile.getId()),
                             new Arg(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_GROUP)),
                     callback);
@@ -174,7 +175,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
 
         @Override
         protected void getData(final APICallback callback) {
-            ProfileMemberDefinition.get().getAPICaller().search(0, 2, null, null,
+            new APICaller(ProfileMemberDefinition.get()).search(0, 2, null, null,
                     MapUtil.asMap(new Arg(ProfileMemberItem.ATTRIBUTE_PROFILE_ID, profile.getId()),
                             new Arg(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_ROLE)),
                     callback);
@@ -201,7 +202,7 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
 
         @Override
         protected void getData(final APICallback callback) {
-            ProfileMemberDefinition.get().getAPICaller().search(0, 2, null, null,
+            new APICaller(ProfileMemberDefinition.get()).search(0, 2, null, null,
                     MapUtil.asMap(new Arg(ProfileMemberItem.ATTRIBUTE_PROFILE_ID, profile.getId()),
                             new Arg(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_MEMBERSHIP)),
                     callback);

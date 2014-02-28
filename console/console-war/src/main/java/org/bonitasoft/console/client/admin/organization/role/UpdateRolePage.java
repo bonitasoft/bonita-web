@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
@@ -91,7 +92,7 @@ public class UpdateRolePage extends Page {
         
         @Override
         protected void getData(final APICallback callback) {
-            RoleDefinition.get().getAPICaller().get(roleId, callback);
+            new APICaller(RoleDefinition.get()).get(roleId, callback);
         }
     }
 }

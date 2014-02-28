@@ -32,6 +32,7 @@ import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 
@@ -79,7 +80,8 @@ public class SelectMembershipForActorPage extends SelectMembershipAndDoPageOnIte
                 item.setAttribute(ActorMemberItem.ATTRIBUTE_ROLE_ID, this.getParameter(ROLE_ID));
                 item.setAttribute(ActorMemberItem.ATTRIBUTE_ACTOR_ID, this.getParameter("id"));
 
-                ActorMemberDefinition.get().getAPICaller().add(item, new APICallback() {
+                new APICaller(ActorMemberDefinition.get())
+                        .add(item, new APICallback() {
 
                     @Override
                     public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

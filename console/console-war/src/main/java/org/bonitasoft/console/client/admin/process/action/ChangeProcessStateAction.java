@@ -19,12 +19,14 @@ package org.bonitasoft.console.client.admin.process.action;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 
@@ -54,7 +56,7 @@ public class ChangeProcessStateAction extends ActionOnItemIds {
     @Override
     protected void execute(final List<APIID> ids) {
         for (final APIID id : ids) {
-            ProcessDefinition.get().getAPICaller().update(
+            new APICaller(ProcessDefinition.get()).update(
                     id,
                     MapUtil.asMap(new Arg(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, this.state)),
                     new APICallback() {

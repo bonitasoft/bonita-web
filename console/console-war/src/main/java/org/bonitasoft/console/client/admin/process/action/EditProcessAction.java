@@ -24,6 +24,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
@@ -72,7 +73,7 @@ public class EditProcessAction extends FormAction {
             attributesToUpdate.put(ProcessItem.ATTRIBUTE_DISPLAY_NAME, processDisplayName);
         }
 
-        Definitions.get(ProcessDefinition.TOKEN).getAPICaller().update(this.processId, attributesToUpdate, new APICallback() {
+        new APICaller(ProcessDefinition.get()).update(this.processId, attributesToUpdate, new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {

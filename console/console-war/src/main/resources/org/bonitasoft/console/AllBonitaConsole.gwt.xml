@@ -7,8 +7,8 @@
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.google.gwt.http.HTTP" />
 
-	<!-- Bonitasoft Web Toolkit -->
-	<inherits name='org.bonitasoft.web.toolkit.ToolkitView' />
+	<!-- Common -->
+	<inherits name='org.bonitasoft.web.common' />
 
 	<!-- Other Bonita resources -->
 	<inherits name='org.bonitasoft.forms.FormsView' />

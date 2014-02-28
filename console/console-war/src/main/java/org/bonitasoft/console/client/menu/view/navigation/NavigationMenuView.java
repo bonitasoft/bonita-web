@@ -109,7 +109,7 @@ public class NavigationMenuView extends RawView {
 
     private void getProfileEntries(String profileId, APICallback callback) {
         final Map<String, String> params = Collections.singletonMap(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, profileId);
-        ProfileEntryDefinition.get().getAPICaller()
+        new APICaller(ProfileEntryDefinition.get())
                 .search(0, 100, ProfileEntryItem.ATTRIBUTE_INDEX + " " + "ASC", null, params, Arrays.asList(ProfileEntryItem.ATTRIBUTE_PAGE), callback);
     }
 
