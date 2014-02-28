@@ -16,8 +16,12 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
@@ -30,12 +34,8 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.URL;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
@@ -43,7 +43,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
  */
 public class StartProcessFormPage extends Page {
 
-	public final static String TOKEN = "StartProcess";
+    public final static String TOKEN = "StartProcess";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
@@ -80,7 +80,7 @@ public class StartProcessFormPage extends Page {
         StringBuilder frameURL = new StringBuilder();
 
         frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?ui=form&locale=")
+                .append("homepage?gwt.codesvr=127.0.0.1:9997&ui=form&locale=")
                 .append(locale);
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
@@ -91,14 +91,14 @@ public class StartProcessFormPage extends Page {
 
         frameURL.append("#form=")
                 .append(processName)
-                .append(this.UUID_SEPERATOR)
+                .append(UUID_SEPERATOR)
                 .append(processVersion)
                 .append("$entry&process=")
                 .append(processId)
                 .append("&autoInstantiate=false&mode=form&user=")
                 .append(userId);
 
-        this.addBody(new IFrame(DOMUtils.FORM_FRAME_ID, frameURL.toString(), "100%", "700px"));
+        addBody(new IFrame(DOMUtils.FORM_FRAME_ID, frameURL.toString(), "100%", "700px"));
     }
 
     public static final Map<String, String> getItemParams(final IItem item) {

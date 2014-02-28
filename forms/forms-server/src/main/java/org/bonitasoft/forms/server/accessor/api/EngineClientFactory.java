@@ -37,7 +37,7 @@ public class EngineClientFactory {
         return new ProcessInstanceAccessorEngineClient(getProcessAPI(session));
     }
 
-    private ProcessAPI getProcessAPI(APISession session) throws BPMEngineException {
+    public ProcessAPI getProcessAPI(APISession session) throws BPMEngineException {
         try {
             return TenantAPIAccessor.getProcessAPI(session);
         } catch (Exception e) {

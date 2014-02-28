@@ -1,30 +1,104 @@
 package org.bonitasoft.forms.server.util;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.forms.client.model.FormFieldValue;
 
 public class FormLogger {
 
-    private Logger logger;
+    private final Logger LOGGER;
 
-    private String context;
+    private static Map<String, Object> context;
 
-    /**
-     * 
-     * Default Constructor.
-     * 
-     * @param classLog
-     * @param context
-     *            this class is userd to
-     */
-    public void FormLogger(Class<?> classLog) {
-        logger = Logger.getLogger(classLog.getName());
+    public FormLogger(String className) {
+        LOGGER = Logger.getLogger(className);
     }
 
-    public void log(String context) {
-
+    public void log(Level level, String message) {
+        this.log(level, message, null);
     }
 
-    private String getUserId() {
-        return "";
+    public void log(Level level, String message, Throwable e) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        String prefixMessage = "";
+
+        if (ctxu.getSession() != null) {
+            prefixMessage += "Username<" + ctxu.getUserName() + "> ";
+        }
+
+        if (ctxu.getFormName() != null) {
+            prefixMessage += "Form<" + ctxu.getFormName() + "> ";
+        }
+
+        HashMap<String, FormFieldValue> submittedFields = ctxu.getSubmittedFields();
+        if (!submittedFields.isEmpty()) {
+            prefixMessage += "Submitted Fields<";
+            String fieldStringRepresentation = getFormFieldStringRepresentation("", submittedFields);
+            prefixMessage += fieldStringRepresentation + "> ";
+        }
+
+        try {
+            if (ctxu.getProcessName() != null) {
+                prefixMessage += "Process<" + ctxu.getProcessName();
+                if (ctxu.getProcessVersion() != null) {
+                    prefixMessage += " " + ctxu.getProcessVersion();
+                }
+                prefixMessage += "> ";
+            }
+        } catch (ProcessDefinitionNotFoundException e1) {
+            prefixMessage += "Process definition not found " + e1.getMessage();
+        } catch (BPMEngineException e1) {
+            prefixMessage += e1.getMessage();
+        }
+        if (message == null) {
+            message = "";
+        }
+        message = prefixMessage + " " + message;
+
+        if (LOGGER.isLoggable(Level.SEVERE)) {
+            LOGGER.log(Level.SEVERE, message, e);
+        } else if (LOGGER.isLoggable(Level.WARNING)) {
+            LOGGER.log(Level.WARNING, message, e);
+        } else if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, message, e);
+        } else if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, message, e);
+        }
     }
+
+    protected String getFormFieldStringRepresentation(String returnedStr, Map<String, FormFieldValue> submittedFields) {
+        int i = 0;
+        for (Map.Entry<String, FormFieldValue> entry : submittedFields.entrySet()) {
+            i = i + 1;
+            FormFieldValue fieldValue = entry.getValue();
+            String fieldName = entry.getKey();
+            if (entry.getValue().hasChildWidgets()) {
+                returnedStr = getFormFieldStringRepresentation(returnedStr, fieldValue.getChildFormFieldValues());
+            } else {
+                returnedStr += formatLogField(fieldName, fieldValue);
+            }
+            if (submittedFields.size() > 1) {
+                returnedStr += " ; ";
+            }
+        }
+        return returnedStr;
+    }
+
+    protected String formatLogField(String fieldName, FormFieldValue fieldValue) {
+        return fieldName + " (" + fieldValue.getValueType() + ")" + " => " + fieldValue.getValue();
+    }
+
+    public boolean isLoggable(Level level) {
+        return LOGGER.isLoggable(level);
+    }
+
+    public static void setContext(Map<String, Object> pcontext) {
+        context = pcontext;
+    }
+
 }
