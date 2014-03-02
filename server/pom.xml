@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <artifactId>bonita-console</artifactId>
         <groupId>org.bonitasoft.console</groupId>
+        <artifactId>bonita-console</artifactId>
         <version>6.3.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -64,7 +64,7 @@
         <!--Test-->
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
-            <artifactId>common-test-toolkit</artifactId>
+            <artifactId>test-toolkit</artifactId>
             <version>6.3.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
@@ -185,7 +185,6 @@
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <jettyConfig>src/main/webapp/WEB-INF/jetty.xml</jettyConfig>
                     <contextPath>bonita</contextPath>
-                    <!--<overrideWebXml>src/main/webapp/WEB-INF/web.xml</overrideWebXml>-->
                 </configuration>
                 <dependencies>
                     <dependency>

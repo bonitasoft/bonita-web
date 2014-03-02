@@ -8,13 +8,13 @@
 	<version>6.3.0-SNAPSHOT</version>
 
 	<modules>
-		<module>toolkit</module>
-        <module>server</module>
-		<module>common</module>
-		<module>rest-api</module>
-		<module>forms</module>
-		<module>console</module>
 		<module>bonita-home</module>
+        <module>test-toolkit</module>
+		<module>common</module>
+		<module>forms</module>
+        <module>looknfeel</module>
+        <module>server</module>
+        <module>client</module>
 	</modules>
 
 	<scm>
@@ -24,7 +24,7 @@
 
 	<properties>
 		<bonita.engine.version>6.3.0-SNAPSHOT</bonita.engine.version>
-
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<slf4j.version>1.6.1</slf4j.version>
