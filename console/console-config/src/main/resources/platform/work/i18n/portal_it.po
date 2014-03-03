@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-26 01:11+0100\n"
-"PO-Revision-Date: 2014-02-28 20:31-0500\n"
+"PO-Revision-Date: 2014-03-02 20:31-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -252,19 +252,19 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:44
 msgid "Call activity (launches another process)"
-msgstr ""
+msgstr "Call activity (chiama un altro processo)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:46
 msgid "Multi-instanciation activity (launches and controls instances execution)"
-msgstr ""
+msgstr "Activity di istanze multiple (chiama e controlla le esecuzioni delle istanze)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:48
 msgid "Loop activity (launches and controls loop execution)"
-msgstr ""
+msgstr "Activity di iterazione (lancia e controlla le iterazioni di esecuzione)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:51
 msgid "Service task (performed automatically)"
-msgstr ""
+msgstr "Task di servizio (eseguita automaticamente)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeDisplayNameFormatter.java:50
 msgid "Task name:"
@@ -524,7 +524,7 @@ msgstr "Tipo"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:155
 msgid "The type of the task"
-msgstr ""
+msgstr "Il tipo di task"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:159
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:32
@@ -534,7 +534,7 @@ msgstr "Lo stato del task"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:166
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:24
 msgid "The app responsible for the creation of this task"
-msgstr ""
+msgstr "L'applicazione responsabile della creazione del task"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:173
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:187
@@ -548,7 +548,7 @@ msgstr "Sottoprocesso"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:180
 msgid "The sub process responsible for the creation of this task"
-msgstr ""
+msgstr "Il sotto processo responsabile della creazione di questa attività"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:186
 msgid "Subprocess version"
@@ -1916,7 +1916,7 @@ msgstr "Attenzione, l'organizzazione verrà fusa con dati esistenti."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:79
 msgid "In case of conflict, priority is given to the imported file"
-msgstr ""
+msgstr "In caso di conflitto, la priorità è data al file importato"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:87
 msgid "Organisation file"
@@ -2272,7 +2272,7 @@ msgstr "Installa un'applicazione"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:98
 msgid "Business archive"
-msgstr ""
+msgstr "Archivio Business"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:98
 msgid "A business archive has a .bar extension"
@@ -2353,7 +2353,7 @@ msgstr "Selezionare un'applicazione nell'elenco sottostante per visualizzare le 
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:236
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:249
 msgid "My tasks"
@@ -3093,7 +3093,7 @@ msgstr "Json non può essere mappato su "
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/platform/APIPlatform.java:61
 msgid "The platform already exist !"
-msgstr ""
+msgstr "Piattaforma già esistente !"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ProcessCategoryDatastore.java:103
 msgid "This category has already been added to this apps"
