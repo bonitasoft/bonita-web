@@ -65,6 +65,7 @@ import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormServiceProviderNotFoundException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
@@ -569,13 +570,10 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         return decodeString(stringBuffer.toString(), encodedStrings);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Map<String, Serializable> getTransientDataContext(final List<TransientData> transientData, final Locale userLocale, final Map<String, Object> context)
             throws FormNotFoundException, FormServiceProviderNotFoundException, ClassNotFoundException, SessionTimeoutException, FileTooBigException,
-            IOException {
+            IOException, FormInitializationException {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
         final Map<String, Serializable> transientDataContext = new HashMap<String, Serializable>();
         final List<Expression> expressionsToEvaluate = new ArrayList<Expression>();

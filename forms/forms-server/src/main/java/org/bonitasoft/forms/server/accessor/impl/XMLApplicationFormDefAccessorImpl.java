@@ -367,7 +367,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
                 }
                 throw new InvalidFormDefinitionException(errorMessage);
             } else {
-                label = xmlExpressionsUtil.parseExpression(pageLabelNode);
+                label = xmlExpressionsUtil.parseExpression(pageId, pageLabelNode);
             }
         }
         return label;
@@ -457,7 +457,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
                 final Node valueNode = getNodeByXpath(dataNode, XMLForms.VALUE);
                 Expression value = null;
                 if (valueNode != null) {
-                    value = xmlExpressionsUtil.parseExpression(valueNode);
+                    value = xmlExpressionsUtil.parseExpression(name, valueNode);
                 }
                 transientData.add(new TransientData(name, className, value));
             }

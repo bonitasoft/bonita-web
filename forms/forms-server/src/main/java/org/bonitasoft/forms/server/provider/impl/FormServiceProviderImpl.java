@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -84,6 +85,7 @@ import org.bonitasoft.forms.server.api.IFormValidationAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormSubmissionException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
@@ -684,7 +686,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public Serializable resolveExpression(final Expression expression, final Map<String, Object> context) throws FormNotFoundException,
+    public Serializable resolveExpression(final Expression expression, final Map<String, Object> context) throws FormNotFoundException, FormInitializationException,
             SessionTimeoutException, FileTooBigException, IOException {
         FormContextUtil ctxu = new FormContextUtil(context);
         Serializable result = null;
@@ -769,18 +771,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     LOGGER.log(Level.SEVERE, message, e);
                 }
                 throw new FormNotFoundException(message);
+            } catch (final BPMExpressionEvaluationException e) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                }
+                throw new FormInitializationException(e.getMessage());
+                
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
                 if (LOGGER.isLoggable(Level.INFO)) {
                     LOGGER.log(Level.INFO, message, e);
                 }
                 throw new SessionTimeoutException(message);
-            } catch (final ExpressionEvaluationException e) {
-                final String message = "Error while communicating with the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
-                throw new FormNotFoundException(message);
+
             }
             if (LOGGER.isLoggable(Level.FINEST)) {
                 final String time = DATE_FORMAT.format(new Date());
@@ -852,10 +855,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * {@inheritDoc}
+     * @throws FormInitializationException 
+     * @throws BPMEngineEvaluationExpressionException 
      */
     @Override
     @SuppressWarnings("unchecked")
-    public Map<String, Serializable> resolveExpressions(final List<Expression> expressions, final Map<String, Object> context) throws FormNotFoundException,
+    public Map<String, Serializable> resolveExpressions(final List<Expression> expressions, final Map<String, Object> context) throws FormNotFoundException,FormInitializationException,
             SessionTimeoutException, FileTooBigException, IOException {
         FormContextUtil ctxu = new FormContextUtil(context);
         if (LOGGER.isLoggable(Level.FINEST)) {
@@ -939,6 +944,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 LOGGER.log(Level.SEVERE, message, e);
             }
             throw new FormNotFoundException(message);
+        
+        } catch (final BPMExpressionEvaluationException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            }
+            throw new FormInitializationException(e.getMessage());
+            
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
             if (LOGGER.isLoggable(Level.INFO)) {
@@ -1371,12 +1383,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * {@inheritDoc}
+     * @throws BPMExpressionEvaluationException 
      */
     @Override
     @SuppressWarnings("unchecked")
     public List<FormValidator> validateField(final List<FormValidator> validators, final String fieldId, final FormFieldValue fieldValue,
             final String submitButtonId, final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException,
-            FileTooBigException, IOException {
+            FileTooBigException, IOException, BPMExpressionEvaluationException {
         FormContextUtil ctxu = new FormContextUtil(context);
         if (LOGGER.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -1438,12 +1451,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 LOGGER.log(Level.INFO, message, e);
             }
             throw new SessionTimeoutException(message);
-        } catch (final ExpressionEvaluationException e) {
-            final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
-            throw new FormNotFoundException(message);
+
         } catch (final ArchivedProcessInstanceNotFoundException e) {
             final String message = "Archvied process instance not foud";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -1463,11 +1471,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * 
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMExpressionEvaluationException 
      */
     @Override
     @SuppressWarnings("unchecked")
     public List<FormValidator> validatePage(final List<FormValidator> validators, final Map<String, FormFieldValue> fields, final String submitButtonId,
-            final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException {
+            final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException, BPMExpressionEvaluationException {
         FormContextUtil ctxu = new FormContextUtil(context);
         if (LOGGER.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -1529,12 +1538,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 LOGGER.log(Level.INFO, message, e);
             }
             throw new SessionTimeoutException(message);
-        } catch (final ExpressionEvaluationException e) {
-            final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
-            throw new FormNotFoundException(message);
+            
         } catch (final ArchivedProcessInstanceNotFoundException e) {
             final String message = "Archived process instance not found";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -1821,12 +1825,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public FormFieldValue getAttachmentFormFieldValue(final Object value, final Map<String, Object> context) throws FormNotFoundException,
-            SessionTimeoutException, IOException, FileTooBigException {
+
+    public FormFieldValue getAttachmentFormFieldValue(final Object value, final Map<String, Object> context) throws SessionTimeoutException, IOException, FileTooBigException, FormInitializationException {
         if (LOGGER.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             LOGGER.log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - start");
