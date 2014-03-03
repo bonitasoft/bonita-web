@@ -116,7 +116,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
         final StringBuilder frameURL = new StringBuilder()
 
-                .append(GWT.getModuleBaseURL()).append("homepage?gwt.codesvr=192.168.0.55:9997&ui=form&locale=")
+                .append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=")
                 .append(AbstractI18n.getDefaultLocale().toString());
 
         // if tenant is filled in portal url add tenant parameter to IFrame url

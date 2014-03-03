@@ -43,13 +43,17 @@ public class FormLogger {
         }
 
         try {
-            if (ctxu.getProcessName() != null) {
+            // in case of process instanciation
+            if (ctxu.getProcessDefinitionId() != null) {
                 prefixMessage += "Process<" + ctxu.getProcessName();
                 if (ctxu.getProcessVersion() != null) {
                     prefixMessage += " " + ctxu.getProcessVersion();
                 }
                 prefixMessage += "> ";
+            } else if (ctxu.getTaskId() != null) {
+                prefixMessage += "Task<" + ctxu.getTaskName() + "> ";
             }
+
         } catch (ProcessDefinitionNotFoundException e1) {
             prefixMessage += "Process definition not found " + e1.getMessage();
         } catch (BPMEngineException e1) {

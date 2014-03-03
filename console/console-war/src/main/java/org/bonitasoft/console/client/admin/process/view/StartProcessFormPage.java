@@ -80,7 +80,7 @@ public class StartProcessFormPage extends Page {
         StringBuilder frameURL = new StringBuilder();
 
         frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?gwt.codesvr=127.0.0.1:9997&ui=form&locale=")
+                .append("homepage?ui=form&locale=")
                 .append(locale);
 
         // if tenant is filled in portal url add tenant parameter to IFrame url

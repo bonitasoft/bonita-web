@@ -58,7 +58,7 @@ public class FormContextUtil {
     }
 
     public String getFormName() {
-        return (String) urlContext.get("form");
+        return (String) urlContext.get(FormServiceProviderUtil.FORM_ID);
     }
 
     public String getProcessName() throws ProcessDefinitionNotFoundException, BPMEngineException {
@@ -71,7 +71,6 @@ public class FormContextUtil {
 
     @SuppressWarnings("unchecked")
     public HashMap<String, FormFieldValue> getSubmittedFields() {
-        String submittedFieldString = null;
         HashMap<String, FormFieldValue> submittedFields = new HashMap<String, FormFieldValue>();
         if (context.containsKey(FormServiceProviderUtil.FIELD_VALUES)) {
             submittedFields = (HashMap<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES);
@@ -94,9 +93,8 @@ public class FormContextUtil {
     public Long getProcessDefinitionId() {
         if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
             return Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -126,5 +124,24 @@ public class FormContextUtil {
 
     public void setUrlContext(final Map<String, Object> pUrlContext) {
         urlContext = pUrlContext;
+    }
+
+    public Long getTaskId() {
+        if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
+            return Long.valueOf(urlContext.get(FormServiceProviderUtil.TASK_UUID).toString());
+        }
+        return null;
+    }
+
+    public String getTaskName() {
+        String formName = getFormName();
+        if (formName != null) {
+            int formIdDelimiterPos = formName.lastIndexOf(FormServiceProviderUtil.FORM_ID_SEPARATOR);
+            int taskDelimiterPos = formName.lastIndexOf("--");
+            if (formName != null && formIdDelimiterPos != -1 && taskDelimiterPos != -1) {
+                return getFormName().substring(taskDelimiterPos, formIdDelimiterPos + 2);
+            }
+        }
+        return null;
     }
 }
