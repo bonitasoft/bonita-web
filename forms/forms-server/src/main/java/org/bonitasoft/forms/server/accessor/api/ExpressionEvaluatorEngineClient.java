@@ -25,6 +25,7 @@ import org.bonitasoft.engine.api.ProcessRuntimeAPI;
 import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.engine.expression.ExpressionEvaluationException;
 import org.bonitasoft.forms.server.accessor.widget.impl.XMLExpressionsUtil;
+import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
 
 /**
  * @author Colin PUY
@@ -99,17 +100,18 @@ public class ExpressionEvaluatorEngineClient {
     private String buildEvaluationMessageLogDetail(final ExpressionEvaluationException e) {
     	String[] splitExpressionName = null;
     	String expressionParentName = "unknown";
-    	String expressionName = "unknown";
+    	String expressionParentAttribute = "unknown";
     	
     	if(e.getExpressionName()!=null){
-    		splitExpressionName = e.getExpressionName().split(XMLExpressionsUtil.SEPARATOR);
-    	}
-    	if(splitExpressionName.length==2){
-    		expressionParentName = splitExpressionName[0];
-    		expressionName = splitExpressionName[1];
+    		splitExpressionName = e.getExpressionName().split(FormFieldValuesUtil.EXPRESSION_KEY_SEPARATOR);
+
+        	if(splitExpressionName.length==2){
+        		expressionParentName = splitExpressionName[0];
+        		expressionParentAttribute = splitExpressionName[1];
+        	}
     	}
     	
-    	return "The error is on expression ["+ expressionName +"] contained in ["+ expressionParentName +"].";
+    	return "Error on expression evaluation for the attribute ["+ expressionParentAttribute +"] of object ["+ expressionParentName +"].";
     }
 
 }
