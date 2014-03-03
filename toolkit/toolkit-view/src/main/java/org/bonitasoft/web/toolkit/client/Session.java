@@ -32,7 +32,7 @@ public class Session extends ParametersStorage {
 
     private final TreeIndexed<String> parameters = new TreeIndexed<String>();
 
-    private static Cookie SINGLETON = new Cookie();
+    private static ParametersStorageWithCookie SINGLETON = new ParametersStorageWithCookie();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // I/O

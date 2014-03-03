@@ -30,7 +30,8 @@ import com.google.gwt.user.client.Cookies;
 /**
  * @author Séverin Moussel, Paul AMAR
  */
-public class Cookie extends ParametersStorage {
+// ParametersStorageWithCookies
+public class ParametersStorageWithCookie extends ParametersStorage {
 
     private static final String COOKIE_NAME = "bos_cookie";
 
@@ -38,7 +39,7 @@ public class Cookie extends ParametersStorage {
 
     private static final long COOKIE_EXPIRE = 6048000000L; // 70 days
 
-    private static Cookie SINGLETON = new Cookie();
+    private static ParametersStorageWithCookie SINGLETON = new ParametersStorageWithCookie();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COOKIE I/O
@@ -51,8 +52,8 @@ public class Cookie extends ParametersStorage {
     protected final void resetParameters() {
         Cookies.removeCookie(LOGIN_COOKIE_NAME);
         
-        CookiesWrapper.removeCookie(COOKIE_NAME);
-        CookiesWrapper.removeCookie(LOGIN_COOKIE_NAME);
+        UserSessionVariables.removeUserVariable(COOKIE_NAME);
+        UserSessionVariables.removeUserVariable(LOGIN_COOKIE_NAME);
     }
 
     /**
@@ -73,7 +74,7 @@ public class Cookie extends ParametersStorage {
     @Override
     protected final TreeIndexed<String> readParameters(final boolean updateExpiresDate) {
         // Read the parameters as JSON
-        final String cookieContent = CookiesWrapper.getCookie(COOKIE_NAME);
+        final String cookieContent = UserSessionVariables.getUserVariable(COOKIE_NAME);
         TreeIndexed<String> result = null;
         if (cookieContent == null) {
             result = new TreeIndexed<String>();
@@ -96,7 +97,7 @@ public class Cookie extends ParametersStorage {
      */
     @Override
     protected final void writeParameters(final TreeIndexed<String> parameters) {
-        CookiesWrapper.addCookie(COOKIE_NAME, parameters.toJson());
+        UserSessionVariables.addUserVariable(COOKIE_NAME, parameters.toJson());
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

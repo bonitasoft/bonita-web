@@ -24,19 +24,19 @@ import java.util.Map;
  * @author Paul AMAR
  *
  */
-public class CookiesWrapper {
+public class UserSessionVariables {
 
-    private static Map<String, String> Cookies = new HashMap<String, String>();
+    private static Map<String, String> userVariables = new HashMap<String, String>();
     
-    public static void addCookie(String name, String value) {
-        Cookies.put(name, value);
+    public static void addUserVariable(String name, String value) {
+        userVariables.put(name, value);
     }
     
-    public static String getCookie(String name) {
-        return Cookies.get(name);
+    public static String getUserVariable(String name) {
+        return userVariables.get(name);
     }
     
-    public static void removeCookie(String name) {
-        Cookies.remove(name);
+    public static void removeUserVariable(String name) {
+        userVariables.remove(name);
     }
 }
