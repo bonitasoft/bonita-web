@@ -54,7 +54,7 @@ public class TableFilterText extends TableFilter {
         $(":text", rootElement).keydown(new Function() {
 
             @Override
-            public boolean f(final Event e, final Object data) {
+            public boolean f(final Event e) {
                 // Return
                 if (e.getKeyCode() == 13) {
                     TableFilterText.this.table.setPage(0);

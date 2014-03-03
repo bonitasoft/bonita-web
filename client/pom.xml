@@ -39,13 +39,6 @@
 
 		<!-- GWT dependency (sources) -->
 		<dependency>
-			<groupId>org.bonitasoft.web.toolkit</groupId>
-			<artifactId>toolkit-view</artifactId>
-			<classifier>sources</classifier>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-view</artifactId>
 			<classifier>sources</classifier>
@@ -66,27 +59,6 @@
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.bonitasoft.web</groupId>-->
-			<!--<artifactId>bonita-rest-model</artifactId>-->
-			<!--<classifier>sources</classifier>-->
-			<!--<version>${project.version}</version>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
-
-		<!-- Runtime dependencies -->
-		<!--<dependency>-->
-			<!--<groupId>org.bonitasoft.console</groupId>-->
-			<!--<artifactId>console-server</artifactId>-->
-			<!--<version>${project.version}</version>-->
-			<!--<scope>runtime</scope>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.bonitasoft.forms</groupId>-->
-			<!--<artifactId>forms-server</artifactId>-->
-			<!--<version>${project.version}</version>-->
-			<!--<scope>runtime</scope>-->
-		<!--</dependency>-->
 
 		<!-- GWT deps -->
 		<dependency>
@@ -99,8 +71,13 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 	<build>
 		<resources>
 			<resource>

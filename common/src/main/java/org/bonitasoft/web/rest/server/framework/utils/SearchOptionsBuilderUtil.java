@@ -18,7 +18,6 @@ package org.bonitasoft.web.rest.server.framework.utils;
 
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 
 /**
  * @author Haojie Yuan
@@ -29,7 +28,7 @@ public class SearchOptionsBuilderUtil {
     /**
      * build SearchOptionsBuilder
      * 
-     * @deprecated use {@link SearchOptionsCreator}
+     * @deprecated use org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator
      */
 	@Deprecated
     public static SearchOptionsBuilder buildSearchOptions(final int pageIndex, final int numberOfResults, final String sort, final String search) {

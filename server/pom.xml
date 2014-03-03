@@ -7,7 +7,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>server</artifactId>
     <name>Bonita Web Server</name>
-    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -240,18 +239,20 @@
                         <scope>runtime</scope>
                     </dependency>
                     <dependency>
-                        <groupId>org.bonitasoft.web.toolkit</groupId>
-                        <artifactId>toolkit-looknfeel</artifactId>
+                        <groupId>org.bonitasoft.console</groupId>
+                        <artifactId>looknfeel</artifactId>
                         <version>${project.version}</version>
                         <classifier>less</classifier>
                         <type>zip</type>
+                        <scope>runtime</scope>
                     </dependency>
                     <dependency>
-                        <groupId>org.bonitasoft.web.toolkit</groupId>
-                        <artifactId>toolkit-looknfeel</artifactId>
+                        <groupId>org.bonitasoft.console</groupId>
+                        <artifactId>looknfeel</artifactId>
                         <version>${project.version}</version>
                         <classifier>css</classifier>
                         <type>zip</type>
+                        <scope>runtime</scope>
                     </dependency>
                 </dependencies>
             </plugin>

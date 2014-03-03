@@ -274,12 +274,6 @@ ${enable.engine.listener.end}
 	</servlet>
 	<!-- End theme -->
     <!-- For engine HTTP API -->
-${enable.engine.http.api.start}
-	<servlet>
-		<servlet-name>HttpAPIServlet</servlet-name>
-		<servlet-class>org.bonitasoft.engine.api.internal.servlet.HttpAPIServlet</servlet-class>
-	</servlet>
-${enable.engine.http.api.end}
 	<servlet-mapping>
 		<servlet-name>homepage</servlet-name>
 		<url-pattern>/portal/homepage</url-pattern>
@@ -369,12 +363,6 @@ ${enable.engine.http.api.end}
 		<url-pattern>/portal/formLayoutDownload</url-pattern>
 	</servlet-mapping>
     <!-- For engine HTTP API -->
-${enable.engine.http.api.start}
-	<servlet-mapping>
-		<servlet-name>HttpAPIServlet</servlet-name>
-		<url-pattern>/serverAPI/*</url-pattern>
-	</servlet-mapping>
-${enable.engine.http.api.end}
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
