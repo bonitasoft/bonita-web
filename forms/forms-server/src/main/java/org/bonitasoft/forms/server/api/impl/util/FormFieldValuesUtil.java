@@ -62,7 +62,7 @@ public class FormFieldValuesUtil {
 
     protected static final String WIDGET_LABEL = "label";
 
-    protected static final String EXPRESSION_KEY_SEPARATOR = ":";
+    public static final String EXPRESSION_KEY_SEPARATOR = ":";
 
     protected static final String WIDGET_TITLE = "title";
 

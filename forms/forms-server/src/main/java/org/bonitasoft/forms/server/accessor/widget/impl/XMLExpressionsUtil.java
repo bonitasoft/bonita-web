@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.server.accessor.impl.util.XPathUtil;
+import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
 import org.bonitasoft.forms.server.constants.XMLForms;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Node;
@@ -26,13 +27,7 @@ public class XMLExpressionsUtil extends XPathUtil {
      * Instance attribute
      */
     protected static XMLExpressionsUtil INSTANCE = null;
-
-    /**
-     * Separator used to build an Expression name containing : 
-     * 			parent_name + separator + expression_name
-     */
-    public static String SEPARATOR = "#";
-    
+   
     public static String NON_APPLICABLE_PREFIX = "n/a";
     
     /**
@@ -179,7 +174,7 @@ public class XMLExpressionsUtil extends XPathUtil {
      * @throws InvalidFormDefinitionException
      */
     protected Expression parseExpressionContent(final String expressionParentName, final Node expressionNode) throws InvalidFormDefinitionException {
-        final String name = expressionParentName + SEPARATOR + getStringByXpath(expressionNode, XMLForms.NAME);
+        final String name = expressionParentName + FormFieldValuesUtil.EXPRESSION_KEY_SEPARATOR + getStringByXpath(expressionNode, XMLForms.NAME);
         final String returnType = getStringByXpath(expressionNode, XMLForms.EXPRESSION_RETURN_TYPE);
         final String expressionType = getStringByXpath(expressionNode, XMLForms.EXPRESSION_TYPE);
         final String interpreter = getStringByXpath(expressionNode, XMLForms.EXPRESSION_INTERPRETER);
