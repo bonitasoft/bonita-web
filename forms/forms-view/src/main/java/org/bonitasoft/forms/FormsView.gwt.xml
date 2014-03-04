@@ -49,7 +49,4 @@
 	
 	<!-- Source path of the module                                  -->
 	<source path="client" />
-
-	<!-- Servlets for RPC calls                                     -->
- 	<servlet path="/formsService" class="org.bonitasoft.forms.server.FormsServlet" />
 </module>

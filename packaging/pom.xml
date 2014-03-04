@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.bonitasoft.console</groupId>
+        <artifactId>bonita-console</artifactId>
+        <version>6.3.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>console-war</artifactId>
+    <name>Web app packaging</name>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>server</artifactId>
+            <version>6.3.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>client</artifactId>
+            <version>6.3.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-version-file</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <mkdir
+                                        dir="${project.build.directory}/${project.artifactId}-${project.version}" />
+                                <echo
+                                        file="${project.build.directory}/${project.artifactId}-${project.version}/VERSION"
+                                        append="false">version : ${project.version}</echo>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-html-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!-- copy htc files for IE compatibility -->
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc"
+                                        file="../looknfeel/src/main/less/tools/PIE.htc" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc"
+                                        file="../looknfeel/src/main/less/tools/boxsizing.htc" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-forms-design</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.bonitasoft.forms</groupId>
+                                    <artifactId>forms-design</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
+                                    <includes>html/</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

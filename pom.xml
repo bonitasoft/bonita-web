@@ -15,6 +15,7 @@
         <module>looknfeel</module>
         <module>server</module>
         <module>client</module>
+        <module>packaging</module>
 	</modules>
 
 	<scm>

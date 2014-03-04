@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-common</artifactId>
-            <version>6.2.3-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

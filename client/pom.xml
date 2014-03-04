@@ -12,14 +12,7 @@
 
 	<properties>
 		<permutations>All</permutations>
-
-		<!-- filtered in web.xml -->
-		<enable.engine.http.api.start>&lt;!--</enable.engine.http.api.start>
-		<enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
-		<enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
-		<enable.engine.listener.end>--&gt;</enable.engine.listener.end>
 		<jacoco.skip>true</jacoco.skip>
-
 	</properties>
 
 	<dependencies>
@@ -76,18 +69,8 @@
             <artifactId>gwtquery</artifactId>
             <version>1.4.0</version>
         </dependency>
-
     </dependencies>
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-            <resource>
-                <directory>src/main/javascript</directory>
-            </resource>
-		</resources>
-
 		<plugins>
 			<!-- War configuration -->
 			<plugin>
@@ -97,72 +80,12 @@
 					<packagingExcludes>
 						.gwt-tmp/**,
 						WEB-INF/deploy/**,
-						%regex[WEB-INF/classes/(?!html).*]
+						WEB-INF/classes/**
 					</packagingExcludes>
-					<webResources>
-						<resource>
-							<filtering>true</filtering>
-							<targetPath>WEB-INF</targetPath>
-							<directory>src/main/resources</directory>
-							<includes>
-								<include>web.xml</include>
-							</includes>
-						</resource>
-					</webResources>
-					<attachClasses>true</attachClasses>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>create-version-file</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<mkdir
-									dir="${project.build.directory}/${project.artifactId}-${project.version}" />
-								<echo
-									file="${project.build.directory}/${project.artifactId}-${project.version}/VERSION"
-									append="false">version : ${project.version}</echo>
-							</tasks>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-html-resources</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<copy
-									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html"
-									file="${project.build.directory}/forms-design/html/page.html" />
-								<copy
-									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html"
-									file="${project.build.directory}/forms-design/html/process.html" />
-								<copy
-									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html"
-									file="${project.build.directory}/forms-design/html/error.html" />
-								<copy
-									tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html"
-									file="${project.build.directory}/forms-design/html/confirm.html" />
-								<!-- copy htc files for IE compatibility -->
-								<copy
-									tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc"
-									file="../looknfeel/src/main/less/tools/PIE.htc" />
-								<copy
-									tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc"
-									file="../looknfeel/src/main/less/tools/boxsizing.htc" />
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -172,7 +95,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
 			<!-- GWT configuration -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -189,59 +111,10 @@
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
 					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
-					<runTarget>bonita/portal</runTarget>
-                    <hostedWebapp>${webappDirectory}</hostedWebapp>
-					<noServer>true</noServer>
 					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <port>8081</port>
+                    <runTarget>/bonita/index.jsp</runTarget>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack-forms-design</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.forms</groupId>
-									<artifactId>forms-design</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/forms-design</outputDirectory>
-									<includes>html/</includes>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>replace-css-url-in-jsp</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
-							<appendAssemblyId>false</appendAssemblyId>
-							<descriptors>
-								<descriptor>assembly.xml</descriptor>
-							</descriptors>
-							<tarLongFileMode>gnu</tarLongFileMode>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -267,7 +140,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jsSrcDir>src/main/javascript/org/bonitasoft/web/toolkit/public/scripts</jsSrcDir>
+                    <jsSrcDir>src/main/webapp/portal/scripts</jsSrcDir>
                     <sourceIncludes>
                         <include>bonita-utils.js</include>
                         <include>bonita-model.js</include>
@@ -284,4 +157,38 @@
             </plugin>
 		</plugins>
 	</build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <permutations>Light</permutations>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-servlets</artifactId>
+                    <version>8.1.14.v20131031</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-rewrite</artifactId>
+                    <version>8.1.14.v20131031</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.bonitasoft.web.tooling</groupId>
+                    <artifactId>bonita-web-devtools</artifactId>
+                    <version>1.0.1</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.tuckey</groupId>
+                    <artifactId>urlrewritefilter</artifactId>
+                    <version>4.0.3</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
