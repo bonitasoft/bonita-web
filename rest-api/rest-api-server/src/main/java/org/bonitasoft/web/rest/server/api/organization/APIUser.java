@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.server.api.organization;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,6 +73,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
 
     @Override
     public UserItem add(final UserItem item) {
+        
         // Finish the upload of the icon
         if (item.getIcon() != null && !item.getIcon().isEmpty()) {
             item.setIcon(uploadIcon(item.getIcon()));
@@ -94,6 +96,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
                 instanceClass = validatorClass.newInstance();
                 AbstractStringValidator validator = (AbstractStringValidator) instanceClass;
                 validator.check(password);
+                validator.setLocale(getLocale());
                 if (!validator.getErrors().isEmpty()) {
                     throw new ValidationException(validator.getErrors());
                 }    

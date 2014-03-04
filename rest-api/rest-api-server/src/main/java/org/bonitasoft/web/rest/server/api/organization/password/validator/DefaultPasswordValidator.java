@@ -18,8 +18,11 @@ package org.bonitasoft.web.rest.server.api.organization.password.validator;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringValidator;
 
 
@@ -27,8 +30,8 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractS
  * @author Paul AMAR
  *
  */
-public class DefaultRobustnessPasswordValidator extends AbstractStringValidator {
-
+public class DefaultPasswordValidator extends AbstractStringValidator {
+    
     @Override
     protected void _check(String password) {
         String regex = "";
@@ -37,27 +40,27 @@ public class DefaultRobustnessPasswordValidator extends AbstractStringValidator 
         regex = "[0-9]";
         int numberMinOccurences = 0;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password does not contain enough numbers"));
+            addError(_("Password does not contain enough numbers", LOCALE.valueOf(locale)));
         }
         
         // Check number of lower case chars
         regex = "[a-z]";
         numberMinOccurences = 0;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password does not contain enough lower case chars"));
+            addError(_("Password does not contain enough lower case chars", LOCALE.valueOf(locale)));
         }
         
         // Check number of upper case chars
         regex = "[A-Z]";
         numberMinOccurences = 0;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password does not contain enough upper case chars"));
+            addError(_("Password does not contain enough upper case chars", LOCALE.valueOf(locale)));
         }
         
         // Check number of length
         int minimalLength = 0;
         if (password.length() < minimalLength) {
-            addError(_("Password is not long enough"));
+            addError(_("Password is not long enough", LOCALE.valueOf(locale)));
         }
     }
     
@@ -71,6 +74,5 @@ public class DefaultRobustnessPasswordValidator extends AbstractStringValidator 
 
         return count;
     }
-    
     
 }
