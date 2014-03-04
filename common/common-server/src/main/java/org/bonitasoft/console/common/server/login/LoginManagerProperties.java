@@ -16,9 +16,6 @@
  */
 package org.bonitasoft.console.common.server.login;
 
-import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,6 +23,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * Utility class for Session Manager access (read in a properties file)
@@ -64,6 +64,11 @@ public class LoginManagerProperties {
      * Configuration of OAuth callback URL
      */
     protected static final String OAUTH_CALLBACK_URL = "OAuth.callbackURL";
+
+    /**
+     * Configuration of OAuth callback URL
+     */
+    protected static final String CAS_SERVER_URL = "Cas.ServerURL";
 
     /**
      * Logger
@@ -153,5 +158,12 @@ public class LoginManagerProperties {
      */
     public String getOAuthCallbackURL() {
         return this.defaultProperties.getProperty(OAUTH_CALLBACK_URL);
+    }
+
+    /**
+     * @return get OAuth callback URL
+     */
+    public String getCasServerURL() {
+        return this.defaultProperties.getProperty(CAS_SERVER_URL);
     }
 }
