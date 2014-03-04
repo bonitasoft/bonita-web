@@ -71,6 +71,11 @@ public class LoginManagerProperties {
     protected static final String CAS_SERVER_URL = "Cas.ServerURL";
 
     /**
+     * Configuration of OAuth callback URL
+     */
+    protected static final String CAS_BONITA_SERVICE_URL = "Cas.BonitaServiceURL";
+
+    /**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(LoginManagerProperties.class.getName());
@@ -165,5 +170,12 @@ public class LoginManagerProperties {
      */
     public String getCasServerURL() {
         return this.defaultProperties.getProperty(CAS_SERVER_URL);
+    }
+
+    /**
+     * @return get OAuth callback URL
+     */
+    public String getCasBonitaServiceUrl() {
+        return this.defaultProperties.getProperty(CAS_BONITA_SERVICE_URL);
     }
 }
