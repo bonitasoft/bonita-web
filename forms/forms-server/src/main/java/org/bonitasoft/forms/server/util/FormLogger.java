@@ -13,10 +13,10 @@ public class FormLogger implements IFormLogger {
 
     protected final Logger LOGGER;
 
-    protected static Map<String, Object> context;
+    protected static Map<String, Object> context = new HashMap<String, Object>();
 
     public FormLogger(String className) {
-        LOGGER = Logger.getLogger(className);
+        LOGGER = Logger.getLogger(className);;
     }
 
     @Override
