@@ -20,8 +20,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -41,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationError;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationException;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringValidator;
 
 /**
  * @author Séverin Moussel
@@ -49,6 +53,12 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationException
 // TODO : implements APIhasFile
 public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>, APIHasDelete, APIHasUpdate<UserItem>,
     APIHasGet<UserItem>, APIHasSearch<UserItem> {
+
+
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(APIUser.class.getName());
 
     @Override
     protected ItemDefinition<UserItem> defineItemDefinition() {
@@ -69,9 +79,41 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
         if (StringUtil.isBlank(item.getPassword())) {
             throw new ValidationException(Arrays.asList(new ValidationError("Password", "%attribute% is mandatory")));
         }
+        checkPasswordRobustness(item.getPassword());
+        
         // Add
         return new UserDatastore(getEngineSession()).add(item);
 
+    }
+    
+    private void checkPasswordRobustness(String password) {
+        try {
+            Class<?> validatorClass = Class.forName(PropertiesFactory.getSecurityProperties(getEngineSession().getTenantId()).getPasswordValidator());
+            Object instanceClass;
+            try {
+                instanceClass = validatorClass.newInstance();
+                AbstractStringValidator validator = (AbstractStringValidator) instanceClass;
+                validator.check(password);
+                if (!validator.getErrors().isEmpty()) {
+                    throw new ValidationException(validator.getErrors());
+                }    
+            } catch (InstantiationException e) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, "Error while instanciating the class", e);
+                }
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, "Illegal access with the file ", e);
+                }
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Class not found", e);
+            }
+            e.printStackTrace();
+        }        
     }
 
     @Override
@@ -88,6 +130,9 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
 
             // Do not update password if not set
             MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_PASSWORD);
+            if (item.get(UserItem.ATTRIBUTE_PASSWORD) != null) {
+                checkPasswordRobustness(item.get(UserItem.ATTRIBUTE_PASSWORD));                
+            }
         }
         // Update
         return new UserDatastore(getEngineSession()).update(id, item);
