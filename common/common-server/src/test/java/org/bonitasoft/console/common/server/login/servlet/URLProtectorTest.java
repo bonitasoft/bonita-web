@@ -20,7 +20,6 @@ public class URLProtectorTest {
         assertEquals("google", urlProtecter.protectRedirectUrl("httpsgoogle"));     
     }
     
-    
     @Test
     public void testProtectRedirectUrlShouldNotChangeURL() {
         assertEquals("mobile/#home", urlProtecter.protectRedirectUrl("mobile/#home"));        
