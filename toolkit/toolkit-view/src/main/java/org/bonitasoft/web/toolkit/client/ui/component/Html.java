@@ -9,19 +9,24 @@ import java.util.LinkedList;
 
 public class Html extends Components {
 
-    private String html = null;
+    private final LinkedList<Element> elements;
 
     public Html(final String html) {
-        this.html = html;
+        elements = XML.makeElements(html);
     }
 
     public Html(final SafeHtml html) {
-        this.html = html.asString();
+        this(html.asString());
+    }
+
+    public Html(final com.google.gwt.dom.client.Element element) {
+        elements = new LinkedList<Element>();
+        elements.add((Element) element);
     }
 
     @Override
     protected LinkedList<Element> makeElements() {
-        return XML.makeElements(this.html);
+        return elements;
     }
 
 }

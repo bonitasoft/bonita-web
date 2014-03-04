@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.model.bpm.flownode;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -72,7 +73,6 @@ public class HumanTaskDefinition extends TaskDefinition {
                         ));
 
         createAttribute(HumanTaskItem.ATTRIBUTE_DUE_DATE, ItemAttribute.TYPE.DATETIME);
-
     }
 
     @Override

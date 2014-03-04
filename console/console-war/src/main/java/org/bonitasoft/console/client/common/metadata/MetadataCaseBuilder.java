@@ -77,6 +77,6 @@ public class MetadataCaseBuilder extends MetadataBuilder {
     
     private ItemDetailsMetadata createLastUpdateDate() {
         return new ItemDetailsMetadata(ArchivedCaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"),
-                _("The date while the case has been last updated"));
+                _("The date when the case was updated"));
     }
 }

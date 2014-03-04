@@ -20,15 +20,6 @@ public class URLProtectorTest {
         assertEquals("google", urlProtecter.protectRedirectUrl("httpsgoogle"));     
     }
     
-    @Test
-    public void testProtectRedirectUrlShouldRemoveAllTokensFromURL() {
-        assertEquals("googlefr", urlProtecter.protectRedirectUrl("http://www.google.fr"));        
-    }
-    
-    @Test
-    public void testProtectRedirectUrlShouldRemoveSlashesFromURL() {
-        assertEquals("googlefr", urlProtecter.protectRedirectUrl("//google.fr"));        
-    }
     
     @Test
     public void testProtectRedirectUrlShouldNotChangeURL() {

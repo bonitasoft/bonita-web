@@ -18,10 +18,15 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode.archive;
 
 import java.util.List;
 
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.AbstractAPIHumanTask;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.ArchivedHumanTaskDatastore;
+import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 
 /**
  * @author Séverin Moussel
@@ -47,4 +52,6 @@ public class APIArchivedHumanTask extends AbstractAPIHumanTask<ArchivedHumanTask
 
         return attributes;
     }
+    
+    
 }

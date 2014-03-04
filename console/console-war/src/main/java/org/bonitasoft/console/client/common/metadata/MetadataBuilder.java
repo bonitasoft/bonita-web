@@ -32,7 +32,7 @@ public abstract class MetadataBuilder {
         return this.metadatas;
     }
     
-    protected void add(ItemDetailsMetadata metadata) {
+    public void add(ItemDetailsMetadata metadata) {
         metadatas.add(metadata);
     }
 }

@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import static org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder.taskQuickDetailsMetadatas;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
+import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
@@ -38,6 +38,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
 /**
  * @author Séverin Moussel
@@ -45,8 +46,8 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
  */
 public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<ArchivedHumanTaskItem> implements PluginTask {
 
-    public static final String TOKEN = "archivedtaskquickdetails";    
-    
+    public static final String TOKEN = "archivedtaskquickdetails";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
     
     static {
@@ -78,7 +79,12 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ArchivedHumanTaskItem task) {
-        return taskQuickDetailsMetadatas().build();
+        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        metadatas.addCaseId(task, false);
+        metadatas.addAppsName();
+        metadatas.addDueDate(DateFormat.FORMAT.DISPLAY_RELATIVE);
+        metadatas.addPriority();
+        return metadatas.build();
     }
 
     @Override

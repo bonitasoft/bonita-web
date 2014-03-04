@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.process;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -103,6 +104,13 @@ public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpd
 
     public String getVersion() {
         return this.getAttributeValue(ATTRIBUTE_VERSION);
+    }
+
+    public String ensureName() {
+        if(StringUtil.isBlank(getDisplayName())) {
+            return getName();
+        }
+        return getDisplayName();
     }
 
     public String getDescription() {

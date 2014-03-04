@@ -665,7 +665,7 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
         if (this.actionSets != null && this.actionSets.size() > 0 && this.actionColumnPosition == -1) {
             final JsId actionJsId = new JsId("actions");
 
-            this.table.addColumn(actionJsId, _("actions"));
+            this.table.addColumn(actionJsId, _("Actions"));
             if (this.actionColumnPosition > -1) {
                 this.table.setColumnPos(actionJsId, this.actionColumnPosition);
             }

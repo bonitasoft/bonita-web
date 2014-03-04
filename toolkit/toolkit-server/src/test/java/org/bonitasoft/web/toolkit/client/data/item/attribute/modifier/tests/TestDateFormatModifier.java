@@ -56,14 +56,14 @@ public class TestDateFormatModifier {
     public void testDateFormatModifierFormToDisplay() {
         final DateFormatModifier test = new DateFormatModifier(FORMAT.FORM, FORMAT.DISPLAY);
         final String result = test.clean("12/31/2012");
-        assertTrue(result.equals("12/31/2012 at 00:00"));
+        assertTrue(result.equals("12/31/2012 12:00 AM"));
     }
 
     @Test
     public void testDateFormatModifierSqlToDisplay() {
         final DateFormatModifier test = new DateFormatModifier(FORMAT.SQL, FORMAT.DISPLAY);
         final String result = test.clean("2012-12-31 00:00:00.000");
-        assertTrue(result.equals("12/31/2012 at 00:00"));
+        assertTrue(result.equals("12/31/2012 12:00 AM"));
     }
 
     @Test

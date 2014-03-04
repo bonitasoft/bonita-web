@@ -23,20 +23,15 @@ import static com.google.gwt.query.client.GQuery.$;
  * 
  */
 public final class Loader {
-
+	//Warning: in case of refactor, be sure to modify the ReportMoreDetailsAdminPage following native methode, 
+	//  showLoader() and hideLoader() to avoid java script error in the reports
     public static final String MAIN_LOADER_ID = "initloader";
-
-    private static Loader loader = new Loader(); 
-    
-    public static Loader getInstance(){
-    	return loader;
-    }
-    
-    public void showLoader() {
+   
+    public static void showLoader() {
     	$("#"+MAIN_LOADER_ID).show();
     }
     
-    public void hideLoader() {
+    public static void hideLoader() {
     	$("#"+MAIN_LOADER_ID).hide();
     }
     

@@ -53,7 +53,7 @@ public abstract class DateFormat {
     public static enum FORMAT {
         SQL("yyyy-MM-dd HH:mm:ss.SSS"),
         FORM(_("MM/dd/yyyy")),
-        DISPLAY(_("MM/dd/yyyy 'at' HH:mm")),
+        DISPLAY(_("MM/dd/yyyy h:mm a")),
         DISPLAY_SHORT(_("MMMM dd, yyyy")),
         LONG,
         DISPLAY_RELATIVE;
@@ -211,6 +211,10 @@ public abstract class DateFormat {
     // // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DATE OBJECT CONVERSIONS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String dateToFormat(final Date date, final FORMAT format) {
+        return dateToFormat(date, format.getFormatString());
+    }
 
     public static String dateToFormat(final Date date, final String format) {
         if (date == null) {
