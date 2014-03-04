@@ -14,7 +14,7 @@ public abstract class EngineSetup {
 
     /* set system properties needed by engine to start */
     static {
-        setSystemPropertyIfNotSet("bonita.home", "target/bonita/home");
+        setSystemPropertyIfNotSet("bonita.home", "target/bonita-home");
         setSystemPropertyIfNotSet("sysprop.bonita.db.vendor", "h2");
         setSystemPropertyIfNotSet(Context.INITIAL_CONTEXT_FACTORY, "org.bonitasoft.engine.local.SimpleMemoryContextFactory");
         setSystemPropertyIfNotSet(Context.URL_PKG_PREFIXES, "org.bonitasoft.engine.local");

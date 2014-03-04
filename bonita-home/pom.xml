@@ -40,7 +40,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>unpack-security-config</id>
+						<id>unpack-looknfeel</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -49,70 +49,7 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.bonitasoft.console</groupId>
-									<artifactId>common-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-forms-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.forms</groupId>
-									<artifactId>forms-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-console-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.console</groupId>
-									<artifactId>console-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-toolkit-looknfeel</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.web.toolkit</groupId>
-									<artifactId>toolkit-looknfeel</artifactId>
+									<artifactId>looknfeel</artifactId>
 									<version>${project.version}</version>
 									<classifier>css</classifier>
 									<type>zip</type>
@@ -120,7 +57,7 @@
 								</artifactItem>
 							</artifactItems>
 							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client/platform/tenant-template/work/theme/portal
+								${project.build.directory}/bonita-home/client/platform/tenant-template/work/theme/portal
 							</outputDirectory>
 						</configuration>
 					</execution>
@@ -138,7 +75,7 @@
             			</goals>
             			<configuration>
             				<tasks>
-	            				<copy todir="${project.build.directory}/bonita-home/bonita" overwrite="false">
+	            				<copy todir="${project.build.directory}/bonita-home" overwrite="false">
 	            					<fileset dir="${project.build.directory}/bonita-engine-home/home" />
 	            				</copy>
 	            			</tasks>
@@ -152,7 +89,7 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<copy todir="${project.build.directory}/bonita-home/bonita" overwrite="true">
+								<copy todir="${project.build.directory}/bonita-home" overwrite="true">
 									<fileset dir="${project.basedir}/src/main/resources" erroronmissingdir="false"/>
 								</copy>
 							</tasks>
@@ -160,7 +97,6 @@
 					</execution>
             	</executions>
             </plugin>
-            
             
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>

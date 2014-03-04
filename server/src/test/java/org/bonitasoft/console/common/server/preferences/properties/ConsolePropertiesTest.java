@@ -37,15 +37,13 @@ public class ConsolePropertiesTest {
 
     @Before
     public void setUp() {
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita/home");
-        properties = new ConsoleProperties(1L);
+        properties = new ConsoleProperties(-1L);
         setProperty(properties, "aProperty", "aValue");
     }
 
     @After
     public void tearDown() {
         removeProperty(properties, "aProperty");
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
     }
 
     @Test

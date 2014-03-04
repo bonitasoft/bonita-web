@@ -28,17 +28,8 @@ import org.junit.Test;
  *
  */
 public class LoginManagerPropertiesTest {
+
     public LoginManagerProperties loginManagerProperties;
-    
-    static {
-        final String bonitaHome = System.getProperty("bonita.home");
-        if (bonitaHome == null) {
-            System.err.println("\n\n*** Forcing bonita.home to target/bonita \n\n\n");
-            System.setProperty("bonita.home", "target/bonita/home");
-        } else {
-            System.err.println("\n\n*** bonita.home already set to: " + bonitaHome + " \n\n\n");
-        }
-    }
     
     @Before
     public void setUp() {

@@ -13,6 +13,7 @@
 	<properties>
 		<permutations>All</permutations>
 		<jacoco.skip>true</jacoco.skip>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
 
 	<dependencies>
@@ -72,6 +73,7 @@
     </dependencies>
 	<build>
 		<plugins>
+
 			<!-- War configuration -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -85,8 +87,23 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
+                    <archiveClasses>true</archiveClasses>
+                    <attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
+
+            <!-- Export jar & test-jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -95,6 +112,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
 			<!-- GWT configuration -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -189,6 +207,14 @@
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/test/webapp</directory>
+                        <targetPath>${webappDirectory}/WEB-INF</targetPath>
+                    </resource>
+                </resources>
+            </build>
         </profile>
     </profiles>
 </project>

@@ -30,6 +30,8 @@ import org.junit.Test;
  */
 public class SecurityPropertiesTest {
 
+    public static final String BONITA_HOME = System.getProperty(WebBonitaConstants.BONITA_HOME);
+
     @Before
     public void setUp() throws Exception {
         System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
@@ -37,7 +39,7 @@ public class SecurityPropertiesTest {
 
     @After
     public void tearDown() {
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, BONITA_HOME);
     }
 
     /*
@@ -45,7 +47,7 @@ public class SecurityPropertiesTest {
      */
     @Test
     public void testTenantPropertiesCanBeRetrieveFromAFile() throws Exception {
-        SecurityProperties tenantProperties = SecurityProperties.getInstance(1);
+        SecurityProperties tenantProperties = SecurityProperties.getInstance(1L);
 
         checkTenantProperties(tenantProperties);
     }

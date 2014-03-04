@@ -3,7 +3,7 @@
         "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 <urlrewrite>
     <rule>
-        <from>^/bonita/portal/(?:(?!homepage).)*$</from>
+        <from>^/bonita/portal/(?!homepage)(.*)$</from>
         <to type="redirect">/portal/$1</to>
     </rule>
 </urlrewrite>

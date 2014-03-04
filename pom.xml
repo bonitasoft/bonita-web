@@ -8,11 +8,11 @@
 	<version>6.3.0-SNAPSHOT</version>
 
 	<modules>
+        <module>looknfeel</module>
 		<module>bonita-home</module>
         <module>test-toolkit</module>
 		<module>common</module>
 		<module>forms</module>
-        <module>looknfeel</module>
         <module>server</module>
         <module>client</module>
         <module>packaging</module>

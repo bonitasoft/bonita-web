@@ -19,7 +19,12 @@
         </dependency>
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
-            <artifactId>bonita-common</artifactId>
+            <artifactId>bonita-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bonitasoft.engine</groupId>
+            <artifactId>bonita-server</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

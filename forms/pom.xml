@@ -11,8 +11,6 @@
 	<name>forms parent</name>
 
 	<modules>
-		<module>forms-design</module>
-		<module>forms-config</module>
 		<module>forms-model</module>
 		<module>forms-rpc</module>
 		<module>forms-server</module>
