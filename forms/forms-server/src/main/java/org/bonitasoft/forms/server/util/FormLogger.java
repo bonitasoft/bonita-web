@@ -9,20 +9,22 @@ import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 
-public class FormLogger {
+public class FormLogger implements IFormLogger {
 
-    private final Logger LOGGER;
+    protected final Logger LOGGER;
 
-    private static Map<String, Object> context;
+    protected static Map<String, Object> context;
 
     public FormLogger(String className) {
         LOGGER = Logger.getLogger(className);
     }
 
+    @Override
     public void log(Level level, String message) {
         this.log(level, message, null);
     }
 
+    @Override
     public void log(Level level, String message, Throwable e) {
         FormContextUtil ctxu = new FormContextUtil(context);
         String prefixMessage = "";
@@ -62,7 +64,7 @@ public class FormLogger {
         if (message == null) {
             message = "";
         }
-        message = prefixMessage + " " + message;
+        message = prefixMessage;
 
         if (LOGGER.isLoggable(Level.SEVERE)) {
             LOGGER.log(Level.SEVERE, message, e);
@@ -81,9 +83,7 @@ public class FormLogger {
             i = i + 1;
             FormFieldValue fieldValue = entry.getValue();
             String fieldName = entry.getKey();
-            if (entry.getValue().hasChildWidgets()) {
-                returnedStr = getFormFieldStringRepresentation(returnedStr, fieldValue.getChildFormFieldValues());
-            } else {
+            if (!entry.getValue().hasChildWidgets()) {
                 returnedStr += formatLogField(fieldName, fieldValue);
             }
             if (submittedFields.size() > 1) {
@@ -97,6 +97,7 @@ public class FormLogger {
         return fieldName + " (" + fieldValue.getValueType() + ")" + " => " + fieldValue.getValue();
     }
 
+    @Override
     public boolean isLoggable(Level level) {
         return LOGGER.isLoggable(level);
     }
