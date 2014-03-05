@@ -54,7 +54,7 @@ public class DocumentDownloadServlet extends HttpServlet {
     /**
      * filename of the document to download
      */
-    public static final String DOCUMENT_FILENAME_PARAM = "documentFilename";
+    public static final String DOCUMENT_FILENAME_PARAM = "fileName";
 
     public static final String CONTENT_STORAGE_ID = "contentStorageId";
 
@@ -72,6 +72,7 @@ public class DocumentDownloadServlet extends HttpServlet {
         final String attachmentPath = req.getParameter(ATTACHMENT_PATH_PARAM);
         final String documentId = req.getParameter(DOCUMENT_ID);
         final String contentStorageId = req.getParameter(CONTENT_STORAGE_ID);
+        fileName = req.getParameter(DOCUMENT_FILENAME_PARAM);
         final String caseType = req.getParameter(TYPE);
         try {
             if (attachmentPath != null) {
@@ -102,16 +103,17 @@ public class DocumentDownloadServlet extends HttpServlet {
                 }
                 this.content = getFileContent(file, fileLength, attachmentPath);
             } else {
-                if (documentId != null && !documentId.isEmpty()) {
-                    final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+                final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+                if (this.fileName == null && documentId != null && !documentId.isEmpty()) {
                     if ("ARCHIVED".equals(caseType)) {
                         this.fileName = processAPI.getArchivedProcessDocument(Long.valueOf(documentId)).getDocumentContentFileName();
                     } else {
                         this.fileName = processAPI.getDocument(Long.valueOf(documentId)).getContentFileName();
                     }
-                    if (contentStorageId != null && !contentStorageId.isEmpty()) {
-                        this.content = processAPI.getDocumentContent(contentStorageId);
-                    }
+                }
+
+                if (contentStorageId != null && !contentStorageId.isEmpty()) {
+                    this.content = processAPI.getDocumentContent(contentStorageId);
                 }
             }
         } catch (final Exception ex) {

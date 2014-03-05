@@ -11,7 +11,7 @@
 						float: @taskList-dueDate-position;
 						width: @taskList-dueDate-width;
 					}
-					&.th_processId_displayName{
+					&.th_processId_displayName, &.th_rootContainerId_displayName{
 						display: @taskList-process-sort-display;
 					}
 					&.th_assigned_id_icon{
@@ -77,7 +77,7 @@
 					&.dueDate{
 							width: @taskList-dueDate-width;
 					}
-					&.td_processId_displayName{
+					&.td_processId_displayName, &.td_rootContainerId_displayName{
 						top: @taskList-processName-top;
 						left: @taskList-processName-left;
 						color: @taskList-processName-textColor;
@@ -95,7 +95,7 @@
 		.section{
 			&_performed{
 				.table .tr .td{
-					&.td_processId_displayName{
+					&.td_processId_displayName, &.td_rootContainerId_displayName{
 						left: @taskList-processName-performed-left;
 					}
 				}
@@ -138,7 +138,7 @@
 							text-overflow: ellipsis;
 							white-space: nowrap;
 						}
-						&.td_processId_displayName{
+						&.td_processId_displayName, &.td_rootContainerId_displayName{
 							width: @taskList-taskAdmin-width;
 							text-overflow: ellipsis;
 							white-space: nowrap;	
@@ -179,7 +179,7 @@
 							text-overflow: ellipsis;
 							white-space: nowrap;
 						}
-						&.td_processId_displayName{
+						&.td_processId_displayName, &.td_rootContainerId_displayName{
 							width: @taskList-taskAdmin-width;
 							text-overflow: ellipsis;
 							white-space: nowrap;

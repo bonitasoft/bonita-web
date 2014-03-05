@@ -117,17 +117,14 @@ function refreshReport(e, localeDateFormat, prefix) {
 
     $.ajax({
         beforeSend: function () {
-            $("div.report").html("<div id=\"reportloader\">" +
-                "<div class=\"loader\">" +
-                "<img src=\"images/loader.gif\" />" +
-                "</div>" +
-                "</div>");
+        	window.showLoader();
         },
         url: urlRefresh,
         data: params + "&locale=" + (bosCookieObj ? bosCookieObj._l : "en") + "&_pf=" + getProfileId(),
         cache: false,
         async: true,
         success: function (refreshResponse) {
+        	window.hideLoader();
             refreshResponse = forceImgRefresh(refreshResponse.substring(refreshResponse.indexOf("<div class=\"report\">"), refreshResponse.lastIndexOf("</div>")));
             $("div.report").html(refreshResponse);
             removeReportStyle();
@@ -135,6 +132,7 @@ function refreshReport(e, localeDateFormat, prefix) {
             retrieveFieldsValues(params, localeDateFormat);
         },
         error: function (jqXHR, textStatus, errorThrown) {
+        	window.hideLoader();
             $("div.report").html("<p>" + errorThrown + "</p>");
         }
     });

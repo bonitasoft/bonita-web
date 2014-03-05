@@ -43,7 +43,7 @@ import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.FlowNodeContextAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
@@ -164,13 +164,13 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .addHiddenFilter(HumanTaskItem.FILTER_HIDDEN_TO_USER_ID, Session.getUserId())
                 .addGroupedAction(newRetrieveButton());
     }
-
+    
     private ItemTable buildItemTableColumns() {
         return new ItemTable(Definitions.get(HumanTaskDefinition.TOKEN))
                 .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
                 .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"), true, true)
-                .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),  _("App"))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
                 .setOrder(HumanTaskItem.ATTRIBUTE_PRIORITY, false);
@@ -185,7 +185,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
                 .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
-                .addColumn(new DeployedAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                 .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
     }
     
@@ -230,7 +230,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     protected ItemListingSort defineDefaultSort() {
         return new ItemListingSort(TaskItem.ATTRIBUTE_DISPLAY_NAME, true);
     }
-
+    
     @Override
     protected Title definePrimaryFiltersTitle() {
     	return new Title(_("Status"));

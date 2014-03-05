@@ -38,11 +38,13 @@ import org.bonitasoft.engine.bpm.bar.BarResource;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.expression.ExpressionBuilder;
 import org.bonitasoft.engine.expression.ExpressionType;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -56,7 +58,6 @@ import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 import org.bonitasoft.web.rest.model.user.User;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -162,7 +163,8 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         context.remove(FormServiceProviderUtil.USER);
         // expected = NoCredentialsInSessionException.class
         formServiceProvider.isAllowed(processDefinition.getName() + "--" + processDefinition.getVersion() + FormServiceProviderUtil.FORM_ID_SEPARATOR
-                + FormServiceProviderUtil.RECAP_FORM_TYPE, FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinition.getId(), "6.0", "6.0", context, true);
+                + FormServiceProviderUtil.RECAP_FORM_TYPE,
+                FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinition.getId(), "6.0", "6.0", context, true);
     }
 
     @Test
@@ -227,11 +229,12 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
             }
         }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0)
-                .getId();
+        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
+                .get(0).getId();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
         urlContext.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
         final Map<String, Object> context = new HashMap<String, Object>();
@@ -250,11 +253,12 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
             }
         }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0)
-                .getId();
+        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
+                .get(0).getId();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
@@ -273,11 +277,12 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
             }
         }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0)
-                .getId();
+        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
+                .get(0).getId();
         final String formId = "firstProcess--1.0--Request$entry";
         urlContext.put(FormServiceProviderUtil.FORM_ID, formId);
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
@@ -292,7 +297,9 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         final Date deployedDate = processAPI.getProcessDeploymentInfo(processDefinition.getId()).getDeploymentDate();
         context.put(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE, deployedDate);
         context.put(FormServiceProviderUtil.IS_EDIT_MODE, true);
-        final IApplicationFormDefAccessor applicationFormDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, document, context);
+        final IApplicationFormDefAccessor applicationFormDefAccessor = formServiceProvider.getApplicationFormDefinition(formId,
+                document,
+                context);
         Assert.assertNull("the first page expression should be null because the entry form is empty in the forms.xml",
                 applicationFormDefAccessor.getFirstPageExpression());
     }
@@ -303,17 +310,20 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
             }
         }.waitUntil());
-        long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
+        long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0)
+                .getId();
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
             }
         }.waitUntil());
         activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
@@ -334,7 +344,9 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         final Date deployedDate = processAPI.getProcessDeploymentInfo(processDefinition.getId()).getDeploymentDate();
         context.put(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE, deployedDate);
         context.put(FormServiceProviderUtil.IS_EDIT_MODE, true);
-        final IApplicationFormDefAccessor applicationFormDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, document, context);
+        final IApplicationFormDefAccessor applicationFormDefAccessor = formServiceProvider.getApplicationFormDefinition(formId,
+                document,
+                context);
         final Expression firstPage = applicationFormDefAccessor.getFirstPageExpression();
         Assert.assertNotNull(
                 "the first page expression should not be null because the entry form is not in the forms.xml, and so it should be generated from the engine",
@@ -353,11 +365,12 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
             }
         }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0)
-                .getId();
+        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
+                .get(0).getId();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
@@ -375,7 +388,6 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
     }
 
     @Test
-    @Ignore("Waiting for a fix for BS-6754")
     public void testGetArchivedAttachmentFormFieldValue() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
@@ -403,7 +415,9 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getArchivedProcessInstances(processInstanceId, 0, 1).size() == 1;
+                SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
+                builder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+                return processAPI.searchArchivedProcessInstances(builder.done()).getCount() == 1;
             }
         }.waitUntil());
         urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);

@@ -95,7 +95,11 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final IFlowNodeItem item) {
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        metadatas.addCaseId(item, true);
         metadatas.addAppsName();
+        if (!(item.getRootContainerProcess().ensureName().equals(item.getProcess().ensureName()))){
+        	metadatas.AddSubAppsName();
+        }
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addType();
         if (item.isHumanTask()) {
@@ -130,7 +134,7 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
 
     @Override
     protected List<String> defineDeploys() {
-        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
+        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
     }
 
     @Override
