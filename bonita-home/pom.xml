@@ -11,9 +11,17 @@
 
   	<properties>
     	<jacoco.skip>true</jacoco.skip>
+        <bonita.home>${project.build.directory}/${project.build.finalName}</bonita.home>
   	</properties>
 
 	<build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${bonita.home}/home</targetPath>
+            </resource>
+        </resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -34,9 +42,7 @@
 									<overWrite>true</overWrite>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-engine-home
-							</outputDirectory>
+							    <outputDirectory>${bonita.home}</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
@@ -56,48 +62,12 @@
 									<overWrite>false</overWrite>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/client/platform/tenant-template/work/theme/portal
-							</outputDirectory>
+							    <outputDirectory>${bonita.home}/home/client/platform/tenant-template/work/theme/portal</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-engine-bonita_home</id>
-						<phase>generate-resources</phase>
-						<goals>
-			            	<goal>run</goal>
-            			</goals>
-            			<configuration>
-            				<tasks>
-	            				<copy todir="${project.build.directory}/bonita-home" overwrite="false">
-	            					<fileset dir="${project.build.directory}/bonita-engine-home/home" />
-	            				</copy>
-	            			</tasks>
-            			</configuration>
-            		</execution>
-					<execution>
-						<id>overwrite-engine-conf</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<copy todir="${project.build.directory}/bonita-home" overwrite="true">
-									<fileset dir="${project.basedir}/src/main/resources" erroronmissingdir="false"/>
-								</copy>
-							</tasks>
-						</configuration>
-					</execution>
-            	</executions>
-            </plugin>
-            
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>

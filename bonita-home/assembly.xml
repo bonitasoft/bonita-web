@@ -11,7 +11,7 @@
 	<fileSets>
 		<fileSet>
 			<outputDirectory>/</outputDirectory>
-			<directory>${project.build.directory}/bonita-home</directory>
+			<directory>${project.build.directory}/${project.build.finalName}/home</directory>
 			<includes>
 				<include>**/*</include>
 			</includes>
