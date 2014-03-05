@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.bonitasoft.web</groupId>
 		<artifactId>bonita-rest-api</artifactId>
-		<version>6.2.4.TESTCG</version>
+		<version>6.2.5-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>bonita-rest-server</artifactId>
