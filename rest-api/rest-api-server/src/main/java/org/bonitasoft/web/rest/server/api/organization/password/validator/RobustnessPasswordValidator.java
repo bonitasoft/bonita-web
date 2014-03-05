@@ -28,8 +28,6 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractS
 
 /**
  * @author Paul AMAR
- * This class is only adding error if the password is not (at least) 10 chars long
- * All the other checks are with default value : 0 
  */
 public class RobustnessPasswordValidator extends AbstractStringValidator {
 
