@@ -3,6 +3,8 @@ package org.bonitasoft.forms.server.util;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -54,7 +56,11 @@ public class FormContextUtil {
     }
 
     public String getUserName() {
-        return session.getUserName();
+        if (session != null && session.getUserName() != null) {
+            return session.getUserName();
+        } else {
+            return "";
+        }
     }
 
     public String getFormName() {
@@ -85,6 +91,7 @@ public class FormContextUtil {
                 ProcessAPI engineClient;
                 engineClient = new EngineClientFactory().getProcessAPI(session);
                 processInfo = engineClient.getProcessDeploymentInfo(getProcessDefinitionId());
+
             }
         }
         return processInfo;
@@ -108,11 +115,9 @@ public class FormContextUtil {
         final APISession session = (APISession) context.get(FormServiceProviderUtil.API_SESSION);
         if (session == null) {
             final String errorMessage = "There is no engine API session in the HTTP session.";
-            // FIXME find a nice way to restore this log
-            // if (LOGGER.isLoggable(Level.SEVERE)) {
-            // LOGGER.log(Level.SEVERE, errorMessage);
-            // }
-            throw new RuntimeException(errorMessage);
+            if (Logger.getLogger(FormContextUtil.class.getName()).isLoggable(Level.SEVERE)) {
+                Logger.getLogger(FormContextUtil.class.getName()).log(Level.SEVERE, errorMessage);
+            }
         }
         return session;
     }

@@ -26,10 +26,13 @@ public class FormLogger implements IFormLogger {
 
     @Override
     public void log(Level level, String message, Throwable e) {
+        if (e == null)
+            e = new Exception();
+
         FormContextUtil ctxu = new FormContextUtil(context);
         String prefixMessage = "";
 
-        if (ctxu.getSession() != null) {
+        if (ctxu.getSession() != null && ctxu.getUserName() != null) {
             prefixMessage += "Username<" + ctxu.getUserName() + "> ";
         }
 
