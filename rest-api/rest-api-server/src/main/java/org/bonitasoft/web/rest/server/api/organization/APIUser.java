@@ -95,8 +95,8 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
             try {
                 instanceClass = validatorClass.newInstance();
                 AbstractStringValidator validator = (AbstractStringValidator) instanceClass;
+                validator.setLocale(getLocale());                
                 validator.check(password);
-                validator.setLocale(getLocale());
                 if (!validator.getErrors().isEmpty()) {
                     throw new ValidationException(validator.getErrors());
                 }    
