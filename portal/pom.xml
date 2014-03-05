@@ -113,27 +113,29 @@
 				</configuration>
 			</plugin>
 
-			<!-- GWT configuration -->
+            <!-- Configure GWT-Maven plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<localWorkers>2</localWorkers>
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
 					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
+                    <!--Configure gwt:run-->
 					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                    <port>8081</port>
                     <runTarget>/bonita/index.jsp</runTarget>
+                    <bindAddress>0.0.0.0</bindAddress>
+                    <port>8081</port>
 				</configuration>
-			</plugin>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -207,16 +209,9 @@
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/test/webapp</directory>
-                        <targetPath>${webappDirectory}/WEB-INF</targetPath>
-                    </resource>
-                </resources>
-            </build>
         </profile>
-        <profile>
+        <!--Need to be done in distrib module-->
+        <!--<profile>
             <id>packaging</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -255,6 +250,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile>-->
     </profiles>
 </project>
