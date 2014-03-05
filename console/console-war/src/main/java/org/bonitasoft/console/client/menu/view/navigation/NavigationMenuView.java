@@ -50,8 +50,6 @@ public class NavigationMenuView extends RawView {
 
     private final MenuListCreator menuListCreator;
 
-    private boolean isDefault;
-
     public NavigationMenuView() {
         this(null);
     }

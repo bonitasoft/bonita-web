@@ -30,15 +30,17 @@ public class TechnicalUserMenuView extends NavigationMenuView {
     @Override
     public void buildView() {
         buildMenu();
+        displayFirstPage();
+        addBody(navigationMenu);
         listenViewChangeEvent(selectMenuOnChange());
         navigationMenu.select(ViewController.getInstance().getCurrentPageToken());
-        addBody(navigationMenu);
+    }
 
+    protected void displayFirstPage() {
         // Open the first page if no page already displayed
         if (BlankPage.TOKEN.equals(ClientApplicationURL.getPageToken()) || ClientApplicationURL.getPageToken() == null) {
             ClientApplicationURL.setPageToken(UserListingAdminPage.TOKEN, true);
         }
-
     }
 
     protected void buildMenu() {
