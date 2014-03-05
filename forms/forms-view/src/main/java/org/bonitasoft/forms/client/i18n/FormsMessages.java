@@ -28,6 +28,8 @@ public interface FormsMessages extends Messages {
 
     String submissionConfirmationMessage();
 
+    String instanceSubmissionConfirmationMessage(String caseId);
+
     String submissionConfirmationGoTo(String href);
 
     String refreshButtonLabel();

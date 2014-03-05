@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -186,7 +187,7 @@ public class ArchivedHumanTaskItem extends ArchivedTaskItem implements IHumanTas
     public final ActorItem getActor() {
         return new ActorItem(getDeploy(ATTRIBUTE_ACTOR_ID));
     }
-
+    
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UTILS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

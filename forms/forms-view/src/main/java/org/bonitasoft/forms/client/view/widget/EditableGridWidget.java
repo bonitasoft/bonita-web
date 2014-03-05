@@ -685,7 +685,6 @@ public class EditableGridWidget extends Composite implements HasValueChangeHandl
             checkRowCountAndDisplayRemoveButton();
             final DOMUtils domUtils = DOMUtils.getInstance();
             if (DOMUtils.getInstance().isPageInFrame()) {
-            	domUtils.resizeFrame(formID);
             }
         }
     }

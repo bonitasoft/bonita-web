@@ -22,13 +22,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
+import org.bonitasoft.console.client.user.cases.view.FormsView;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
-import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -38,7 +39,10 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
+import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
+import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
+import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
@@ -94,11 +98,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     public void buildView(final HumanTaskItem task) {
         if (task.getAssignedId() == null) {
             addBody(createFormIframe(task, true));
-        } else if (!task.getAssignedId().equals(getUserId())) {
+        } else if (!task.getAssignedId().equals(this.getUserId())) {
             ViewController.showView(TasksListingPage.TOKEN);
             throw new APIException(_("This task is already assigned to someone else."));
         } else {
-            addBody(createFormIframe(task, false));
+            this.addBody(this.createFormIframe(task, false));
         }
     }
 
@@ -109,8 +113,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         return Session.getUserId();
     }
 
-    private IFrame createFormIframe(final HumanTaskItem item, final boolean assignTask) {
-        return new IFrame(DOMUtils.FORM_FRAME_ID, buildTasksFormURL(item, assignTask), "100%", "700px");
+    private Component createFormIframe(final HumanTaskItem item, final boolean assignTask) {
+        return new UiComponent(new FormsView(buildTasksFormURL(item, assignTask)));
     }
 
     private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
@@ -126,20 +130,36 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
 
         frameURL.append("#form=")
-                .append(URL.decodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
-                .append(item.getProcess().getVersion()).append(UUID_SEPERATOR)
+                .append(URL.decodeQueryString(item.getProcess().getName())).append(this.UUID_SEPERATOR)
+                .append(item.getProcess().getVersion()).append(this.UUID_SEPERATOR)
                 .append(URL.decodeQueryString(item.getName()))
 
                 .append("$entry")
 
                 .append("&task=").append(item.getId())
                 .append("&mode=form");
-
+        
         if (assignTask) {
             frameURL.append("&assignTask=true");
         }
 
         return frameURL.toString();
+    }
+
+    /**
+     * We don't need any header and it screw up the page's size.
+     *
+     * @param header
+     * @return
+     */
+    @Override
+    protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
+        return null;
+    }
+
+    @Override
+    protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
+        return null;
     }
 
     @Override

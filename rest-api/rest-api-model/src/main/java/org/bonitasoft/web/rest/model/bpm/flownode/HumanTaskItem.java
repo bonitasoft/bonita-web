@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -129,7 +130,8 @@ public class HumanTaskItem extends TaskItem implements IHumanTaskItem {
     public final void setNbOfActorUser(final int count) {
         setAttribute(COUNT_ACTOR_USER_NUMBER, count);
     }
-
+    
+	
     // GETTERS
 
     @Override
@@ -179,13 +181,18 @@ public class HumanTaskItem extends TaskItem implements IHumanTaskItem {
 
     @Override
     public final UserItem getAssignedUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_ASSIGNED_USER_ID));
+        IItem item = getDeploy(ATTRIBUTE_ASSIGNED_USER_ID);
+        if(item == null) {
+            return null;
+        }
+        return new UserItem(item);
     }
 
     @Override
     public final ActorItem getActor() {
         return new ActorItem(getDeploy(ATTRIBUTE_ACTOR_ID));
     }
+    
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UTILS

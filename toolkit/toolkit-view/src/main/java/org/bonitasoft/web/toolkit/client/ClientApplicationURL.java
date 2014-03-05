@@ -373,7 +373,7 @@ public class ClientApplicationURL {
     // First display of a view
     protected void initView() {
         // Hide global loader
-        Loader.getInstance().hideLoader();
+        Loader.hideLoader();
 
         if (_getPageToken() != null && _getProfileId() != null) {
             ViewController.showView(_getPageToken(), _getPageAttributes());
