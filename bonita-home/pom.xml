@@ -11,7 +11,7 @@
 
   	<properties>
     	<jacoco.skip>true</jacoco.skip>
-        <bonita.home>${project.build.directory}/${project.build.finalName}</bonita.home>
+        <bonita.home>${project.build.directory}/bonita-home</bonita.home>
   	</properties>
 
 	<build>
@@ -67,7 +67,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+			<!--Create bonita home zip-->
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
