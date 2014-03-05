@@ -16,9 +16,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.junit.After;
@@ -30,14 +28,21 @@ import org.junit.Test;
  */
 public class SecurityPropertiesTest {
 
+    private String formerBonitaHome = null;
+
     @Before
     public void setUp() throws Exception {
+        formerBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
     }
 
     @After
     public void tearDown() {
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        if (formerBonitaHome == null) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, formerBonitaHome);
+        }
     }
 
     /*

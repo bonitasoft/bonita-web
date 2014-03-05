@@ -16,8 +16,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 import java.io.File;
 
@@ -35,8 +34,11 @@ public class WebBonitaConstantsUtilsTest {
 
     private WebBonitaConstantsTenancyImpl constants;
 
+    private String formerBonitaHome = null;
+
     @Before
     public void setUp() throws Exception {
+        formerBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
         // Those tests depends on files in test resources!
         System.setProperty(WebBonitaConstants.BONITA_HOME, TEST_BONITA_HOME);
         constants = new WebBonitaConstantsTenancyImpl(1L);
@@ -44,7 +46,11 @@ public class WebBonitaConstantsUtilsTest {
 
     @After
     public void tearDown() {
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        if (formerBonitaHome == null) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, formerBonitaHome);
+        }
     }
 
     @Test

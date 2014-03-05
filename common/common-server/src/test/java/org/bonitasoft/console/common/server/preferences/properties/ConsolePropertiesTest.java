@@ -16,9 +16,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 
@@ -35,8 +33,11 @@ public class ConsolePropertiesTest {
 
     private ConsoleProperties properties;
 
+    private String formerBonitaHome = null;
+
     @Before
     public void setUp() {
+        formerBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita/home");
         properties = new ConsoleProperties(1L);
         setProperty(properties, "aProperty", "aValue");
@@ -45,7 +46,11 @@ public class ConsolePropertiesTest {
     @After
     public void tearDown() {
         removeProperty(properties, "aProperty");
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        if (formerBonitaHome == null) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, formerBonitaHome);
+        }
     }
 
     @Test
