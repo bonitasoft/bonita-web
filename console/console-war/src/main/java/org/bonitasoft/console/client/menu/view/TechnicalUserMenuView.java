@@ -15,23 +15,24 @@
 package org.bonitasoft.console.client.menu.view;
 
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
+import org.bonitasoft.console.client.menu.view.navigation.NavigationMenuView;
 import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuItem;
 import org.bonitasoft.console.client.menu.view.technicaluser.PortalMenuItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
-import org.bonitasoft.web.toolkit.client.ui.RawView;
+import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
-import org.bonitasoft.web.toolkit.client.ui.component.menu.Menu;
 
 /**
  * @author Julien Mege
  */
-public class TechnicalUserMenuView extends RawView {
-
-    public static final String TOKEN = "technicalusermenu";
+public class TechnicalUserMenuView extends NavigationMenuView {
 
     @Override
     public void buildView() {
-        addBody(buildMenu());
+        buildMenu();
+        listenViewChangeEvent(selectMenuOnChange());
+        navigationMenu.select(ViewController.getInstance().getCurrentPageToken());
+        addBody(navigationMenu);
 
         // Open the first page if no page already displayed
         if (BlankPage.TOKEN.equals(ClientApplicationURL.getPageToken()) || ClientApplicationURL.getPageToken() == null) {
@@ -40,12 +41,7 @@ public class TechnicalUserMenuView extends RawView {
 
     }
 
-    protected Menu buildMenu() {
-        return new Menu(new OrganizationMenuItem(), new PortalMenuItem());
-    }
-
-    @Override
-    public String defineToken() {
-        return TOKEN;
+    protected void buildMenu() {
+        navigationMenu.addMenuItem(new OrganizationMenuItem(), new PortalMenuItem());
     }
 }
