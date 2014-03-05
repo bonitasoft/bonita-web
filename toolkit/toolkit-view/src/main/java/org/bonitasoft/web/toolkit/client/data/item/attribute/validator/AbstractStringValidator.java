@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
+
 /**
  * 
  * @author Séverin Moussel
@@ -52,6 +53,5 @@ public abstract class AbstractStringValidator extends AbstractCollectionValidato
 
     public void setLocale(String locale) {
         this.locale = locale;
-    }
-    
+    }    
 }

@@ -78,9 +78,12 @@ public class AddUserFormAction extends AddItemFormAction<UserItem> {
             indexStartMessage = indexStartMessage + 11;
             
             message = message.substring(indexStartMessage);
-            int endOfMessage = message.indexOf("\\");
+            int endOfMessage = message.indexOf("\"");
             if (endOfMessage >= 0) {
-                return message.substring(0, endOfMessage);
+                message =  message.substring(0, endOfMessage);
+                message = message.replace("\\r\\n", ", ");
+                message = message.substring(0, message.length() - 2);
+                return message;
             } else {
                 return message;
             }
