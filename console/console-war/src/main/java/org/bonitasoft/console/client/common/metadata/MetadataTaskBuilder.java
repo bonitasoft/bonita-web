@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.console.client.common.metadata;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
@@ -48,15 +50,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
-<<<<<<< HEAD
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-=======
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Element;
->>>>>>> e333ad4... BS-7289 In tasks list page: final improvments
 
 /**
  * @author Vincent Elcrin
@@ -183,12 +181,6 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
-<<<<<<< HEAD
-        return new ItemDetailsMetadata(
-                new DeployedAttributeReader(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
-                _("Apps version"),
-                _("Version of the app"));
-=======
     	return new ItemDetailsMetadata(
     			new DeployedAttributeReader(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
     			_("Apps version"),
@@ -200,7 +192,6 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
                 _("Subprocess"),
                 _("The sub process responsible for the creation of this task"));
->>>>>>> e333ad4... BS-7289 In tasks list page: final improvments
     }
 
     private ItemDetailsMetadata createMetaSubAppsVersion() {

@@ -96,25 +96,15 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final IFlowNodeItem item) {
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addCaseId(item, true);
-        metadatas.addCaseId(task, true);
-        metadatas.addAppsName();
-        metadatas.addAppsVersion();
-        metadatas.addType();
-        metadatas.addState();
-        metadatas.addPriority();
-        if (task.isHumanTask()) {
-            metadatas.addAssignedTo();
-            if (isArchived()) {
-                metadatas.addExecutedBy();
-            }
-        }
-        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))){
-        	metadatas.AddSubAppsName();
-        	metadatas.AddSubAppsVersion();
-        }
         metadatas.addDueDate(getArchivedDateFormat());
-        metadatas.addLastUpdateDate(FORMAT.DISPLAY);
-        metadatas.addAssignedDate(FORMAT.DISPLAY);
+        metadatas.addAppsName();
+        if (!(item.getRootContainerProcess().ensureName().equals(item.getProcess().ensureName()))){
+        	metadatas.AddSubAppsName();
+        }
+        metadatas.addType();
+        if (item.isHumanTask()) {
+            metadatas.addAssignedTo();
+        }
         return metadatas.build();
     }
 
@@ -144,7 +134,7 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
 
     @Override
     protected List<String> defineDeploys() {
-        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
+        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
     }
 
     @Override
