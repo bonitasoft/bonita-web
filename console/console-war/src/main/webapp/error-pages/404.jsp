@@ -59,6 +59,17 @@
 		font-size:72px;
 		text-shadow: 0.1em 0.1em 0.2em black;		
 	}
+	p#error
+	{
+		position: absolute;
+		margin: auto;
+		margin-top: -135px;
+		left:0;
+		right:0;
+		color:#fff;
+		font-weight:bold;
+		color:black;
+	}	
 	</style>
 </head>
 <body>
@@ -68,6 +79,7 @@
 			<img src="<%=getServletContext().getContextPath()%>/images/error-red-circle.png">
 			<p id="statuscode">404</div>
 			<p id="message">Not found</p>
+			<p id="error">Oops. Error.</p>			
 		</div>
 	</div>
 </body>
