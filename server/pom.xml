@@ -280,23 +280,45 @@
                                 <version>1.3.170</version>
                                 <scope>runtime</scope>
                             </dependency>
-                            <dependency>
-                                <groupId>org.bonitasoft.console</groupId>
-                                <artifactId>looknfeel</artifactId>
-                                <version>${project.version}</version>
-                                <classifier>less</classifier>
-                                <type>zip</type>
-                                <scope>runtime</scope>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.bonitasoft.console</groupId>
-                                <artifactId>looknfeel</artifactId>
-                                <version>${project.version}</version>
-                                <classifier>css</classifier>
-                                <type>zip</type>
-                                <scope>runtime</scope>
-                            </dependency>
                         </dependencies>
+                    </plugin>
+                    
+                    <!-- Themes needs to be on the classes path -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-looknfeel</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.bonitasoft.console</groupId>
+                                            <artifactId>looknfeel</artifactId>
+                                            <version>${project.version}</version>
+                                            <classifier>less</classifier>
+                                            <type>zip</type>
+                                            <overWrite>true</overWrite>
+                                            <destFileName>bonita-portal-theme.zip</destFileName>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.bonitasoft.console</groupId>
+                                            <artifactId>looknfeel</artifactId>
+                                            <version>${project.version}</version>
+                                            <classifier>css</classifier>
+                                            <type>zip</type>
+                                            <overWrite>true</overWrite>
+                                            <destFileName>bonita-portal-theme-css.zip</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
