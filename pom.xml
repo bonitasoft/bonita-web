@@ -593,7 +593,6 @@
 								<exclude>org.bonitasoft.console.client.*</exclude>
 								<exclude>com.bonitasoft.console.client.*</exclude>
 							</excludes>
-							<append>true</append>
 						</configuration>
 						<executions>
 							<execution>
@@ -630,15 +629,12 @@
 								<phase>integration-test</phase>
 								<goals>
 									<goal>integration-test</goal>
-									<goal>verify</goal>
 								</goals>
 		 						<configuration>
 		 							<argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
 									<systemPropertyVariables>
 										<bonita.home>${project.build.directory}/bonita/home</bonita.home>
 									</systemPropertyVariables>
-									<!-- workaround to have test report for IT in sonar, see http://stackoverflow.com/a/15567782/936729 -->
-									<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 									<includes>
 										<!--run all possible tests
 										maven failsafe plugin filters classes by name
@@ -652,7 +648,7 @@
 										<include>**/*IT.java</include>
 										<include>**/*ITCase.java</include>
 									</includes>
-								</configuration> 
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>

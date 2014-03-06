@@ -81,7 +81,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
     /**
      * Default Constructor.
      * Constructor which set archived parameter of the page.
-     * 
+     *
      * @param archived
      */
     public TaskMoreDetailsAdminPage(final boolean archived) {
@@ -176,7 +176,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addAppsVersion();
-        metadatas.addCaseId();
+        metadatas.addCaseId(task, true);
         metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();
@@ -185,6 +185,10 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
             if (isArchived()) {
                 metadatas.addExecutedBy();
             }
+        }
+        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))){
+            metadatas.AddSubAppsName();
+            metadatas.AddSubAppsVersion();
         }
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addLastUpdateDate(FORMAT.DISPLAY);
@@ -227,6 +231,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         deploys.add(IActivityItem.ATTRIBUTE_PROCESS_ID);
         deploys.add(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID);
         deploys.add(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
+        deploys.add(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID);
         return deploys;
     }
 }

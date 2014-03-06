@@ -75,7 +75,8 @@ public class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends ArchivedFlow
         result.setType(item.getType().name());
         result.setArchivedDate(item.getArchiveDate());
         result.setSourceObjectId(item.getSourceObjectId());
-
+        result.setRootContainerId(item.getRootContainerId());
+        
         return result;
     }
 

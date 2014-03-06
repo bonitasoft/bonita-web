@@ -54,7 +54,6 @@ public final class ChangeProfileAction extends Action {
 
     @Override
     public void execute() {
-        // ViewController.showView(BlankPage.TOKEN);
         if (this.menu != null) {
             this.menu.setLabel(_(this.profileItem.getAttributeValue(ProfileItem.ATTRIBUTE_NAME)));
         }

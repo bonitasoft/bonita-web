@@ -71,7 +71,6 @@ public class HumanTaskDefinition extends TaskDefinition {
                         ));
 
         createAttribute(HumanTaskItem.ATTRIBUTE_DUE_DATE, ItemAttribute.TYPE.DATETIME);
-
     }
 
     @Override

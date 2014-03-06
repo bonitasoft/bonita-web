@@ -179,7 +179,11 @@ public class HumanTaskItem extends TaskItem implements IHumanTaskItem {
 
     @Override
     public final UserItem getAssignedUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_ASSIGNED_USER_ID));
+        IItem item = getDeploy(ATTRIBUTE_ASSIGNED_USER_ID);
+        if(item == null) {
+            return null;
+        }
+        return new UserItem(item);
     }
 
     @Override

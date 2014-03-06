@@ -27,20 +27,20 @@ import java.util.List;
  */
 public class URLProtector {
 
-    protected List<String> tokens = Arrays.asList("https", "http", "www", "//", "\\.", ":");
-        
+    protected List<String> tokens = Arrays.asList("https", "http", "www");
+
     public String protectRedirectUrl(String redirectUrl) {
         if (redirectUrl != null && !redirectUrl.startsWith("portal")) {
-            return removeTokenFromUrl(redirectUrl, new ArrayList<String>(tokens));            
-        } 
+            return removeTokenFromUrl(redirectUrl, new ArrayList<String>(tokens));
+        }
         return redirectUrl;
     }
-    
+
     private String removeTokenFromUrl(String redirectUrl, List<String> tokens){
         if (tokens.size() > 0) {
             return removeTokenFromUrl(redirectUrl.replaceAll(tokens.remove(0), ""), tokens);
         }
         return redirectUrl;
     }
-    
+
 }

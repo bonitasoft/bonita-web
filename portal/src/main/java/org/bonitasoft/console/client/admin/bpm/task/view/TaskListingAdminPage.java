@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,7 +46,7 @@ import org.bonitasoft.web.toolkit.client.common.TreeNode;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.FlowNodeContextAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
@@ -60,7 +60,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
@@ -141,18 +141,18 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     private ItemListingTable createAllListingTable() {
         return new ItemListingTable(new JsId(TABLE_ALL), _("All"), new ItemTable(FlowNodeDefinition.get())
 
-                        // columns configuration
-                        .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
-                        .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(FlowNodeItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                        .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
-                        .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), false)
+                // columns configuration
+                .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
+                .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+                .addColumn(new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
+                .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), false)
 
                         // cell formatters
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
-                                new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
-                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
+                        new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
+                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 ,new TaskQuickDetailsAdminPage());
     }
 
@@ -163,11 +163,11 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         // columns configuration
                         .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
                         .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addColumn(new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), true, true)
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
 
-                        // Grouped actions
+                                // Grouped actions
                         .addGroupedAction(new JsId("assign"), _("Assign"), _("Assign task to someone"), onAssignClick())
                         .addGroupedAction(new JsId("unassign"), _("Unassign"), _("Unassign this task. Other allowed users will see it"),
                                 new TaskRelaseAction()).addAttributeToCheckForGroupedActions(HumanTaskItem.ATTRIBUTE_TYPE, "MANUAL_TASK")
@@ -188,7 +188,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
                         .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), false)
                         .addColumn(ArchivedActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                        .addColumn(new DeployedAttributeReader(ArchivedActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addColumn(new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedActivityItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
                         .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
 
@@ -204,7 +204,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
     /**
      * Executed action on assign button click
-     * 
+     *
      * @return
      */
     protected ActionOnItemIds onAssignClick() {
@@ -220,7 +220,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
             /**
              * Convert an APIID list into a string list
-             * 
+             *
              * @param itemIds
              * @return
              */
