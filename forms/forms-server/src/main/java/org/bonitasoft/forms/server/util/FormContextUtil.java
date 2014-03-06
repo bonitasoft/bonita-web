@@ -112,7 +112,7 @@ public class FormContextUtil {
      * @return the engine API session
      */
     public APISession getAPISessionFromContext() {
-        final APISession session = (APISession) context.get(FormServiceProviderUtil.API_SESSION);
+        APISession session = (APISession) context.get(FormServiceProviderUtil.API_SESSION);
         if (session == null) {
             final String errorMessage = "There is no engine API session in the HTTP session.";
             if (Logger.getLogger(FormContextUtil.class.getName()).isLoggable(Level.SEVERE)) {
@@ -144,7 +144,7 @@ public class FormContextUtil {
             int formIdDelimiterPos = formName.lastIndexOf(FormServiceProviderUtil.FORM_ID_SEPARATOR);
             int taskDelimiterPos = formName.lastIndexOf("--");
             if (formName != null && formIdDelimiterPos != -1 && taskDelimiterPos != -1) {
-                return getFormName().substring(taskDelimiterPos, formIdDelimiterPos + 2);
+                return getFormName().substring(taskDelimiterPos, formIdDelimiterPos);
             }
         }
         return null;
