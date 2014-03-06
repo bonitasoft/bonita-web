@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-05 08:51+0100\n"
+"POT-Creation-Date: 2014-03-06 05:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -893,6 +893,30 @@ msgstr ""
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/MembershipDatastore.java:135
 msgid "This membership is already added to user"
+msgstr ""
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:44
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:43
+msgid "Password does not contain enough numbers"
+msgstr ""
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:51
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:50
+msgid "Password does not contain enough lower case chars"
+msgstr ""
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:58
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:57
+msgid "Password does not contain enough upper case chars"
+msgstr ""
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:65
+msgid "Password does not contain enough special chars"
+msgstr ""
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:71
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:63
+msgid "Password is not long enough"
 msgstr ""
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/platform/APIPlatform.java:61
@@ -2529,7 +2553,7 @@ msgid "Create this role"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:45
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:50
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
 msgid "Passwords don't match"
 msgstr ""
 
