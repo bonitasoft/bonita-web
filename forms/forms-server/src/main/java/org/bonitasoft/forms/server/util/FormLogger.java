@@ -11,7 +11,7 @@ import org.bonitasoft.forms.client.model.FormFieldValue;
 
 public class FormLogger implements IFormLogger {
 
-    protected final Logger LOGGER;
+    protected Logger LOGGER;
 
     protected static Map<String, Object> context = new HashMap<String, Object>();
 
