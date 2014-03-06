@@ -184,6 +184,9 @@
             <properties>
                 <permutations>Light</permutations>
             </properties>
+        </profile>
+        <profile>
+            <id>proxy</id>
             <dependencies>
                 <dependency>
                     <groupId>org.eclipse.jetty</groupId>
