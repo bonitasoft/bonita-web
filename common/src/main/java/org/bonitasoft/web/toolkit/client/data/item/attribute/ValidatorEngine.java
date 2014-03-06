@@ -41,14 +41,6 @@ public class ValidatorEngine {
         validateAttribute(attributeName, item.getAttributes(), item.getItemDefinition().getAttribute(attributeName).getValidators(), applyMandatory);
     }
 
-//    public static void validateAttribute(final String attributeName, final AbstractForm form) throws ValidationException {
-//        validateAttribute(attributeName, form, true);
-//    }
-
-//    public static void validateAttribute(final String attributeName, final AbstractForm form, final boolean applyMandatory) throws ValidationException {
-//        validateAttribute(attributeName, form.getValues(), form.getEntry(new JsId(attributeName)).getValidators(), applyMandatory);
-//    }
-
     public static void validateAttribute(final String attributeName, final TreeIndexed<String> values, final List<Validator> validators)
             throws ValidationException {
         validateAttribute(attributeName, values, validators, true);
@@ -122,25 +114,6 @@ public class ValidatorEngine {
         validate(item.getAttributes(), item.getItemDefinition().getValidators(), applyMandatory);
     }
 
-//    /**
-//     * Validate a Form
-//     *
-//     * @throws ValidationException
-//     */
-//    public static void validate(final AbstractForm form, final Map<String, List<Validator>> validators) throws ValidationException {
-//        validate(form, validators, true);
-//    }
-//
-//    /**
-//     * Validate a Form
-//     *
-//     * @throws ValidationException
-//     */
-//    public static void validate(final AbstractForm form, final Map<String, List<Validator>> validators, final boolean applyMandatory)
-//            throws ValidationException {
-//        validate(form.getValues(), validators, applyMandatory);
-//    }
-
     /**
      * Validate a Tree
      * 
@@ -188,30 +161,5 @@ public class ValidatorEngine {
             throw new ValidationException(errors);
         }
     }
-
-    // public void validate(final TreeIndexed<String> tree, final Map<String, List<Validator>> validators) {
-    //
-    // tree.getValues()
-    //
-    // final List<ValidationError> errors = new LinkedList<ValidationError>();
-    // for (final String attributeName : tree.keySet()) {
-    // for (final Validator validator : this.getAttribute(attributeName).getValidators()) {
-    // if (validator instanceof AbstractStringValidator) {
-    // ((AbstractStringValidator) validator).check(tree.getValue(attributeName));
-    // } else if (validator instanceof MandatoryValidator) {
-    // ((MandatoryValidator) validator).check(tree.getValue(attributeName));
-    // } else if (validator instanceof AbstractStringComparisonValidator) {
-    // ((AbstractStringComparisonValidator) validator).check(
-    // tree.getValue(attributeName),
-    // tree.getValue(((AbstractStringComparisonValidator) validator).getSecondAttributeName())
-    // );
-    // }
-    // errors.addAll(validator.getErrors());
-    // }
-    // }
-    // if (errors.size() > 0) {
-    // throw new ItemValidationException(errors);
-    // }
-    // }
 
 }
