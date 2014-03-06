@@ -108,10 +108,11 @@ public class ExpressionEvaluatorEngineClient {
         	if(splitExpressionName.length==2){
         		expressionParentName = splitExpressionName[0];
         		expressionParentAttribute = splitExpressionName[1];
+        		return "Error on expression evaluation for the attribute ["+ expressionParentAttribute +"] of object ["+ expressionParentName +"].";
         	}
     	}
     	
-    	return "Error on expression evaluation for the attribute ["+ expressionParentAttribute +"] of object ["+ expressionParentName +"].";
+    	return "Error on expression evaluation for the expression with name ["+ e.getExpressionName() +"].";
     }
 
 }
