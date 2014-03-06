@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
