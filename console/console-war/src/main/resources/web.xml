@@ -5,6 +5,17 @@
 	id="console-war" version="2.5">
 	<display-name>Bonita</display-name>
 
+	<!--  Error pages -->
+    <error-page>
+		<error-code>500</error-code>
+		<location>/error-pages/500.jsp</location>
+    </error-page>
+
+    <error-page>
+		<error-code>404</error-code>
+		<location>/error-pages/404.jsp</location>
+    </error-page>
+
 	<!-- Bonita home Filter -->
 	<filter>
 		<filter-name>BonitaHomeFilter</filter-name>
