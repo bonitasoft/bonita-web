@@ -77,6 +77,97 @@
         <url-pattern>/bonita/portal/themeResource</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>attachmentImage</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlets.ProxyServlet$Transparent</servlet-class>
+        <load-on-startup>5</load-on-startup>
+        <init-param>
+            <param-name>ProxyTo</param-name>
+            <param-value>http://localhost:8080/bonita/portal/attachmentImage</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Prefix</param-name>
+            <param-value>/bonita/portal/attachmentImage</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>attachmentImage</servlet-name>
+        <url-pattern>/bonita/portal/attachmentImage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>api</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlets.ProxyServlet$Transparent</servlet-class>
+        <load-on-startup>6</load-on-startup>
+        <init-param>
+            <param-name>ProxyTo</param-name>
+            <param-value>http://localhost:8080/bonita/API</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Prefix</param-name>
+            <param-value>/bonita/API</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>api</servlet-name>
+        <url-pattern>/bonita/API/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>logoutservice</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlets.ProxyServlet$Transparent</servlet-class>
+        <load-on-startup>7</load-on-startup>
+        <init-param>
+            <param-name>ProxyTo</param-name>
+            <param-value>http://localhost:8080/bonita/logoutservice</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Prefix</param-name>
+            <param-value>/bonita/logoutservice</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logoutservice</servlet-name>
+        <url-pattern>/bonita/logoutservice</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>processUpload</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlets.ProxyServlet$Transparent</servlet-class>
+        <load-on-startup>8</load-on-startup>
+        <init-param>
+            <param-name>ProxyTo</param-name>
+            <param-value>http://localhost:8080/bonita/portal/processUpload</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Prefix</param-name>
+            <param-value>/bonita/portal/processUpload</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>processUpload</servlet-name>
+        <url-pattern>/bonita/portal/processUpload</url-pattern>
+    </servlet-mapping>
+
+    <!--Ensure user is set properly in HTTPSession-->
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/bonita/portal/formsService</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>formsService</servlet-name>
+        <servlet-class>org.bonitasoft.forms.server.FormsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>formsService</servlet-name>
+        <url-pattern>/bonita/portal/formsService</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>

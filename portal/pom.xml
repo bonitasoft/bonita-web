@@ -14,6 +14,7 @@
 		<permutations>All</permutations>
 		<jacoco.skip>true</jacoco.skip>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        <bonita.home.http>src/test/bonita-home-http</bonita.home.http>
 	</properties>
 
 	<dependencies>
@@ -123,7 +124,7 @@
 					<disableClassMetadata>true</disableClassMetadata>
 					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
                     <!--Configure gwt:run-->
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <extraJvmArgs>-Xmx512M -Xss1024k -Dbonita.home=${bonita.home.http}</extraJvmArgs>
                     <runTarget>/bonita/index.jsp</runTarget>
                     <bindAddress>0.0.0.0</bindAddress>
                     <port>8081</port>
@@ -207,6 +208,31 @@
                     <artifactId>urlrewritefilter</artifactId>
                     <version>4.0.3</version>
                     <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.bonitasoft.forms</groupId>
+                    <artifactId>forms-server</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.bonitasoft.forms</groupId>
+                    <artifactId>forms-rpc</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.bonitasoft.forms</groupId>
+                    <artifactId>forms-model</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.google.gwt</groupId>
+                    <artifactId>gwt-servlet</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.bonitasoft.console</groupId>
+                    <artifactId>server</artifactId>
+                    <classifier>classes</classifier>
+                    <version>${project.version}</version>
                 </dependency>
             </dependencies>
         </profile>
