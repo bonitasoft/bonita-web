@@ -125,7 +125,7 @@
 					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
                     <!--Configure gwt:run-->
                     <extraJvmArgs>-Xmx512M -Xss1024k -Dbonita.home=${bonita.home.http}</extraJvmArgs>
-                    <runTarget>/bonita/index.jsp</runTarget>
+                    <runTarget>/bonita/login.jsp</runTarget>
                     <bindAddress>0.0.0.0</bindAddress>
                     <port>8081</port>
 				</configuration>
