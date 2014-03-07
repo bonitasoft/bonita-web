@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -41,6 +42,7 @@ public interface IHumanTaskItem extends ITaskItem {
     public static final String ATTRIBUTE_DUE_DATE = "dueDate";
 
     public static final String ATTRIBUTE_ACTOR_ID = "actorId";
+    
     
     /*
      * Same as ATTRIBUTE_PARENT_CONTAINER_ID

@@ -38,11 +38,12 @@ msgid "Cases"
 msgstr "Casos"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:105
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:165
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:117
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:81
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:70
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:224
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:28
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
 msgid "Apps"
@@ -121,6 +122,46 @@ msgstr "Reportes"
 msgid "Can't import organization. Please check that your file is well-formed"
 msgstr "No puede importar organización. Por favor, compruebe que el archivo es correcto"
 
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/PriorityFormatter.java:31
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:41
+msgid "Highest"
+msgstr "Mayor"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/PriorityFormatter.java:32
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:43
+msgid "High"
+msgstr "alto"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/PriorityFormatter.java:33
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:45
+msgid "Normal"
+msgstr "Normal"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/PriorityFormatter.java:34
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:47
+msgid "Low"
+msgstr "bajo"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/PriorityFormatter.java:35
+#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:49
+msgid "Lowest"
+msgstr "Menor"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/Formatter.java:35
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:202
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:133
+msgid "Unassigned"
+msgstr "sin asignar"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/Formatter.java:42
+#: console/console-war/src/main/java/org/bonitasoft/console/client/uib/formatter/Formatter.java:49
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:83
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:208
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:213
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:502
+msgid "No data"
+msgstr "No hay datos"
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/component/snippet/CommentSectionSnippet.java:69
 msgid "Comments"
 msgstr "Comentarios"
@@ -174,7 +215,7 @@ msgstr "Tiempo publicado"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedCaseQuickDetailsAdminPage.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileQuickDetailsPage.java:61
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:96
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:72
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:73
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:83
 msgid "More"
 msgstr "Más"
@@ -333,13 +374,6 @@ msgstr "La fecha de la última actualización del usuario"
 msgid "The date of the creation of the user"
 msgstr "La fecha de la creación del usuario"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:83
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:133
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:138
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:502
-msgid "No data"
-msgstr "No hay datos"
-
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:84
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:124
 msgid "Last login"
@@ -395,7 +429,8 @@ msgid "Manager of the specified user"
 msgstr "Gerente del usuario especificado"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:41
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:112
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:172
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:44
 msgid "Apps version"
 msgstr "Versión de la aplicación"
 
@@ -435,7 +470,7 @@ msgid "The user that has started this case"
 msgstr "El usuario que ha iniciado este caso"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:70
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:99
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:159
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:68
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceTable.java:44
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:110
@@ -444,6 +479,7 @@ msgstr "El usuario que ha iniciado este caso"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:165
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:180
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:189
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:36
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/MyCasesSnippet.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:72
@@ -467,97 +503,122 @@ msgstr "Última actualización"
 msgid "The date when the case was updated"
 msgstr "La fecha, mientras que el caso ha sido actualizado por última vez"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:95
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:92
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:192
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:48
+msgid "The id of the related case"
+msgstr "El id del caso relacionado"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:93
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:192
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:52
+msgid "Case"
+msgstr "Caso"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:155
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/EditCaseVariablePopUp.java:79
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:33
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/connector/ConnectorSection.java:55
 msgid "Type"
 msgstr "Tipo"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:95
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:155
 msgid "The type of the task"
 msgstr "El tipo de la tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:99
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:159
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:32
 msgid "The state of the task"
 msgstr "El estado de la tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:106
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:166
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:24
 msgid "The app responsible for the creation of this task"
 msgstr "La aplicación responsable de la creación de esta tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:113
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:173
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:187
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:40
 msgid "Version of the app"
 msgstr "Versión de la aplicación"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:117
-msgid "Case"
-msgstr "Caso"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:179
+msgid "Subprocess"
+msgstr "Sub-proceso"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:117
-msgid "The id of the related case"
-msgstr "El id del caso relacionado"
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:180
+msgid "The sub process responsible for the creation of this task"
+msgstr "El subproceso responsable para la creación de esta tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:121
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:186
+msgid "Subprocess version"
+msgstr "Versión de Subproceso"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:196
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:145
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:164
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:189
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:170
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:60
 msgid "Priority"
 msgstr "Prioridad"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:121
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:196
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:56
 msgid "The priority of the task"
 msgstr "La prioridad de la tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:127
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:133
-msgid "Unassigned"
-msgstr "sin asignar"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:128
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:203
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:68
 msgid "Assigned to"
 msgstr "Asignado a"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:129
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:204
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:64
 msgid "The username to which the task is assigned."
 msgstr "El nombre de usuario del usuario al que se le ha asignado la tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:134
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:209
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:76
 msgid "Last update date"
 msgstr "Última fecha de actualización"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:134
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:209
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:72
 msgid "The date of the last modification"
 msgstr "La fecha de la última modificación"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:139
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:214
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:84
 msgid "Assigned date"
 msgstr "Fecha asignada"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:140
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:215
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:80
 msgid "The date when the task was assigned"
 msgstr "La fecha cuando se ha asignado la tarea"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:145
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:220
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:150
 msgid "Executed by"
 msgstr "Ejecutado por"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:146
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:221
 msgid "Name of the user who executed this task"
 msgstr "Nombre del usuario que ejecutó esta tarea por última vez"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:152
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:227
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:149
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:167
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:136
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:172
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:92
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:129
 msgid "Due date"
 msgstr "Fecha de vencimiento"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:153
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:228
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:88
 msgid "The date when the task must be finished"
 msgstr "La fecha en la que la tarea debe ser terminada"
 
@@ -631,7 +692,7 @@ msgstr "Seleccione un rol"
 msgid "Select a role by typing a part of its name."
 msgstr "Seleccione un rol escribiendo parte de su nombre."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:101
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/PerformTaskPage.java:103
 msgid "This task is already assigned to someone else."
 msgstr "No puede realizar esta tarea, ya ha sido asignado a otra persona."
 
@@ -820,7 +881,7 @@ msgid "Performed date"
 msgstr "Fecha realizada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:47
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:213
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:217
 msgid "Connectors"
 msgstr "Conectores"
 
@@ -838,6 +899,7 @@ msgstr "Saltar esta tarea"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileQuickDetailsPage.java:49
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:58
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupQuickDetailsAdminPage.java:60
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:96
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/reader/DescriptionAttributeReader.java:31
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/reader/DescriptionAttributeReader.java:37
 msgid "No description."
@@ -861,7 +923,7 @@ msgid "Select a user by typing a part of his name."
 msgstr "Seleccione un usuario escribiendo parte de su nombre."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskQuickDetailsAdminPage.java:85
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:72
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:73
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:42
 msgid "Show more details about this task"
 msgstr "Ver más detalles de esta tarea"
@@ -2220,7 +2282,7 @@ msgstr "Un archivo de negocios tiene una extensión de .bar"
 msgid "Show more details about this apps"
 msgstr "Mostrar más detalles sobre esta aplicación"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:79
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:85
 msgid "Start an instance of app %app_name%"
 msgstr "Iniciar una instancia de aplicación %app_name%"
 
@@ -2436,7 +2498,7 @@ msgstr "Nombre de la aplicación"
 msgid "Start date"
 msgstr "Fecha de inicio"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:94
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:97
 msgid "Display a case form of app %app_name%"
 msgstr "Mostrar un formulario en caso de aplicación %app_name%"
 
@@ -3000,26 +3062,6 @@ msgstr "MMMM dd, yyyy"
 #: toolkit/toolkit-view/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:84
 msgid "message"
 msgstr "mensaje"
-
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:41
-msgid "Highest"
-msgstr "Mayor"
-
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:43
-msgid "High"
-msgstr "alto"
-
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:45
-msgid "Normal"
-msgstr "Normal"
-
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:47
-msgid "Low"
-msgstr "bajo"
-
-#: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/PriorityModifier.java:49
-msgid "Lowest"
-msgstr "Menor"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:39
 msgid "Human task"

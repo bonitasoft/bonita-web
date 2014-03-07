@@ -76,6 +76,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         result.setProcessId(item.getProcessDefinitionId());
         result.setState(item.getState());
         result.setType(item.getType().name());
+        result.setRootContainerId(item.getRootContainerId());
 
         return result;
     }

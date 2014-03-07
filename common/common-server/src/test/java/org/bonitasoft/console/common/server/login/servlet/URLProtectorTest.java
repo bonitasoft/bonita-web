@@ -19,7 +19,7 @@ public class URLProtectorTest {
     public void testProtectRedirectUrlShouldRemoveHTTPSFromURL() {
         assertEquals("google", urlProtecter.protectRedirectUrl("httpsgoogle"));     
     }
-
+	
     @Test
     public void testProtectRedirectUrlShouldNotChangeURL() {
         assertEquals("mobile/#home", urlProtecter.protectRedirectUrl("mobile/#home"));        

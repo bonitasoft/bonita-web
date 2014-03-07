@@ -77,6 +77,8 @@ public class FlowNodeDefinition extends ItemDefinition {
         createAttribute(FlowNodeItem.ATTRIBUTE_CASE_ID, ItemAttribute.TYPE.ITEM_ID)
                 .isMandatory();
 
+        createAttribute(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ItemAttribute.TYPE.ITEM_ID);
+        
         createAttribute(FlowNodeItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID)
                 .isMandatory();
 
@@ -104,6 +106,7 @@ public class FlowNodeDefinition extends ItemDefinition {
         declareDeployable(FlowNodeItem.ATTRIBUTE_PROCESS_ID, Definitions.get(ProcessDefinition.TOKEN));
         declareDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, Definitions.get(CaseDefinition.TOKEN));
         declareDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID, UserDefinition.get());
+        declareDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, Definitions.get(ProcessDefinition.TOKEN));
     }
 
     @Override

@@ -20,8 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.session.SessionItem;
+import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -33,6 +35,10 @@ public class Session extends ParametersStorage {
     private final TreeIndexed<String> parameters = new TreeIndexed<String>();
 
     private static Cookie SINGLETON = new Cookie();
+
+    public static String getCurrentProfile() {
+        return URLUtils.getInstance().getHashParameter(UrlOption.PROFILE);
+    }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // I/O

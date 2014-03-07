@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import static org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder.taskQuickDetailsMetadatas;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +24,7 @@ import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
+import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
@@ -37,6 +36,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
 /**
  * @author Séverin Moussel
@@ -44,8 +44,8 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
  */
 public class HumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<HumanTaskItem> implements PluginTask {
 
-    public static final String TOKEN = "taskquickdetails";    
-    
+    public static final String TOKEN = "taskquickdetails";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
     
     static {
@@ -87,8 +87,13 @@ public class HumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<HumanTask
     }
 
     @Override
-    protected LinkedList<ItemDetailsMetadata> defineMetadatas(final HumanTaskItem item) {
-    	return taskQuickDetailsMetadatas().build();
+    protected LinkedList<ItemDetailsMetadata> defineMetadatas(final HumanTaskItem task) {
+        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        metadatas.addCaseId(task, false);
+        metadatas.addAppsName();
+        metadatas.addDueDate(DateFormat.FORMAT.DISPLAY_RELATIVE);
+        metadatas.addPriority();
+        return metadatas.build();
     }
 
     @Override

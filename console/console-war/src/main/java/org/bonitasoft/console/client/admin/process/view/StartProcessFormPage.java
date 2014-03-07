@@ -19,7 +19,9 @@ package org.bonitasoft.console.client.admin.process.view;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.FormsView;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -29,6 +31,10 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
+import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
+import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +104,17 @@ public class StartProcessFormPage extends Page {
                 .append("&autoInstantiate=false&mode=form&user=")
                 .append(userId);
 
-        this.addBody(new IFrame(DOMUtils.FORM_FRAME_ID, frameURL.toString(), "100%", "700px"));
+        this.addBody(new UiComponent(new FormsView(frameURL.toString())));
+    }
+
+    @Override
+    protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
+        return null;
+    }
+
+    @Override
+    protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
+        return null;
     }
 
     public static final Map<String, String> getItemParams(final IItem item) {

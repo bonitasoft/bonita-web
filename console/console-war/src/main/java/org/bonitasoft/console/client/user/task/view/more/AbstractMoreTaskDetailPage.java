@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
-import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.view.AbstractTaskDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
@@ -29,8 +28,8 @@ import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
-import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 /**
  * @author Colin PUY
@@ -62,23 +61,18 @@ public abstract class AbstractMoreTaskDetailPage<T extends IHumanTaskItem> exten
     }
 
     @Override
+    protected void buildMetadatas(T item) {
+        addBody(new UiComponent(new HumanTaskMetadataView(item)));
+    }
+
+    @Override
     protected boolean isDescriptionBeforeMetadatas() {
         return false;
     }
 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(T item) {
-        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addAppsName();
-        metadatas.addAppsVersion();
-        metadatas.addCaseId();
-        metadatas.addState();
-        metadatas.addPriority();
-        metadatas.addAssignedTo();
-        metadatas.addDueDate(FORMAT.DISPLAY_RELATIVE);
-        metadatas.addLastUpdateDate(FORMAT.DISPLAY);
-        metadatas.addAssignedDate(FORMAT.DISPLAY);
-        return metadatas.build();
+        return null;
     }
 
     @Override
