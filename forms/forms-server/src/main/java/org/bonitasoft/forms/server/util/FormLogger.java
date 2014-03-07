@@ -80,6 +80,12 @@ public class FormLogger implements IFormLogger {
         }
     }
 
+    @Override
+    public void log(Level level, String message, Throwable e, Map<String, Object> pcontext) {
+        setContext(pcontext);
+        this.log(level, message, e);
+    }
+
     protected String getFormFieldStringRepresentation(String returnedStr, Map<String, FormFieldValue> submittedFields) {
         int i = 0;
         for (Map.Entry<String, FormFieldValue> entry : submittedFields.entrySet()) {

@@ -138,13 +138,21 @@ public class FormContextUtil {
         return null;
     }
 
+    public Long getProcessInstanceId() {
+        if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
+            return Long.valueOf(urlContext.get(FormServiceProviderUtil.INSTANCE_UUID).toString());
+        }
+        return null;
+    }
+
     public String getTaskName() {
         String formName = getFormName();
         if (formName != null) {
             int formIdDelimiterPos = formName.lastIndexOf(FormServiceProviderUtil.FORM_ID_SEPARATOR);
-            int taskDelimiterPos = formName.lastIndexOf("--");
+            String taskDelimiter = "--";
+            int taskDelimiterPos = formName.lastIndexOf(taskDelimiter) + taskDelimiter.length();
             if (formName != null && formIdDelimiterPos != -1 && taskDelimiterPos != -1) {
-                return getFormName().substring(taskDelimiterPos, formIdDelimiterPos);
+                return formName.substring(taskDelimiterPos, formIdDelimiterPos);
             }
         }
         return null;
