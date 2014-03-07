@@ -213,11 +213,15 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
                 context.put(FormServiceProviderUtil.FIELD_VALUES, new HashMap<String, FormFieldValue>());
                 final String pageId = (String) formServiceProvider.resolveExpression(pageIdExpression, context);
-                formPage = definitionAPI.getFormPage(formID, pageId, context);
-                if (formPage != null) {
-                    formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-                    formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
-                    formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
+                if(pageId != null){
+                	formPage = definitionAPI.getFormPage(formID, pageId, context);
+                	if (formPage != null) {
+                		formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
+                		formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
+                		formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
+                	}
+                } else {
+                	throw new IllegalStateException("The first Form page cannot be calculated for "+formID+". This is more likely to be a design issue of conditional pageflow.");
                 }
             }
             if (formPage == null) {
@@ -330,11 +334,15 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID);
             final Expression nextPageIdExpression = formCacheUtil.getNextPageIdExpression(nextPageExpressionId);
             final String pageId = (String) formServiceProvider.resolveExpression(nextPageIdExpression, context);
-            final FormPage formPage = definitionAPI.getFormPage(formID, pageId, context);
-            formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
-            formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
-            formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
-            return formPage.getReducedFormPage();
+            if(pageId != null){
+            	final FormPage formPage = definitionAPI.getFormPage(formID, pageId, context);
+            	formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabelExpression(), context));
+            	formFieldValuesUtil.setFormWidgetsValues(tenantID, formPage.getFormWidgets(), context);
+            	formFieldValuesUtil.storeWidgetsInCacheAndSetCacheID(tenantID, formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
+            	return formPage.getReducedFormPage();
+            } else {
+            	throw new IllegalStateException("The next Form page cannot be calculated for "+formID+". This is more likely to be a design issue of conditional pageflow.");
+            }
         } catch (final ForbiddenFormAccessException e) {
             throw e;
         } catch (final CanceledFormException e) {
@@ -624,7 +632,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * @param context
      * @return a Map<String, Object> containing the context of transient data
      */
-    @SuppressWarnings("unchecked")
     protected Map<String, Serializable> getFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
             final Map<String, Object> context) {
 
@@ -642,7 +649,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * @param context
      * @return a Map<String, Object> containing the context of transient data
      */
-    @SuppressWarnings("unchecked")
     protected void removeFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID, final Map<String, Object> context) {
 
         final HttpServletRequest request = getThreadLocalRequest();
