@@ -34,45 +34,6 @@ public class DefaultPasswordValidator extends AbstractStringValidator {
     
     @Override
     protected void _check(String password) {
-        String regex = "";
-
-        // Check number of digits        
-        regex = "[0-9]";
-        int numberMinOccurences = 0;
-        if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password does not contain enough numbers", LOCALE.valueOf(locale)));
-        }
-        
-        // Check number of lower case chars
-        regex = "[a-z]";
-        numberMinOccurences = 0;
-        if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password does not contain enough lower case chars", LOCALE.valueOf(locale)));
-        }
-        
-        // Check number of upper case chars
-        regex = "[A-Z]";
-        numberMinOccurences = 0;
-        if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password does not contain enough upper case chars", LOCALE.valueOf(locale)));
-        }
-        
-        // Check number of length
-        int minimalLength = 0;
-        if (password.length() < minimalLength) {
-            addError(_("Password is not long enough", LOCALE.valueOf(locale)));
-        }
     }
-    
-    private int numberOfOccurenceOfRegex(String regex, String password) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher  matcher = pattern.matcher(password);
-
-        int count = 0;
-        while (matcher.find())
-            count++;
-
-        return count;
-    }
-    
+       
 }
