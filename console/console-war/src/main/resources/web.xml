@@ -16,6 +16,11 @@
 		<location>/error-pages/404.jsp</location>
     </error-page>
 
+    <!-- Security Filter -->
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.SecurityFilter</filter-class>
+    </filter>
 	<!-- Bonita home Filter -->
 	<filter>
 		<filter-name>BonitaHomeFilter</filter-name>
@@ -96,6 +101,11 @@
 		<filter-class>org.bonitasoft.forms.server.filter.BPMURLSupportFilter</filter-class>
 	</filter>
 
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/portal/homepage</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>BonitaHomeFilter</filter-name>
 		<url-pattern>/login.jsp</url-pattern>
