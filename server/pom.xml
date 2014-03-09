@@ -25,6 +25,13 @@
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>portal</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
 
         <!--forms-->
         <dependency>
@@ -216,8 +223,11 @@
                                     <value>${bonita.home}</value>
                                 </systemProperty>
                             </systemProperties>
-                            <stopKey>STOP</stopKey>
-                            <stopPort>9999</stopPort>
+                            <webApp>
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>src/main/webapp,${basedir}/../portal/target/portal-${project.version}/</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
                             <jettyConfig>src/test/webapp/WEB-INF/jetty.xml</jettyConfig>
                             <jettyEnvXml>src/test/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
