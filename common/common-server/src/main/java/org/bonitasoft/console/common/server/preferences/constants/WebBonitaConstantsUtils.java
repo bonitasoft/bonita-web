@@ -45,11 +45,11 @@ public class WebBonitaConstantsUtils {
         return instance;
     }
 
-    private WebBonitaConstantsUtils(final long tenantId) {
+    protected WebBonitaConstantsUtils(final long tenantId) {
         webBonitaConstants = new WebBonitaConstantsTenancyImpl(tenantId);
     }
 
-    private WebBonitaConstantsUtils() {
+    protected WebBonitaConstantsUtils() {
         webBonitaConstants = new WebBonitaConstantsImpl();
     }
 
@@ -183,7 +183,8 @@ public class WebBonitaConstantsUtils {
         return getFolderFromBonitaHome(webBonitaConstants.getPortalProfilesIconsFolderPath());
     }
 
-    private String getBonitaHomePath() {
+    // protected for test stubbing
+    protected String getBonitaHomePath() {
         final String bonitaHomePath = System.getProperty(WebBonitaConstants.BONITA_HOME);
         if (bonitaHomePath == null) {
             throw new RuntimeException(WebBonitaConstants.BONITA_HOME + " system property not set!");
