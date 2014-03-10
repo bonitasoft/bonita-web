@@ -87,7 +87,7 @@ public class SecurityProperties {
      */
     protected final static String INSTANCES_MAP_SEPERATOR = "@";
 
-    private final static String TENANT_SCOPE_CONFIG_ID = "tenant";
+    protected final static String TENANT_SCOPE_CONFIG_ID = "tenant";
 
     /**
      * @return the {@link SecurityProperties} instance
@@ -96,7 +96,7 @@ public class SecurityProperties {
         final String instanceKey = generateInstanceKey(tenantId, TENANT_SCOPE_CONFIG_ID);
         SecurityProperties securityProperties = INSTANCES.get(instanceKey);
         if (securityProperties == null) {
-            securityProperties = new SecurityProperties(tenantId, TENANT_SCOPE_CONFIG_ID);
+            securityProperties = new SecurityProperties(WebBonitaConstantsUtils.getInstance(tenantId), TENANT_SCOPE_CONFIG_ID);
             INSTANCES.put(instanceKey, securityProperties);
         }
         return securityProperties;
@@ -111,7 +111,7 @@ public class SecurityProperties {
         final String instanceKey = generateInstanceKey(tenantID, id.getIdentifier());
         SecurityProperties securityProperties = INSTANCES.get(instanceKey);
         if (securityProperties == null) {
-            securityProperties = new SecurityProperties(tenantID, id.getIdentifier());
+            securityProperties = new SecurityProperties(WebBonitaConstantsUtils.getInstance(tenantID), id.getIdentifier());
             INSTANCES.put(instanceKey, securityProperties);
         }
         return securityProperties;
@@ -140,16 +140,16 @@ public class SecurityProperties {
     /**
      * Private contructor to prevent instantiation
      */
-    protected SecurityProperties(final long tenantID, final String processDefinitionId) {
+    protected SecurityProperties(WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
         InputStream inputStream = null;
         try {
             if (isValidProcessDefinition(processDefinitionId)) {
                 inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(SECURITY_DEFAULT_CONFIG_FILE_NAME);
                 if (inputStream == null) {
-                    inputStream = new FileInputStream(getSecurityPropertyFile(tenantID, processDefinitionId));
+                    inputStream = new FileInputStream(getSecurityPropertyFile(webBonitaConstantsUtils, processDefinitionId));
                 }
             } else {
-                inputStream = new FileInputStream(getTenantSecurityPropertyFile(tenantID));
+                inputStream = new FileInputStream(getTenantSecurityPropertyFile(webBonitaConstantsUtils));
             }
             defaultProperties.load(inputStream);
         } catch (final IOException e) {
@@ -169,18 +169,16 @@ public class SecurityProperties {
         }
     }
 
-    private File getSecurityPropertyFile(final long tenantId, final String processDefinitionId) {
-        File securityPropertiesFile = getProcessSecurityPropertiesFile(tenantId, processDefinitionId);
+    private File getSecurityPropertyFile(WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
+        File securityPropertiesFile = getProcessSecurityPropertiesFile(webBonitaConstantsUtils, processDefinitionId);
         if (securityPropertiesFile == null) {
-            securityPropertiesFile = getTenantSecurityPropertyFile(tenantId);
+            securityPropertiesFile = getTenantSecurityPropertyFile(webBonitaConstantsUtils);
         }
         return securityPropertiesFile;
     }
 
-    private File getTenantSecurityPropertyFile(final long tenantID) {
-        File securityPropertiesFile;
-        securityPropertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantID).getConfFolder(), SECURITY_DEFAULT_CONFIG_FILE_NAME);
-        return securityPropertiesFile;
+    private File getTenantSecurityPropertyFile(WebBonitaConstantsUtils webBonitaConstantsUtils) {
+        return new File(webBonitaConstantsUtils.getConfFolder(), SECURITY_DEFAULT_CONFIG_FILE_NAME);
     }
 
     private boolean isValidProcessDefinition(final String processDefinitionId) {
@@ -196,9 +194,9 @@ public class SecurityProperties {
      * @return the config file or null if it doesn't exists
      * @throws IOException
      */
-    protected File getProcessSecurityPropertiesFile(long tenantId, String processDefinitionId) {
+    protected File getProcessSecurityPropertiesFile(WebBonitaConstantsUtils webBonitaConstantsUtils, String processDefinitionId) {
         File securityPropertiesFile = null;
-        File processWorkFolder = getProcessWorkFolder(tenantId, processDefinitionId);
+        File processWorkFolder = getProcessWorkFolder(webBonitaConstantsUtils, processDefinitionId);
         if (processWorkFolder.exists()) {
             long lastDeployementDate = getLastDeployementDate(
                     listProcessDeployementFolders(processWorkFolder));
@@ -236,9 +234,8 @@ public class SecurityProperties {
         return lastDeployementDate;
     }
 
-    private File getProcessWorkFolder(final long tenantID, final String processDefinitionId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantID).getFormsWorkFolder(),
-                processDefinitionId);
+    private File getProcessWorkFolder(WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
+        return new File(webBonitaConstantsUtils.getFormsWorkFolder(), processDefinitionId);
     }
 
     private File[] listProcessDeployementFolders(final File processDir) {
