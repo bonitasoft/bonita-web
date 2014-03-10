@@ -7,6 +7,8 @@ public interface IFormLogger {
 
     public void log(Level level, String message);
 
+    public void log(Level level, String message, Map<String, Object> context);
+
     public void log(Level level, String message, Throwable e);
 
     public void log(Level level, String message, Throwable e, Map<String, Object> context);

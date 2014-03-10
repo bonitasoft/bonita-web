@@ -21,7 +21,24 @@ public class FormLogger implements IFormLogger {
 
     @Override
     public void log(Level level, String message) {
-        this.log(level, message, null);
+        logWithoutContext(level, message, null);
+    }
+
+    @Override
+    public void log(Level level, String message, Throwable e, Map<String, Object> pcontext) {
+        setContext(pcontext);
+        this.log(level, message, e);
+    }
+
+    @Override
+    public void log(Level level, String message, Map<String, Object> pcontext) {
+        setContext(pcontext);
+        this.log(level, message);
+
+    }
+
+    private void logWithoutContext(Level level, String message, Throwable e) {
+        this.log(level, message, e);
     }
 
     @Override
@@ -78,12 +95,6 @@ public class FormLogger implements IFormLogger {
         } else if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, message, e);
         }
-    }
-
-    @Override
-    public void log(Level level, String message, Throwable e, Map<String, Object> pcontext) {
-        setContext(pcontext);
-        this.log(level, message, e);
     }
 
     protected String getFormFieldStringRepresentation(String returnedStr, Map<String, FormFieldValue> submittedFields) {
