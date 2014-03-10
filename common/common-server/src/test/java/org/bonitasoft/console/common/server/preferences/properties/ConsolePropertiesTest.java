@@ -37,7 +37,7 @@ public class ConsolePropertiesTest {
 
     @Before
     public void setUp() {
-        properties = new ConsoleProperties(new File("src/test/resources/console-config.properties"));
+        properties = new ConsoleProperties(new File("target/bonita/console-config.properties"));
         setProperty(properties, "aProperty", "aValue");
     }
 
