@@ -40,6 +40,8 @@ public abstract class OAuthConsumer implements Serializable {
     protected OAuthService service;
 
     private static final long serialVersionUID = 1L;
+    
+    private static LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
 
     protected OAuthConsumer(final Class<? extends Api> viewType, final long tenantId, final String redirctURL) {
         this.viewType = viewType;
@@ -49,7 +51,7 @@ public abstract class OAuthConsumer implements Serializable {
     }
 
     protected void generateOAuthService() {
-        final LoginManagerProperties properties = LoginManagerPropertiesFactory.getProperties(this.tenantId);
+        final LoginManagerProperties properties = loginManagerPropertiesFactory.getProperties(this.tenantId);
         final String consumerKey = properties.getOAuthConsumerKey();
         final String consumerSecret = properties.getOAuthConsumerSecret();
         final String callbackURL = properties.getOAuthCallbackURL();

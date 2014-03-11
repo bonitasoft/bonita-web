@@ -11,13 +11,22 @@
 
 /** Loading */
 div#loading {
-	height: 100px;
-	left: 50%;
-	margin-left: -50px;
-	margin-top: -50px;
-	position: absolute;
-	top: 50%;
-	width: 100px;
+    display: table;
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: 100px;
+}
+
+div#loading #bottom-right-shadow {
+    display: table-row;
+    height: 100px;
+}
+
+div#loading #loading-content {
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
 }
 
 .bonita_form_entry {
