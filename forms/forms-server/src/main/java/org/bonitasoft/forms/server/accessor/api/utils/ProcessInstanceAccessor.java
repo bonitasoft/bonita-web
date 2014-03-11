@@ -35,10 +35,10 @@ public class ProcessInstanceAccessor {
 
     public ProcessInstanceAccessor(final ProcessInstanceAccessorEngineClient processInstanceAccessor, final long id) throws BPMEngineException {
         this.processInstanceAccessor = processInstanceAccessor;
-        fecthConfiguration(id);
+        fetchConfiguration(id);
     }
 
-    private void fecthConfiguration(final long id) throws BPMEngineException {
+    private void fetchConfiguration(final long id) throws BPMEngineException {
         this.id = id;
         try {
             getProcessInstance(id);

@@ -1,16 +1,16 @@
 /**
- * Copyright (C) 2009 BonitaSoft S.A.
- * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
+ * Copyright (C) 2014 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -393,7 +393,6 @@ public class FormPagesViewController {
             buildViewMode(pageHTMLPanel, formPage, hasAlreadyBeenDisplayed, isNextPage, onloadAttributeValue);
         }
         domUtils.overrideBrowserNativeInputs();
-        resizeFrame();
         domUtils.hideLoading();
 
     }
@@ -778,7 +777,7 @@ public class FormPagesViewController {
         protected boolean editMode;
 
         /**
-         * @param isEditMode
+         * @param editMode
          */
         public PreviousPageClickHandler(final boolean editMode) {
             this.editMode = editMode;
@@ -846,7 +845,7 @@ public class FormPagesViewController {
     /**
      * disable the buttons
      * 
-     * @param button
+     * @param pressedButton
      *            the button that was pressed
      */
     protected void disableButtons(final Widget pressedButton) {
@@ -958,7 +957,6 @@ public class FormPagesViewController {
                 submitForm(actionAfterValidation);
             }
         } else {
-            resizeFrame();
             enableButtons(true);
         }
     }
@@ -966,7 +964,7 @@ public class FormPagesViewController {
     /**
      * Validate the compliance of a list of widgets with their mandatory attributes
      * 
-     * @param formWidget
+     * @param formWidgets
      */
     protected void validateMandatoryFieldWidgets(final List<ReducedFormWidget> formWidgets) {
         for (final ReducedFormWidget formWidget : formWidgets) {
@@ -1152,7 +1150,6 @@ public class FormPagesViewController {
                     submitForm(actionAfterValidation);
                 }
             } else {
-                resizeFrame();
                 enableButtons(true);
             }
         }
@@ -1200,7 +1197,6 @@ public class FormPagesViewController {
                         Window.alert("An element with id " + validatorId + " is missing from the page template.");
                     }
                 }
-                resizeFrame();
                 enableButtons(true);
             } else {
                 submitForm(actionAfterValidation);
@@ -1313,23 +1309,6 @@ public class FormPagesViewController {
         }
     }
 
-    /**
-     * If the page is containned in a form, resize the frame to fit the page height
-     */
-    protected void resizeFrame() {
-
-        final Timer timer = new Timer() {
-
-            @Override
-            public void run() {
-                if (domUtils.isPageInFrame()) {
-                	domUtils.resizeFrame(DOMUtils.FORM_FRAME_ID);
-               }
-            }
-        };
-        timer.schedule(300);
-    }
-
     public void setMandatoryFieldSymbol(final String mandatoryFieldSymbol) {
 
         if (mandatoryFieldSymbol != null && mandatoryFieldSymbol.length() > 0) {
@@ -1346,7 +1325,12 @@ public class FormPagesViewController {
     }
 
     private void redirectToConfirmationPage() {
-        final String defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        String defaultConfirmationMessage = null;
+        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            defaultConfirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        } else {
+            defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        }
         formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, createConfirmationPageHandler(defaultConfirmationMessage));
     }
 

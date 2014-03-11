@@ -18,7 +18,18 @@ package org.bonitasoft.console.client.common.metadata;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.Map;
+
+import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.console.client.uib.SafeHtmlParser;
+import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
+import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeTypeAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
@@ -27,11 +38,23 @@ import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.PriorityAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.Session;
+import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.data.api.request.APIGetRequest;
+import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedJsId;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Vincent Elcrin
@@ -39,13 +62,16 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class MetadataTaskBuilder extends MetadataBuilder {
 
-    public static MetadataTaskBuilder taskQuickDetailsMetadatas() {
-        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addAppsName();
-        metadatas.addDueDate(FORMAT.DISPLAY_RELATIVE);
-        metadatas.addPriority();
-        return metadatas;
+    interface Templates extends SafeHtmlTemplates {
+
+        @SafeHtmlTemplates.Template(
+                "<a class='definition caseid' title='{0}'>" +
+                        "<label>{1}: </label><span>{2}</span>" +
+                        "</a>")
+        SafeHtml caseId(String title, String label, String id);
     }
+
+    private static Templates TEMPLATES = GWT.create(Templates.class);
 
     public void addAppsName() {
         add(createMetaAppsName());
@@ -55,8 +81,56 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaAppsVersion());
     }
 
-    public void addCaseId() {
-        add(createMetaCaseId());
+    public void AddSubAppsName() {
+    	add(createMetaSubAppsName());
+    }
+    
+    public void AddSubAppsVersion() {
+    	add(createMetaSubAppsVersion());
+    }
+
+
+	public void addCaseId(final IFlowNodeItem task, boolean admin) {
+        final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.caseId(
+                _("The id of the related case"),
+                _("Case"),
+                task.getCaseId().toString()))));
+        add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, new Html(anchor)));
+        setCaseHref(anchor, task, admin);
+    }
+
+    /**
+     * Is static to be accessible in HumanTaskMetadataView which is the same code but really shouldn't.
+     *
+     * @param anchor
+     * @param task
+     */
+    public static void setCaseHref(final AnchorElement anchor, final IFlowNodeItem task, final boolean admin) {
+        APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(task.getCaseId());
+        request.run(new APICallback() {
+
+            @Override
+            public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+                anchor.setHref("#?id=" + task.getCaseId() + "&_p=" + ((admin) ? CaseMoreDetailsAdminPage.TOKEN : CaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
+            }
+
+            @Override
+            protected void on404NotFound(String message) {
+                getArchivedCaseId(task, new APICallback() {
+                    @Override
+                    public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+                        ArchivedCaseItem archive =  JSonItemReader.parseItem(response, ArchivedCaseDefinition.get());
+                        anchor.setHref("#?id=" + archive.getId() + "&_p=" + ((admin) ? ArchivedCaseMoreDetailsAdminPage.TOKEN : ArchivedCaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
+                    }
+                });
+            }
+        });
+    }
+
+    public static void getArchivedCaseId(IFlowNodeItem task, APICallback callback) {
+        APISearchRequest request = new APISearchRequest(ArchivedCaseDefinition.get());
+        request.addFilter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, task.getCaseId().toString());
+        request.run(callback);
     }
 
     public void addPriority() {
@@ -101,17 +175,32 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
     private ItemDetailsMetadata createMetaAppsName() {
         return new ItemDetailsMetadata(
-                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
+                new DeployedAttributeReader(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
                 _("Apps"),
                 _("The app responsible for the creation of this task"));
     }
 
     private ItemDetailsMetadata createMetaAppsVersion() {
-        return new ItemDetailsMetadata(
-                new DeployedAttributeReader(IActivityItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
-                _("Apps version"),
-                _("Version of the app"));
+    	return new ItemDetailsMetadata(
+    			new DeployedAttributeReader(IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, ProcessItem.ATTRIBUTE_VERSION),
+    			_("Apps version"),
+    			_("Version of the app"));
     }
+
+    private ItemDetailsMetadata createMetaSubAppsName() {
+    	return new ItemDetailsMetadata(
+                new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_DISPLAY_NAME),
+                _("Subprocess"),
+                _("The sub process responsible for the creation of this task"));
+    }
+
+    private ItemDetailsMetadata createMetaSubAppsVersion() {
+    	return new ItemDetailsMetadata(
+    			new DeployedAttributeReader(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
+    			_("Subprocess version"),
+    			_("Version of the app"));
+    }
+
 
     private ItemDetailsMetadata createMetaCaseId() {
         return new ItemDetailsMetadata(IActivityItem.ATTRIBUTE_CASE_ID, _("Case"), _("The id of the related case"));
@@ -152,5 +241,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 _("Due date"),
                 _("The date when the task must be finished"));
     }
+
+
 
 }
