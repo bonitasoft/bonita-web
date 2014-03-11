@@ -26,6 +26,8 @@ import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserRead
 import org.bonitasoft.console.client.uib.SafeHtmlParser;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeTypeAttributeReader;
@@ -37,9 +39,10 @@ import org.bonitasoft.web.rest.model.bpm.flownode.PriorityAttributeReader;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.Session;
-import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIGetRequest;
+import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedJsId;
@@ -93,30 +96,41 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 _("Case"),
                 task.getCaseId().toString()))));
         add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, new Html(anchor)));
-        setCaseHref(anchor, task.getCaseId(), admin);
+        setCaseHref(anchor, task, admin);
     }
 
     /**
      * Is static to be accessible in HumanTaskMetadataView which is the same code but really shouldn't.
      *
      * @param anchor
-     * @param caseId
+     * @param task
      */
-    public static void setCaseHref(final AnchorElement anchor, final APIID caseId, final boolean admin) {
-        APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(caseId);
+    public static void setCaseHref(final AnchorElement anchor, final IFlowNodeItem task, final boolean admin) {
+        APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(task.getCaseId());
         request.run(new APICallback() {
 
             @Override
             public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-                anchor.setHref("#?id=" + caseId + "&_p=" + ((admin) ? CaseMoreDetailsAdminPage.TOKEN : CaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
+                anchor.setHref("#?id=" + task.getCaseId() + "&_p=" + ((admin) ? CaseMoreDetailsAdminPage.TOKEN : CaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
             }
 
             @Override
             protected void on404NotFound(String message) {
-
-                anchor.setHref("#?id=" + caseId + "&_p=" + ((admin) ? ArchivedCaseMoreDetailsAdminPage.TOKEN : ArchivedCaseMoreDetailsPage.TOKEN) +"&_pf=" + Session.getCurrentProfile());
+                getArchivedCaseId(task, new APICallback() {
+                    @Override
+                    public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+                        ArchivedCaseItem archive =  JSonItemReader.parseItem(response, ArchivedCaseDefinition.get());
+                        anchor.setHref("#?id=" + archive.getId() + "&_p=" + ((admin) ? ArchivedCaseMoreDetailsAdminPage.TOKEN : ArchivedCaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
+                    }
+                });
             }
         });
+    }
+
+    public static void getArchivedCaseId(IFlowNodeItem task, APICallback callback) {
+        APISearchRequest request = new APISearchRequest(ArchivedCaseDefinition.get());
+        request.addFilter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, task.getCaseId().toString());
+        request.run(callback);
     }
 
     public void addPriority() {
