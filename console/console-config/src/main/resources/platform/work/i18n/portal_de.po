@@ -1,4 +1,4 @@
-sgid ""
+msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-08 01:01+0100\n"
