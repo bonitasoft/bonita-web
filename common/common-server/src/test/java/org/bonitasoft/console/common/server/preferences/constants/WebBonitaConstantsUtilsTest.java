@@ -16,12 +16,13 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 import java.io.File;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,36 +36,24 @@ public class WebBonitaConstantsUtilsTest {
 
     private WebBonitaConstantsTenancyImpl constants;
 
-    String initialBonitaHome = "";
+    private WebBonitaConstantsUtils webBonitaConstantsUtils;
 
     @Before
     public void setUp() throws Exception {
-        initialBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
+        webBonitaConstantsUtils = spy(new WebBonitaConstantsUtils(1L));
+        doReturn(TEST_BONITA_HOME).when(webBonitaConstantsUtils).getBonitaHomePath();
+        
+        // Those tests depends on files in test resources!
         constants = new WebBonitaConstantsTenancyImpl(1L);
     }
 
-    @After
-    public void tearDown() {
-        if (initialBonitaHome != null) {
-            System.setProperty(WebBonitaConstants.BONITA_HOME, initialBonitaHome);
-        }
-    }
 
     @Test
     public void testWeCanGetFormsWorkFolder() throws Exception {
-        File expected = new File(TEST_BONITA_HOME + constants.getFormsWorkFolderPath());
+        File expected = new File(TEST_BONITA_HOME, constants.getFormsWorkFolderPath());
 
-        File folder = WebBonitaConstantsUtils.getInstance(1L).getFormsWorkFolder();
+        File folder = webBonitaConstantsUtils.getFormsWorkFolder();
 
-        assertTrue(folder.exists());
-        assertEquals(expected.getPath(), folder.getPath());
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void testWeGetAnExceptionWhenBonitaHomeIsntSet() throws Exception {
-        System.clearProperty(WebBonitaConstants.BONITA_HOME);
-
-        WebBonitaConstantsUtils.getInstance(1L).getFormsWorkFolder();
+        assertThat(folder.getPath(), equalTo(expected.getPath()));
     }
 }

@@ -16,22 +16,41 @@
  */
 package org.bonitasoft.console.common.server.login;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * @author Ruiheng.Fan
  * 
  */
 public class LoginManagerPropertiesFactory {
-
+    
+    /**
+     * Default name of the form definition file
+     */
+    protected static final String LOGIN_CONFIG_FILE_NAME = "loginManager-config.properties";
+    
     private static final Map<Long, LoginManagerProperties> map = new HashMap<Long, LoginManagerProperties>();
 
-    public static LoginManagerProperties getProperties(final long tenantId) {
+    public LoginManagerProperties getProperties(final long tenantId) {
         if (!map.containsKey(tenantId)) {
-            map.put(tenantId, new LoginManagerProperties(tenantId));
+            map.put(tenantId, createLoginManagerPropertiesForTenant(tenantId));
         }
         return map.get(tenantId);
+    }
+    
+    private LoginManagerProperties createLoginManagerPropertiesForTenant(long tenantId) {
+        WebBonitaConstantsUtils webConstantsUtils = null;
+        if (tenantId == -1L) {
+            webConstantsUtils = WebBonitaConstantsUtils.getInstance();
+        } else {
+            webConstantsUtils = WebBonitaConstantsUtils.getInstance(tenantId);
+        }
+        File propertiesFile = new File(webConstantsUtils.getConfFolder(), LOGIN_CONFIG_FILE_NAME);
+        return new LoginManagerProperties(propertiesFile);
     }
 
 }

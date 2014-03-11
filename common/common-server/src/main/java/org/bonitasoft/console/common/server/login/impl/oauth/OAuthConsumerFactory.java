@@ -27,7 +27,8 @@ import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 public class OAuthConsumerFactory {
 
     static Map<Long, OAuthConsumer> map = new HashMap<Long, OAuthConsumer>();
-
+    private static LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+    
     private enum OAUTH_CLASS_TYPE {
         LinkedIn
     }
@@ -41,7 +42,7 @@ public class OAuthConsumerFactory {
         if (!map.containsKey(tenantId)) {
             String providerName = null;
             try {
-                providerName = LoginManagerPropertiesFactory.getProperties(tenantId).getOAuthServiceProviderName();
+                providerName = loginManagerPropertiesFactory.getProperties(tenantId).getOAuthServiceProviderName();
                 if (providerName == null) {
                     providerName = OAUTH_CLASS_TYPE.LinkedIn.toString();
                     LOGGER.log(Level.INFO, "The OAuth service provider undefined. Using the default implementation : " + providerName);
