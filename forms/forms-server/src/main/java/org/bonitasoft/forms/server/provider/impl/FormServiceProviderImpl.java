@@ -759,15 +759,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             } catch (final BPMExpressionEvaluationException e) {
-                if (getLogger().isLoggable(Level.SEVERE)) {
-                    getLogger().log(Level.SEVERE, e.getMessage(), e, context);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, e.getMessage(), e, context);
                 }
                 throw new FormInitializationException(e.getMessage());
 
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (getLogger().isLoggable(Level.INFO)) {
-                    getLogger().log(Level.INFO, message, e, context);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, message, context);
                 }
                 throw new SessionTimeoutException(message);
 
@@ -811,8 +811,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             urlContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -938,8 +938,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1041,8 +1041,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         } catch (final Exception e) {
@@ -1348,8 +1348,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1421,8 +1421,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
 
@@ -1501,8 +1501,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
 
@@ -1540,8 +1540,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1595,8 +1595,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 throw new ProcessDefinitionNotFoundException(message);
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (getLogger().isLoggable(Level.INFO)) {
-                    getLogger().log(Level.INFO, message, e);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, message, e);
                 }
                 throw new SessionTimeoutException(message);
             }
@@ -1626,8 +1626,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 throw new ApplicationFormDefinitionNotFoundException(e);
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (getLogger().isLoggable(Level.INFO)) {
-                    getLogger().log(Level.INFO, message, e);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, message, e);
                 }
                 throw new SessionTimeoutException(message);
             }
@@ -1658,8 +1658,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             iApplicationDefAccessor = getApplicationFormDefinition(formId, formDefinitionDocument, applicationDeploymentDate, context);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1773,8 +1773,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new ApplicationFormDefinitionNotFoundException(message, e);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         } finally {
@@ -1867,8 +1867,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1898,8 +1898,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
