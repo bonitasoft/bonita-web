@@ -82,6 +82,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String reportsWorkFolderPath = null;
 
+    public static final String pagesWorkFolderName = "pages";
+
+    private String pagesWorkFolderPath = null;
+
     public static final String pdfWorkFolderName = "pdf";
 
     private String pdfWorkFolderPath = null;
@@ -165,6 +169,17 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
             reportsWorkFolderPath = getWorkFolderPath() + reportsWorkFolderName + File.separator;
         }
         return reportsWorkFolderPath;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPagesWorkFolderPath() {
+        if (pagesWorkFolderPath == null) {
+            pagesWorkFolderPath = getWorkFolderPath() + pagesWorkFolderName + File.separator;
+        }
+        return pagesWorkFolderPath;
     }
 
     /**

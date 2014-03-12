@@ -128,6 +128,15 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
+     * Get the folder of Tenant pages files
+     * 
+     * @throws ConsoleException
+     */
+    public File getPagesFolder() {
+        return getFolderFromBonitaHome(webBonitaConstants.getPagesWorkFolderPath());
+    }
+
+    /**
      * Get the profile folder to store the report dashboard configuration.
      * 
      * @throws ConsoleException

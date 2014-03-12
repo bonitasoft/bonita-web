@@ -163,6 +163,13 @@ public interface WebBonitaConstants {
     public String getReportsWorkFolderPath();
 
     /**
+     * Get pagesConsoleWorkFolder Path
+     * 
+     * @return path
+     */
+    public String getPagesWorkFolderPath();
+
+    /**
      * Get groupsConsoleWorkFolder Path
      * 
      * @return path
