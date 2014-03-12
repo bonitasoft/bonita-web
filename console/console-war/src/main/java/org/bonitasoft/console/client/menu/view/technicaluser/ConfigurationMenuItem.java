@@ -27,9 +27,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
  * @author Colin PUY
  *
  */
-public class PortalMenuItem extends MenuFolder {
+public class ConfigurationMenuItem extends MenuFolder {
 
-    public PortalMenuItem() {
+    public ConfigurationMenuItem() {
         super(_("Configuration"));
         addMenuItem(new MenuLink(_("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }

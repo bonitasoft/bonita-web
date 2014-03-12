@@ -16,7 +16,7 @@ package org.bonitasoft.console.client.menu.view;
 
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuItem;
-import org.bonitasoft.console.client.menu.view.technicaluser.PortalMenuItem;
+import org.bonitasoft.console.client.menu.view.technicaluser.ConfigurationMenuItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
@@ -41,7 +41,7 @@ public class TechnicalUserMenuView extends RawView {
     }
 
     protected Menu buildMenu() {
-        return new Menu(new OrganizationMenuItem(), new PortalMenuItem());
+        return new Menu(new OrganizationMenuItem(), new ConfigurationMenuItem());
     }
 
     @Override
