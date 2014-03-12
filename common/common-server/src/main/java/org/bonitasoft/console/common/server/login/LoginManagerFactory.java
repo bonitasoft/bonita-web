@@ -26,12 +26,13 @@ import java.util.Map;
 public class LoginManagerFactory {
 
     static Map<Long, LoginManager> map = new HashMap<Long, LoginManager>();
-
+    private static LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+    
     public static LoginManager getLoginManager(final long tenantId) throws LoginManagerNotFoundException {
         String loginManagerName = null;
         if (!map.containsKey(tenantId)) {
             try {
-                loginManagerName = LoginManagerPropertiesFactory.getProperties(tenantId).getLoginManagerImpl();
+                loginManagerName = loginManagerPropertiesFactory.getProperties(tenantId).getLoginManagerImpl();
                 final LoginManager loginManager = (LoginManager) Class.forName(loginManagerName).newInstance();
                 map.put(tenantId, loginManager);
             } catch (final Exception e) {

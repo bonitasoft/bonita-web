@@ -28,12 +28,12 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItem;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
-import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
+import org.bonitasoft.web.toolkit.client.ui.component.core.Node;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 /**
@@ -70,7 +70,7 @@ public abstract class ItemQuickDetailsPage<T extends IItem> extends PageOnItem<T
 
         final LinkedList<ItemDetailsMetadata> metadatas = this.defineMetadatas(item);
         if (metadatas != null && metadatas.size() > 0) {
-            final ContainerStyled<Definition> definitions = new ContainerStyled<Definition>(new JsId("definitions"));
+            final ContainerStyled<Node> definitions = new ContainerStyled<Node>(new JsId("definitions"));
             for (final ItemDetailsMetadata metadata : metadatas) {
                 addMetadata(item, definitions, metadata);
             }
@@ -93,22 +93,14 @@ public abstract class ItemQuickDetailsPage<T extends IItem> extends PageOnItem<T
         metadatasSection.append(new Title(getTitle().getText(), getTitle().getComponents()));
     }
 
-    private void addMetadata(final T item, final ContainerStyled<Definition> definitions, final ItemDetailsMetadata metadata) {
+    private void addMetadata(final T item, final ContainerStyled<Node> definitions, final ItemDetailsMetadata metadata) {
         final AbstractAttributeReader attributeReader = metadata.getAttributeReader();
         final String value = attributeReader.read(item);
         // the call below must be done after the call to the read method since the CSS class can be determined while reading the attribute
         final String cssClass = createMetadataCssClass(attributeReader, metadata);
         if (!StringUtil.isBlank(value)) {
-            definitions.append(createDefinition(metadata, cssClass, value));
+            definitions.append(metadata.createDefinition(cssClass, value));
         }
-    }
-
-    private Definition createDefinition(final ItemDetailsMetadata metadata, final String cssClass, final String value) {
-        final Definition definition = new Definition(metadata.getLabel() + ": ", metadata.getTooltip(), value);
-        if (cssClass != null) {
-            definition.addClass(cssClass);
-        }
-        return definition;
     }
 
     /**

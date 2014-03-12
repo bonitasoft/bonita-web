@@ -27,8 +27,7 @@ public class WebBonitaConstantsUtils {
 
     protected WebBonitaConstants webBonitaConstants;
 
-    public synchronized static WebBonitaConstantsUtils getInstance(
-            final long tenantId) {
+    public synchronized static WebBonitaConstantsUtils getInstance(final long tenantId) {
         WebBonitaConstantsUtils instance = tenantConstantsUtils.get(tenantId);
         if (instance == null) {
             instance = new WebBonitaConstantsUtils(tenantId);
@@ -46,11 +45,11 @@ public class WebBonitaConstantsUtils {
         return instance;
     }
 
-    private WebBonitaConstantsUtils(final long tenantId) {
+    protected WebBonitaConstantsUtils(final long tenantId) {
         webBonitaConstants = new WebBonitaConstantsTenancyImpl(tenantId);
     }
 
-    private WebBonitaConstantsUtils() {
+    protected WebBonitaConstantsUtils() {
         webBonitaConstants = new WebBonitaConstantsImpl();
     }
 
@@ -61,8 +60,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getTempFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getTempFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getTempFolderPath());
     }
 
     /**
@@ -71,8 +69,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConfFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getConfFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getConfFolderPath());
     }
 
     /**
@@ -81,8 +78,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getPortalThemeFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getThemePortalFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getThemePortalFolderPath());
     }
 
     /**
@@ -91,8 +87,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConsoleDefaultIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getPortalDefaultIconsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalDefaultIconsFolderPath());
     }
 
     /**
@@ -101,8 +96,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConsoleProcessIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getPortalProcessIconsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalProcessIconsFolderPath());
     }
 
     /**
@@ -111,8 +105,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConsoleUserIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getPortalUserIconsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalUserIconsFolderPath());
     }
 
     /**
@@ -122,8 +115,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConsoleRoleIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getPortalRoleIconsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalRoleIconsFolderPath());
     }
 
     /**
@@ -132,8 +124,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getReportFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getReportsWorkFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getReportsWorkFolderPath());
     }
 
     /**
@@ -142,8 +133,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getProfileWorkFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getProfilesWorkFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getProfilesWorkFolderPath());
     }
 
     /**
@@ -152,8 +142,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getFormsWorkFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getFormsWorkFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getFormsWorkFolderPath());
     }
 
     /**
@@ -162,8 +151,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getTenantsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getTenantsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getTenantsFolderPath());
     }
 
     /**
@@ -172,8 +160,7 @@ public class WebBonitaConstantsUtils {
      * @return
      */
     public File getTenantTemplateFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getTenantTemplateFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getTenantTemplateFolderPath());
     }
 
     /**
@@ -183,8 +170,7 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConsoleGroupIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getPortalGroupIconsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalGroupIconsFolderPath());
     }
 
     /**
@@ -194,16 +180,14 @@ public class WebBonitaConstantsUtils {
      * @throws ConsoleException
      */
     public File getConsoleProfileIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants
-                .getPortalProfilesIconsFolderPath());
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalProfilesIconsFolderPath());
     }
 
-    private String getBonitaHomePath() {
-        final String bonitaHomePath = System
-                .getProperty(WebBonitaConstants.BONITA_HOME);
+    // protected for test stubbing
+    protected String getBonitaHomePath() {
+        final String bonitaHomePath = System.getProperty(WebBonitaConstants.BONITA_HOME);
         if (bonitaHomePath == null) {
-            throw new RuntimeException(WebBonitaConstants.BONITA_HOME
-                    + " system property not set!");
+            throw new RuntimeException(WebBonitaConstants.BONITA_HOME + " system property not set!");
         }
         return bonitaHomePath;
     }
