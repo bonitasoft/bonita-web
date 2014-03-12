@@ -32,7 +32,6 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
@@ -168,7 +167,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -253,7 +252,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -364,7 +363,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -442,7 +441,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 }
             }
             return nonCompliantValidators;
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -480,7 +479,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 reducedValidators.add(formValidator.getReducedFormValidator());
             }
             return reducedValidators;
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -551,7 +550,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -588,7 +587,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -619,7 +618,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -722,7 +721,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -831,7 +830,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, e.getMessage(), e);
             }
             throw new FileTooBigException(e.getMessage(), e.getFileName(), e.getMaxSize());
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -864,7 +863,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
@@ -899,11 +898,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
-        } catch (final InvalidSessionException e){
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.INFO, "Invalid Session");
-            }
-            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting any todolist form", e);
@@ -1020,13 +1014,11 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
 
         } catch (final FormNotFoundException e) {
             throw new FormNotFoundException(e);
-        } catch (final InvalidSessionException e){
+        } catch (final SessionTimeoutException e){
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
             throw new SessionTimeoutException();
-        } catch (final SessionTimeoutException e) {
-            throw new SessionTimeoutException(e);
         }
         return applicationConfig;
     }
