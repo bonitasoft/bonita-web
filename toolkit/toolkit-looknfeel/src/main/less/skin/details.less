@@ -1,5 +1,18 @@
-.details_panel{
-	.itemquickdetailspage{
+.metadatas {
+  a {
+    color: @detailsPanel-link-color;
+  }
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  a label {
+    .pointerAsLink();
+  }
+}
+
+.details_panel {
+	.itemquickdetailspage {
 		background: @detailsPanel-background;
 		padding: @detailsPanel-padding;
 		height: 100%;
@@ -15,6 +28,16 @@
 			a + a, a + css3-container + a{ margin-left: @button-marginBetween; }
 		}
 		.metadatas{
+            a {
+              color:#035;
+            }
+            a:hover {
+              cursor: pointer;
+              text-decoration: underline;
+            }
+            a label {
+              .pointerAsLink();
+            }
 			H1{
 				.fontSize(@detailsPanel-metadatas-title-fontSize);
 				overflow: @detailsPanel-metadatas-title-overflow;
@@ -44,7 +67,7 @@
 					label{
 						padding: @detailsPanel-definition-padding;
 					}
-					&.displayname, &.version {
+					&.displayname, &.version, &.parent-task {
 						label{
 							.bgLeft(@detailsPanel-definition-processBg);
 						}

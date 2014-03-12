@@ -61,7 +61,8 @@ public class AutoLoginRule implements AuthorizationRule {
         }
     }
 
-    private SecurityProperties getSecurityProperties(final HttpServletRequestAccessor httpRequest, final long tenantId) {
+    // protected for testing
+    protected SecurityProperties getSecurityProperties(final HttpServletRequestAccessor httpRequest, final long tenantId) {
         return SecurityProperties.getInstance(tenantId,
                 new ProcessIdentifier(httpRequest.getAutoLoginScope()));
     }

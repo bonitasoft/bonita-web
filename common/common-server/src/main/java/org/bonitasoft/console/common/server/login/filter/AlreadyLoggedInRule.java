@@ -65,7 +65,8 @@ public class AlreadyLoggedInRule implements AuthorizationRule {
         return LocaleUtils.getUserLocale(request);
     }
 
-    private boolean useCredentialsTransmission(final APISession apiSession) {
+    // protected for test stubbing
+    protected boolean useCredentialsTransmission(final APISession apiSession) {
         return PropertiesFactory.getSecurityProperties(apiSession.getTenantId())
                 .useCredentialsTransmission();
     }

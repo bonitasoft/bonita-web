@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
-import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -27,11 +27,14 @@ import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.Page;
-import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
+import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
+import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
+import org.bonitasoft.web.toolkit.client.ui.html.HTML;
 
 
 /**
@@ -56,7 +59,6 @@ public class DisplayCaseFormPage extends Page {
 
     // legacy, needed by ConsoleFactoryClient
     public DisplayCaseFormPage() {
-        this.addClass("moredetails");
     }
 
     public DisplayCaseFormPage(final CaseItem item) {
@@ -76,7 +78,12 @@ public class DisplayCaseFormPage extends Page {
 
     @Override
     public void buildView() {
+        FormsView view = new FormsView(getCaseOverviewUrl());
+        this.addBody(new UiComponent(view));
+        view.addTool(new ButtonBack());
+    }
 
+    private String getCaseOverviewUrl() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
         // TODO remove this once the same method is used in the toolkit and in the studio to URL encode/decode
         final String decodedProcessName = URL.decodeQueryString(processName);
@@ -87,10 +94,6 @@ public class DisplayCaseFormPage extends Page {
         }
         final String locale = AbstractI18n.getDefaultLocale().toString();
 
-        String userId = this.getParameter("userId");
-        if (userId == null) {
-            userId = Session.getUserId().toString();
-        }
         this.setTitle(_("Display a case form of app %app_name%", new Arg("app_name", decodedProcessName)));
 
         final StringBuilder frameURL = new StringBuilder();
@@ -110,9 +113,7 @@ public class DisplayCaseFormPage extends Page {
                 .append(processVersion)
                 .append("$recap&mode=form&instance=")
                 .append(caseId).append("&recap=true");
-
-        this.addToolbarLink(new ButtonBack());
-        this.addBody(new IFrame(DOMUtils.FORM_FRAME_ID, frameURL.toString(), "100%", "700px"));
+        return frameURL.toString();
     }
 
     public static final Map<String, String> getItemParams(final CaseItem item) {
@@ -129,5 +130,16 @@ public class DisplayCaseFormPage extends Page {
         processParams.put("token", TOKEN);
         return processParams;
     }
+
+    @Override
+    protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
+        return null;
+    }
+
+    @Override
+    protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
+        return null;
+    }
+
 
 }

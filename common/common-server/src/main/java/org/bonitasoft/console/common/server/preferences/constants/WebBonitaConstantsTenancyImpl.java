@@ -190,6 +190,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
         if (defaultIconsWorkFolderPath == null) {
             defaultIconsWorkFolderPath = getIconsWorkFolderPath() + defaultIconsWorkFolderName + File.separator;
         }
+        // FIXME: must return defaultIconsWorkFolderPath not iconsWorkFolderPath
         return iconsWorkFolderPath;
     }
 

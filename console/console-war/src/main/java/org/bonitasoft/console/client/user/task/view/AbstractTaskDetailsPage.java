@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.ViewController.showPopup;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public abstract class AbstractTaskDetailsPage<T extends IHumanTaskItem> extends 
     protected List<String> defineDeploys() {
         ArrayList<String> deploys = new ArrayList<String>();
         deploys.add(TaskItem.ATTRIBUTE_PROCESS_ID);
-        deploys.add(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID);
+        deploys.add(TaskItem.ATTRIBUTE_ROOT_CONTAINER_ID);
         return deploys;
     }
 

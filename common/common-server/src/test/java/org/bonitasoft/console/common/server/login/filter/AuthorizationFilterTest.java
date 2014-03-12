@@ -16,15 +16,13 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.localization.Locator;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,9 +30,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
+import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
+import org.bonitasoft.console.common.server.login.localization.Locator;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
+import org.mockito.Spy;
 
 /**
  * Created by Vincent Elcrin
@@ -65,6 +70,7 @@ public class AuthorizationFilterTest {
     public void setUp() throws Exception {
         initMocks(this);
         doReturn(httpSession).when(request).getHttpSession();
+        doReturn(new StandardLoginManagerImpl()).when(authorizationFilter).getLoginManager(anyLong());
     }
 
     @Test
