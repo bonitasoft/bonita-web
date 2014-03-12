@@ -36,7 +36,6 @@ public class PageLister {
         pages.add(new BonitaPageItem("profilelisting", _("user privilege settings"), "", _("Profiles")));
         pages.add(new BonitaPageItem("reportlistingadminext", _("Monitoring"), "", _("Analytics")));
         pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), "", _("Look and Feel")));
-        pages.add(new BonitaPageItem("businessdatamodelimport", _("Manage Business Data Model"), "", _("Business Data Model")));
     }
 
     public List<BonitaPageItem> getPages() {
