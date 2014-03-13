@@ -22,16 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.FormsView;
-import org.bonitasoft.console.client.user.task.model.TaskAPI;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
-import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -41,9 +38,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
-import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
-import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
@@ -53,6 +47,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Séverin Moussel
@@ -103,11 +98,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     public void buildView(final HumanTaskItem task) {
         if (task.getAssignedId() == null) {
             addBody(createFormIframe(task, true));
-        } else if (!task.getAssignedId().equals(this.getUserId())) {
+        } else if (!task.getAssignedId().equals(getUserId())) {
             ViewController.showView(TasksListingPage.TOKEN);
             throw new APIException(_("You can't perform this task, it has already been assigned to someone else."));
         } else {
-            this.addBody(this.createFormIframe(task, false));
+            addBody(createFormIframe(task, false));
         }
     }
 
@@ -135,15 +130,15 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
 
         frameURL.append("#form=")
-                .append(URL.decodeQueryString(item.getProcess().getName())).append(this.UUID_SEPERATOR)
-                .append(item.getProcess().getVersion()).append(this.UUID_SEPERATOR)
-                .append(URL.decodeQueryString(item.getName()))
+                .append(URL.encodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
+                .append(URL.encodeQueryString(item.getProcess().getVersion())).append(UUID_SEPERATOR)
+                .append(URL.encodeQueryString(item.getName()))
 
                 .append("$entry")
 
                 .append("&task=").append(item.getId())
                 .append("&mode=form");
-        
+
         if (assignTask) {
             frameURL.append("&assignTask=true");
         }
@@ -153,7 +148,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
     /**
      * We don't need any header and it screw up the page's size.
-     *
+     * 
      * @param header
      * @return
      */
