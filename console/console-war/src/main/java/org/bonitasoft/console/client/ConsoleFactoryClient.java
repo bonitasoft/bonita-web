@@ -285,7 +285,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         }
     }
 
-    private boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
+    protected boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
        
         String sessionId = new String(Session.getParameter("session_id"));
         
