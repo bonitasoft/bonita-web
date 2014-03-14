@@ -21,7 +21,7 @@ import com.google.gwt.http.client.URL;
 
 import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
-import org.bonitasoft.console.client.user.cases.view.FormsView;
+import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -104,7 +104,7 @@ public class StartProcessFormPage extends Page {
                 .append("&autoInstantiate=false&mode=form&user=")
                 .append(userId);
 
-        this.addBody(new UiComponent(new FormsView(frameURL.toString())));
+        this.addBody(new UiComponent(new IFrameView(frameURL.toString())));
     }
 
     @Override

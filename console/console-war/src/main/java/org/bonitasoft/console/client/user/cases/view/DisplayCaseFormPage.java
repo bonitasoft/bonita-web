@@ -78,7 +78,7 @@ public class DisplayCaseFormPage extends Page {
 
     @Override
     public void buildView() {
-        FormsView view = new FormsView(getCaseOverviewUrl());
+        IFrameView view = new IFrameView(getCaseOverviewUrl());
         this.addBody(new UiComponent(view));
         view.addTool(new ButtonBack());
     }
