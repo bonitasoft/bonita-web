@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-13 05:01+0100\n"
-"PO-Revision-Date: 2014-03-13 01:32-0400\n"
+"POT-Creation-Date: 2014-03-14 05:03+0100\n"
+"PO-Revision-Date: 2014-03-14 01:33-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -222,15 +222,15 @@ msgstr "Arquivo Bonita"
 msgid "Jasper Archive"
 msgstr "Arquivo Jasper"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:91
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:152
 msgid "Unsupported file."
 msgstr "Arquivo não suportado."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:98
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:159
 msgid "Click here to choose your file."
 msgstr "Clique aqui para escolher o arquivo."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:100
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:161
 msgid "Click here to choose your file. "
 msgstr "Clique aqui para escolher o arquivo. "
 
