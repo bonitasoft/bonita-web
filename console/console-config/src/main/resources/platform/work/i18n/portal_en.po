@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-11 20:02+0100\n"
-"PO-Revision-Date: 2014-03-11 16:31-0400\n"
+"POT-Creation-Date: 2014-03-13 14:52+0100\n"
+"PO-Revision-Date: 2014-03-13 18:30-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1228,7 +1228,7 @@ msgstr "Edit a role"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:65
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:111
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:116
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:44
 msgid "Users"
@@ -1251,7 +1251,7 @@ msgstr "Update this role"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:64
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:104
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:48
 msgid "Roles"
@@ -1346,7 +1346,7 @@ msgid "Enter the description of this group"
 msgstr "Enter the description of this group"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:61
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:46
 msgid "Groups"
@@ -1433,7 +1433,7 @@ msgid "Save this group changes"
 msgstr "Save this group changes"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:58
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:40
 msgid "Import / Export"
 msgstr "Import / Export"
 
@@ -1755,7 +1755,7 @@ msgstr "Enter the username for this user"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
-#: console/console-war/src/main/webapp/login.jsp:121
+#: console/console-war/src/main/webapp/login.jsp:126
 msgid "Password"
 msgstr "Password"
 
@@ -2424,25 +2424,25 @@ msgstr "Profiles"
 msgid "Show all profiles of portal"
 msgstr "Show all profiles of portal"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:35
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:42
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:50
 msgid "Organization"
 msgstr "Organization"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
 msgid "Show the user list"
 msgstr "Show the user list"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:37
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
 msgid "Show the group list"
 msgstr "Show the group list"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
 msgid "Show the role list"
 msgstr "Show the role list"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:40
 msgid "Import or export data"
 msgstr "Import or export data"
 
@@ -2764,7 +2764,7 @@ msgid "Reports"
 msgstr "Reports"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
-#: console/console-war/src/main/webapp/login.jsp:113
+#: console/console-war/src/main/webapp/login.jsp:118
 msgid "User"
 msgstr "User"
 
@@ -3331,31 +3331,35 @@ msgstr "Change to selected language"
 msgid "message"
 msgstr "message"
 
-#: console/console-war/src/main/webapp/login.jsp:64
+#: console/console-war/src/main/webapp/login.jsp:65
 msgid "The server is not available"
 msgstr "The server is not available"
 
-#: console/console-war/src/main/webapp/login.jsp:64
+#: console/console-war/src/main/webapp/login.jsp:65
 msgid "Please, contact your administrator."
 msgstr "Please, contact your administrator."
 
-#: console/console-war/src/main/webapp/login.jsp:69
+#: console/console-war/src/main/webapp/login.jsp:70
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "Login failed. No profile has been set up for this user. Contact your administrator."
 
-#: console/console-war/src/main/webapp/login.jsp:73
+#: console/console-war/src/main/webapp/login.jsp:74
+msgid "This service is offline for maintenance. Please try later."
+msgstr "This service is offline for maintenance. Please try later."
+
+#: console/console-war/src/main/webapp/login.jsp:78
 msgid "Unable to log in. Please check your username and password."
 msgstr "Unable to log in. Please check your username and password."
 
-#: console/console-war/src/main/webapp/login.jsp:98
+#: console/console-war/src/main/webapp/login.jsp:103
 msgid "Welcome to"
 msgstr "Welcome to"
 
-#: console/console-war/src/main/webapp/login.jsp:98
+#: console/console-war/src/main/webapp/login.jsp:103
 msgid "Bonita BPM Portal"
 msgstr "Bonita BPM Portal"
 
-#: console/console-war/src/main/webapp/login.jsp:107
+#: console/console-war/src/main/webapp/login.jsp:112
 msgid "Login form"
 msgstr "Login form"
 
