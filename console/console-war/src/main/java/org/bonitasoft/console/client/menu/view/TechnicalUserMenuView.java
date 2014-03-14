@@ -21,7 +21,6 @@ import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuIte
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
-import org.bonitasoft.web.toolkit.client.ui.component.menu.Menu;
 
 /**
  * @author Julien Mege
@@ -45,7 +44,7 @@ public class TechnicalUserMenuView extends NavigationMenuView {
         }
     }
 
-    protected Menu buildMenu() {
-        return new Menu(new OrganizationMenuItem(), new ConfigurationMenuItem());
+    protected void buildMenu() {
+        navigationMenu.addMenuItem(new OrganizationMenuItem(), new ConfigurationMenuItem());
     }
 }
