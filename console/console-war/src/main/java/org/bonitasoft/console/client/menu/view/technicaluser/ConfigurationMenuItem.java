@@ -19,9 +19,9 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
-
 
 /**
  * @author Colin PUY
@@ -30,8 +30,8 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 public class ConfigurationMenuItem extends MenuFolder {
 
     public ConfigurationMenuItem() {
-        super(_("Configuration"));
-        addMenuItem(new MenuLink(_("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
+        super(new JsId("Configuration"), _("Configuration"));
+        addMenuItem(new MenuLink(new JsId(ProfileListingPage.TOKEN), _("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
 }
