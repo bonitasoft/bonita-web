@@ -17,6 +17,8 @@ package org.bonitasoft.web.rest.server.api.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.common.server.api.token.APIToken;
+import org.bonitasoft.console.common.server.api.token.MappingTokenUserSession;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -47,15 +49,23 @@ public class APISession extends ConsoleAPI<SessionItem> {
     public SessionItem get(final APIID unusedId) {
         final org.bonitasoft.engine.session.APISession apiSession = getEngineSession();
         final SessionItem session = new SessionItem();
-
+        
         if (apiSession != null) {
             session.setAttribute(SessionItem.ATTRIBUTE_SESSIONID, String.valueOf(apiSession.getId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
+            
+            // Set token
+            if (MappingTokenUserSession.getToken(String.valueOf(apiSession.getId())) == null) {
+                final APIToken apiToken = new APIToken();
+                MappingTokenUserSession.addSessionIdAndToken(String.valueOf(apiSession.getId()), apiToken);
+                session.setAttribute("token_api", apiToken.getToken());
+            } else {
+                session.setAttribute("token_api", MappingTokenUserSession.getToken(String.valueOf(apiSession.getId())).getToken());
+            }
         }
-
         return session;
     }
 

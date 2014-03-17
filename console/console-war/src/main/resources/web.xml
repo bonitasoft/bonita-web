@@ -16,8 +16,8 @@
 		<filter-class>org.bonitasoft.console.common.server.login.filter.FilterManager</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>i18ntranslation</param-value>
-		</init-param>		
+			<param-value>i18ntranslation,session</param-value>
+		</init-param>
 	</filter>
 	<!-- SSO filter -->
 	<filter>

@@ -323,6 +323,9 @@ public class ClientApplicationURL {
                     if (name.equals("conf")) {
                         AvailableTokens.tokens.addAll(((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
                         // Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
+                    } else if (name.equals("token_api")) {
+                        String val = session.getAttributeValue("session_id") + "/" + session.getAttributeValue(name); 
+                        UserSessionVariables.addUserVariable(name, val);
                     } else {
                         Session.addParameter(name, session.getAttributeValue(name));
                     }

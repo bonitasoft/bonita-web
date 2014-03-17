@@ -27,6 +27,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.api.token.APIToken;
+import org.bonitasoft.console.common.server.api.token.MappingTokenUserSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.PlatformSession;
@@ -66,7 +68,7 @@ public class FilterManager implements Filter {
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final String requestURL = httpRequest.getRequestURI();
-
+        
         if (matchURL(requestURL, excludePatterns)) {
             chain.doFilter(request, response);
         } else {
@@ -74,6 +76,31 @@ public class FilterManager implements Filter {
         }
     }
 
+    private boolean isValidToken(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) {
+        String headerFromRequest = httpRequest.getHeader("X-API-Token");
+        // Header in request
+        if (headerFromRequest != null) {
+            String sessionId = headerFromRequest.split("/")[0];
+            String apiTokenReq = headerFromRequest.split("/")[1];
+            APIToken apiToken = MappingTokenUserSession.getToken(sessionId);
+            // Token created on server side
+            if (apiToken != null) {
+                // Check that tokens are the same
+                if (!apiToken.getToken().equals(apiTokenReq)) {
+                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return false;
+                }
+            } else {
+                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return false;
+            }
+        } else {
+            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * (non-Javadoc)
      * 
@@ -81,27 +108,28 @@ public class FilterManager implements Filter {
      */
     @Override
     public void destroy() {
-
     }
 
     private void pageRedirect(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         try {
-            if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
-                final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
-                if (platformSession != null) {
-                    chain.doFilter(request, response);
+            if (isValidToken(httpRequest, httpResponse)) {
+                if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
+                    final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
+                    if (platformSession != null) {
+                        chain.doFilter(request, response);
+                    } else {
+                        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    }
                 } else {
-                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                }
-            } else {
-                final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
-                if (apiSession != null) {
-                    chain.doFilter(request, response);
-                } else {
-                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                }
+                    final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+                    if (apiSession != null) {
+                        chain.doFilter(request, response);
+                    } else {
+                        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    }
+                }                
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {

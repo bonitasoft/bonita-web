@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
         boolean redirectAfterLogin = true;
         final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
-        if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
+        if (redirectAfterLoginStr != null && Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
             redirectAfterLogin = false;
         }
         final long tenantId = getTenantId(request, response);

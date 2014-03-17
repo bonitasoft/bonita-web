@@ -18,6 +18,7 @@ package org.bonitasoft.web.toolkit.client.data.api.request;
 
 import java.util.Map;
 
+import org.bonitasoft.web.toolkit.client.UserSessionVariables;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 
 import com.google.gwt.http.client.RequestBuilder;
@@ -77,6 +78,9 @@ abstract public class QueuableRequest {
         this.request.setCallback(localCallback);
 
         try {
+            if (UserSessionVariables.getUserVariable("token_api") != null) {
+                this.request.setHeader("X-API-Token", UserSessionVariables.getUserVariable("token_api"));    
+            }
             this.request.send();
         } catch (final RequestException e) {
             localCallback.onError(e.getMessage(), null);
