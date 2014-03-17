@@ -19,12 +19,22 @@ package org.bonitasoft.forms.client.view.widget;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
+import org.bonitasoft.forms.client.model.ReducedFormSubtitle.SubTitlePosition;
+import org.bonitasoft.forms.client.model.ReducedFormWidget;
+import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
+import org.bonitasoft.forms.client.model.WidgetType;
+import org.bonitasoft.forms.client.view.SupportedFieldTypes;
+import org.bonitasoft.forms.client.view.common.URLUtils;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -66,14 +76,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 import com.google.gwt.user.datepicker.client.DateBox.Format;
-import org.bonitasoft.forms.client.model.FormFieldValue;
-import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
-import org.bonitasoft.forms.client.model.ReducedFormSubtitle.SubTitlePosition;
-import org.bonitasoft.forms.client.model.ReducedFormWidget;
-import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
-import org.bonitasoft.forms.client.model.WidgetType;
-import org.bonitasoft.forms.client.view.SupportedFieldTypes;
-import org.bonitasoft.forms.client.view.common.URLUtils;
 
 /**
  * Generic form flow field widget
@@ -182,7 +184,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * Map of suggestions for the suggestion box
      */
-    protected Map<String, String> suggestionsMap;
+    protected TreeMap<String, String> suggestionsMap;
 
     /**
      * Constructor
@@ -483,10 +485,31 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
         if (popupStyle != null && popupStyle.length() > 0) {
             suggestionDisplay.setPopupStyleName(popupStyle);
         }
-        suggestionsMap = new HashMap<String, String>();
+        suggestionsMap = new TreeMap<String, String>();
         final MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+
+        // this fix the reordering of numbers
+        Comparator<String> numberComparator = new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+
+                if (stringIsDouble(o1) && stringIsDouble(o2)) {
+                    return Double.valueOf(o1).compareTo(Double.valueOf(o2));
+                }
+                return o1.compareTo(o2);
+            }
+
+            private boolean stringIsDouble(String str) {
+                return str.matches("^(([0-9]*)|(([0-9]*)[\\.,\\,]([0-9]*)))$");
+            }
+
+        };
+        oracle.setComparator(numberComparator);
+
         String labelValue = null;
         final String fieldValueStr = getStringValue(fieldValue);
+        widgetData.getAvailableValues();
         for (final ReducedFormFieldAvailableValue availableValue : widgetData.getAvailableValues()) {
             final String label = availableValue.getLabel();
             final String value = availableValue.getValue();
@@ -701,7 +724,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create the widget
-     *
+     * 
      * @param widgetData
      *            the widget data object
      */
