@@ -5,6 +5,27 @@
 	id="console-war" version="2.5">
 	<display-name>Bonita</display-name>
 
+	<!--  Error pages -->
+    <error-page>
+		<error-code>500</error-code>
+		<location>/error-pages/500.jsp</location>
+    </error-page>
+
+    <error-page>
+		<error-code>404</error-code>
+		<location>/error-pages/404.jsp</location>
+    </error-page>
+
+    <!-- No Cache Filter -->
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.NoCacheFilter</filter-class>
+    </filter>    
+    <!-- Security Filter -->
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.SecurityFilter</filter-class>
+    </filter>
 	<!-- Bonita home Filter -->
 	<filter>
 		<filter-name>BonitaHomeFilter</filter-name>
@@ -85,6 +106,20 @@
 		<filter-class>org.bonitasoft.forms.server.filter.BPMURLSupportFilter</filter-class>
 	</filter>
 
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/portal/homepage</url-pattern>
+        <url-pattern>/portal/formsService</url-pattern>
+        <url-pattern>/portal/formsDocumentDownload</url-pattern>
+        <url-pattern>/portal/runreport</url-pattern>
+        <url-pattern>/portal/BonitaConsole.html</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/portal/homepage</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
 	<filter-mapping>
 		<filter-name>BonitaHomeFilter</filter-name>
 		<url-pattern>/login.jsp</url-pattern>
