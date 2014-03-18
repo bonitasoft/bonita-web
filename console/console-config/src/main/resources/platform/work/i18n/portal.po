@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-17 22:02+0100\n"
+"POT-Creation-Date: 2014-03-18 21:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:64
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:135
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:149
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:148
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:152
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:32
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/EditCaseVariablePopUp.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:34
@@ -467,17 +467,17 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:66
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/MyCasesSnippet.java:66
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:64
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:68
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:72
 msgid "Case id"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:97
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:100
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:104
 msgid "App version"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:97
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:100
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:104
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:41
 msgid "The version of the app that created this case"
 msgstr ""
@@ -485,13 +485,13 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:101
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:67
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/MyCasesSnippet.java:67
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:95
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:99
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:50
 msgid "Started on"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:101
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:95
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:99
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:51
 msgid "The date while the case has been started"
 msgstr ""
@@ -500,13 +500,13 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/MyCasesSnippet.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedCaseWorkedOnSnippet.java:74
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:90
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:94
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:61
 msgid "Started by"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:106
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:91
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:95
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:61
 msgid "The user that has started this case"
 msgstr ""
@@ -529,7 +529,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:66
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:137
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:153
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:151
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:155
 msgid "Description"
 msgstr ""
 
@@ -544,7 +544,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:70
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:141
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:156
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:155
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:159
 msgid "Description:"
 msgstr ""
 
@@ -1978,7 +1978,7 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileQuickDetailsPage.java:78
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedTaskTechnicalInformationSnippet.java:58
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:67
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:112
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:116
 msgid "Technical details"
 msgstr ""
 
@@ -2058,7 +2058,7 @@ msgid "Tasks "
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:107
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:154
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:158
 msgid "Failed"
 msgstr ""
 
@@ -2124,52 +2124,52 @@ msgstr ""
 msgid "Performed by"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:170
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:171
 msgid "Closed tasks"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:119
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:123
 msgid "No task done"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:121
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:125
 msgid "Last executed task : "
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:125
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:129
 msgid "Number of open tasks : %nb_openTask%"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:126
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:130
 msgid "No opened task"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:126
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:130
 msgid "Link to the tasks"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:130
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:134
 msgid "No attachments"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:136
 msgid "Number of attachments : %nb_attachments%"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:138
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:142
 msgid "Failed tasks"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:149
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:153
 msgid "Update date"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:150
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:154
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:234
 msgid "Executed by"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:153
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:157
 msgid "Executed by:"
 msgstr ""
 
