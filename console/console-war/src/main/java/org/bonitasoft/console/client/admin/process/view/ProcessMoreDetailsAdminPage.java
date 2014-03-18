@@ -14,7 +14,9 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem.FILTER_PROCESS_ID;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.util.MapUtil.asMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,11 +46,9 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionA
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
-import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction;
-import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutDanger;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -58,9 +58,9 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessItem> {
 
     public static final String TOKEN = "processmoredetailsadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
@@ -115,8 +115,7 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     }
 
     private Clickable newDeleteProcessButton(final ProcessItem process) {
-        return new ButtonAction("btn-delete", _("Delete"), _("Delete this app"),
-                new DeleteProcessAction(process.getId().toString(), process.getDisplayName()));
+        return new ButtonAction("btn-delete", _("Delete"), _("Delete this app"), new DeleteProcessAction(process.getId().toString(), process.getDisplayName()));
     }
 
     private Clickable newChangeProcessActivationStateButton(final ProcessItem process) {
@@ -142,22 +141,28 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     @Override
     protected void buildBody(final ProcessItem item) {
         ProcessResolutionProblemDefinition.get().getAPICaller()
-                .search(0, 100, null, null, MapUtil.asMap(new Arg(ProcessResolutionProblemItem.FILTER_PROCESS_ID, item.getId())),
-                        new APICallback() {
-
-                            @Override
-                            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                                final List<ProcessResolutionProblemItem> processResolutionErrors = JSonItemReader.parseItems(response,
-                                        ProcessResolutionProblemDefinition.get());
-                                ProcessConfigurationStateResolver stateResolver = new ProcessConfigurationStateResolver(processResolutionErrors);
-                                if (stateResolver.hasProblems()) {
-                                    addHeader(new ProcessResolutionProblemsCallout(stateResolver));
-                                }
-                                buildBody(item, stateResolver);
-                            }
-                        });
+                .search(0, 100, null, null, asMap(new Arg(FILTER_PROCESS_ID, item.getId())), new ProcessResolutionProblemCallback(item));
     }
+    
+    private class ProcessResolutionProblemCallback extends APICallback {
+        
+        private final ProcessItem process;
 
+        public ProcessResolutionProblemCallback(ProcessItem process) {
+            this.process = process;
+        }
+        
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            final List<ProcessResolutionProblemItem> processResolutionErrors = JSonItemReader.parseItems(response, ProcessResolutionProblemDefinition.get());
+            ProcessConfigurationStateResolver stateResolver = new ProcessConfigurationStateResolver(processResolutionErrors);
+            if (stateResolver.hasProblems()) {
+                addHeader(new ProcessResolutionProblemsCallout(stateResolver));
+            }
+            buildBody(process, stateResolver);
+        }
+    }
+    
     protected void buildBody(final ProcessItem process, final ProcessConfigurationStateResolver stateResolver) {
         addBody(new EntityMappingSection(process, stateResolver.getActorsConfigurationState()));
         addBody(getConnectorSection(process, stateResolver));
