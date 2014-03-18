@@ -45,6 +45,7 @@ public class ArchivedFlowNodeSearchDescriptorConverter implements AttributeConve
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_STATE, ArchivedFlowNodeInstanceSearchDescriptor.STATE_NAME);
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_TYPE, ArchivedFlowNodeInstanceSearchDescriptor.FLOW_NODE_TYPE);
         mapping.put(ArchivedFlowNodeItem.FILTER_IS_TERMINAL, ArchivedFlowNodeInstanceSearchDescriptor.TERMINAL);
+        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE);
         return mapping;
     }
 
