@@ -42,6 +42,10 @@ public class ProcessConfigurationStateResolver {
         }
         return errors;
     }
+    
+    public boolean hasProblems() {
+        return !problems.isEmpty();
+    }
 
     public boolean areActorsResolved() {
         return !problems.contains(ProcessResolutionProblemItem.VALUE_STATE_TARGET_TYPE_ACTOR);

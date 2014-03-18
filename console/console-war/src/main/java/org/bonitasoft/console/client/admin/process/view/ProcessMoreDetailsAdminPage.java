@@ -25,6 +25,7 @@ import java.util.Map;
 import org.bonitasoft.console.client.admin.process.action.DeleteProcessAction;
 import org.bonitasoft.console.client.admin.process.action.DisableProcessAction;
 import org.bonitasoft.console.client.admin.process.action.EnableProcessAction;
+import org.bonitasoft.console.client.admin.process.view.section.ProcessResolutionProblemsCallout;
 import org.bonitasoft.console.client.admin.process.view.section.cases.CasesSection;
 import org.bonitasoft.console.client.admin.process.view.section.category.CategoriesSection;
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ProcessConfigurationStateResolver;
@@ -43,9 +44,11 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionA
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
+import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction;
+import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutDanger;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -146,7 +149,11 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
                             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                                 final List<ProcessResolutionProblemItem> processResolutionErrors = JSonItemReader.parseItems(response,
                                         ProcessResolutionProblemDefinition.get());
-                                buildBody(item, new ProcessConfigurationStateResolver(processResolutionErrors));
+                                ProcessConfigurationStateResolver stateResolver = new ProcessConfigurationStateResolver(processResolutionErrors);
+                                if (stateResolver.hasProblems()) {
+                                    addHeader(new ProcessResolutionProblemsCallout(stateResolver));
+                                }
+                                buildBody(item, stateResolver);
                             }
                         });
     }
