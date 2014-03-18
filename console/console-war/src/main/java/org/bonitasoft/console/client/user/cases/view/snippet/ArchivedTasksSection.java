@@ -62,7 +62,8 @@ public class ArchivedTasksSection extends Section {
                         _("Description"))
                 .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
-                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter());
+                .addCellFormatter(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
+                .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE, false);
         return table;
     }
 
