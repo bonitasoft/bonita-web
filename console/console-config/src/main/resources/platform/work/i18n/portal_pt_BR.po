@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-15 05:01+0100\n"
-"PO-Revision-Date: 2014-03-18 01:33-0400\n"
+"POT-Creation-Date: 2014-03-19 05:01+0100\n"
+"PO-Revision-Date: 2014-03-19 01:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -88,7 +88,7 @@ msgstr "Não"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:148
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:127
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:115
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:118
 msgid "Delete"
 msgstr "Excluir"
 
@@ -2974,7 +2974,7 @@ msgid "Unresolved Apps"
 msgstr "Apps não resolvidos"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:156
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:136
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
 msgid "Disable"
 msgstr "Desativar"
 
@@ -2983,7 +2983,7 @@ msgid "Disable selected apps"
 msgstr "Desabilitar Apps selecionados"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:134
 msgid "Enable"
 msgstr "Ativar"
 
@@ -3017,6 +3017,22 @@ msgstr "Iniciar uma instância da app %app_name%"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:72
 msgid "Show more details about this apps"
 msgstr "Mostrar mais detalhes sobre estas apps"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:32
+msgid "The App cannot be enabled"
+msgstr "The App cannot be enabled"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:40
+msgid "Entity Mapping must be resolved before enabling the App."
+msgstr "Entity Mapping must be resolved before enabling the App."
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:43
+msgid "Parameters must be resolved before enabling the App."
+msgstr "Parameters must be resolved before enabling the App."
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:46
+msgid "Connector definitions must be resolved before enabling the App."
+msgstr "Connector definitions must be resolved before enabling the App."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/RemoveCategoryPopUp.java:50
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:59
@@ -3226,15 +3242,15 @@ msgstr "Definições de conector"
 msgid "Class name"
 msgstr "Nome da classe"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:115
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:118
 msgid "Delete this app"
 msgstr "Excluir esta app"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:134
 msgid "Enable this app"
 msgstr "Habilitar esta app"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:136
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
 msgid "Disable this app"
 msgstr "Desativar esta app"
 
