@@ -29,11 +29,22 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public class ProcessConfigurationStateResolver {
 
-    private Set<String> problems;
+    protected Set<String> problems;
+    protected List<ProcessResolutionProblemItem> processResolutionErrors;
 
     public ProcessConfigurationStateResolver(List<ProcessResolutionProblemItem> processResolutionErrors) {
+        this.processResolutionErrors = processResolutionErrors;
         problems = getProblemsType(processResolutionErrors);
     }
+    
+    public List<ProcessResolutionProblemItem> getProcessResolutionErrors() {
+        return processResolutionErrors;
+    }
+    
+    public void setProcessResolutionErrors(List<ProcessResolutionProblemItem> processResolutionErrors) {
+        this.processResolutionErrors = processResolutionErrors;
+    }
+
 
     private Set<String> getProblemsType(List<ProcessResolutionProblemItem> processResolutionErrors) {
         HashSet<String> errors = new HashSet<String>();

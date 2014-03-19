@@ -28,9 +28,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutDanger;
  */
 public class ProcessResolutionProblemsCallout extends CalloutDanger {
 
+    protected List ul;
+
     public ProcessResolutionProblemsCallout(ProcessConfigurationStateResolver stateResolver) {
         super(_("The App cannot be enabled"));
-        List ul = buildProblemsList(stateResolver);
+        ul = buildProblemsList(stateResolver);
         append(ul);
     }
 

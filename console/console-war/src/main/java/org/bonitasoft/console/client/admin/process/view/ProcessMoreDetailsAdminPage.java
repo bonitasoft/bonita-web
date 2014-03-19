@@ -40,7 +40,6 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinit
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
@@ -157,26 +156,30 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
             final List<ProcessResolutionProblemItem> processResolutionErrors = JSonItemReader.parseItems(response, ProcessResolutionProblemDefinition.get());
             ProcessConfigurationStateResolver stateResolver = new ProcessConfigurationStateResolver(processResolutionErrors);
             if (stateResolver.hasProblems()) {
-                addHeader(new ProcessResolutionProblemsCallout(stateResolver));
+                addHeader(buildProcessResolutionProblemsCallout(stateResolver));
             }
             buildBody(process, stateResolver);
         }
+
     }
     
     protected void buildBody(final ProcessItem process, final ProcessConfigurationStateResolver stateResolver) {
         addBody(new EntityMappingSection(process, stateResolver.getActorsConfigurationState()));
-        addBody(getConnectorSection(process, stateResolver));
+        addBody(buildConnectorSection(process, stateResolver));
         addBody(new CategoriesSection(process));
         addBody(new CasesSection(process));
     }
 
-    /**
-     * Overriden in SP
-     */
-    protected ConnectorSection getConnectorSection(final ProcessItem process, final ProcessConfigurationStateResolver stateResolver) {
+    /** Overriden in SP */
+    protected ConnectorSection buildConnectorSection(ProcessItem process, ProcessConfigurationStateResolver stateResolver) {
         return new ConnectorSection(process, stateResolver.getConnectorsConfigurationState());
     }
 
+    /** Overriden in SP */
+    protected ProcessResolutionProblemsCallout buildProcessResolutionProblemsCallout(ProcessConfigurationStateResolver stateResolver) {
+        return new ProcessResolutionProblemsCallout(stateResolver);
+    }
+    
     @Override
     public String defineToken() {
         return TOKEN;
