@@ -28,9 +28,10 @@ import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import com.google.gwt.user.client.Cookies;
 
 /**
- * @author Séverin Moussel
+ * @author Séverin Moussel, Paul AMAR
  */
-public class Cookie extends ParametersStorage {
+// ParametersStorageWithCookies
+public class ParametersStorageWithCookie extends ParametersStorage {
 
     private static final String COOKIE_NAME = "bos_cookie";
 
@@ -38,7 +39,7 @@ public class Cookie extends ParametersStorage {
 
     private static final long COOKIE_EXPIRE = 6048000000L; // 70 days
 
-    private static Cookie SINGLETON = new Cookie();
+    private static ParametersStorageWithCookie SINGLETON = new ParametersStorageWithCookie();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COOKIE I/O
@@ -49,8 +50,10 @@ public class Cookie extends ParametersStorage {
      */
     @Override
     protected final void resetParameters() {
-        Cookies.removeCookie(COOKIE_NAME);
         Cookies.removeCookie(LOGIN_COOKIE_NAME);
+        
+        UserSessionVariables.removeUserVariable(COOKIE_NAME);
+        UserSessionVariables.removeUserVariable(LOGIN_COOKIE_NAME);
     }
 
     /**
@@ -71,7 +74,7 @@ public class Cookie extends ParametersStorage {
     @Override
     protected final TreeIndexed<String> readParameters(final boolean updateExpiresDate) {
         // Read the parameters as JSON
-        final String cookieContent = Cookies.getCookie(COOKIE_NAME);
+        final String cookieContent = UserSessionVariables.getUserVariable(COOKIE_NAME);
         TreeIndexed<String> result = null;
         if (cookieContent == null) {
             result = new TreeIndexed<String>();
@@ -94,12 +97,7 @@ public class Cookie extends ParametersStorage {
      */
     @Override
     protected final void writeParameters(final TreeIndexed<String> parameters) {
-        // Set the expires date
-        final Date now = new Date();
-        now.setTime(now.getTime() + COOKIE_EXPIRE);
-
-        // Save the parameters as json
-        Cookies.setCookie(COOKIE_NAME, parameters.toJson(), now);
+        UserSessionVariables.addUserVariable(COOKIE_NAME, parameters.toJson());
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +168,7 @@ public class Cookie extends ParametersStorage {
      * @return This method returns the value of a parameter or NULL if the parameter doesn't exist or is an array.
      */
     public static String getParameter(final String name) {
-        return SINGLETON._getParameter(name);
+        return Cookies.getCookie(name);
     }
 
     /**

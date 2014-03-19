@@ -29,8 +29,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
 import org.bonitasoft.forms.client.model.Expression;
@@ -168,6 +170,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting the Process Config from a process instance", e);
@@ -252,6 +261,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting the first page for application " + formID, e);
@@ -362,6 +378,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting the process instance next form page " + nextPageExpressionId, e);
@@ -435,6 +458,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 }
             }
             return nonCompliantValidators;
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while validating Field", e);
@@ -468,6 +498,11 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 reducedValidators.add(formValidator.getReducedFormValidator());
             }
             return reducedValidators;
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while validating Page", e);
@@ -534,6 +569,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting the Process Confirmation Template", e);
@@ -566,6 +608,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting the Process Error Template", e);
@@ -592,6 +641,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting the next task", e);
@@ -688,6 +744,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting activity async available values of the widget " + formWidget.getId(), e);
@@ -792,6 +855,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, e.getMessage(), e);
             }
             throw new FileTooBigException(e.getMessage(), e.getFileName(), e.getMaxSize());
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while executing Actions", e);
@@ -820,6 +890,13 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.INFO, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while getting any todolist form", e);
@@ -965,6 +1042,16 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             resolvedExpression = (String) formServiceProvider.resolveExpression(applicationConfig.getMandatorySymbolExpression(), context);
             applicationConfig.setMandatorySymbol(resolvedExpression);
 
+        } catch (final FormNotFoundException e) {
+            throw new FormNotFoundException(e);
+        } catch (final SessionTimeoutException e){
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor((HttpServletRequest) getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
+        }
         return applicationConfig;
     }
 

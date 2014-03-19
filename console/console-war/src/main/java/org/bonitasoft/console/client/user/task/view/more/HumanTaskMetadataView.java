@@ -81,6 +81,6 @@ public class HumanTaskMetadataView extends Composite {
             description.setInnerText(task.ensureDescription());
         }
 
-        MetadataTaskBuilder.setCaseHref(caseId, task.getCaseId(), false);
+        MetadataTaskBuilder.setCaseHref(caseId, task, false);
     }
 }

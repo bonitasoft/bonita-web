@@ -72,15 +72,15 @@ public class ConsoleProperties {
     protected static synchronized ConsoleProperties getInstance(final long tenantId) {
         ConsoleProperties tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
-            tenancyProperties = new ConsoleProperties(tenantId);
+            tenancyProperties = new ConsoleProperties(new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), PROPERTIES_FILENAME));
             INSTANCES.put(tenantId, tenancyProperties);
         }
         return tenancyProperties;
     }
 
-    protected ConsoleProperties(final long tenantId) {
+    protected ConsoleProperties(File propertiesFile) {
         // Read properties file.
-        this.propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), PROPERTIES_FILENAME);
+        this.propertiesFile = propertiesFile;
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(this.propertiesFile);

@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertTrue;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.AbstractJUnitWebTest;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
@@ -43,6 +44,9 @@ public abstract class AbstractConsoleTest extends AbstractJUnitWebTest {
     @Override
     public void webTestSetUp() throws Exception {
         FlowNodeConverter.setFlowNodeConverter(new FlowNodeConverter());
+        
+        // init default tenant
+        TenantsManagementUtils.addDirectoryForTenant(1);
 
         new BonitaRestAPIServlet();
         consoleTestSetUp();

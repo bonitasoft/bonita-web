@@ -130,8 +130,8 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
         }
         if (formNode == null) {
             final String message = "The node for the form " + formId + " was not found in the forms definition file";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, message);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, message);
             }
             throw new ApplicationFormDefinitionNotFoundException(message);
         }
