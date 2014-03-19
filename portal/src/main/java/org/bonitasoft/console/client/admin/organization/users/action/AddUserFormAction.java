@@ -31,6 +31,8 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
 
+import com.google.gwt.user.client.Window;
+
 /**
  * @author Yongtao Guo
  * 
@@ -62,7 +64,32 @@ public class AddUserFormAction extends AddItemFormAction<UserItem> {
                     redirectToUsersMoreDetailsPage(parseJsonToUserItem(response).getId());
                 }
             }
+
+            @Override
+            public void onError(String message, Integer errorCode) {
+                getForm().addError(new JsId(UserItem.ATTRIBUTE_PASSWORD), getMessageFromErrorMessage(message));
+            }
         };
+    }
+
+    private String getMessageFromErrorMessage(String message) {
+        int indexStartMessage = message.indexOf("\"message\"");
+        if (indexStartMessage >= 0) {
+            indexStartMessage = indexStartMessage + 11;
+
+            message = message.substring(indexStartMessage);
+            int endOfMessage = message.indexOf("\"");
+            if (endOfMessage >= 0) {
+                message =  message.substring(0, endOfMessage);
+                message = message.replace("\\r\\n", ", ");
+                message = message.substring(0, message.length() - 2);
+                return message;
+            } else {
+                return message;
+            }
+        } else {
+            return message;
+        }
     }
 
     private void redirectToUsersMoreDetailsPage(final APIID userId) {

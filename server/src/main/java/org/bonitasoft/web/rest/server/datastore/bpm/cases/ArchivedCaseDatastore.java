@@ -76,6 +76,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
 
         addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
+        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
 
         // Run search depending on filters passed
         final SearchResult<ArchivedProcessInstance> searchResult = runSearch(filters, builder);

@@ -18,10 +18,12 @@ package org.bonitasoft.console.common.server.login;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
+
+import org.bonitasoft.console.common.server.login.LoginManagerProperties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 
 /**
  * @author Rohart Bastien
@@ -33,7 +35,7 @@ public class LoginManagerPropertiesTest {
     
     @Before
     public void setUp() {
-        loginManagerProperties = new LoginManagerProperties(new Long(-1L));
+        loginManagerProperties = new LoginManagerProperties(new File("src/test/resources/loginManager-config.properties"));
     }
     
     @After

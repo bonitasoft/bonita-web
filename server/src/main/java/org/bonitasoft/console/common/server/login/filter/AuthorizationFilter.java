@@ -96,7 +96,8 @@ public class AuthorizationFilter implements Filter {
     }
 
 
-    private LoginManager getLoginManager(final long tenantId) throws ServletException {
+    // protected for test stubbing
+    protected LoginManager getLoginManager(final long tenantId) throws ServletException {
         try {
             return LoginManagerFactory.getLoginManager(tenantId);
         } catch (final LoginManagerNotFoundException e) {

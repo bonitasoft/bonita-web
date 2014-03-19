@@ -17,7 +17,6 @@
 package org.bonitasoft.web.rest.model.bpm.cases;
 
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -26,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  * 
  * @author Séverin Moussel
  */
-public class ArchivedCaseDefinition extends ItemDefinition {
+public class ArchivedCaseDefinition extends ItemDefinition<ArchivedCaseItem> {
 
     /**
      * Singleton
@@ -70,7 +69,7 @@ public class ArchivedCaseDefinition extends ItemDefinition {
     }
 
     @Override
-    public IItem _createItem() {
+    public ArchivedCaseItem _createItem() {
         return new ArchivedCaseItem();
     }
 

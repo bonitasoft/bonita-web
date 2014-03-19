@@ -247,7 +247,7 @@ public class ClientApplicationURL {
     private static void setLang(final LOCALE lang, final boolean refresh) {
 
         Session.addParameter(ATTRIBUTE_LANG, lang.toString());
-        Cookie.addParameter(ATTRIBUTE_LANG, lang.toString());
+        ParametersStorageWithCookie.addParameter(ATTRIBUTE_LANG, lang.toString());
         Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, lang.toString());
         AbstractI18n.setDefaultLocale(lang);
 
@@ -346,11 +346,11 @@ public class ClientApplicationURL {
             // TODO remove lang from URL and replace last history URL
         } else {
             // Check if the lang is in the session
-            newLang = Session.getParameter(ATTRIBUTE_LANG);
+            newLang = Session.getParameter(FORM_LOCALE_COOKIE_NAME);
 
             if (newLang == null) {
                 // Check if the lang is in the cookie
-                newLang = Cookie.getParameter(ATTRIBUTE_LANG);
+                newLang = ParametersStorageWithCookie.getParameter(FORM_LOCALE_COOKIE_NAME);
 
                 if (newLang == null) {
                     // else we set the default lang
@@ -362,7 +362,7 @@ public class ClientApplicationURL {
         // Save the currentLang
         if (!newLang.toString().equals(Session.getParameter(ATTRIBUTE_LANG))) {
             Session.addParameter(ATTRIBUTE_LANG, newLang.toString());
-            Cookie.addParameter(ATTRIBUTE_LANG, newLang.toString());
+            ParametersStorageWithCookie.addParameter(ATTRIBUTE_LANG, newLang.toString());
         }
 
         // Load i18n data

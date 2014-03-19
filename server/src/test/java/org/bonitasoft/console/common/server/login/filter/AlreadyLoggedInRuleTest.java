@@ -17,6 +17,21 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
@@ -26,18 +41,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Locale;
-
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
+import org.mockito.Spy;
 
 /**
  * Created by Vincent Elcrin
@@ -60,12 +64,14 @@ public class AlreadyLoggedInRuleTest {
 
     @Mock
     HttpServletRequest httpServletRequest;
-
-    AlreadyLoggedInRule rule = new AlreadyLoggedInRule();
+    
+    @Spy
+    AlreadyLoggedInRule rule;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
+        doReturn(true).when(rule).useCredentialsTransmission(any(APISession.class));
         doReturn(httpSession).when(request).getHttpSession();
         doReturn(httpServletRequest).when(request).asHttpServletRequest();
     }
@@ -78,7 +84,7 @@ public class AlreadyLoggedInRuleTest {
 
         boolean authorization = rule.doAuthorize(request, tenantAccessor);
 
-        assertTrue(authorization);
+        assertThat(authorization, is(true));
     }
 
     @Test
