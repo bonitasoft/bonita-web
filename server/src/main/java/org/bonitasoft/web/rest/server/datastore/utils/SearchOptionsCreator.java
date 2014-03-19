@@ -60,4 +60,8 @@ public class SearchOptionsCreator {
     public SearchOptions create() {
         return builder.done();
     }
+
+    public SearchOptionsBuilder getBuilder() {
+		return builder;
+    }
 }
