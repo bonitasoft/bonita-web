@@ -25,13 +25,6 @@
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.bonitasoft.console</groupId>
-            <artifactId>portal</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-            <scope>runtime</scope>
-        </dependency>
 
         <!--forms-->
         <dependency>
