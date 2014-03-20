@@ -23,6 +23,8 @@ package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
  */
 public abstract class AbstractStringValidator extends AbstractCollectionValidator {
 
+    protected String locale = "";
+    
     @Override
     protected final void _check(final String[] attributeValue) {
         for (int i = 0; i < attributeValue.length; i++) {
@@ -46,5 +48,9 @@ public abstract class AbstractStringValidator extends AbstractCollectionValidato
     }
 
     protected abstract void _check(String attributeValue);
+    
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
 
 }
