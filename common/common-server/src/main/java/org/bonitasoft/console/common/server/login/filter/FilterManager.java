@@ -69,36 +69,11 @@ public class FilterManager implements Filter {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final String requestURL = httpRequest.getRequestURI();
         
-        if (matchURL(requestURL, excludePatterns)) {
+        if (sessionIsNotNeeded(requestURL, excludePatterns)) {
             chain.doFilter(request, response);
         } else {
-            pageRedirect(request, response, chain);
+            checkSessionAndProcessRequest(request, response, chain);
         }
-    }
-
-    private boolean isValidToken(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) {
-        String headerFromRequest = httpRequest.getHeader("X-API-Token");
-        // Header in request
-        if (headerFromRequest != null) {
-            String sessionId = headerFromRequest.split("/")[0];
-            String apiTokenReq = headerFromRequest.split("/")[1];
-            APIToken apiToken = MappingTokenUserSession.getToken(sessionId);
-            // Token created on server side
-            if (apiToken != null) {
-                // Check that tokens are the same
-                if (!apiToken.getToken().equals(apiTokenReq)) {
-                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    return false;
-                }
-            } else {
-                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return false;
-            }
-        } else {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return false;
-        }
-        return true;
     }
     
     /**
@@ -110,26 +85,24 @@ public class FilterManager implements Filter {
     public void destroy() {
     }
 
-    private void pageRedirect(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException {
+    private void checkSessionAndProcessRequest(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         try {
-            if (isValidToken(httpRequest, httpResponse)) {
-                if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
-                    final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
-                    if (platformSession != null) {
-                        chain.doFilter(request, response);
-                    } else {
-                        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    }
+            if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
+                final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
+                if (platformSession != null) {
+                    chain.doFilter(request, response);
                 } else {
-                    final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
-                    if (apiSession != null) {
-                        chain.doFilter(request, response);
-                    } else {
-                        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    }
-                }                
+                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                }
+            } else {
+                final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+                if (apiSession != null) {
+                    chain.doFilter(request, response);
+                } else {
+                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                }
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -139,7 +112,7 @@ public class FilterManager implements Filter {
         }
     }
 
-    private boolean matchURL(final String requestURL, final String excludePatterns) {
+    private boolean sessionIsNotNeeded(final String requestURL, final String excludePatterns) {
         boolean isMatched = false;
         if (excludePatterns != null) {
             final String[] patterns = excludePatterns.split(",");
@@ -150,7 +123,6 @@ public class FilterManager implements Filter {
                 }
             }
         }
-
         return isMatched;
     }
 }
