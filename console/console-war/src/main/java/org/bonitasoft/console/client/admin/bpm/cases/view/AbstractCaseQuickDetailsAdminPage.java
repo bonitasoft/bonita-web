@@ -33,7 +33,11 @@ import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPag
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
@@ -142,7 +146,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     }
 
     protected ItemTable getFailedTaskTable(final CaseItem item) {
-        return new ItemTable(new JsId("failedtasks"), FlowNodeDefinition.get())
+        return new ItemTable(new JsId("failedtasks"), TaskDefinition.get())
                 .addHiddenFilter(TaskItem.ATTRIBUTE_CASE_ID, item.getId())
                 .addHiddenFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_FAILED)
                 .addColumn(TaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
@@ -153,6 +157,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 .addCellFormatter(TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID, new SpanPrepender(_("Executed by:")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, new SpanPrepender(_("Failed")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
+                .setOrder(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, false)
                 .setDefaultAction(new RedirectionAction(TaskMoreDetailsAdminPage.TOKEN, new Arg(TaskItem.ATTRIBUTE_ID, item.getId().toString())));
     }
 

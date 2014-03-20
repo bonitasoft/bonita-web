@@ -18,13 +18,14 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
 import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.server.datastore.converter.ValueConverter;
 import org.bonitasoft.web.rest.server.framework.api.EnumConverter;
 
 /**
  * @author Vincent Elcrin
  * 
  */
-public class FlowNodeTypeConverter implements EnumConverter<FlowNodeType> {
+public class FlowNodeTypeConverter implements EnumConverter<FlowNodeType>, ValueConverter<FlowNodeType> {
 
     @Override
     public FlowNodeType convert(final String attributeValue) {
