@@ -20,7 +20,6 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.RequestTimeoutException;
 
 /**
  * @author Séverin Moussel
@@ -98,8 +97,6 @@ public class HttpRequest {
         Request request = null;
         try {
             request = builder.send();
-        } catch (final RequestTimeoutException e) {
-            callback.onError(request, new BonitaRequestTimeoutException());
         } catch (final RequestException e) {
             callback.onError(request, e);
         }
