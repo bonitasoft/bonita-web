@@ -16,8 +16,7 @@
  */
 package org.bonitasoft.console.common.server.api.token;
 
-import java.util.Random;
-
+import java.util.UUID;
 
 /**
  * @author Paul AMAR
@@ -28,19 +27,7 @@ public class APIToken {
     private String APIToken = "";
     
     public APIToken() {
-        this.APIToken = generateNewToken();
-    }
-    
-    private String generateNewToken() {
-        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 20; i++) {
-            char c = chars[random.nextInt(chars.length)];
-            sb.append(c);
-        }
-        String output = sb.toString();
-        return output;
+        this.APIToken = UUID.randomUUID().toString();
     }
     
     public String getToken() {
