@@ -34,10 +34,11 @@ import org.bonitasoft.console.common.server.api.token.APIToken;
  * @author Paul AMAR
  *
  */
-public class TokenFilter implements Filter {
+public class TokenGeneratorFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        
     }
 
     @Override
@@ -57,7 +58,8 @@ public class TokenFilter implements Filter {
     }
 
     @Override
-    public void destroy() {  
+    public void destroy() {
+        
     }
 
 }

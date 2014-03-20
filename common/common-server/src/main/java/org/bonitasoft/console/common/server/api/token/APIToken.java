@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 public class APIToken {
     
-    private String APIToken = "";
+    private String APIToken;
     
     public APIToken() {
         this.APIToken = UUID.randomUUID().toString();
