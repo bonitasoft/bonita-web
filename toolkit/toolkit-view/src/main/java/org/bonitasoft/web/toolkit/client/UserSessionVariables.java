@@ -25,6 +25,8 @@ import java.util.Map;
  *
  */
 public class UserSessionVariables {
+    
+    public static final String API_TOKEN = "token_api";
 
     private static Map<String, String> userVariables = new HashMap<String, String>();
     

@@ -78,8 +78,8 @@ abstract public class QueuableRequest {
         this.request.setCallback(localCallback);
 
         try {
-            if (UserSessionVariables.getUserVariable("token_api") != null) {
-                this.request.setHeader("X-API-Token", UserSessionVariables.getUserVariable("token_api"));    
+            if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
+                this.request.setHeader("X-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
             }
             this.request.send();
         } catch (final RequestException e) {

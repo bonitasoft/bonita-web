@@ -319,7 +319,7 @@ public class ClientApplicationURL {
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 if (headers.get("X-API-Token") != null) {
-                    UserSessionVariables.addUserVariable("token_api", headers.get("X-API-Token"));
+                    UserSessionVariables.addUserVariable(UserSessionVariables.API_TOKEN, headers.get("X-API-Token"));
                 }
                 final IItem session = JSonItemReader.parseItem(response, new SessionDefinition());
                 for (final String name : session.getAttributeNames()) {

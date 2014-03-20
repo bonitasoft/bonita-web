@@ -94,8 +94,8 @@ public class HttpRequest {
             builder.setHeader("Content-Type", (contentType != null ? contentType : "text/plain") + ";charset=UTF-8");
         }
         
-        if (UserSessionVariables.getUserVariable("token_api") != null) {
-            builder.setHeader("X-API-Token", UserSessionVariables.getUserVariable("token_api"));    
+        if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
+            builder.setHeader("X-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
         }
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);
