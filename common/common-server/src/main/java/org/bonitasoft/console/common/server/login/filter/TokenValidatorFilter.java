@@ -32,57 +32,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author Paul AMAR
  *
  */
-public class TokenValidatorFilter implements Filter {
-
-    private String excludePatterns = null;
-    
-    @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-        excludePatterns = filterConfig.getInitParameter("excludePatterns");
-    }
+public class TokenValidatorFilter extends AbstractAuthorizationFilter {
 
     @Override
-    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-        final HttpServletRequest httpRequest = (HttpServletRequest) request;
-        final HttpServletResponse httpResponse = (HttpServletResponse) response;
-        final String requestURL = httpRequest.getRequestURI();
-        
-        if (sessionIsNotNeeded(requestURL, excludePatterns)) {
-            chain.doFilter(request, response);
-        } else if (isValidToken(httpRequest, httpResponse)) {
-            chain.doFilter(request, response);
-        }
-    }
-
-    @Override
-    public void destroy() {
-
-    }
-    
-    private boolean isValidToken(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) {
+    boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         String headerFromRequest = httpRequest.getHeader("X-API-Token");
-        String apiToken = httpRequest.getSession().getAttribute("api_token").toString();
+        String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
 
-        if (headerFromRequest == null || apiToken == null || (!apiToken.equals(headerFromRequest))) {
+        if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
-        
         return true;
     }
-    
-    private boolean sessionIsNotNeeded(final String requestURL, final String excludePatterns) {
-        boolean isMatched = false;
-        if (excludePatterns != null) {
-            final String[] patterns = excludePatterns.split(",");
-            for (int i = 0, size = patterns.length; i < size; i++) {
-                if (requestURL.contains(patterns[i])) {
-                    isMatched = true;
-                    break;
-                }
-            }
-        }
-        return isMatched;
-    }
-
 }
