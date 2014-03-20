@@ -40,6 +40,20 @@
 			<param-value>i18ntranslation,session</param-value>
 		</init-param>
 	</filter>
+    <!-- Token Filter -->
+    <filter>
+        <filter-name>TokenFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.TokenFilter</filter-class>
+    </filter>
+    <!-- Token Validator Filter -->
+	<filter>
+		<filter-name>TokenValidatorFilter</filter-name>
+		<filter-class>org.bonitasoft.console.common.server.login.filter.TokenValidatorFilter</filter-class>
+		<init-param>
+			<param-name>excludePatterns</param-name>
+			<param-value>i18ntranslation,session</param-value>
+		</init-param>
+	</filter>
 	<!-- SSO filter -->
 	<filter>
 		<filter-name>InternalSSOFilter</filter-name>
@@ -125,8 +139,16 @@
 		<url-pattern>/login.jsp</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
+		<filter-name>TokenValidatorFilter</filter-name>
+		<url-pattern>/API/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
 		<filter-name>RestFilter</filter-name>
 		<url-pattern>/API/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>TokenFilter</filter-name>
+		<url-pattern>/API/system/session/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>InternalSSOFilter</filter-name>

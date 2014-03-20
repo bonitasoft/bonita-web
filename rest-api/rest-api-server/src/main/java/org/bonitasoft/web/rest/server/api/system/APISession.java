@@ -56,15 +56,6 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
-            
-            // Set token
-            if (MappingTokenUserSession.getToken(String.valueOf(apiSession.getId())) == null) {
-                final APIToken apiToken = new APIToken();
-                MappingTokenUserSession.addSessionIdAndToken(String.valueOf(apiSession.getId()), apiToken);
-                session.setAttribute("token_api", apiToken.getToken());
-            } else {
-                session.setAttribute("token_api", MappingTokenUserSession.getToken(String.valueOf(apiSession.getId())).getToken());
-            }
         }
         return session;
     }

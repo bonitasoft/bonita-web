@@ -318,22 +318,20 @@ public class ClientApplicationURL {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+                if (headers.get("X-API-Token") != null) {
+                    UserSessionVariables.addUserVariable("token_api", headers.get("X-API-Token"));
+                }
                 final IItem session = JSonItemReader.parseItem(response, new SessionDefinition());
                 for (final String name : session.getAttributeNames()) {
                     if (name.equals("conf")) {
                         AvailableTokens.tokens.addAll(((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
                         // Session.addParameter(name, ((Tree<String>) JSonUnserializerClient.unserializeTree(session.getAttributeValue(name))).getValues());
-                    } else if (name.equals("token_api")) {
-                        String val = session.getAttributeValue("session_id") + "/" + session.getAttributeValue(name); 
-                        UserSessionVariables.addUserVariable(name, val);
                     } else {
                         Session.addParameter(name, session.getAttributeValue(name));
                     }
                 }
-
                 // TODO Add here assertions on parameters mandatory for the toolkit
                 // Example : assert Session.getUserId() != null;
-
                 callback.execute();
             }
         });
