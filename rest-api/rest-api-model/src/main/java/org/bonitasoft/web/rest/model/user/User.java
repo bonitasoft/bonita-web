@@ -153,7 +153,13 @@ public class User implements Serializable {
         setFeatures(userProfile.getFeatures());
     }
 
-    private List<String> getFeatures() {
+    public void addFeature(String feature) {
+        if (this.availableFeatures != null) {
+            this.availableFeatures.add(feature);
+        }
+    }
+
+    public List<String> getFeatures() {
         return this.availableFeatures;
     }
 }

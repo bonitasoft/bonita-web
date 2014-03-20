@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.login.LoginManagerProperties;
+import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
@@ -837,6 +839,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 }
                 throw new NoCredentialsInSessionException(errorMessage);
             }
+            manageLogoutDisplay(user);
             return user;
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
@@ -848,6 +851,20 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 LOGGER.log(Level.SEVERE, "Error while getting any todolist form", e);
             }
             throw new RPCException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * @param user
+     */
+    private void manageLogoutDisplay(final User user) {
+        List<String> features = user.getFeatures();
+        if (features != null && (!features.contains(LoginManagerProperties.LOGOUT_ENABLED) || !features.contains(LoginManagerProperties.LOGOUT_DISABLED))) {
+            if (LoginManagerPropertiesFactory.getProperties(user.getTenantId()).isLogoutDisabled()) {
+                features.add(LoginManagerProperties.LOGOUT_DISABLED);
+            } else {
+                features.add(LoginManagerProperties.LOGOUT_ENABLED);
+            }
         }
     }
 
