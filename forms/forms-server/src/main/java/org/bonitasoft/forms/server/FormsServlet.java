@@ -919,7 +919,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 }
                 throw new NoCredentialsInSessionException(errorMessage);
             }
-            manageLogoutDisplay(user);
+            final APISession apiSession = (APISession) session.getAttribute(API_SESSION_PARAM_KEY);
+            long tenantId = 0L;
+            if (apiSession != null) {
+                tenantId = apiSession.getTenantId();
+            }
+            manageLogoutDisplay(user, tenantId);
             return user;
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
@@ -937,10 +942,10 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     /**
      * @param user
      */
-    private void manageLogoutDisplay(final User user) {
+    private void manageLogoutDisplay(final User user, long tenantId) {
         List<String> features = user.getFeatures();
         if (features != null && (!features.contains(LoginManagerProperties.LOGOUT_ENABLED) || !features.contains(LoginManagerProperties.LOGOUT_DISABLED))) {
-            if (loginManagerPropertiesFactory.getProperties(user.getTenantId()).isLogoutDisabled()) {
+            if (loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled()) {
                 features.add(LoginManagerProperties.LOGOUT_DISABLED);
             } else {
                 features.add(LoginManagerProperties.LOGOUT_ENABLED);
