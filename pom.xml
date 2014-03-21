@@ -34,8 +34,8 @@
 			to the same value. -->
 		<gwtVersion>${gwt.version}</gwtVersion>
 		<wro4j.version>1.7.0</wro4j.version>
-		<powermock.version>1.5.4</powermock.version>
 		<assertj.version>1.5.0</assertj.version>
+		<powermock.version>1.5.1</powermock.version>
 
 	</properties>
 
@@ -236,6 +236,19 @@
 			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<scope>test</scope>
+				<version>${powermock.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-mockito</artifactId>
+				<scope>test</scope>
+				<version>${powermock.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -614,7 +627,6 @@
 								<exclude>org.bonitasoft.console.client.*</exclude>
 								<exclude>com.bonitasoft.console.client.*</exclude>
 							</excludes>
-							<append>true</append>
 						</configuration>
 						<executions>
 							<execution>
@@ -651,15 +663,12 @@
 								<phase>integration-test</phase>
 								<goals>
 									<goal>integration-test</goal>
-									<goal>verify</goal>
 								</goals>
 								<configuration>
 									<argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
 									<systemPropertyVariables>
 										<bonita.home>${project.build.directory}/bonita/home</bonita.home>
 									</systemPropertyVariables>
-									<!-- workaround to have test report for IT in sonar, see http://stackoverflow.com/a/15567782/936729 -->
-									<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 									<includes>
 										<!--run all possible tests maven failsafe plugin filters classes 
 											by name add those includes if you want to preserve surefire conventions -->

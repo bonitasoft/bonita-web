@@ -84,7 +84,9 @@ public class LoginServlet extends HttpServlet {
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = LoginManager.DEFAULT_DIRECT_URL;
         } else {
-            redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
+            if (redirectURL != null) {
+                redirectURL = new URLProtector().protectRedirectUrl(redirectURL);    
+            }
         }
         try {
             doLogin(request, tenantId);
@@ -108,7 +110,7 @@ public class LoginServlet extends HttpServlet {
                         loginURL = LoginManager.LOGIN_PAGE;
                         getServletContext().getRequestDispatcher(loginURL).forward(request, response);
                     } else {
-                        response.sendRedirect(createRedirectUrl(request, loginURL));
+                        getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL)).forward(request, response);
                     }
                 } catch (final Exception e1) {
                     if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -129,7 +131,7 @@ public class LoginServlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
-    
+
     private String createRedirectUrl(final HttpServletRequest request, final String redirectURL) {
         return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }

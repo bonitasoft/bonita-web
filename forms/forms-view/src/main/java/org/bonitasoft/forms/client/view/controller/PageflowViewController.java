@@ -18,8 +18,10 @@ package org.bonitasoft.forms.client.view.controller;
 
 import java.util.Map;
 
+import com.google.gwt.user.client.Timer;
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.ReducedFormPage;
+import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
 import org.bonitasoft.forms.client.model.exception.AbortedFormException;
 import org.bonitasoft.forms.client.model.exception.CanceledFormException;
 import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
@@ -391,7 +393,13 @@ public class PageflowViewController {
     }
 
     private String getDefaultConfirmationMessage() {
-        return FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        String confirmationMessage = null;
+        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            confirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        } else {
+            confirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
+        }
+        return confirmationMessage;
     }
 
 }

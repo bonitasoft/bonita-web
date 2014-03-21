@@ -17,15 +17,20 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.TaskDatastore;
@@ -111,6 +116,16 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
             item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
                     new CaseDatastore(getEngineSession()).get(item.getCaseId()));
         }
+        
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
+        	CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+        	if (rootContainerCase == null) {
+        		rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+            }
+            if(rootContainerCase != null) {
+        	    item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, new ProcessDatastore(getEngineSession()).get(rootContainerCase.getProcessId()));
+            }
+        }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID, deploys, item)) {
             item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
@@ -132,6 +147,18 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
                     new TaskDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_PARENT_TASK_ID)));
         }
 
+    }
+
+    private CaseItem getArchivedCase(String id) {
+        List<ArchivedCaseItem> result = new ArchivedCaseDatastore(getEngineSession()).search(
+                0, 1,
+                null,
+                null,
+                Collections.singletonMap(ArchivedHumanTaskItem.ATTRIBUTE_SOURCE_OBJECT_ID, id)).getResults();
+        if(result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
     }
 
     @Override

@@ -17,22 +17,23 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
-import org.junit.After;
+import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Spy;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Created by Vincent Elcrin
@@ -50,18 +51,9 @@ public class AutoLoginRuleTest {
     @Mock
     private TenantIdAccessor tenantAccessor;
 
-    String initialBonitaHome = "";
-
     @Before
     public void setUp() throws Exception {
-        initialBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "src/test/resources/bonita");
         initMocks(this);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        System.setProperty(WebBonitaConstants.BONITA_HOME, initialBonitaHome);
     }
 
     @Test
@@ -91,9 +83,19 @@ public class AutoLoginRuleTest {
         doReturn(1L).when(tenantAccessor).ensureTenantId();
         // avoid having an exception result into an authorized false
         doReturn(mock(LoginManager.class)).when(rule).getLoginManager(anyLong());
-
+        SecurityProperties secu = autoLoginAllowedSecurityConfig();
+        doReturn(secu).when(rule).getSecurityProperties(any(HttpServletRequestAccessor.class), anyLong());
+        
         boolean authorized = rule.doAuthorize(request, tenantAccessor);
 
         assertTrue(authorized);
+    }
+
+    private SecurityProperties autoLoginAllowedSecurityConfig() {
+        SecurityProperties secu = mock(SecurityProperties.class);
+        when(secu.allowAutoLogin()).thenReturn(true);
+        when(secu.getAutoLoginPassword()).thenReturn("aPasswordForTenant");
+        when(secu.getAutoLoginUserName()).thenReturn("aUserNameForTenant");
+        return secu;
     }
 }

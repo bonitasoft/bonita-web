@@ -37,11 +37,6 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 public class LoginManagerProperties {
 
     /**
-     * Default name of the form definition file
-     */
-    protected static final String LOGIN_CONFIG_FILE_NAME = "loginManager-config.properties";
-
-    /**
      * Logout Hidden constant
      */
     public static final String LOGOUT_DISABLED = "logout.link.hidden";
@@ -99,27 +94,17 @@ public class LoginManagerProperties {
     /**
      * Private constructor to prevent instantiation
      */
-    protected LoginManagerProperties(final long tenantId) {
+    protected LoginManagerProperties(File propertiesFile) {
         // Read properties file.
         InputStream inputStream = null;
-        WebBonitaConstantsUtils webConstantsUtils = null;
-        File propertiesFile = null;
         try {
-            if (tenantId == -1L) {
-                webConstantsUtils = WebBonitaConstantsUtils.getInstance();
-            } else {
-                webConstantsUtils = WebBonitaConstantsUtils.getInstance(tenantId);
-            }
-            propertiesFile = new File(webConstantsUtils.getConfFolder(), LOGIN_CONFIG_FILE_NAME);
             inputStream = new FileInputStream(propertiesFile);
             this.defaultProperties.load(inputStream);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 if (propertiesFile != null) {
                     LOGGER.log(Level.WARNING,
-                            "default login config file " + LOGIN_CONFIG_FILE_NAME + " is missing from the conf directory (" + propertiesFile.getPath() + ")");
-                } else {
-                    LOGGER.log(Level.WARNING, "default login config file " + LOGIN_CONFIG_FILE_NAME + " is missing from the conf directory");
+                            "default login config file " + propertiesFile.getName() + " is missing from the conf directory (" + propertiesFile.getPath() + ")");
                 }
             }
         } finally {
@@ -128,7 +113,7 @@ public class LoginManagerProperties {
                     inputStream.close();
                 } catch (final IOException e) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "default login config file " + LOGIN_CONFIG_FILE_NAME + " stream could not be closed.", e);
+                        LOGGER.log(Level.WARNING, "default login config file " + propertiesFile.getName() + " stream could not be closed.", e);
                     }
                 }
             }

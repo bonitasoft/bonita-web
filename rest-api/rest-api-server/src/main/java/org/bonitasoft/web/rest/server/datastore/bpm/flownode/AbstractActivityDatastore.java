@@ -21,6 +21,7 @@ import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.ActivityStates;
+import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -28,6 +29,13 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
+import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.filter.ActivityFilterCreator;
+import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.datastore.utils.VariableMapper;
 import org.bonitasoft.web.rest.server.datastore.utils.VariablesMapper;
 import org.bonitasoft.web.rest.server.engineclient.ActivityEngineClient;
@@ -107,15 +115,9 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
     protected SearchOptionsBuilder makeSearchOptionBuilder(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-
-        addFilterToSearchBuilder(filters, builder, ActivityItem.ATTRIBUTE_CASE_ID, ActivityInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
-        addFilterToSearchBuilder(filters, builder, ActivityItem.ATTRIBUTE_PROCESS_ID, ActivityInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addFilterToSearchBuilder(filters, builder, ActivityItem.ATTRIBUTE_STATE, ActivityInstanceSearchDescriptor.STATE_NAME);
-        addFilterToSearchBuilder(filters, builder, ActivityItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE, new FlowNodeTypeConverter());
-        addFilterToSearchBuilder(filters, builder, ActivityItem.FILTER_SUPERVISOR_ID, ActivityInstanceSearchDescriptor.SUPERVISOR_ID);
-
-        return builder;
+    	return new SearchOptionsCreator(page, resultsByPage, search, 
+    											new Sorts(orders, new ActivityAttributeConverter()),
+    											new Filters(filters, new ActivityFilterCreator())).getBuilder();
     }
 
     @Override

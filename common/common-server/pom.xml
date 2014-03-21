@@ -213,10 +213,7 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<copy
-									file="${project.basedir}/src/test/resources/loginManager-config.properties"
-									tofile="${project.build.directory}/bonita/home/client/platform/conf/loginManager-config.properties"
-									overwrite="true" />
+								<copy file="${project.basedir}/src/test/resources/loginManager-config.properties" tofile="${project.build.directory}/bonita/home/client/platform/conf/loginManager-config.properties" overwrite="true" />
 							</tasks>
 						</configuration>
 					</execution>

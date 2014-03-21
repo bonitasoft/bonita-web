@@ -98,6 +98,11 @@ public class DocumentDownloadServlet extends HttpServlet {
     protected static final String BUSINESS_ARCHIVE_RESOURCES_DIRECTORY = "documents";
 
     /**
+     * content storage id of the document downloaded
+     */
+    protected static final String CONTENT_STORAGE_ID_PARAM = "contentStorageId";
+
+    /**
      * Util class allowing to work with the BPM engine API
      */
     protected BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
@@ -117,6 +122,7 @@ public class DocumentDownloadServlet extends HttpServlet {
         String fileName = request.getParameter(FILE_NAME_PARAM);
         final String resourcePath = request.getParameter(RESOURCE_FILE_NAME_PARAM);
         final String documentId = request.getParameter(DOCUMENT_ID_PARAM);
+        String contentStorageId = request.getParameter(CONTENT_STORAGE_ID_PARAM);
         final APISession apiSession = (APISession) request.getSession().getAttribute(API_SESSION_PARAM_KEY);
         byte[] fileContent = null;
         if (filePath != null) {
@@ -142,10 +148,19 @@ public class DocumentDownloadServlet extends HttpServlet {
                 fileName = file.getName();
             }
             fileContent = getFileContent(file, filePath);
+        } else if (fileName != null && contentStorageId != null) {
+            try {
+                fileContent = bpmEngineAPIUtil.getProcessAPI(apiSession).getDocumentContent(contentStorageId);
+            } catch (Exception e) {
+                final String errorMessage = "Error while retrieving the document  with content storage ID " + contentStorageId + " from the engine.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new ServletException(errorMessage, e);
+            }
         } else if (documentId != null) {
             try {
                 final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(apiSession);
-                String contentStorageId;
                 try {
                     final Document document = processAPI.getDocument(Long.valueOf(documentId));
                     fileName = document.getContentFileName();

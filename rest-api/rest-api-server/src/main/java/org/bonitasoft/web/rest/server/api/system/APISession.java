@@ -40,6 +40,8 @@ public class APISession extends ConsoleAPI<SessionItem> {
 
     public static final String APISESSION = "apiSession";
 
+    public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+
     @Override
     protected ItemDefinition defineItemDefinition() {
         return Definitions.get(SessionDefinition.TOKEN);
@@ -123,7 +125,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
      *            the current user tenant id
      */
     protected boolean isLogoutDisabled(long tenantId) {
-        return LoginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
+        return loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
     }
 
 }
