@@ -42,7 +42,7 @@ public class ArchivedTasksSection extends Section {
     private ItemTable tasksTable;
 
     public ArchivedTasksSection(ArchivedCaseItem item) {
-        super(_("Tasks"));
+        super(_("Done tasks"));
         addClass("tasks");
         tasksTable = buildTasksTable(item);
         addBody(tasksTable);
