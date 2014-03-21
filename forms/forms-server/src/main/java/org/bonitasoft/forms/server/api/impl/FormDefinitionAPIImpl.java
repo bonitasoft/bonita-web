@@ -375,8 +375,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         try {
             htmlTemplate = getPageLayout(templatePath, applicationDeploymentDate, context);
         } catch (final FileNotFoundException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Page layout not fount. Using the default page template.");
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Page layout not found. Using the default page template.");
             }
             boolean isActivity = false;
             @SuppressWarnings("unchecked")
