@@ -19,10 +19,13 @@ package org.bonitasoft.forms.server.accessor.api;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProcessRuntimeAPI;
 import org.bonitasoft.engine.expression.Expression;
+import org.bonitasoft.engine.expression.ExpressionEvaluationException;
+import org.bonitasoft.forms.server.accessor.widget.impl.XMLExpressionsUtil;
+import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
 
 /**
  * @author Colin PUY
@@ -37,60 +40,79 @@ public class ExpressionEvaluatorEngineClient {
     }
 
     public Map<String, Serializable> evaluateExpressionsOnActivityInstance(long activityInstanceID,
-            Map<Expression, Map<String, Serializable>> expressionsWithContext) throws BPMEngineException {
+            Map<Expression, Map<String, Serializable>> expressionsWithContext) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnActivityInstance(activityInstanceID, expressionsWithContext);
-        } catch (Exception e) {
-            throw new BPMEngineException("Error when evaluating expressions on activity instance " + activityInstanceID, e);
+        } catch (ExpressionEvaluationException e) {
+            throw new BPMExpressionEvaluationException("Error when evaluating expressions on activity instance " + activityInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
     public Map<String, Serializable> evaluateExpressionsOnProcessInstance(long processInstanceID, Map<Expression, Map<String, Serializable>> expressions)
-            throws BPMEngineException {
+            throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnProcessInstance(processInstanceID, expressions);
-        } catch (Exception e) {
-            throw new BPMEngineException("Error when evaluating expressions on process instance " + processInstanceID, e);
+        } catch (ExpressionEvaluationException e) {
+            throw new BPMExpressionEvaluationException("Error when evaluating expressions on process instance " + processInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
     public Map<String, Serializable> evaluateExpressionsOnProcessDefinition(long processDefinitionID,
-            Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException {
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnProcessDefinition(processDefinitionID, expressions);
-        } catch (Exception e) {
-            throw new BPMEngineException("Error when evaluating expressions on process definition " + processDefinitionID, e);
+        } catch (ExpressionEvaluationException e) {
+            throw new BPMExpressionEvaluationException("Error when evaluating expressions on process definition " + processDefinitionID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
     public Map<String, Serializable> evaluateExpressionsOnCompletedActivityInstance(long activityInstanceID,
-            Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException {
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressions);
-        } catch (Exception e) {
-            throw new BPMEngineException("Error when evaluating expressions on completed activity instance " + activityInstanceID, e);
+        } catch (ExpressionEvaluationException e) {
+            throw new BPMExpressionEvaluationException("Error when evaluating expressions on completed activity instance " + activityInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
     public Map<String, Serializable> evaluateExpressionsOnCompletedProcessInstance(long processInstanceID,
-            Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException {
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionOnCompletedProcessInstance(processInstanceID, expressions);
-        } catch (Exception e) {
-            throw new BPMEngineException("Error when evaluating expressions on completed process instance " + processInstanceID, e);
+        } catch (ExpressionEvaluationException e) {
+            throw new BPMExpressionEvaluationException("Error when evaluating expressions on completed process instance " + processInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
     public Map<String, Serializable> evaluateExpressionsAtProcessInstanciation(long processInstanceID,
-            Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException {
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsAtProcessInstanciation(processInstanceID, expressions);
-        } catch (Exception e) {
-            throw new BPMEngineException("Error when evaluating expressions on completed process instance " + processInstanceID, e);
+    	}catch (ExpressionEvaluationException e) {
+            throw new BPMExpressionEvaluationException("Error when evaluating expressions on completed process instance " + processInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
     private ProcessRuntimeAPI getProcessAPI() {
         return processApi;
     }
+    
+    private String buildEvaluationMessageLogDetail(final ExpressionEvaluationException e) {
+    	String[] splitExpressionName = null;
+    	String expressionParentName = "unknown";
+    	String expressionParentAttribute = "unknown";
+    	
+    	if(e.getExpressionName()!=null){
+    		splitExpressionName = e.getExpressionName().split(FormFieldValuesUtil.EXPRESSION_KEY_SEPARATOR);
+
+        	if(splitExpressionName.length==2){
+        		expressionParentName = splitExpressionName[0];
+        		expressionParentAttribute = splitExpressionName[1];
+        		return "Error on expression evaluation for the attribute ["+ expressionParentAttribute +"] of object ["+ expressionParentName +"].";
+        	}
+    	}
+    	
+    	return "Error on expression evaluation for the expression with name ["+ e.getExpressionName() +"].";
+    }
+
 }

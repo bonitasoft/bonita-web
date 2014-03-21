@@ -42,7 +42,7 @@ public class ArchivedTasksSection extends Section {
     private ItemTable tasksTable;
 
     public ArchivedTasksSection(ArchivedCaseItem item) {
-        super(_("Tasks"));
+        super(_("Done tasks"));
         addClass("tasks");
         tasksTable = buildTasksTable(item);
         addBody(tasksTable);
@@ -67,7 +67,8 @@ public class ArchivedTasksSection extends Section {
 
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
-                .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")));
+                .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
+                .setOrder(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, false);
     }
 
     public void setNbLinesByPages(int nbLinesByPage) {

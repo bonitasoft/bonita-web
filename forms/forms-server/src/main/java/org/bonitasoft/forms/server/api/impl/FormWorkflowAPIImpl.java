@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -62,7 +63,6 @@ import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.UpdateException;
-import org.bonitasoft.engine.expression.ExpressionEvaluationException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.operation.Operation;
@@ -120,27 +120,16 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     protected BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExpressionEvaluationException
-     */
     @Override
     public Serializable getActivityFieldValue(final APISession session, final long activityInstanceID, final Expression expression, final Locale locale,
-            final boolean isCurrentValue) throws BPMEngineException, InvalidSessionException, ExpressionEvaluationException {
+            final boolean isCurrentValue) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         return getActivityFieldValue(session, activityInstanceID, expression, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExpressionEvaluationException
-     */
     @Override
     public Serializable getActivityFieldValue(final APISession session, final long activityInstanceID, final Expression expression, final Locale locale,
-            final boolean isCurrentValue, final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException,
-            ExpressionEvaluationException {
+            final boolean isCurrentValue, final Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateActivityInitialExpression(session, activityInstanceID, expression, locale, isCurrentValue, context);
@@ -148,20 +137,22 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getProcessFieldValue(final APISession session, final long processDefinitionID, final Expression expression, final Locale locale)
-            throws BPMEngineException, InvalidSessionException {
+            throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         return getProcessFieldValue(session, processDefinitionID, expression, locale, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getProcessFieldValue(final APISession session, final long processDefinitionID, final Expression expression, final Locale locale,
-            final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException {
+            final Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateProcessInitialExpression(session, processDefinitionID, expression, locale, context);
@@ -169,47 +160,39 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getInstanceFieldValue(final APISession session, final long processInstanceID, final Expression expression, final Locale locale,
-            final boolean isCurrentValue) throws BPMEngineException, InvalidSessionException {
+            final boolean isCurrentValue) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         return getInstanceFieldValue(session, processInstanceID, expression, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getInstanceFieldValue(final APISession session, final long processInstanceID, final Expression expression, final Locale locale,
-            final boolean isCurrentValue, final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException {
+            final boolean isCurrentValue, final Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateInstanceInitialExpression(session, processInstanceID, expression, locale, isCurrentValue, context);
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExpressionEvaluationException
-     */
     @Override
     public Serializable getActivityFieldValue(final APISession session, final long activityInstanceID, final Expression expression,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         return getActivityFieldValue(session, activityInstanceID, expression, fieldValues, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExpressionEvaluationException
-     */
     @Override
     public Serializable getActivityFieldValue(final APISession session, final long activityInstanceID, final Expression expression,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context)
-            throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException {
+            throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateActivityExpression(session, activityInstanceID, expression, fieldValues, locale, isCurrentValue, context);
@@ -217,22 +200,24 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getProcessFieldValue(final APISession session, final long processDefinitionID, final Expression expression,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale) throws BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException,
+            IOException, BPMEngineException {
 
         return getProcessFieldValue(session, processDefinitionID, expression, fieldValues, locale, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getProcessFieldValue(final APISession session, final long processDefinitionID, final Expression expression,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale, final Map<String, Serializable> context) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale, final Map<String, Serializable> context) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateProcessExpression(session, processDefinitionID, expression, fieldValues, locale, context);
@@ -240,11 +225,12 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getInstanceFieldValue(final APISession session, final long processInstanceID, final Expression expression,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         return getInstanceFieldValue(session, processInstanceID, expression, fieldValues, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
@@ -254,11 +240,12 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * 
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     @Override
     public Serializable getInstanceFieldValue(final APISession session, final long processInstanceID, final Expression expression,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context)
-            throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
+            throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateInstanceExpression(session, processInstanceID, expression, fieldValues, locale, isCurrentValue, context);
@@ -281,7 +268,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public long executeActionsAndStartInstance(final APISession session, final long userId, final long processDefinitionID,
             final Map<String, FormFieldValue> fieldValues, final List<FormAction> actions, final Locale locale, final String submitButtonId,
-            final Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, Serializable> context) throws BPMEngineException,BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException {
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context, true);
         if (context != null) {
@@ -328,7 +315,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public void executeActionsAndTerminate(final APISession session, final long activityInstanceID, final Map<String, FormFieldValue> fieldValues,
             final List<FormAction> actions, final Locale locale, final String submitButtonId, final Map<String, Serializable> context)
-            throws BPMEngineException, InvalidSessionException, ActivityInstanceNotFoundException, ProcessInstanceNotFoundException, FileTooBigException,
+            throws BPMEngineException,BPMExpressionEvaluationException, InvalidSessionException, ActivityInstanceNotFoundException, ProcessInstanceNotFoundException, FileTooBigException,
             IOException {
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
 
@@ -795,11 +782,12 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getActivityFieldsValues(final APISession session, final long activityInstanceID, final List<Expression> expressions,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue,
-            final Map<String, Serializable> transientDataContext) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, Serializable> transientDataContext) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateActivityExpressions(session, activityInstanceID, expressions, fieldValues, locale, isCurrentValue,
@@ -808,22 +796,24 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getActivityFieldsValues(final APISession session, final long activityInstanceID, final List<Expression> expressions,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         return getActivityFieldsValues(session, activityInstanceID, expressions, fieldValues, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getActivityFieldsValues(final APISession session, final long activityInstanceID, final List<Expression> expressions,
-            final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> transientDataContext) throws BPMEngineException,
-            InvalidSessionException {
+            final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> transientDataContext) throws BPMExpressionEvaluationException,
+            InvalidSessionException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateActivityInitialExpressions(session, activityInstanceID, expressions, locale, isCurrentValue, transientDataContext);
@@ -831,21 +821,23 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getActivityFieldsValues(final APISession session, final long activityInstanceID, final List<Expression> expressions,
-            final Locale locale, final boolean isCurrentValue) throws BPMEngineException, InvalidSessionException {
+            final Locale locale, final boolean isCurrentValue) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         return getActivityFieldsValues(session, activityInstanceID, expressions, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getInstanceFieldsValues(final APISession session, final long processInstanceID, final List<Expression> expressions,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue,
-            final Map<String, Serializable> transientDataContext) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, Serializable> transientDataContext) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateInstanceExpressions(session, processInstanceID, expressions, fieldValues, locale, isCurrentValue,
@@ -854,22 +846,24 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getInstanceFieldsValues(final APISession session, final long processInstanceID, final List<Expression> expressions,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         return getInstanceFieldsValues(session, processInstanceID, expressions, fieldValues, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getInstanceFieldsValues(final APISession session, final long processInstanceID, final List<Expression> expressions,
-            final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> transientDataContext) throws BPMEngineException,
-            InvalidSessionException {
+            final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> transientDataContext) throws BPMExpressionEvaluationException,
+            InvalidSessionException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateInstanceInitialExpressions(session, processInstanceID, expressions, locale, isCurrentValue, transientDataContext);
@@ -877,21 +871,23 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getInstanceFieldsValues(final APISession session, final long processInstanceID, final List<Expression> expressions,
-            final Locale locale, final boolean isCurrentValue) throws BPMEngineException, InvalidSessionException {
+            final Locale locale, final boolean isCurrentValue) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         return getInstanceFieldsValues(session, processInstanceID, expressions, locale, isCurrentValue, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getProcessFieldsValues(final APISession session, final long processDefinitionID, final List<Expression> expressions,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final Map<String, Serializable> transientDataContext)
-            throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException {
+            throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateProcessExpressions(session, processDefinitionID, expressions, fieldValues, locale, transientDataContext);
@@ -899,21 +895,23 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getProcessFieldsValues(final APISession session, final long processDefinitionID, final List<Expression> expressions,
-            final Map<String, FormFieldValue> fieldValues, final Locale locale) throws BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException {
+            final Map<String, FormFieldValue> fieldValues, final Locale locale) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException,
+            IOException, BPMEngineException {
 
         return getProcessFieldsValues(session, processDefinitionID, expressions, fieldValues, locale, new HashMap<String, Serializable>());
     }
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getProcessFieldsValues(final APISession session, final long processDefinitionID, final List<Expression> expressions,
-            final Locale locale, final Map<String, Serializable> transientDataContext) throws BPMEngineException, InvalidSessionException {
+            final Locale locale, final Map<String, Serializable> transientDataContext) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
         return formExpressionsAPI.evaluateProcessInitialExpressions(session, processDefinitionID, expressions, locale, transientDataContext);
@@ -921,10 +919,11 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
+     * @throws BPMEngineException 
      */
     @Override
     public Map<String, Serializable> getProcessFieldsValues(final APISession session, final long processDefinitionID, final List<Expression> expressions,
-            final Locale locale) throws BPMEngineException, InvalidSessionException {
+            final Locale locale) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         return getProcessFieldsValues(session, processDefinitionID, expressions, locale, new HashMap<String, Serializable>());
     }
