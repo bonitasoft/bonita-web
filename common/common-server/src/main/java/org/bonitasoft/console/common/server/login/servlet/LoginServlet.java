@@ -86,7 +86,9 @@ public class LoginServlet extends HttpServlet {
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = LoginManager.DEFAULT_DIRECT_URL;
         } else {
-            redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
+            if (redirectURL != null) {
+                redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
+            }
         }
         try {
             doLogin(request, tenantId);
