@@ -46,7 +46,7 @@ public class LoginDatastore {
         APISession apiSession = null;
         try {
             if (username == null || password == null) {
-                final String errorMessage = "Error while logging in on the engine API.";
+                final String errorMessage = "Error while logging in the engine API.";
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, errorMessage);
                 }
@@ -54,7 +54,7 @@ public class LoginDatastore {
             }
             apiSession = getLoginAPI().login(username, password);
         } catch (final LoginException e) {
-            final String errorMessage = "Error while logging in on the engine API.";
+            final String errorMessage = "Error while logging in the engine API.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, errorMessage);
             }
@@ -73,7 +73,7 @@ public class LoginDatastore {
             try {
                 getLoginAPI().logout(apiSession);
             } catch (final LogoutException e) {
-                final String errorMessage = "logout error while calling the engine API.";
+                final String errorMessage = "Logout error while calling the engine API.";
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, errorMessage);
                 }
