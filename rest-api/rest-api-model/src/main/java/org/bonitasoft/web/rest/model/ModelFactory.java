@@ -45,6 +45,9 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoAssociationDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.MembershipDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
@@ -82,6 +85,12 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new GroupDefinition();
         } else if (MembershipDefinition.TOKEN.equals(token)) {
             return new MembershipDefinition();
+        } else if (CustomUserInfoDefinition.TOKEN.equals(token)) {
+            return new CustomUserInfoDefinition();
+        } else if (CustomUserInfoDefinitionDefinition.TOKEN.equals(token)) {
+            return new CustomUserInfoDefinitionDefinition();
+        } else if (CustomUserInfoAssociationDefinition.TOKEN.equals(token)) {
+            return new CustomUserInfoAssociationDefinition();
         }
 
         // bpm.process
