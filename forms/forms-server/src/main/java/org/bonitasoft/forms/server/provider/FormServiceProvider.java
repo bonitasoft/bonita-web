@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.forms.server.provider;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,6 +24,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
@@ -45,6 +47,7 @@ import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormSubmissionException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
@@ -148,9 +151,10 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws FormInitializationException 
      */
     Serializable resolveExpression(Expression expression, Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException,
-            FileTooBigException, IOException;
+            FileTooBigException, IOException, FormInitializationException;
 
     /**
      * Resolve a group of expressions (Groovy in the default implementation, but it can be anything in another implementation).
@@ -165,9 +169,10 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws FormInitializationException 
      */
     Map<String, Serializable> resolveExpressions(List<Expression> expressions, Map<String, Object> context) throws FormNotFoundException,
-            SessionTimeoutException, FileTooBigException, IOException;
+            SessionTimeoutException, FileTooBigException, IOException, FormInitializationException;
 
     /**
      * Execute some actions after a form submission.
@@ -236,9 +241,10 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validateField(List<FormValidator> validators, String fieldId, FormFieldValue fieldValue, String submitButtonId,
-            Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException;
+            Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException, BPMExpressionEvaluationException;
 
     /**
      * Validate a form page with several fields
@@ -259,9 +265,10 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMExpressionEvaluationException 
      */
     List<FormValidator> validatePage(List<FormValidator> validators, Map<String, FormFieldValue> fields, String submitButtonId, Map<String, Object> context)
-            throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException;
+            throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException, BPMExpressionEvaluationException;
 
     /**
      * Get the date at which the form application was deployed (this is used to clear the form definition cache in case a new application is deployed).<br/>
@@ -325,9 +332,10 @@ public interface FormServiceProvider {
      * @return the form field value
      * @throws FileTooBigException
      * @throws IOException
+     * @throws FormInitializationException 
      */
     FormFieldValue getAttachmentFormFieldValue(Object value, Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException, IOException,
-            FileTooBigException;
+            FileTooBigException, FormInitializationException;
 
     /**
      * Check if a specific form is in edit mode (entry form) or not (view form).<br/>

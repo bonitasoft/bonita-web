@@ -126,7 +126,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected void buildAvailableTasks(final CaseItem item) {
         final ItemTable tasksTable = getTaskTable(item);
         preparetasksTable(tasksTable);
-        addBody(new Section(_("Tasks"), tasksTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("tasks"));
+        addBody(new Section(_("Pending tasks"), tasksTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("tasks"));
     }
 
     protected ItemTable getTaskTable(final CaseItem item) {
@@ -168,7 +168,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected void buildDoneTasks(final CaseItem item) {
         final ItemTable doneTasksTable = getArchivedTaskTable(item);
         prepareArchivedTasksTable(doneTasksTable);
-        final Section section = new Section(_("Closed tasks"),
+        final Section section = new Section(_("Done tasks"),
                 doneTasksTable.setView(VIEW_TYPE.VIEW_LIST));
         section.addClass("tasks");
         section.addClass("performed");

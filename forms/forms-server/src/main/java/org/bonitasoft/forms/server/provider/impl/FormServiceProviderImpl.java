@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.forms.server.provider.impl;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,7 +30,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -50,7 +52,6 @@ import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.expression.ExpressionEvaluationException;
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -84,6 +85,7 @@ import org.bonitasoft.forms.server.api.IFormValidationAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormSubmissionException;
 import org.bonitasoft.forms.server.exception.FormValidationException;
@@ -94,6 +96,9 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.ApplicationURLUtils;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
+import org.bonitasoft.forms.server.util.FormContextUtil;
+import org.bonitasoft.forms.server.util.FormLogger;
+import org.bonitasoft.forms.server.util.IFormLogger;
 import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
@@ -113,14 +118,16 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(FormServiceProviderImpl.class.getName());
+    protected static FormLogger LOGGER;
+
+    protected static Logger defaultLogger = Logger.getLogger(FormServiceProviderImpl.class.getName());
 
     protected static SimpleDateFormat DATE_FORMAT;
 
     private final static int DEFAULT_NUM_VALUE = 0;
 
     static {
-        if (LOGGER.isLoggable(Level.WARNING)) {
+        if (Logger.getLogger(FormServiceProviderImpl.class.getName()).isLoggable(Level.WARNING)) {
             DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS");
         }
     }
@@ -138,6 +145,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         super();
     }
 
+    protected IFormLogger getLogger() {
+        if (LOGGER == null) {
+            LOGGER = new FormLogger(FormServiceProviderImpl.class.getName());
+        }
+        return LOGGER;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -145,17 +159,18 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     public Document getFormDefinitionDocument(final Map<String, Object> context) throws IOException, InvalidFormDefinitionException, FormNotFoundException,
             SessionTimeoutException {
 
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getFormDefinitionDocument - start ");
+            defaultLogger.log(Level.FINEST, "### " + time + " - getFormDefinitionDocument - start ");
         }
-        final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+        final Locale locale = ctxu.getLocale();
         long processDefinitionID = -1;
         Document formDefinitionDocument = null;
         Date processDeployementDate = null;
         try {
             processDefinitionID = getProcessDefinitionID(context);
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             processDeployementDate = getDeployementDate(session, processDefinitionID);
             String localeString = null;
             if (locale != null) {
@@ -166,33 +181,31 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         } catch (final ProcessDefinitionNotFoundException e) {
             if (processDefinitionID != -1) {
                 final String message = "Cannot find a process with ID " + processDefinitionID;
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             }
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new SessionTimeoutException(message);
         } catch (final FileNotFoundException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "No form definition descriptor was found for process " + processDefinitionID, e);
-            }
+            logInfoMessage("No form definition descriptor was found for process " + processDefinitionID, e);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getFormDefinitionDocument - end");
+            defaultLogger.log(Level.FINEST, "### " + time + " - getFormDefinitionDocument - end");
         }
         return formDefinitionDocument;
+    }
+
+    protected void logSevereWithContext(final String message, final Throwable e, final Map<String, Object> context) {
+        if (getLogger().isLoggable(Level.SEVERE)) {
+            getLogger().log(Level.SEVERE, message, e, context);
+        }
     }
 
     /**
@@ -205,10 +218,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws SessionTimeoutException
      */
     protected long getProcessDefinitionID(final Map<String, Object> context) throws InvalidSessionException, FormNotFoundException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getProcessDefinitionID - start");
+            defaultLogger.log(Level.FINEST, "### " + time + " - getProcessDefinitionID - start");
         }
         final Map<String, Object> urlContext = getUrlContext(context);
         long processDefinitionID = -1;
@@ -219,58 +232,51 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                     final long processInstanceID = getProcessInstanceId(urlContext);
                     final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
-                    final APISession session = getAPISessionFromContext(context);
+                    final APISession session = ctxu.getAPISessionFromContext();
                     try {
                         processDefinitionID = workflowAPI.getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID);
                     } catch (final ProcessInstanceNotFoundException e) {
                         final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, message, e);
-                        }
+                        logSevereWithContext(message, e, context);
                         throw new RuntimeException(message, e);
                     } catch (final ProcessDefinitionNotFoundException e) {
                         final String message = "The process definition for process instance with ID " + processInstanceID + " was not found!";
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, message, e);
-                        }
+                        logSevereWithContext(message, e, context);
                         throw new RuntimeException(message, e);
                     } catch (final ArchivedProcessInstanceNotFoundException e) {
                         final String message = "The archived process instance for process instance with ID " + processInstanceID + " was not found!";
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, message, e);
-                        }
+                        logSevereWithContext(message, e, context);
                         throw new RuntimeException(message, e);
                     }
                 } else if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                     final long activityInstanceID = getActivityInstanceId(urlContext);
                     final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
-                    final APISession session = getAPISessionFromContext(context);
+                    final APISession session = ctxu.getAPISessionFromContext();
                     try {
                         processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
                     } catch (final FormWorflowApiException e) {
-                        logSevereMessage(e, e.getMessage());
+                        logSevereMessageWithContext(e, e.getMessage(), context);
                         throw new RuntimeException(e);
                     }
                 } else {
-                    if (LOGGER.isLoggable(Level.FINE)) {
-                        LOGGER.log(Level.FINE, "The URL context does not contain any BPM entity parameter. Unable to retrieve the process definition UUID.");
+                    if (defaultLogger.isLoggable(Level.FINE)) {
+                        defaultLogger.log(Level.FINE,
+                                "The URL context does not contain any BPM entity parameter. Unable to retrieve the process definition UUID.");
                     }
                 }
             } catch (final BPMEngineException e) {
                 final String message = "Error while communicating with the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new RuntimeException(message, e);
             }
         } else {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "The URL context is null. Unable to retrieve the process definition UUID.");
+            if (defaultLogger.isLoggable(Level.WARNING)) {
+                defaultLogger.log(Level.WARNING, "The URL context is null. Unable to retrieve the process definition UUID.");
             }
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getProcessDefinitionID - end");
+            defaultLogger.log(Level.FINEST, "### " + time + " - getProcessDefinitionID - end");
         }
         return processDefinitionID;
     }
@@ -285,17 +291,17 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             CanceledFormException, FormNotFoundException, FormAlreadySubmittedException, ForbiddenApplicationAccessException, FormInErrorException,
             MigrationProductVersionNotIdenticalException, NoCredentialsInSessionException, SkippedFormException, SessionTimeoutException,
             TaskAssignationException, AbortedFormException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - isAllowed - start");
+            defaultLogger.log(Level.FINEST, "### " + time + " - isAllowed - start");
         }
         final Map<String, Object> urlContext = getUrlContext(context);
         final User user = (User) context.get(FormServiceProviderUtil.USER);
         if (user == null) {
             final String message = "Can't find the user.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message);
+            if (defaultLogger.isLoggable(Level.INFO)) {
+                defaultLogger.log(Level.INFO, message);
             }
             throw new NoCredentialsInSessionException(message);
         }
@@ -306,15 +312,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         // if (migrationProductVersion == null && !currentProductVersion.split("-")[0].equals(productVersion.split("-")[0])
         // || migrationProductVersion != null && !currentProductVersion.split("-")[0].equals(migrationProductVersion.split("-")[0])) {
         // final String message = "The migration product version not identical with current product version.";
-        // if (LOGGER.isLoggable(Level.WARNING)) {
-        // LOGGER.log(Level.WARNING, message);
+        // if (getLogger().isLoggable(Level.WARNING)) {
+        // getLogger().log(Level.WARNING, message);
         // }
         // throw new MigrationProductVersionNotIdenticalException(message);
         // }
         // }
         if (permissions != null) {
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             final String uuidType = permissions.split("#")[0];
             try {
                 if (FormServiceProviderUtil.ACTIVITY_UUID.equals(uuidType)) {
@@ -325,14 +331,14 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         final long activityInstanceID = getActivityInstanceId(urlContext);
                         try {
                             if (!getActivityDefinitionUUID(session, workflowAPI, activityInstanceID).equals(activityDefinitionUUIDStr)) {
-                                final String message = "The task required is not an instance of activity " + activityDefinitionUUIDStr;
-                                if (LOGGER.isLoggable(Level.INFO)) {
-                                    LOGGER.log(Level.INFO, message);
+                                final String message = "User tried to access an unauthorized activity <" + activityDefinitionUUIDStr + ">";
+                                if (getLogger().isLoggable(Level.INFO)) {
+                                    getLogger().log(Level.INFO, message, context);
                                 }
                                 throw new ForbiddenFormAccessException(message);
                             }
                         } catch (final FormWorflowApiException e) {
-                            logInfoMessage(e, e.getMessage());
+                            logInfoMessageWithContext(e.getMessage(), e, context);
                             throw new FormNotFoundException(e);
                         }
                         if (isFormPermissions) {
@@ -342,17 +348,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 try {
                                     getFormWorkFlowApi().assignTask(session, activityInstanceID);
                                 } catch (final TaskAssignationException e) {
-                                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                                        LOGGER.log(Level.SEVERE, e.getMessage());
-                                    }
+                                    logSevereWithContext(e.getMessage(), e, context);
                                     throw e;
                                 }
                             }
                         }
                     } else {
                         final String message = "A task parameter is required to display the form for activity " + activityDefinitionUUIDStr;
-                        if (LOGGER.isLoggable(Level.INFO)) {
-                            LOGGER.log(Level.INFO, message);
+                        if (getLogger().isLoggable(Level.INFO)) {
+                            getLogger().log(Level.INFO, message);
                         }
                         throw new ForbiddenFormAccessException(message);
                     }
@@ -368,13 +372,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 final long activityInstanceProcessDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
                                 if (activityInstanceProcessDefinitionID != processDefinitionID) {
                                     final String message = "The task required is not an instance of an activity of process" + processDefinitionUUIDStr;
-                                    if (LOGGER.isLoggable(Level.INFO)) {
-                                        LOGGER.log(Level.INFO, message);
+                                    if (getLogger().isLoggable(Level.INFO)) {
+                                        getLogger().log(Level.INFO, message);
                                     }
                                     throw new ForbiddenFormAccessException(message);
                                 }
                             } catch (final FormWorflowApiException e) {
-                                logSevereMessage(e, e.getMessage());
+                                logSevereMessageWithContext(e, e.getMessage(), context);
                                 throw new FormNotFoundException(e);
                             }
                             if (isFormPermissions) {
@@ -388,22 +392,18 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                         processInstanceID);
                                 if (processInstanceProcessDefinitionID != processDefinitionID) {
                                     final String message = "The process instance required is not an instance of process" + processDefinitionUUIDStr;
-                                    if (LOGGER.isLoggable(Level.INFO)) {
-                                        LOGGER.log(Level.INFO, message);
+                                    if (getLogger().isLoggable(Level.INFO)) {
+                                        getLogger().log(Level.INFO, message);
                                     }
                                     throw new ForbiddenFormAccessException(message);
                                 }
                             } catch (final ProcessInstanceNotFoundException e) {
                                 final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-                                if (LOGGER.isLoggable(Level.INFO)) {
-                                    LOGGER.log(Level.INFO, message, e);
-                                }
+                                logInfoMessageWithContext(message, e, context);
                                 throw new FormNotFoundException(message);
                             } catch (final ArchivedProcessInstanceNotFoundException e) {
                                 final String message = "Archived process instance not found";
-                                if (LOGGER.isLoggable(Level.SEVERE)) {
-                                    LOGGER.log(Level.SEVERE, message, e);
-                                }
+                                logSevereWithContext(message, e, context);
                                 throw new FormNotFoundException(message);
                             }
                             if (isFormPermissions) {
@@ -414,16 +414,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             final long processDefinitionIDFromURL = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
                             if (processDefinitionIDFromURL != processDefinitionID) {
                                 final String message = "The process required does not match the form required " + processDefinitionUUIDStr;
-                                if (LOGGER.isLoggable(Level.INFO)) {
-                                    LOGGER.log(Level.INFO, message);
-                                }
+                                logInfoMessageWithContext(message, new ForbiddenFormAccessException(), context);
                                 throw new ForbiddenFormAccessException(message);
                             }
                             if (!workflowAPI.isProcessEnabled(session, processDefinitionID)) {
                                 final String message = "The process definition with ID " + processDefinitionID + " is not enabled.";
-                                if (LOGGER.isLoggable(Level.INFO)) {
-                                    LOGGER.log(Level.INFO, message);
-                                }
+                                logInfoMessageWithContext(message, new ForbiddenFormAccessException(), context);
                                 throw new ForbiddenFormAccessException(message);
                             }
                             if (isFormPermissions) {
@@ -432,35 +428,31 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         }
                     } catch (final ProcessDefinitionNotFoundException e) {
                         final String message = "The process definition " + processDefinitionUUIDStr + " does not exist!";
-                        if (LOGGER.isLoggable(Level.INFO)) {
-                            LOGGER.log(Level.INFO, message, e);
+                        if (getLogger().isLoggable(Level.INFO)) {
+                            getLogger().log(Level.INFO, message, e);
                         }
                         throw new FormNotFoundException(message);
                     }
                 }
             } catch (final BPMEngineException e) {
                 final String message = "Error while communicating with the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new SessionTimeoutException(message);
             }
         } else {
             final String message = "The permissions are undefined for form " + formId;
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message);
             }
             throw new ForbiddenApplicationAccessException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - isAllowed - end");
+            getLogger().log(Level.FINEST, "### " + time + " - isAllowed - end");
         }
         return true;
     }
@@ -497,8 +489,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             // TODO verify if a user is process supervisor of the process. In this case, he can access the form
             if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session), activityInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the form of activity instance " + activityInstanceID;
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message);
+                if (getLogger().isLoggable(Level.INFO)) {
+                    getLogger().log(Level.INFO, message);
                 }
                 throw new ForbiddenFormAccessException(message);
             }
@@ -517,28 +509,28 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 if (FormServiceProviderUtil.ENTRY_FORM_TYPE.equals(getFormType(formId))) {
                     final String message = "The activity instance with ID " + activityInstanceID
                             + " cannot be executed anymore. It's either finished or aborted";
-                    if (LOGGER.isLoggable(Level.INFO)) {
-                        LOGGER.log(Level.INFO, message);
+                    if (getLogger().isLoggable(Level.INFO)) {
+                        getLogger().log(Level.INFO, message);
                     }
                     throw new FormAlreadySubmittedException(message);
                 }
             }
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new FormNotFoundException(message);
         } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
             final String message = "The activity archived instance with ID " + activityInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new FormNotFoundException(message);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process definition of activity with with ID " + activityInstanceID + " could not be found.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                logSevereMessage(e, message);
             }
             throw new FormNotFoundException(message);
         }
@@ -575,27 +567,27 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             if (!workflowAPI.canUserSeeProcessInstance(session, getProcessActors(session), processInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the " + getFormType(formId)
                         + " form of process instance " + processInstanceID;
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message);
+                if (getLogger().isLoggable(Level.INFO)) {
+                    getLogger().log(Level.INFO, message);
                 }
                 throw new ForbiddenFormAccessException(message);
             }
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new FormNotFoundException(message);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process definition of process instance with ID " + processInstanceID + " could not be found.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new FormNotFoundException(message);
         } catch (final UserNotFoundException e) {
             final String message = "The user with ID " + session.getUserId() + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                logSevereMessage(e, message);
             }
             throw new SessionTimeoutException(message);
         }
@@ -626,21 +618,21 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             if (!workflowAPI.canUserInstantiateProcessDefinition(session, getProcessActors(session), processDefinitionID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the instantiation form of process "
                         + processDefinitionID;
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message);
+                if (getLogger().isLoggable(Level.INFO)) {
+                    getLogger().log(Level.INFO, message);
                 }
                 throw new ForbiddenFormAccessException(message);
             }
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process instance with ID " + processDefinitionID + " does not exist!";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new FormNotFoundException(message);
         } catch (final ActorNotFoundException e) {
             final String message = "The engine was not able to retrieve the actors of process definition with ID " + processDefinitionID;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                logSevereMessage(e, message);
             }
             throw new BPMEngineException(message);
         }
@@ -658,8 +650,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         String formType = null;
         if (formId == null) {
             final String message = "the Form ID is null. The parameter 'form' is probably missing from the URL.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                getLogger().log(Level.SEVERE, message);
             }
             throw new FormNotFoundException(message);
         } else {
@@ -668,8 +660,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 formType = formIdComponents[1];
             } else {
                 final String message = "Wrong FormId " + formId + ". It doesn't contain the form type.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message);
+                if (getLogger().isLoggable(Level.SEVERE)) {
+                    getLogger().log(Level.SEVERE, message);
                 }
                 throw new IllegalArgumentException(message);
             }
@@ -683,24 +675,25 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Serializable resolveExpression(final Expression expression, final Map<String, Object> context) throws FormNotFoundException,
+            FormInitializationException,
             SessionTimeoutException, FileTooBigException, IOException {
-
+        FormContextUtil ctxu = new FormContextUtil(context);
         Serializable result = null;
         if (expression != null) {
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (getLogger().isLoggable(Level.FINEST)) {
                 final String time = DATE_FORMAT.format(new Date());
-                LOGGER.log(Level.FINEST, "### " + time + " - resolveExpression - start" + expression.getExpressionType() + " " + expression.getContent());
+                getLogger().log(Level.FINEST, "### " + time + " - resolveExpression - start" + expression.getExpressionType() + " " + expression.getContent());
             }
             long activityInstanceID = -1;
             long processDefinitionID = -1;
             long processInstanceID = -1;
             boolean isCurrentValue = true;
-            final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+            final Locale locale = ctxu.getLocale();
             if (context.get(FormServiceProviderUtil.IS_CURRENT_VALUE) != null) {
                 isCurrentValue = (Boolean) context.get(FormServiceProviderUtil.IS_CURRENT_VALUE);
             }
             final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             final Map<String, FormFieldValue> fieldValues = convertFormFieldValues(
                     (Map<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES), true);
             final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
@@ -757,32 +750,31 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         }
                     }
                 } else {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "Unable to resolve expression: " + expression + ". No process entity specified in the context");
+                    if (getLogger().isLoggable(Level.SEVERE)) {
+                        getLogger().log(Level.SEVERE, "Unable to resolve expression: " + expression + ". No process entity specified in the context");
                     }
                 }
             } catch (final BPMEngineException e) {
                 final String message = "Error while communicating with the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
+            } catch (final BPMExpressionEvaluationException e) {
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, e.getMessage(), e, context);
+                }
+                throw new FormInitializationException(e.getMessage());
+
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message, e);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, message, context);
                 }
                 throw new SessionTimeoutException(message);
-            } catch (final ExpressionEvaluationException e) {
-                final String message = "Error while communicating with the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
-                throw new FormNotFoundException(message);
+
             }
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (getLogger().isLoggable(Level.FINEST)) {
                 final String time = DATE_FORMAT.format(new Date());
-                LOGGER.log(Level.FINEST, "### " + time + " - resolveExpression - end" + expression.getExpressionType() + " " + expression.getContent());
+                getLogger().log(Level.FINEST, "### " + time + " - resolveExpression - end" + expression.getExpressionType() + " " + expression.getContent());
             }
         }
         return result;
@@ -819,8 +811,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             urlContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -829,20 +821,20 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new FormNotFoundException(message);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                logSevereMessage(e, message);
             }
             throw new FormNotFoundException(message);
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                logSevereMessage(e, message);
             }
             throw new FormNotFoundException(message);
         } catch (final ArchivedProcessInstanceNotFoundException e) {
             final String message = "The archived process instance with ID " + processInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                logSevereMessage(e, message);
             }
             throw new FormNotFoundException(message);
         }
@@ -850,25 +842,29 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws FormInitializationException
+     * @throws BPMEngineEvaluationExpressionException
      */
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Serializable> resolveExpressions(final List<Expression> expressions, final Map<String, Object> context) throws FormNotFoundException,
+            FormInitializationException,
             SessionTimeoutException, FileTooBigException, IOException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - resolveExpressions - start - nb of expressions " + expressions.size());
+            getLogger().log(Level.FINEST, "### " + time + " - resolveExpressions - start - nb of expressions " + expressions.size());
         }
         long activityInstanceID = -1;
         long processDefinitionID = -1;
         long processInstanceID = -1;
         boolean isCurrentValue = false;
-        final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+        final Locale locale = ctxu.getLocale();
         if (context.get(FormServiceProviderUtil.IS_CURRENT_VALUE) != null) {
             isCurrentValue = (Boolean) context.get(FormServiceProviderUtil.IS_CURRENT_VALUE);
         }
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
         final Map<String, FormFieldValue> fieldValues = (Map<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES);
         Map<String, Serializable> results;
@@ -926,27 +922,30 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     }
                 }
             } else {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Unable to resolve expressions: " + expressions + ". No process entity specified in the context");
+                if (getLogger().isLoggable(Level.SEVERE)) {
+                    getLogger().log(Level.SEVERE, "Unable to resolve expressions: " + expressions + ". No process entity specified in the context");
                 }
                 results = new HashMap<String, Serializable>();
             }
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
+
+        } catch (final BPMExpressionEvaluationException e) {
+            logSevereWithContext(e.getMessage(), e, context);
+            throw new FormInitializationException(e.getMessage());
+
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - resolveExpressions - end - nb of expressions " + expressions.size());
+            getLogger().log(Level.FINEST, "### " + time + " - resolveExpressions - end - nb of expressions " + expressions.size());
         }
         return results;
     }
@@ -959,21 +958,24 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @SuppressWarnings("unchecked")
     public Map<String, Object> executeActions(final List<FormAction> actions, final Map<String, Object> context) throws FileTooBigException,
             FormNotFoundException, FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil formContextUtil = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - executeActions - start - nb of actions " + actions.size());
+            getLogger().log(Level.FINEST, "### " + time + " - executeActions - start - nb of actions " + actions.size());
         }
+        // init vars
         long activityInstanceID = -1;
         long processDefinitionID = -1;
         long userID = -1;
         String submitButtonId = null;
-        final Map<String, Object> urlContext = new HashMap<String, Object>();
-        if (context.get(FormServiceProviderUtil.URL_CONTEXT) != null) {
-            urlContext.putAll(getUrlContext(context));
-        }
-        final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
-        final APISession session = getAPISessionFromContext(context);
+        final Map<String, Object> urlContext = formContextUtil.getUrlContext();
+        // retrieve the locale from the context
+        final Locale locale = formContextUtil.getLocale();
+        FormLogger.setContext(context);
+
+        // retrieve session from the context
+        final APISession session = formContextUtil.getAPISessionFromContext();
+
         final Map<String, FormFieldValue> fieldValues = convertFormFieldValues((Map<String, FormFieldValue>) context.get(FormServiceProviderUtil.FIELD_VALUES),
                 true);
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
@@ -981,19 +983,23 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             submitButtonId = (String) context.get(FormServiceProviderUtil.SUBMIT_BUTTON_ID);
         }
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        long newProcessInstanceID;
+
         try {
             if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
-                if (urlContext.containsKey(FormServiceProviderUtil.USER) && urlContext.get(FormServiceProviderUtil.USER) != null) {
-                    userID = Long.valueOf(urlContext.get(FormServiceProviderUtil.USER).toString());
-                } else {
-                    userID = session.getUserId();
-                }
-                processDefinitionID = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
-                final long newProcessInstanceID = workflowAPI.executeActionsAndStartInstance(session, userID, processDefinitionID, fieldValues, actions,
+                // retrieve the userid from the context
+                userID = formContextUtil.getUserId();
+                // retrieve the process definition id from the context
+                processDefinitionID = formContextUtil.getProcessDefinitionId();
+
+                newProcessInstanceID = workflowAPI.executeActionsAndStartInstance(session, userID, processDefinitionID, fieldValues, actions,
                         locale, submitButtonId, transientDataContext);
                 urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                 urlContext.remove(FormServiceProviderUtil.TASK_UUID);
                 urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, String.valueOf(newProcessInstanceID));
+                // update the context in the contextutil
+                formContextUtil.setUrlContext(urlContext);
+
             } else if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 activityInstanceID = getActivityInstanceId(urlContext);
                 boolean executeActions = false;
@@ -1012,46 +1018,42 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final FormAlreadySubmittedException e) {
             final String message = "The task with ID " + activityInstanceID + " has already been executed";
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, message);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message);
             }
             throw new FormAlreadySubmittedException(message);
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance for activity instance with ID " + activityInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
+            logSevereMessageWithContext(e, e.getMessage(), context);
             throw new FormNotFoundException(message);
         } catch (final FileTooBigException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
+            if (getLogger().isLoggable(Level.WARNING)) {
+                getLogger().log(Level.WARNING, e.getMessage(), e);
             }
             throw new FileTooBigException(e.getMessage(), e.getFileName(), e.getMaxSize());
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while executing Actions task", e);
+            if (getLogger().isLoggable(Level.SEVERE)) {
+                getLogger().log(Level.SEVERE, "Error while executing Actions task", e);
             }
             throw new FormSubmissionException(e.getMessage(), e);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - executeActions - end - nb of actions " + actions.size());
+            getLogger().log(Level.FINEST, "### " + time + " - executeActions - end - nb of actions " + actions.size());
         }
         return urlContext;
     }
@@ -1107,8 +1109,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     convertedObj = valueAsString;
                 } else {
                     final String message = "Type " + modifier + " is not handled.";
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, message);
+                    if (getLogger().isLoggable(Level.WARNING)) {
+                        getLogger().log(Level.WARNING, message);
                     }
                 }
             } catch (final IllegalArgumentException e) {
@@ -1140,9 +1142,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public FormURLComponents getNextFormURLParameters(final String formId, final Map<String, Object> context) throws FormNotFoundException,
             SessionTimeoutException {
+        FormContextUtil ctxu = new FormContextUtil(context);
         logTime("getNextFormURLParameters - start");
         final Map<String, Object> urlContext = getUrlContext(context);
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         long processInstanceID = -1;
         FormURLComponents urlComponents = null;
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
@@ -1173,10 +1176,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 urlComponents.setTaskId(activityInstanceId);
             }
         } catch (final FormWorflowApiException e) {
-            logSevereMessage(e, e.getMessage());
+            logSevereMessageWithContext(e, e.getMessage(), context);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            logInfoMessage(e, message);
+            logInfoMessageWithContext(message, e, context);
             throw new SessionTimeoutException(message);
         }
         logTime("getNextFormURLParameters - end");
@@ -1317,71 +1320,71 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Map<String, String> getAttributesToInsert(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getAttributesToInsert - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getAttributesToInsert - start");
         }
         final Map<String, Object> urlContext = getUrlContext(context);
         long activityInstanceID = -1;
         if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
             activityInstanceID = getActivityInstanceId(urlContext);
         }
-        final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+        final Locale locale = ctxu.getLocale();
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         Map<String, String> attributes = null;
         try {
             if (activityInstanceID != -1) {
-                final APISession session = getAPISessionFromContext(context);
+                final APISession session = ctxu.getAPISessionFromContext();
                 attributes = workflowAPI.getActivityAttributes(session, activityInstanceID, locale);
             }
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
+            logSevereMessageWithContext(e, e.getMessage(), context);
             throw new FormNotFoundException(message);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getAttributesToInsert - end");
+            getLogger().log(Level.FINEST, "### " + time + " - getAttributesToInsert - end");
         }
         return attributes;
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws BPMExpressionEvaluationException
      */
     @Override
     @SuppressWarnings("unchecked")
     public List<FormValidator> validateField(final List<FormValidator> validators, final String fieldId, final FormFieldValue fieldValue,
             final String submitButtonId, final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException,
-            FileTooBigException, IOException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+            FileTooBigException, IOException, BPMExpressionEvaluationException {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - validateField - start " + fieldId);
+            getLogger().log(Level.FINEST, "### " + time + " - validateField - start " + fieldId);
         }
         long activityInstanceID = -1;
         long processDefinitionID = -1;
         long processInstanceID = -1;
-        final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+        final Locale locale = ctxu.getLocale();
         final IFormValidationAPI validationAPI = FormAPIFactory.getFormValidationAPI();
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
         List<FormValidator> nonCompliantFieldValidators = null;
         convertValueType(fieldValue, false);
         try {
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             final Map<String, Object> urlContext = getUrlContext(context);
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 activityInstanceID = getActivityInstanceId(urlContext);
@@ -1398,52 +1401,39 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
+            logSevereMessageWithContext(e, e.getMessage(), context);
             throw new FormNotFoundException(message);
         } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
             final String message = "The archived activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
+            logSevereMessageWithContext(e, e.getMessage(), context);
             throw new FormNotFoundException(message);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
-        } catch (final ExpressionEvaluationException e) {
-            final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
-            throw new FormNotFoundException(message);
+
         } catch (final ArchivedProcessInstanceNotFoundException e) {
             final String message = "Archvied process instance not foud";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - validateField - end " + fieldId);
+            getLogger().log(Level.FINEST, "### " + time + " - validateField - end " + fieldId);
         }
         return nonCompliantFieldValidators;
     }
@@ -1453,24 +1443,26 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * 
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMExpressionEvaluationException
      */
     @Override
     @SuppressWarnings("unchecked")
     public List<FormValidator> validatePage(final List<FormValidator> validators, final Map<String, FormFieldValue> fields, final String submitButtonId,
-            final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+            final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException,
+            IOException, BPMExpressionEvaluationException {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - validatePage - start");
+            getLogger().log(Level.FINEST, "### " + time + " - validatePage - start");
         }
         long activityInstanceID = -1;
         long processDefinitionID = -1;
         long processInstanceID = -1;
-        final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+        final Locale locale = ctxu.getLocale();
         final IFormValidationAPI validationAPI = FormAPIFactory.getFormValidationAPI();
         final Map<String, Serializable> transientDataContext = (Map<String, Serializable>) context.get(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT);
         List<FormValidator> nonCompliantFieldValidators = null;
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         convertFormFieldValues(fields, false);
         try {
             final Map<String, Object> urlContext = getUrlContext(context);
@@ -1489,52 +1481,39 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
+            logSevereMessageWithContext(e, e.getMessage(), context);
             throw new FormNotFoundException(message);
         } catch (final ArchivedFlowNodeInstanceNotFoundException e) {
             final String message = "The archived activity instance with ID " + activityInstanceID + " does not exist!";
-            logSevereMessage(e, message);
+            logSevereMessageWithContext(e, e.getMessage(), context);
             throw new FormNotFoundException(message);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
-        } catch (final ExpressionEvaluationException e) {
-            final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
-            throw new FormNotFoundException(message);
+
         } catch (final ArchivedProcessInstanceNotFoundException e) {
             final String message = "Archived process instance not found";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - validatePage - end");
+            getLogger().log(Level.FINEST, "### " + time + " - validatePage - end");
         }
         return nonCompliantFieldValidators;
     }
@@ -1544,32 +1523,31 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Date getDeployementDate(final Map<String, Object> context) throws FormNotFoundException, IOException, SessionTimeoutException {
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getDeployementDate - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getDeployementDate - start");
         }
         Date processDeployementDate = null;
         long processDefinitionID = -1;
         try {
             processDefinitionID = getProcessDefinitionID(context);
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             processDeployementDate = getDeployementDate(session, processDefinitionID);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process with UUID " + processDefinitionID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getDeployementDate - end");
+            getLogger().log(Level.FINEST, "### " + time + " - getDeployementDate - end");
         }
         return processDeployementDate;
     }
@@ -1605,20 +1583,20 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 }
             } catch (final ProcessDefinitionNotFoundException e) {
                 final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
+                if (getLogger().isLoggable(Level.SEVERE)) {
+                    logSevereMessage(e, message);
                 }
                 throw new ProcessDefinitionNotFoundException(message);
             } catch (final BPMEngineException e) {
                 final String message = "Error while communicating with the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
+                if (getLogger().isLoggable(Level.SEVERE)) {
+                    logSevereMessage(e, message);
                 }
                 throw new ProcessDefinitionNotFoundException(message);
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message, e);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, message, e);
                 }
                 throw new SessionTimeoutException(message);
             }
@@ -1633,12 +1611,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public IApplicationConfigDefAccessor getApplicationConfigDefinition(final Document formDefinitionDocument, final Map<String, Object> context)
             throws SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getApplicationConfigDefinition - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getApplicationConfigDefinition - start");
         }
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         IApplicationConfigDefAccessor applicationConfigDefAccessor = null;
         if (formDefinitionDocument == null) {
             try {
@@ -1648,17 +1626,17 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 throw new ApplicationFormDefinitionNotFoundException(e);
             } catch (final InvalidSessionException e) {
                 final String message = "The engine session is invalid.";
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message, e);
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE, message, e);
                 }
                 throw new SessionTimeoutException(message);
             }
         } else {
             applicationConfigDefAccessor = new XMLApplicationConfigDefAccessorImpl(session.getTenantId(), formDefinitionDocument);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getApplicationConfigDefinition - end");
+            getLogger().log(Level.FINEST, "### " + time + " - getApplicationConfigDefinition - end");
         }
         return applicationConfigDefAccessor;
     }
@@ -1670,9 +1648,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     public IApplicationFormDefAccessor getApplicationFormDefinition(final String formId, final Document formDefinitionDocument,
             final Map<String, Object> context) throws ApplicationFormDefinitionNotFoundException, InvalidFormDefinitionException, SessionTimeoutException {
 
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getApplicationFormDefinition - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getApplicationFormDefinition - start");
         }
         IApplicationFormDefAccessor iApplicationDefAccessor = null;
         final Date applicationDeploymentDate = (Date) context.get(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE);
@@ -1680,14 +1658,14 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             iApplicationDefAccessor = getApplicationFormDefinition(formId, formDefinitionDocument, applicationDeploymentDate, context);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getApplicationFormDefinition - end");
+            getLogger().log(Level.FINEST, "### " + time + " - getApplicationFormDefinition - end");
         }
         return iApplicationDefAccessor;
     }
@@ -1709,7 +1687,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     protected IApplicationFormDefAccessor getApplicationFormDefinition(final String formId, final Document formDefinitionDocument,
             final Date applicationDeploymentDate, final Map<String, Object> context) throws ApplicationFormDefinitionNotFoundException,
             InvalidFormDefinitionException, InvalidSessionException {
-
+        FormContextUtil ctxu = new FormContextUtil(context);
         IApplicationFormDefAccessor formDefAccessor = null;
         long processDefinitionID;
         try {
@@ -1742,13 +1720,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         if (isConfirmationPageFromContext != null) {
             isConfirmationPage = isConfirmationPageFromContext.booleanValue();
         }
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         if (formDefinitionDocument == null) {
             formDefAccessor = FormDefAccessorFactory.getEngineApplicationFormDefAccessor(session, processDefinitionID, activityInstanceID, true, isEditMode,
                     isCurrentValue, isConfirmationPage);
         } else {
             try {
-                final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
+                final Locale locale = ctxu.getLocale();
                 String localeString = null;
                 if (locale != null) {
                     localeString = locale.getLanguage();
@@ -1756,8 +1734,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 formDefAccessor = FormDefAccessorFactory.getXMLApplicationFormDefAccessor(session, processDefinitionID, formDefinitionDocument, formId,
                         localeString, applicationDeploymentDate);
             } catch (final ApplicationFormDefinitionNotFoundException e) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "No form definition was found for the form " + formId + ". The forms will be generated using the engine variables.");
+                if (getLogger().isLoggable(Level.FINE)) {
+                    getLogger().log(Level.FINE,
+                            "No form definition was found for the form " + formId + ". The forms will be generated using the engine variables.");
                 }
                 formDefAccessor = FormDefAccessorFactory.getEngineApplicationFormDefAccessor(session, processDefinitionID, activityInstanceID, true,
                         isEditMode, isCurrentValue, isConfirmationPage);
@@ -1772,52 +1751,46 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public File getApplicationResourceDir(final Date applicationDeploymentDate, final Map<String, Object> context)
             throws ApplicationFormDefinitionNotFoundException, SessionTimeoutException, IOException {
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getApplicationResourceDir - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getApplicationResourceDir - start");
         }
         long processDefinitionID = -1L;
         try {
             processDefinitionID = getProcessDefinitionID(context);
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             return FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID, applicationDeploymentDate);
         } catch (final FormNotFoundException e) {
             throw new ApplicationFormDefinitionNotFoundException(e);
         } catch (final ProcessDefinitionNotFoundException e) {
             final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new ApplicationFormDefinitionNotFoundException(message, e);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new ApplicationFormDefinitionNotFoundException(message, e);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         } finally {
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (getLogger().isLoggable(Level.FINEST)) {
                 final String time = DATE_FORMAT.format(new Date());
-                LOGGER.log(Level.FINEST, "### " + time + " - getApplicationResourceDir - end");
+                getLogger().log(Level.FINEST, "### " + time + " - getApplicationResourceDir - end");
             }
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public FormFieldValue getAttachmentFormFieldValue(final Object value, final Map<String, Object> context) throws FormNotFoundException,
-            SessionTimeoutException, IOException, FileTooBigException {
-        if (LOGGER.isLoggable(Level.FINEST)) {
+    public FormFieldValue getAttachmentFormFieldValue(final Object value, final Map<String, Object> context) throws SessionTimeoutException, IOException,
+            FileTooBigException, FormInitializationException {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - start");
         }
         String documentValue = null;
         String valueType = null;
@@ -1841,22 +1814,18 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         }
                         documentId = document.getId();
                         documentName = document.getName();
-                        if (LOGGER.isLoggable(Level.FINE)) {
-                            LOGGER.log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
+                        if (getLogger().isLoggable(Level.FINE)) {
+                            getLogger().log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue);
                         }
                     }
                 } catch (final FormNotFoundException e) {
                     final String message = "Error while trying to retrieve the document " + documentName;
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, message, e);
-                    }
+                    logSevereWithContext(message, e, context);
                     throw new IllegalArgumentException(message);
                 }
             } catch (final ClassCastException e) {
                 final String message = "Error while setting the initial value of a file widget. A Document name is expected as initial value.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new IllegalArgumentException(message);
             }
         }
@@ -1864,9 +1833,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         formFieldValue.setDocumentId(documentId);
         formFieldValue.setDocumentName(documentName);
         formFieldValue.setDocument(true);
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - end");
+            getLogger().log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - end");
         }
         return formFieldValue;
 
@@ -1877,7 +1846,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public boolean isEditMode(final String formID, final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-
+        FormContextUtil ctxu = new FormContextUtil(context);
         long activityInstanceID = -1;
         boolean isEditMode = false;
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
@@ -1885,7 +1854,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final Map<String, Object> urlContext = getUrlContext(context);
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 activityInstanceID = getActivityInstanceId(urlContext);
-                final APISession session = getAPISessionFromContext(context);
+                final APISession session = ctxu.getAPISessionFromContext();
                 isEditMode = workflowAPI.isTaskReady(session, activityInstanceID);
             } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
                 isEditMode = true;
@@ -1894,14 +1863,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1931,8 +1898,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
             throw new SessionTimeoutException(message);
         }
@@ -1946,17 +1913,17 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public Map<String, Object> skipForm(final String formID, final Map<String, Object> context) throws FormNotFoundException, FormSubmissionException,
             FormAlreadySubmittedException, IllegalActivityTypeException, SessionTimeoutException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - skipForm - start");
+            getLogger().log(Level.FINEST, "### " + time + " - skipForm - start");
         }
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         final Map<String, Object> urlContext = new HashMap<String, Object>();
         if (context.get(FormServiceProviderUtil.URL_CONTEXT) != null) {
             urlContext.putAll(getUrlContext(context));
         }
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         try {
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 final long activityInstanceID = getActivityInstanceId(urlContext);
@@ -1978,25 +1945,21 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     }
                 } catch (final UserNotFoundException e) {
                     final String message = "The user with ID " + session.getUserId() + " does not exist!";
-                    if (LOGGER.isLoggable(Level.INFO)) {
-                        LOGGER.log(Level.INFO, message, e);
+                    if (getLogger().isLoggable(Level.INFO)) {
+                        getLogger().log(Level.INFO, message, e);
                     }
                     throw new SessionTimeoutException(message);
                 } catch (final ActivityInstanceNotFoundException e) {
                     final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
-                    logSevereMessage(e, message);
+                    logSevereMessageWithContext(e, e.getMessage(), context);
                     throw new FormNotFoundException(message);
                 } catch (final ProcessInstanceNotFoundException e) {
                     final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, message, e);
-                    }
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final FlowNodeExecutionException e) {
                     final String message = "The engine was not able to execute the activity instance " + activityInstanceID;
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, message, e);
-                    }
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 }
             } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
@@ -2008,27 +1971,23 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, String.valueOf(newProcessInstanceID));
                 } catch (final ProcessDefinitionNotFoundException e) {
                     final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, message, e);
-                    }
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final ProcessDefinitionNotEnabledException e) {
                     final String message = "The process instance creation is not enabled for the process with ID " + processDefinitionID;
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, message, e);
-                    }
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final CreationException e) {
                     final String message = "It is not possible to start the apps. Please contact your administrator";
-                    LOGGER.log(Level.SEVERE, message, e);
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final ProcessActivationException e) {
                     final String message = "It is not possible to start the apps. Please contact your administrator";
-                    LOGGER.log(Level.SEVERE, message, e);
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final ExecutionException e) {
                     final String message = "It is not possible to start the apps. Please contact your administrator";
-                    LOGGER.log(Level.SEVERE, message, e);
+                    logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 }
             } else {
@@ -2036,20 +1995,18 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new SessionTimeoutException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - skipForm - end");
+            getLogger().log(Level.FINEST, "### " + time + " - skipForm - end");
         }
         return urlContext;
     }
@@ -2059,10 +2016,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - skipForm - start");
+            getLogger().log(Level.FINEST, "### " + time + " - skipForm - start");
         }
         final Map<String, Object> urlContext = new HashMap<String, Object>();
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
@@ -2070,7 +2027,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             urlContext.putAll(getUrlContext(context));
         }
         long activityInstanceID = -1;
-        final APISession session = getAPISessionFromContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
         long processInstanceID = -1;
         long processDefinitionID = -1;
         try {
@@ -2090,21 +2047,17 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 }
             } catch (final UserNotFoundException e) {
                 final String message = "The user with ID " + session.getUserId() + " does not exist!";
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message, e);
+                if (getLogger().isLoggable(Level.INFO)) {
+                    getLogger().log(Level.INFO, message, e);
                 }
                 throw new SessionTimeoutException(message);
             } catch (final ProcessDefinitionNotFoundException e) {
                 final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             } catch (final ProcessInstanceNotFoundException e) {
                 final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
+                logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             }
             urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
@@ -2116,7 +2069,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     activitydefinitionUUID = getActivityDefinitionUUID(session, workflowAPI, activityInstanceID);
                     processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
                 } catch (final FormWorflowApiException e) {
-                    logSevereMessage(e, e.getMessage());
+                    logSevereMessageWithContext(e, e.getMessage(), context);
                     throw new FormNotFoundException(e);
                 }
                 urlContext.put(FormServiceProviderUtil.TASK_UUID, String.valueOf(activityInstanceID));
@@ -2125,27 +2078,25 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         + FormServiceProviderUtil.ENTRY_FORM_TYPE);
             } else {
                 final String message = "There are no steps waiting in inbox.";
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, message);
+                if (getLogger().isLoggable(Level.INFO)) {
+                    getLogger().log(Level.INFO, message);
                 }
                 throw new FormNotFoundException(message);
             }
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereWithContext(message, e, context);
             throw new FormNotFoundException(message);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new SessionTimeoutException(message);
         }
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - skipForm - end");
+            getLogger().log(Level.FINEST, "### " + time + " - skipForm - end");
         }
         return urlContext;
     }
@@ -2156,46 +2107,27 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public ClassLoader getClassloader(final Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException {
-
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        FormContextUtil ctxu = new FormContextUtil(context);
+        if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - getClassloader - start");
+            getLogger().log(Level.FINEST, "### " + time + " - getClassloader - start");
         }
         try {
             final long processDefinitionID = getProcessDefinitionID(context);
-            final APISession session = getAPISessionFromContext(context);
+            final APISession session = ctxu.getAPISessionFromContext();
             return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
             }
             throw new SessionTimeoutException(message);
         } finally {
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (getLogger().isLoggable(Level.FINEST)) {
                 final String time = DATE_FORMAT.format(new Date());
-                LOGGER.log(Level.FINEST, "### " + time + " - getClassloader - end");
+                getLogger().log(Level.FINEST, "### " + time + " - getClassloader - end");
             }
         }
-    }
-
-    /**
-     * Retrieve the API session from the context
-     * 
-     * @param context
-     *            the map of context
-     * @return the engine API session
-     */
-    protected APISession getAPISessionFromContext(final Map<String, Object> context) {
-        final APISession session = (APISession) context.get(FormServiceProviderUtil.API_SESSION);
-        if (session == null) {
-            final String errorMessage = "There is no engine API session in the HTTP session.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
-            }
-            throw new RuntimeException(errorMessage);
-        }
-        return session;
     }
 
     private Map<Long, Set<Long>> getProcessActors(final APISession session) throws BPMEngineException {
@@ -2207,9 +2139,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
         } catch (final Exception e) {
             final String message = "The engine was not able to retrieve the actors of process Actors. Error while executing command:";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
-            }
+            logSevereMessage(e, message);
             throw new BPMEngineException(message);
         }
     }
@@ -2261,22 +2191,34 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return id;
     }
 
-    private void logInfoMessage(final Throwable e, final String message) {
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, message, e);
+    private void logInfoMessageWithContext(final String message, final Throwable e, Map<String, Object> context) {
+        if (getLogger().isLoggable(Level.INFO)) {
+            getLogger().log(Level.INFO, message, e, context);
+        }
+    }
+
+    private void logInfoMessage(final String message, final Throwable e) {
+        if (Logger.getLogger(FormServiceProviderImpl.class.getName()).isLoggable(Level.INFO)) {
+            Logger.getLogger(FormServiceProviderImpl.class.getName()).log(Level.INFO, message, e);
+        }
+    }
+
+    private void logSevereMessageWithContext(final Throwable e, final String message, Map<String, Object> context) {
+        if (getLogger().isLoggable(Level.SEVERE)) {
+            getLogger().log(Level.SEVERE, message, e, context);
         }
     }
 
     private void logSevereMessage(final Throwable e, final String message) {
-        if (LOGGER.isLoggable(Level.SEVERE)) {
-            LOGGER.log(Level.SEVERE, message, e);
+        if (Logger.getLogger(FormServiceProviderImpl.class.getName()).isLoggable(Level.SEVERE)) {
+            Logger.getLogger(FormServiceProviderImpl.class.getName()).log(Level.SEVERE, message, e);
         }
     }
 
     private void logTime(final String message) {
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (Logger.getLogger(FormServiceProviderImpl.class.getName()).isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINEST, "### " + time + " - " + message);
+            Logger.getLogger(FormServiceProviderImpl.class.getName()).log(Level.FINEST, "### " + time + " - " + message);
         }
     }
 
