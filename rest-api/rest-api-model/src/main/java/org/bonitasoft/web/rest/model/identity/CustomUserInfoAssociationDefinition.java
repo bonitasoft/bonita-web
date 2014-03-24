@@ -18,6 +18,7 @@ package org.bonitasoft.web.rest.model.identity;
 
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Vincent Elcrin
@@ -33,17 +34,19 @@ public class CustomUserInfoAssociationDefinition extends ItemDefinition<CustomUs
 
     @Override
     protected String defineAPIUrl() {
-        return "../API/identity/customuserinfo/user"; //<user id>
+        return "../API/identity/customuserinfo/user"; // <user id>
     }
 
     @Override
     protected void defineAttributes() {
-
+        createAttribute(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CustomUserInfoItem.ATTRIBUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CustomUserInfoItem.ATTRIBUTE_VALUE, ItemAttribute.TYPE.STRING);
     }
 
     @Override
     protected void definePrimaryKeys() {
-
+        setPrimaryKeys(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, CustomUserInfoItem.ATTRIBUTE_USER_ID);
     }
 
     @Override
