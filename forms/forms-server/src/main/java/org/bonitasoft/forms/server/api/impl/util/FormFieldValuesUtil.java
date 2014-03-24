@@ -45,6 +45,7 @@ import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormServiceProviderNotFoundException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -61,7 +62,7 @@ public class FormFieldValuesUtil {
 
     protected static final String WIDGET_LABEL = "label";
 
-    protected static final String EXPRESSION_KEY_SEPARATOR = ":";
+    public static final String EXPRESSION_KEY_SEPARATOR = ":";
 
     protected static final String WIDGET_TITLE = "title";
 
@@ -578,10 +579,11 @@ public class FormFieldValuesUtil {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws FormInitializationException 
      */
     public void setFormWidgetValues(final long tenantID, final FormWidget formWidget, final Map<String, Serializable> evaluatedExpressions,
             final Map<String, Object> context) throws FormNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException, IOException,
-            FileTooBigException {
+            FileTooBigException, FormInitializationException {
         final String widgetId = formWidget.getId();
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
         final Locale locale = (Locale) context.get(FormServiceProviderUtil.LOCALE);
@@ -861,6 +863,7 @@ public class FormFieldValuesUtil {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws FormInitializationException 
      */
     public void setFormWidgetsValues(final long tenantID,
             final List<FormWidget> widgets,
@@ -870,7 +873,7 @@ public class FormFieldValuesUtil {
             FormServiceProviderNotFoundException,
             SessionTimeoutException,
             IOException,
-            FileTooBigException {
+            FileTooBigException, FormInitializationException {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
 
         final Map<String, Serializable> evaluatedDisplayExpressions = resolveDisplayExpressions(widgets, context, formServiceProvider);
@@ -887,7 +890,7 @@ public class FormFieldValuesUtil {
 
     private Map<String, Serializable> resolveDisplayExpressions(final List<FormWidget> widgets, final Map<String, Object> context,
             final FormServiceProvider formServiceProvider)
-            throws FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException {
+            throws FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException, FormInitializationException {
         Map<String, Serializable> resolvedExpressions = formServiceProvider.resolveExpressions(
                 new DisplayExpressions(widgets).asList(),
                 context);

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.forms.server.accessor.api.ExpressionEvaluatorEngineClient;
 import org.bonitasoft.forms.server.accessor.api.utils.ProcessInstanceAccessor;
@@ -41,7 +42,7 @@ public class ProcessInstanceExpressionsEvaluator {
             final Map<Expression, Map<String, Serializable>> expressions,
             boolean atProcessInstanciation)
 
-            throws BPMEngineException {
+            throws BPMEngineException, BPMExpressionEvaluationException {
 
         if (atProcessInstanciation) {
             return evaluateExpressionsAtProcessInstanciation(instance.getId(), expressions);
@@ -54,18 +55,18 @@ public class ProcessInstanceExpressionsEvaluator {
 
     private Map<String, Serializable> evaluateExpressionsAtProcessInstanciation(final long processInstanceID,
             final Map<Expression, Map<String, Serializable>> expressions)
-            throws BPMEngineException {
+            throws BPMEngineException, BPMExpressionEvaluationException {
         return engineEvaluator.evaluateExpressionsAtProcessInstanciation(processInstanceID, expressions);
     }
 
     private Map<String, Serializable> evaluateExpressionsOnCompleted(final long processInstanceID,
-            final Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException {
+            final Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException, BPMExpressionEvaluationException {
         return engineEvaluator.evaluateExpressionsOnCompletedProcessInstance(processInstanceID,
                 expressions);
     }
 
     private Map<String, Serializable> evaluateExpressionsOnProcessInstance(final long processInstanceID,
-            final Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException {
+            final Map<Expression, Map<String, Serializable>> expressions) throws BPMEngineException, BPMExpressionEvaluationException {
         return engineEvaluator.evaluateExpressionsOnProcessInstance(processInstanceID,
                 expressions);
     }

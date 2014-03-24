@@ -100,13 +100,13 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
                 final FormValidator formValidator = new FormValidator(validatorId, validatorClass, validatorStyle);
                 final Node validatorLabelNode = getNodeByXpath(pageValidatorNode, XMLForms.LABEL);
                 if (validatorLabelNode != null) {
-                    final Expression labelExpression = xmlExpressionsUtil.parseExpression(validatorLabelNode);
+                    final Expression labelExpression = xmlExpressionsUtil.parseExpression(validatorId, validatorLabelNode);
                     formValidator.setLabelExpression(labelExpression);
                 }
                 formValidator.setPosition(validatorPosition);
                 final Node validatorParameterNode = getNodeByXpath(pageValidatorNode, XMLForms.PARAMETER);
                 if (validatorParameterNode != null) {
-                    final Expression parameterExpression = xmlExpressionsUtil.parseExpression(validatorParameterNode);
+                    final Expression parameterExpression = xmlExpressionsUtil.parseExpression(validatorId, validatorParameterNode);
                     formValidator.setParameterExpression(parameterExpression);
                 }
                 pageValidators.add(formValidator);
@@ -186,11 +186,11 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
         final Node labelNode = getNodeByXpath(widgetNode, XMLForms.LABEL);
         if (labelNode != null) {
-            formWidget.setLabelExpression(xmlExpressionsUtil.parseExpression(labelNode));
+            formWidget.setLabelExpression(xmlExpressionsUtil.parseExpression(id, labelNode));
         }
         final Node titleNode = getNodeByXpath(widgetNode, XMLForms.TITLE);
         if (titleNode != null) {
-            formWidget.setTitleExpression(xmlExpressionsUtil.parseExpression(titleNode));
+            formWidget.setTitleExpression(xmlExpressionsUtil.parseExpression(id, titleNode));
         }
         final Node initialValueNode = getNodeByXpath(widgetNode, XMLForms.INITIAL_VALUE);
         if (initialValueNode != null) {
@@ -200,9 +200,9 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
             }
             final Node initialValueArrayNode = getNodeByXpath(initialValueNode, XMLForms.EXPRESSION_ARRAY);
             if (initialValueArrayNode != null) {
-                formWidget.setInitialValueExpressionArray(xmlExpressionsUtil.parseExpressionsArray(initialValueArrayNode));
+                formWidget.setInitialValueExpressionArray(xmlExpressionsUtil.parseExpressionsArray(id, initialValueArrayNode));
             } else {
-                formWidget.setInitialValueExpression(xmlExpressionsUtil.parseExpression(initialValueNode));
+                formWidget.setInitialValueExpression(xmlExpressionsUtil.parseExpression(id, initialValueNode));
             }
         }
         // add the fileUpload input type
@@ -219,7 +219,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
         if (availableValuesNode != null) {
             final Node availableValuesListNode = getNodeByXpath(availableValuesNode, XMLForms.VALUES_LIST);
             if (availableValuesListNode != null) {
-                formWidget.setAvailableValues(getAvailableValues(availableValuesListNode));
+                formWidget.setAvailableValues(getAvailableValues(id, availableValuesListNode));
             } else {
                 final Node availableValuesArrayNode = getNodeByXpath(availableValuesNode, XMLForms.VALUES_ARRAY);
                 if (availableValuesArrayNode != null) {
@@ -227,11 +227,11 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
                     final List<List<FormFieldAvailableValue>> availableValuesArray = new ArrayList<List<FormFieldAvailableValue>>();
                     for (int i = 0; i < availableValuesRowNodes.getLength(); i++) {
                         final Node availableValuesRowNode = availableValuesRowNodes.item(i);
-                        availableValuesArray.add(getAvailableValues(availableValuesRowNode));
+                        availableValuesArray.add(getAvailableValues(id, availableValuesRowNode));
                     }
                     formWidget.setTableAvailableValues(availableValuesArray);
                 } else {
-                    formWidget.setAvailableValuesExpression(xmlExpressionsUtil.parseExpression(availableValuesNode));
+                    formWidget.setAvailableValuesExpression(xmlExpressionsUtil.parseExpression(id, availableValuesNode));
                 }
             }
         }
@@ -247,13 +247,13 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
             final FormValidator formValidator = new FormValidator(validatorId, validatorClass, validatorStyle);
             final Node validatorLabelNode = getNodeByXpath(validatorNode, XMLForms.LABEL);
             if (validatorLabelNode != null) {
-                final Expression labelExpression = xmlExpressionsUtil.parseExpression(validatorLabelNode);
+                final Expression labelExpression = xmlExpressionsUtil.parseExpression(id, validatorLabelNode);
                 formValidator.setLabelExpression(labelExpression);
             }
             formValidator.setPosition(validatorPosition);
             final Node validatorParameterNode = getNodeByXpath(validatorNode, XMLForms.PARAMETER);
             if (validatorParameterNode != null) {
-                final Expression parameterExpression = xmlExpressionsUtil.parseExpression(validatorParameterNode);
+                final Expression parameterExpression = xmlExpressionsUtil.parseExpression(id, validatorParameterNode);
                 formValidator.setParameterExpression(parameterExpression);
             }
             validators.add(formValidator);
@@ -269,7 +269,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
         final Node displayConditionNode = getNodeByXpath(widgetNode, XMLForms.DISPLAY_CONDITION);
         if (displayConditionNode != null) {
-            formWidget.setDisplayConditionExpression(xmlExpressionsUtil.parseExpression(displayConditionNode));
+            formWidget.setDisplayConditionExpression(xmlExpressionsUtil.parseExpression(id, displayConditionNode));
         }
         // formats for dates
         formWidget.setDisplayFormat(getStringByXpath(widgetNode, XMLForms.DISPLAY_FORMAT));
@@ -304,7 +304,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
         final Node popupTooltipNode = getNodeByXpath(widgetNode, XMLForms.POPUP_TOOLTIP);
         if (popupTooltipNode != null) {
-            formWidget.setPopupTooltipExpression(xmlExpressionsUtil.parseExpression(popupTooltipNode));
+            formWidget.setPopupTooltipExpression(xmlExpressionsUtil.parseExpression(id, popupTooltipNode));
         }
 
         final Node subTitleNode = getNodeByXpath(widgetNode, XMLForms.SUB_TITLE);
@@ -312,7 +312,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
             final SubTitlePosition subTitlePosition = getSubTitlePositionValue(getNodeByXpath(subTitleNode, XMLForms.POSITION));
             final FormSubtitle formSubTitle = new FormSubtitle(subTitlePosition);
             final Node subtitleLabelNode = getNodeByXpath(subTitleNode, XMLForms.LABEL);
-            formSubTitle.setLabelExpression(xmlExpressionsUtil.parseExpression(subtitleLabelNode));
+            formSubTitle.setLabelExpression(xmlExpressionsUtil.parseExpression(id, subtitleLabelNode));
             formWidget.setSubtitle(formSubTitle);
         }
         return formWidget;
@@ -332,18 +332,18 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
         if (verticalHeaderNode != null) {
             final Node verticalHeaderListNode = getNodeByXpath(verticalHeaderNode, XMLForms.EXPRESSION_LIST);
             if (verticalHeaderListNode != null) {
-                formWidget.setVerticalHeaderExpressionList(xmlExpressionsUtil.parseExpressionsList(verticalHeaderListNode));
+                formWidget.setVerticalHeaderExpressionList(xmlExpressionsUtil.parseExpressionsList(formWidget.getId(), verticalHeaderListNode));
             } else {
-                formWidget.setVerticalHeaderExpression(xmlExpressionsUtil.parseExpression(verticalHeaderNode));
+                formWidget.setVerticalHeaderExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), verticalHeaderNode));
             }
         }
         final Node horizontalHeaderNode = getNodeByXpath(widgetNode, XMLForms.HORIZONTAL_HEADER);
         if (horizontalHeaderNode != null) {
             final Node horizontalHeaderListNode = getNodeByXpath(horizontalHeaderNode, XMLForms.EXPRESSION_LIST);
             if (horizontalHeaderListNode != null) {
-                formWidget.setHorizontalHeaderExpressionList(xmlExpressionsUtil.parseExpressionsList(horizontalHeaderListNode));
+                formWidget.setHorizontalHeaderExpressionList(xmlExpressionsUtil.parseExpressionsList(formWidget.getId(), horizontalHeaderListNode));
             } else {
-                formWidget.setHorizontalHeaderExpression(xmlExpressionsUtil.parseExpression(horizontalHeaderNode));
+                formWidget.setHorizontalHeaderExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), horizontalHeaderNode));
             }
         }
         formWidget.setSelectMode(getSelectMode(getNodeByXpath(widgetNode, XMLForms.SELECT_MODE)));
@@ -352,23 +352,23 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
         formWidget.setVariableColumnNumber(getBooleanValue(getNodeByXpath(widgetNode, XMLForms.VARIABLE_COLUMNS)));
         final Node maxRowsNode = getNodeByXpath(widgetNode, XMLForms.MAX_ROWS);
         if (maxRowsNode != null) {
-            formWidget.setMaxRowsExpression(xmlExpressionsUtil.parseExpression(maxRowsNode));
+            formWidget.setMaxRowsExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), maxRowsNode));
         }
         final Node minRowsNode = getNodeByXpath(widgetNode, XMLForms.MIN_ROWS);
         if (minRowsNode != null) {
-            formWidget.setMinRowsExpression(xmlExpressionsUtil.parseExpression(minRowsNode));
+            formWidget.setMinRowsExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), minRowsNode));
         }
         final Node maxColumnsNode = getNodeByXpath(widgetNode, XMLForms.MAX_COLUMNS);
         if (maxColumnsNode != null) {
-            formWidget.setMaxColumnsExpression(xmlExpressionsUtil.parseExpression(maxColumnsNode));
+            formWidget.setMaxColumnsExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), maxColumnsNode));
         }
         final Node minColumnsNode = getNodeByXpath(widgetNode, XMLForms.MIN_COLUMNS);
         if (minColumnsNode != null) {
-            formWidget.setMinColumnsExpression(xmlExpressionsUtil.parseExpression(minColumnsNode));
+            formWidget.setMinColumnsExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), minColumnsNode));
         }
         final Node valueColumnIndexNode = getNodeByXpath(widgetNode, XMLForms.VALUE_COLUMN_INDEX);
         if (valueColumnIndexNode != null) {
-            formWidget.setValueColumnIndexExpression(xmlExpressionsUtil.parseExpression(valueColumnIndexNode));
+            formWidget.setValueColumnIndexExpression(xmlExpressionsUtil.parseExpression(formWidget.getId(), valueColumnIndexNode));
         }
         final Node headingsStyleNode = getNodeByXpath(widgetNode, XMLForms.HEADINGS_STYLE);
         if (headingsStyleNode != null) {
@@ -390,14 +390,14 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
      * @return a List of {@link FormFieldAvailableValue}
      * @throws InvalidFormDefinitionException
      */
-    protected List<FormFieldAvailableValue> getAvailableValues(final Node availableValuesListNode) throws InvalidFormDefinitionException {
+    protected List<FormFieldAvailableValue> getAvailableValues(final String id, final Node availableValuesListNode) throws InvalidFormDefinitionException {
         final List<FormFieldAvailableValue> availableValues = new ArrayList<FormFieldAvailableValue>();
         final NodeList availableValuesNodes = getNodeListByXpath(availableValuesListNode, XMLForms.AVAILABLE_VALUE);
         for (int i = 0; i < availableValuesNodes.getLength(); i++) {
             final Node availableValueNode = availableValuesNodes.item(i);
             final FormFieldAvailableValue formFieldAvailableValue = new FormFieldAvailableValue();
-            formFieldAvailableValue.setLabelExpression(xmlExpressionsUtil.parseExpression(getNodeByXpath(availableValueNode, XMLForms.LABEL)));
-            formFieldAvailableValue.setValueExpression(xmlExpressionsUtil.parseExpression(getNodeByXpath(availableValueNode, XMLForms.VALUE)));
+            formFieldAvailableValue.setLabelExpression(xmlExpressionsUtil.parseExpression(id, getNodeByXpath(availableValueNode, XMLForms.LABEL)));
+            formFieldAvailableValue.setValueExpression(xmlExpressionsUtil.parseExpression(id, getNodeByXpath(availableValueNode, XMLForms.VALUE)));
             availableValues.add(formFieldAvailableValue);
         }
         return availableValues;

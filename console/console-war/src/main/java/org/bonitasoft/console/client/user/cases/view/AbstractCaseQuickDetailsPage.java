@@ -117,7 +117,7 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
     protected void buildAvailableTasks(final CaseItem item) {
         final ItemTable tasksTable = getTaskTable(item);
         preparetasksTable(tasksTable);
-        addBody(new Section(_("Tasks"), tasksTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("tasks"));
+        addBody(new Section(_("Tasks to do"), tasksTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("tasks"));
     }
 
     protected ItemTable getTaskTable(final CaseItem item) {
