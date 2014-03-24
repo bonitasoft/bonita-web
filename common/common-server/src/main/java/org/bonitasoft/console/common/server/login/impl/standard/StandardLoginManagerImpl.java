@@ -32,7 +32,7 @@ public class StandardLoginManagerImpl implements LoginManager {
     @Override
     public String getLoginpageURL(final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
-        url.append("..").append(LoginManager.LOGIN_PAGE).append("?");
+        url.append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");
         }
