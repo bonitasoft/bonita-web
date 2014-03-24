@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
-import org.bonitasoft.engine.expression.ExpressionEvaluationException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.DataFieldDefinition;
@@ -58,12 +58,13 @@ public interface IFormExpressionsAPI {
      * @param isCurrentValue
      *            if true, value returned is the current value for the instance. otherwise, it's the value at step end
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
-     * @throws ExpressionEvaluationException
+     * @throws BPMEngineException 
+
      */
     Serializable evaluateActivityInitialExpression(APISession session, long activityInstanceID, Expression expression, Locale locale, boolean isCurrentValue)
-            throws BPMEngineException, InvalidSessionException, ExpressionEvaluationException;
+            throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * evaluate an initial value expression (at form construction)
@@ -75,11 +76,12 @@ public interface IFormExpressionsAPI {
      * @param locale
      *            the user's locale
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Serializable evaluateInstanceInitialExpression(APISession osession, long processInstanceID, Expression expression, Locale locale, boolean isCurrentValue)
-            throws BPMEngineException, InvalidSessionException;
+            throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * evaluate an initial value expression (at form construction)
@@ -91,12 +93,13 @@ public interface IFormExpressionsAPI {
      * @param locale
      *            the user's locale
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Serializable evaluateProcessInitialExpression(APISession session, long processDefinitionID, Expression expression, Locale locale)
-            throws BPMEngineException, InvalidSessionException,
-            BPMEngineException;
+            throws BPMExpressionEvaluationException, InvalidSessionException,
+            BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * evaluate an initial value expression (at form construction)
@@ -112,12 +115,12 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
-     * @throws BPMEngineException
-     *             , InvalidSessionException
-     * @throws ExpressionEvaluationException
+     * @throws BPMExpressionEvaluationException
+     *             , InvalidSessionException 
+     * @throws BPMEngineException 
      */
     Serializable evaluateActivityInitialExpression(APISession session, long activityInstanceID, Expression expression, Locale locale, boolean isCurrentValue,
-            Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, ExpressionEvaluationException;
+            Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * evaluate an initial value expression (at form construction)
@@ -133,11 +136,12 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Serializable evaluateInstanceInitialExpression(APISession session, long processInstanceID, Expression expression, Locale locale, boolean isCurrentValue,
-            Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException;
+            Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * evaluate an initial value expression (at form construction)
@@ -151,11 +155,12 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Serializable evaluateProcessInitialExpression(APISession session, long processDefinitionID, Expression expression, Locale locale,
-            Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException;
+            Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -171,15 +176,14 @@ public interface IFormExpressionsAPI {
      * @param isCurrentValue
      *            if true, value returned is the current value for the instance. otherwise, it's the value at step end
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
+     * @throws BPMEngineException 
      */
     Serializable evaluateActivityExpression(APISession session, long activityInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException,
-            ExpressionEvaluationException;
+            Locale locale, boolean isCurrentValue) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -195,13 +199,14 @@ public interface IFormExpressionsAPI {
      * @param isCurrentValue
      *            if true, value returned is the current value for the instance. otherwise, it's the value at instantiation
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Serializable evaluateInstanceExpression(APISession session, long processInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException;
+            Locale locale, boolean isCurrentValue) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException;
 
     /**
      * Evaluate an action expression (at form submission)
@@ -215,13 +220,14 @@ public interface IFormExpressionsAPI {
      * @param locale
      *            the user's locale
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Serializable evaluateProcessExpression(APISession session, long processDefinitionID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException;
+            Locale locale) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -239,15 +245,15 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
+     * @throws BPMEngineException 
      */
     Serializable evaluateActivityExpression(APISession session, long activityInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException, ExpressionEvaluationException;
+            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException,
+            IOException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -265,14 +271,15 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Serializable evaluateInstanceExpression(APISession session, long processInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException;
+            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException,
+            IOException, BPMEngineException;
 
     /**
      * Evaluate an action expression (at form submission)
@@ -288,13 +295,14 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluation
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Serializable evaluateProcessExpression(APISession session, long processDefinitionID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException;
+            Locale locale, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException;
 
     /**
      * Generate the form fields context for a groovy evaluation
@@ -306,11 +314,12 @@ public interface IFormExpressionsAPI {
      * @return the context
      * @throws IOException
      * @throws FileTooBigException
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      * @throws InvalidSessionException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> generateGroovyContext(APISession session, Map<String, FormFieldValue> fieldValues, Locale locale,
-            Map<String, Serializable> context, boolean deleteDocuments) throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException;
+            Map<String, Serializable> context, boolean deleteDocuments) throws FileTooBigException, IOException, InvalidSessionException, BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Get the right object value according to the datafield definition
@@ -364,11 +373,12 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> evaluateActivityInitialExpressions(APISession session, long activityInstanceID, List<Expression> expressions,
-            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException;
+            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -386,14 +396,15 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> evaluateActivityExpressions(APISession session, long activityInstanceID, List<Expression> expressions,
-            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException;
+            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form construction)
@@ -409,11 +420,12 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> evaluateInstanceInitialExpressions(APISession session, long processInstanceID, List<Expression> expressions,
-            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException;
+            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -431,14 +443,15 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> evaluateInstanceExpressions(APISession session, long processInstanceID, List<Expression> expressions,
-            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMEngineException,
-            InvalidSessionException, FileTooBigException, IOException;
+            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws BPMExpressionEvaluationException,
+            InvalidSessionException, FileTooBigException, IOException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form construction)
@@ -452,11 +465,12 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> evaluateProcessInitialExpressions(APISession session, long processDefinitionID, List<Expression> expressions,
-            Locale locale, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException;
+            Locale locale, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException;
 
     /**
      * Evaluate an expression (at form submission)
@@ -472,12 +486,13 @@ public interface IFormExpressionsAPI {
      * @param context
      *            some additional context for groovy evaluation
      * @return The result of the evaluations as a Map
-     * @throws BPMEngineException
+     * @throws BPMExpressionEvaluationException
      *             , InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws BPMEngineException 
      */
     Map<String, Serializable> evaluateProcessExpressions(APISession session, long processDefinitionID, List<Expression> expressions,
-            Map<String, FormFieldValue> fieldValues, Locale locale, Map<String, Serializable> context) throws BPMEngineException, InvalidSessionException,
-            FileTooBigException, IOException;
+            Map<String, FormFieldValue> fieldValues, Locale locale, Map<String, Serializable> context) throws BPMExpressionEvaluationException, InvalidSessionException,
+            FileTooBigException, IOException, BPMEngineException;
 }

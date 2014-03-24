@@ -86,7 +86,7 @@ public class ArchivedCaseQuickDetailsPage extends ItemQuickDetailsPage<ArchivedC
 
     @Override
     protected void buildBody(final ArchivedCaseItem item) {
-        addBody(new ArchivedTasksSection(_("Tasks"), item, 5));
+        addBody(new ArchivedTasksSection(_("Done tasks"), item, 5));
 
         addBody(new CommentSectionSnippet(item.getSourceObjectId(), true)
                 .setNbLinesByPage(5)
