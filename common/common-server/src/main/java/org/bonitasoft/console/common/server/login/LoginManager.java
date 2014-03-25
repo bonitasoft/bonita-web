@@ -74,7 +74,7 @@ public interface LoginManager {
      * @return new redirect url
      * @throws OAuthConsumerNotFoundException
      */
-    String getLoginpageURL(final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException;
+    String getLoginpageURL(final String context, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException;
 
     /**
      * Login the engine

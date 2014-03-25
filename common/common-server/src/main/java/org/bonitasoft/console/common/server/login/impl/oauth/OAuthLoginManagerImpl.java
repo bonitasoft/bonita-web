@@ -40,7 +40,7 @@ public class OAuthLoginManagerImpl implements LoginManager {
     private static final Logger LOGGER = Logger.getLogger(OAuthLoginManagerImpl.class.getName());
 
     @Override
-    public String getLoginpageURL(final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
+    public String getLoginpageURL(String context, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
         final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(tenantId, redirectURL);
         final Token requestToken = aConsumer.getRequestToken();
         TokenCacheUtil.addRequestToken(requestToken);
