@@ -55,6 +55,7 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
             final String search,
             final String orders,
             final Map<String, String> filters) {
+
         assertNull(search, new _("Search term are not supported by this api"));
         assertNull(filters, new _("Filters are not supported by this api"));
         if(!orders.equals(FIX_ORDER)) {
@@ -62,11 +63,12 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
         }
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
+
         List<CustomUserInfoDefinitionItem> result = new ArrayList<CustomUserInfoDefinitionItem>();
-        List<CustomUserInfoDefinition> definitions = client.listDefinitions(page, resultsByPage);
-        for (CustomUserInfoDefinition definition : definitions) {
+        for (CustomUserInfoDefinition definition : client.listDefinitions(page, resultsByPage)) {
             result.add(converter.convert(definition));
         }
+
         return new ItemSearchResult<CustomUserInfoDefinitionItem>(page, resultsByPage, client.countDefinitions(), result);
     }
 
