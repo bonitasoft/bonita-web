@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-22 07:02+0100\n"
-"PO-Revision-Date: 2014-03-24 03:32-0400\n"
+"POT-Creation-Date: 2014-03-25 07:01+0100\n"
+"PO-Revision-Date: 2014-03-25 03:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,6 +18,7 @@ msgstr "Machen Sie es"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:38
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:274
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:112
 msgid "Done"
 msgstr "Fertig"
 
@@ -254,12 +255,7 @@ msgid "No description."
 msgstr "Keine Beschreibung."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:102
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:120
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:89
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:106
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:89
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:45
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:129
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:36
@@ -327,7 +323,6 @@ msgid "App"
 msgstr "App"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:180
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:112
 msgid "Performed"
 msgstr "Ausgeführt"
 
@@ -481,8 +476,16 @@ msgid "The user that has started this case"
 msgstr "Der Benutzer, der mit diesem Fall begonnen hat"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:112
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:89
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:106
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/section/ArchivedTasksSection.java:45
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:171
 msgid "Done tasks"
 msgstr "Erledigte Aufgaben"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:120
+msgid "Tasks to do"
+msgstr "Auszuführende Aufgaben"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:132
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:140
@@ -757,8 +760,8 @@ msgid "Connectors"
 msgstr "Konnektoren"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:102
-msgid "Human"
-msgstr "Menschlich"
+msgid "Pending"
+msgstr "Unerledigt"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:107
@@ -830,13 +833,13 @@ msgstr "Bearbeiten"
 msgid "Edit this value"
 msgstr "Diesen Wert editieren"
 
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:129
+msgid "Pending tasks"
+msgstr "Unerledigte Aufgaben"
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:151
 msgid "Performed by"
 msgstr "Ausgeführt von"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:171
-msgid "Closed tasks"
-msgstr "Beendete Aufgaben"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:123
 msgid "No task done"
