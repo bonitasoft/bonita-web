@@ -63,9 +63,8 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
         }
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
-
         List<CustomUserInfoDefinitionItem> result = new ArrayList<CustomUserInfoDefinitionItem>();
-        for (CustomUserInfoDefinition definition : client.listDefinitions(page, resultsByPage)) {
+        for (CustomUserInfoDefinition definition : client.listDefinitions(page * resultsByPage, resultsByPage)) {
             result.add(converter.convert(definition));
         }
 

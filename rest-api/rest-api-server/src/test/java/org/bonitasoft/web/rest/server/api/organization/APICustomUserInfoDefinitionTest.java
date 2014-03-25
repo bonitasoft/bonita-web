@@ -121,12 +121,13 @@ public class APICustomUserInfoDefinitionTest {
     }
 
     @Test
-    public void search_should_retrieve_a_list_of_item_specified_in_a_range() throws Exception {
-        given(engine.listDefinitions(0, 2)).willReturn(Arrays.<CustomUserInfoDefinition> asList(
+    public void search_should_retrieve_the_list_of_item_from_the_specified_range() throws Exception {
+        given(engine.listDefinitions(4, 2)).willReturn(Arrays.<CustomUserInfoDefinition> asList(
                 new EngineCustomUserInfoDefinition(3L),
                 new EngineCustomUserInfoDefinition(4L)));
+        given(engine.countDefinitions()).willReturn(6L);
 
-        List<CustomUserInfoDefinitionItem> result = api.search(0, 2,
+        List<CustomUserInfoDefinitionItem> result = api.search(2, 2,
                 null,
                 APICustomUserInfoDefinition.FIX_ORDER,
                 null).getResults();
