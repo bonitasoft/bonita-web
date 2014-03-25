@@ -39,14 +39,14 @@ public class CustomUserInfoDefinitionDefinition extends ItemDefinition<CustomUse
 
     @Override
     protected void defineAttributes() {
-        createAttribute(CustomUserInfoDefinitionItem.ATTRIBUTE_DEFINITION_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CustomUserInfoDefinitionItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CustomUserInfoDefinitionItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
         createAttribute(CustomUserInfoDefinitionItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
     }
 
     @Override
     protected void definePrimaryKeys() {
-        setPrimaryKeys(CustomUserInfoDefinitionItem.ATTRIBUTE_DEFINITION_ID);
+        setPrimaryKeys(CustomUserInfoDefinitionItem.ATTRIBUTE_ID);
     }
 
     @Override

@@ -16,14 +16,14 @@
  */
 package org.bonitasoft.web.rest.model.identity;
 
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
  * @author Vincent Elcrin
  */
-public class CustomUserInfoDefinitionItem extends Item {
-
-    public static final String ATTRIBUTE_DEFINITION_ID = "definitionId";
+public class CustomUserInfoDefinitionItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_NAME = "name";
 
@@ -32,5 +32,31 @@ public class CustomUserInfoDefinitionItem extends Item {
     @Override
     public CustomUserInfoDefinitionDefinition getItemDefinition() {
         return new CustomUserInfoDefinitionDefinition();
+    }
+
+    @Override
+    public void setId(String id) {
+        setId(APIID.makeAPIID(id));
+    }
+
+    @Override
+    public void setId(Long id) {
+        setId(APIID.makeAPIID(id));
+    }
+
+    public String getName() {
+        return getAttributeValue(ATTRIBUTE_NAME);
+    }
+
+    public void setName(String name) {
+        setAttribute(ATTRIBUTE_NAME, name);
+    }
+
+    public String getDescription() {
+        return getAttributeValue(ATTRIBUTE_DESCRIPTION);
+    }
+
+    public void setDescription(String description) {
+        setAttribute(ATTRIBUTE_DESCRIPTION, description);
     }
 }
