@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
@@ -30,6 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -37,6 +39,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author Vincent Elcrin
@@ -81,5 +85,33 @@ public class APICustomUserInfoDefinitionTest {
         CustomUserInfoDefinitionItem added = api.add(new CustomUserInfoDefinitionItem());
 
         assertThat(added.getId()).isEqualTo(APIID.makeAPIID(2L));
+    }
+
+    @Test
+    public void add_should_call_engine_client_with_a_correct_item_creator() throws Exception {
+        given(engine.createDefinition(any(CustomUserInfoDefinitionCreator.class)))
+                .willReturn(new EngineCustomUserInfoDefinition(1L));
+        ArgumentCaptor<CustomUserInfoDefinitionCreator> argument = ArgumentCaptor.forClass(CustomUserInfoDefinitionCreator.class);
+        CustomUserInfoDefinitionItem item = new CustomUserInfoDefinitionItem();
+        item.setName("foo");
+        item.setDescription("bar");
+
+        api.add(item);
+        verify(engine).createDefinition(argument.capture());
+
+        assertThat(argument.getValue().getName()).isEqualTo("foo");
+        assertThat(argument.getValue().getDescription()).isEqualTo("bar");
+    }
+
+    @Test
+    public void delete_should_call_engine_client_with_a_correct_item_creator() throws Exception {
+        ArgumentCaptor<Long> argument = ArgumentCaptor.forClass(Long.class);
+
+        api.delete(Arrays.asList(
+                APIID.makeAPIID(1L),
+                APIID.makeAPIID(2L)));
+        verify(engine, times(2)).deleteDefinition(argument.capture());
+
+        assertThat(argument.getAllValues()).containsOnly(1L, 2L);
     }
 }

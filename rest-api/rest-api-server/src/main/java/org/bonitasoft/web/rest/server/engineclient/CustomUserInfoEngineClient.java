@@ -16,8 +16,11 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import java.util.List;
+
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.exception.CreationException;
+import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -40,5 +43,17 @@ public class CustomUserInfoEngineClient {
         } catch (CreationException e) {
             throw new APIException(new _("Error while creating definition"), e);
         }
+    }
+
+    public void deleteDefinition(long id) {
+        try {
+            identity.deleteCustomUserInfoDefinition(id);
+        } catch (DeletionException e) {
+            throw new APIException(new _("Error while deleting item with id <" + id + ">"), e);
+        }
+    }
+
+    public List<CustomUserInfoDefinition> listDefinitions(int startIndex, int maxResult) {
+        return identity.getCustomUserInfoDefinitions(startIndex, maxResult);
     }
 }

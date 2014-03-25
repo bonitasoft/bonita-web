@@ -37,7 +37,9 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
     }
 
     public void delete(final List<APIID> ids) {
-
+        for (APIID id : ids) {
+            engineClientCreator.create(getEngineSession()).deleteDefinition(id.toLong());
+        }
     }
 
     public ItemSearchResult<CustomUserInfoDefinitionItem> search(
