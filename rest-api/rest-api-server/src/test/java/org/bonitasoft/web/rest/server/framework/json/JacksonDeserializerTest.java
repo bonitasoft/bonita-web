@@ -31,10 +31,8 @@ import org.bonitasoft.web.rest.server.framework.json.model.Address;
 import org.bonitasoft.web.rest.server.framework.json.model.User;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 /** extends APITestWithMock to avoid nullpointerException on I18n */
 public class JacksonDeserializerTest extends APITestWithMock {
 
