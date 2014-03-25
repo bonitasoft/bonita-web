@@ -13,6 +13,8 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.standard;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
@@ -30,8 +32,12 @@ import org.bonitasoft.web.rest.model.user.User;
 public class StandardLoginManagerImpl implements LoginManager {
 
     @Override
-    public String getLoginpageURL(String context, final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
+        String context = request.getContextPath();
+        if (request.getPathInfo().startsWith("/mobile/")) {
+            context += "/mobile/";
+        }
         url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");

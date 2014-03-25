@@ -44,7 +44,7 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
  */
 public class AuthorizationFilter implements Filter {
 
-    private LinkedList<AuthorizationRule> rules = new LinkedList<AuthorizationRule>();
+    private final LinkedList<AuthorizationRule> rules = new LinkedList<AuthorizationRule>();
 
     public AuthorizationFilter() {
         addRules();
@@ -72,14 +72,14 @@ public class AuthorizationFilter implements Filter {
     }
 
     protected void doAuthorizationFiltering(HttpServletRequestAccessor requestAccessor,
-                                            HttpServletResponseAccessor responseAccessor,
-                                            TenantIdAccessor tenantIdAccessor,
-                                            FilterChain chain) throws ServletException, IOException {
+            HttpServletResponseAccessor responseAccessor,
+            TenantIdAccessor tenantIdAccessor,
+            FilterChain chain) throws ServletException, IOException {
 
-        if(!isAuthorized(requestAccessor, responseAccessor, tenantIdAccessor, chain)) {
+        if (!isAuthorized(requestAccessor, responseAccessor, tenantIdAccessor, chain)) {
 
             cleanHttpSession(requestAccessor.getHttpSession());
-            responseAccessor.redirect(createLoginUrl(requestAccessor.asHttpServletRequest().getContextPath(),
+            responseAccessor.redirect(createLoginUrl(requestAccessor.asHttpServletRequest(),
                     makeRedirectUrl(requestAccessor, requestAccessor.getRedirectUrl()).getUrl(),
                     tenantIdAccessor.getRequestedTenantId()));
         }
@@ -89,12 +89,12 @@ public class AuthorizationFilter implements Filter {
      * @return true if one of the rules pass false otherwise
      */
     private boolean isAuthorized(HttpServletRequestAccessor requestAccessor,
-                                 HttpServletResponseAccessor responseAccessor,
-                                 TenantIdAccessor tenantIdAccessor,
-                                 FilterChain chain) throws ServletException, IOException {
+            HttpServletResponseAccessor responseAccessor,
+            TenantIdAccessor tenantIdAccessor,
+            FilterChain chain) throws ServletException, IOException {
 
-        for(AuthorizationRule rule : rules) {
-            if(rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
+        for (AuthorizationRule rule : rules) {
+            if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
                 chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
                 return true;
             }
@@ -106,7 +106,6 @@ public class AuthorizationFilter implements Filter {
     public void destroy() {
     }
 
-
     // protected for test stubbing
     protected LoginManager getLoginManager(final long tenantId) throws ServletException {
         try {
@@ -116,11 +115,11 @@ public class AuthorizationFilter implements Filter {
         }
     }
 
-    private LoginUrl createLoginUrl(final String context, final String redirectUrl, final long requestedTenantId) throws ServletException {
+    private LoginUrl createLoginUrl(final HttpServletRequest request, final String redirectUrl, final long requestedTenantId) throws ServletException {
         try {
             return new LoginUrl(getLoginManager(requestedTenantId),
                     requestedTenantId,
-                    redirectUrl, context);
+                    redirectUrl, request);
         } catch (final LoginUrlException e) {
             throw new ServletException(e);
         }

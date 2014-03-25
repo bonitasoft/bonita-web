@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
@@ -56,8 +57,9 @@ public class JAASLoginManagerImpl implements LoginManager {
      * {@inheritDoc}
      */
     @Override
-    public String getLoginpageURL(String context, final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuffer url = new StringBuffer();
+        String context = request.getContextPath();
         url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");

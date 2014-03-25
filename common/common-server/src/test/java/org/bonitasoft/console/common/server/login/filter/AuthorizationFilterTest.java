@@ -5,20 +5,23 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -98,7 +101,8 @@ public class AuthorizationFilterTest {
     public void testIfWeAreRedirectedIfAllRulesFail() throws Exception {
         authorizationFilter.addRule(createFailingRule());
         authorizationFilter.addRule(createFailingRule());
-
+        when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authorizationFilter.doAuthorizationFiltering(request, response, tenantIdAccessor, chain);
 
         verify(response).redirect(any(Locator.class));
@@ -109,6 +113,7 @@ public class AuthorizationFilterTest {
         authorizationFilter.addRule(createFailingRule());
         authorizationFilter.addRule(createFailingRule());
         when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authorizationFilter.doAuthorizationFiltering(request, response, tenantIdAccessor, chain);
 
         verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
@@ -120,6 +125,7 @@ public class AuthorizationFilterTest {
         doReturn(-1L).when(tenantIdAccessor).getRequestedTenantId();
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authorizationFilter.doAuthorizationFiltering(request, response, tenantIdAccessor, chain);
 
         verify(response).redirect(argThat(new LocatorMatcher("/bonita/login.jsp?redirectUrl=")));
@@ -131,6 +137,7 @@ public class AuthorizationFilterTest {
         doReturn(12L).when(tenantIdAccessor).getRequestedTenantId();
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authorizationFilter.doAuthorizationFiltering(request, response, tenantIdAccessor, chain);
 
         verify(response).redirect(argThat(new LocatorMatcher("/bonita/login.jsp?tenant=12&redirectUrl=")));
@@ -138,7 +145,7 @@ public class AuthorizationFilterTest {
 
     class LocatorMatcher extends ArgumentMatcher<Locator> {
 
-        private String expectedUrl;
+        private final String expectedUrl;
 
         LocatorMatcher(String expectedUrl) {
             this.expectedUrl = expectedUrl;
@@ -152,6 +159,7 @@ public class AuthorizationFilterTest {
 
     private AuthorizationRule createPassingRule() {
         return new AuthorizationRule() {
+
             @Override
             public boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException {
                 return true;
@@ -161,12 +169,12 @@ public class AuthorizationFilterTest {
 
     private AuthorizationRule createFailingRule() {
         return new AuthorizationRule() {
+
             @Override
             public boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException {
                 return false;
             }
         };
     }
-
 
 }
