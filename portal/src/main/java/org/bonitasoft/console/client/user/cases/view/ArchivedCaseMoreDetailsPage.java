@@ -103,7 +103,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
 
     @Override
     protected void buildBody(final ArchivedCaseItem item) {
-        addBody(new ArchivedTasksSection(_("Tasks"), item, 10));
+        addBody(new ArchivedTasksSection(_("Done tasks"), item, 10));
         addBody(new CommentSectionSnippet(item.getSourceObjectId(), true)
                 .build());
     }

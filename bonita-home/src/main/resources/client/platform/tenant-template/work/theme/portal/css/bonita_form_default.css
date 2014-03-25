@@ -166,6 +166,8 @@ textarea.bonita_form_field, div.bonita_form_field div.bonita_rich_text {
 	height:75px;
 }
 
+div.bonita_form_field div.bonita_rich_text{ height: auto; }
+
 .bonita_form_label {
 	color: #282626;
 	font-size: 100%;
