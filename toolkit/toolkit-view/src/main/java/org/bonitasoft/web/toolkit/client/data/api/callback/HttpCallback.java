@@ -16,12 +16,16 @@
  */
 package org.bonitasoft.web.toolkit.client.data.api.callback;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import com.google.gwt.http.client.Header;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestTimeoutException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONException;
 import com.google.gwt.user.client.Window;
+
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -95,7 +99,13 @@ public abstract class HttpCallback implements RequestCallback {
      */
     @Override
     public final void onError(final Request request, final Throwable exception) {
-        onError(exception.getMessage(), 503);
+        String exceptionMessage;
+        if (exception instanceof RequestTimeoutException) {
+            exceptionMessage = _("No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page.");
+        } else {
+            exceptionMessage = exception.getMessage();
+        }
+        onError(exceptionMessage, 503);
     }
 
     /**

@@ -32,7 +32,8 @@ public class SearchOptionsCreator {
 
     private final SearchOptionsBuilder builder;
 
-    public SearchOptionsCreator(int page, int resultsByPage, String search, Sorts sorts, Filters filters) {
+
+	public SearchOptionsCreator(int page, int resultsByPage, String search, Sorts sorts, Filters filters) {
         builder = new SearchOptionsBuilder(computeIndex(page, resultsByPage), resultsByPage);
         builder.searchTerm(search);
         addSorts(builder, sorts);
@@ -60,4 +61,8 @@ public class SearchOptionsCreator {
     public SearchOptions create() {
         return builder.done();
     }
+
+    public SearchOptionsBuilder getBuilder() {
+		return builder;
+	}
 }
