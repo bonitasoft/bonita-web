@@ -99,7 +99,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     }
 
     private ItemListingFilter humanFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Human"), _("Tasks "), TABLE_HUMAN_TASK).addFilter(TaskItem.ATTRIBUTE_STATE,
+        return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Pending"), _("Tasks "), TABLE_HUMAN_TASK).addFilter(TaskItem.ATTRIBUTE_STATE,
                 TaskItem.VALUE_STATE_READY);
     }
 
@@ -109,7 +109,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
     }
 
     private ItemListingFilter performedFilter() {
-        return new ItemListingFilter(FILTER_PRIMARY_PERFORMED, _("Performed"), _("Tasks "), TABLE_HISTORY);
+        return new ItemListingFilter(FILTER_PRIMARY_PERFORMED, _("Done"), _("Tasks "), TABLE_HISTORY);
     }
 
     @Override

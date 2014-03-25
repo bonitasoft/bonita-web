@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
@@ -48,6 +47,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Séverin Moussel
@@ -130,9 +130,9 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
 
         frameURL.append("#form=")
-                .append(URL.decodeQueryString(item.getProcess().getName())).append(this.UUID_SEPERATOR)
-                .append(item.getProcess().getVersion()).append(this.UUID_SEPERATOR)
-                .append(URL.decodeQueryString(item.getName()))
+                .append(URL.encodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
+                .append(URL.encodeQueryString(item.getProcess().getVersion())).append(UUID_SEPERATOR)
+                .append(URL.encodeQueryString(item.getName()))
 
                 .append("$entry")
 

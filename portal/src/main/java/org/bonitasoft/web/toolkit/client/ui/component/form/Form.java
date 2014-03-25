@@ -62,7 +62,7 @@ import com.google.gwt.user.client.Element;
 
 /**
  * This class allow to manually create forms
- * 
+ *
  * @author Séverin Moussel
  */
 public class Form extends AbstractForm {
@@ -119,7 +119,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line text input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -134,7 +134,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line text input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -149,7 +149,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line text input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -167,7 +167,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line text input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -184,7 +184,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line text input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -205,13 +205,21 @@ public class Form extends AbstractForm {
         return this;
     }
 
+    public Form addTextEntry(final JsId jsid, final String label, final String tooltip, final String defaultValue, final String description,
+            final String example, final Long maxLength) {
+
+        addEntry(new Text(jsid, label, tooltip, defaultValue, description, example, maxLength));
+
+        return this;
+    }
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // STATIC
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Add a single line Static text
-     * 
+     *
      * @param jsid
      *            The JsId of the Static text
      * @param label
@@ -226,7 +234,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line static text
-     * 
+     *
      * @param jsid
      *            The JsId of the Static text
      * @param label
@@ -243,7 +251,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a single line static text
-     * 
+     *
      * @param jsid
      *            The JsId of the Static text
      * @param label
@@ -268,7 +276,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a simple obfuscated password input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -283,7 +291,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a simple obfuscated password input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -300,7 +308,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a simple obfuscated password input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -324,7 +332,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a plain text textarea
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -339,7 +347,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a plain text textarea
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -356,7 +364,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a plain text textarea
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -373,7 +381,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a plain text textarea
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -398,7 +406,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a radio button. To have multiple radio button switching each other, create them using the same JsId.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -412,7 +420,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a radio button. To have multiple radio button switching each other, create them using the same JsId.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -427,7 +435,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a radio button. To have multiple radio button switching each other, create them using the same JsId.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -442,7 +450,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a radio button. To have multiple radio button switching each other, create them using the same JsId.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -463,7 +471,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a checkBox.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -477,7 +485,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a checkBox.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -492,7 +500,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a checkBox.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -507,7 +515,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a checkBox.
-     * 
+     *
      * @param jsid
      * @param label
      * @param tooltip
@@ -528,7 +536,7 @@ public class Form extends AbstractForm {
 
     /**
      * @author Séverin Moussel
-     * 
+     *
      */
     public final class FormSubmitAction extends Action {
 
@@ -540,12 +548,12 @@ public class Form extends AbstractForm {
 
         @Override
         public void execute() {
-            if (isUploadFinished(Form.this.getElement())) {
+            if (isUploadFinished(getElement())) {
                 try {
                     validate();
                     // TODO find a better way to unactivate the double click
                     // action.setStarted(true);
-                    this.action.execute();
+                    action.execute();
                 } catch (ValidationException e) {
                     for (final ValidationError error : e.getErrors()) {
                         Form.this.addError(new JsId(error.getAttributeName()), error.getMessageTemplate());
@@ -562,7 +570,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add an action to the form
-     * 
+     *
      * @param jsid
      * @param label
      *            The label to show in the button
@@ -582,7 +590,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add an action to the form
-     * 
+     *
      * @param jsid
      * @param label
      *            The label to show in the button
@@ -602,7 +610,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add an action to the form
-     * 
+     *
      * @param label
      *            The label to show in the button
      * @param tooltip
@@ -648,9 +656,9 @@ public class Form extends AbstractForm {
     }
 
     public Form closeFieldset() {
-        for (int i = this.containers.size() - 1; i > 0; i--) {
-            if (this.containers.get(i) instanceof Fieldset) {
-                while (this.containers.size() > 2 && !(this.containers.lastElement() instanceof Fieldset)) {
+        for (int i = containers.size() - 1; i > 0; i--) {
+            if (containers.get(i) instanceof Fieldset) {
+                while (containers.size() > 2 && !(containers.lastElement() instanceof Fieldset)) {
                     closeSection();
                 }
                 closeSection();
@@ -670,9 +678,9 @@ public class Form extends AbstractForm {
     }
 
     public Form closeTab() {
-        for (int i = this.containers.size() - 1; i > 0; i--) {
-            if (this.containers.get(i) instanceof Tab) {
-                while (this.containers.size() > 2 && !(this.containers.lastElement() instanceof Tab)) {
+        for (int i = containers.size() - 1; i > 0; i--) {
+            if (containers.get(i) instanceof Tab) {
+                while (containers.size() > 2 && !(containers.lastElement() instanceof Tab)) {
                     closeSection();
                 }
                 closeSection();
@@ -715,9 +723,9 @@ public class Form extends AbstractForm {
     }
 
     private Form closePage() {
-        for (int i = this.containers.size() - 1; i > 0; i--) {
-            if (this.containers.get(i) instanceof Page) {
-                while (this.containers.size() > 2 && !(this.containers.lastElement() instanceof Page)) {
+        for (int i = containers.size() - 1; i > 0; i--) {
+            if (containers.get(i) instanceof Page) {
+                while (containers.size() > 2 && !(containers.lastElement() instanceof Page)) {
                     closeSection();
                 }
                 closeSection();
@@ -734,7 +742,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a simple obfuscated File input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -749,7 +757,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a simple obfuscated File input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -759,7 +767,7 @@ public class Form extends AbstractForm {
      * @param description
      *            (Optional) A more complete description on how to fill the input and what it is for.
      * @return This function returns the form itself in order to allow cascading calls
-     * 
+     *
      * @deprecated Use {@link #addEntry(new FileUpload())}
      */
     @Deprecated
@@ -769,7 +777,7 @@ public class Form extends AbstractForm {
 
     /**
      * Add a simple obfuscated File input
-     * 
+     *
      * @param jsid
      *            The JsId of the input
      * @param label
@@ -781,7 +789,7 @@ public class Form extends AbstractForm {
      * @param example
      *            (Optional) An example of valid input.
      * @return This function returns the form itself in order to allow cascading calls
-     * 
+     *
      * @deprecated Use {@link #addEntry(new FileUpload())}
      */
     @Deprecated
@@ -820,7 +828,7 @@ public class Form extends AbstractForm {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     * @deprecated use addEntry(new {@link AutoCompleteEntry}(...))
      */
     @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
@@ -829,7 +837,7 @@ public class Form extends AbstractForm {
     }
 
     /**
-     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     * @deprecated use addEntry(new {@link AutoCompleteEntry}(...))
      */
     @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
@@ -838,7 +846,7 @@ public class Form extends AbstractForm {
     }
 
     /**
-     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     * @deprecated use addEntry(new {@link AutoCompleteEntry}(...))
      */
     @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
@@ -850,7 +858,7 @@ public class Form extends AbstractForm {
     }
 
     /**
-     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     * @deprecated use addEntry(new {@link AutoCompleteEntry}(...))
      */
     @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
@@ -859,7 +867,7 @@ public class Form extends AbstractForm {
     }
 
     /**
-     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     * @deprecated use addEntry(new {@link AutoCompleteEntry}(...))
      */
     @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
@@ -868,7 +876,7 @@ public class Form extends AbstractForm {
     }
 
     /**
-     *  @deprecated use addEntry(new {@link AutoCompleteEntry}(...)) 
+     * @deprecated use addEntry(new {@link AutoCompleteEntry}(...))
      */
     @Deprecated
     public Form addAutoCompleteEntry(final JsId jsid, final String label, final String tooltip, final ItemDefinition itemDefinition,
@@ -970,20 +978,25 @@ public class Form extends AbstractForm {
      */
 
     public Form addItemAttributeEntry(final JsId jsId, final ItemAttribute itemAttribute, final String label, final String tooltip) {
-        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, null, null, null);
+        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, null, null, null, null);
+    }
+
+    public Form addItemAttributeEntryWithMaxLength(final JsId jsId, final ItemAttribute itemAttribute, final String label, final String tooltip,
+            final Long maxLength) {
+        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, null, null, null, maxLength);
     }
 
     public Form addItemAttributeEntry(final JsId jsId, final ItemAttribute itemAttribute, final String label, final String tooltip, final String defaultValue) {
-        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, defaultValue, null, null);
+        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, defaultValue, null, null, null);
     }
 
     public Form addItemAttributeEntry(final JsId jsId, final ItemAttribute itemAttribute, final String label, final String tooltip, final String defaultValue,
             final String description) {
-        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, defaultValue, description, null);
+        return this.addItemAttributeEntry(jsId, itemAttribute, label, tooltip, defaultValue, description, null, null);
     }
 
     public Form addItemAttributeEntry(final JsId jsId, final ItemAttribute itemAttribute, final String label, final String tooltip, String defaultValue,
-            final String description, final String example) {
+            final String description, final String example, Long maxLength) {
 
         if (itemAttribute.getDefaultValue() != null && defaultValue == null) {
             defaultValue = itemAttribute.getDefaultValue();
@@ -992,7 +1005,7 @@ public class Form extends AbstractForm {
         switch (itemAttribute.getType()) {
             default:
             case STRING:
-                this.addTextEntry(jsId, label, tooltip, defaultValue, description, example);
+                this.addTextEntry(jsId, label, tooltip, defaultValue, description, example, maxLength);
                 break;
             case TEXT:
                 this.addTextareaEntry(jsId, label, tooltip, defaultValue, description, example);
@@ -1048,7 +1061,7 @@ public class Form extends AbstractForm {
     public Form addItemAttributeEntry(final ItemAttribute itemAttribute, final String label, final String tooltip, final String defaultValue,
             final String description, final String example) {
 
-        return this.addItemAttributeEntry(new JsId(itemAttribute.getName()), itemAttribute, label, tooltip, defaultValue, description, example);
+        return this.addItemAttributeEntry(new JsId(itemAttribute.getName()), itemAttribute, label, tooltip, defaultValue, description, example, null);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
