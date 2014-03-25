@@ -56,4 +56,8 @@ public class CustomUserInfoEngineClient {
     public List<CustomUserInfoDefinition> listDefinitions(int startIndex, int maxResult) {
         return identity.getCustomUserInfoDefinitions(startIndex, maxResult);
     }
+
+    public long countDefinitions() {
+        return identity.getNumberOfCustomInfoDefinitions();
+    }
 }

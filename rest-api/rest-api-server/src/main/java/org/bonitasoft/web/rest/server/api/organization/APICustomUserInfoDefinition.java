@@ -1,16 +1,21 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -20,6 +25,8 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
         APIHasAdd<CustomUserInfoDefinitionItem>,
         APIHasSearch<CustomUserInfoDefinitionItem>,
         APIHasDelete {
+
+    public static final String FIX_ORDER = "Fix order";
 
     private final CustomUserInfoConverter converter = new CustomUserInfoConverter();
 
@@ -48,10 +55,28 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
             final String search,
             final String orders,
             final Map<String, String> filters) {
-        return null;
+        assertNull(search, new _("Search term are not supported by this api"));
+        assertNull(filters, new _("Filters are not supported by this api"));
+        if(!orders.equals(FIX_ORDER)) {
+            throw new APIException(new _("Sort is not supported by this api"));
+        }
+
+        CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
+        List<CustomUserInfoDefinitionItem> result = new ArrayList<CustomUserInfoDefinitionItem>();
+        List<CustomUserInfoDefinition> definitions = client.listDefinitions(page, resultsByPage);
+        for (CustomUserInfoDefinition definition : definitions) {
+            result.add(converter.convert(definition));
+        }
+        return new ItemSearchResult<CustomUserInfoDefinitionItem>(page, resultsByPage, client.countDefinitions(), result);
+    }
+
+    private void assertNull(Object object, _ message) {
+        if(object != null) {
+            throw new APIException(message);
+        }
     }
 
     public String defineDefaultSearchOrder() {
-        return CustomUserInfoDefinitionItem.ATTRIBUTE_NAME;
+        return FIX_ORDER;
     }
 }

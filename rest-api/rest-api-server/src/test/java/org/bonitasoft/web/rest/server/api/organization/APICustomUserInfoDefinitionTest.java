@@ -18,14 +18,19 @@ package org.bonitasoft.web.rest.server.api.organization;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.bonitasoft.engine.api.IdentityAPI;
+import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,7 +93,7 @@ public class APICustomUserInfoDefinitionTest {
     }
 
     @Test
-    public void add_should_call_engine_client_with_a_correct_item_creator() throws Exception {
+    public void add_should_create_an_item_based_on_item_passed_in_parameter() throws Exception {
         given(engine.createDefinition(any(CustomUserInfoDefinitionCreator.class)))
                 .willReturn(new EngineCustomUserInfoDefinition(1L));
         ArgumentCaptor<CustomUserInfoDefinitionCreator> argument = ArgumentCaptor.forClass(CustomUserInfoDefinitionCreator.class);
@@ -104,7 +109,7 @@ public class APICustomUserInfoDefinitionTest {
     }
 
     @Test
-    public void delete_should_call_engine_client_with_a_correct_item_creator() throws Exception {
+    public void delete_should_delete_all_items_with_id_passed_through() throws Exception {
         ArgumentCaptor<Long> argument = ArgumentCaptor.forClass(Long.class);
 
         api.delete(Arrays.asList(
@@ -113,5 +118,50 @@ public class APICustomUserInfoDefinitionTest {
         verify(engine, times(2)).deleteDefinition(argument.capture());
 
         assertThat(argument.getAllValues()).containsOnly(1L, 2L);
+    }
+
+    @Test
+    public void search_should_retrieve_a_list_of_item_specified_in_a_range() throws Exception {
+        given(engine.listDefinitions(0, 2)).willReturn(Arrays.<CustomUserInfoDefinition> asList(
+                new EngineCustomUserInfoDefinition(3L),
+                new EngineCustomUserInfoDefinition(4L)));
+
+        List<CustomUserInfoDefinitionItem> result = api.search(0, 2,
+                null,
+                APICustomUserInfoDefinition.FIX_ORDER,
+                null).getResults();
+
+        assertThat(result.get(0).getId()).isEqualTo(APIID.makeAPIID(3L));
+        assertThat(result.get(1).getId()).isEqualTo(APIID.makeAPIID(4L));
+    }
+
+    @Test
+    public void search_should_retrieve_the_total_number_of_definitions() throws Exception {
+        given(engine.countDefinitions()).willReturn(42L);
+
+        ItemSearchResult<CustomUserInfoDefinitionItem> result = api.search(0, 2,
+                null,
+                APICustomUserInfoDefinition.FIX_ORDER,
+                null);
+
+        assertThat(result.getTotal()).isEqualTo(42);
+    }
+
+    @Test(expected = APIException.class)
+    public void search_should_throw_an_exception_when_filters_are_passed_through() throws Exception {
+        api.search(0, 1,
+                null,
+                APICustomUserInfoDefinition.FIX_ORDER,
+                Collections.singletonMap("name", "foo"));
+    }
+
+    @Test(expected = APIException.class)
+    public void search_should_throw_an_exception_when_an_order_is_passed_through() throws Exception {
+        api.search(0, 1, null, "NAME ASC", null);
+    }
+
+    @Test(expected = APIException.class)
+    public void search_should_throw_an_exception_when_a_search_is_passed_through() throws Exception {
+        api.search(0, 1, "foo", APICustomUserInfoDefinition.FIX_ORDER, null);
     }
 }
