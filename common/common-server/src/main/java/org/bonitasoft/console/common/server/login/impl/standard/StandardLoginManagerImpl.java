@@ -30,9 +30,9 @@ import org.bonitasoft.web.rest.model.user.User;
 public class StandardLoginManagerImpl implements LoginManager {
 
     @Override
-    public String getLoginpageURL(final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(String context, final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
-        url.append(LoginManager.LOGIN_PAGE).append("?");
+        url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");
         }

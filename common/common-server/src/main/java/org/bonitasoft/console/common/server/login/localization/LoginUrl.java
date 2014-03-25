@@ -29,13 +29,12 @@ import org.bonitasoft.console.common.server.login.impl.oauth.OAuthConsumerNotFou
 public class LoginUrl implements Locator {
 
     private final String location;
-
     /**
      * @throws LoginUrlException
      *             If the login page Url couldn't be retrieved
      */
-    public LoginUrl(final LoginManager loginManager, final long tenantId, final String redirectUrl) {
-        location = getLoginPageUrl(loginManager, redirectUrl, tenantId);
+    public LoginUrl(final LoginManager loginManager, final long tenantId, final String redirectUrl, String context) {
+        location = getLoginPageUrl(loginManager, redirectUrl, tenantId, context);
     }
 
     @Override
@@ -43,9 +42,9 @@ public class LoginUrl implements Locator {
         return location;
     }
 
-    private String getLoginPageUrl(final LoginManager loginManager, final String redirectURL, final long tenantId) throws LoginUrlException {
+    private String getLoginPageUrl(final LoginManager loginManager, final String redirectURL, final long tenantId, String context) throws LoginUrlException {
         try {
-            return loginManager.getLoginpageURL(tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
+            return loginManager.getLoginpageURL(context, tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
         } catch (final UnsupportedEncodingException e) {
             throw new LoginUrlException(e);
         } catch (final OAuthConsumerNotFoundException e) {
