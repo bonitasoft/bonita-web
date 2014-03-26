@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.bonitasoft.console</groupId>
 		<artifactId>bonita-console</artifactId>
-		<version>6.2.6</version>
+		<version>6.2.6-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>org.bonitasoft.web</groupId>
