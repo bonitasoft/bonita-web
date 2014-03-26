@@ -36,6 +36,7 @@
 		<gwtVersion>${gwt.version}</gwtVersion>
 		<wro4j.version>1.7.0</wro4j.version>
 		<powermock.version>1.5.1</powermock.version>
+        <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
 
 	</properties>
 
@@ -491,6 +492,33 @@
 					<deployAtEnd>true</deployAtEnd>
 				</configuration>
 			</plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-bonita-home</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.bonitasoft.console</groupId>
+                                    <artifactId>bonita-home</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <excludes>META*/**</excludes>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${bonita.home.test}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -649,7 +677,8 @@
 								<configuration>
 									<argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
 									<systemPropertyVariables>
-										<bonita.home>${project.build.directory}/bonita/home</bonita.home>
+										<!--<bonita.home>${project.build.directory}/bonita/home</bonita.home>-->
+                                        <bonita.home>${bonita.home.test}/bonita</bonita.home>
 									</systemPropertyVariables>
 									<includes>
 										<!--run all possible tests maven failsafe plugin filters classes 

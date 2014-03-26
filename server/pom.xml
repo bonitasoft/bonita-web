@@ -16,7 +16,7 @@
         <enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
         <enable.engine.listener.end>--&gt;</enable.engine.listener.end>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        <bonita.home>${project.build.directory}/bonita-home/bonita</bonita.home>
+        <bonita.home>${bonita.home.test}/bonita</bonita.home>
     </properties>
 
     <dependencies>
