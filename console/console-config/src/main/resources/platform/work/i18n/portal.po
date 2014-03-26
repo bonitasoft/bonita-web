@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-25 03:02+0100\n"
+"POT-Creation-Date: 2014-03-26 03:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,8 +181,8 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:68
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:165
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:180
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:131
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:169
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:133
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:174
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:173
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:70
 msgid "State"
@@ -380,7 +380,7 @@ msgstr ""
 msgid "Performed on"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:97
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:93
 msgid "Display a case form of app %app_name%"
 msgstr ""
 
@@ -917,7 +917,7 @@ msgstr ""
 msgid "Deletable"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:85
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:82
 msgid "Start an instance of app %app_name%"
 msgstr ""
 
@@ -1609,7 +1609,7 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:122
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:64
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:189
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:196
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:47
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:43
 msgid "First name"
@@ -1617,7 +1617,7 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:123
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:65
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:190
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:197
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:48
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:51
 msgid "Last name"
@@ -1629,7 +1629,7 @@ msgid "Last login"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:125
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:192
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:199
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:115
 msgid "Job title"
 msgstr ""
@@ -1663,14 +1663,14 @@ msgid "Delete this membership"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:159
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:150
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:155
 msgid "Business card"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:161
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:176
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:115
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:153
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:117
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:158
 msgid "Address"
 msgstr ""
 
@@ -1680,8 +1680,8 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:162
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:177
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:119
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:157
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:121
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:162
 msgid "City"
 msgstr ""
 
@@ -1692,8 +1692,8 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:163
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:178
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:123
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:161
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:125
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:166
 msgid "Country"
 msgstr ""
 
@@ -1703,8 +1703,8 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:164
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:179
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:127
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:165
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:129
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:170
 msgid "Zip code"
 msgstr ""
 
@@ -1718,8 +1718,8 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:166
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:181
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:135
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:173
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:137
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:178
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:95
 msgid "Email"
 msgstr ""
@@ -1730,8 +1730,8 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:167
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:182
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:139
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:177
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:141
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:182
 msgid "Phone"
 msgstr ""
 
@@ -1741,8 +1741,8 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:168
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:183
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:143
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:181
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:145
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:186
 msgid "Mobile"
 msgstr ""
 
@@ -1751,7 +1751,7 @@ msgid "the professional mobile phone number of the user"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:174
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:112
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:114
 msgid "Personal information"
 msgstr ""
 
@@ -1788,45 +1788,45 @@ msgid "Create a user"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:60
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:105
 msgid "Username"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:60
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:85
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
 msgid "Enter the username for this user"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
 #: console/console-war/src/main/webapp/login.jsp:126
 msgid "Password"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:86
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
 msgid "Enter the password for this user"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:62
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:69
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
 msgid "Confirm password"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:62
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
 msgid "Confirm the password for this user"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:64
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:189
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:196
 msgid "Enter the first name of this user"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:65
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:190
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:197
 msgid "Enter the last name of this user"
 msgstr ""
 
@@ -1927,92 +1927,92 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:73
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:74
 msgid "Edit a user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:89
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:93
 msgid "Avatar"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:89
 msgid "Select an avatar for this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:97
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:99
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/UpdateGroupPage.java:68
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:71
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:265
 msgid "Save"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:97
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:99
 msgid "Save this user modifications"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:116
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:154
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:118
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:159
 msgid "Enter the address of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:120
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:158
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:122
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:163
 msgid "Enter the city of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:124
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:162
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:126
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:167
 msgid "Enter the country of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:128
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:166
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:130
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:171
 msgid "Enter the zip code of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:132
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:170
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:134
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:175
 msgid "Enter the state of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:136
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:174
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:138
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:179
 msgid "Enter the email of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:140
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:178
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:142
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:183
 msgid "Enter the phone of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:144
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:182
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:146
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:187
 msgid "Enter the mobile phone of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:188
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:195
 msgid "Details"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:191
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:198
 msgid "Title"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:191
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:198
 msgid "Enter the title of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:192
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:199
 msgid "Enter the job title of this user"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:196
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:203
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:126
 msgid "Manager"
 msgstr ""
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:197
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:204
 msgid "Select the manager of this user"
 msgstr ""
 
@@ -2503,6 +2503,10 @@ msgstr ""
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/APICallback.java:71
 msgid "Your session has expired. Please log in again and retry."
+msgstr ""
+
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:104
+msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr ""
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericNegativeNotZeroValidator.java:30
@@ -3094,28 +3098,24 @@ msgstr ""
 msgid "The platform already exist !"
 msgstr ""
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:44
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:43
-msgid "Password does not contain enough numbers"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:45
+msgid "Password must contain at least %number% digits"
 msgstr ""
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:51
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:50
-msgid "Password does not contain enough lower case chars"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:52
+msgid "Password must contain at least %number% lower case characters"
 msgstr ""
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:58
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:57
-msgid "Password does not contain enough upper case chars"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:59
+msgid "Password must contain at least %number% upper case characters"
 msgstr ""
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:65
-msgid "Password does not contain enough special chars"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:66
+msgid "Password must contain at least %number% special characters"
 msgstr ""
 
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:71
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/DefaultPasswordValidator.java:63
-msgid "Password is not long enough"
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:72
+msgid "Password must be at least %number% characters long"
 msgstr ""
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/utils/VariableMapper.java:46
