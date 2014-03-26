@@ -21,7 +21,7 @@
 		</dependency>
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>console-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
