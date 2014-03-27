@@ -117,6 +117,30 @@ public class XMLExpressionsUtil extends XPathUtil {
         }
         return expressions;
     }
+    
+    /**
+     * Parse a expression list node
+     * 
+     * @param expressionParentName
+     *            name of the parent widget
+     *            
+     * @param dependenciesNode
+     *            the dependencies node
+     * @return a list of expressions
+     * @throws InvalidFormDefinitionException
+     */
+    public List<Expression> parseExpressionsDependenciesList(final Node dependenciesNode) throws InvalidFormDefinitionException {
+        final List<Expression> expressions = new ArrayList<Expression>();
+        final NodeList expressionNodes = getNodeListByXpath(dependenciesNode, XMLForms.EXPRESSION);
+        for (int i = 0; i < expressionNodes.getLength(); i++) {
+            final Node expressionNode = expressionNodes.item(i);
+            if (expressionNode != null) {
+            	final String name = getStringByXpath(expressionNode, XMLForms.NAME);
+                expressions.add(buildExpression(expressionNode, name) );
+            }
+        }
+        return expressions;
+    }
 
     /**
      * Parse an expression parent node, put expressionParentName as "n/a" as default value.
@@ -175,17 +199,24 @@ public class XMLExpressionsUtil extends XPathUtil {
      */
     protected Expression parseExpressionContent(final String expressionParentName, final Node expressionNode) throws InvalidFormDefinitionException {
         final String name = expressionParentName + FormFieldValuesUtil.EXPRESSION_KEY_SEPARATOR + getStringByXpath(expressionNode, XMLForms.NAME);
-        final String returnType = getStringByXpath(expressionNode, XMLForms.EXPRESSION_RETURN_TYPE);
+        
+        return buildExpression(expressionNode, name);
+    }
+
+	private Expression buildExpression(final Node expressionNode, final String name)
+			throws InvalidFormDefinitionException {
+		final String returnType = getStringByXpath(expressionNode, XMLForms.EXPRESSION_RETURN_TYPE);
         final String expressionType = getStringByXpath(expressionNode, XMLForms.EXPRESSION_TYPE);
         final String interpreter = getStringByXpath(expressionNode, XMLForms.EXPRESSION_INTERPRETER);
         final String content = getStringByXpath(expressionNode, XMLForms.EXPRESSION_CONTENT);
         final Node expressionDependenciesNode = getNodeByXpath(expressionNode, XMLForms.DEPENDENCIES);
         final List<Expression> dependencies;
         if (expressionDependenciesNode != null) {
-            dependencies = parseExpressionsList(expressionParentName, expressionDependenciesNode);
+            dependencies = parseExpressionsDependenciesList(expressionDependenciesNode);
+            
         } else {
             dependencies = new ArrayList<Expression>();
         }
         return new Expression(name, content, expressionType, returnType, interpreter, dependencies);
-    }
+	}
 }
