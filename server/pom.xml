@@ -131,11 +131,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
                 <executions>
                     <execution>
+                        <id>provide-jar</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>provide-test-jar</id>
+                        <goals>
                             <goal>test-jar</goal>
                         </goals>
                     </execution>
