@@ -29,6 +29,7 @@
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-view</artifactId>
 			<version>${project.version}</version>
+            <scope>provided</scope>
 		</dependency>
 
 		<!-- GWT dependency (sources) -->
