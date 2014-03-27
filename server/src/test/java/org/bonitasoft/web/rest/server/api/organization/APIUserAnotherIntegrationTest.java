@@ -42,6 +42,7 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasCreator;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -266,6 +267,7 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
         }
     }
 
+    @Ignore
     @Test
     public void testAddUser() throws Exception {
 
@@ -284,6 +286,7 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
         identityAPI.deleteUser(addedUser.getId().toLong());
     }
 
+    @Ignore
     @Test
     public void testUpdateUser() throws Exception {
         final UserItem expectedUser = this.expectedUsers.get(0);
