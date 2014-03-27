@@ -230,6 +230,17 @@
                 <enable.engine.listener.start />
                 <enable.engine.listener.end />
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.bonitasoft.console</groupId>
+                    <artifactId>console-client</artifactId>
+                    <version>${project.version}</version>
+                    <type>war</type>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+
             <build>
                 <plugins>
                     <!-- Jetty configuration -->
@@ -246,7 +257,7 @@
                             </systemProperties>
                             <webApp>
                                 <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                                    <resourcesAsCSV>src/main/webapp,${basedir}/../portal/target/portal-${project.version}/</resourcesAsCSV>
+                                    <resourcesAsCSV>src/main/webapp,${basedir}/../portal/target/console-client-${project.version}/</resourcesAsCSV>
                                 </baseResource>
                             </webApp>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
