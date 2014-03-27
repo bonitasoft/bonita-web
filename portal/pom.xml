@@ -81,8 +81,7 @@
 				<configuration>
 					<packagingExcludes>
 						.gwt-tmp/**,
-						WEB-INF/deploy/**,
-						WEB-INF/classes/**
+						WEB-INF/deploy/**
 					</packagingExcludes>
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
@@ -172,6 +171,69 @@
                         <version>2.13</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <!--Unpack & copy forms design where they belong-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-forms-design</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.bonitasoft.forms</groupId>
+                                    <artifactId>forms-design</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/forms-design</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-html-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html"
+                                        file="${project.build.directory}/forms-design/html/page.html" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html"
+                                        file="${project.build.directory}/forms-design/html/process.html" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html"
+                                        file="${project.build.directory}/forms-design/html/error.html" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html"
+                                        file="${project.build.directory}/forms-design/html/confirm.html" />
+                                <!-- copy htc files for IE compatibility -->
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc"
+                                        file="${project.build.directory}/forms-design/application/application/css/PIE.htc" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc"
+                                        file="${project.build.directory}/forms-design/application/application/css/boxsizing.htc" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 		</plugins>
 	</build>
