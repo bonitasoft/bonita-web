@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 03:02+0100\n"
-"PO-Revision-Date: 2014-03-26 23:34-0400\n"
+"POT-Creation-Date: 2014-03-28 03:02+0100\n"
+"PO-Revision-Date: 2014-03-27 23:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2493,7 +2493,7 @@ msgstr "Ocorreu um erro na aplicação."
 msgid "Your session has expired. Please log in again and retry."
 msgstr "Sua sessão expirou. Por favor, faça o login e tente novamente."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:104
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 
