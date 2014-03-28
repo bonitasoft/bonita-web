@@ -224,13 +224,10 @@
                                 <copy
                                         tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html"
                                         file="${project.build.directory}/forms-design/html/confirm.html" />
-                                <!-- copy htc files for IE compatibility -->
-                                <copy
-                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/PIE.htc"
-                                        file="${project.build.directory}/forms-design/application/application/css/PIE.htc" />
-                                <copy
-                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/css/boxsizing.htc"
-                                        file="${project.build.directory}/forms-design/application/application/css/boxsizing.htc" />
+
+                                <copy todir="${project.build.directory}/${project.artifactId}-${project.version}/portal">
+                                    <fileset dir="${project.build.directory}/forms-design/application/application" includes="**/*" />
+                                </copy>
                             </tasks>
                         </configuration>
                     </execution>
