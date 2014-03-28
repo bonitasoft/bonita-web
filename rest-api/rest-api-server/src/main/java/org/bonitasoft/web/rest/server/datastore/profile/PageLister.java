@@ -8,10 +8,10 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.datastore.profile;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
 
@@ -36,14 +36,15 @@ public class PageLister {
         pages.add(new BonitaPageItem("profilelisting", _("user privilege settings"), "", _("Profiles")));
         pages.add(new BonitaPageItem("reportlistingadminext", _("Monitoring"), "", _("Analytics")));
         pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), "", _("Look and Feel")));
+        pages.add(new BonitaPageItem("pagelisting", _("Manage custom pages"), "", _("Custom Pages")));
     }
 
     public List<BonitaPageItem> getPages() {
         return pages;
     }
 
-    public BonitaPageItem getPage(String token) {
-        for (BonitaPageItem page : pages) {
+    public BonitaPageItem getPage(final String token) {
+        for (final BonitaPageItem page : pages) {
             if (page.getToken().equals(token)) {
                 return page;
             }
@@ -51,10 +52,10 @@ public class PageLister {
         return null;
     }
 
-    public List<BonitaPageItem> getPages(List<String> pagesTokenToSkip) {
+    public List<BonitaPageItem> getPages(final List<String> pagesTokenToSkip) {
         final List<BonitaPageItem> pagelist = new ArrayList<BonitaPageItem>();
 
-        for (BonitaPageItem page : pages) {
+        for (final BonitaPageItem page : pages) {
             if (!(pagesTokenToSkip.contains(page.getToken()))) {
                 pagelist.add(page);
             }
