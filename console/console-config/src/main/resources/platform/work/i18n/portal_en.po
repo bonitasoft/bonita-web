@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 16:08+0100\n"
-"PO-Revision-Date: 2014-03-27 21:32-0400\n"
+"POT-Creation-Date: 2014-03-29 01:28+0100\n"
+"PO-Revision-Date: 2014-03-28 21:31-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -3213,6 +3213,14 @@ msgstr "Manage Look and Feel"
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:38
 msgid "Look and Feel"
 msgstr "Look and Feel"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:39
+msgid "Manage custom pages"
+msgstr "Manage custom pages"
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:39
+msgid "Custom Pages"
+msgstr "Custom Pages"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/MembershipDatastore.java:135
 msgid "This membership is already added to user"
