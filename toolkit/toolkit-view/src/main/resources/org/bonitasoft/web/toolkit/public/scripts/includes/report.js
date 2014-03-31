@@ -19,7 +19,7 @@ function getProfileId() {
 }
 
 function removeReportStyle() {
-    $("table, div, tr", $(".report")).each(function () {
+    $("table, div", $(".report")).each(function () {
         var elt = $(this);
         if (elt.attr("style")) {
             if (elt.attr("style").indexOf("background") != -1) {
