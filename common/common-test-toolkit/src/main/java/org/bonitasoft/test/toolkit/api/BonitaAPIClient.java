@@ -61,11 +61,12 @@ public interface BonitaAPIClient {
      * @param pTenantId
      * @param pUserName
      * @param pPassword
+     * @param pRedirect
      * @return
      */
     @POST
     @Path("loginservice")
-    ClientResponse<String> login(@FormParam("tenant") String pTenantId, @FormParam("username") String pUserName, @FormParam("password") String pPassword);
+    ClientResponse<String> login(@FormParam("tenant") String pTenantId, @FormParam("username") String pUserName, @FormParam("password") String pPassword, @FormParam("redirect") String pRedirect);
 
     /**
      * Logout.
