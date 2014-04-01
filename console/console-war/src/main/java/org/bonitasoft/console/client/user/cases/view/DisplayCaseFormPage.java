@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
@@ -23,19 +22,17 @@ import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
-import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
-import org.bonitasoft.web.toolkit.client.ui.html.HTML;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Fabio Lombardi
@@ -79,15 +76,14 @@ public class DisplayCaseFormPage extends Page {
     @Override
     public void buildView() {
         FormsView view = new FormsView(getCaseOverviewUrl());
-        this.addBody(new UiComponent(view));
+        addBody(new UiComponent(view));
         view.addTool(new ButtonBack());
     }
 
     private String getCaseOverviewUrl() {
-        final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        // TODO remove this once the same method is used in the toolkit and in the studio to URL encode/decode
-        final String decodedProcessName = URL.decodeQueryString(processName);
-        final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
+        final String processName = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_NAME));
+        final String decodedProcessName = URL.encodeQueryString(processName);
+        final String processVersion = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_VERSION));
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
@@ -109,7 +105,7 @@ public class DisplayCaseFormPage extends Page {
 
         frameURL.append("#form=")
                 .append(processName)
-                .append(this.UUID_SEPERATOR)
+                .append(UUID_SEPERATOR)
                 .append(processVersion)
                 .append("$recap&mode=form&instance=")
                 .append(caseId).append("&recap=true");
@@ -140,6 +136,5 @@ public class DisplayCaseFormPage extends Page {
     protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
         return null;
     }
-
 
 }

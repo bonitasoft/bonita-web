@@ -25,6 +25,7 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
+import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
@@ -90,6 +91,7 @@ public class UpdateUserPage extends Page {
 
         form = addDetails(form);
         form = addProfessionalBusinessCard(form);
+
         form = addPersonalBusinessCard(form);
 
         final String itemId = this.getParameter(PARAMETER_USER_ID);
@@ -130,10 +132,10 @@ public class UpdateUserPage extends Page {
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_STATE),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_STATE), _("State"),
                         _("Enter the state of this user"))
-                .addItemAttributeEntry(
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_EMAIL),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_EMAIL), _("Email"),
-                        _("Enter the email of this user"))
+                        _("Enter the email of this user"), AbstractContactDataItem.MAX_EMAIL_LENGTH)
                 .addItemAttributeEntry(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_PHONE),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_PHONE), _("Phone"),
@@ -143,11 +145,14 @@ public class UpdateUserPage extends Page {
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_MOBILE), _("Mobile"),
                         _("Enter the mobile phone of this user"))
                 .closeTab();
+
     }
 
     private Form addProfessionalBusinessCard(Form form) {
         final ItemDefinition proContactItem = Definitions.get(ProfessionalContactDataDefinition.TOKEN);
-        return form.openTab(_("Business card"))
+        JsId jsIdEmail = new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_EMAIL);
+        form.getEntry(jsIdEmail);
+        Form businessForm = form.openTab(_("Business card"))
                 .addItemAttributeEntry(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_ADDRESS),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_ADDRESS), _("Address"),
@@ -168,10 +173,10 @@ public class UpdateUserPage extends Page {
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_STATE),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_STATE), _("State"),
                         _("Enter the state of this user"))
-                .addItemAttributeEntry(
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_EMAIL),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_EMAIL), _("Email"),
-                        _("Enter the email of this user"))
+                        _("Enter the email of this user"), AbstractContactDataItem.MAX_EMAIL_LENGTH)
                 .addItemAttributeEntry(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_PHONE),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_PHONE), _("Phone"),
@@ -181,6 +186,8 @@ public class UpdateUserPage extends Page {
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_MOBILE), _("Mobile"),
                         _("Enter the mobile phone of this user"))
                 .closeTab();
+        return businessForm;
+
     }
 
     private Form addDetails(final Form form) {

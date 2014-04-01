@@ -155,7 +155,8 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE, new ArchivedFlowNodeDateFormatter())
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
-                        new ArchivedFlowNodeExecutedByFormatter());
+                        new ArchivedFlowNodeExecutedByFormatter())
+                .setOrder(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE, false);
     }
 
     protected void prepareArchivedTasksTable(final ItemTable archivedTasksTable) {

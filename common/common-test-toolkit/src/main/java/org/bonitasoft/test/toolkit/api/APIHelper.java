@@ -100,7 +100,7 @@ public class APIHelper {
         setSiteUrl(pSiteUrl);
         this.client = ProxyFactory.create(BonitaAPIClient.class, pSiteUrl, this.executor);
 
-        final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword);
+        final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword, Boolean.FALSE.toString());
         consumeResponse(res);
 
         this.jsonParser = new JSONParser();
