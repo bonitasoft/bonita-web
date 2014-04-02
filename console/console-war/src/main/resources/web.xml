@@ -124,7 +124,21 @@
 		<filter-name>BonitaHomeFilter</filter-name>
 		<url-pattern>/login.jsp</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/login.jsp</url-pattern>
+		<url-pattern>/portal/homepage</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/portal/homepage</url-pattern>
+        <url-pattern>/portal/formsService</url-pattern>
+        <url-pattern>/portal/formsDocumentDownload</url-pattern>
+        <url-pattern>/portal/runreport</url-pattern>
+        <url-pattern>/portal/BonitaConsole.html</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>	
 		<filter-name>RestFilter</filter-name>
 		<url-pattern>/API/*</url-pattern>
 	</filter-mapping>

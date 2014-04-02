@@ -45,8 +45,13 @@ public class SecurityProperties {
     /**
      * property for the credentials transmission mechanism activation
      */
-    public static final String CREDENTIALS_TRANSMISSION_PROPERTY = "forms.application.credentials.transmission";
-
+    public static final String CREDENTIALS_TRANSMISSION_PROPERTY = "forms.application.credentials.transmission";    
+    
+    /**
+     * property for the robustness of the password
+    */
+    public static final String PASSWORD_VALIDATOR_CLASSNAME = "security.password.validator";
+    
     /**
      * property for the robustness of the password 
      */
@@ -247,7 +252,7 @@ public class SecurityProperties {
             }
         });
     }
-
+    
     /**
      * @return the credential transmission property
      */
@@ -277,6 +282,13 @@ public class SecurityProperties {
      */
     public String getAutoLoginUserName() {
         return defaultProperties.getProperty(AUTO_LOGIN_USERNAME_PROPERTY);
+    }
+    
+    /**
+     * @return the password validator property
+     */
+    public String getPasswordValidator() {
+        return defaultProperties.getProperty(PASSWORD_VALIDATOR_CLASSNAME);
     }
 
     /**
