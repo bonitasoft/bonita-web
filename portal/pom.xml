@@ -123,7 +123,10 @@
 					<disableClassMetadata>true</disableClassMetadata>
 					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
                     <!--Configure gwt:run-->
+                    <noServer>true</noServer>
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <port>8080</port>
+                    <runTarget>bonita/login.jsp</runTarget>
 				</configuration>
                 <executions>
                     <execution>
