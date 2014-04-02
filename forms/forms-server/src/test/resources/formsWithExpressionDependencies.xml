@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<forms-definition product-version="6.3-SP">
+  <migration-product-version>6.3-SP</migration-product-version>
+  <application name="MyH2PoolKO" version="1.0">
+    <permissions>process#MyH2PoolKO--1.0</permissions>
+    <application-label>
+      <expression>
+        <name>MyH2PoolKO</name>
+        <expression-content>MyH2PoolKO</expression-content>
+        <expression-type>TYPE_CONSTANT</expression-type>
+        <return-type>java.lang.String</return-type>
+      </expression>
+    </application-label>
+    <application-layout>html/_LMzT8bUCEeOo4uu6wOflkw_process_template.html</application-layout>
+    <error-template>html/_LMzT8bUCEeOo4uu6wOflkw_error_template.html</error-template>
+    <forms>
+      <form id="MyH2PoolKO--1.0--Step1$entry">
+        <form-type>entry</form-type>
+        <permissions>activity#MyH2PoolKO--1.0--Step1</permissions>
+        <pages>
+          <page id="Step1">
+            <page-label>
+              <expression>
+                <name>Step1</name>
+                <expression-content>Step1</expression-content>
+                <expression-type>TYPE_CONSTANT</expression-type>
+                <return-type>java.lang.String</return-type>
+              </expression>
+            </page-label>
+            <allow-html-in-label>false</allow-html-in-label>
+            <page-layout>html/_LMzT87UCEeOo4uu6wOflkw__LMzT_bUCEeOo4uu6wOflkw.html</page-layout>
+            <widgets>
+              <widget id="myId1" type="TEXTBOX">
+                <initial-value>
+                  <expression>
+                    <name>myId</name>
+                    <expression-content>myId</expression-content>
+                    <expression-type>TYPE_VARIABLE</expression-type>
+                    <return-type>java.lang.Long</return-type>
+                  </expression>
+                </initial-value>
+                <allow-html-in-field>false</allow-html-in-field>
+                <mandatory>false</mandatory>
+                <validators>
+                  <validator id="myId1_default_validator">
+                    <classname>org.bonitasoft.forms.server.validator.NumericLongFieldValidator</classname>
+                    <position>BOTTOM</position>
+                    <label>
+                      <expression>
+                        <name>#numericLongFieldValidatorLabel</name>
+                        <expression-content>#numericLongFieldValidatorLabel</expression-content>
+                        <expression-type>TYPE_CONSTANT</expression-type>
+                        <return-type>java.lang.String</return-type>
+                      </expression>
+                    </label>
+                  </validator>
+                </validators>
+                <readonly>false</readonly>
+                <label>
+                  <expression>
+                    <name>My Id</name>
+                    <expression-content>My Id</expression-content>
+                    <expression-type>TYPE_CONSTANT</expression-type>
+                    <return-type>java.lang.String</return-type>
+                  </expression>
+                </label>
+                <allow-html-in-label>false</allow-html-in-label>
+                <label-position>TOP</label-position>
+                <field-output-type>java.lang.Long</field-output-type>
+              </widget>
+              <widget id="myTransientId1" type="TEXTBOX">
+                <initial-value>
+                  <expression>
+                    <name>myTransientId</name>
+                    <expression-content>myTransientId</expression-content>
+                    <expression-type>TYPE_INPUT</expression-type>
+                    <return-type>java.lang.Long</return-type>
+                  </expression>
+                </initial-value>
+                <allow-html-in-field>false</allow-html-in-field>
+                <mandatory>false</mandatory>
+                <readonly>false</readonly>
+                <label>
+                  <expression>
+                    <name>My Transient Id</name>
+                    <expression-content>My Transient Id</expression-content>
+                    <expression-type>TYPE_CONSTANT</expression-type>
+                    <return-type>java.lang.String</return-type>
+                  </expression>
+                </label>
+                <allow-html-in-label>false</allow-html-in-label>
+                <label-position>TOP</label-position>
+                <field-output-type>java.lang.Long</field-output-type>
+              </widget>
+              <widget id="Submit1" type="BUTTON_SUBMIT">
+                <label-button>false</label-button>
+                <label>
+                  <expression>
+                    <name>Submit1</name>
+                    <expression-content>Submit1</expression-content>
+                    <expression-type>TYPE_CONSTANT</expression-type>
+                    <return-type>java.lang.String</return-type>
+                  </expression>
+                </label>
+                <allow-html-in-label>false</allow-html-in-label>
+                <label-position>TOP</label-position>
+              </widget>
+            </widgets>
+            <actions>
+              <action type="ASSIGNMENT">
+                <variable>myId</variable>
+                <is-external>false</is-external>
+                <expression>
+                  <name>field_myId1</name>
+                  <expression-content>field_myId1</expression-content>
+                  <expression-type>TYPE_INPUT</expression-type>
+                  <return-type>java.lang.Long</return-type>
+                </expression>
+              </action>
+            </actions>
+          </page>
+        </pages>
+        <transient-data>
+          <data name="myTransientId">
+            <classname>java.lang.Long</classname>
+          </data>
+          <data name="myTransientIdCopy">
+            <classname>java.lang.Long</classname>
+            <value>
+              <expression>
+                <name>myId</name>
+                <expression-content>myId</expression-content>
+                <expression-type>TYPE_VARIABLE</expression-type>
+                <return-type>java.lang.Long</return-type>
+              </expression>
+            </value>
+          </data>
+        </transient-data>
+        <connectors>
+          <connector>
+            <id>database-jdbc</id>
+            <version>1.0.0</version>
+            <name>selectId</name>
+            <throw-exception>true</throw-exception>
+            <input-parameters>
+              <input-parameter name="driver">
+                <expression>
+                  <name>org.h2.Driver</name>
+                  <expression-content>org.h2.Driver</expression-content>
+                  <expression-type>TYPE_CONSTANT</expression-type>
+                  <return-type>java.lang.String</return-type>
+                </expression>
+              </input-parameter>
+              <input-parameter name="url">
+                <expression>
+                  <name>jdbc:h2:C:\Users\julien.mege\Downloads\BonitaBPMSubscription-6.3.0-SNAPSHOT-Tomcat-6.0.37\bonita\server\platform\work\bonita_journal.db.h2;FILE_LOCK=NO</name>
+                  <expression-content>jdbc:h2:C:\Users\julien.mege\Downloads\BonitaBPMSubscription-6.3.0-SNAPSHOT-Tomcat-6.0.37\bonita\server\platform\work\bonita_journal.db.h2;FILE_LOCK=NO</expression-content>
+                  <expression-type>TYPE_CONSTANT</expression-type>
+                  <return-type>java.lang.String</return-type>
+                </expression>
+              </input-parameter>
+              <input-parameter id="expressionToTest" name="script">
+                <expression>
+                  <name>&lt;pattern-expression&gt;</name>
+                  <expression-content>select ${myId}</expression-content>
+                  <expression-type>TYPE_PATTERN</expression-type>
+                  <return-type>java.lang.String</return-type>
+                  <dependencies>
+                    <expression>
+                      <name>myId</name>
+                      <expression-content>myId</expression-content>
+                      <expression-type>TYPE_VARIABLE</expression-type>
+                      <return-type>java.lang.Long</return-type>
+                    </expression>
+                  </dependencies>
+                </expression>
+              </input-parameter>
+              <input-parameter name="username">
+                <expression>
+                  <name>sa</name>
+                  <expression-content>sa</expression-content>
+                  <expression-type>TYPE_CONSTANT</expression-type>
+                  <return-type>java.lang.String</return-type>
+                </expression>
+              </input-parameter>
+            </input-parameters>
+            <output-operations>
+              <output-operation type="ASSIGNMENT">
+                <variable>myTransientId</variable>
+                <is-external>true</is-external>
+                <input-type>java.lang.Long</input-type>
+                <expression>
+                  <name>resultset</name>
+                  <expression-content>resultset.first();&#13;
+return resultset.getLong(1);</expression-content>
+                  <expression-type>TYPE_READ_ONLY_SCRIPT</expression-type>
+                  <return-type>java.lang.Long</return-type>
+                  <interpreter>GROOVY</interpreter>
+                  <dependencies>
+                    <expression>
+                      <name>resultset</name>
+                      <expression-content>resultset</expression-content>
+                      <expression-type>TYPE_INPUT</expression-type>
+                      <return-type>java.sql.ResultSet</return-type>
+                    </expression>
+                  </dependencies>
+                </expression>
+              </output-operation>
+            </output-operations>
+          </connector>
+        </connectors>
+        <first-page>
+          <expression>
+            <name>First page transitions condition</name>
+            <expression-content>"Step1"</expression-content>
+            <expression-type>TYPE_READ_ONLY_SCRIPT</expression-type>
+            <return-type>java.lang.String</return-type>
+            <interpreter>GROOVY</interpreter>
+          </expression>
+        </first-page>
+      </form>
+    </forms>
+  </application>
+</forms-definition>

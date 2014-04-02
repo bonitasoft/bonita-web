@@ -25,14 +25,24 @@ import com.google.gwt.user.client.Element;
  * 
  */
 public class Text extends Input {
-    
+
     public static final long DEFAULT_MAX_LENGTH = 50L;
-    
+
     private String placeholder = null;
+
     private long maxLength = DEFAULT_MAX_LENGTH;
 
     public Text(final JsId jsid, final String label, final String tooltip, final String defaultValue, final String description, final String example) {
         super(jsid, label, tooltip, defaultValue, description, example);
+        addClass("text");
+    }
+
+    public Text(final JsId jsid, final String label, final String tooltip, final String defaultValue, final String description, final String example,
+            final Long maxLength) {
+        super(jsid, label, tooltip, defaultValue, description, example);
+        if (maxLength != null) {
+            setMaxLength(maxLength);
+        }
         addClass("text");
     }
 
@@ -54,26 +64,26 @@ public class Text extends Input {
     }
 
     public void setPlaceholder(final String pPlaceholder) {
-        this.placeholder = pPlaceholder;
+        placeholder = pPlaceholder;
     }
 
     @Override
     protected Element makeInput(final String uid) {
         final Element input = super.makeInput(uid);
         input.setAttribute("maxlength", String.valueOf(maxLength));
-        
-        if (this.placeholder != null) {
-            input.setAttribute("placeholder", this.placeholder);
+
+        if (placeholder != null) {
+            input.setAttribute("placeholder", placeholder);
         }
 
         return input;
     }
-    
+
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        if(getInputElement() != null) {
-            if (enabled == false){
+        if (getInputElement() != null) {
+            if (enabled == false) {
                 getInputElement().setAttribute("disabled", "disabled");
             } else {
                 getInputElement().removeAttribute("disabled");

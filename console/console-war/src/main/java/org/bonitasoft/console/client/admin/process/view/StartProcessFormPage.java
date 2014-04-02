@@ -16,13 +16,15 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import com.google.gwt.user.client.Element;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.FormsView;
-import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
@@ -30,18 +32,13 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.Page;
-import org.bonitasoft.web.toolkit.client.ui.component.IFrame;
-import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
@@ -49,7 +46,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
  */
 public class StartProcessFormPage extends Page {
 
-	public final static String TOKEN = "StartProcess";
+    public final static String TOKEN = "StartProcess";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
@@ -72,10 +69,10 @@ public class StartProcessFormPage extends Page {
     @Override
     public void buildView() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        // TODO remove this once the same method is used in the toolkit and in the studio to URL encode/decode
-        final String decodedProcessName = URL.decodeQueryString(processName);
-        final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
+        final String decodedProcessName = URL.encodeQueryString(processName);
+        final String processVersion = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_VERSION));
+        final String processId = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_ID));
+
         final String locale = AbstractI18n.getDefaultLocale().toString();
 
         String userId = this.getParameter("userId");
@@ -97,14 +94,14 @@ public class StartProcessFormPage extends Page {
 
         frameURL.append("#form=")
                 .append(processName)
-                .append(this.UUID_SEPERATOR)
+                .append(UUID_SEPERATOR)
                 .append(processVersion)
                 .append("$entry&process=")
                 .append(processId)
                 .append("&autoInstantiate=false&mode=form&user=")
                 .append(userId);
 
-        this.addBody(new UiComponent(new FormsView(frameURL.toString())));
+        addBody(new UiComponent(new FormsView(frameURL.toString())));
     }
 
     @Override
