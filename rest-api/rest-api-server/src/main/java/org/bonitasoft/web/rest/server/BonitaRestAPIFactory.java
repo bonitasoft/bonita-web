@@ -48,6 +48,8 @@ import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessResolutionProble
 import org.bonitasoft.web.rest.server.api.document.APIArchivedDocument;
 import org.bonitasoft.web.rest.server.api.document.APIDocument;
 import org.bonitasoft.web.rest.server.api.organization.APICustomUserInfoDefinition;
+import org.bonitasoft.web.rest.server.api.organization.APICustomUserInfoUser;
+import org.bonitasoft.web.rest.server.api.organization.APICustomUserInfoValue;
 import org.bonitasoft.web.rest.server.api.organization.APIGroup;
 import org.bonitasoft.web.rest.server.api.organization.APIMembership;
 import org.bonitasoft.web.rest.server.api.organization.APIPersonalContactData;
@@ -91,8 +93,14 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProfessionalContactData();
             } else if ("personalcontactdata".equals(resourceToken)) {
                 return new APIPersonalContactData();
-            } else if("customuserinfo/definition".equals(resourceToken)) {
+            }
+        } else if("customuserinfo".equals(apiToken)) {
+            if("definition".equals(resourceToken)) {
                 return new APICustomUserInfoDefinition(new CustomUserInfoEngineClientCreator());
+            } else if("user".equals(resourceToken)) {
+                return new APICustomUserInfoUser(new CustomUserInfoEngineClientCreator());
+            } else if("value".equals(resourceToken)) {
+                return new APICustomUserInfoValue(new CustomUserInfoEngineClientCreator());
             }
         } else if ("system".equals(apiToken)) {
             if ("i18nlocale".equals(resourceToken)) {
