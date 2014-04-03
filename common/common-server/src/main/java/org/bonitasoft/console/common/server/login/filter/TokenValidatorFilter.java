@@ -16,16 +16,10 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 
 
 /**
@@ -36,12 +30,14 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
 
     @Override
     boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
-        String headerFromRequest = httpRequest.getHeader("X-API-Token");
-        String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
+        if (PropertiesFactory.getSecurityProperties().isCSRFProtectionEnabled()) {
+            String headerFromRequest = httpRequest.getHeader("X-API-Token");
+            String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
 
-        if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return false;
+            if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
+                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return false;
+            }
         }
         return true;
     }
