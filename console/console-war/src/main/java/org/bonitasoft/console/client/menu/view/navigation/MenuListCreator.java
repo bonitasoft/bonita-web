@@ -130,14 +130,15 @@ public class MenuListCreator {
         if (!StringUtil.isBlank(entry.getName())) {
             return entry.getName();
         }
-        return new ProfileEntryNameAttributeReader(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntryItem.ATTRIBUTE_PAGE, BonitaPageItem.ATTRIBUTE_MENU_NAME)
+
+        return new ProfileEntryNameAttributeReader(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntryItem.ATTRIBUTE_PAGE, BonitaPageItem.ATTRIBUTE_DISPLAY_NAME)
                 .read(entry);
     }
 
     private String getEntryUrlToken(final ProfileEntryItem entry) {
         String urlToken;
         if (entry.isCustom()) {
-            urlToken = "customPageWithFrame".concat(entry.getCustomPage().getUrlToken());
+            urlToken = "custompage_".concat(entry.getCustomPage().getUrlToken());
         } else {
             urlToken = entry.getPage();
         }
