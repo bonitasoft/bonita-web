@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-28 03:02+0100\n"
-"PO-Revision-Date: 2014-04-01 22:33-0400\n"
+"PO-Revision-Date: 2014-04-02 22:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2326,7 +2326,7 @@ msgstr "Sous-processus"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:194
 msgid "The sub process responsible for the creation of this task"
-msgstr "The sub process responsible for the creation of this task"
+msgstr "Le sous-processus qui a créé cette tâche"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:200
 msgid "Subprocess version"
@@ -2495,7 +2495,7 @@ msgstr "Votre session a expirée, Loguez vous de nouveau s'il vous plait."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
-msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
+msgstr "Aucune réponse reçue pour l'instant, mais l'opération est peut-être toujours en cours. Veuillez patienter quelques secondes avant de recharger la page."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericNegativeNotZeroValidator.java:30
 msgid "%attribute% must be a negative value diffrent from 0"
@@ -3084,23 +3084,23 @@ msgstr "La plate-forme existe déjà !"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:45
 msgid "Password must contain at least %number% digits"
-msgstr "Password must contain at least %number% digits"
+msgstr "Le mot de passe doit contenir au moins %number% chiffres"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:52
 msgid "Password must contain at least %number% lower case characters"
-msgstr "Password must contain at least %number% lower case characters"
+msgstr "Le mot de passe doit contenir au moins %number% lettres en minuscules"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:59
 msgid "Password must contain at least %number% upper case characters"
-msgstr "Password must contain at least %number% upper case characters"
+msgstr "Le mot de passe doit contenir au moins %number% lettres en majuscules"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:66
 msgid "Password must contain at least %number% special characters"
-msgstr "Password must contain at least %number% special characters"
+msgstr "Le mot de passe doit contenir au moins %number% caractères spéciaux"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:72
 msgid "Password must be at least %number% characters long"
-msgstr "Password must be at least %number% characters long"
+msgstr "Le mot de passe doit contenir au moins %number% caractères"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/utils/VariableMapper.java:46
 msgid "%value% is not a valid value for %className%"
