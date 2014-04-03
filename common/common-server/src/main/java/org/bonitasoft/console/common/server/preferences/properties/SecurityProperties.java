@@ -45,8 +45,8 @@ public class SecurityProperties {
     /**
      * property for the credentials transmission mechanism activation
      */
-    public static final String CREDENTIALS_TRANSMISSION_PROPERTY = "forms.application.credentials.transmission";
-
+    public static final String CREDENTIALS_TRANSMISSION_PROPERTY = "forms.application.credentials.transmission";    
+    
     /**
      * property for the robustness of the password 
      */
@@ -120,7 +120,7 @@ public class SecurityProperties {
 
     /**
      * @param tenantID
-     * @param processDefinitionID
+     * @param id
      * @return the {@link SecurityProperties} instance
      */
     public static synchronized SecurityProperties getInstance(final long tenantID, final ProcessIdentifier id) {
@@ -204,7 +204,7 @@ public class SecurityProperties {
     /**
      * Retrieve the config file in the extracted business archive
      * 
-     * @param tenantId
+     * @param webBonitaConstantsUtils
      * @param processDefinitionId
      *            the process definition ID
      * @return the config file or null if it doesn't exists
@@ -263,7 +263,7 @@ public class SecurityProperties {
             }
         });
     }
-
+    
     /**
      * @return the credential transmission property
      */
