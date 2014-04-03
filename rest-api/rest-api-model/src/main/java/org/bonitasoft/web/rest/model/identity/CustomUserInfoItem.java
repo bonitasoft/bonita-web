@@ -33,4 +33,28 @@ public class CustomUserInfoItem extends Item {
     public CustomUserInfoDefinition getItemDefinition() {
         return new CustomUserInfoDefinition();
     }
+
+    public void setUserId(long userId) {
+        setAttribute(ATTRIBUTE_USER_ID, userId);
+    }
+
+    public void setDefinition(CustomUserInfoDefinitionItem definition) {
+        setDeploy(ATTRIBUTE_DEFINITION_ID, definition);
+    }
+
+    public void setValue(String value) {
+        setAttribute(ATTRIBUTE_VALUE, value);
+    }
+
+    public long getUserId() {
+        return getAttributeValueAsLong(ATTRIBUTE_USER_ID);
+    }
+
+    public CustomUserInfoDefinitionItem getDefinition() {
+        return (CustomUserInfoDefinitionItem) getDeploy(ATTRIBUTE_DEFINITION_ID);
+    }
+
+    public String getValue() {
+        return getAttributeValue(ATTRIBUTE_VALUE);
+    }
 }

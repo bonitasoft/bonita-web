@@ -16,8 +16,12 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
+import org.bonitasoft.engine.identity.impl.CustomUserInfoValueImpl;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +35,7 @@ public class CustomUserInfoConverterTest {
     private CustomUserInfoConverter converter = new CustomUserInfoConverter();
 
     @Test
-    public void convert_should_return_a_fully_configured_item() throws Exception {
+    public void should_return_a_fully_configured_definition() throws Exception {
         CustomUserInfoDefinition dummy = new EngineCustomUserInfoDefinition(1L, "foo", "bar");
 
         CustomUserInfoDefinitionItem definition = converter.convert(dummy);
@@ -40,6 +44,20 @@ public class CustomUserInfoConverterTest {
                 entry("id", "1"),
                 entry("name", "foo"),
                 entry("description", "bar"));
+    }
+
+    @Test
+    public void should_return_a_fully_configured_custom_information() throws Exception {
+        CustomUserInfoDefinition definition = new EngineCustomUserInfoDefinition(3L);
+        CustomUserInfoValueImpl value = new CustomUserInfoValueImpl();
+        value.setValue("foo");
+
+        CustomUserInfoItem information = converter.convert(new CustomUserInfo(2L, definition, value));
+
+        assertThat(information.getAttributes()).containsOnly(
+                entry("userId", "2"),
+                entry("value", "foo"));
+        assertThat(information.getDefinition().getId()).isEqualTo(APIID.makeAPIID(3L));
     }
 
 }

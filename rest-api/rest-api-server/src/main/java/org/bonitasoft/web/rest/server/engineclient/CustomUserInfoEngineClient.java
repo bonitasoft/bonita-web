@@ -21,6 +21,7 @@ import java.util.List;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -59,5 +60,9 @@ public class CustomUserInfoEngineClient {
 
     public long countDefinitions() {
         return identity.getNumberOfCustomInfoDefinitions();
+    }
+
+    public List<CustomUserInfo> listCustomInformation(long userId, int startIndex, int maxResult) {
+        return identity.getCustomUserInfo(userId, startIndex, maxResult);
     }
 }
