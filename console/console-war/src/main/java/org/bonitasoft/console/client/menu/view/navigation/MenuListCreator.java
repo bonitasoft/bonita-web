@@ -88,12 +88,12 @@ public class MenuListCreator {
                 createJsId(entry),
                 _(getLinkName(entry)),
                 _(entry.getDescription()),
-                entry.getPage());
+                getEntryUrlToken(entry));
     }
 
     private JsId createJsId(final ProfileEntryItem entry) {
-        if (!StringUtil.isBlank(entry.getPage())) {
-            return new JsId(entry.getPage());
+        if (!StringUtil.isBlank(getEntryUrlToken(entry))) {
+            return new JsId(getEntryUrlToken(entry));
         } else {
             return JsId.getRandom();
         }
@@ -107,7 +107,7 @@ public class MenuListCreator {
 
     private void saveFirstPageMet(final ProfileEntryItem entry) {
         if (ClientApplicationURL.getPageToken() == null) {
-            ClientApplicationURL.setPageToken(entry.getPage(), true);
+            ClientApplicationURL.setPageToken(getEntryUrlToken(entry), true);
         }
     }
 
@@ -132,5 +132,15 @@ public class MenuListCreator {
         }
         return new ProfileEntryNameAttributeReader(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntryItem.ATTRIBUTE_PAGE, BonitaPageItem.ATTRIBUTE_MENU_NAME)
                 .read(entry);
+    }
+
+    private String getEntryUrlToken(final ProfileEntryItem entry) {
+        String urlToken;
+        if (entry.isCustom()) {
+            urlToken = "customPageWithFrame".concat(entry.getCustomPage().getUrlToken());
+        } else {
+            urlToken = entry.getPage();
+        }
+        return urlToken;
     }
 }

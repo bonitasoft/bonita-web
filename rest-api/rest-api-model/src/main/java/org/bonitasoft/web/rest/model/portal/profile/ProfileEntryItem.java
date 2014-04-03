@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.rest.model.portal.profile;
 
+import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -52,6 +53,8 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_TYPE = "type";
 
     public static final String ATTRIBUTE_PAGE = "page";
+    
+    public static final String ATTRIBUTE_IS_CUSTOM = "isCustom";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VALUES
@@ -101,6 +104,14 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
 
     public void setProfileId(final String id) {
         setAttribute(ATTRIBUTE_PROFILE_ID, id);
+    }
+
+    public void setIsCustom(final boolean isCustom) {
+        setAttribute(ATTRIBUTE_IS_CUSTOM, isCustom);
+    }
+    
+    public boolean isCustom() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_CUSTOM));
     }
 
     public APIID getProfileId() {
@@ -170,6 +181,10 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
 
     public BonitaPageItem getBonitaPage() {
         return new BonitaPageItem(getDeploy(ATTRIBUTE_PAGE));
+    }
+    
+    public PageItem getCustomPage() {
+        return new PageItem(getDeploy(ATTRIBUTE_PAGE));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

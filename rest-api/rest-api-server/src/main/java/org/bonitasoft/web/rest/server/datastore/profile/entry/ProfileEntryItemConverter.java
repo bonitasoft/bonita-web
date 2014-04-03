@@ -37,6 +37,7 @@ public class ProfileEntryItemConverter extends ItemConverter<ProfileEntryItem, P
         item.setDescription(profileEntry.getDescription());
         item.setParentId(profileEntry.getParentId());
         item.setPage(profileEntry.getPage());
+        item.setIsCustom(profileEntry.isCustom());
         return item;
     }
 
