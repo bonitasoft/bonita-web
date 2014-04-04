@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-02 17:45+0200\n"
-"PO-Revision-Date: 2014-04-03 00:33-0400\n"
+"PO-Revision-Date: 2014-04-04 00:33-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -47,15 +47,15 @@ msgstr "Aufruf-Aktivität"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:45
 msgid "Multi-instanciation activity"
-msgstr "Multi-instanciation activity"
+msgstr "Multi-Instanziierungsaktivität"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:48
 msgid "Loop activity"
-msgstr "Loop activity"
+msgstr "Schleifenaktivität"
 
 #: rest-api/rest-api-model/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:51
 msgid "Service task"
-msgstr "Service task"
+msgstr "Service-Aufgabe"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/platform/APIPlatform.java:61
 msgid "The platform already exist !"
@@ -1838,7 +1838,7 @@ msgstr "App installieren"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:98
 msgid "Business archive"
-msgstr "Business archive"
+msgstr "Geschäftsarchiv"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:98
 msgid "A business archive has a .bar extension"
@@ -2581,19 +2581,19 @@ msgstr "human task"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:44
 msgid "Call activity (launches another process)"
-msgstr "Call activity (launches another process)"
+msgstr "Anruf-Aktivität (startet einen anderen Prozess)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:46
 msgid "Multi-instanciation activity (launches and controls instances execution)"
-msgstr "Multi-instanciation activity (launches and controls instances execution)"
+msgstr "Multi-Instanziierungsaktivität (startet und kontrolliert Ausführung von Instanzen)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:48
 msgid "Loop activity (launches and controls loop execution)"
-msgstr "Loop activity (launches and controls loop execution)"
+msgstr "Schleifenaktivität (startet und steuert die Ausführung einer Schleife)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/FlowNodeCellFormatter.java:51
 msgid "Service task (performed automatically)"
-msgstr "Service task (performed automatically)"
+msgstr "Service-Aufgabe (wird automatisch ausgeführt)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeDateFormatter.java:38
 msgid "Aborted on:"
@@ -2661,7 +2661,7 @@ msgstr "Erstellungsdatum der Gruppe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:169
 msgid "The type of the task"
-msgstr "The type of the task"
+msgstr "Der Typ der Aufgabe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:193
 msgid "Subprocess"
