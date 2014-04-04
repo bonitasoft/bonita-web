@@ -30,16 +30,16 @@ public class ProcessResolutionProblemsCallout extends CalloutDanger {
 
     protected List ul;
 
-    public ProcessResolutionProblemsCallout(ProcessConfigurationStateResolver stateResolver) {
+    public ProcessResolutionProblemsCallout(final ProcessConfigurationStateResolver stateResolver) {
         super(_("The App cannot be enabled"));
         ul = buildProblemsList(stateResolver);
         append(ul);
     }
 
-    private List buildProblemsList(ProcessConfigurationStateResolver stateResolver) {
-        List ul = new List();
+    private List buildProblemsList(final ProcessConfigurationStateResolver stateResolver) {
+        final List ul = new List();
         if (!stateResolver.areActorsResolved()) {
-            ul.append(new Text(_("Entity Mappings must be resolved before enabling the App.")));
+            ul.append(new Text(_("Actor Mapping must be resolved before enabling the App.")));
         }
         if (!stateResolver.areParametersResolved()) {
             ul.append(new Text(_("Parameters must be resolved before enabling the App.")));
