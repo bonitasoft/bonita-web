@@ -96,6 +96,16 @@ public class FormApplicationViewController {
     protected static final String OPEN_USER_XP_ELEMENT_ID = "bonita_user_xp_link";
 
     /**
+     * Logout Hidden constant
+     */
+    public static final String LOGOUT_DISABLED = "logout.link.hidden";
+
+    /**
+     * Logout Visible constant
+     */
+    public static final String LOGOUT_ENABLED = "logout.link.visible";
+
+    /**
      * forms RPC service
      */
     protected FormsServiceAsync formsServiceAsync;
@@ -275,11 +285,13 @@ public class FormApplicationViewController {
                             if (applicationConfig.getApplicationLabel() != null && DOM.getElementById(APPLICATION_LABEL_ELEMENT_ID) != null) {
                                 domUtils.insertInElement(applicationHTMLPanel, APPLICATION_LABEL_ELEMENT_ID, applicationConfig.getApplicationLabel());
                             }
-                            if (DOM.getElementById(LOGOUT_WIDGET_ELEMENT_ID) != null) {
+                            if ((user.getFeatures() == null || user.getFeatures().contains(LOGOUT_ENABLED))
+                                    && DOM.getElementById(LOGOUT_WIDGET_ELEMENT_ID) != null) {
                                 final UserLogoutWidget logoutWidget = new UserLogoutWidget(user, urlContext);
                                 applicationHTMLPanel.add(logoutWidget, LOGOUT_WIDGET_ELEMENT_ID);
                             }
-                            if (DOM.getElementById(LOGOUT_BUTTON_ELEMENT_ID) != null) {
+                            if ((user.getFeatures() == null || user.getFeatures().contains(LOGOUT_ENABLED))
+                                    && DOM.getElementById(LOGOUT_BUTTON_ELEMENT_ID) != null) {
                                 Anchor logoutLink = null;
                                 if (user.isAnonymous()) {
                                     logoutLink = new Anchor(FormsResourceBundle.getMessages().loginButtonLabel());
