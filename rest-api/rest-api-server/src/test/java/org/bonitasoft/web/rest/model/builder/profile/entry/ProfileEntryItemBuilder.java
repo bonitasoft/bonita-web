@@ -46,6 +46,7 @@ public class ProfileEntryItemBuilder extends AbstractProfileEntryBuilder<Profile
         item.setParentId(parentId);
         item.setPage(page);
         item.setIsCustom(false);
+        item.setIcon("");
         return item;
     }
 

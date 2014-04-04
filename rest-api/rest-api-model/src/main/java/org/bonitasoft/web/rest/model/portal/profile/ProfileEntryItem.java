@@ -40,6 +40,8 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     // ATTRIBUTES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static final String DEFAULT_IS_CUSTOM_ICON = "/default/customPageIconSmall.png";
+    
     public static final String ATTRIBUTE_PARENT_ID = "parent_id";
 
     public static final String ATTRIBUTE_PROFILE_ID = "profile_id";
@@ -55,6 +57,8 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_PAGE = "page";
     
     public static final String ATTRIBUTE_IS_CUSTOM = "isCustom";
+    
+    public static final String ATTRIBUTE_IS_CUSTOM_ICON = "icon";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // VALUES
@@ -166,6 +170,15 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     public String getPage() {
         return getAttributeValue(ATTRIBUTE_PAGE);
     }
+    
+    public String getIcon() {
+        return this.getAttributeValue(ATTRIBUTE_IS_CUSTOM_ICON);
+    }
+    
+    public void setIcon(final String iconPath) {
+        this.setAttribute(ATTRIBUTE_IS_CUSTOM_ICON, iconPath);
+    }
+    
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DEPLOYS

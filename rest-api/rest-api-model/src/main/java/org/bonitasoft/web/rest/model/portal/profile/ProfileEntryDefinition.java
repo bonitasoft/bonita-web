@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.rest.model.portal.profile;
 
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -74,6 +75,7 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
                         ProfileEntryItem.VALUE_TYPE.link.name()
                         ));
         createAttribute(ProfileEntryItem.ATTRIBUTE_PAGE, ItemAttribute.TYPE.STRING);
+        createAttribute(ProfileEntryItem.ATTRIBUTE_IS_CUSTOM_ICON, ItemAttribute.TYPE.IMAGE);
     }
 
     @Override

@@ -38,6 +38,11 @@ public class ProfileEntryItemConverter extends ItemConverter<ProfileEntryItem, P
         item.setParentId(profileEntry.getParentId());
         item.setPage(profileEntry.getPage());
         item.setIsCustom(profileEntry.isCustom());
+        if (item.isCustom()) {
+            item.setIcon(ProfileEntryItem.DEFAULT_IS_CUSTOM_ICON);
+        } else {
+            item.setIcon("");
+        }
         return item;
     }
 
