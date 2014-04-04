@@ -18,7 +18,6 @@ package org.bonitasoft.web.rest.server.api.organization;
 
 import java.util.Map;
 
-import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.CustomUserInfoValue;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
@@ -30,16 +29,25 @@ import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
-import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_VALUE;
+import static org.bonitasoft.web.rest.server.api.APIAssert.assertThat;
+import static org.bonitasoft.web.rest.server.api.APIAssert.containsOnly;
 
 /**
  * @author Vincent Elcrin
  */
-public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem> implements APIHasSearch<CustomUserInfoItem> {
+public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
+        implements APIHasSearch<CustomUserInfoItem>, APIHasUpdate<CustomUserInfoItem> {
 
     private CustomUserInfoEngineClientCreator engineClientCreator;
+
+    private CustomUserInfoConverter converter = new CustomUserInfoConverter();
 
     public APICustomUserInfoValue(CustomUserInfoEngineClientCreator engineClientCreator) {
         this.engineClientCreator = engineClientCreator;
@@ -58,6 +66,21 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem> imple
                 resultsByPage,
                 result,
                 new CustomUserInfoConverter()).toItemSearchResult();
+    }
+
+    @Override
+    public String defineDefaultSearchOrder() {
+        return ATTRIBUTE_VALUE + " ASC";
+    }
+
+    @Override
+    public CustomUserInfoItem update(APIID id, Map<String, String> attributes) {
+        assertThat(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only value attribute can be updated"));
+
+        return converter.convert(getClient().setCustomUserInfoValue(
+                id.getPartAsLong(0),
+                id.getPartAsLong(1),
+                attributes.get(ATTRIBUTE_VALUE)));
     }
 
     private CustomUserInfoEngineClient getClient() {

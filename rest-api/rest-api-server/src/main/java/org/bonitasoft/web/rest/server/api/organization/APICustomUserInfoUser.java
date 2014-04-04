@@ -17,7 +17,6 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.FILTER_USER_ID;
 import static org.bonitasoft.web.rest.server.api.APIAssert.assertThat;
+import static org.bonitasoft.web.rest.server.api.APIAssert.containsOnly;
 
 /**
  * @author Vincent Elcrin
@@ -68,13 +68,7 @@ public class APICustomUserInfoUser extends ConsoleAPI<CustomUserInfoItem> implem
         return new ItemSearchResult<CustomUserInfoItem>(page, information.size(), client.countDefinitions(), information);
     }
 
-    private boolean containsOnly(String filter, Map<String, String> filters) {
-        if(filters == null) {
-            return false;
-        }
-        HashMap<String, String> map = new HashMap<String, String>(filters);
-        return map.remove(filter) != null && map.isEmpty();
-    }
+
 
     @Override
     public String defineDefaultSearchOrder() {

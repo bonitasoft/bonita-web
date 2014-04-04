@@ -6,9 +6,11 @@ import java.util.List;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
+import org.bonitasoft.engine.identity.CustomUserInfoValue;
 import org.bonitasoft.engine.identity.impl.CustomUserInfoValueImpl;
 import org.bonitasoft.web.rest.server.api.organization.EngineCustomUserInfoDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -99,5 +101,16 @@ public class CustomUserInfoEngineClientTest {
 
         assertThat(information.get(0).getDefinition().getId()).isEqualTo(1L);
         assertThat(information.get(1).getDefinition().getId()).isEqualTo(2L);
+    }
+
+    @Test
+    public void should_the_value_of_a_given_custom_user_info() throws UpdateException {
+        CustomUserInfoValueImpl value = new CustomUserInfoValueImpl();
+        value.setValue("foo");
+        given(engine.setCustomUserInfoValue(1L, 2L, "foo")).willReturn(value);
+
+        CustomUserInfoValue foo = client.setCustomUserInfoValue(1L, 2L, "foo");
+
+        assertThat(foo.getValue()).isEqualTo("foo");
     }
 }

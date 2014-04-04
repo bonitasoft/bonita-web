@@ -16,6 +16,9 @@
  */
 package org.bonitasoft.web.rest.server.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 
@@ -28,5 +31,13 @@ public class APIAssert {
         if(!condition) {
             throw new APIException(message);
         }
+    }
+
+    public static boolean containsOnly(String key, Map<String, String> map) {
+        if(map == null) {
+            return false;
+        }
+        HashMap<String, String> clone = new HashMap<String, String>(map);
+        return clone.remove(key) != null && clone.isEmpty();
     }
 }

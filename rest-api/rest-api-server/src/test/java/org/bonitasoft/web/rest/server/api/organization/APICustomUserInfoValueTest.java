@@ -1,7 +1,6 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
 import javax.servlet.http.HttpSession;
-
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -17,6 +16,7 @@ import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +27,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -126,5 +124,16 @@ public class APICustomUserInfoValueTest {
 
         verify(engine).searchCustomUserInfoValues(argument.capture());
         assertThat(argument.getValue().getSearchTerm()).isEqualTo("foo");
+    }
+
+    @Test
+    public void should_update_a_given_custom_item_value() throws Exception {
+        CustomUserInfoValueImpl update = new CustomUserInfoValueImpl();
+        update.setValue("foo");
+        given(engine.setCustomUserInfoValue(1L, 2L, "foo")).willReturn(update);
+
+        CustomUserInfoItem value = api.update(APIID.makeAPIID(1L, 2L), Collections.singletonMap("value", "foo"));
+
+        assertThat(value.getValue()).isEqualTo("foo");
     }
 }

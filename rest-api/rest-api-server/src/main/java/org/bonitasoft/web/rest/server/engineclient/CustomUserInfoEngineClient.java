@@ -21,6 +21,7 @@ import java.util.List;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
@@ -28,7 +29,9 @@ import org.bonitasoft.engine.identity.CustomUserInfoValue;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Vincent Elcrin
@@ -71,5 +74,13 @@ public class CustomUserInfoEngineClient {
 
     public SearchResult<CustomUserInfoValue> searchCustomUserInfoValues(SearchOptions options) {
         return identity.searchCustomUserInfoValues(options);
+    }
+
+    public CustomUserInfoValue setCustomUserInfoValue(long definitionId, long userId, String value) {
+        try {
+            return identity.setCustomUserInfoValue(definitionId, userId, value);
+        } catch (UpdateException e) {
+            throw new APIItemNotFoundException(org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition.TOKEN, APIID.makeAPIID(definitionId, userId));
+        }
     }
 }
