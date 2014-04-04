@@ -14,17 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.organization;
+package org.bonitasoft.web.rest.server.api;
 
-import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
-import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
-import org.bonitasoft.web.rest.server.framework.API;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n._;
 
 /**
  * @author Vincent Elcrin
  */
-public class APICustomUserInfoValue extends API<CustomUserInfoItem> {
+public class APIAssert {
 
-    public APICustomUserInfoValue(CustomUserInfoEngineClientCreator engineClientCreator) {
+    public static void assertThat(boolean condition, _ message) {
+        if(!condition) {
+            throw new APIException(message);
+        }
     }
 }

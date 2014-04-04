@@ -23,6 +23,8 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
  */
 public class CustomUserInfoItem extends Item {
 
+    public static final String FILTER_USER_ID = "userId";
+
     public static final String ATTRIBUTE_DEFINITION_ID = "definitionId";
 
     public static final String ATTRIBUTE_USER_ID = "userId";

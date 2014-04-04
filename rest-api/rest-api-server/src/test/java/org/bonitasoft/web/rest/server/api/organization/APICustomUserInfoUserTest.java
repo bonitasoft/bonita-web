@@ -1,7 +1,22 @@
+/**
+ * Copyright (C) 2014 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.web.rest.server.api.organization;
 
 import javax.servlet.http.HttpSession;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +29,7 @@ import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
-import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +41,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author Vincent Elcrin
@@ -68,10 +84,40 @@ public class APICustomUserInfoUserTest {
         given(engine.listCustomInformation(3L, 0, 2)).willReturn(Arrays.asList(
                 new CustomUserInfo(3L, new EngineCustomUserInfoDefinition(5L), new CustomUserInfoValueImpl()),
                 new CustomUserInfo(3L, new EngineCustomUserInfoDefinition(6L), new CustomUserInfoValueImpl())));
+        given(engine.countDefinitions()).willReturn(2L);
 
-        List<CustomUserInfoItem> information = api.search(0, 2, "", "Fix order", Collections.singletonMap("userId", "3")).getResults();
+        List<CustomUserInfoItem> information = api.search(0, 2, null, "Fix order", Collections.singletonMap("userId", "3")).getResults();
 
         assertThat(information.get(0).getDefinition().getId()).isEqualTo(APIID.makeAPIID(5L));
         assertThat(information.get(1).getDefinition().getId()).isEqualTo(APIID.makeAPIID(6L));
+    }
+
+    @Test
+    public void should_paginate_CustomUserInfo_search() throws Exception {
+        given(engine.countDefinitions()).willReturn(2L);
+
+        api.search(2, 2, null, "Fix order", Collections.singletonMap("userId", "3")).getResults();
+
+        verify(engine).listCustomInformation(3L, 4, 2);
+    }
+
+    @Test(expected = APIException.class)
+    public void should_fail_when_passing_an_order_to_the_search() {
+        api.search(0, 2, null, "NAME ASC", Collections.singletonMap("userId", "3")).getResults();
+    }
+
+    @Test(expected = APIException.class)
+    public void should_fail_when_passing_a_term_to_the_search() {
+        api.search(0, 2, "foo", "Fix order", Collections.singletonMap("userId", "3")).getResults();
+    }
+
+    @Test(expected = APIException.class)
+    public void should_fail_when_passing_a_no_filter_to_the_search() {
+        api.search(0, 2, null, "Fix order", null).getResults();
+    }
+
+    @Test(expected = APIException.class)
+    public void should_fail_when_passing_wrong_filter_to_the_search() {
+        api.search(0, 2, null, "Fix order", Collections.singletonMap("foo", "bar")).getResults();
     }
 }

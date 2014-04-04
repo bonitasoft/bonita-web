@@ -23,6 +23,8 @@ import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
  */
 public class EngineCustomUserInfoDefinition implements CustomUserInfoDefinition {
 
+    private static final long serialVersionUID = -6151441522473783097L;
+
     private long id;
 
     private String name;
