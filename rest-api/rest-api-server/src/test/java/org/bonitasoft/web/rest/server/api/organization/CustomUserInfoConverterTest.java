@@ -56,8 +56,23 @@ public class CustomUserInfoConverterTest {
 
         assertThat(information.getAttributes()).containsOnly(
                 entry("userId", "2"),
+                entry("definitionId", "3"),
                 entry("value", "foo"));
         assertThat(information.getDefinition().getId()).isEqualTo(APIID.makeAPIID(3L));
     }
 
+    @Test
+    public void should_return_a_fully_configured_custom_information_form_a_value() throws Exception {
+        CustomUserInfoValueImpl value = new CustomUserInfoValueImpl();
+        value.setUserId(5);
+        value.setDefinitionId(6);
+        value.setValue("foo");
+
+        CustomUserInfoItem information = converter.convert(value);
+
+        assertThat(information.getAttributes()).containsOnly(
+                entry("userId", "5"),
+                entry("definitionId", "6"),
+                entry("value", "foo"));
+    }
 }

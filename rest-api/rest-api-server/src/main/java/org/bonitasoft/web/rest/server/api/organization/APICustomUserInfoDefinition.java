@@ -82,7 +82,6 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
         for (CustomUserInfoDefinition definition : client.listDefinitions(page * resultsByPage, resultsByPage)) {
             result.add(converter.convert(definition));
         }
-
         return new ItemSearchResult<CustomUserInfoDefinitionItem>(page, resultsByPage, client.countDefinitions(), result);
     }
 

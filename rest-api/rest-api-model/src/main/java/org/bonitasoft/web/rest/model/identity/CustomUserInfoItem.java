@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.model.identity;
 
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 
 /**
@@ -40,7 +41,12 @@ public class CustomUserInfoItem extends Item {
         setAttribute(ATTRIBUTE_USER_ID, userId);
     }
 
+    public void setDefinition(APIID id) {
+        setAttribute(ATTRIBUTE_DEFINITION_ID, id);
+    }
+
     public void setDefinition(CustomUserInfoDefinitionItem definition) {
+        setDefinition(definition.getId());
         setDeploy(ATTRIBUTE_DEFINITION_ID, definition);
     }
 

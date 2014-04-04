@@ -16,15 +16,51 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import java.util.Map;
+
+import org.bonitasoft.engine.identity.CustomUserInfo;
+import org.bonitasoft.engine.identity.CustomUserInfoValue;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
+import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConverter;
+import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
+import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.API;
+import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 
 /**
  * @author Vincent Elcrin
  */
-public class APICustomUserInfoValue extends API<CustomUserInfoItem> {
+public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem> implements APIHasSearch<CustomUserInfoItem> {
+
+    private CustomUserInfoEngineClientCreator engineClientCreator;
 
     public APICustomUserInfoValue(CustomUserInfoEngineClientCreator engineClientCreator) {
+        this.engineClientCreator = engineClientCreator;
+    }
+
+    @Override
+    public ItemSearchResult<CustomUserInfoItem> search(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
+        SearchResult<CustomUserInfoValue> result = getClient().searchCustomUserInfoValues(new SearchOptionsCreator(
+                page,
+                resultsByPage,
+                search,
+                new Sorts(orders),
+                new Filters(filters, new GenericFilterCreator(new CustomUserInfoAttributeConverter()))).create());
+        return new ItemSearchResultConverter<CustomUserInfoItem, CustomUserInfoValue>(
+                page,
+                resultsByPage,
+                result,
+                new CustomUserInfoConverter()).toItemSearchResult();
+    }
+
+    private CustomUserInfoEngineClient getClient() {
+        return engineClientCreator.create(getEngineSession());
     }
 }

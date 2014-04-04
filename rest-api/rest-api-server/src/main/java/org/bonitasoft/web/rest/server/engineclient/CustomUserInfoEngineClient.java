@@ -24,6 +24,9 @@ import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
+import org.bonitasoft.engine.identity.CustomUserInfoValue;
+import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 
@@ -64,5 +67,9 @@ public class CustomUserInfoEngineClient {
 
     public List<CustomUserInfo> listCustomInformation(long userId, int startIndex, int maxResult) {
         return identity.getCustomUserInfo(userId, startIndex, maxResult);
+    }
+
+    public SearchResult<CustomUserInfoValue> searchCustomUserInfoValues(SearchOptions options) {
+        return identity.searchCustomUserInfoValues(options);
     }
 }

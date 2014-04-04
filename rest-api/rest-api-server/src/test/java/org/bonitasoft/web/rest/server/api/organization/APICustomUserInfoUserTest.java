@@ -76,7 +76,6 @@ public class APICustomUserInfoUserTest {
         given(caller.getHttpSession()).willReturn(httpSession);
         given(httpSession.getAttribute("apiSession")).willReturn(apiSession);
         given(engineClientCreator.create(apiSession)).willReturn(engine);
-
     }
 
     @Test
