@@ -40,7 +40,7 @@ public class ProfileEntryItemConverter extends ItemConverter<ProfileEntryItem, P
         item.setIsCustom(profileEntry.isCustom());
         if (item.isCustom() && profileEntry.getParentId() != 0) {
             item.setIcon(ProfileEntryItem.DEFAULT_ICON_BLACK);
-        } else if (item.isCustom() && item.getParentId().toLong() == 0) {
+        } else if (item.isCustom() && profileEntry.getParentId() == 0) {
             item.setIcon(ProfileEntryItem.DEFAULT_ICON_WHITE);
         } else {
             item.setIcon("");
