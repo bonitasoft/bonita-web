@@ -40,14 +40,42 @@ public class UpdateUserFormAction extends UpdateItemWithDeployFormAction<UserIte
     public void execute() {
         String password = getParameter(new JsId(UserItem.ATTRIBUTE_PASSWORD));
         String confirmPassword = getParameter(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"));
+        
+        onError(new Promise() {
 
+            @Override
+            public void apply(String message, Integer errorCode) {
+                getForm().addError(new JsId(UserItem.ATTRIBUTE_PASSWORD), getMessageFromErrorMessage(message));
+            }
+        });
+        
         if (!areEquals(password, confirmPassword)) {
             this.getForm().addError(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Passwords don't match"));
         } else {
             super.execute();
         }
     }
-
+    
+    private String getMessageFromErrorMessage(String message) {
+        int indexStartMessage = message.indexOf("\"message\""); 
+        if (indexStartMessage >= 0) {
+            indexStartMessage = indexStartMessage + 11;
+            
+            message = message.substring(indexStartMessage);
+            int endOfMessage = message.indexOf("\"");
+            if (endOfMessage >= 0) {
+                message =  message.substring(0, endOfMessage);
+                message = message.replace("\\r\\n", ", ");
+                message = message.substring(0, message.length() - 2);
+                return message;
+            } else {
+                return message;
+            }
+        } else {
+            return message;
+        }
+    }
+    
     private boolean areEquals(String password1, String password2) {
         if (password1 == null && password2 == null) {
             return true;

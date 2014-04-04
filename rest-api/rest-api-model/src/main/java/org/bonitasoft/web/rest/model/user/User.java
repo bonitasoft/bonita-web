@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.model.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class User implements Serializable {
     /**
      * the user rights
      */
-    private List<String> availableFeatures;
+    private List<String> availableFeatures = new ArrayList<String>();
 
     /**
      * 
@@ -153,7 +154,13 @@ public class User implements Serializable {
         setFeatures(userProfile.getFeatures());
     }
 
-    private List<String> getFeatures() {
+    public void addFeature(String feature) {
+        if (this.availableFeatures != null) {
+            this.availableFeatures.add(feature);
+        }
+    }
+
+    public List<String> getFeatures() {
         return this.availableFeatures;
     }
 }

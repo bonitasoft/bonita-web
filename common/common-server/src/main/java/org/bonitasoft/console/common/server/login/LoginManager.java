@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.console.common.server.login;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.impl.oauth.OAuthConsumerNotFoundException;
 
@@ -74,7 +76,7 @@ public interface LoginManager {
      * @return new redirect url
      * @throws OAuthConsumerNotFoundException
      */
-    String getLoginpageURL(final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException;
+    String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException;
 
     /**
      * Login the engine
