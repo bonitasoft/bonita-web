@@ -24,7 +24,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * Utility class for Session Manager access (read in a properties file)
@@ -34,6 +36,15 @@ import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginMan
  */
 public class LoginManagerProperties {
 
+    /**
+     * Logout Hidden constant
+     */
+    public static final String LOGOUT_DISABLED = "logout.link.hidden";
+
+    /**
+     * Logout Visible constant
+     */
+    public static final String LOGOUT_ENABLED = "logout.link.visible";
     /**
      * Configuration of login manager implementation
      */
@@ -60,9 +71,20 @@ public class LoginManagerProperties {
     protected static final String OAUTH_CALLBACK_URL = "OAuth.callbackURL";
 
     /**
+     * Configuration of CAS Server URL
+     */
+    protected static final String CAS_SERVER_URL = "Cas.serverUrlPrefix";
+
+    /**
+     * Configuration of CAS Bonita Service URL
+     */
+    protected static final String CAS_BONITA_SERVICE_URL = "Cas.bonitaServiceURL";
+
+    /**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(LoginManagerProperties.class.getName());
+
 
     /**
      * properties
@@ -137,5 +159,26 @@ public class LoginManagerProperties {
      */
     public String getOAuthCallbackURL() {
         return this.defaultProperties.getProperty(OAUTH_CALLBACK_URL);
+    }
+
+    /**
+     * @return get OAuth callback URL
+     */
+    public String getCasServerURL() {
+        return this.defaultProperties.getProperty(CAS_SERVER_URL);
+    }
+
+    /**
+     * @return get OAuth callback URL
+     */
+    public String getCasBonitaServiceUrl() {
+        return this.defaultProperties.getProperty(CAS_BONITA_SERVICE_URL);
+    }
+
+    /**
+     * @return if properties are set up to display the logout button
+     */
+    public boolean isLogoutDisabled() {
+        return BooleanUtils.toBoolean(this.defaultProperties.getProperty(LOGOUT_DISABLED));
     }
 }

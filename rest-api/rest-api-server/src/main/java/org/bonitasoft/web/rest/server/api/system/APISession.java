@@ -17,6 +17,8 @@ package org.bonitasoft.web.rest.server.api.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.common.server.login.LoginManagerProperties;
+import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -38,6 +40,8 @@ public class APISession extends ConsoleAPI<SessionItem> {
 
     public static final String APISESSION = "apiSession";
 
+    public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+
     @Override
     protected ItemDefinition defineItemDefinition() {
         return Definitions.get(SessionDefinition.TOKEN);
@@ -53,6 +57,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
+
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
 
@@ -89,6 +94,10 @@ public class APISession extends ConsoleAPI<SessionItem> {
 
             }
         }
+        // TODO restrict the current user from being able to call the logout directly as a profileEntry (is it possible)?
+        if (isLogoutDisabled(apiSession.getTenantId())) {
+            userRights.add(LoginManagerProperties.LOGOUT_DISABLED);
+        }
         return JSonSerializer.serialize(userRights);
     }
 
@@ -108,6 +117,16 @@ public class APISession extends ConsoleAPI<SessionItem> {
         userRights.add(sha1Generator.getHash("profilelisting".concat(String.valueOf(apiSession.getId()))));
         userRights.add(sha1Generator.getHash("businessdatamodelimport".concat(String.valueOf(apiSession.getId()))));
         return JSonSerializer.serialize(userRights);
+    }
+
+    /**
+     * enable to know if the logout button is visible or not
+     * 
+     * @param tenantId
+     *            the current user tenant id
+     */
+    protected boolean isLogoutDisabled(long tenantId) {
+        return loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
     }
 
 }
