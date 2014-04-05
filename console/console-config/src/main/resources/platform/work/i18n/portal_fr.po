@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-04 07:03+0200\n"
-"PO-Revision-Date: 2014-04-04 02:33-0400\n"
+"PO-Revision-Date: 2014-04-05 00:40-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -88,7 +88,7 @@ msgstr "Installé le"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:70
 msgid "The date when this app was installed"
-msgstr "La date, d'installation de cette application"
+msgstr "La date d'installation de cette App"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:73
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:79
@@ -107,7 +107,7 @@ msgstr "Dernière mise à jour le"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:75
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:53
 msgid "The date when the app was updated"
-msgstr "La date de mise à jour de l'application"
+msgstr "La date de mise à jour de l'App"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:96
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/ArchivedHumanTaskQuickDetailsPage.java:73
@@ -932,7 +932,7 @@ msgstr "Démarrer une app au titre en tant qu'un autre utilisateur"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:83
 msgid "Start this app on behalf of selected user"
-msgstr "Démarrer cette application en tant que l'utilisateur sélectionné"
+msgstr "Démarrer cette App à la place de l'utilisateur sélectionné"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:89
 msgid "Select a user to start app %app_name% %app_version%"
@@ -953,7 +953,7 @@ msgstr "Installer"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:85
 msgid "Opens a popup to install an app"
-msgstr "Ouvre une pop up pour installer une application"
+msgstr "Ouvre une pop up pour installer une App"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:100
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:153
@@ -1002,7 +1002,7 @@ msgstr "Désactiver"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:156
 msgid "Disable selected apps"
-msgstr "Désactiver les applications sélectionnées"
+msgstr "Désactiver les Apps sélectionnées"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:132
@@ -1011,12 +1011,12 @@ msgstr "Activer"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
 msgid "Enable selected apps"
-msgstr "Activer les applications sélectionnées"
+msgstr "Activer les Apps sélectionnées"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:172
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:180
 msgid "Delete selected apps"
-msgstr "Supprimer les applications sélectionnées"
+msgstr "Supprimer les Apps sélectionnées"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:172
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:180
@@ -2278,7 +2278,7 @@ msgstr "Etat de la configuration "
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:45
 msgid "The configuration state of the app"
-msgstr "L'état de configuration de l'application"
+msgstr "L'état de configuration de l'App"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:61
 msgid "Activation state"
@@ -3195,7 +3195,7 @@ msgstr "Déplacer cet élément après le suivant"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/PagerLink.java:64
 msgid "Go to page %pagenumber%"
-msgstr "Aller à la page %pagenumber%"
+msgstr "Allez à la page %pagenumber%"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/DatePicker.java:66
 msgid "mm/dd/yyyy"
