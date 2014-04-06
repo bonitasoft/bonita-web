@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-04 07:03+0200\n"
-"PO-Revision-Date: 2014-04-04 02:39-0400\n"
+"POT-Creation-Date: 2014-04-05 07:01+0200\n"
+"PO-Revision-Date: 2014-04-06 02:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1665,7 +1665,7 @@ msgid "Opens a popup to create a group"
 msgstr "Se abre una ventana emergente para crear un grupo"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:45
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:53
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
@@ -2461,23 +2461,23 @@ msgstr "ADVERTENCIA: usted se registra como usuario técnico. Este usuario tiene
 msgid "Select profile"
 msgstr "Seleccione el perfil"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:83
 msgid "Welcome: "
 msgstr "Bienvenido: "
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:198
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:202
 msgid "Settings"
 msgstr "Configuración"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:204
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:208
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:216
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:220
 msgid "Language"
 msgstr "Idioma"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:221
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:225
 msgid "About"
 msgstr "Acerca"
 
@@ -2787,7 +2787,7 @@ msgstr "mensaje"
 msgid "The application encountered an error."
 msgstr "The application encountered an error."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:104
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 
