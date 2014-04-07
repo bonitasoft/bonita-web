@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.model.identity;
 
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
+import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -57,5 +58,9 @@ public class CustomUserInfoDefinitionDefinition extends ItemDefinition<CustomUse
     @Override
     public APICaller<CustomUserInfoDefinitionItem> getAPICaller() {
         throw new UnsupportedOperationException("This is method is not used");
+    }
+
+    public static CustomUserInfoDefinitionDefinition get() {
+        return (CustomUserInfoDefinitionDefinition) Definitions.get(TOKEN);
     }
 }

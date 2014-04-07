@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionDefinition;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
@@ -32,6 +33,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 import static org.bonitasoft.web.rest.server.api.APIAssert.assertThat;
 
@@ -74,7 +76,7 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
             final Map<String, String> filters) {
 
         assertThat(search == null, new _("Search term are not supported by this api"));
-        assertThat(filters == null, new _("Filters are not supported by this api"));
+        assertThat(filters == null || filters.isEmpty(), new _("Filters are not supported by this api"));
         assertThat(orders.equals(FIX_ORDER), new _("Sort is not supported by this api"));
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
@@ -83,6 +85,11 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
             result.add(converter.convert(definition));
         }
         return new ItemSearchResult<CustomUserInfoDefinitionItem>(page, resultsByPage, client.countDefinitions(), result);
+    }
+
+    @Override
+    protected ItemDefinition<CustomUserInfoDefinitionItem> defineItemDefinition() {
+        return CustomUserInfoDefinitionDefinition.get();
     }
 
     public String defineDefaultSearchOrder() {

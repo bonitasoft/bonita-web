@@ -30,6 +30,7 @@ import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.utils.converter.typed.StringConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
@@ -144,6 +145,18 @@ public class APICustomUserInfoDefinitionTest {
                 null,
                 APICustomUserInfoDefinition.FIX_ORDER,
                 null);
+
+        assertThat(result.getTotal()).isEqualTo(42);
+    }
+
+    @Test
+    public void should_allow_an_empty_filter() throws Exception {
+        given(engine.countDefinitions()).willReturn(42L);
+
+        ItemSearchResult<CustomUserInfoDefinitionItem> result = api.search(0, 2,
+                null,
+                APICustomUserInfoDefinition.FIX_ORDER,
+                Collections.<String, String> emptyMap());
 
         assertThat(result.getTotal()).isEqualTo(42);
     }

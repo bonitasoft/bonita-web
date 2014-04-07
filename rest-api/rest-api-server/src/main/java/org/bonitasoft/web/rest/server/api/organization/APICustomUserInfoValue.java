@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.bonitasoft.engine.identity.CustomUserInfoValue;
 import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConverter;
@@ -34,6 +35,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_VALUE;
 import static org.bonitasoft.web.rest.server.api.APIAssert.assertThat;
@@ -85,5 +87,10 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
 
     private CustomUserInfoEngineClient getClient() {
         return engineClientCreator.create(getEngineSession());
+    }
+
+    @Override
+    protected ItemDefinition<CustomUserInfoItem> defineItemDefinition() {
+        return CustomUserInfoDefinition.get();
     }
 }

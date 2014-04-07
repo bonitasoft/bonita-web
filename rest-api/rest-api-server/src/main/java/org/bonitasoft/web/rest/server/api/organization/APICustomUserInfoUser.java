@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.identity.CustomUserInfo;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
@@ -29,6 +30,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.FILTER_USER_ID;
 import static org.bonitasoft.web.rest.server.api.APIAssert.assertThat;
@@ -68,7 +70,10 @@ public class APICustomUserInfoUser extends ConsoleAPI<CustomUserInfoItem> implem
         return new ItemSearchResult<CustomUserInfoItem>(page, information.size(), client.countDefinitions(), information);
     }
 
-
+    @Override
+    protected ItemDefinition<CustomUserInfoItem> defineItemDefinition() {
+        return CustomUserInfoDefinition.get();
+    }
 
     @Override
     public String defineDefaultSearchOrder() {
