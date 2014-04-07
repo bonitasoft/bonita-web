@@ -20,6 +20,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ConfigurationState;
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ConfigurationStateText;
+import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.common.event.handler.HideComponentOnEmptyTableHandler;
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
@@ -29,6 +30,8 @@ import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.popup.PopupAction;
+import org.bonitasoft.web.toolkit.client.ui.component.Link;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
@@ -50,6 +53,10 @@ public class EntityMappingSection extends Section {
                 new HideComponentOnEmptyTableHandler(configurationStateText));
 
         addHeader(configurationStateText);
+        addBody(new Paragraph(
+                _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal. To do so, go to "),
+                new Link(new JsId("profilelink"), _("Configuration > Profiles"), _("Click here to go to Profile listing page"), ProfileListingPage.TOKEN))
+                .addClass("section_description"));
         addBody(entityMappingTable);
     }
 
