@@ -25,10 +25,13 @@ public class PageLister {
     static {
         pages.add(new BonitaPageItem("tasklistinguser", _("visualize & do tasks"), "", _("Tasks")));
         pages.add(new BonitaPageItem("tasklistingadmin", _("manage tasks"), "", _("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingpm", _("manage tasks"), "", _("Tasks")));
         pages.add(new BonitaPageItem("caselistinguser", _("visualize cases"), "", _("Cases")));
         pages.add(new BonitaPageItem("caselistingadmin", _("manage cases"), "", _("Cases")));
+        pages.add(new BonitaPageItem("caselistingpm", _("manage cases"), "", _("Cases")));
         pages.add(new BonitaPageItem("processlistinguser", _("visualize & start apps"), "", _("Apps")));
         pages.add(new BonitaPageItem("processlistingadmin", _("manage apps"), "", _("Apps")));
+        pages.add(new BonitaPageItem("processlistingpm", _("manage apps"), "", _("Apps")));
         pages.add(new BonitaPageItem("userlistingadmin", _("manage users"), "", _("Users")));
         pages.add(new BonitaPageItem("grouplistingadmin", _("manage groups"), "", _("Groups")));
         pages.add(new BonitaPageItem("rolelistingadmin", _("manage roles"), "", _("Roles")));

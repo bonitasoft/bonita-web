@@ -141,11 +141,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (UpdateUserPage.TOKEN.equals(token) && isUserAuthorized(UpdateUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new UpdateUserPage();
             
-        // Manage Apps pages    
+        // Manage Apps pages For Admin   
         } else if (ProcessListingAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessListingAdminPage();
         } else if (ProcessQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessQuickDetailsAdminPage();
+        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessMoreDetailsAdminPage();
         /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
             return new StartProcessOnBehalfPage();*/
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, currentUserAccessRights)) {
@@ -154,8 +156,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new CreateCategoryAndAddToProcessPage();
         } else if (AddProcessCategoryPage.TOKEN.equals(token) && isUserAuthorized(AddProcessCategoryPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddProcessCategoryPage();
-        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
-            return new ProcessMoreDetailsAdminPage();
         } else if (ListProcessActorUserPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProcessActorUserPage();
         } else if (ListProcessActorGroupPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorGroupPage.PRIVILEGES, currentUserAccessRights)) {
