@@ -45,7 +45,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.Table;
 public class EntityMappingSection extends Section {
 
     public EntityMappingSection(final ProcessItem process, final ConfigurationState state) {
-        super(new JsId("Entity mapping"), _("Entity mapping"));
+        super(new JsId("Entity mapping"), _("Actor mapping"));
 
         final ConfigurationStateText configurationStateText = new ConfigurationStateText(state);
         final ItemTable entityMappingTable = newEntityMappingTable(process);
@@ -54,10 +54,12 @@ public class EntityMappingSection extends Section {
 
         addHeader(configurationStateText);
         addBody(new Paragraph(
-                _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal. To do so, go to "),
-                new Link(new JsId("profilelink"), _("Configuration > Profiles"), _("Click here to go to Profile listing page"), ProfileListingPage.TOKEN))
+                _("Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."))
                 .addClass("section_description"));
         addBody(entityMappingTable);
+        addBody(new Paragraph(
+                _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal. To do so, go to %profilelink%."),
+                new Link(new JsId("entitymappingprofilelink"), _("Profiles"), _("Click here to go to Profile listing page"), ProfileListingPage.TOKEN)));
     }
 
     private ItemTable newEntityMappingTable(final ProcessItem process) {

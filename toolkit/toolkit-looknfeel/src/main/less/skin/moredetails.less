@@ -90,6 +90,14 @@
 			> .body{
 				padding: @moreDetails-section-body-padding;
 				position: @moreDetails-section-body-position;
+				p{
+					a{
+						color: @moreDetails-section-link-color;
+						&:hover{
+							text-decoration: @moreDetails-section-linkHover-textDecoration;
+						}
+					}
+				}
 			}
 			.tablefilters{
 				display: @moreDetails-section-tableFilters-display;
