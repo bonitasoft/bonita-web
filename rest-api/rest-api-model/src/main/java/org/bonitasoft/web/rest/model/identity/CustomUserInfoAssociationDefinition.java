@@ -35,7 +35,7 @@ public class CustomUserInfoAssociationDefinition extends ItemDefinition<CustomUs
 
     @Override
     protected String defineAPIUrl() {
-        return "../API/identity/customuserinfo/user"; // <user id>
+        return "../API/identity/customuserinfo/user";
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CustomUserInfoAssociationDefinition extends ItemDefinition<CustomUs
 
     @Override
     protected void definePrimaryKeys() {
-        setPrimaryKeys(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, CustomUserInfoItem.ATTRIBUTE_USER_ID);
+        setPrimaryKeys(CustomUserInfoItem.ATTRIBUTE_USER_ID, CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID);
     }
 
     @Override

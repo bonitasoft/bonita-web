@@ -47,7 +47,7 @@ public class CustomUserInfoDefinition extends ItemDefinition<CustomUserInfoItem>
 
     @Override
     protected void definePrimaryKeys() {
-        setPrimaryKeys(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, CustomUserInfoItem.ATTRIBUTE_USER_ID);
+        setPrimaryKeys(CustomUserInfoItem.ATTRIBUTE_USER_ID, CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID);
     }
 
     @Override

@@ -80,8 +80,8 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
         assertThat(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only value attribute can be updated"));
 
         return converter.convert(getClient().setCustomUserInfoValue(
-                id.getPartAsLong(0),
                 id.getPartAsLong(1),
+                id.getPartAsLong(0),
                 attributes.get(ATTRIBUTE_VALUE)));
     }
 
