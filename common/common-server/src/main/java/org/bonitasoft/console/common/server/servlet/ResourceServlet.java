@@ -72,6 +72,11 @@ public abstract class ResourceServlet extends HttpServlet {
     protected abstract File getResourcesParentFolder(long tenantId);
 
     /**
+     * Return null if there is no subfolder
+     */
+    protected abstract String getSubFolderName();
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -104,7 +109,6 @@ public abstract class ResourceServlet extends HttpServlet {
             throws ServletException, UnsupportedEncodingException {
         byte[] content = null;
         String contentType = null;
-        File resourcesFolder = null;
         if (resourceName == null) {
             final String errorMessage = "Error while using the servlet to get a resource: the parameter " + getResourceParameterName() + " is null.";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -123,18 +127,25 @@ public abstract class ResourceServlet extends HttpServlet {
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        resourcesFolder = getResourcesParentFolder(request);
+        final File resourcesFolder = getResourcesParentFolder(request);
+        final String subFolderName = getSubFolderName();
+        String subFolderSuffix;
+        if (subFolderName != null) {
+            subFolderSuffix = File.separator + subFolderName;
+        } else {
+            subFolderSuffix = "";
+        }
 
         try {
-
-            final File file = new File(resourcesFolder.getAbsolutePath() + File.separator + resourceName + File.separator + fileName);
+            final File resourceFolder = new File(resourcesFolder, resourceName + subFolderSuffix);
+            final File file = new File(resourceFolder, fileName);
             try {
-                if (!file.getCanonicalPath().startsWith(resourcesFolder.getCanonicalPath())) {
+                if (!file.getCanonicalPath().startsWith(resourceFolder.getCanonicalPath())) {
                     throw new IOException();
                 }
             } catch (final IOException e) {
                 final String errorMessage = "Error while using the servlet to get a resource file " + resourceName
-                        + " For security reasons, access to paths other than " + resourcesFolder.getName() + " is restricted";
+                        + " For security reasons, access to paths other than " + resourceFolder.getName() + " is restricted";
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, errorMessage, e);
                 }

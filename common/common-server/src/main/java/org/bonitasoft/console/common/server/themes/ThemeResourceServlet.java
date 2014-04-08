@@ -47,4 +47,9 @@ public class ThemeResourceServlet extends ResourceServlet {
         return WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder();
     }
 
+    @Override
+    protected String getSubFolderName() {
+        return null;
+    }
+
 }
