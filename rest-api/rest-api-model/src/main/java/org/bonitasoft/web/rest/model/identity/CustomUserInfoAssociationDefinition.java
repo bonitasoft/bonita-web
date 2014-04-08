@@ -35,7 +35,7 @@ public class CustomUserInfoAssociationDefinition extends ItemDefinition<CustomUs
 
     @Override
     protected String defineAPIUrl() {
-        return "../API/identity/customuserinfo/user";
+        return "../API/customuserinfo/user";
     }
 
     @Override

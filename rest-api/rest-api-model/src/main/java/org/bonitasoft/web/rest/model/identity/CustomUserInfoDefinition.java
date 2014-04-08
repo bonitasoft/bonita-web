@@ -35,7 +35,7 @@ public class CustomUserInfoDefinition extends ItemDefinition<CustomUserInfoItem>
 
     @Override
     protected String defineAPIUrl() {
-        return "../API/identity/customuserinfo";
+        return "../API/customuserinfo/user";
     }
 
     @Override
@@ -43,6 +43,11 @@ public class CustomUserInfoDefinition extends ItemDefinition<CustomUserInfoItem>
         createAttribute(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CustomUserInfoItem.ATTRIBUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CustomUserInfoItem.ATTRIBUTE_VALUE, ItemAttribute.TYPE.STRING);
+    }
+
+    @Override
+    protected void defineDeploys() {
+        declareDeployable(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, CustomUserInfoDefinitionDefinition.get());
     }
 
     @Override

@@ -18,14 +18,18 @@
 package org.bonitasoft.web.toolkit.client.ui.component.core;
 
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.UIObject;
+import com.google.gwt.user.client.ui.Widget;
+import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
 
 /**
  * Created by Vincent Elcrin
  * Date: 02/10/13
  * Time: 16:22
  */
-public class UiComponent extends Component {
+public class UiComponent extends Component implements FormNode {
 
     private UIObject uiObject;
 
@@ -35,6 +39,28 @@ public class UiComponent extends Component {
 
     @Override
     protected Element makeElement() {
+
+        if(uiObject instanceof Widget) {
+            adopt((Widget) uiObject);
+        }
+
         return uiObject.getElement();
+    }
+
+    class WidgetWrapper extends SimplePanel {
+
+        WidgetWrapper(Widget child) {
+            super(child);
+        }
+
+        public void attach() {
+            onAttach();
+        }
+    }
+
+    private void adopt(Widget widget) {
+        WidgetWrapper wrapper = new WidgetWrapper(widget);
+        wrapper.attach();
+        RootPanel.detachOnWindowClose(wrapper);
     }
 }

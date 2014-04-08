@@ -35,7 +35,7 @@ public class CustomUserInfoDefinitionDefinition extends ItemDefinition<CustomUse
 
     @Override
     protected String defineAPIUrl() {
-        return "../API/identity/customuserinfo/definitions";
+        return "../API/customuserinfo/definition";
     }
 
     @Override
