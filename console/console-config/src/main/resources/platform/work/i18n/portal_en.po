@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-04 22:01+0200\n"
-"PO-Revision-Date: 2014-04-07 17:31-0400\n"
+"POT-Creation-Date: 2014-04-08 22:02+0200\n"
+"PO-Revision-Date: 2014-04-08 17:30-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -760,8 +760,7 @@ msgid "Disabled Apps"
 msgstr "Disabled Apps"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:110
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:81
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:97
 msgid "Resolved"
 msgstr "Resolved"
 
@@ -770,8 +769,7 @@ msgid "Resolved Apps"
 msgstr "Resolved Apps"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:116
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:81
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:97
 msgid "Unresolved"
 msgstr "Unresolved"
 
@@ -780,7 +778,7 @@ msgid "Unresolved Apps"
 msgstr "Unresolved Apps"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:156
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:136
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:137
 msgid "Disable"
 msgstr "Disable"
 
@@ -789,7 +787,7 @@ msgid "Disable selected apps"
 msgstr "Disable selected apps"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:133
 msgid "Enable"
 msgstr "Enable"
 
@@ -1057,8 +1055,24 @@ msgstr "Type"
 msgid "Class name"
 msgstr "Class name"
 
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:34
+msgid "The App cannot be enabled"
+msgstr "The App cannot be enabled"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
+msgid "Actor Mapping must be resolved before enabling the App."
+msgstr "Actor Mapping must be resolved before enabling the App."
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
+msgid "Parameters must be resolved before enabling the App."
+msgstr "Parameters must be resolved before enabling the App."
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:48
+msgid "Connector definitions must be resolved before enabling the App."
+msgstr "Connector definitions must be resolved before enabling the App."
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:45
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:33
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:33
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:54
 msgid "Configuration"
 msgstr "Configuration"
@@ -1182,7 +1196,7 @@ msgstr "This category was not found or this field is mandatory"
 msgid "Start an instance of app %app_name%"
 msgstr "Start an instance of app %app_name%"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:115
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:117
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:148
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:127
@@ -1193,15 +1207,15 @@ msgstr "Start an instance of app %app_name%"
 msgid "Delete"
 msgstr "Delete"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:115
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:117
 msgid "Delete this app"
 msgstr "Delete this app"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:132
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:133
 msgid "Enable this app"
 msgstr "Enable this app"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:136
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:137
 msgid "Disable this app"
 msgstr "Disable this app"
 
@@ -1435,63 +1449,59 @@ msgstr "Update a group"
 msgid "Save this group changes"
 msgstr "Save this group changes"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:58
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:63
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:40
 msgid "Import / Export"
 msgstr "Import / Export"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:68
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:73
 msgid "Import an existing organization"
 msgstr "Import an existing organization"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:82
 msgid "This will import a file containing your whole organization data."
 msgstr "This will import a file containing your whole organization data."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:78
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:83
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Be careful, your organization will be merged with existing data."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:79
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:84
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "In case of conflict, priority is given to the imported file"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:92
 msgid "Organisation file"
 msgstr "Organisation file"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:87
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:92
 msgid "Please choose a file to import"
 msgstr "Please choose a file to import"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:91
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:96
 msgid "Please select a file first"
 msgstr "Please select a file first"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:94
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:99
 msgid "Import"
 msgstr "Import"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:100
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:116
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:105
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:121
 msgid "Export the installed organization"
 msgstr "Export the installed organization"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:109
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:114
 msgid "This will export a file containing your whole organization data. "
 msgstr "This will export a file containing your whole organization data. "
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:110
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:115
 msgid "Data included are : Users, groups and roles"
 msgstr "Data included are : Users, groups and roles"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:116
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:121
 msgid "Export"
 msgstr "Export"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:124
-msgid "Warning:"
-msgstr "Warning:"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:53
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
@@ -2417,13 +2427,17 @@ msgstr "Content"
 msgid "Post time"
 msgstr "Post time"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/component/section/WarningCell.java:31
+msgid "Warning:"
+msgstr "Warning:"
+
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:34
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:56
 msgid "Profiles"
 msgstr "Profiles"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/PortalMenuItem.java:34
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:34
 msgid "Show all profiles of portal"
 msgstr "Show all profiles of portal"
 
@@ -3190,17 +3204,21 @@ msgstr "Image files"
 msgid "Jasper Archive"
 msgstr "Jasper Archive"
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:91
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:152
 msgid "Unsupported file."
 msgstr "Unsupported file."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:98
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:159
 msgid "Click here to choose your file."
 msgstr "Click here to choose your file."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:100
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/FileUpload.java:161
 msgid "Click here to choose your file. "
 msgstr "Click here to choose your file. "
+
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/ZipUploadFilter.java:24
+msgid "zip file"
+msgstr "zip file"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/entry/BarUploadFilter.java:34
 msgid "Bonita Archive"
