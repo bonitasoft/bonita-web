@@ -13,6 +13,9 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.standard;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
@@ -30,9 +33,14 @@ import org.bonitasoft.web.rest.model.user.User;
 public class StandardLoginManagerImpl implements LoginManager {
 
     @Override
-    public String getLoginpageURL(final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
-        url.append("..").append(LoginManager.LOGIN_PAGE).append("?");
+        String context = request.getContextPath();
+        String servletPath = request.getServletPath();
+        if (StringUtils.isNotBlank(servletPath) && servletPath.startsWith("/mobile")) {
+            context += "/mobile";
+        }
+        url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");
         }
@@ -57,7 +65,7 @@ public class StandardLoginManagerImpl implements LoginManager {
         return new UserLogger();
     }
 
-    private boolean useCredentialsTransmission(final APISession apiSession) {
+    protected boolean useCredentialsTransmission(final APISession apiSession) {
         return PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).useCredentialsTransmission();
     }
 

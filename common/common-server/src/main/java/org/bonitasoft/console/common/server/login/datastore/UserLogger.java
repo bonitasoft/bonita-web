@@ -16,6 +16,9 @@
  */
 package org.bonitasoft.console.common.server.login.datastore;
 
+import java.io.Serializable;
+import java.util.Map;
+
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
@@ -33,6 +36,17 @@ public class UserLogger {
         try {
             return getDatastore().login(credentials.getName(),
                     credentials.getPassword());
+        } catch (final BonitaException e) {
+            throw new LoginFailedException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Overridden in SP
+     */
+    public APISession doLogin(Map<String, Serializable> credentials) throws LoginFailedException {
+        try {
+            return getDatastore().login(credentials);
         } catch (final BonitaException e) {
             throw new LoginFailedException(e.getMessage(), e);
         }

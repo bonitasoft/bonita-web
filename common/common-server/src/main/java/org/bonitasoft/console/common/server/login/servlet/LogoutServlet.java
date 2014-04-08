@@ -111,7 +111,7 @@ public class LogoutServlet extends HttpServlet {
                 final LoginManager loginManager = LoginManagerFactory.getLoginManager(tenantId);
                 final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
                 if (loginManager instanceof OAuthLoginManagerImpl) {
-                    loginPage = loginManager.getLoginpageURL(tenantId, encodedRedirectURL);
+                    loginPage = loginManager.getLoginpageURL(request, tenantId, encodedRedirectURL);
                 } else {
                     final String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
                     if (loginURL != null) {
