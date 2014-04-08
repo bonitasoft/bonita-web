@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import org.bonitasoft.console.client.admin.bpm.accessor.IActivityAccessor;
 import org.bonitasoft.console.client.common.component.snippet.SectionSnippet;

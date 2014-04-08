@@ -84,7 +84,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PROCESS_ID, HumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_STATE, HumanTaskInstanceSearchDescriptor.STATE_NAME);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
+        // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
         // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_TEAM_MANAGER_ID, HumanTaskInstanceSearchDescriptor.TEAM_MANAGER_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, HumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PRIORITY, HumanTaskInstanceSearchDescriptor.PRIORITY);
@@ -102,6 +102,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             // Tasks of all users using a specific supervisor's processes.
             id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_SUPERVISOR_ID));
             if (id != null) {
+                filters.remove(HumanTaskItem.FILTER_SUPERVISOR_ID);
                 return runSupervisorSearch(filters, builder, id.toLong());
             }
 
