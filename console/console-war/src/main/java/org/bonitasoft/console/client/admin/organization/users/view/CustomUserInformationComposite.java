@@ -6,24 +6,28 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.view.client.ListDataProvider;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
+
+import java.util.List;
 
 /**
  * @author Vincent Elcrin
  */
-public class CustomUserInformationComposite extends Composite implements ModelChangeHandler<CustomUserInformationModel>, DirtyInputHandler {
-
-    private ListDataProvider<CustomUserInfoItem> data = new ListDataProvider<CustomUserInfoItem>();
-
-    private CustomUserInformationModel model;
+public class CustomUserInformationComposite extends Composite implements ModelLoadHandler<CustomUserInformationModel>, DirtyInputHandler {
 
     interface Template extends SafeHtmlTemplates {
 
         @Template("<div class=\"formentry formentry_firstname mandatory text\">" +
-                "<div class=\"label\"><label title=\"{0}\">{0}</label></div>" +
-                "<div class=\"input\"><input type=\"text\" name=\"{0}\" title=\"{0}\" maxlength=\"50\" value=\"{1}\"></div></div>")
-        public SafeHtml line(String name, String value);
+                "<div class=\"label\"><label title=\"{2}\">{1}</label></div>" +
+                "<div class=\"input\"><input type=\"text\" name=\"{1}\" maxlength=\"50\" value=\"{3}\" tabindex=\"{0}\">" +
+                "</div></div>")
+        public SafeHtml line(int line, String name, String description, String value);
     }
+
+    private ListDataProvider<CustomUserInfoItem> data = new ListDataProvider<CustomUserInfoItem>();
+
+    private CustomUserInformationModel model;
 
     private static final Template TEMPLATE = GWT.create(Template.class);
 
@@ -31,7 +35,8 @@ public class CustomUserInformationComposite extends Composite implements ModelCh
 
         @Override
         public SafeHtml render(Cell.Context context, CustomUserInfoItem information) {
-            return TEMPLATE.line(information.getDefinition().getName(), information.getValue());
+            CustomUserInfoDefinitionItem definition = information.getDefinition();
+            return TEMPLATE.line(context.getIndex() + 1, definition.getName(), definition.getDescription(), information.getValue());
         }
     });
 
@@ -47,12 +52,17 @@ public class CustomUserInformationComposite extends Composite implements ModelCh
     }
 
     @Override
-    public void onDirtyInput(DirtyInputEvent event) {
-        model.update(event.getContext().getIndex(), event.getInput().getValue());
+    public void onModelLoad(ModelLoadEvent<CustomUserInformationModel> event) {
+        List<CustomUserInfoItem> information = event.getModel().getInformation();
+        int size = event.getSize();
+        if(information.size() < size) {
+            size = information.size();
+        }
+        data.getList().addAll(size, information.subList(event.getPage() * size, size));
     }
 
     @Override
-    public void onModelChange(ModelChangeEvent<CustomUserInformationModel> event) {
-        data.setList(event.getModel().getInformation());
+    public void onDirtyInput(DirtyInputEvent event) {
+        model.update(event.getContext().getIndex(), event.getInput().getValue());
     }
 }

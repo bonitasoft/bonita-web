@@ -38,13 +38,7 @@ public class CustomUserInformationModel extends ObservableModel<CustomUserInform
         load(++page, size, userId);
     }
 
-    public void previous() {
-        if(page > 0) {
-            load(--page, size, userId);
-        }
-    }
-
-    private void load(int page, int size, String userId) {
+    private void load(final int page, final int size, String userId) {
         APISearchRequest request = new APISearchRequest(CustomUserInfoDefinition.get());
         request.setPage(page);
         request.setResultsPerPage(size);
@@ -53,16 +47,17 @@ public class CustomUserInformationModel extends ObservableModel<CustomUserInform
 
             @Override
             public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-                items.clear();
                 items.addAll(JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()));
-                notifyChange(CustomUserInformationModel.this);
+                notifyLoad(page, size, CustomUserInformationModel.this);
             }
         });
         request.run();
     }
 
     public void update(int index, String value) {
-        items.get(index).setValue(value);
-        notifyChange(this);
+        if(!value.equals(items.get(index).getValue())) {
+            items.get(index).setValue(value);
+            notifyChange(this);
+        }
     }
 }

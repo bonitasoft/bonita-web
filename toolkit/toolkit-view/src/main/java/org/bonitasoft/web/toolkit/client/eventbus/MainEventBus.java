@@ -16,15 +16,11 @@
  */
 package org.bonitasoft.web.toolkit.client.eventbus;
 
+import com.google.gwt.event.shared.*;
+import com.google.gwt.event.shared.GwtEvent.Type;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.EventHandler;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.SimpleEventBus;
 
 /**
  * Application's only event bus
@@ -90,10 +86,6 @@ public class MainEventBus extends EventBus {
     public void fireEventFromSource(GwtEvent<?> event, Object source) {
         impl.fireEventFromSource(event, source);
     }
-
-    // ////////////////////////////////////////////////////////////////////////////////////
-    // / Named handlers
-    // ////////////////////////////////////////////////////////////////////////////////////
 
     public <H extends EventHandler> HandlerRegistration addNamedHandler(Type<H> type, String name, H handler) {
         unregisterNamedHandler(name);
