@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2009 BonitaSoft S.A.
- * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
+ * Copyright (C) 2014 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.forms.client.model;
+package org.bonitasoft.web.toolkit.client.ui.component.form.entry;
 
-/**
- * Type of action to execute at form submission
- * 
- * @author Anthony Birembaut
- */
-public enum ActionType {
-    ASSIGNMENT, JAVA_METHOD, XPATH_UPDATE_QUERY, DOCUMENT_CREATE_UPDATE, STRING_INDEX, EXECUTE_CONNECTOR, CREATE_BUSINESS_DATA, BUSINESS_DATA_JAVA_SETTER;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
+public class ZipUploadFilter extends UploadFilter {
+
+    public ZipUploadFilter() {
+        super(_("zip file"), "zip", "ZIP");
+    }
+
 }
