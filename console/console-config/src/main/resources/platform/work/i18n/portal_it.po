@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-08 01:28+0200\n"
-"PO-Revision-Date: 2014-04-07 21:17-0400\n"
+"POT-Creation-Date: 2014-04-08 14:58+0200\n"
+"PO-Revision-Date: 2014-04-08 09:23-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -691,23 +691,23 @@ msgstr "Seleziona un ruolo digitando parte del suo nome."
 msgid "This task is already assigned to someone else."
 msgstr "Non è possibile eseguire questo task, è già stato assegnato a qualcun altro."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:83
 msgid "Welcome: "
 msgstr "Benvenuto:"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:198
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:202
 msgid "Settings"
 msgstr "Configurazioni"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:204
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:208
 msgid "Logout"
 msgstr "Logout"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:216
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:220
 msgid "Language"
 msgstr "Lingua"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:221
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:225
 msgid "About"
 msgstr "Info su"
 
@@ -793,7 +793,7 @@ msgstr "Dettagli tecnici"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:102
 msgid "Pending"
-msgstr "Pending"
+msgstr "In attesa"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:107
@@ -1017,7 +1017,7 @@ msgstr "Stato corrente del caso"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:129
 msgid "Pending tasks"
-msgstr "Pending tasks"
+msgstr "Task in attesa"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:140
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:132
@@ -1360,7 +1360,7 @@ msgid "Add selected role(s) to this profile"
 msgstr "Aggiungi i ruoli selezionati a questo profilo"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:45
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:53
 msgid "Passwords don't match"
 msgstr "Le password non coincidono"
 
@@ -2429,7 +2429,7 @@ msgstr "Aggiornare questa tabella"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:120
 msgid "Tasks to do"
-msgstr "Tasks to do"
+msgstr "Task da fare"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:147
 msgid "Performed on"
@@ -2650,7 +2650,7 @@ msgstr "%attribute% deve essere un valore negativo diverso da 0"
 msgid "Your session has expired. Please log in again and retry."
 msgstr "La tua sessione è scaduta. Si prega di accedere di nuovo e riprovare."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:104
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 

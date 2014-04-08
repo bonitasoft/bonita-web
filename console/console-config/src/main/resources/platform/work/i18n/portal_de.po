@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-08 01:28+0200\n"
-"PO-Revision-Date: 2014-04-07 21:15-0400\n"
+"POT-Creation-Date: 2014-04-08 14:58+0200\n"
+"PO-Revision-Date: 2014-04-08 09:21-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -691,23 +691,23 @@ msgstr "Wählen Sie eine Rolle, indem Sie einen Teil des Namens eingeben."
 msgid "This task is already assigned to someone else."
 msgstr "Sie können diese Aufgabe nicht ausführen, sie wurde schon jemand anderem zugewiesen."
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:82
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:83
 msgid "Welcome: "
 msgstr "Willkommen: "
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:198
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:202
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:204
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:208
 msgid "Logout"
 msgstr "Abmelden"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:216
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:220
 msgid "Language"
 msgstr "Sprache"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:221
+#: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/LoginBox.java:225
 msgid "About"
 msgstr "Über"
 
@@ -1360,7 +1360,7 @@ msgid "Add selected role(s) to this profile"
 msgstr "Ausgewählte Rolle(n) zu diesem Profil hinzufügen"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:45
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:53
 msgid "Passwords don't match"
 msgstr "Passworte stimmen nicht überein"
 
@@ -2650,7 +2650,7 @@ msgstr "%attribute% muss ein negativer Wert ungleich Null sein"
 msgid "Your session has expired. Please log in again and retry."
 msgstr "Ihre Sitzung ist abgelaufen. Bitte loggen Sie sich erneut ein."
 
-#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:104
+#: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 
