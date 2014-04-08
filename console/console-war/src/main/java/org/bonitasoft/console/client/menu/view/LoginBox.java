@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.client.menu.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +30,7 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
+import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
@@ -190,7 +191,10 @@ public class LoginBox extends RawView {
     }
 
     private Menu createUserNameMenu() {
-        userNameMenu.addLink(createLogoutLink());
+        if (!AvailableTokens.tokens.contains("logout.link.hidden")) {
+            userNameMenu.addLink(createLogoutLink());
+            userNameMenu.addClass("downArrow");
+        }
         return new Menu(userNameMenu);
     }
 
