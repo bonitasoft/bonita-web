@@ -39,17 +39,17 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
  */
 public class MenuListCreator {
 
-    private LinkedHashMap<APIID, List<ProfileEntryItem>> orphelineEntries = new LinkedHashMap<APIID, List<ProfileEntryItem>>();;
+    private final LinkedHashMap<APIID, List<ProfileEntryItem>> orphelineEntries = new LinkedHashMap<APIID, List<ProfileEntryItem>>();;
 
-    public LinkedList<MenuItem> asList(List<ProfileEntryItem> profiles) {
-        LinkedHashMap<APIID, MenuItem> menu = new LinkedHashMap<APIID, MenuItem>();
+    public LinkedList<MenuItem> asList(final List<ProfileEntryItem> profiles) {
+        final LinkedHashMap<APIID, MenuItem> menu = new LinkedHashMap<APIID, MenuItem>();
         for (final ProfileEntryItem profile : profiles) {
             addProfileEntry(menu, profile);
         }
         return new LinkedList<MenuItem>(menu.values());
     }
 
-    protected void addProfileEntry(LinkedHashMap<APIID, MenuItem> menu, final ProfileEntryItem entry) {
+    protected void addProfileEntry(final LinkedHashMap<APIID, MenuItem> menu, final ProfileEntryItem entry) {
         if (isParentMenu(entry)) {
             menu.put(entry.getId(), createMenuItem(entry));
         } else if (parentExist(menu, entry)) {
@@ -59,7 +59,7 @@ public class MenuListCreator {
         }
     }
 
-    private MenuFolder getParent(LinkedHashMap<APIID, MenuItem> menu, final ProfileEntryItem entry) {
+    private MenuFolder getParent(final LinkedHashMap<APIID, MenuItem> menu, final ProfileEntryItem entry) {
         return (MenuFolder) menu.get(entry.getParentId());
     }
 
@@ -84,11 +84,7 @@ public class MenuListCreator {
 
     private MenuLink createLink(final ProfileEntryItem entry) {
         saveFirstPageMet(entry);
-        return new MenuLink(
-                createJsId(entry),
-                _(getLinkName(entry)),
-                _(entry.getDescription()),
-                getEntryUrlToken(entry));
+        return new MenuLink(createJsId(entry), _(getLinkName(entry)), _(entry.getDescription()), getEntryUrlToken(entry));
     }
 
     private JsId createJsId(final ProfileEntryItem entry) {
@@ -99,8 +95,8 @@ public class MenuListCreator {
         }
     }
 
-    private MenuItem createFolder(ProfileEntryItem entry) {
-        MenuFolder folder = new MenuFolder(new JsId(entry.getName()), _(entry.getName()));
+    private MenuItem createFolder(final ProfileEntryItem entry) {
+        final MenuFolder folder = new MenuFolder(new JsId(entry.getName()), _(entry.getName()));
         adoptOrphelineEntries(folder, entry);
         return folder;
     }
@@ -135,13 +131,7 @@ public class MenuListCreator {
                 .read(entry);
     }
 
-    private String getEntryUrlToken(final ProfileEntryItem entry) {
-        String urlToken;
-        if (entry.isCustom()) {
-            urlToken = "custompage_".concat(entry.getCustomPage().getUrlToken());
-        } else {
-            urlToken = entry.getPage();
-        }
-        return urlToken;
+    protected String getEntryUrlToken(final ProfileEntryItem entry) {
+        return entry.getPage();
     }
 }
