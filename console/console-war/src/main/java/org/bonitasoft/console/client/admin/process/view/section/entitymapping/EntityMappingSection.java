@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.admin.process.view.section.entitymapping;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.console.client.SHA1;
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ConfigurationState;
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ConfigurationStateText;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
@@ -25,6 +26,8 @@ import org.bonitasoft.console.client.common.event.handler.HideComponentOnEmptyTa
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.toolkit.client.AvailableTokens;
+import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -57,9 +60,21 @@ public class EntityMappingSection extends Section {
                 _("Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."))
                 .addClass("section_description"));
         addBody(entityMappingTable);
-        addBody(new Paragraph(
-                _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal. To do so, go to %profilelink%."),
-                new Link(new JsId("entitymappingprofilelink"), _("Profiles"), _("Click here to go to Profile listing page"), ProfileListingPage.TOKEN)));
+        String explanations = _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal.");
+
+        if (AvailableTokens.tokens.contains(hasRightToAccessProfilePage())) {
+            addBody(new Paragraph(
+                    explanations + _(" To do so, go to %entitymappingprofilelink%."),
+                    new Link(new JsId("entitymappingprofilelink"), _("Profiles"), _("Click here to go to Profile listing page"), ProfileListingPage.TOKEN)));
+
+        } else {
+            addBody(new Paragraph(explanations + _("To do so, contact your administrator")));
+        }
+
+    }
+
+    protected String hasRightToAccessProfilePage() {
+        return new String(SHA1.calcSHA1(ProfileListingPage.TOKEN.concat(new String(Session.getParameter("session_id"))))).toUpperCase();
     }
 
     private ItemTable newEntityMappingTable(final ProcessItem process) {
@@ -96,25 +111,25 @@ public class EntityMappingSection extends Section {
         }
 
         private ItemTableAction userTableAction(final ActorItem actor) {
-            return new ItemTableAction(_("User(%nb_user%)", new Arg("nb_user", actor.getNbSelectedUsers())),
+            return new ItemTableAction(_("User (%nb_user%)", new Arg("nb_user", actor.getNbSelectedUsers())),
                     _("Add a user"), newListProcessActorAction(actor, ListProcessActorUserPage.TOKEN));
         }
 
         private ItemTableAction groupTableAction(final ActorItem actor) {
             return new ItemTableAction(
-                    _("Group(%nb_group%)", new Arg("nb_group", actor.getNbSelectedGroups())),
+                    _("Group (%nb_group%)", new Arg("nb_group", actor.getNbSelectedGroups())),
                     _("Add a group"), newListProcessActorAction(actor, ListProcessActorGroupPage.TOKEN));
         }
 
         private ItemTableAction roleTableAction(final ActorItem actor) {
             return new ItemTableAction(
-                    _("Role(%nb_role%)", new Arg("nb_role", actor.getNbSelectedRoles())),
+                    _("Role (%nb_role%)", new Arg("nb_role", actor.getNbSelectedRoles())),
                     _("Add a role"), newListProcessActorAction(actor, ListProcessActorRolePage.TOKEN));
         }
 
         private ItemTableAction membershipTableAction(final ActorItem actor) {
             return new ItemTableAction(
-                    _("Membership(%nb_membership%)", new Arg("nb_membership", actor.getNbSelectedMembershipss())),
+                    _("Membership (%nb_membership%)", new Arg("nb_membership", actor.getNbSelectedMembershipss())),
                     _("Add a membership"), newListProcessActorAction(actor, ListProcessActorMembershipPage.TOKEN));
         }
 
