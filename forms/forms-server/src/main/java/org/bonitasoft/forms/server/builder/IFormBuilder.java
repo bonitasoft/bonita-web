@@ -364,6 +364,8 @@ public interface IFormBuilder {
      *            the action type
      * @param variableName
      *            the name of the variable (if it's a set variable action)
+     * @param variableName
+     *            the type of the variable, it can be document, data, and other types handled by the engine
      * @param operator
      *            the operator for the action
      * @param operatorInputType
@@ -373,7 +375,8 @@ public interface IFormBuilder {
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
-    IFormBuilder addAction(ActionType actionType, String variableName, boolean isExternal, String operator, String operatorInputType, String submitButtonId)
+    IFormBuilder addAction(ActionType actionType, String variableName, String variableType, boolean isExternal, String operator, String operatorInputType,
+            String submitButtonId)
             throws InvalidFormDefinitionException;
 
     /**

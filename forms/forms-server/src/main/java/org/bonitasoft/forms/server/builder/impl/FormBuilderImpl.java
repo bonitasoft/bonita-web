@@ -245,7 +245,8 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws InvalidFormDefinitionException
      */
     @Override
-    public IFormBuilder addAction(final ActionType actionType, final String variableName, final boolean isExternal, final String operator,
+    public IFormBuilder addAction(final ActionType actionType, final String variableName, final String variableType, final boolean isExternal,
+            final String operator,
             final String operatorInputType, final String submitButtonId) throws InvalidFormDefinitionException {
         final String[] actionsParentsNames = { XMLForms.PAGE };
         try {
@@ -266,7 +267,7 @@ public class FormBuilderImpl implements IFormBuilder {
         final Element actionElement = document.createElement(XMLForms.ACTION);
         actionElement.setAttribute(XMLForms.TYPE, actionType.name());
         addChild(actionElement, XMLForms.VARIABLE, variableName, false, true);
-        addChild(actionElement, XMLForms.IS_EXTERNAL, Boolean.toString(isExternal), false, true);
+        addChild(actionElement, XMLForms.VARIABLE_TYPE, variableType, false, true);
         addChild(actionElement, XMLForms.OPERATOR, operator, false, true);
         addChild(actionElement, XMLForms.INPUT_TYPE, operatorInputType, false, true);
         addChild(actionElement, XMLForms.SUBMIT_BUTTON, submitButtonId, false, true);
