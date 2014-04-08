@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-29 01:28+0100\n"
-"PO-Revision-Date: 2014-04-06 22:28-0400\n"
+"POT-Creation-Date: 2014-04-08 01:28+0200\n"
+"PO-Revision-Date: 2014-04-07 21:17-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -766,21 +766,13 @@ msgstr "%groupname%"
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% di %groupname%"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:72
+#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:70
 msgid "system"
 msgstr "sistema"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:73
+#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:71
 msgid "System"
 msgstr "Sistema"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:79
-msgid "deleted"
-msgstr "eliminato"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/DeployedUserReader.java:80
-msgid "Deleted"
-msgstr "Eliminato"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedTaskTechnicalInformationSnippet.java:48
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:52
@@ -801,7 +793,7 @@ msgstr "Dettagli tecnici"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:102
 msgid "Pending"
-msgstr "In attesa"
+msgstr "Pending"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:107
@@ -1025,7 +1017,7 @@ msgstr "Stato corrente del caso"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:129
 msgid "Pending tasks"
-msgstr "Task in attesa"
+msgstr "Pending tasks"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:140
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:132
@@ -2437,7 +2429,7 @@ msgstr "Aggiornare questa tabella"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:120
 msgid "Tasks to do"
-msgstr "Task da fare"
+msgstr "Tasks to do"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:147
 msgid "Performed on"
