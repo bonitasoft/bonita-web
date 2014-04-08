@@ -16,15 +16,10 @@
  */
 package org.bonitasoft.web.toolkit.client.data.api.callback;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
-import com.google.gwt.http.client.Header;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestTimeoutException;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.json.client.JSONException;
-import com.google.gwt.user.client.Window;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
@@ -35,8 +30,13 @@ import org.bonitasoft.web.toolkit.client.common.exception.http.HttpException;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonUnserializerClient;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.google.gwt.http.client.Header;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestTimeoutException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONException;
+import com.google.gwt.user.client.Window;
 
 /**
  * @author Séverin Moussel
@@ -56,6 +56,10 @@ public abstract class HttpCallback implements RequestCallback {
 //        // Session expired
         else if (response.getStatusCode() == 401) {
             Window.Location.reload();
+        }
+        // 302 redirect
+        else if (response.getStatusCode() == 302) {
+            Window.Location.assign(response.getHeader("Location"));
         }
         // Other HTTP problems
         else if (response.getStatusCode() >= 300) {
