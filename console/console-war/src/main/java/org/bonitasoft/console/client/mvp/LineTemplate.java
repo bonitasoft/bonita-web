@@ -22,9 +22,16 @@ public class LineTemplate<T> extends AbstractCell<T> {
 
     private final Line<T> line;
 
-    public LineTemplate(Line<T> line) {
+    private String style;
+
+    public LineTemplate(Line<T> line, String style) {
         super(BrowserEvents.CLICK, BrowserEvents.KEYDOWN);
         this.line = line;
+        this.style = style;
+    }
+
+    public String getStyle() {
+        return style;
     }
 
     @Override

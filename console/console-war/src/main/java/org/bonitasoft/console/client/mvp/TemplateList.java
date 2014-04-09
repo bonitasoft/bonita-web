@@ -8,7 +8,7 @@ import com.google.gwt.user.cellview.client.CellList;
  */
 public class TemplateList<T> extends CellList<T> {
 
-    public TemplateList(final LineTemplate<T> line, final String style) {
+    public TemplateList(final LineTemplate<T> line) {
         super(line, new Resources() {
 
             @Override
@@ -18,7 +18,7 @@ public class TemplateList<T> extends CellList<T> {
 
             @Override
             public Style cellListStyle() {
-                return new LineStyle(style);
+                return new LineStyle(line.getStyle());
             }
         });
     }
