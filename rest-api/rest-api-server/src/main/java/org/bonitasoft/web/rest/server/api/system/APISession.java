@@ -115,6 +115,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
         userRights.add(sha1Generator.getHash("grouplistingadmin".concat(String.valueOf(apiSession.getId()))));
         userRights.add(sha1Generator.getHash("importexportorganization".concat(String.valueOf(apiSession.getId()))));
         userRights.add(sha1Generator.getHash("profilelisting".concat(String.valueOf(apiSession.getId()))));
+        userRights.add(sha1Generator.getHash("businessdatamodelimport".concat(String.valueOf(apiSession.getId()))));
         return JSonSerializer.serialize(userRights);
     }
 
