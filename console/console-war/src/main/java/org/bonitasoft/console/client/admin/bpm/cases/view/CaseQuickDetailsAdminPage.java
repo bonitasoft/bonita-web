@@ -29,6 +29,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
+import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
 /**
  * @author Nicolas Tith
@@ -55,8 +56,12 @@ public class CaseQuickDetailsAdminPage extends AbstractCaseQuickDetailsAdminPage
     }
 
     protected Action createMoreDetailsAction(final CaseItem item) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new CaseMoreDetailsAdminPage(item.getId())));
+        return new CheckValidSessionBeforeAction(new ActionShowView(getCaseMoreDetailsPage(item)));
     }
+
+	protected ItemQuickDetailsPage<CaseItem> getCaseMoreDetailsPage(final CaseItem item) {
+		return new CaseMoreDetailsAdminPage(item.getId());
+	}
 
     @Override
     public String defineToken() {

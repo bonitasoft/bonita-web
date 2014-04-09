@@ -35,12 +35,14 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
@@ -154,13 +156,13 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
                 createItemTable()
                         .addGroupedAction(
                                 new JsId("disable"), _("Disable"), _("Disable selected apps"), new DisableProcessAction()),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
     private ItemListingTable buildCategoryProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_NO_ACTION),
                 _("Enabled"), createItemTable(),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
     private ItemListingTable buildDisabledProcessesTable() {
@@ -170,18 +172,22 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
                         .addGroupedAction(
                                 new JsId("enable"), _("Enable"), _("Enable selected apps"), new EnableProcessAction())
                         .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
+
+	protected ItemQuickDetailsPage<ProcessItem> getQuickDetailsTargetPage() {
+		return new ProcessQuickDetailsAdminPage();
+	}
 
     private ItemListingTable buildDeletableProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_ACTION_DELETE),
                 _("Deletable"),
                 createItemTable()
                         .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
-    private ItemTable createItemTable() {
+    protected ItemTable createItemTable() {
         return new ItemTable(Definitions.get(ProcessDefinition.TOKEN))
                 .addColumn(ProcessItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(ProcessItem.ATTRIBUTE_VERSION, _("Version"))

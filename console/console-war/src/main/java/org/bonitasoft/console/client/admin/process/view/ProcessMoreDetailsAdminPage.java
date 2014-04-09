@@ -104,19 +104,23 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     @Override
     protected void buildToolbar(final ProcessItem process) {
         super.buildToolbar(process);
-        addToolbarLink(new ButtonBack());
+        contributeInToolbar(process);
+    }
+
+	protected void contributeInToolbar(final ProcessItem process) {
+		addToolbarLink(new ButtonBack());
         if (!process.isEnabled()) {
             addToolbarLink(newDeleteProcessButton(process));
         }
         addToolbarLink(newChangeProcessActivationStateButton(process));
-    }
+	}
 
     private Clickable newDeleteProcessButton(final ProcessItem process) {
         return new ButtonAction("btn-delete", _("Delete"), _("Delete this app"),
                 new DeleteProcessAction(process.getId().toString(), process.getDisplayName()));
     }
 
-    private Clickable newChangeProcessActivationStateButton(final ProcessItem process) {
+    protected Clickable newChangeProcessActivationStateButton(final ProcessItem process) {
         if (process.isEnabled()) {
             return newDisableProcessButton(process);
         } else {

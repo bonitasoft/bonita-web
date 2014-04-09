@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirectionAction;
+import org.bonitasoft.console.client.admin.bpm.cases.action.TaskRedirectionAction;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.AttachmentsFiller;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.LastExecutedTaskFiller;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.OpenTasksFiller;
@@ -33,10 +35,6 @@ import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPag
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -127,8 +125,12 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
 
     private Definition numberOfOpenedTasksDefinition(final CaseItem item) {
         return new Definition(_("Number of open tasks : %nb_openTask%", new Arg("nb_openTask", "")), "%%",
-                new Link(_("No opened task"), _("Link to the tasks"), TaskListingAdminPage.TOKEN).addFiller(new OpenTasksFiller(item)));
+                new Link(_("No opened task"), _("Link to the tasks"), getTaskListingPage()).addFiller(new OpenTasksFiller(item)));
     }
+
+	protected String getTaskListingPage() {
+		return TaskListingAdminPage.TOKEN;
+	}
 
     private Definition numberOfAttachmentDefinition(final CaseItem item) {
         final Text nbAttachments = new Text(_("No attachments"));
@@ -158,7 +160,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 .addCellFormatter(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, new SpanPrepender(_("Failed")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .setOrder(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, false)
-                .setDefaultAction(new RedirectionAction(TaskMoreDetailsAdminPage.TOKEN, new Arg(TaskItem.ATTRIBUTE_ID, item.getId().toString())));
+                .setActions(getTaskRedirectionAction());
     }
 
     protected abstract ItemDefinition getHumanTasksDefinition();
@@ -174,5 +176,13 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     protected void prepareFailedTasksTable(final ItemTable tasksTable) {
         tasksTable.setNbLinesByPage(5);
     }
+
+	protected ArchivedTaskRedirectionAction getArchivedTaskRedirectionAction() {
+		return new ArchivedTaskRedirectionAction();
+	}
+
+	protected TaskRedirectionAction getTaskRedirectionAction() {
+		return new TaskRedirectionAction();
+	}
 
 }
