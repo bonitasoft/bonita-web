@@ -43,10 +43,9 @@ public class ProcessResolutionProblemDatastore extends CommonDatastore<ProcessRe
     @Override
     protected ProcessResolutionProblemItem convertEngineToConsoleItem(final Problem item) {
         final ProcessResolutionProblemItem consoleItem = new ProcessResolutionProblemItem();
-
         consoleItem.setMessage(item.getDescription());
         consoleItem.setTargetType(item.getResource());
-
+        consoleItem.setRessourceId(item.getResourceId());
         return consoleItem;
     }
 
