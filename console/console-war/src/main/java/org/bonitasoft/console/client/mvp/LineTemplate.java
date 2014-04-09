@@ -1,4 +1,4 @@
-package org.bonitasoft.console.client.admin.organization.users.view;
+package org.bonitasoft.console.client.mvp;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
@@ -6,6 +6,8 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import org.bonitasoft.console.client.mvp.event.DirtyInputEvent;
+import org.bonitasoft.console.client.mvp.event.DirtyInputHandler;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 
 /**
@@ -13,7 +15,7 @@ import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
  */
 public class LineTemplate<T> extends AbstractCell<T> {
 
-    interface Line<T> {
+    public interface Line<T> {
 
         public SafeHtml render(Cell.Context context, T value);
     }
@@ -55,9 +57,7 @@ public class LineTemplate<T> extends AbstractCell<T> {
     public boolean resetFocus(Context context, Element parent, T value) {
         final NodeList<Element> elements = parent.getElementsByTagName("input");
         if (elements.getLength() > 0) {
-            InputElement input = InputElement.as(elements.getItem(0));
-            input.focus();
-            input.setValue(input.getValue());
+            InputElement.as(elements.getItem(0)).focus();
             return true;
         }
         return false;

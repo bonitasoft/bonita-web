@@ -1,6 +1,10 @@
-package org.bonitasoft.console.client.admin.organization.users.view;
+package org.bonitasoft.console.client.mvp;
 
 import com.google.gwt.event.shared.GwtEvent;
+import org.bonitasoft.console.client.mvp.event.ModelChangeEvent;
+import org.bonitasoft.console.client.mvp.event.ModelChangeHandler;
+import org.bonitasoft.console.client.mvp.event.ModelLoadEvent;
+import org.bonitasoft.console.client.mvp.event.ModelLoadHandler;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 
 /**

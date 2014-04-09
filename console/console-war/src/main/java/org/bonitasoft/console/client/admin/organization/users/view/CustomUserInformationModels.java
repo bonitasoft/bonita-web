@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.mvp.ObservableModel;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
@@ -13,7 +14,7 @@ import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 /**
  * @author Vincent Elcrin
  */
-public class CustomUserInformationModel extends ObservableModel<CustomUserInformationModel> {
+public class CustomUserInformationModels extends ObservableModel<CustomUserInformationModels> {
 
     private List<CustomUserInfoItem> items = new ArrayList<CustomUserInfoItem>();
 
@@ -23,7 +24,7 @@ public class CustomUserInformationModel extends ObservableModel<CustomUserInform
 
     private int size;
 
-    public CustomUserInformationModel(String userId, int page, int size) {
+    public CustomUserInformationModels(String userId, int page, int size) {
         this.userId = userId;
         this.page = page;
         this.size = size;
@@ -48,7 +49,7 @@ public class CustomUserInformationModel extends ObservableModel<CustomUserInform
             @Override
             public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
                 items.addAll(JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()));
-                notifyLoad(page, size, CustomUserInformationModel.this);
+                notifyLoad(page, size, CustomUserInformationModels.this);
             }
         });
         request.run();

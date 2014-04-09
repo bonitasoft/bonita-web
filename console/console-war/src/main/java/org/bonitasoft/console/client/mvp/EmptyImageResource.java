@@ -1,4 +1,4 @@
-package org.bonitasoft.console.client.admin.organization.users.view;
+package org.bonitasoft.console.client.mvp;
 
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeUri;

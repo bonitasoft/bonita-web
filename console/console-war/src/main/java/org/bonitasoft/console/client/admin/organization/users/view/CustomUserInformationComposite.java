@@ -1,20 +1,26 @@
 package org.bonitasoft.console.client.admin.organization.users.view;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.view.client.ListDataProvider;
+import org.bonitasoft.console.client.mvp.LineTemplate;
+import org.bonitasoft.console.client.mvp.TemplateList;
+import org.bonitasoft.console.client.mvp.event.DirtyInputEvent;
+import org.bonitasoft.console.client.mvp.event.DirtyInputHandler;
+import org.bonitasoft.console.client.mvp.event.ModelLoadEvent;
+import org.bonitasoft.console.client.mvp.event.ModelLoadHandler;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
-
-import java.util.List;
 
 /**
  * @author Vincent Elcrin
  */
-public class CustomUserInformationComposite extends Composite implements ModelLoadHandler<CustomUserInformationModel>, DirtyInputHandler {
+public class CustomUserInformationComposite extends Composite implements ModelLoadHandler<CustomUserInformationModels>, DirtyInputHandler {
 
     interface Template extends SafeHtmlTemplates {
 
@@ -27,7 +33,7 @@ public class CustomUserInformationComposite extends Composite implements ModelLo
 
     private ListDataProvider<CustomUserInfoItem> data = new ListDataProvider<CustomUserInfoItem>();
 
-    private CustomUserInformationModel model;
+    private CustomUserInformationModels model;
 
     private static final Template TEMPLATE = GWT.create(Template.class);
 
@@ -42,7 +48,7 @@ public class CustomUserInformationComposite extends Composite implements ModelLo
 
     final TemplateList<CustomUserInfoItem> list = new TemplateList<CustomUserInfoItem>(line, "formentry");
 
-    public CustomUserInformationComposite(CustomUserInformationModel model) {
+    public CustomUserInformationComposite(CustomUserInformationModels model) {
         initWidget(list);
         this.model = model;
         model.observe(this);
@@ -52,7 +58,7 @@ public class CustomUserInformationComposite extends Composite implements ModelLo
     }
 
     @Override
-    public void onModelLoad(ModelLoadEvent<CustomUserInformationModel> event) {
+    public void onModelLoad(ModelLoadEvent<CustomUserInformationModels> event) {
         List<CustomUserInfoItem> information = event.getModel().getInformation();
         int size = event.getSize();
         if(information.size() < size) {

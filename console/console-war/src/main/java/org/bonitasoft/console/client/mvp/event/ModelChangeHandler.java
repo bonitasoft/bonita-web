@@ -1,4 +1,4 @@
-package org.bonitasoft.console.client.admin.organization.users.view;
+package org.bonitasoft.console.client.mvp.event;
 
 import com.google.gwt.event.shared.EventHandler;
 
