@@ -19,6 +19,8 @@ package org.bonitasoft.console.common.server.login.localization;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.impl.oauth.OAuthConsumerNotFoundException;
 
@@ -34,8 +36,8 @@ public class LoginUrl implements Locator {
      * @throws LoginUrlException
      *             If the login page Url couldn't be retrieved
      */
-    public LoginUrl(final LoginManager loginManager, final long tenantId, final String redirectUrl) {
-        location = getLoginPageUrl(loginManager, redirectUrl, tenantId);
+    public LoginUrl(final LoginManager loginManager, final long tenantId, final String redirectUrl, HttpServletRequest request) {
+        location = getLoginPageUrl(loginManager, redirectUrl, tenantId, request);
     }
 
     @Override
@@ -43,9 +45,11 @@ public class LoginUrl implements Locator {
         return location;
     }
 
-    private String getLoginPageUrl(final LoginManager loginManager, final String redirectURL, final long tenantId) throws LoginUrlException {
+    private String getLoginPageUrl(final LoginManager loginManager, final String redirectURL, final long tenantId, HttpServletRequest request)
+            throws LoginUrlException {
         try {
-            return loginManager.getLoginpageURL(tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
+
+            return loginManager.getLoginpageURL(request, tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
         } catch (final UnsupportedEncodingException e) {
             throw new LoginUrlException(e);
         } catch (final OAuthConsumerNotFoundException e) {
