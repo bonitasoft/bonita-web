@@ -127,11 +127,11 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.addCellsStyle("table-cellStyle");
         formBuilder.addHeadingsStyle("table-headings-cellStyle", true, true, false, false);
 
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.DATA, false, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget1", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TRANSIENT_DATA, false, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TRANSIENT_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.DATA, false, "=", null, "button1");
+        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
 
         formBuilder.addConfirmationLayout("/process-confirmation-template.html");

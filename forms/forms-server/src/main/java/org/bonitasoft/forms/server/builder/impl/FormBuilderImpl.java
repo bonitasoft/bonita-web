@@ -245,7 +245,7 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws InvalidFormDefinitionException
      */
     @Override
-    public IFormBuilder addAction(final ActionType actionType, final String variableName, final String variableType, final boolean isExternal,
+    public IFormBuilder addAction(final ActionType actionType, final String variableName, final String variableType,
             final String operator,
             final String operatorInputType, final String submitButtonId) throws InvalidFormDefinitionException {
         final String[] actionsParentsNames = { XMLForms.PAGE };

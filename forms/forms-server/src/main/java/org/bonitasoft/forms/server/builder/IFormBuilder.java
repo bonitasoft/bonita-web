@@ -375,7 +375,7 @@ public interface IFormBuilder {
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
-    IFormBuilder addAction(ActionType actionType, String variableName, String variableType, boolean isExternal, String operator, String operatorInputType,
+    IFormBuilder addAction(ActionType actionType, String variableName, String variableType, String operator, String operatorInputType,
             String submitButtonId)
             throws InvalidFormDefinitionException;
 
