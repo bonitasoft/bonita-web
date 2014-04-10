@@ -14,11 +14,9 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.ATTRIBUTE_ACTIVATION_STATE;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.VALUE_ACTIVATION_STATE_DISABLED;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.VALUE_ACTIVATION_STATE_ENABLED;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -160,7 +158,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
 
     private ItemListingTable buildCategoryProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_NO_ACTION),
-                _("Enabled"), createCategoryProcessTable(),
+                _("Enabled"), createItemTable(),
                 getQuickDetailsTargetPage());
     }
 
@@ -186,9 +184,11 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
                 getQuickDetailsTargetPage());
     }
 
-    protected ItemTable createCategoryProcessTable() {
-    	return createItemTable();
-    }
+    /*
+     * protected ItemTable createCategoryProcessTable() {
+     * return createItemTable();
+     * }
+     */
     
     protected ItemTable createItemTable() {
         return new ItemTable(Definitions.get(ProcessDefinition.TOKEN))
