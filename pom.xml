@@ -223,6 +223,12 @@
 				<artifactId>powermock-module-junit4</artifactId>
 				<version>${powermock.version}</version>
 				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<artifactId>junit</artifactId>
+						<groupId>junit</groupId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.powermock</groupId>
