@@ -25,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
  * @author Séverin Moussel
  * 
  */
-public abstract class FormButton extends Button implements FormNode {
+public class FormButton extends Button implements FormNode {
 
     public FormButton(final JsId jsid, final String label, final String tooltip, final Action action) {
         super(jsid, label, tooltip, action);

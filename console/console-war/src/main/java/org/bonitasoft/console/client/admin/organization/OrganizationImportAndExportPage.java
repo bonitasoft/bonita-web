@@ -21,14 +21,15 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.client.common.component.section.WarningCell;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
+import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
-import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
@@ -53,6 +54,10 @@ public class OrganizationImportAndExportPage extends Page {
         PRIVILEGES.add(OrganizationImportAndExportPage.TOKEN);
     }
 
+    public OrganizationImportAndExportPage() {
+        addClass(CssClass.NO_FILTER_PAGE);
+    }
+    
     @Override
     public void defineTitle() {
         this.setTitle(_("Import / Export"));
@@ -66,14 +71,14 @@ public class OrganizationImportAndExportPage extends Page {
 
     private Section importSection() {
         final Section section = new Section(new JsId("import"), _("Import an existing organization"));
-        section.addBody(newWarningCell());
+        section.addBody(new WarningCell());
         section.addBody(importContainer());
         return section;
     }
 
     private ContainerStyled<Component> importContainer() {
         final ContainerStyled<Component> container = new ContainerStyled<Component>();
-        container.addClass("cell");
+        container.addClass(CssClass.CELL);
         container.append(new Paragraph(_("This will import a file containing your whole organization data.")));
         container.append(new Paragraph(_("Be careful, your organization will be merged with existing data.")));
         container.append(new Paragraph(_("In case of conflict, priority is given to the imported file")));
@@ -98,14 +103,14 @@ public class OrganizationImportAndExportPage extends Page {
 
     private Section exportSection() {
         final Section section = new Section(new JsId("export"), _("Export the installed organization"));
-        section.addBody(newWarningCell());
+        section.addBody(new WarningCell());
         section.addBody(exportContainer());
         return section;
     }
 
     private ContainerStyled<Component> exportContainer() {
         final ContainerStyled<Component> container = new ContainerStyled<Component>();
-        container.addClass("cell");
+        container.addClass(CssClass.CELL);
         container.append(new Paragraph(_("This will export a file containing your whole organization data. ")));
         container.append(new Paragraph(_("Data included are : Users, groups and roles")));
         container.append(exportButton());
@@ -115,14 +120,6 @@ public class OrganizationImportAndExportPage extends Page {
     private Clickable exportButton() {
         return new ButtonAction("btn-export", _("Export"), _("Export the installed organization"),
                 new Url(GWT.getModuleBaseURL() + "exportOrganization"));
-    }
-
-    private ContainerStyled<Component> newWarningCell() {
-        final ContainerStyled<Component> cellWarning = new ContainerStyled<Component>();
-        cellWarning.addClass("cell");
-        cellWarning.addClass("warning");
-        cellWarning.append(new Text(_("Warning:")));
-        return cellWarning;
     }
 
     @Override
