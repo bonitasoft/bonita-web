@@ -78,19 +78,27 @@ public class ConfigurationSection extends Section {
      */
     protected void fillResolutionProblems(ProcessConfigurationStateResolver stateResolver, final ContainerStyled<Definition> target) {
         // Add actors definition component
-        final String actorsDescription = stateResolver.areActorsResolved() ? _("Resolved") : _("Unresolved");
+        final String actorsDescription = getState(stateResolver.areActorsResolved());
         final Definition actorsDefinition = new Definition(_("Actors: %ok_ko%", new Arg("ok_ko", "")), actorsDescription);
-        actorsDefinition.addClass(stateResolver.areActorsResolved() ? "ok" : "ko");
+        actorsDefinition.addClass(getClass(stateResolver.areActorsResolved()));
         actorsDefinition.setTooltip(actorsDescription);
 
         // Add connectors definition component
-        final String connectorsDescription = stateResolver.areConnectorsResolved() ? _("Resolved") : _("Unresolved");
+        final String connectorsDescription = getState(stateResolver.areConnectorsResolved());
         final Definition connectorsDefinition = new Definition(_("Connectors: %ok_ko%", new Arg("ok_ko", "")), connectorsDescription);
-        connectorsDefinition.addClass(stateResolver.areConnectorsResolved() ? "ok" : "ko");
+        connectorsDefinition.addClass(getClass(stateResolver.areConnectorsResolved()));
         connectorsDefinition.setTooltip(connectorsDescription);
 
         // Insert definitions
         target.prepend(actorsDefinition, connectorsDefinition);
+    }
+
+    protected String getState(boolean resolved) {
+        return resolved ? _("Resolved") : _("Unresolved");
+    }
+
+    protected String getClass(boolean resolved) {
+        return resolved ? "ok" : "ko";
     }
 
 }

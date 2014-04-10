@@ -217,8 +217,8 @@ public class ViewController {
         }
         rootElement.appendChild(widgetElement);
 
-        widget.onLoad();
         ViewController.updateUI(rootElement, true);
+        widget.onLoad();
 
         MainEventBus.getInstance().fireEventFromSource(new ChangeViewEvent(view), getInstance());
 

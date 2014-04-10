@@ -33,6 +33,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.event.InputCompleteEvent;
 import org.bonitasoft.web.toolkit.client.ui.component.event.InputCompleteHandler;
+import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormButton;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormButtonCancel;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormDisabledSubmitButton;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
@@ -605,6 +606,17 @@ public class Form extends AbstractForm {
         }
 
         super.addAction(new FormSubmitButton(jsid, label, tooltip, new FormSubmitAction(actionHandler)));
+        return this;
+    }
+    
+    public Form addButton(FormSubmitButton formButton) {
+        Action action = formButton.getAction();
+        if (action instanceof FormAction) {
+            ((FormAction) action).setForm(this);
+        }
+        
+        formButton.setAction(new FormSubmitAction(action));
+        super.addAction(formButton);
         return this;
     }
 

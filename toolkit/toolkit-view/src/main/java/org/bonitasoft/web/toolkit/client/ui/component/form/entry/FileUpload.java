@@ -14,17 +14,21 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.form.entry;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.ui.JsId;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.ui.CssClass.DISABLED;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
+
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Julien Mege
@@ -58,6 +62,63 @@ public class FileUpload extends Input {
         this(submitionUrl, jsid, label, tooltip, null, null);
     }
 
+    /**
+     * WARNING: can only be called in {@link org.bonitasoft.web.toolkit.client.ui.RawView#onLoad()} method 
+     */
+    public FileUpload disable() {
+        Scheduler.get().scheduleDeferred(new DisableCommand(this.getElement()));
+        return this;
+    }
+    
+    /**
+     * WARNING: can only be called in {@link org.bonitasoft.web.toolkit.client.ui.RawView#onLoad()} method 
+     */
+    public FileUpload enable() {
+        Scheduler.get().scheduleDeferred(new EnableCommand(this.getElement()));
+        return this;
+    }
+    
+    private class DisableCommand implements ScheduledCommand {
+        
+        private final Element e;
+
+        public DisableCommand(Element e) {
+            this.e = e;
+        }
+        
+        @Override
+        public void execute() {
+            _disable(e);
+            e.addClassName(DISABLED);
+        }
+    }
+    
+   private class EnableCommand implements ScheduledCommand {
+        
+        private final Element e;
+
+        public EnableCommand(Element e) {
+            this.e = e;
+        }
+        
+        @Override
+        public void execute() {
+            _enable(e);
+            e.removeClassName(DISABLED);
+        }
+    }
+    
+    private native void _disable(Element e)
+        /*-{
+            $wnd.$(e, '.uploader').disable();
+        }-*/;
+
+    private void _enable(Element e) {
+        /*-{
+            $wnd.$(e, '.uploader').enable();
+        }-*/;
+    }
+    
     @Override
     protected String getInputType() {
         return "file";
