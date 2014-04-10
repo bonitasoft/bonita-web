@@ -42,7 +42,7 @@ public interface IFormBuilder {
      *             if the generated document is not valid
      * @throws IOException
      */
-    File done() throws IOException;
+    File done() throws IOException, InvalidFormDefinitionException;
 
     /**
      * Initiate the form definition

@@ -87,7 +87,6 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.createFormDefinition();
         // formBuilder.addWelcomePage("resources/application/welcome.html");
         // formBuilder.addExternalWelcomePage("resources/application/external-welcome.html");
-        formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression("addLabel", "process label with accents éèà", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addLayout("/process-template.html");
@@ -139,8 +138,28 @@ public class TestFormBuilderImpl extends FormsTestCase {
                 String.class.getName(), GROOVY);
 
         formBuilder.addEntryForm("processName--1.0--1--request$entry");
+        formBuilder.addPermissions("process#processName--1.0");
+        formBuilder.addTransientData("transientData", Boolean.class.getName());
+        formBuilder.addTransientDataExpression(null, "true", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addPage("activitypage1");
+        formBuilder.addLabelExpression("addLabel", "activitypage1 label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
+        formBuilder.addLayout("/activity-page1-template.html");
+        formBuilder.addWidget("activitypage1widget1", WidgetType.LISTBOX_SIMPLE);
+        formBuilder.addAvailableValue();
+        formBuilder.addLabelExpression("addLabel", "available value 1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValueExpression("addValue", "availablevalue1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addAvailableValue();
+        formBuilder.addLabelExpression("addLabel", "available value 2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValueExpression("addValue", "availablevalue2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addItemsStyle("items_class_names");
+        formBuilder.addWidget("activitypage1widget2", WidgetType.PASSWORD);
+        formBuilder.addValidator("activitywidget2validator1", "classname", null, null);
+        formBuilder.addLabelExpression(null, "activity widget2 validator1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValidator("activitywidget2validator2", "classname", null, null);
+        formBuilder.addLabelExpression(null, "activity widget2 validator2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
 
         formBuilder.addEntryForm("processName--1.0--1--validate$entry");
+        formBuilder.addPermissions("process#processName--1.0");
         formBuilder.addTransientData("transientData", Boolean.class.getName());
         formBuilder.addTransientDataExpression(null, "true", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
         formBuilder.addPage("activitypage1");

@@ -17,13 +17,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,6 +39,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.forms.client.model.ActionType;
@@ -52,6 +60,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Implementation of the {@link IFormBuilder} interface generating an XML form definition file
@@ -105,6 +114,8 @@ public class FormBuilderImpl implements IFormBuilder {
      */
     private static FormBuilderImpl INSTANCE = null;
 
+    private final Validator validator;
+
     /**
      * @return the FormExpressionsAPI instance
      */
@@ -117,6 +128,8 @@ public class FormBuilderImpl implements IFormBuilder {
 
     /**
      * Private constructor to prevent instantiation
+     * 
+     * @throws SAXException
      */
     protected FormBuilderImpl() {
         productVersion = PRODUCT_VERSION;
@@ -135,6 +148,26 @@ public class FormBuilderImpl implements IFormBuilder {
         } catch (final Exception e) {
             // Nothing to do: indent-number is not supported
         }
+
+        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+        Schema schema;
+        InputStream schemaStream = null;
+        try {
+            schemaStream = this.getClass().getResourceAsStream("/forms.xsd");
+            schema = factory.newSchema(new StreamSource(schemaStream));
+        } catch (SAXException e) {
+            throw new RuntimeException("unable to initialize the xsd validator form the forms", e);
+        } finally {
+            if (schemaStream != null) {
+                try {
+                    schemaStream.close();
+                } catch (IOException e) {
+                    LOGGER.log(Level.INFO, "Unable to close schema input stream", e);
+                }
+            }
+        }
+        validator = schema.newValidator();
     }
 
     /**
@@ -148,7 +181,7 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws IOException
      */
     @Override
-    public File done() throws IOException {
+    public File done() throws IOException, InvalidFormDefinitionException {
 
         final File formsDefinitionFile = File.createTempFile("forms", ".xml", WebBonitaConstantsUtils.getInstance().getTempFolder());
         formsDefinitionFile.deleteOnExit();
@@ -165,6 +198,10 @@ public class FormBuilderImpl implements IFormBuilder {
             transformer.transform(source, resultat);
 
             final byte[] xmlContent = outputStream.toByteArray();
+
+            //commented because studio might generate forms that are not complient with xsd but still working
+//            validateAgainstFormsXSD(xmlContent);
+
             outputStream.close();
 
             final FileOutputStream fileOutputStream = new FileOutputStream(formsDefinitionFile);
@@ -175,9 +212,22 @@ public class FormBuilderImpl implements IFormBuilder {
                 fileOutputStream.close();
             }
         } catch (final TransformerException e) {
-            LOGGER.log(Level.WARNING, "Error while generating the forms definition file.", e);
+            throw new InvalidFormDefinitionException("Error while generating the forms definition file.", e);
         }
         return formsDefinitionFile;
+    }
+
+    void validateAgainstFormsXSD(final byte[] xmlContent) throws InvalidFormDefinitionException {
+
+        String content = new String(xmlContent, Charset.forName("UTF-8"));
+        try {
+            StreamSource source = new StreamSource(new StringReader(content));
+            validator.validate(source);
+        } catch (SAXException e) {
+            throw new InvalidFormDefinitionException("Unable to parse the forms.xml using the forms.xsd", e);
+        } catch (IOException e) {
+            throw new InvalidFormDefinitionException("Unable to read the forms.xml", e);
+        }
     }
 
     /**
