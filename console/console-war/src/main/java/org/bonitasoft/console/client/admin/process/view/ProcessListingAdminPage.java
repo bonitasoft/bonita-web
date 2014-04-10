@@ -35,7 +35,6 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
-import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
@@ -67,9 +66,9 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
 
     private static final String TABLE_ACTION_DISABLE = "actiondisableprocesses";
 
-    private static final String TABLE_ACTION_ENABLE = "actionenableprocesses";
+    protected static final String TABLE_ACTION_ENABLE = "actionenableprocesses";
 
-    private static final String TABLE_ACTION_DELETE = "actiondeleteprocesses";
+    protected static final String TABLE_ACTION_DELETE = "actiondeleteprocesses";
 
     private static final String TABLE_NO_ACTION = "noactionprocesses";
 
@@ -161,11 +160,11 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
 
     private ItemListingTable buildCategoryProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_NO_ACTION),
-                _("Enabled"), createItemTable(),
+                _("Enabled"), createCategoryProcessTable(),
                 getQuickDetailsTargetPage());
     }
 
-    private ItemListingTable buildDisabledProcessesTable() {
+    protected ItemListingTable buildDisabledProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_ACTION_ENABLE),
                 _("Disabled"),
                 createItemTable()
@@ -179,7 +178,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
 		return new ProcessQuickDetailsAdminPage();
 	}
 
-    private ItemListingTable buildDeletableProcessesTable() {
+    protected ItemListingTable buildDeletableProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_ACTION_DELETE),
                 _("Deletable"),
                 createItemTable()
@@ -187,6 +186,10 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
                 getQuickDetailsTargetPage());
     }
 
+    protected ItemTable createCategoryProcessTable() {
+    	return createItemTable();
+    }
+    
     protected ItemTable createItemTable() {
         return new ItemTable(Definitions.get(ProcessDefinition.TOKEN))
                 .addColumn(ProcessItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
