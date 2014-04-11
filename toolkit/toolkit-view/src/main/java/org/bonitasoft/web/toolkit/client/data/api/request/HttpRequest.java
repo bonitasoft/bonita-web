@@ -95,7 +95,7 @@ public class HttpRequest {
         }
         
         if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
-            builder.setHeader("X-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
+            builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
         }
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);

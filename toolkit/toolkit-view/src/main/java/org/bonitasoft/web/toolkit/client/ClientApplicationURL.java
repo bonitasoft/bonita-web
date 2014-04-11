@@ -318,8 +318,8 @@ public class ClientApplicationURL {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                if (headers.get("X-API-Token") != null) {
-                    UserSessionVariables.addUserVariable(UserSessionVariables.API_TOKEN, headers.get("X-API-Token"));
+                if (headers.get("X-Bonita-API-Token") != null) {
+                    UserSessionVariables.addUserVariable(UserSessionVariables.API_TOKEN, headers.get("X-Bonita-API-Token"));
                 }
                 final IItem session = JSonItemReader.parseItem(response, new SessionDefinition());
                 for (final String name : session.getAttributeNames()) {

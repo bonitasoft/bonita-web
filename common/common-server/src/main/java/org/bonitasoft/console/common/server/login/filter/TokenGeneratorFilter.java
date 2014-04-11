@@ -53,7 +53,7 @@ public class TokenGeneratorFilter implements Filter {
             req.getSession().setAttribute("api_token", apiTokenFromClient);
         }
         
-        res.addHeader("X-API-Token", apiTokenFromClient.toString());
+        res.addHeader("X-Bonita-API-Token", apiTokenFromClient.toString());
         chain.doFilter(req, res);
     }
 

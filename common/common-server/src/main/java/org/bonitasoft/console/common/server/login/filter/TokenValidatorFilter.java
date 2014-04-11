@@ -31,7 +31,7 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
     @Override
     boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         if (PropertiesFactory.getSecurityProperties().isCSRFProtectionEnabled()) {
-            String headerFromRequest = httpRequest.getHeader("X-API-Token");
+            String headerFromRequest = httpRequest.getHeader("X-Bonita-API-Token");
             String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
 
             if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {

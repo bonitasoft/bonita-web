@@ -79,7 +79,7 @@ abstract public class QueuableRequest {
 
         try {
             if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
-                this.request.setHeader("X-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
+                this.request.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
             }
             this.request.send();
         } catch (final RequestException e) {
