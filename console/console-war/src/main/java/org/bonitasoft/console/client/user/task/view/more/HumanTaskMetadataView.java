@@ -51,6 +51,9 @@ public class HumanTaskMetadataView extends Composite {
 
     @UiField
     SpanElement assignedTo;
+    
+    @UiField
+    SpanElement doneBy;
 
     @UiField
     SpanElement dueDate;
@@ -76,13 +79,18 @@ public class HumanTaskMetadataView extends Composite {
         priority.setInnerText(Formatter.formatPriority(task.getPriority()));
         assignedTo.setInnerText(Formatter.formatUser(task.getAssignedUser()));
         dueDate.setInnerText(Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
+        if (task.getExecutedByUserId().toLong() == task.getExecutedByDelegateUserId().toLong()) {
+            doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()));
+        } else {
+            doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()) + " for " + Formatter.formatUser(task.getExecutedByDelegateUser())); 
+        }
         lastUpdateDate.setInnerText(Formatter.formatDate(task.getLastUpdateDate(), DISPLAY));
         assignedDate.setInnerText(Formatter.formatDate(task.getAssignedDate(), DISPLAY));
 
         if(!StringUtil.isBlank(task.ensureDescription())) {
             description.setInnerText(task.ensureDescription());
         }
-
+        
         MetadataTaskBuilder.setCaseHref(caseId, task, CaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.TOKEN);
     }
 }

@@ -131,6 +131,11 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
             item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getExecutedByUserId()));
         }
+        
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, deploys, item)) {
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID,
+                    new UserDatastore(getEngineSession()).get(item.getExecutedByDelegateUserId()));
+        }
 
         if (isDeployable(HumanTaskItem.ATTRIBUTE_ACTOR_ID, deploys, item)) {
             item.setDeploy(HumanTaskItem.ATTRIBUTE_ACTOR_ID,

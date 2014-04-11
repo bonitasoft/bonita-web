@@ -95,5 +95,13 @@ public class MetadataMessages {
     String no_description() {
         return _("No description.");
     }
+    
+    String done_by_title() {
+        return _("The user who did the task.");
+    }
+    
+    String done_by_label() {
+        return _("Done by");
+    }
 
 }

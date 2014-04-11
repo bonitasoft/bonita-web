@@ -231,7 +231,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
     private ItemDetailsMetadata createMetaExecutedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID),
-                _("Executed by"),
+                _("Done by"),
                 _("Name of the user who executed this task"));
     }
 

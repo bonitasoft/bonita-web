@@ -209,6 +209,31 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     public final UserItem getExecutedByUser() {
         return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_USER_ID));
     }
+    
+    @Override
+    public void setExecutedByDelegateUserId(APIID id) {
+        setAttribute(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, id);
+    }
+
+    @Override
+    public void setExecutedByDelegateUserId(String id) {
+        setAttribute(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, id);
+    }
+
+    @Override
+    public void setExecutedByDelegateUserId(Long id) {
+        setAttribute(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, id);
+    }
+
+    @Override
+    public APIID getExecutedByDelegateUserId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID);
+    }
+
+    @Override
+    public UserItem getExecutedByDelegateUser() {
+        return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID));
+    }
 
     @Override
     public final ProcessItem getProcess() {

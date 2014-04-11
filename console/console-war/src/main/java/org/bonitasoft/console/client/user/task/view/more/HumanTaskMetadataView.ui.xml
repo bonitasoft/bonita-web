@@ -53,6 +53,10 @@
                 <label><ui:text from="{messages.due_date_label}" />: </label>
                 <span ui:field="dueDate" />
             </div>
+            <div class="definition done_by" title="{messages.done_by_title}">
+                <label><ui:text from="{messages.done_by_label}" />: </label>
+                <span ui:field="doneBy" />
+            </div>
             <div class="definition last_update_date" title="{messages.last_update_date_title}">
                 <label><ui:text from="{messages.last_update_date_label}" />: </label>
                 <span ui:field="lastUpdateDate" />
@@ -61,6 +65,7 @@
                 <label><ui:text from="{messages.assigned_date_label}" />: </label>
                 <span ui:field="assignedDate" />
             </div>
+			
         </div>
         <div class="description">
             <p ui:field="description"><ui:text from="{messages.no_description}" /></p>

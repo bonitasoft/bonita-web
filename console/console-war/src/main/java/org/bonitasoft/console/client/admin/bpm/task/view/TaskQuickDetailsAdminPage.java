@@ -148,7 +148,7 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
 
     @Override
     protected List<String> defineDeploys() {
-        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
+        return Arrays.asList(IActivityItem.ATTRIBUTE_PROCESS_ID, IActivityItem.ATTRIBUTE_EXECUTED_BY_USER_ID, IFlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, IFlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID);
     }
 
     @Override
