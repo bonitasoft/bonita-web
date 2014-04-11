@@ -53,6 +53,7 @@ public class StartProcessFormPage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
+    	PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
