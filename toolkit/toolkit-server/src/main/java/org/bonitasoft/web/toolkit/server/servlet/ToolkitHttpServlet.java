@@ -16,14 +16,10 @@
  */
 package org.bonitasoft.web.toolkit.server.servlet;
 
-import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
-import org.bonitasoft.web.toolkit.client.common.exception.api.*;
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.data.item.Item;
-import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
-import org.bonitasoft.web.toolkit.server.ServletCall;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
-import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -31,12 +27,20 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
+import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
+import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
+import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
+import org.bonitasoft.web.toolkit.server.ServletCall;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
+import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
 /**
  * @author Séverin Moussel

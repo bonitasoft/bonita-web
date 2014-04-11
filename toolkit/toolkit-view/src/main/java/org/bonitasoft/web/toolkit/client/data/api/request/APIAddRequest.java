@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.data.api.request;
 
+import org.bonitasoft.web.toolkit.client.UserSessionVariables;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 import com.google.gwt.http.client.RequestBuilder;

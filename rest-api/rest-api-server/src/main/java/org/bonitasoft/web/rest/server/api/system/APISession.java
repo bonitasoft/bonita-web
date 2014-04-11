@@ -51,7 +51,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
     public SessionItem get(final APIID unusedId) {
         final org.bonitasoft.engine.session.APISession apiSession = getEngineSession();
         final SessionItem session = new SessionItem();
-
+        
         if (apiSession != null) {
             session.setAttribute(SessionItem.ATTRIBUTE_SESSIONID, String.valueOf(apiSession.getId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
@@ -60,7 +60,6 @@ public class APISession extends ConsoleAPI<SessionItem> {
 
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
-
         return session;
     }
 

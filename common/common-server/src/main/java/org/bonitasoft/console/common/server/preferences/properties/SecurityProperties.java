@@ -52,6 +52,8 @@ public class SecurityProperties {
      */
     public static final String PASSWORD_VALIDATOR_CLASSNAME = "security.password.validator";
     
+    public static final String CSRF_PROTECTION = "security.csrf.enabled";
+    
     /**
      * property for the auto login mechanism activation
      */
@@ -88,7 +90,21 @@ public class SecurityProperties {
     protected final static String INSTANCES_MAP_SEPERATOR = "@";
 
     protected final static String TENANT_SCOPE_CONFIG_ID = "tenant";
+    
+    protected final static String PLATFORM_SCOPE_CONFIG_ID = "platform";
 
+    /**
+     * @return the {@link SecurityProperties} instance
+     */
+    public static SecurityProperties getInstance() {
+        SecurityProperties securityProperties = INSTANCES.get(PLATFORM_SCOPE_CONFIG_ID);
+        if (securityProperties == null) {
+            securityProperties = new SecurityProperties(WebBonitaConstantsUtils.getInstance(), PLATFORM_SCOPE_CONFIG_ID);
+            INSTANCES.put(PLATFORM_SCOPE_CONFIG_ID, securityProperties);
+        }
+        return securityProperties;
+    }
+    
     /**
      * @return the {@link SecurityProperties} instance
      */
@@ -149,7 +165,7 @@ public class SecurityProperties {
                     inputStream = new FileInputStream(getSecurityPropertyFile(webBonitaConstantsUtils, processDefinitionId));
                 }
             } else {
-                inputStream = new FileInputStream(getTenantSecurityPropertyFile(webBonitaConstantsUtils));
+                inputStream = new FileInputStream(getSecurityPropertyFile(webBonitaConstantsUtils));
             }
             defaultProperties.load(inputStream);
         } catch (final IOException e) {
@@ -172,17 +188,17 @@ public class SecurityProperties {
     private File getSecurityPropertyFile(WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
         File securityPropertiesFile = getProcessSecurityPropertiesFile(webBonitaConstantsUtils, processDefinitionId);
         if (securityPropertiesFile == null) {
-            securityPropertiesFile = getTenantSecurityPropertyFile(webBonitaConstantsUtils);
+            securityPropertiesFile = getSecurityPropertyFile(webBonitaConstantsUtils);
         }
         return securityPropertiesFile;
     }
 
-    private File getTenantSecurityPropertyFile(WebBonitaConstantsUtils webBonitaConstantsUtils) {
+    private File getSecurityPropertyFile(WebBonitaConstantsUtils webBonitaConstantsUtils) {
         return new File(webBonitaConstantsUtils.getConfFolder(), SECURITY_DEFAULT_CONFIG_FILE_NAME);
     }
 
     private boolean isValidProcessDefinition(final String processDefinitionId) {
-        return processDefinitionId != null && !TENANT_SCOPE_CONFIG_ID.equals(processDefinitionId);
+        return processDefinitionId != null && !TENANT_SCOPE_CONFIG_ID.equals(processDefinitionId) && !PLATFORM_SCOPE_CONFIG_ID.equals(processDefinitionId);
     }
 
     /**
@@ -284,6 +300,16 @@ public class SecurityProperties {
      */
     public String getPasswordValidator() {
         return defaultProperties.getProperty(PASSWORD_VALIDATOR_CLASSNAME);
+    }
+    
+    /**
+     * @return the value to allow or not CSRF protection
+     */
+    public boolean isCSRFProtectionEnabled() {
+        String res = defaultProperties.getProperty(CSRF_PROTECTION);
+        if (res != null && res.equals("true"))
+            return true;
+        return false;
     }
     
     /**

@@ -33,12 +33,26 @@
 	</filter>
 	<!--Rest filter -->
 	<filter>
-		<filter-name>RestFilter</filter-name>
-		<filter-class>org.bonitasoft.console.common.server.login.filter.FilterManager</filter-class>
+		<filter-name>RestAPIAuthorizationFilter</filter-name>
+		<filter-class>org.bonitasoft.console.common.server.login.filter.RestAPIAuthorizationFilter</filter-class>
 		<init-param>
 			<param-name>excludePatterns</param-name>
-			<param-value>i18ntranslation</param-value>
-		</init-param>		
+			<param-value>i18ntranslation,session</param-value>
+		</init-param>
+	</filter>
+    <!-- Token Filter -->
+    <filter>
+        <filter-name>TokenGeneratorFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.TokenGeneratorFilter</filter-class>
+    </filter>
+    <!-- Token Validator Filter -->
+	<filter>
+		<filter-name>TokenValidatorFilter</filter-name>
+		<filter-class>org.bonitasoft.console.common.server.login.filter.TokenValidatorFilter</filter-class>
+		<init-param>
+			<param-name>excludePatterns</param-name>
+			<param-value>i18ntranslation,session</param-value>
+		</init-param>
 	</filter>
 	<!-- SSO filter -->
 	<filter>
@@ -124,23 +138,17 @@
 		<filter-name>BonitaHomeFilter</filter-name>
 		<url-pattern>/login.jsp</url-pattern>
 	</filter-mapping>
-    <filter-mapping>
-        <filter-name>SecurityFilter</filter-name>
-        <url-pattern>/login.jsp</url-pattern>
-		<url-pattern>/portal/homepage</url-pattern>
-    </filter-mapping>
-     <filter-mapping>
-        <filter-name>NoCacheFilter</filter-name>
-        <url-pattern>/portal/homepage</url-pattern>
-        <url-pattern>/portal/formsService</url-pattern>
-        <url-pattern>/portal/formsDocumentDownload</url-pattern>
-        <url-pattern>/portal/runreport</url-pattern>
-        <url-pattern>/portal/BonitaConsole.html</url-pattern>
-        <url-pattern>/login.jsp</url-pattern>
-    </filter-mapping>
-    <filter-mapping>	
-		<filter-name>RestFilter</filter-name>
+	<filter-mapping>
+		<filter-name>TokenValidatorFilter</filter-name>
 		<url-pattern>/API/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>RestAPIAuthorizationFilter</filter-name>
+		<url-pattern>/API/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>TokenGeneratorFilter</filter-name>
+		<url-pattern>/API/system/session/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>InternalSSOFilter</filter-name>
