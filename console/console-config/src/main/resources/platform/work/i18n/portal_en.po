@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-11 03:02+0200\n"
-"PO-Revision-Date: 2014-04-10 22:32-0400\n"
+"POT-Creation-Date: 2014-04-12 03:02+0200\n"
+"PO-Revision-Date: 2014-04-11 22:31-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -914,7 +914,7 @@ msgstr "apps"
 msgid "Deletable"
 msgstr "Deletable"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:84
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:85
 msgid "Start an instance of app %app_name%"
 msgstr "Start an instance of app %app_name%"
 
@@ -1333,17 +1333,9 @@ msgstr "Business archive"
 msgid "A business archive has a .bar extension"
 msgstr "A business archive has a .bar extension"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:72
 msgid "Show more details about this apps"
 msgstr "Show more details about this apps"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:84
-msgid "Start for"
-msgstr "Start for"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:84
-msgid "Start this app for "
-msgstr "Start this app for "
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
 msgid "Delete the app %app_name%?"

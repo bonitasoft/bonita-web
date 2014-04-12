@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-11 03:02+0200\n"
-"PO-Revision-Date: 2014-04-10 22:38-0400\n"
+"POT-Creation-Date: 2014-04-12 03:02+0200\n"
+"PO-Revision-Date: 2014-04-11 22:33-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -914,7 +914,7 @@ msgstr "Aplicaciones"
 msgid "Deletable"
 msgstr "Eliminable"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:84
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:85
 msgid "Start an instance of app %app_name%"
 msgstr "Iniciar una instancia de aplicación %app_name%"
 
@@ -1333,17 +1333,9 @@ msgstr "Business Archive (*.bar)"
 msgid "A business archive has a .bar extension"
 msgstr "Un archivo de negocios tiene una extensión de .bar"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:72
 msgid "Show more details about this apps"
 msgstr "Mostrar más detalles sobre esta aplicación"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:84
-msgid "Start for"
-msgstr "Start for"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:84
-msgid "Start this app for "
-msgstr "Start this app for "
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
 msgid "Delete the app %app_name%?"
