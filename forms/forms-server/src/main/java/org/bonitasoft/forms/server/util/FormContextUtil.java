@@ -15,6 +15,8 @@ import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.server.accessor.api.EngineClientFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 
+import com.google.gwt.core.shared.GWT;
+
 public class FormContextUtil {
 
     private final Map<String, Object> context = new HashMap<String, Object>();
@@ -46,11 +48,19 @@ public class FormContextUtil {
     }
 
     public Long getUserId() {
+    	return getUserId(true);
+    }
+    
+    public Long getUserId(boolean returnLoggedInUserAsDefault) {
         Long userID;
         if (urlContext.containsKey(FormServiceProviderUtil.USER_ID) && urlContext.get(FormServiceProviderUtil.USER_ID) != null) {
             userID = Long.valueOf(urlContext.get(FormServiceProviderUtil.USER_ID).toString());
         } else {
-            userID = session.getUserId();
+            if (returnLoggedInUserAsDefault) {
+            	userID = session.getUserId();
+            } else {
+            	userID = -1L;
+            }
         }
         return userID;
     }

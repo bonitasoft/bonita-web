@@ -342,7 +342,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             throw new FormNotFoundException(e);
                         }
                         if (isFormPermissions) {
-                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, urlContext);
+                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false));
                             // If assignTask=true in the contextURL assign the task to the user
                             if (isAssignTask(urlContext)) {
                                 try {
@@ -382,7 +382,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 throw new FormNotFoundException(e);
                             }
                             if (isFormPermissions) {
-                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, urlContext);
+                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false));
                             }
                         } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                             // Trying to display the overview form
@@ -407,7 +407,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 throw new FormNotFoundException(message);
                             }
                             if (isFormPermissions) {
-                                canUserViewInstanceForm(session, user, workflowAPI, processInstanceID, formId);
+                                canUserViewInstanceForm(session, user, workflowAPI, processInstanceID, formId, ctxu.getUserId());
                             }
                         } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
                             // Trying to display the Instantiation Form for a process
@@ -423,7 +423,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 throw new ForbiddenFormAccessException(message);
                             }
                             if (isFormPermissions) {
-                                canUserInstantiateProcess(session, user, workflowAPI, processDefinitionID);
+                                canUserInstantiateProcess(session, user, workflowAPI, processDefinitionID, ctxu.getUserId());
                             }
                         }
                     } catch (final ProcessDefinitionNotFoundException e) {
@@ -470,6 +470,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *            the activity instance ID
      * @param formId
      *            the form Id
+     * @param userId
+     *            the userId used to "Start for" and "Do for"
      * @throws BPMEngineException
      * @throws ForbiddenFormAccessException
      * @throws SuspendedFormException
@@ -480,7 +482,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws FormAlreadySubmittedException
      */
     protected void canUserViewActivityInstanceForm(final APISession session, final User user, final IFormWorkflowAPI workflowAPI,
-            final long activityInstanceID, final String formId, Map<String, Object> urlContext) throws BPMEngineException, InvalidSessionException,
+            final long activityInstanceID, final String formId, long userId) throws BPMEngineException, InvalidSessionException,
             ForbiddenFormAccessException,
             SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, FormNotFoundException, FormAlreadySubmittedException,
             AbortedFormException {
@@ -488,7 +490,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         try {
             // TODO verify if the user is admin. In this case, he can access the form
             // TODO verify if a user is process supervisor of the process. In this case, he can access the form
-            if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session), activityInstanceID, urlContext)) {
+            if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session, userId), activityInstanceID, userId)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the form of activity instance " + activityInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
                     getLogger().log(Level.INFO, message);
@@ -550,6 +552,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *            the process instance ID
      * @param formId
      *            the form Id
+     * @param userId
+     * 			  the userId to performe a "Start For" or a "Do for" 
      * @throws InvalidSessionException
      * @throws BonitaHomeNotSetException
      * @throws ServerAPIException
@@ -559,13 +563,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws SessionTimeoutException
      */
     protected void canUserViewInstanceForm(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processInstanceID,
-            final String formId) throws InvalidSessionException, BPMEngineException, FormNotFoundException, ForbiddenFormAccessException,
+            final String formId, long userId) throws InvalidSessionException, BPMEngineException, FormNotFoundException, ForbiddenFormAccessException,
             SessionTimeoutException {
 
         try {
             // FIXME verify if the user is admin. In this case, he can access the form
             // TODO verify if the user is process supervisor of the process. In this case, he can access the form
-            if (!workflowAPI.canUserSeeProcessInstance(session, getProcessActors(session), processInstanceID)) {
+            if (!workflowAPI.canUserSeeProcessInstance(session, getProcessActors(session, userId), processInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the " + getFormType(formId)
                         + " form of process instance " + processInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
@@ -605,18 +609,20 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *            the workflow API
      * @param processDefinitionID
      *            the process definition ID
+     * @param userId
+     *            userId used for "Start for" and "Do for"
      * @throws InvalidSessionException
      * @throws ForbiddenFormAccessException
      * @throws FormNotFoundException
      * @throws BPMEngineException
      */
-    protected void canUserInstantiateProcess(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processDefinitionID)
+    protected void canUserInstantiateProcess(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processDefinitionID, final long userId)
             throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException, FormNotFoundException {
 
         try {
             // TODO verify if the user is admin. In this case, he can access the form
             // TODO verify if a user is process supervisor of the process. In this case, he can access the form
-            if (!workflowAPI.canUserInstantiateProcessDefinition(session, getProcessActors(session), processDefinitionID)) {
+            if (!workflowAPI.canUserInstantiateProcessDefinition(session, getProcessActors(session, userId), processDefinitionID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the instantiation form of process "
                         + processDefinitionID;
                 if (getLogger().isLoggable(Level.INFO)) {
@@ -2135,11 +2141,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
     }
 
-    private Map<Long, Set<Long>> getProcessActors(final APISession session) throws BPMEngineException {
+    private Map<Long, Set<Long>> getProcessActors(final APISession session, long userId) throws BPMEngineException {
         try {
             final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
             final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-            parameters.put("USER_ID_KEY", session.getUserId());
+            if (userId != -1) {
+            	parameters.put("USER_ID_KEY", userId);
+            } else {
+            	parameters.put("USER_ID_KEY", session.getUserId());
+            }
             return (Map<Long, Set<Long>>) commandAPI.execute("getActorIdsForUserIdIncludingTeam", parameters);
 
         } catch (final Exception e) {

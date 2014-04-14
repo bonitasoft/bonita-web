@@ -765,16 +765,13 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     @Override
     public boolean isUserInvolvedInActivityInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long activityInstanceID,
-            Map<String, Object> urlContext)
+            long userId)
             throws ActivityInstanceNotFoundException, BPMEngineException, ProcessDefinitionNotFoundException, InvalidSessionException {
 
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         long actorID = -1;
         long assigneeID = -1;
-        long urlParameterUserId = -1;
-        if (urlContext.get(FormServiceProviderUtil.USER_ID) != null) {
-            urlParameterUserId = Long.valueOf((String) urlContext.get(FormServiceProviderUtil.USER_ID));
-        }
+        
         try {
             final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
             actorID = humanTaskInstance.getActorId();
@@ -791,7 +788,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         boolean isInvolved = false;
         if (session.getUserId() == assigneeID) {
             isInvolved = true;
-        } else if (urlParameterUserId != -1 && assigneeID != 0L) {
+        } else if (userId != -1 && assigneeID != 0L) {
             isInvolved = true;
         } else if (assigneeID == 0L && userProcessActors != null) {
             final long processDefinitionID = getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID);

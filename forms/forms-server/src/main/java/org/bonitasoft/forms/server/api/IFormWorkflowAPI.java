@@ -553,15 +553,15 @@ public interface IFormWorkflowAPI {
      *            the process actors of the user
      * @param activityInstanceID
      *            the activity instance ID
-     * @param user
-     *            the context user
+     * @param userId
+     *            userid used to "Start for" or "do for"
      * @return true if the user is involved in the activity instance. False otherwise
      * @throws ActivityInstanceNotFoundException
      * @throws BPMEngineException
      * @throws ProcessDefinitionNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
-    boolean isUserInvolvedInActivityInstance(APISession session, Map<Long, Set<Long>> userProcessActors, long activityInstanceID, Map<String, Object> urlContext)
+    boolean isUserInvolvedInActivityInstance(APISession session, Map<Long, Set<Long>> userProcessActors, long activityInstanceID, long userId)
             throws ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException, ProcessDefinitionNotFoundException,
             ArchivedFlowNodeInstanceNotFoundException;
 
