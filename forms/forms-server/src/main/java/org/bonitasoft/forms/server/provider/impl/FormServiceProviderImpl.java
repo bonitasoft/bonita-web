@@ -2115,7 +2115,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         try {
             final long processDefinitionID = getProcessDefinitionID(context);
             final APISession session = ctxu.getAPISessionFromContext();
-            return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            return getProcessClassloader(processDefinitionID, session);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";
             if (getLogger().isLoggable(Level.INFO)) {
@@ -2128,6 +2128,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 getLogger().log(Level.FINEST, "### " + time + " - getClassloader - end");
             }
         }
+    }
+
+    protected ClassLoader getProcessClassloader(final long processDefinitionID, final APISession session) {
+        return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
     }
 
     private Map<Long, Set<Long>> getProcessActors(final APISession session) throws BPMEngineException {

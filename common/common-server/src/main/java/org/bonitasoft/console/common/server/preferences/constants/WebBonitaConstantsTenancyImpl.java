@@ -90,6 +90,8 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String pdfWorkFolderPath = null;
 
+    private String bdmWorkFolderPath;
+
     /**
      * Default constructor.
      * 
@@ -263,5 +265,13 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
             groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
         }
         return groupsIconsWorkFolderPath;
+    }
+
+    @Override
+    public String getBDMWorkFolderPath() {
+        if (this.bdmWorkFolderPath == null) {
+            this.bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+        }
+        return this.bdmWorkFolderPath;
     }
 }
