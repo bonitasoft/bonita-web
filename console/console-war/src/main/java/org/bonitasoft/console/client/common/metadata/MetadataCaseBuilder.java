@@ -18,10 +18,12 @@ package org.bonitasoft.console.client.common.metadata;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 
@@ -51,15 +53,29 @@ public class MetadataCaseBuilder extends MetadataBuilder {
                 _("The date while the case has been started"));
     }
     
-    public MetadataCaseBuilder addStartedBy() {
-        add(createStartedBy());
+    public MetadataCaseBuilder addStartedBy(UserItem startedByUser, UserItem startedByDelegateUser) {
+        if (startedByUser.getId().toLong().equals(startedByDelegateUser.getId().toLong())) {
+            add(createStartedBy());        
+        } else {
+            add(addStartedByDelegate(startedByUser, startedByDelegateUser));
+        }    
         return this;
     }
-    
+
     private ItemDetailsMetadata createStartedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID),
                 _("Started by"), _("The user that has started this case"));
     }
+    
+    private ItemDetailsMetadata addStartedByDelegate(UserItem executedByUser, UserItem executedByDelegateUser) {
+        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
+        attributeReader.setStartedByUser(executedByUser);
+        attributeReader.setStartedByDelegateUser(executedByDelegateUser);
+        return new ItemDetailsMetadata(attributeReader,
+                _("Started by"),
+                _("Name of the user who started this case"));
+    }
+
     
     public MetadataCaseBuilder addState() {
         add(createState());

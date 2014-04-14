@@ -57,13 +57,13 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         result.setLastUpdateDate(item.getLastUpdate());
         result.setState(item.getState());
         result.setStartDate(item.getStartDate());
-        result.setStartedByUserId(item.getStartedBy());
         result.setEndDate(item.getEndDate());
         result.setProcessId(item.getProcessDefinitionId());
         result.setArchivedDate(item.getArchiveDate());
         result.setSourceObjectId(item.getSourceObjectId());
         result.setRootCaseId(item.getRootProcessInstanceId());
-
+        result.setStartedByUserId(item.getStartedBy());
+        result.setStartedByDelegateUserId(item.getStartedByDelegate());
         return result;
     }
 

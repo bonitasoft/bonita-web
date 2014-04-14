@@ -62,11 +62,12 @@ public class ArchivedCaseDefinition extends ItemDefinition<ArchivedCaseItem> {
         createAttribute(ArchivedCaseItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_STATE, ItemAttribute.TYPE.ENUM);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_START_DATE, ItemAttribute.TYPE.DATETIME);
-        createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_END_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_ARCHIVED_DATE, ItemAttribute.TYPE.DATETIME);
+        createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
     }
 
     @Override

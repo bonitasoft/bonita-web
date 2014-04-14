@@ -79,7 +79,7 @@ public class HumanTaskMetadataView extends Composite {
         priority.setInnerText(Formatter.formatPriority(task.getPriority()));
         assignedTo.setInnerText(Formatter.formatUser(task.getAssignedUser()));
         dueDate.setInnerText(Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
-        if (task.getExecutedByUserId().toLong() == task.getExecutedByDelegateUserId().toLong()) {
+        if (task.getExecutedByUserId().toLong().equals(task.getExecutedByDelegateUserId().toLong())) {
             doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()));
         } else {
             doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()) + " for " + Formatter.formatUser(task.getExecutedByDelegateUser())); 
