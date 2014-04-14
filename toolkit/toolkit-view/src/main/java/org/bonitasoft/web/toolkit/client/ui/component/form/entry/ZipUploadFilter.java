@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api;
+package org.bonitasoft.web.toolkit.client.ui.component.form.entry;
 
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.server.framework.API;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-/**
- * @author Séverin Moussel
- * 
- */
-public abstract class ConsoleAPI<T extends IItem> extends API<T> {
+public class ZipUploadFilter extends UploadFilter {
 
-    private APISession sessionSingleton = null;
-
-    /**
-     * Get the session to access the engine SDK
-     */
-    protected APISession getEngineSession() {
-        if (this.sessionSingleton == null) {
-            this.sessionSingleton = (APISession) getHttpSession().getAttribute("apiSession");
-        }
-        return this.sessionSingleton;
+    public ZipUploadFilter() {
+        super(_("zip file"), "zip", "ZIP");
     }
+
 }

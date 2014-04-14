@@ -23,12 +23,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.TaskSkipAction;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.IActivityItem;
@@ -51,6 +54,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 /**
@@ -138,7 +142,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                final TaskListingAdminPage taskListingAdminPage = new TaskListingAdminPage();
+            	final ItemListingPage<CaseItem> taskListingAdminPage = getTaskListingPage();
                 taskListingAdminPage.selectResourceFilter(APIID.makeAPIID(TaskListingAdminPage.FILTER_PRIMARY_FAILED));
                 ViewController.showView(taskListingAdminPage);
             }
@@ -150,7 +154,12 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         });
     }
 
-    private void showFailedTaskListingPage() {
+	protected ItemListingPage<CaseItem>  getTaskListingPage() {
+		return new TaskListingAdminPage();
+	}
+
+    
+    protected void showFailedTaskListingPage() {
         ViewController.showView(TaskListingAdminPage.TOKEN, Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
     }
 
@@ -176,7 +185,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addAppsVersion();
-        metadatas.addCaseId(task, true);
+        metadatas.addCaseId(task,  CaseMoreDetailsAdminPage.TOKEN , ArchivedCaseMoreDetailsAdminPage.TOKEN);
         metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();

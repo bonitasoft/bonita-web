@@ -29,6 +29,8 @@ public class Callout extends ContainerStyled<Component> {
     public Callout(String title, Component... body) {
         addClass("callout");
         append(new H4(title));
-        append(new Paragraph(body));
+        if (body != null && body.length > 0) {
+            append(new Paragraph(body));
+        }   
     }
 }

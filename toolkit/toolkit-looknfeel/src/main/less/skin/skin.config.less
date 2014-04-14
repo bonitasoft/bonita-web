@@ -9,7 +9,7 @@
 //@mainAccentColor: #2674b0; //the main skin color (blue)
 @secondAccentColor: #313433;
 @color3: #666666; //calendar links, button3 text color
-
+@color4: #035;//link color
 
 @browserFontSize: 16;//default browser font size in px, don't change this value 
 @skinFontSize: 13;
@@ -39,6 +39,8 @@
 // ****************************************************************************** //
 // 								BUTTONS											  //
 // ****************************************************************************** //
+@link-color: #035;
+
 @button-fontSize: 12;
 @button-paddingY: 0*@h;
 @button-paddingX: 2*@w;
@@ -315,6 +317,10 @@
 @tablesPanel-table-1stCell-paddingLeft: 2*@w;
 @tablesPanel-table-1stCell-paddingRight: 2*@w;
 @tablesPanel-table-cellCheckbox-padding: @tablesPanel-table-cell-padding;
+@table-cell-actions-link-marginRight: 8px;
+@table-cell-actions-link-color: @color4;
+@table-cell-actions-link-textDecoration: none;
+@table-cell-actions-linkHover-textDecoration: underline;
 
 @tablesPanel-padding:1.4*@h 0 1.4*@h 5*@w;
 @tablesPanel-search-inputContainer-paddingRight: 4*@w;
@@ -707,15 +713,13 @@
 // More details Page
 // ----------------------------------------------------------------------------
 @moreDetails-min-width: 250 * @w;
-@moreDetails-body-top: (20*@h) + @header-login-height + @header-menu-height;
 @moreDetails-paddingLeft: 8*@w;
 @moreDetails-paddingRight: 7*@w;
 @moreDetails-pager-padding: 1*@h 0 3*@h 0;
 @moreDetails-header-marginBottom: 8*@h;
-@moreDetails-body-padding: (@header-menu-height + @header-login-height + @moreDetails-toolbar-marginTop + @button-globalHeight + @moreDetails-toolbar-marginBottom) @moreDetails-paddingRight 9*@h @moreDetails-paddingLeft;
+@moreDetails-body-padding: 0 @moreDetails-paddingRight 9*@h @moreDetails-paddingLeft;
 @moreDetails-header-padding: 0 @moreDetails-paddingRight 0 @moreDetails-paddingLeft;
-@moreDetails-header-margin:  (@header-menu-height+@header-login-height) 0 @moreDetails-header-marginBottom 0;
-@moreDetails-header-position: absolute;
+@moreDetails-header-margin:  (@header-menu-height + @header-login-height + 6*@h) 0 @moreDetails-header-marginBottom 0;
 @moreDetails-toolbar-marginTop: 6*@h;
 @moreDetails-toolbar-marginBottom: 8*@h;
 @moreDetails-toolbar-margin: @moreDetails-toolbar-marginTop 0 @moreDetails-toolbar-marginBottom 0;
@@ -781,6 +785,8 @@
 @moreDetails-definition-dueDateBg: "metadata-due-date.png";
 @moreDetails-definition-dueDateH: "metadata-due-date.png";
 @moreDetails-section-body-position: relative;
+@moreDetails-section-linkHover-textDecoration: underline;
+@moreDetails-section-link-color: #035;
 @moreDetails-section-pagerTop-display: none;
 @moreDetails-section-pagerTop-pageCount-display: none;
 @moreDetails-section-pagerTop-pageNum-display: none;

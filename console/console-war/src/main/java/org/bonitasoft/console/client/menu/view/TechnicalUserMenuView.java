@@ -16,8 +16,8 @@ package org.bonitasoft.console.client.menu.view;
 
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.console.client.menu.view.navigation.NavigationMenuView;
+import org.bonitasoft.console.client.menu.view.technicaluser.ConfigurationMenuItem;
 import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuItem;
-import org.bonitasoft.console.client.menu.view.technicaluser.PortalMenuItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
@@ -25,6 +25,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 /**
  * @author Julien Mege
  */
+
 public class TechnicalUserMenuView extends NavigationMenuView {
 
     @Override
@@ -44,6 +45,6 @@ public class TechnicalUserMenuView extends NavigationMenuView {
     }
 
     protected void buildMenu() {
-        navigationMenu.addMenuItem(new OrganizationMenuItem(), new PortalMenuItem());
+        navigationMenu.addMenuItem(new OrganizationMenuItem(), new ConfigurationMenuItem());
     }
 }

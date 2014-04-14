@@ -14,25 +14,31 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
+import java.util.List;
+import java.util.Map;
+
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.rest.server.api.bpm.process.APICategory;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.exception.APIAttributeException;
+import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -88,16 +94,60 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
         
-        SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, 
-                new Sorts(orders, new UserSearchAttributeConverter()), 
-                new Filters(filters, new UserFilterCreator()));
+    	if(filters.containsKey(UserItem.FILTER_PROCESS_ID)){
+    		String processId = filters.get(UserItem.FILTER_PROCESS_ID);
+    		filters.remove(UserItem.FILTER_PROCESS_ID);
+    		return searchUsersWhoCanStartProcess(processId, page, resultsByPage, search, filters, orders);
+    	}else{
+    		return searchUsers(page, resultsByPage, search, filters, orders);	
+    	}
+    	
+    }
+
+    private ItemSearchResult<UserItem> searchUsers(final int page, final int resultsByPage, final String search,
+            final Map<String, String> filters, final String orders) {
+    	
+        SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
+				resultsByPage, search, filters, orders);
 
         SearchResult<User> engineSearchResults = getUserEngineClient().search(searchOptionsCreator.create());
         
         return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(), 
                 userItemConverter.convert(engineSearchResults.getResult()));
+    	
+    }
+    
+    private ItemSearchResult<UserItem> searchUsersWhoCanStartProcess(final String processId, final int page, final int resultsByPage, final String search,
+            final Map<String, String> filters, final String orders) {
+    	
+        SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
+				resultsByPage, search, filters, orders);
+
+        SearchResult<User> engineSearchResults;
+		try {
+			engineSearchResults = getProcessEngineClient().getProcessApi().searchUsersWhoCanStartProcessDefinition(Long.valueOf(processId), searchOptionsCreator.create());
+		} catch (NumberFormatException e) {
+			throw new APIAttributeException(UserItem.FILTER_PROCESS_ID, "Cannot convert process id: "+ processId + " into long.");
+		} catch (SearchException e) {
+			throw new APIException(e);
+		}
+        
+        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(), 
+                userItemConverter.convert(engineSearchResults.getResult()));
+    	
     }
 
+	private SearchOptionsCreator buildSearchOptionCreator(final int page,
+			final int resultsByPage, final String search,
+			final Map<String, String> filters, final String orders) {
+		SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, 
+                new Sorts(orders, new UserSearchAttributeConverter()), 
+                new Filters(filters, new UserFilterCreator()));
+		return searchOptionsCreator;
+	}
+        
+    
+    
 
     /**
      * Delete users
@@ -118,6 +168,10 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         return engineClientFactory.createUserEngineClient();
     }
 
+    protected ProcessEngineClient getProcessEngineClient() {
+        return engineClientFactory.createProcessEngineClient();
+    }
+    
     @Override
     protected UserItem convertEngineToConsoleItem(final User user) {
         throw new RuntimeException("Unimplemented method");
