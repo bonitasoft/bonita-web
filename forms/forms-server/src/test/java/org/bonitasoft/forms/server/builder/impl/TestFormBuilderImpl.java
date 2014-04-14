@@ -126,11 +126,11 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.addCellsStyle("table-cellStyle");
         formBuilder.addHeadingsStyle("table-headings-cellStyle", true, true, false, false);
 
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.DATA, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget1", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TRANSIENT_DATA, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TYPE_TRANSIENT_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.DATA, "=", null, "button1");
+        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
 
         formBuilder.addConfirmationLayout("/process-confirmation-template.html");
@@ -260,13 +260,13 @@ public class TestFormBuilderImpl extends FormsTestCase {
         final FormAction action = applicationFormDefAccessor.getActions("processPage2").get(0);
         Assert.assertEquals(ActionType.ASSIGNMENT, action.getType());
         Assert.assertEquals("variable1", action.getVariableName());
-        Assert.assertEquals(LeftOperand.DATA, action.getVariableType());
+        Assert.assertEquals(LeftOperand.TYPE_DATA, action.getVariableType());
         Assert.assertEquals("=", action.getOperator());
         Assert.assertEquals("field_processpage1widget1", action.getExpression().getContent());
         final FormAction action2 = applicationFormDefAccessor.getActions("processPage2").get(1);
         Assert.assertEquals(ActionType.ASSIGNMENT, action2.getType());
         Assert.assertEquals("variable2", action2.getVariableName());
-        Assert.assertEquals(LeftOperand.TRANSIENT_DATA, action2.getVariableType());
+        Assert.assertEquals(LeftOperand.TYPE_TRANSIENT_DATA, action2.getVariableType());
         Assert.assertEquals(2, applicationFormDefAccessor.getPageValidators("processPage2").size());
         final FormValidator validator = applicationFormDefAccessor.getPageValidators("processPage2").get(0);
         Assert.assertEquals("processpage2validator1", validator.getId());

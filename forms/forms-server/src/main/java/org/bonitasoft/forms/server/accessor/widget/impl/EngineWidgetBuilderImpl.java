@@ -200,7 +200,7 @@ public class EngineWidgetBuilderImpl implements IEngineWidgetBuilder {
             final boolean isEditMode) {
         final Expression actionExpression = new Expression("widgetAction", IFormExpressionsAPI.FIELDID_PREFIX + widgetId,
                 ExpressionType.TYPE_INPUT.name(), dataFieldClassName, null, null);
-        return new FormAction(ActionType.ASSIGNMENT, dataFieldName, isTransient ? LeftOperand.TRANSIENT_DATA : LeftOperand.DATA, "=", null,
+        return new FormAction(ActionType.ASSIGNMENT, dataFieldName, isTransient ? LeftOperand.TYPE_TRANSIENT_DATA : LeftOperand.TYPE_DATA, "=", null,
                 actionExpression, null);
     }
 
