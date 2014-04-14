@@ -59,6 +59,8 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
 
     private String formsWorkFolderPath = null;
 
+    private String bdmWorkFolderPath;
+
     /**
      * Default constructor.
      */
@@ -192,6 +194,14 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getPortalGroupIconsFolderPath() {
         return null;
+    }
+
+    @Override
+    public String getBDMWorkFolderPath() {
+        if (this.bdmWorkFolderPath == null) {
+            this.bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+        }
+        return this.bdmWorkFolderPath;
     }
 
 }
