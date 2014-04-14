@@ -146,6 +146,15 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
+     * Get the Tenant folder where to write BDM work files.
+     * 
+     * @throws ConsoleException
+     */
+    public File geBDMWorkFolder() {
+        return getFolderFromBonitaHome(webBonitaConstants.getBDMWorkFolderPath());
+    }
+
+    /**
      * Get the folder of the tenants directories
      * 
      * @throws ConsoleException
@@ -203,4 +212,5 @@ public class WebBonitaConstantsUtils {
         }
         return folder;
     }
+
 }

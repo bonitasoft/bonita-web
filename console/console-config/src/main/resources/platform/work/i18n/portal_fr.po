@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-11 03:02+0200\n"
-"PO-Revision-Date: 2014-04-10 22:32-0400\n"
+"POT-Creation-Date: 2014-04-12 03:02+0200\n"
+"PO-Revision-Date: 2014-04-13 22:33-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -914,7 +914,7 @@ msgstr "Apps"
 msgid "Deletable"
 msgstr "À supprimer"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:84
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:85
 msgid "Start an instance of app %app_name%"
 msgstr "Démarrer un cas de l'app %app_name%"
 
@@ -1203,23 +1203,23 @@ msgstr "Association acteurs/utilisateurs"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:60
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
-msgstr "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
+msgstr "Sélectionner les entités (utilisateurs, groupes, rôles, adhésions) à mapper aux acteurs. Ces entités feront les tâches humaines dans l'application."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:63
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Pour chaque acteur, vérifier que chaque entité (utilisateur, groupe, rôle, adhesion) a le profil de l'utilisateur correspondant sur le Portal."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:67
 msgid " To do so, go to %entitymappingprofilelink%."
-msgstr " To do so, go to %entitymappingprofilelink%."
+msgstr " Pour le faire, allez dans %entitymappingprofilelink%."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:68
 msgid "Click here to go to Profile listing page"
-msgstr "Click here to go to Profile listing page"
+msgstr "Cliquez ici pour aller à la page de gestion des profils"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:71
 msgid "To do so, contact your administrator"
-msgstr "To do so, contact your administrator"
+msgstr "Pour le faire, contacter votre administrateur"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:82
 msgid "Actor name"
@@ -1233,7 +1233,7 @@ msgstr "Nom affiché"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:114
 msgid "User (%nb_user%)"
-msgstr "User (%nb_user%)"
+msgstr "Utilisateur (%nb_user%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:115
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:82
@@ -1243,15 +1243,15 @@ msgstr "Ajouter un utilisateur"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:120
 msgid "Group (%nb_group%)"
-msgstr "Group (%nb_group%)"
+msgstr "Groupe (%nb_group%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:126
 msgid "Role (%nb_role%)"
-msgstr "Role (%nb_role%)"
+msgstr "Rôle (%nb_role%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:132
 msgid "Membership (%nb_membership%)"
-msgstr "Membership (%nb_membership%)"
+msgstr "Adhésion (%nb_membership%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectUserForActorPage.java:70
 msgid "Add a user to %actor_name%"
@@ -1333,17 +1333,9 @@ msgstr "Archive"
 msgid "A business archive has a .bar extension"
 msgstr "Une archive a .bar comme extension"
 
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:77
+#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:72
 msgid "Show more details about this apps"
 msgstr "Afficher plus de détails sur cette apps"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:84
-msgid "Start for"
-msgstr "Start for"
-
-#: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:84
-msgid "Start this app for "
-msgstr "Start this app for "
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
 msgid "Delete the app %app_name%?"
@@ -3214,7 +3206,7 @@ msgstr "gérer des tâches"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
 msgid "Manage tasks of apps that an entity with this profile can supervise as PM."
-msgstr "Manage tasks of apps that an entity with this profile can supervise as PM."
+msgstr "Gère les tâches de l'app dont une entité de ce profil peut superviser en tant que PM."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 msgid "visualize cases"
@@ -3226,7 +3218,7 @@ msgstr "Gérer des cas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
 msgid "Manage cases of apps that an entity with this profile can supervise as PM."
-msgstr "Manage cases of apps that an entity with this profile can supervise as PM."
+msgstr "Gère les cas de l'app dont une entité de ce profil peut superviser en tant que PM."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 msgid "visualize & start apps"
@@ -3238,7 +3230,7 @@ msgstr "Gérer les apps"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
 msgid "Manage apps that an entity with this profile can supervise as PM."
-msgstr "Manage apps that an entity with this profile can supervise as PM."
+msgstr "Gère l'app dont une entité de ce profil peut superviser en tant que PM."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "manage users"
