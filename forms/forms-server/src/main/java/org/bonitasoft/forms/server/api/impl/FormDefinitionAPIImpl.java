@@ -593,19 +593,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                 try {
                     evaluatedValue = resolvedExpressions.get(data.getExpression().getName());
                     if (evaluatedValue != null) {
-                        final ClassLoader classloader = evaluatedValue.getClass().getClassLoader();
                         try {
-                            Class<?> dataClass;
-                            if (classloader != null) {
-                                try {
-                                    dataClass = Class.forName(className, true, classloader);
-                                } catch (final ClassNotFoundException e) {
-                                    dataClass = Class.forName(className);
-                                }
-                            } else {
-                                dataClass = Class.forName(className);
-                            }
-                            evaluatedValue.getClass().asSubclass(dataClass);
+                            // Load both classes in the current classloader because evaluatedValue comes from another classloader (server side)
+                            Class<?> dataClass = Thread.currentThread().getContextClassLoader().loadClass(className);
+                            Class<?> localEvaluatedValueClass = Thread.currentThread().getContextClassLoader().loadClass(evaluatedValue.getClass().getName());
+                            localEvaluatedValueClass.asSubclass(dataClass);
                         } catch (final ClassCastException e) {
                             throw new IllegalArgumentException();
                         }
