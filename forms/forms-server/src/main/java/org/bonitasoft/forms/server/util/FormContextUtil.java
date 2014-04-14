@@ -47,8 +47,8 @@ public class FormContextUtil {
 
     public Long getUserId() {
         Long userID;
-        if (urlContext.containsKey(FormServiceProviderUtil.USER) && urlContext.get(FormServiceProviderUtil.USER) != null) {
-            userID = Long.valueOf(urlContext.get(FormServiceProviderUtil.USER).toString());
+        if (urlContext.containsKey(FormServiceProviderUtil.USER_ID) && urlContext.get(FormServiceProviderUtil.USER_ID) != null) {
+            userID = Long.valueOf(urlContext.get(FormServiceProviderUtil.USER_ID).toString());
         } else {
             userID = session.getUserId();
         }

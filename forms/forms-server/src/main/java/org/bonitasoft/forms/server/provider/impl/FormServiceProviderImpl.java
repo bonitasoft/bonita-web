@@ -342,7 +342,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             throw new FormNotFoundException(e);
                         }
                         if (isFormPermissions) {
-                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId);
+                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, urlContext);
                             // If assignTask=true in the contextURL assign the task to the user
                             if (isAssignTask(urlContext)) {
                                 try {
@@ -382,7 +382,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 throw new FormNotFoundException(e);
                             }
                             if (isFormPermissions) {
-                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId);
+                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, urlContext);
                             }
                         } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                             // Trying to display the overview form
@@ -480,14 +480,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws FormAlreadySubmittedException
      */
     protected void canUserViewActivityInstanceForm(final APISession session, final User user, final IFormWorkflowAPI workflowAPI,
-            final long activityInstanceID, final String formId) throws BPMEngineException, InvalidSessionException, ForbiddenFormAccessException,
+            final long activityInstanceID, final String formId, Map<String, Object> urlContext) throws BPMEngineException, InvalidSessionException,
+            ForbiddenFormAccessException,
             SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, FormNotFoundException, FormAlreadySubmittedException,
             AbortedFormException {
 
         try {
             // TODO verify if the user is admin. In this case, he can access the form
             // TODO verify if a user is process supervisor of the process. In this case, he can access the form
-            if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session), activityInstanceID)) {
+            if (!workflowAPI.isUserInvolvedInActivityInstance(session, getProcessActors(session), activityInstanceID, urlContext)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the form of activity instance " + activityInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
                     getLogger().log(Level.INFO, message);
