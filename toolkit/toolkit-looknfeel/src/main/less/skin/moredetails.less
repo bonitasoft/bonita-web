@@ -89,6 +89,14 @@
 			> .body{
 				padding: @moreDetails-section-body-padding;
 				position: @moreDetails-section-body-position;
+				p{
+					a{
+						color: @moreDetails-section-link-color;
+						&:hover{
+							text-decoration: @moreDetails-section-linkHover-textDecoration;
+						}
+					}
+				}
 			}
 			.tablefilters{
 				display: @moreDetails-section-tableFilters-display;
@@ -232,6 +240,9 @@
 					float: left;
 				}
 			}
+		}
+		.td_actions a{
+			text-decoration: underline;
 		}
 	}
 	//specific pages below

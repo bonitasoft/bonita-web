@@ -61,12 +61,8 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
             return engineClient.searchUncategorizedProcessDefinitionsUserCanStart(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
         } else if (isFilteringOn(filters, ProcessItem.FILTER_USER_ID)) {
             return engineClient.searchProcessDeploymentInfos(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
-        } else if (isFilteringOn(filters, ProcessItem.FILTER_SUPERVISOR_ID, ProcessItem.FILTER_CATEGORY_ID)) {
-            return engineClient.searchProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
-
         } else if (isFilteringOn(filters, ProcessItem.FILTER_SUPERVISOR_ID)) {
-            return engineClient.searchUncategorizedProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
-
+            return engineClient.searchProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
         } else {
             return engineClient.searchProcessDefinitions(searchOptions);
         }

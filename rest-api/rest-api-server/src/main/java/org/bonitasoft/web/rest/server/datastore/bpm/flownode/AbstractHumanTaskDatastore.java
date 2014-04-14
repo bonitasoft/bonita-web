@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
@@ -84,7 +85,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PROCESS_ID, HumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_STATE, HumanTaskInstanceSearchDescriptor.STATE_NAME);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
+        // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
         // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_TEAM_MANAGER_ID, HumanTaskInstanceSearchDescriptor.TEAM_MANAGER_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, HumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PRIORITY, HumanTaskInstanceSearchDescriptor.PRIORITY);
@@ -102,6 +103,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             // Tasks of all users using a specific supervisor's processes.
             id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_SUPERVISOR_ID));
             if (id != null) {
+                filters.remove(HumanTaskItem.FILTER_SUPERVISOR_ID);
                 return runSupervisorSearch(filters, builder, id.toLong());
             }
 
@@ -203,23 +205,13 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
                 throw new APIException("Can't retrieve mixed state tasks for a defined supervisor");
             }
 
-            if (filters.containsKey(HumanTaskItem.FILTER_IS_ASSIGNED)) {
-                if (MapUtil.getValueAsBoolean(filters, HumanTaskItem.FILTER_IS_ASSIGNED)) {
-                    @SuppressWarnings("unchecked")
-                    final SearchResult<ENGINE_ITEM> searchResult = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchAssignedTasksSupervisedBy(supervisorId,
-                            builder.done());
-                    return searchResult;
-                } else {
-                    @SuppressWarnings("unchecked")
-                    final SearchResult<ENGINE_ITEM> searchResult = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksSupervisedBy(supervisorId,
-                            builder.done());
-                    return searchResult;
-                }
-            } else {
-                // Custom search
+            if (StringUtils.equalsIgnoreCase(taskType, HumanTaskItem.VALUE_STATE_READY)) {
                 @SuppressWarnings("unchecked")
-                final SearchResult<ENGINE_ITEM> searchHumanTaskInstances = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchHumanTaskInstances(builder.done());
-                return searchHumanTaskInstances;
+                final SearchResult<ENGINE_ITEM> searchResult = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksSupervisedBy(supervisorId,
+                        builder.done());
+                return searchResult;
+            } else {
+                throw new APIException("Can't retrieve non pending human task for a Process Manager");
             }
         } catch (final Exception e) {
             throw new APIException(e);

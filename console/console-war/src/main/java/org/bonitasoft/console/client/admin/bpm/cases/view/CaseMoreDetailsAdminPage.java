@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirectionAction;
-import org.bonitasoft.console.client.admin.bpm.cases.action.TaskRedirectionAction;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
@@ -161,11 +159,11 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
 
     protected void prepareArchivedTasksTable(final ItemTable archivedTasksTable) {
         archivedTasksTable.setNbLinesByPage(10);
-        archivedTasksTable.setActions(new ArchivedTaskRedirectionAction());
+        archivedTasksTable.setActions(getArchivedTaskRedirectionAction());
         archivedTasksTable.addClass("archived");
     }
 
-    protected void buildDoneTasks(final CaseItem item) {
+	protected void buildDoneTasks(final CaseItem item) {
         final ItemTable doneTasksTable = getArchivedTaskTable(item);
         prepareArchivedTasksTable(doneTasksTable);
         final Section section = new Section(_("Done tasks"),
@@ -178,10 +176,10 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     @Override
     protected void preparetasksTable(final ItemTable subtasksTable) {
         subtasksTable.setNbLinesByPage(10);
-        subtasksTable.setActions(new TaskRedirectionAction());
+        subtasksTable.setActions(getTaskRedirectionAction());
     }
 
-    private void buildComments(final APIID caseId) {
+	private void buildComments(final APIID caseId) {
         addBody(new CommentSectionSnippet(caseId)
                 .build());
     }
@@ -194,4 +192,5 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     public String defineToken() {
         return TOKEN;
     }
+
 }

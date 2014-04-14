@@ -24,4 +24,9 @@ public enum MemberType {
 
     USER, GROUP, ROLE, MEMBERSHIP;
 
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase();
+    }
+
 }

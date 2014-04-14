@@ -14,11 +14,9 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.ATTRIBUTE_ACTIVATION_STATE;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.VALUE_ACTIVATION_STATE_DISABLED;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.VALUE_ACTIVATION_STATE_ENABLED;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessItem.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,6 +39,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
@@ -65,9 +64,9 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
 
     private static final String TABLE_ACTION_DISABLE = "actiondisableprocesses";
 
-    private static final String TABLE_ACTION_ENABLE = "actionenableprocesses";
+    protected static final String TABLE_ACTION_ENABLE = "actionenableprocesses";
 
-    private static final String TABLE_ACTION_DELETE = "actiondeleteprocesses";
+    protected static final String TABLE_ACTION_DELETE = "actiondeleteprocesses";
 
     private static final String TABLE_NO_ACTION = "noactionprocesses";
 
@@ -154,34 +153,44 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem>
                 createItemTable()
                         .addGroupedAction(
                                 new JsId("disable"), _("Disable"), _("Disable selected apps"), new DisableProcessAction()),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
     private ItemListingTable buildCategoryProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_NO_ACTION),
                 _("Enabled"), createItemTable(),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
-    private ItemListingTable buildDisabledProcessesTable() {
+    protected ItemListingTable buildDisabledProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_ACTION_ENABLE),
                 _("Disabled"),
                 createItemTable()
                         .addGroupedAction(
                                 new JsId("enable"), _("Enable"), _("Enable selected apps"), new EnableProcessAction())
                         .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
-    private ItemListingTable buildDeletableProcessesTable() {
+	protected ItemQuickDetailsPage<ProcessItem> getQuickDetailsTargetPage() {
+		return new ProcessQuickDetailsAdminPage();
+	}
+
+    protected ItemListingTable buildDeletableProcessesTable() {
         return new ItemListingTable(new JsId(TABLE_ACTION_DELETE),
                 _("Deletable"),
                 createItemTable()
                         .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
-                new ProcessQuickDetailsAdminPage());
+                getQuickDetailsTargetPage());
     }
 
-    private ItemTable createItemTable() {
+    /*
+     * protected ItemTable createCategoryProcessTable() {
+     * return createItemTable();
+     * }
+     */
+    
+    protected ItemTable createItemTable() {
         return new ItemTable(Definitions.get(ProcessDefinition.TOKEN))
                 .addColumn(ProcessItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(ProcessItem.ATTRIBUTE_VERSION, _("Version"))

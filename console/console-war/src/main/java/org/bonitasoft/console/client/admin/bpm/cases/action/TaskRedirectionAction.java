@@ -19,6 +19,7 @@ package org.bonitasoft.console.client.admin.bpm.cases.action;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
@@ -40,9 +41,14 @@ public class TaskRedirectionAction extends ItemTableActionSet<FlowNodeItem> {
                 true);
     }
 
-    private TaskMoreDetailsAdminPage createView(APIID apiid) {
-        TaskMoreDetailsAdminPage page = new TaskMoreDetailsAdminPage();
+    private RawView createView(APIID apiid) {
+    	RawView page = getTaskMoreDetailsPage();
         page.addParameter(PageOnItem.PARAMETER_ITEM_ID, apiid.toString());
         return page;
     }
+
+	protected RawView getTaskMoreDetailsPage() {
+		RawView page = new TaskMoreDetailsAdminPage();
+		return page;
+	}
 }
