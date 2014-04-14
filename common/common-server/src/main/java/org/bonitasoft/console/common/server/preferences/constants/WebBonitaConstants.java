@@ -46,6 +46,8 @@ public interface WebBonitaConstants {
 
     public static final String formsFolderName = "forms";
 
+    public static final String bdmFolderName = "bdm";
+
     public static final String ROLES_ICONS_FOLDER_NAME = "roles";
 
     public static final String GROUPS_ICONS_FOLDER_NAME = "groups";
@@ -168,5 +170,12 @@ public interface WebBonitaConstants {
      * @return path
      */
     public String getPortalGroupIconsFolderPath();
+
+    /**
+     * Get BDMWorkFolderPath Path
+     * 
+     * @return path
+     */
+    public String getBDMWorkFolderPath();
 
 }
