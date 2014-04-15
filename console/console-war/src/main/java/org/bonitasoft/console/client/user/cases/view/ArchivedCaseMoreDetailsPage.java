@@ -65,6 +65,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+        defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
         defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
@@ -84,7 +85,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
         final MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
         metadatas.addAppsVersion();
         metadatas.addStartDate();
-        // metadatas.addStartedBy();
+        metadatas.addStartedBy(item.getStartedByUser(), item.getStartedByDelegateUser());
         metadatas.addLastUpdateDate();
         metadatas.addState();
         return metadatas.build();
