@@ -348,6 +348,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         excuteParameters.put(FormWorkflowUtil.ACTIVITY_INSTANCE_ID_KEY, activityInstanceID);
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_LIST_KEY, (Serializable) buildOperations(actionsToExecute));
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_INPUT_KEY, (Serializable) evalContext);
+        excuteParameters.put(FormWorkflowUtil.USER_ID_KEY, userID);
         bpmEngineAPIUtil.executeCommand(commandAPI, FormWorkflowUtil.EXECUTE_ACTION_AND_TERMINATE, excuteParameters);
     }
 

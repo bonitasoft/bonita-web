@@ -1009,6 +1009,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 formContextUtil.setUrlContext(urlContext);
 
             } else if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
+                // retrieve the userid from the context
+                userID = formContextUtil.getUserId();
+
                 activityInstanceID = getActivityInstanceId(urlContext);
                 boolean executeActions = false;
                 if (urlContext.containsKey(EXECUTE_ACTIONS_PARAM)) {
