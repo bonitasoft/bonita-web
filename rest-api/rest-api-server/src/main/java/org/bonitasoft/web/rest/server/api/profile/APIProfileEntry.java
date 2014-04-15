@@ -65,7 +65,9 @@ public class APIProfileEntry extends ConsoleAPI<ProfileEntryItem> implements
         factory = getDeployerFactory();
         addDeployer(factory.createProfileDeployer(ProfileEntryItem.ATTRIBUTE_PROFILE_ID));
         addDeployer(factory.createProfileEntryDeployer(ProfileEntryItem.ATTRIBUTE_PARENT_ID));
-        addDeployer(factory.createBonitaPageDeployer(ProfileEntryItem.ATTRIBUTE_PAGE));
+        if(!item.isCustom()) {
+            addDeployer(factory.createBonitaPageDeployer(ProfileEntryItem.ATTRIBUTE_PAGE));
+        }
         super.fillDeploys(item, deploys);
 
     }

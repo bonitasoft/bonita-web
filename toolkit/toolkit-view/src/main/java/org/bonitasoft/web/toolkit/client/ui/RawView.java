@@ -89,7 +89,7 @@ public abstract class RawView extends Callable {
         this.token = token;
     }
 
-    public final String getToken() {
+    public String getToken() {
         return this.token;
     }
 

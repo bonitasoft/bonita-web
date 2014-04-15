@@ -77,12 +77,12 @@ import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDe
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
 import org.bonitasoft.web.toolkit.client.AvailableTokens;
+import org.bonitasoft.web.toolkit.client.SHA1;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
-
 import com.google.gwt.core.shared.GWT;
 
 /**
@@ -291,6 +291,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         }
     }
 
+   
+
     protected String listAUthorizedTokens(List<String> currentUserAccessRights) {
         String result = "";
         
@@ -377,7 +379,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 		
 		return pagePrivileges;
 	}
-
+	
 	protected boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
        
         String sessionId = new String(Session.getParameter("session_id"));
