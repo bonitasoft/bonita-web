@@ -23,6 +23,7 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.FormsView;
@@ -127,6 +128,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         final String tenantId = ClientApplicationURL.getTenantId();
         if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenant=").append(tenantId);
+        }
+
+        String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);
+        if (userId == null) {
+            userId = getUserId().toString();
         }
 
         frameURL.append("#form=")

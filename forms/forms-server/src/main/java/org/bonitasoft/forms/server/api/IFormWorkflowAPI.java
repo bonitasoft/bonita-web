@@ -414,7 +414,8 @@ public interface IFormWorkflowAPI {
      * @throws BPMExpressionEvaluationException
      * @throws BPMEngineException
      */
-    void executeActionsAndTerminate(APISession session, long activityInstanceID, Map<String, FormFieldValue> fieldValues, List<FormAction> actions,
+    void executeActionsAndTerminate(APISession session, long userID, long activityInstanceID, Map<String, FormFieldValue> fieldValues,
+            List<FormAction> actions,
             Locale locale, String submitButtonId, Map<String, Serializable> context) throws InvalidSessionException,
             ActivityInstanceNotFoundException, ProcessInstanceNotFoundException, RetrieveException, FileTooBigException, IOException,
             BPMExpressionEvaluationException, BPMEngineException;

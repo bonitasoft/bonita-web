@@ -553,7 +553,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formId
      *            the form Id
      * @param userId
-     * 			  the userId to performe a "Start For" or a "Do for" 
+     *            the userId to performe a "Start For" or a "Do for"
      * @throws InvalidSessionException
      * @throws BonitaHomeNotSetException
      * @throws ServerAPIException
@@ -616,7 +616,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws FormNotFoundException
      * @throws BPMEngineException
      */
-    protected void canUserInstantiateProcess(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processDefinitionID, final long userId)
+    protected void canUserInstantiateProcess(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processDefinitionID,
+            final long userId)
             throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException, FormNotFoundException {
 
         try {
@@ -1017,7 +1018,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 if (submitButtonId != null || executeActions) {
                     final boolean isTaskReady = workflowAPI.isTaskReady(session, activityInstanceID);
                     if (isTaskReady) {
-                        workflowAPI.executeActionsAndTerminate(session, activityInstanceID, fieldValues, actions, locale, submitButtonId, transientDataContext);
+                        workflowAPI.executeActionsAndTerminate(session, userID, activityInstanceID, fieldValues, actions, locale, submitButtonId,
+                                transientDataContext);
                     } else {
                         throw new FormAlreadySubmittedException();
                     }
@@ -2146,9 +2148,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
             final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
             if (userId != -1) {
-            	parameters.put("USER_ID_KEY", userId);
+                parameters.put("USER_ID_KEY", userId);
             } else {
-            	parameters.put("USER_ID_KEY", session.getUserId());
+                parameters.put("USER_ID_KEY", session.getUserId());
             }
             return (Map<Long, Set<Long>>) commandAPI.execute("getActorIdsForUserIdIncludingTeam", parameters);
 

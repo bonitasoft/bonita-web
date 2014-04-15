@@ -187,7 +187,8 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
                 new ArrayList<Expression>());
         formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", false, "=", null, fieldExpression, "submitButtonId"));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        formWorkflowApi.executeActionsAndTerminate(getSession(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH, "submitButtonId",
+        formWorkflowApi.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
+                "submitButtonId",
                 new HashMap<String, Serializable>());
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 
@@ -224,7 +225,8 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
                 new ArrayList<Expression>());
         formActions.add(new FormAction(ActionType.DOCUMENT_CREATE_UPDATE, "DocumentToCreate", false, "=", null, fieldExpression, "submitButtonId"));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        api.executeActionsAndTerminate(getSession(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH, "submitButtonId",
+        api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
+                "submitButtonId",
                 new HashMap<String, Serializable>());
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 
@@ -279,7 +281,8 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
                 new ArrayList<Expression>());
         formActions.add(new FormAction(ActionType.DOCUMENT_CREATE_UPDATE, "doc1", false, "=", null, fieldExpression, "submitButtonId"));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        api.executeActionsAndTerminate(getSession(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH, "submitButtonId",
+        api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
+                "submitButtonId",
                 new HashMap<String, Serializable>());
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 
@@ -340,7 +343,8 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
                 new ArrayList<Expression>());
         formActions.add(new FormAction(ActionType.DOCUMENT_CREATE_UPDATE, "doc1", false, "=", null, fieldExpression, "submitButtonId"));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        api.executeActionsAndTerminate(getSession(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH, "submitButtonId",
+        api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
+                "submitButtonId",
                 new HashMap<String, Serializable>());
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 
@@ -392,7 +396,8 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
                 ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), "GROOVY", dependencyExpressions);
         formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", false, "=", null, fieldExpression, "submitButtonId"));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        api.executeActionsAndTerminate(getSession(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH, "submitButtonId",
+        api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
+                "submitButtonId",
                 new HashMap<String, Serializable>());
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 

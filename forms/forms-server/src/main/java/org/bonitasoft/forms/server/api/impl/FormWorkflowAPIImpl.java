@@ -84,7 +84,6 @@ import org.bonitasoft.forms.server.api.impl.util.FormActionAdapter;
 import org.bonitasoft.forms.server.api.impl.util.FormWorkflowUtil;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
-import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 
 /**
  * implementation of {@link IFormWorkflowAPI}
@@ -326,7 +325,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public void executeActionsAndTerminate(final APISession session, final long activityInstanceID, final Map<String, FormFieldValue> fieldValues,
+    public void executeActionsAndTerminate(final APISession session, long userID, final long activityInstanceID, final Map<String, FormFieldValue> fieldValues,
             final List<FormAction> actions, final Locale locale, final String submitButtonId, final Map<String, Serializable> context)
             throws BPMEngineException, BPMExpressionEvaluationException, InvalidSessionException, ActivityInstanceNotFoundException,
             ProcessInstanceNotFoundException, FileTooBigException,
@@ -771,7 +770,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         long actorID = -1;
         long assigneeID = -1;
-        
+
         try {
             final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
             actorID = humanTaskInstance.getActorId();
