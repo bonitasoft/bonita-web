@@ -53,7 +53,7 @@
                 <label><ui:text from="{messages.due_date_label}" />: </label>
                 <span ui:field="dueDate" />
             </div>
-            <div class="definition done_by" title="{messages.done_by_title}">
+            <div ui:field="doneByContainer" class="definition done_by" title="{messages.done_by_title}">
                 <label><ui:text from="{messages.done_by_label}" />: </label>
                 <span ui:field="doneBy" />
             </div>

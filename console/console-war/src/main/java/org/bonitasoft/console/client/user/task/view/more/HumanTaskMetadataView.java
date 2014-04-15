@@ -23,11 +23,13 @@ import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.uib.formatter.Formatter;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -51,6 +53,9 @@ public class HumanTaskMetadataView extends Composite {
 
     @UiField
     SpanElement assignedTo;
+
+    @UiField
+    DivElement doneByContainer;
     
     @UiField
     SpanElement doneBy;
@@ -79,10 +84,14 @@ public class HumanTaskMetadataView extends Composite {
         priority.setInnerText(Formatter.formatPriority(task.getPriority()));
         assignedTo.setInnerText(Formatter.formatUser(task.getAssignedUser()));
         dueDate.setInnerText(Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
-        if (task.getExecutedByUserId().toLong().equals(task.getExecutedByDelegateUserId().toLong())) {
-            doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()));
+        if (!IFlowNodeItem.VALUE_STATE_READY.equals(task.getState())) {
+        	if (task.getExecutedByUserId().toLong().equals(task.getExecutedByDelegateUserId().toLong())) {
+        		doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()));
+        	} else {
+        		doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()) + " for " + Formatter.formatUser(task.getExecutedByDelegateUser())); 
+        	}
         } else {
-            doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()) + " for " + Formatter.formatUser(task.getExecutedByDelegateUser())); 
+        	doneByContainer.removeFromParent();
         }
         lastUpdateDate.setInnerText(Formatter.formatDate(task.getLastUpdateDate(), DISPLAY));
         assignedDate.setInnerText(Formatter.formatDate(task.getAssignedDate(), DISPLAY));
