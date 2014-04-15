@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-11 01:02+0200\n"
-"PO-Revision-Date: 2014-04-12 20:31-0400\n"
+"POT-Creation-Date: 2014-04-15 01:02+0200\n"
+"PO-Revision-Date: 2014-04-14 20:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1223,7 +1223,7 @@ msgstr "Mapping"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:81
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
-msgstr "Ce profil sera disponible à la prochaine connexion des utilisateurs mappés. Si vous vous êtes mappé ce profil, il sera disponible après avoir actualisé la page dans votre navigateur."
+msgstr "Ce profil sera disponible pour les utilisateurs associés lors de leur prochaine connexion . Si vous vous êtes associé ce profil, rafraîchissez la page de votre navigateur pour le rendre disponible."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:93
 msgid "Users mapping"
@@ -2160,8 +2160,8 @@ msgid "The App cannot be enabled"
 msgstr "L'App ne peut être activée"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
-msgid "Actor Mapping must be resolved before enabling the App."
-msgstr "Actor Mapping must be resolved before enabling the App."
+msgid "Entity Mapping must be resolved before enabling the App."
+msgstr "Toutes les entités doivent être configurées pour pouvoir activer l'app."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
 msgid "Parameters must be resolved before enabling the App."
