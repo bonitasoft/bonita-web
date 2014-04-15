@@ -43,9 +43,9 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCaseItem> implements PluginCase {
 
     public static final String TOKEN = "archivedcasemoredetails";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
@@ -84,7 +84,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
         final MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
         metadatas.addAppsVersion();
         metadatas.addStartDate();
-        metadatas.addStartedBy();
+        // metadatas.addStartedBy();
         metadatas.addLastUpdateDate();
         metadatas.addState();
         return metadatas.build();

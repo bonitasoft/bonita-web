@@ -142,8 +142,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         if (assignTask) {
             frameURL.append("&assignTask=true");
         }
-        if (!getParameter(PARAMETER_USER_ID).isEmpty()) {
-            frameURL.append("&"+PARAMETER_USER_ID+"=");
+        if (getParameter(PARAMETER_USER_ID) != null && !getParameter(PARAMETER_USER_ID).isEmpty()) {
+            frameURL.append("&" + PARAMETER_USER_ID + "=");
             frameURL.append(getParameter(PARAMETER_USER_ID));
         }
 
