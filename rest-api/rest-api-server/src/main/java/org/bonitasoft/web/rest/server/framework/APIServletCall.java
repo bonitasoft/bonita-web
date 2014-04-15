@@ -29,6 +29,7 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
 import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -75,6 +76,7 @@ public class APIServletCall extends ServletCall {
         head("Pragma", "No-cache");
         head("Cache-Control", "no-cache,no-store,no-transform,max-age=0");
         head("Expires", df.format(expdate));
+
     }
 
     /**
@@ -111,6 +113,9 @@ public class APIServletCall extends ServletCall {
         apiName = path[1];
         resourceName = path[2];
 
+        // Fixes BS-400. This is ugly.
+        I18n.getInstance();
+        
         api = APIs.get(apiName, resourceName);
         api.setCaller(this);
 
@@ -270,7 +275,7 @@ public class APIServletCall extends ServletCall {
     }
 
     /**
-     * @param parameter
+     * @param parameters
      * @return
      */
     private Map<String, String> parseFilters(final List<String> parameters) {
