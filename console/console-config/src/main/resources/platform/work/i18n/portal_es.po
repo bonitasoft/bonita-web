@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-10 07:02+0200\n"
-"PO-Revision-Date: 2014-04-14 20:37-0400\n"
+"POT-Creation-Date: 2014-04-15 07:01+0200\n"
+"PO-Revision-Date: 2014-04-15 02:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1289,8 +1289,8 @@ msgid "The App cannot be enabled"
 msgstr "The App cannot be enabled"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
-msgid "Actor Mapping must be resolved before enabling the App."
-msgstr "Actor Mapping must be resolved before enabling the App."
+msgid "Entity Mapping must be resolved before enabling the App."
+msgstr "Entity Mapping must be resolved before enabling the App."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
 msgid "Parameters must be resolved before enabling the App."
