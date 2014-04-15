@@ -95,16 +95,17 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
 
-        if (filters.containsKey(UserItem.FILTER_PROCESS_ID)) {
-            String processId = filters.get(UserItem.FILTER_PROCESS_ID);
-            filters.remove(UserItem.FILTER_PROCESS_ID);
-            return searchUsersWhoCanStartProcess(processId, page, resultsByPage, search, filters, orders);
-            // } else if (filters.containsKey(UserItem.FILTER_HUMAN_TASK_ID)) {
-            // String taskId = filters.get(UserItem.FILTER_HUMAN_TASK_ID);
-            // return searchUsersWhoCanPerformTask(taskId, page, resultsByPage, search, filters, orders);
-        } else {
-            return searchUsers(page, resultsByPage, search, filters, orders);
-        }
+    	if (filters.containsKey(UserItem.FILTER_PROCESS_ID)) {
+    		String processId = filters.get(UserItem.FILTER_PROCESS_ID);
+    		filters.remove(UserItem.FILTER_PROCESS_ID);
+    		return searchUsersWhoCanStartProcess(processId, page, resultsByPage, search, filters, orders);
+    	} else if (filters.containsKey(UserItem.FILTER_HUMAN_TASK_ID)) {
+    		String taskId = filters.get(UserItem.FILTER_HUMAN_TASK_ID);
+    		filters.remove(UserItem.FILTER_HUMAN_TASK_ID);
+    		return searchUsersWhoCanPerformTask(taskId, page, resultsByPage, search, filters, orders);
+    	} else {
+    		return searchUsers(page, resultsByPage, search, filters, orders);
+    	}
 
     }
 

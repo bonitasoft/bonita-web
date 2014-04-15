@@ -16,12 +16,16 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.ActivityStates;
-import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -29,11 +33,9 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.ActivityFilterCreator;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
-import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.datastore.utils.VariableMapper;
@@ -43,27 +45,17 @@ import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
-import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
-
 /**
  * @author Séverin Moussel
  * 
  */
-public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE_ITEM extends ActivityInstance>
-        extends AbstractFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM>
-        implements DatastoreHasGet<CONSOLE_ITEM>,
-        DatastoreHasUpdate<CONSOLE_ITEM>
-{
+public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE_ITEM extends ActivityInstance> extends
+        AbstractFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM> implements DatastoreHasGet<CONSOLE_ITEM>, DatastoreHasUpdate<CONSOLE_ITEM> {
 
     public AbstractActivityDatastore(final APISession engineSession) {
         super(engineSession);
@@ -115,14 +107,13 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
     protected SearchOptionsBuilder makeSearchOptionBuilder(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-    	return new SearchOptionsCreator(page, resultsByPage, search, 
-    											new Sorts(orders, new ActivityAttributeConverter()),
-    											new Filters(filters, new ActivityFilterCreator())).getBuilder();
+        return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, new ActivityAttributeConverter()), new Filters(filters,
+                new ActivityFilterCreator())).getBuilder();
     }
 
     @Override
     public CONSOLE_ITEM update(final APIID id, final Map<String, String> attributes) {
-        String jsonVariables = MapUtil.getValue(attributes, ActivityItem.ATTRIBUTE_VARIABLES, null);
+        final String jsonVariables = MapUtil.getValue(attributes, ActivityItem.ATTRIBUTE_VARIABLES, null);
         if (!isBlank(jsonVariables)) {
             updateActivityVariables(id.toLong(), jsonVariables);
         }
@@ -138,9 +129,9 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
         }
     }
 
-    private void updateActivityVariables(long activityId, String jsonValue) {
-        ActivityEngineClient activityEngineclient = getActivityEngineClient();
-        HashMap<String, Serializable> variables = buildVariablesMap(activityId, jsonValue, activityEngineclient);
+    private void updateActivityVariables(final long activityId, final String jsonValue) {
+        final ActivityEngineClient activityEngineclient = getActivityEngineClient();
+        final HashMap<String, Serializable> variables = buildVariablesMap(activityId, jsonValue, activityEngineclient);
         activityEngineclient.updateVariables(activityId, variables);
     }
 
@@ -148,10 +139,10 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
         return new EngineClientFactory(new EngineAPIAccessor(getEngineSession())).createActivityEngineClient();
     }
 
-    private HashMap<String, Serializable> buildVariablesMap(long activityId,  String jsonValue, ActivityEngineClient client) {
-        HashMap<String, Serializable> map = new HashMap<String, Serializable>();
-        for (VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
-            DataInstance data = client.getDataInstance(var.getName(), activityId);
+    private HashMap<String, Serializable> buildVariablesMap(final long activityId, final String jsonValue, final ActivityEngineClient client) {
+        final HashMap<String, Serializable> map = new HashMap<String, Serializable>();
+        for (final VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
+            final DataInstance data = client.getDataInstance(var.getName(), activityId);
             map.put(var.getName(), var.getSerializableValue(data.getClassName()));
         }
         return map;
@@ -172,11 +163,16 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
             if (state == null) {
                 return;
             }
-
             if (HumanTaskItem.VALUE_STATE_SKIPPED.equals(state) && item instanceof FlowNodeItem) {
                 getProcessAPI().setActivityStateByName(item.getId().toLong(), ActivityStates.SKIPPED_STATE);
             } else if (HumanTaskItem.VALUE_STATE_COMPLETED.equals(state) && item instanceof ActivityItem) {
-                getProcessAPI().executeFlowNode(item.getId().toLong());
+                if (item instanceof HumanTaskItem && item.hasAttribute(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID)
+                        && item.getExecutedByDelegateUserId() != null) {
+                    final long userId = ((HumanTaskItem) item).getExecutedByDelegateUserId().toLong();
+                    getProcessAPI().executeFlowNode(userId, item.getId().toLong());
+                } else {
+                    getProcessAPI().executeFlowNode(item.getId().toLong());
+                }
             } else {
                 throw new APIException("Can't update " + item.getClass().getName() + " state to \"" + item.getState() + "\"");
             }
