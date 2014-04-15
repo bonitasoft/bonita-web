@@ -40,10 +40,14 @@ public class CasesSection extends Section {
     private ItemTable caseTable(ProcessItem process) {
         ItemTable casesTable = buildCaseItemTable(process);
         casesTable.setNbLinesByPage(10);
-        casesTable.setDefaultAction(new ShowCaseMoreDetailAction());
+        casesTable.setDefaultAction(getShowCaseMoreDetailAction());
         casesTable.addClass("cases");
         return casesTable;
     }
+
+	protected ShowCaseMoreDetailAction getShowCaseMoreDetailAction() {
+		return new ShowCaseMoreDetailAction();
+	}
 
     private ItemTable buildCaseItemTable(ProcessItem process) {
         ItemTable casesTable = new ItemTable(CaseDefinition.get())

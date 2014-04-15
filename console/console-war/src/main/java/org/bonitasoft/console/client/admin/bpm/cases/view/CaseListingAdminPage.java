@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
@@ -31,6 +32,7 @@ import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
+import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTable;
@@ -60,7 +62,7 @@ public class CaseListingAdminPage extends CaseListingPage {
         return filters;
     }
 
-    private ItemListingFilter allOpenedCases() {
+    protected ItemListingFilter allOpenedCases() {
         return new ItemListingFilter(FILTER_PRIMARY_OPENED_CASES, _("Opened"), _("Cases "), TABLE_CASES_ALL);
     }
 
@@ -71,7 +73,7 @@ public class CaseListingAdminPage extends CaseListingPage {
         return filters;
     }
 
-    private ItemListingFilter allArchivedCases() {
+    protected ItemListingFilter allArchivedCases() {
         return new ItemListingFilter(FILTER_SECONDARY_ARCHIVED_CASES, _("Archived"), _("Cases started or worked on by someone"), TABLE_HISTORY_ALL)
                 .addFilter(CaseItem.ATTRIBUTE_STATE, CaseItem.VALUE_STATE_COMPLETED);
     }
@@ -98,17 +100,25 @@ public class CaseListingAdminPage extends CaseListingPage {
     protected LinkedList<ItemListingTable> defineTables() {
         final LinkedList<ItemListingTable> tables = new LinkedList<ItemListingTable>();
         tables.add(allCasesAdminTable());
-        tables.add(archivedCasesTable(new ArchivedCaseQuickDetailsAdminPage()));
+        tables.add(archivedCasesTable(getArchivedCaseQuickDetailsPage()));
         return tables;
     }
 
-    private ItemListingTable allCasesAdminTable() {
+    protected ItemListingTable allCasesAdminTable() {
         return new ItemListingTable(new JsId(TABLE_CASES_ALL), _("All"),
                 buildAllCasesItemTable(CaseDefinition.get(), CaseItem.ATTRIBUTE_ID)
                 .addGroupedMultipleDeleteAction(_("Delete selected cases"), CaseDefinition.get(), _("case"), _("cases")),
-                new CaseQuickDetailsAdminPage());
+                getCaseQuickDetailsPage());
     }
 
+	protected ItemQuickDetailsPage<CaseItem> getCaseQuickDetailsPage() {
+		return new CaseQuickDetailsAdminPage();
+	}
+
+	protected ItemQuickDetailsPage<ArchivedCaseItem> getArchivedCaseQuickDetailsPage() {
+		return new ArchivedCaseQuickDetailsAdminPage();
+	}
+    
     @Override
     public String defineToken() {
         return TOKEN;

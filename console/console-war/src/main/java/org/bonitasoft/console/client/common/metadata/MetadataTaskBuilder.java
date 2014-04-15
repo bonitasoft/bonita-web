@@ -20,12 +20,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.uib.SafeHtmlParser;
-import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
-import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
@@ -90,28 +86,32 @@ public class MetadataTaskBuilder extends MetadataBuilder {
     }
 
 
-	public void addCaseId(final IFlowNodeItem task, boolean admin) {
+    /**
+     * 
+     * @param anchor
+     * @param task
+     */
+	public void addCaseId(final IFlowNodeItem task, final String targetPageToken, final String targetArchivedPageToken) {
         final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.caseId(
                 _("The id of the related case"),
                 _("Case"),
                 task.getCaseId().toString()))));
         add(new ItemDetailsMetadata(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, new Html(anchor)));
-        setCaseHref(anchor, task, admin);
+        setCaseHref(anchor, task, targetPageToken, targetArchivedPageToken);
     }
 
     /**
      * Is static to be accessible in HumanTaskMetadataView which is the same code but really shouldn't.
-     *
      * @param anchor
      * @param task
      */
-    public static void setCaseHref(final AnchorElement anchor, final IFlowNodeItem task, final boolean admin) {
+    public static void setCaseHref(final AnchorElement anchor, final IFlowNodeItem task, final String targetPageToken, final String targetArchivedPageToken) {
         APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(task.getCaseId());
         request.run(new APICallback() {
 
             @Override
             public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-                anchor.setHref("#?id=" + task.getCaseId() + "&_p=" + ((admin) ? CaseMoreDetailsAdminPage.TOKEN : CaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
+                anchor.setHref("#?id=" + task.getCaseId() + "&_p=" + targetPageToken + "&_pf=" + Session.getCurrentProfile());
             }
 
             @Override
@@ -120,7 +120,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                     @Override
                     public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
                         ArchivedCaseItem archive =  JSonItemReader.parseItem(response, ArchivedCaseDefinition.get());
-                        anchor.setHref("#?id=" + archive.getId() + "&_p=" + ((admin) ? ArchivedCaseMoreDetailsAdminPage.TOKEN : ArchivedCaseMoreDetailsPage.TOKEN) + "&_pf=" + Session.getCurrentProfile());
+                        anchor.setHref("#?id=" + archive.getId() + "&_p=" + targetArchivedPageToken + "&_pf=" + Session.getCurrentProfile());
                     }
                 });
             }

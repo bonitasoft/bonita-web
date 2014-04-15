@@ -21,6 +21,8 @@ import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPL
 
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.uib.formatter.Formatter;
+import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
+import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
@@ -81,6 +83,6 @@ public class HumanTaskMetadataView extends Composite {
             description.setInnerText(task.ensureDescription());
         }
 
-        MetadataTaskBuilder.setCaseHref(caseId, task, false);
+        MetadataTaskBuilder.setCaseHref(caseId, task, CaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.TOKEN);
     }
 }

@@ -280,7 +280,11 @@ label{
 		&.td_actions{
 			a{
 				margin-right: 8px;
-				text-decoration: underline;
+				color: @table-cell-actions-link-color;
+				text-decoration: @table-cell-actions-link-textDecoration;
+				&:hover{
+					text-decoration: @table-cell-actions-linkHover-textDecoration;
+				}
 			}
 		}
 	}
