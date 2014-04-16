@@ -43,6 +43,7 @@ public class ProfileEntrySearchDescriptorConverter implements AttributeConverter
         mapping.put(ProfileEntryItem.ATTRIBUTE_PARENT_ID, ProfileEntrySearchDescriptor.PARENT_ID);
         mapping.put(ProfileEntryItem.ATTRIBUTE_INDEX, ProfileEntrySearchDescriptor.INDEX);
         mapping.put(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, ProfileEntrySearchDescriptor.PROFILE_ID);
+        mapping.put(ProfileEntryItem.ATTRIBUTE_PAGE, ProfileEntrySearchDescriptor.PAGE);
         
         return mapping;
     }
