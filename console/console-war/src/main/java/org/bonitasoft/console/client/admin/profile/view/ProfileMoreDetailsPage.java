@@ -22,7 +22,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.DoubleSection;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
-import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
@@ -79,7 +78,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     protected void buildBody(final ProfileItem item) {
         if (item.isDefault().equals("false")) {
             DoubleSection mappingSection = new DoubleSection(new JsId("Mapping"), _("Mapping"));
-            mappingSection.addDescription(_("This profile will be available to the users mapped upon next login."));
+            mappingSection.addDescription(_("This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."));
             mappingSection.addBody(createUsersSection(item), createGroupsSection(item), createRolesSection(item), createMembershipsSection(item));
             addBody(mappingSection);
         } else {

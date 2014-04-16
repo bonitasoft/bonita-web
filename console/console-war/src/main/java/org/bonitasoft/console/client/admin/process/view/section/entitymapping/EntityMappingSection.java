@@ -18,7 +18,6 @@ package org.bonitasoft.console.client.admin.process.view.section.entitymapping;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.SHA1;
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ConfigurationState;
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ConfigurationStateText;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
@@ -27,6 +26,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.AvailableTokens;
+import org.bonitasoft.web.toolkit.client.SHA1;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
@@ -60,7 +60,7 @@ public class EntityMappingSection extends Section {
                 _("Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."))
                 .addClass("section_description"));
         addBody(entityMappingTable);
-        String explanations = _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal.");
+        final String explanations = _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal.");
 
         if (AvailableTokens.tokens.contains(hasRightToAccessProfilePage())) {
             addBody(new Paragraph(

@@ -26,7 +26,7 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
-import org.bonitasoft.console.client.user.cases.view.FormsView;
+import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
@@ -115,7 +115,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     }
 
     private Component createFormIframe(final HumanTaskItem item, final boolean assignTask) {
-        return new UiComponent(new FormsView(buildTasksFormURL(item, assignTask)));
+        return new UiComponent(new IFrameView(buildTasksFormURL(item, assignTask)));
     }
 
     private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {

@@ -53,10 +53,10 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
     // GET
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private ProcessInstance getProcessInstance(APIID caseId) throws Exception {
+    private ProcessInstance getProcessInstance(final APIID caseId) throws Exception {
         try {
             return TenantAPIAccessor.getProcessAPI(getInitiator().getSession()).getProcessInstance(caseId.toLong());
-        } catch (ProcessInstanceNotFoundException e) {
+        } catch (final ProcessInstanceNotFoundException e) {
             return null;
         }
     }
@@ -74,9 +74,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testGetCase() {
-        final TestCase testCase = TestProcessFactory.getDefaultHumanTaskProcess()
-                .addActor(getInitiator())
-                .startCase();
+        final TestCase testCase = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).startCase();
 
         final CaseItem caseItem = apiCase.runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<String>(), new ArrayList<String>());
 
@@ -212,18 +210,18 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
 
         checkSearchResults(caseItems, 10, 5);
     }
-    
+
     /**
      * Process Owner test cases
      */
     public void testSearchTeamManager() throws Exception {
 
-        Map<String, TestUser> managedList = TestUserFactory.getManagedUsers(1);
+        final Map<String, TestUser> managedList = TestUserFactory.getManagedUsers(1);
 
         final TestProcess testProcess4 = TestProcessFactory.getHumanTaskProcess("ProcessTeamManager");
         testProcess4.addActor(managedList.get("managed.user0"));
         testProcess4.startCases(25);
-        
+
         final TestProcess testProcess5 = TestProcessFactory.getHumanTaskProcess("Process five");
         testProcess5.addActor(TestUserFactory.getRidleyScott());
         testProcess5.startCases(10);
@@ -244,42 +242,49 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
         Assert.assertTrue("Wrong page size", caseItems.getLength() == nbResultsByPageExpected);
         Assert.assertTrue("Wrong Total size", caseItems.getTotal() == nbTotalResultsExpected);
     }
-    
+
     @Test
     public void we_can_start_a_case() throws Exception {
-        TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).setEnable(true);
-        
-        CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).build());
-        
-        ProcessInstance instance = getProcessInstance(item.getId());
+        final TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).setEnable(true);
+
+        final CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).build());
+
+        final ProcessInstance instance = getProcessInstance(item.getId());
         assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
     }
-    
+
+    @Test
+    public void we_can_start_a_case_with_user() throws Exception {
+        final TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(TestUserFactory.getRidleyScott()).setEnable(true);
+
+        final CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).withUserId(TestUserFactory.getRidleyScott().getId()).build());
+
+        final ProcessInstance instance = getProcessInstance(item.getId());
+        assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
+        assertThat(instance.getStartedByDelegate(), is(TestUserFactory.getRidleyScott().getId()));
+    }
+
     @Test
     public void we_can_start_a_case_with_variables() throws Exception {
-        String jsonVariables = "[" +
-                "{\"name\": \"stringVariable\", \"value\": \"newValue\"}," +
-                "{\"name\": \"longVariable\", \"value\": 9}," +
-                "{\"name\": \"dateVariable\", \"value\": 349246800000}" +
-            "]";
-        TestProcess process = createProcessWithVariables(aStringVariable("stringVariable", "firstValue"), 
-                aLongVariable("longVariable", 1L), aDateVariable("dateVariable", "428558400000"));
-        
-        CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).withVariables(jsonVariables).build());
-        
-        ProcessInstance instance = getProcessInstance(item.getId());
+        final String jsonVariables = "[" + "{\"name\": \"stringVariable\", \"value\": \"newValue\"}," + "{\"name\": \"longVariable\", \"value\": 9},"
+                + "{\"name\": \"dateVariable\", \"value\": 349246800000}" + "]";
+        final TestProcess process = createProcessWithVariables(aStringVariable("stringVariable", "firstValue"), aLongVariable("longVariable", 1L),
+                aDateVariable("dateVariable", "428558400000"));
+
+        final CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).withVariables(jsonVariables).build());
+
+        final ProcessInstance instance = getProcessInstance(item.getId());
         assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
         assertThat((String) getProcessDataInstanceValue("stringVariable", instance.getId()), equalTo("newValue"));
         assertThat((Long) getProcessDataInstanceValue("longVariable", instance.getId()), equalTo(9L));
         assertThat((Date) getProcessDataInstanceValue("dateVariable", instance.getId()), equalTo(new Date(349246800000L)));
     }
 
-    private TestProcess createProcessWithVariables(ProcessVariable... processVariables) throws Exception {
-        return TestProcessFactory.createProcessWithVariables("processWithVariables", processVariables)
-                .addActor(getInitiator()).setEnable(true);
+    private TestProcess createProcessWithVariables(final ProcessVariable... processVariables) throws Exception {
+        return TestProcessFactory.createProcessWithVariables("processWithVariables", processVariables).addActor(getInitiator()).setEnable(true);
     }
-    
-    private Serializable getProcessDataInstanceValue(String dataName, long processInstanceId) throws Exception {
+
+    private Serializable getProcessDataInstanceValue(final String dataName, final long processInstanceId) throws Exception {
         return TenantAPIAccessor.getProcessAPI(getInitiator().getSession()).getProcessDataInstance(dataName, processInstanceId).getValue();
     }
 }

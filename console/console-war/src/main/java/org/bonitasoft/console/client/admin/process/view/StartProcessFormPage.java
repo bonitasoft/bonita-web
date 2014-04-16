@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
-import org.bonitasoft.console.client.user.cases.view.FormsView;
+import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
@@ -104,7 +104,7 @@ public class StartProcessFormPage extends Page {
                 .append("&autoInstantiate=false&mode=form&userId=")
                 .append(userId);
   
-        addBody(new UiComponent(new FormsView(frameURL.toString())));
+        addBody(new UiComponent(new IFrameView(frameURL.toString())));
     }
 
     @Override

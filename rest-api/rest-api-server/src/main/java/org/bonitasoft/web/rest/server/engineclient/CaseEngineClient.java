@@ -64,9 +64,7 @@ public class CaseEngineClient {
                 if (variables == null || variables.isEmpty()) {
                     return processAPI.startProcess(userId, processId);
                 } else {
-                    // FIXME restore this once the engine method is available
-                    // return processAPI.startProcess(userId, processId, variables);
-                    return processAPI.startProcess(userId, processId);
+                    return processAPI.startProcess(userId, processId, variables);
                 }
             } else {
                 if (variables == null || variables.isEmpty()) {
