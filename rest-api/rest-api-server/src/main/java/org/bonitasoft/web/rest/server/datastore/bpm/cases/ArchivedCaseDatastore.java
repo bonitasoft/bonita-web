@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import java.util.Map;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
@@ -35,8 +37,6 @@ import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -63,7 +63,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         result.setSourceObjectId(item.getSourceObjectId());
         result.setRootCaseId(item.getRootProcessInstanceId());
         result.setStartedByUserId(item.getStartedBy());
-        result.setStartedByDelegateUserId(item.getStartedByDelegate());
+        result.setStartedBySubstituteUserId(item.getStartedBySubstitute());
         return result;
     }
 
@@ -104,7 +104,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
                         .searchArchivedProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_SUPERVISOR_ID), builder.done());
             }
 
-            if(filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
+            if (filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
                 builder.filter(ArchivedProcessInstancesSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
                 return processAPI.searchArchivedProcessInstancesInAllStates(builder.done());
             }

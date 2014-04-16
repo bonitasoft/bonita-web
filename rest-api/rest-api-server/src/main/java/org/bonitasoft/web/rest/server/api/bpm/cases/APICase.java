@@ -40,8 +40,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Séverin Moussel
  */
 public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>, APIHasAdd<CaseItem>, APIHasSearch<CaseItem>, APIHasDelete {
-    
-    
+
     @Override
     protected ItemDefinition defineItemDefinition() {
         return Definitions.get(CaseDefinition.TOKEN);
@@ -51,7 +50,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
     public CaseItem add(final CaseItem caseItem) {
         return new CaseDatastore(getEngineSession()).add(caseItem);
     }
-    
+
     @Override
     public CaseItem get(final APIID id) {
         return new CaseDatastore(getEngineSession()).get(id);
@@ -86,9 +85,9 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
         if (isDeployable(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
             item.setDeploy(
                     CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
-                    new UserDatastore(getEngineSession()).get(item.getStartedByDelegateUserId()));
+                    new UserDatastore(getEngineSession()).get(item.getStartedBySubstituteUserId()));
         }
-        
+
         if (isDeployable(CaseItem.ATTRIBUTE_PROCESS_ID, deploys, item)) {
             item.setDeploy(
                     CaseItem.ATTRIBUTE_PROCESS_ID,

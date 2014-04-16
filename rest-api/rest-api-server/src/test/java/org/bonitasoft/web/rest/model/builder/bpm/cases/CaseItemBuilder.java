@@ -49,7 +49,7 @@ public class CaseItemBuilder {
     public CaseItem build() {
         final CaseItem item = new CaseItem();
         setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_PROCESS_ID, processId);
-        setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, userId);
+        setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
         setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_VARIABLES, jsonVariables);
         return item;
     }
