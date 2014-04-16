@@ -14,21 +14,22 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * Servlet allowing to upload a File.
@@ -46,18 +47,36 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     private String uploadDirectoryPath = null;
 
-    private static final String SUPPORTED_EXTENSIONS = "SupportedExtensions";
+    private static final String RESPONSE_SEPARATOR = ":";
+
+    private static final String SUPPORTED_EXTENSIONS_PARAM = "SupportedExtensions";
 
     private static final String SUPPORTED_EXTENSIONS_SEPARATOR = ",";
 
+    private static final String RETURN_FULL_SERVER_PATH_PARAM = "ReturnFullPath";
+
+    private static final String RETURN_ORIGINAL_FILENAME_PARAM = "ReturnOriginalFilename";
+
     private String[] supportedExtensionsList = new String[0];
+
+    protected boolean returnFullPathInResponse = true;
+
+    protected boolean alsoReturnOriginalFilename = false;
 
     @Override
     public void init() throws ServletException {
 
-        final String supportedExtensions = getInitParameter(SUPPORTED_EXTENSIONS);
-        if (supportedExtensions != null) {
-            this.supportedExtensionsList = supportedExtensions.split(SUPPORTED_EXTENSIONS_SEPARATOR);
+        final String supportedExtensionsParam = getInitParameter(SUPPORTED_EXTENSIONS_PARAM);
+        if (supportedExtensionsParam != null) {
+            supportedExtensionsList = supportedExtensionsParam.split(SUPPORTED_EXTENSIONS_SEPARATOR);
+        }
+        final String alsoReturnOriginalFilenameParam = getInitParameter(RETURN_ORIGINAL_FILENAME_PARAM);
+        if (alsoReturnOriginalFilenameParam != null) {
+            alsoReturnOriginalFilename = Boolean.parseBoolean(alsoReturnOriginalFilenameParam);
+        }
+        final String returnFullPathInResponseParam = getInitParameter(RETURN_FULL_SERVER_PATH_PARAM);
+        if (returnFullPathInResponseParam != null) {
+            returnFullPathInResponse = Boolean.parseBoolean(returnFullPathInResponseParam);
         }
     }
 
@@ -79,7 +98,7 @@ public abstract class FileUploadServlet extends HttpServlet {
                 return;
             }
 
-            final File targetDirectory = new File(this.uploadDirectoryPath);
+            final File targetDirectory = new File(uploadDirectoryPath);
             if (!targetDirectory.exists()) {
                 targetDirectory.mkdirs();
             }
@@ -121,7 +140,17 @@ public abstract class FileUploadServlet extends HttpServlet {
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "File uploaded : " + uploadedFile.getPath());
                 }
-                responsePW.print(uploadedFile.getPath());
+
+                String responseString;
+                if (returnFullPathInResponse) {
+                    responseString = uploadedFile.getPath();
+                } else {
+                    responseString = uploadedFile.getName();
+                }
+                if (alsoReturnOriginalFilename) {
+                    responseString = responseString + RESPONSE_SEPARATOR + fileName;
+                }
+                responsePW.print(responseString);
                 responsePW.flush();
 
                 // TODO add break
@@ -155,8 +184,8 @@ public abstract class FileUploadServlet extends HttpServlet {
         if (supportedExtensionsList.length < 1) {
             return true;
         }
-        
-        for (final String extention : this.supportedExtensionsList) {
+
+        for (final String extention : supportedExtensionsList) {
             if (fileName.toLowerCase().endsWith("." + extention.toLowerCase())) {
                 return true;
             }
