@@ -24,10 +24,10 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
-import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
 import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -64,5 +64,11 @@ public class UserDatastoreTest {
         } catch (AttributeConverterException e) {
             Assert.fail("Search should be able to handle multple sort");
         }
+    }
+
+    @Test
+    @Ignore
+    public void testSearchUsersWhoCanPerformTask() throws Exception {
+
     }
 }

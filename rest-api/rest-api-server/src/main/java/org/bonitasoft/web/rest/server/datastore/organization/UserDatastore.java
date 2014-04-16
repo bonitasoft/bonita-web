@@ -147,17 +147,18 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
             final Map<String, String> filters, final String orders) {
 
         SearchResult<User> engineSearchResults;
-        List<User> userList;
         try {
-            userList = getProcessEngineClient().getProcessApi().getPossibleUsersOfPendingHumanTask(Long.valueOf(taskId), page * resultsByPage,
-                    resultsByPage);
+            SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
+                    resultsByPage, search, filters, orders);
+            engineSearchResults = getProcessEngineClient().getProcessApi().searchUsersWhoCanExecutePendingHumanTask(Long.valueOf(taskId),
+                    searchOptionsCreator.create());
 
         } catch (NumberFormatException e) {
             throw new APIAttributeException(UserItem.FILTER_HUMAN_TASK_ID, "Cannot convert human task id: " + taskId + " into long.");
         }
 
-        return new ItemSearchResult<UserItem>(page, resultsByPage, resultsByPage,
-                userItemConverter.convert(userList));
+        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(),
+                userItemConverter.convert(engineSearchResults.getResult()));
 
     }
 
