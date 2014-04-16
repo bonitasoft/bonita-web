@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.console.client.common.view;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
@@ -26,9 +28,9 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttr
  */
 public class StartedByDelegateAttributeReder extends AbstractAttributeReader {
 
-    private UserItem startedByUser;
+    private UserItem startedBySubstitue;
 
-    private UserItem startedByDelegateUser;
+    private UserItem startedBy;
 
     /**
      * Default Constructor.
@@ -39,18 +41,18 @@ public class StartedByDelegateAttributeReder extends AbstractAttributeReader {
         super(attributeToRead);
     }
 
-    public void setStartedByUser(UserItem startedByUser) {
-        this.startedByUser = startedByUser;
+    public void setStartedBySubstitute(UserItem startedBySustitute) {
+        this.startedBySubstitue = startedBySustitute;
     }
 
-    public void setStartedByDelegateUser(UserItem startedByDelegateUser) {
-        this.startedByDelegateUser = startedByDelegateUser;
+    public void setStartedBy(UserItem startedBy) {
+        this.startedBy = startedBy;
     }
 
     @Override
     protected String _read(IItem item) {
-        return startedByUser.getFirstName() + " " + startedByUser.getLastName() + " for " + startedByDelegateUser.getFirstName() + " "
-                + startedByDelegateUser.getLastName();
+        return startedBySubstitue.getFirstName() + " " + startedBySubstitue.getLastName() + _(" for ") + startedBy.getFirstName() + " "
+                + startedBy.getLastName();
     }
 
 }

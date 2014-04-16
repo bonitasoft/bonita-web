@@ -76,7 +76,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
-        defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
+        defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(CaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
@@ -86,14 +86,14 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startedOn());
-        metadatas.add(startedBy(item.getStartedByUser(), item.getStartedByDelegateUser()));
+        metadatas.add(startedBy(item.getStartedByUser(), item.getStartedBySubstituteUser()));
         return metadatas;
     }
-    private ItemDetailsMetadata startedBy(UserItem startedByUser, UserItem startedByDelegateUser) {
-        if (startedByUser.getId().toLong().equals(startedByDelegateUser.getId().toLong())) {
+    private ItemDetailsMetadata startedBy(UserItem startedByUser, UserItem startedBySubstituteUser) {
+        if (startedByUser.getId().toLong().equals(startedBySubstituteUser.getId().toLong())) {
             return addStartedBy();
         } else {
-            return addStartedByDelegate(startedByUser, startedByDelegateUser);
+            return addStartedBySubstitute(startedByUser, startedBySubstituteUser);
         }
     }
 
@@ -102,10 +102,10 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 _("Started by"), _("The user that has started this case"));
     }
     
-    private ItemDetailsMetadata addStartedByDelegate(UserItem executedByUser, UserItem executedByDelegateUser) {
-        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
-        attributeReader.setStartedByUser(executedByUser);
-        attributeReader.setStartedByDelegateUser(executedByDelegateUser);
+    private ItemDetailsMetadata addStartedBySubstitute(UserItem executedByUser, UserItem startedBySubstituteUser) {
+        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+        attributeReader.setStartedBySubstitute(startedBySubstituteUser);
+        attributeReader.setStartedBy(executedByUser);
         return new ItemDetailsMetadata(attributeReader,
                 _("Started by"),
                 _("Name of the user who started this case"));

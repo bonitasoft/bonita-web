@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY;
 import static org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT.DISPLAY_RELATIVE;
 
@@ -85,10 +86,10 @@ public class HumanTaskMetadataView extends Composite {
         assignedTo.setInnerText(Formatter.formatUser(task.getAssignedUser()));
         dueDate.setInnerText(Formatter.formatDate(task.getDueDate(), DISPLAY_RELATIVE));
         if (!IFlowNodeItem.VALUE_STATE_READY.equals(task.getState())) {
-        	if (task.getExecutedByUserId().toLong().equals(task.getExecutedByDelegateUserId().toLong())) {
+        	if (task.getExecutedByUserId().toLong().equals(task.getExecutedBySubstituteUserId().toLong())) {
         		doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()));
         	} else {
-        		doneBy.setInnerText(Formatter.formatUser(task.getExecutedByUser()) + " for " + Formatter.formatUser(task.getExecutedByDelegateUser())); 
+        		doneBy.setInnerText(Formatter.formatUser(task.getExecutedBySubstituteUser()) + _(" for ") + Formatter.formatUser(task.getExecutedByUser())); 
         	}
         } else {
         	doneByContainer.removeFromParent();
