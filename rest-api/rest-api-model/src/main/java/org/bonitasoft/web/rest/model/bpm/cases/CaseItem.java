@@ -51,7 +51,7 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     
     public static final String ATTRIBUTE_STARTED_BY_USER_ID = "started_by";
 
-    public static final String ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID = "startedByDelegate";
+    public static final String ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID = "startedBySubstitute";
 
     public static final String ATTRIBUTE_START_DATE = "start";
     
@@ -107,8 +107,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     }
 
 
-    public UserItem getStartedByDelegateUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID));
+    public UserItem getStartedBySubstituteUser() {
+        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
     }
     
     public ProcessItem getProcess() {
@@ -134,8 +134,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
         return getAttributeValueAsAPIID(ATTRIBUTE_STARTED_BY_USER_ID);
     }
 
-    public APIID getStartedByDelegateUserId() {
-        return getAttributeValueAsAPIID(ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
+    public APIID getStartedBySubstituteUserId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
     }
 
     public Date getEndDate() {
@@ -201,16 +201,16 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
         setAttribute(ATTRIBUTE_STARTED_BY_USER_ID, userId);
     }
 
-    public void setStartedByDelegateUserId(final Long userId) {
-        setAttribute(ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, userId);
+    public void setStartedBySubstituteUserId(final Long userId) {
+        setAttribute(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
     }
 
-    public void setStartedByDelegateUserId(final APIID userId) {
-        setAttribute(ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, userId);
+    public void setStartedBySubstituteUserId(final APIID userId) {
+        setAttribute(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
     }
 
-    public void setStartedByDelegateUserId(final String userId) {
-        setAttribute(ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, userId);
+    public void setStartedBySubstituteUserId(final String userId) {
+        setAttribute(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
     }
     
     public void setEndDate(final String date) {

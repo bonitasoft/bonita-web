@@ -83,9 +83,9 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
                     new UserDatastore(getEngineSession()).get(item.getStartedByUserId()));
         }
 
-        if (isDeployable(CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, deploys, item)) {
+        if (isDeployable(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
             item.setDeploy(
-                    CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID,
+                    CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getStartedByDelegateUserId()));
         }
         

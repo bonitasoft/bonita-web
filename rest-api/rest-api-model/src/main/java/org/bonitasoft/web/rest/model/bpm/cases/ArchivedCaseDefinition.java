@@ -67,7 +67,7 @@ public class ArchivedCaseDefinition extends ItemDefinition<ArchivedCaseItem> {
         createAttribute(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_ARCHIVED_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
-        createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
     }
 
     @Override

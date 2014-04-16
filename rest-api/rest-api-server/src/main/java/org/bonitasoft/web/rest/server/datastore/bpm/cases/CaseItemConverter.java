@@ -34,7 +34,7 @@ public class CaseItemConverter extends ItemConverter<CaseItem, ProcessInstance> 
         item.setProcessId(process.getProcessDefinitionId());
         item.setRootCaseId(process.getRootProcessInstanceId());
         item.setStartedByUserId(process.getStartedBy());
-        item.setStartedByDelegateUserId(process.getStartedByDelegate());
+        item.setStartedBySubstituteUserId(process.getStartedBySubstitute());
         return item;
     }
 

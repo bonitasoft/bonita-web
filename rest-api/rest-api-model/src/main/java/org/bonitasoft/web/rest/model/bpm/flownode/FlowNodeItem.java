@@ -211,28 +211,28 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     }
     
     @Override
-    public void setExecutedByDelegateUserId(APIID id) {
-        setAttribute(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, id);
+    public void setExecutedBySubstituteUserId(APIID id) {
+        setAttribute(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, id);
     }
 
     @Override
-    public void setExecutedByDelegateUserId(String id) {
-        setAttribute(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, id);
+    public void setExecutedBySubstituteUserId(String id) {
+        setAttribute(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, id);
     }
 
     @Override
-    public void setExecutedByDelegateUserId(Long id) {
-        setAttribute(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, id);
+    public void setExecutedBySubstituteUserId(Long id) {
+        setAttribute(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, id);
     }
 
     @Override
-    public APIID getExecutedByDelegateUserId() {
-        return getAttributeValueAsAPIID(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID);
+    public APIID getExecutedBySubstituteUserId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID);
     }
 
     @Override
-    public UserItem getExecutedByDelegateUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID));
+    public UserItem getExecutedBySubstituteUser() {
+        return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID));
     }
 
     @Override
