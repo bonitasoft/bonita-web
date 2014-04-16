@@ -74,7 +74,7 @@ public class CaseEngineClientTest extends APITestWithMock {
 
         caseEngineClient.start(userId, expectedProcessId, variables);
 
-        verify(processAPI).startProcess(userId, expectedProcessId);
+        verify(processAPI).startProcess(userId, expectedProcessId, variables);
     }
 
     @Test(expected = APIException.class)
