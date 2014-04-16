@@ -65,7 +65,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
      *            The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
-    protected static final FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
+    protected static FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
 
         result.setId(item.getId());
         result.setName(item.getName());
