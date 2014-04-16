@@ -261,7 +261,7 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
 
         final ProcessInstance instance = getProcessInstance(item.getId());
         assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
-        assertThat(instance.getStartedByDelegate(), is(TestUserFactory.getRidleyScott().getId()));
+        assertThat(instance.getStartedBy(), is(TestUserFactory.getRidleyScott().getId()));
     }
 
     @Test
