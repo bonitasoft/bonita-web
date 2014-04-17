@@ -57,6 +57,4 @@ public class UserRightsBuilderTest {
         assertEquals(rights.get(0), generator.getHash("token 15"));
         assertEquals(rights.get(1), generator.getHash("token 25"));
     }
-
-
 }

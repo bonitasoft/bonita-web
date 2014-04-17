@@ -22,6 +22,7 @@ import org.bonitasoft.console.common.server.login.LoginManagerProperties;
 import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;
+import org.bonitasoft.web.rest.server.ListExtractor;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
@@ -87,14 +88,18 @@ public class APISession extends ConsoleAPI<SessionItem> {
     private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession apiSession) {
         final List<String> userRights = new ArrayList<String>();
         final SHA1Generator sha1Generator = new SHA1Generator();
+        ListExtractor<String, ProfileEntry> extractor = new ListExtractor<String, ProfileEntry>();
         for (final Profile profile : profiles) {
             final List<ProfileEntry> profileEntries = getProfileEntriesForProfile(profile.getId(), apiSession);
-            for (final ProfileEntry profileEntry : profileEntries) {
-
-                // User rights are defined by the Profile Entries of a profile
-                final String userRight = profileEntry.getPage();
-                if (userRight != null) {
-                    userRights.add(sha1Generator.getHash(userRight.concat(String.valueOf(apiSession.getId()))));
+            List<String> tokens = extractor.extract(profileEntries, new ListExtractor.Extractor<String, ProfileEntry>() {
+                @Override
+                public String extract(ProfileEntry entry) {
+                    return entry.getPage();
+                }
+            });
+            for (final String token : tokens) {
+                if (token != null) {
+                    userRights.add(sha1Generator.getHash(token.concat(String.valueOf(apiSession.getId()))));
                 }
 
             }
