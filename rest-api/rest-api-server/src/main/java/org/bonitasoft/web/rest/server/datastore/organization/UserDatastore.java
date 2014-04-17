@@ -45,9 +45,9 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 public class UserDatastore extends CommonDatastore<UserItem, User>
         implements DatastoreHasGet<UserItem> {
 
-    private final EngineClientFactory engineClientFactory;
+    protected EngineClientFactory engineClientFactory;
 
-    private final UserItemConverter userItemConverter;
+    protected UserItemConverter userItemConverter;
 
     public UserDatastore(final APISession engineSession) {
         super(engineSession);
@@ -122,7 +122,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
     }
 
-    private ItemSearchResult<UserItem> searchUsersWhoCanStartProcess(final String processId, final int page, final int resultsByPage, final String search,
+    protected ItemSearchResult<UserItem> searchUsersWhoCanStartProcess(final String processId, final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
 
         SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
@@ -143,7 +143,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
     }
 
-    private ItemSearchResult<UserItem> searchUsersWhoCanPerformTask(final String taskId, final int page, final int resultsByPage, final String search,
+    protected ItemSearchResult<UserItem> searchUsersWhoCanPerformTask(final String taskId, final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
 
         SearchResult<User> engineSearchResults;
