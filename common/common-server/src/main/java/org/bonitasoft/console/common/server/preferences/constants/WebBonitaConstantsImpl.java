@@ -55,9 +55,9 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     private String workFolderPath = null;
 
-    private final String consoleWorkFolderPath = null;
-
     private String formsWorkFolderPath = null;
+
+    private String workLibFolderPath = null;
 
     private String bdmWorkFolderPath;
 
@@ -181,6 +181,17 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
             workFolderPath = getPlatformFolderPath() + workFolderName + File.separator;
         }
         return workFolderPath;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getWorkLibFolderPath() {
+        if (workLibFolderPath == null) {
+            workLibFolderPath = getWorkFolderPath() + LIB_FOLDER_NAME + File.separator;
+        }
+        return workLibFolderPath;
     }
 
     /**

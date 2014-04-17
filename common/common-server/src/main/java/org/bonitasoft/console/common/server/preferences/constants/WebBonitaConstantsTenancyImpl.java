@@ -40,8 +40,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     private String workFolderPath = null;
 
-    private final String consoleWorkFolderPath = null;
-
     private String formsWorkFolderPath = null;
 
     public static final String gadgetsWorkFolderName = "gadgets";
@@ -265,6 +263,11 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
             groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
         }
         return groupsIconsWorkFolderPath;
+    }
+
+    @Override
+    public String getWorkLibFolderPath() {
+        return null;
     }
 
     @Override
