@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +31,10 @@ public class UserRightsBuilder {
     }
 
     public List<String> buildFrom(List<String> tokens) {
-        return Arrays.asList(generator.getHash(tokens.get(0).concat(String.valueOf(session.getId()))));
+        List<String> rights = new ArrayList<String>(tokens.size());
+        for (String token : tokens) {
+            rights.add(generator.getHash(token.concat(String.valueOf(session.getId()))));
+        }
+        return rights;
     }
 }
