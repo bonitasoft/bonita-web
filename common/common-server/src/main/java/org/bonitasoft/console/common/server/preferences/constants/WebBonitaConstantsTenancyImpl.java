@@ -266,15 +266,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getWorkLibFolderPath() {
-        return null;
-    }
-
-    @Override
     public String getBDMWorkFolderPath() {
-        if (this.bdmWorkFolderPath == null) {
-            this.bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+        if (bdmWorkFolderPath == null) {
+            bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
         }
-        return this.bdmWorkFolderPath;
+        return bdmWorkFolderPath;
     }
 }

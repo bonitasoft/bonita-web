@@ -54,8 +54,6 @@ public interface WebBonitaConstants {
 
     public static final String PROFILES_ICONS_FOLDER_NAME = "profiles";
 
-    public static final String LIB_FOLDER_NAME = "lib";
-
     /**
      * Client
      */
@@ -181,12 +179,6 @@ public interface WebBonitaConstants {
     public String getPortalGroupIconsFolderPath();
 
     /**
-     * Get workLibFolderPath Path
-     * 
-     * @return path
-     */
-    public String getWorkLibFolderPath();
-
      * Get BDMWorkFolderPath Path
      * 
      * @return path
