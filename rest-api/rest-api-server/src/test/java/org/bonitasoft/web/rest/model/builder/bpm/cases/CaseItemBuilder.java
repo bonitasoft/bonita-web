@@ -36,7 +36,7 @@ public class CaseItemBuilder {
         return this;
     }
 
-    public CaseItemBuilder withSubstituteUserId(final long userId) {
+    public CaseItemBuilder withUserId(final long userId) {
         this.userId = userId;
         return this;
     }
