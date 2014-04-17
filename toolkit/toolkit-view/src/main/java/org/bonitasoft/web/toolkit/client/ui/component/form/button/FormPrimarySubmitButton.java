@@ -14,31 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client.ui.component.button;
+package org.bonitasoft.web.toolkit.client.ui.component.form.button;
 
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
-import org.bonitasoft.web.toolkit.client.ui.component.Button;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction;
 
 /**
- * @author Colin PUY
+ * @author Séverin Moussel
  * 
  */
-public class ButtonPrimaryAction extends Button {
+public class FormPrimarySubmitButton extends FormSubmitButton {
 
-    public static final String BTN_PRIMARY_ACTION_CLASS = "btn-primary-action";
-
-    public ButtonPrimaryAction(String label, String tooltip, Action action) {
-        super(label, tooltip, action);
-    }
-
-    public ButtonPrimaryAction(String id, String label, String tooltip, Action action) {
-        super(id, label, tooltip, action);
+    public FormPrimarySubmitButton(JsId jsid, String label, String tooltip, Action action) {
+        super(jsid, label, tooltip, action);
     }
 
     @Override
     protected void postProcessHtml() {
         super.postProcessHtml();
-        element.addClassName(BTN_PRIMARY_ACTION_CLASS);
-    }
+        element.addClassName(ButtonPrimaryAction.BTN_PRIMARY_ACTION_CLASS);
+        element.removeClassName(ButtonAction.CSS_CLASS);
 
+    }
 }
