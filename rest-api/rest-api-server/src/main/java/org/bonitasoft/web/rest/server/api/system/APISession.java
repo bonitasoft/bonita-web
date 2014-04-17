@@ -31,40 +31,37 @@ import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.session.SessionItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Julien Mege
  */
 public class APISession extends ConsoleAPI<SessionItem> {
 
-    public static final String APISESSION = "apiSession";
-
     public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
 
     @Override
-    protected ItemDefinition defineItemDefinition() {
-        return Definitions.get(SessionDefinition.TOKEN);
+    protected SessionDefinition defineItemDefinition() {
+        return (SessionDefinition) Definitions.get(SessionDefinition.TOKEN);
     }
 
     @Override
     public SessionItem get(final APIID unusedId) {
         final org.bonitasoft.engine.session.APISession apiSession = getEngineSession();
         final SessionItem session = new SessionItem();
-        
+
         if (apiSession != null) {
             session.setAttribute(SessionItem.ATTRIBUTE_SESSIONID, String.valueOf(apiSession.getId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
-
+            session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
         return session;
     }
 
     public String getUserRights(final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<Profile> profiles = getProfilesForUser(apiSession.getUserId(), apiSession);
+        final List<Profile> profiles = getProfilesForUser(apiSession);
         if (apiSession.isTechnicalUser()) {
             return getUserRightsForTechnicalUser(apiSession);
         } else {
@@ -72,7 +69,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
         }
     }
 
-    private List<Profile> getProfilesForUser(final long userId, final org.bonitasoft.engine.session.APISession apiSession) {
+    private List<Profile> getProfilesForUser(final org.bonitasoft.engine.session.APISession apiSession) {
         final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
         final ProfileEngineClient profileApi = engineClientFactory.createProfileEngineClient();
         return profileApi.listProfilesForUser(apiSession.getUserId());
@@ -130,4 +127,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
         return loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
     }
 
+    public String getVersion() {
+        return "";
+    }
 }
