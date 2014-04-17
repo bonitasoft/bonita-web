@@ -18,13 +18,13 @@ import static org.mockito.BDDMockito.given;
 @RunWith(MockitoJUnitRunner.class)
 public class UserRightsBuilderTest {
 
-    SHA1Generator generator = new SHA1Generator();
+    private SHA1Generator generator = new SHA1Generator();
 
     @Mock
-    org.bonitasoft.engine.session.APISession session;
+    private org.bonitasoft.engine.session.APISession session;
 
     @InjectMocks
-    UserRightsBuilder builder;
+    private UserRightsBuilder builder;
 
     @Test
     public void should_return_a_list_of_sba1ed_rights_composed_from_tokens_concatenated_with_session_id() throws Exception {

@@ -15,6 +15,7 @@
 package org.bonitasoft.web.rest.server.api.system;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.login.LoginManagerProperties;
@@ -63,7 +64,15 @@ public class APISession extends ConsoleAPI<SessionItem> {
     public String getUserRights(final org.bonitasoft.engine.session.APISession apiSession) {
         final List<Profile> profiles = getProfilesForUser(apiSession);
         if (apiSession.isTechnicalUser()) {
-            return getUserRightsForTechnicalUser(apiSession);
+            return JSonSerializer.serialize(new UserRightsBuilder(apiSession).buildFrom(Arrays.asList(
+                    "userlistingadmin",
+                    "rolelistingadmin",
+                    "grouplistingadmin",
+                    "importexportorganization",
+                    "profilelisting",
+                    "tenantMaintenance",
+                    "pagelisting",
+                    "businessdatamodelimport")));
         } else {
             return getUserRightsForProfiles(profiles, apiSession);
         }
@@ -101,20 +110,6 @@ public class APISession extends ConsoleAPI<SessionItem> {
         final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
         final ProfileEntryEngineClient profileEntryApi = engineClientFactory.createProfileEntryEngineClient();
         return profileEntryApi.getProfileEntriesByProfile(profileId);
-    }
-
-    private String getUserRightsForTechnicalUser(final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<String> userRights = new ArrayList<String>();
-        final SHA1Generator sha1Generator = new SHA1Generator();
-        userRights.add(sha1Generator.getHash("userlistingadmin".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("rolelistingadmin".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("grouplistingadmin".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("importexportorganization".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("profilelisting".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("tenantMaintenance".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("pagelisting".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("businessdatamodelimport".concat(String.valueOf(apiSession.getId()))));
-        return JSonSerializer.serialize(userRights);
     }
 
     /**
