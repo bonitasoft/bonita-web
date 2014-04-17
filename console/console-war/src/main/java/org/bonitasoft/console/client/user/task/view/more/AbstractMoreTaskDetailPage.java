@@ -52,7 +52,7 @@ public abstract class AbstractMoreTaskDetailPage<T extends IHumanTaskItem> exten
         final List<String> deploys = new ArrayList<String>(super.defineDeploys());
         deploys.add(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
         deploys.add(TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID);
-        deploys.add(TaskItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID);
+        deploys.add(TaskItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID);
         return deploys;
     }
 

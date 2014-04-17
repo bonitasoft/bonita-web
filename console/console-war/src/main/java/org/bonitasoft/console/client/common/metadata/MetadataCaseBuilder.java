@@ -53,11 +53,11 @@ public class MetadataCaseBuilder extends MetadataBuilder {
                 _("The date while the case has been started"));
     }
     
-    public MetadataCaseBuilder addStartedBy(UserItem startedByUser, UserItem startedByDelegateUser) {
-        if (startedByUser.getId().toLong().equals(startedByDelegateUser.getId().toLong())) {
+    public MetadataCaseBuilder addStartedBy(UserItem startedByUser, UserItem startedBySubstituteUser) {
+        if (startedByUser.getId().toLong().equals(startedBySubstituteUser.getId().toLong())) {
             add(createStartedBy());        
         } else {
-            add(addStartedByDelegate(startedByUser, startedByDelegateUser));
+            add(addStartedBySubstitute(startedByUser, startedBySubstituteUser));
         }    
         return this;
     }
@@ -67,10 +67,10 @@ public class MetadataCaseBuilder extends MetadataBuilder {
                 _("Started by"), _("The user that has started this case"));
     }
     
-    private ItemDetailsMetadata addStartedByDelegate(UserItem executedByUser, UserItem executedByDelegateUser) {
-        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
-        attributeReader.setStartedByUser(executedByUser);
-        attributeReader.setStartedByDelegateUser(executedByDelegateUser);
+    private ItemDetailsMetadata addStartedBySubstitute(UserItem executedByUser, UserItem startedBySubstituteUser) {
+        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+        attributeReader.setStartedBySubstitute(startedBySubstituteUser);
+        attributeReader.setStartedBy(executedByUser);
         return new ItemDetailsMetadata(attributeReader,
                 _("Started by"),
                 _("Name of the user who started this case"));

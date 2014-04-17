@@ -65,7 +65,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
      *            The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
-    protected static final FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
+    protected static FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
 
         result.setId(item.getId());
         result.setName(item.getName());
@@ -78,7 +78,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         result.setState(item.getState());
         result.setType(item.getType().name());
         result.setRootContainerId(item.getRootContainerId());
-        result.setExecutedByDelegateUserId(item.getExecutedByDelegate());
+        result.setExecutedBySubstituteUserId(item.getExecutedBySubstitute());
         return result;
     }
 

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.cases.section.ArchivedTasksSection;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
@@ -61,7 +60,7 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
-        defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID);
+        defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
@@ -71,7 +70,7 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
         MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
         metadatas.addAppsVersion();
         metadatas.addStartDate();
-        metadatas.addStartedBy(item.getStartedByUser(), item.getStartedByDelegateUser());
+        metadatas.addStartedBy(item.getStartedByUser(), item.getStartedBySubstituteUser());
         return metadatas.build();
     }
 

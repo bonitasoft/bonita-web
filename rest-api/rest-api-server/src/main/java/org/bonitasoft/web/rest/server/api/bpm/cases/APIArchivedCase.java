@@ -73,10 +73,10 @@ public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements API
                     ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getStartedByUserId()));
         }
-        
-        if (isDeployable(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID, deploys, item)) {
+
+        if (isDeployable(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
             item.setDeploy(
-                    ArchivedCaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID,
+                    ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getStartedByUserId()));
         }
 

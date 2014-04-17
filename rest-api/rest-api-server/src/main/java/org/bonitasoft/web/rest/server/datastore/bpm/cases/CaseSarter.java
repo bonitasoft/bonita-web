@@ -48,8 +48,8 @@ public class CaseSarter {
     public CaseSarter(final CaseItem caseItem, final CaseEngineClient caseEngineClient, final ProcessEngineClient processEngineClient) {
         this.caseItem = caseItem;
         processId = caseItem.getProcessId().toLong();
-        if (caseItem.hasAttribute(CaseItem.ATTRIBUTE_STARTED_BY_DELEGATE_USER_ID) && caseItem.getStartedByDelegateUserId() != null) {
-            delegateUserId = caseItem.getStartedByDelegateUserId().toLong();
+        if (caseItem.hasAttribute(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID) && caseItem.getStartedBySubstituteUserId() != null) {
+            delegateUserId = caseItem.getStartedBySubstituteUserId().toLong();
         } else {
             delegateUserId = -1L;
         }

@@ -166,9 +166,9 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
             if (HumanTaskItem.VALUE_STATE_SKIPPED.equals(state) && item instanceof FlowNodeItem) {
                 getProcessAPI().setActivityStateByName(item.getId().toLong(), ActivityStates.SKIPPED_STATE);
             } else if (HumanTaskItem.VALUE_STATE_COMPLETED.equals(state) && item instanceof ActivityItem) {
-                if (item instanceof HumanTaskItem && item.hasAttribute(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID)
-                        && item.getExecutedByDelegateUserId() != null) {
-                    final long userId = ((HumanTaskItem) item).getExecutedByDelegateUserId().toLong();
+                if (item instanceof HumanTaskItem && item.hasAttribute(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID)
+                        && item.getExecutedBySubstituteUserId() != null) {
+                    final long userId = ((HumanTaskItem) item).getExecutedBySubstituteUserId().toLong();
                     getProcessAPI().executeFlowNode(userId, item.getId().toLong());
                 } else {
                     getProcessAPI().executeFlowNode(item.getId().toLong());

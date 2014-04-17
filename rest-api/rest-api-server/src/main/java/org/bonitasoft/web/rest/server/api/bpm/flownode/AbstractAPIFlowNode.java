@@ -116,14 +116,14 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
             item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
                     new CaseDatastore(getEngineSession()).get(item.getCaseId()));
         }
-        
+
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
-        	CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
-        	if (rootContainerCase == null) {
-        		rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+            CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+            if (rootContainerCase == null) {
+                rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             }
-            if(rootContainerCase != null) {
-        	    item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, new ProcessDatastore(getEngineSession()).get(rootContainerCase.getProcessId()));
+            if (rootContainerCase != null) {
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, new ProcessDatastore(getEngineSession()).get(rootContainerCase.getProcessId()));
             }
         }
 
@@ -131,10 +131,10 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
             item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getExecutedByUserId()));
         }
-        
-        if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_DELEGATE_USER_ID,
-                    new UserDatastore(getEngineSession()).get(item.getExecutedByDelegateUserId()));
+
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID,
+                    new UserDatastore(getEngineSession()).get(item.getExecutedBySubstituteUserId()));
         }
 
         if (isDeployable(HumanTaskItem.ATTRIBUTE_ACTOR_ID, deploys, item)) {
@@ -160,7 +160,7 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
                 null,
                 null,
                 Collections.singletonMap(ArchivedHumanTaskItem.ATTRIBUTE_SOURCE_OBJECT_ID, id)).getResults();
-        if(result.size() > 0) {
+        if (result.size() > 0) {
             return result.get(0);
         }
         return null;

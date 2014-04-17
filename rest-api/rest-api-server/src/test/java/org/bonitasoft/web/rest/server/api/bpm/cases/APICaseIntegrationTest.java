@@ -257,11 +257,11 @@ public class APICaseIntegrationTest extends AbstractConsoleTest {
     public void we_can_start_a_case_with_user() throws Exception {
         final TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(TestUserFactory.getRidleyScott()).setEnable(true);
 
-        final CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).withUserId(TestUserFactory.getRidleyScott().getId()).build());
+        final CaseItem item = apiCase.runAdd(aCaseItem().withProcessId(process.getId()).withSubstituteUserId(TestUserFactory.getRidleyScott().getId()).build());
 
         final ProcessInstance instance = getProcessInstance(item.getId());
         assertThat(instance.getProcessDefinitionId(), is(item.getProcessId().toLong()));
-        assertThat(instance.getStartedByDelegate(), is(TestUserFactory.getRidleyScott().getId()));
+        assertThat(instance.getStartedBySubstitute(), is(TestUserFactory.getRidleyScott().getId()));
     }
 
     @Test
