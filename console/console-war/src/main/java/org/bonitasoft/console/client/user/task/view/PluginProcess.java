@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
+import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.Plugin;
 
 /**
@@ -24,6 +25,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.Plugin;
  */
 public interface PluginProcess extends Plugin {
 
-    public static final String PLUGIN_TOKEN = "processlistinguser";
+    public static final String PLUGIN_TOKEN = ProcessListingPage.TOKEN;
 
 }
