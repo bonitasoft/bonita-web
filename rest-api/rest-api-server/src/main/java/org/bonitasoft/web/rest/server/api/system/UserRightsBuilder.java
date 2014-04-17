@@ -26,8 +26,24 @@ public class UserRightsBuilder {
 
     private SHA1Generator generator = new SHA1Generator();
 
+    private List<String> tokens = new ArrayList<String>();
+
     public UserRightsBuilder(org.bonitasoft.engine.session.APISession session) {
         this.session = session;
+    }
+
+    public void add(String token) {
+        tokens.add(token);
+    }
+
+    public void add(List<String> tokens) {
+        for (String token : tokens) {
+            add(token);
+        }
+    }
+
+    public List<String> build() {
+        return buildFrom(tokens);
     }
 
     public List<String> buildFrom(List<String> tokens) {

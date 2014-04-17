@@ -44,4 +44,38 @@ public class UserRightsBuilderTest {
         assertEquals(rights.get(0), generator.getHash("token 18"));
         assertEquals(rights.get(1), generator.getHash("token 28"));
     }
+
+    @Test
+    public void should_build_rights_for_a_token_add_to_it() throws Exception {
+        given(session.getId()).willReturn(56L);
+
+        builder.add("token");
+
+        assertEquals(builder.build().get(0), generator.getHash("token56"));
+    }
+
+    @Test
+    public void should_build_rights_for_all_tokens_progressively_add_to_it() throws Exception {
+        given(session.getId()).willReturn(85L);
+
+        builder.add("token 1");
+        builder.add("token 2");
+        List<String> rights = builder.build();
+
+        assertEquals(rights.get(0), generator.getHash("token 185"));
+        assertEquals(rights.get(1), generator.getHash("token 285"));
+    }
+
+    @Test
+    public void should_build_rights_for_all_tokens_add_to_it() throws Exception {
+        given(session.getId()).willReturn(5L);
+
+        builder.add(Arrays.asList("token 1", "token 2"));
+        List<String> rights = builder.build();
+
+        assertEquals(rights.get(0), generator.getHash("token 15"));
+        assertEquals(rights.get(1), generator.getHash("token 25"));
+    }
+
+
 }
