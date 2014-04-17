@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-15 22:01+0200\n"
-"PO-Revision-Date: 2014-04-16 17:33-0400\n"
+"PO-Revision-Date: 2014-04-17 17:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -909,15 +909,15 @@ msgstr "Mapeamento de ator"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:60
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
-msgstr "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
+msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas da aplicação."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:63
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:67
 msgid " To do so, go to %entitymappingprofilelink%."
-msgstr " To do so, go to %entitymappingprofilelink%."
+msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:68
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:34
@@ -928,11 +928,11 @@ msgstr "Privilégio"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:68
 msgid "Click here to go to Profile listing page"
-msgstr "Click here to go to Profile listing page"
+msgstr "Clique aqui para ir para a página de perfis"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:71
 msgid "To do so, contact your administrator"
-msgstr "To do so, contact your administrator"
+msgstr "Para fazer isso, contate o administrador"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:82
 msgid "Actor name"
@@ -946,7 +946,7 @@ msgstr "Nome de exibição"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:114
 msgid "User (%nb_user%)"
-msgstr "User (%nb_user%)"
+msgstr "Usuário(%nb_user%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:115
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:82
@@ -956,11 +956,11 @@ msgstr "Adicionar um usuário"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:120
 msgid "Group (%nb_group%)"
-msgstr "Group (%nb_group%)"
+msgstr "Grupo(%nb_group%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:126
 msgid "Role (%nb_role%)"
-msgstr "Role (%nb_role%)"
+msgstr "Função(%nb_role%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:127
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorRolePage.java:78
@@ -970,7 +970,7 @@ msgstr "Adicionar uma função"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:132
 msgid "Membership (%nb_membership%)"
-msgstr "Membership (%nb_membership%)"
+msgstr "Associação(%nb_membership%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:133
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMembershipPage.java:63
@@ -1079,7 +1079,7 @@ msgstr "Nome da classe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:34
 msgid "The App cannot be enabled"
-msgstr "The App cannot be enabled"
+msgstr "A aplicação não pode ser ativada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
 msgid "Entity Mapping must be resolved before enabling the App."
@@ -1087,11 +1087,11 @@ msgstr "O mapeamento de entidades deve ser resolvido antes de ativar a aplicaç�
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
 msgid "Parameters must be resolved before enabling the App."
-msgstr "Parameters must be resolved before enabling the App."
+msgstr "Os parâmetros devem ser resolvidos antes de ativar a aplicação."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:48
 msgid "Connector definitions must be resolved before enabling the App."
-msgstr "Connector definitions must be resolved before enabling the App."
+msgstr "As definições de conectores devem ser resolvidas antes de ativar a aplicação."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:45
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:33
@@ -1943,7 +1943,7 @@ msgstr "Mapeamento"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:81
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
-msgstr "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
+msgstr "Este perfil estará disponível no próximo login para os usuários que são mapeadas. Se você mapeou o perfil para você mesmo, ele estará disponível depois que você atualizar a página no seu navegador."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:93
 msgid "Users mapping"
@@ -2553,7 +2553,7 @@ msgstr "gerenciar tarefas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
 msgid "Manage tasks of apps that an entity with this profile can supervise as PM."
-msgstr "Manage tasks of apps that an entity with this profile can supervise as PM."
+msgstr "Gerencia as tarefas das aplicações que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 msgid "visualize cases"
@@ -2565,7 +2565,7 @@ msgstr "gerenciar casos"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
 msgid "Manage cases of apps that an entity with this profile can supervise as PM."
-msgstr "Manage cases of apps that an entity with this profile can supervise as PM."
+msgstr "Gerencia os casos das aplicações que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 msgid "visualize & start apps"
@@ -2577,7 +2577,7 @@ msgstr "gerenciar aplicativos"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
 msgid "Manage apps that an entity with this profile can supervise as PM."
-msgstr "Manage apps that an entity with this profile can supervise as PM."
+msgstr "Gerencia as aplicações que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "manage users"
@@ -2622,11 +2622,11 @@ msgstr "Look and Feel"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:42
 msgid "Manage custom pages"
-msgstr "Manage custom pages"
+msgstr "Gerenciar páginas personalizadas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:42
 msgid "Custom Pages"
-msgstr "Custom Pages"
+msgstr "Páginas personalizadas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:224
 msgid "This group has already been mapped to actor"
@@ -2835,7 +2835,7 @@ msgstr "Ocorreu um erro na aplicação."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
-msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
+msgstr "Nenhuma resposta foi recebida até o momento, mas a operação ainda pode estar em andamento. Aguarde alguns segundos antes de recarregar a página."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/APICallback.java:71
 msgid "Your session has expired. Please log in again and retry."

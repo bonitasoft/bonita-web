@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-15 22:01+0200\n"
-"PO-Revision-Date: 2014-04-16 17:31-0400\n"
+"PO-Revision-Date: 2014-04-17 17:31-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -998,7 +998,7 @@ msgstr "Ajouter un rôle à %actor_name%"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:63
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/DeleteProfileMemberPage.java:61
 msgid "Confirm deletion ?"
-msgstr "Confirmer la suppression ?"
+msgstr "Confirmez-vous la suppression ?"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/DeleteActorMemberPage.java:59
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/DeleteActorMemberPage.java:60
@@ -1040,7 +1040,7 @@ msgstr "Etes-vous sûr de vouloir supprimer de l'app les membres de l'acteur sé
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:59
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/RemoveCategoryPopUp.java:50
 msgid "Confirm removing ?"
-msgstr "Confirmer la suppression ?"
+msgstr "Confirmez-vous la suppression ?"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:57
 msgid "Edit users of actor %actor_name%"
@@ -1762,7 +1762,7 @@ msgstr "Attention"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:58
 msgid "You risk interrupting one or more apps.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n\nBefore proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "Cette action pourrait interrompre une ou plusieurs apps.\n\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'une(des) app(s).\n\nIl est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\nConfirmer la désactivation de cet utilisateur?"
+msgstr "Cette action pourrait interrompre une ou plusieurs apps.\n\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'une(des) app(s).\n\nIl est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\nConfirmez-vous la désactivation de cet utilisateur?"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:77
 msgid "Dactivate selected user"
@@ -3266,7 +3266,7 @@ msgstr "Annuler ce formulaire"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/view/DeleteItemPage.java:52
 msgid "Confirm delete ?"
-msgstr "Confirmer la suppression ?"
+msgstr "Confirmez-vous la suppression ?"
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/view/DeleteItemPage.java:59
 msgid "Delete %resource_name%"
