@@ -33,7 +33,9 @@ public class UserRightsBuilder {
     }
 
     public void add(String token) {
-        tokens.add(token);
+        if(token != null) {
+            tokens.add(token);
+        }
     }
 
     public void add(List<String> tokens) {

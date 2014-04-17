@@ -57,4 +57,14 @@ public class UserRightsBuilderTest {
         assertEquals(rights.get(0), generator.getHash("token 15"));
         assertEquals(rights.get(1), generator.getHash("token 25"));
     }
+
+    @Test
+    public void should_build_rights_for_a_null_token() throws Exception {
+        given(session.getId()).willReturn(5L);
+
+        builder.add(Arrays.asList(null, "token"));
+        List<String> rights = builder.build();
+
+        assertEquals(rights.get(0), generator.getHash("token5"));
+    }
 }
