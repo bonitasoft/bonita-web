@@ -23,6 +23,7 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
+import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
@@ -41,6 +42,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
+import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
@@ -163,7 +165,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         definitions.append(new Definition(_("Country") + ": ", _("the country of the user company"), professionalData.getCountry()));
         definitions.append(new Definition(_("Zip code") + ": ", _("the zip code of the user company"), professionalData.getZipCode()));
         definitions.append(new Definition(_("State") + ": ", _("the state of the user company"), professionalData.getState()));
-        definitions.append(new Definition(_("Email") + ": ", _("the professional email the user"), professionalData.getEmail()));
+        definitions.append(emailDefinition(professionalData, _("the professional email the user")));
         definitions.append(new Definition(_("Phone") + ": ", _("the professional phone number of the user"), professionalData.getPhoneNumber()));
         definitions.append(new Definition(_("Mobile") + ": ", _("the professional mobile phone number of the user"), professionalData
                 .getMobileNumber()));
@@ -178,10 +180,16 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         definitions.append(new Definition(_("Country") + ": ", _("the country of the user"), item.getCountry()));
         definitions.append(new Definition(_("Zip code") + ": ", _("the zip code of the user"), item.getZipCode()));
         definitions.append(new Definition(_("State") + ": ", _("the state of the user"), item.getState()));
-        definitions.append(new Definition(_("Email") + ": ", _("the personnal email the user"), item.getEmail()));
+        definitions.append(emailDefinition(item, _("the personnal email the user")));
         definitions.append(new Definition(_("Phone") + ": ", _("the personnal phone number of the user"), item.getPhoneNumber()));
         definitions.append(new Definition(_("Mobile") + ": ", _("the personnal mobile phone number of the user"), item.getMobileNumber()));
         return personalInformationSection.addBody(definitions);
+    }
+
+    private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {
+        Definition definition = new Definition(_("Email") + ": ", tooltip, contactData.getEmail());
+        definition.addClass(CssClass.BREAK_WORD);
+        return definition;
     }
 
     @Override
