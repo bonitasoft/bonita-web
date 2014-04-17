@@ -43,10 +43,6 @@ public class UserRightsBuilder {
     }
 
     public List<String> build() {
-        return buildFrom(tokens);
-    }
-
-    public List<String> buildFrom(List<String> tokens) {
         List<String> rights = new ArrayList<String>(tokens.size());
         for (String token : tokens) {
             rights.add(generator.getHash(token.concat(String.valueOf(session.getId()))));

@@ -27,25 +27,6 @@ public class UserRightsBuilderTest {
     private UserRightsBuilder builder;
 
     @Test
-    public void should_return_a_list_of_sba1ed_rights_composed_from_tokens_concatenated_with_session_id() throws Exception {
-        given(session.getId()).willReturn(3L);
-
-        List<String> rights = builder.buildFrom(Arrays.asList("token"));
-
-        assertEquals(rights.get(0), generator.getHash("token3"));
-    }
-
-    @Test
-    public void should_return_a_list_of_sba1ed_rights_for_all_tokens_passed_by_parameter() throws Exception {
-        given(session.getId()).willReturn(8L);
-
-        List<String> rights = builder.buildFrom(Arrays.asList("token 1", "token 2"));
-
-        assertEquals(rights.get(0), generator.getHash("token 18"));
-        assertEquals(rights.get(1), generator.getHash("token 28"));
-    }
-
-    @Test
     public void should_build_rights_for_a_token_add_to_it() throws Exception {
         given(session.getId()).willReturn(56L);
 
