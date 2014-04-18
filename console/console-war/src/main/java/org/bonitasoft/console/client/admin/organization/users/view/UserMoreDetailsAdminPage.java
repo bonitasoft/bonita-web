@@ -194,6 +194,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         SpanElement span = SpanElement.as(Element.as(SafeHtmlParser.parseFirst(UserMetadataBuilder.TEMPLATES.email(contactData.getEmail()))));
         Definition definition = new Definition(_("Email") + ": ", new Html(span));
         definition.addClass(CssClass.BREAK_WORD);
+        definition.addClass("metadatas");
         return definition;
     }
 
