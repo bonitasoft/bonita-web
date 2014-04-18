@@ -191,7 +191,8 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     }
 
     private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {
-        SpanElement span = SpanElement.as(Element.as(SafeHtmlParser.parseFirst(UserMetadataBuilder.TEMPLATES.email(contactData.getEmail()))));
+        String email = contactData.getEmail() != null ? contactData.getEmail() : "";
+        SpanElement span = SpanElement.as(Element.as(SafeHtmlParser.parseFirst(UserMetadataBuilder.TEMPLATES.email(email))));
         Definition definition = new Definition(_("Email") + ": ", new Html(span));
         definition.addClass(CssClass.BREAK_WORD);
         definition.addClass("metadatas");
