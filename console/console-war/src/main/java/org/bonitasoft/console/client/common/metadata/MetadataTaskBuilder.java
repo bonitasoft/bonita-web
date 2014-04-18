@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.common.metadata;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.Map;
 
@@ -141,6 +141,10 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaAssignTo());
     }
 
+    public void addDoneOn(final FORMAT format) {
+        add(createMetaDoneOn(format));
+    }
+
     public void addLastUpdateDate(final FORMAT format) {
         add(createMetaLastUpdateDate(format));
     }
@@ -216,6 +220,11 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 new DeployedUserReader(IHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID).setDefaultValue(_("Unassigned")),
                 _("Assigned to"),
                 _("The username to which the task is assigned."));
+    }
+
+    private ItemDetailsMetadata createMetaDoneOn(final FORMAT format) {
+        return new ItemDetailsMetadata(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_LAST_UPDATE_DATE, format).setDefaultValue(_("No data")),
+                _("Done on"), "");
     }
 
     private ItemDetailsMetadata createMetaLastUpdateDate(final FORMAT format) {

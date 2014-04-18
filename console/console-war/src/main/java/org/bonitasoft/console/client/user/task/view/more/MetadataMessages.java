@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 public class MetadataMessages {
 
@@ -102,6 +102,10 @@ public class MetadataMessages {
     
     String done_by_label() {
         return _("Done by");
+    }
+
+    public String done_on_label() {
+        return _("Done on");
     }
 
 }

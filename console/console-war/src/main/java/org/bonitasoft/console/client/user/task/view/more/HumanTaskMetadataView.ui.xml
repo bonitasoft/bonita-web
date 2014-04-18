@@ -58,7 +58,7 @@
                 <span ui:field="doneBy" />
             </div>
             <div class="definition last_update_date" title="{messages.last_update_date_title}">
-                <label><ui:text from="{messages.last_update_date_label}" />: </label>
+                <label ui:field="labelDoneOn"> </label>
                 <span ui:field="lastUpdateDate" />
             </div>
             <div class="definition assigned_date" title="{messages.assigned_date_title}">

@@ -609,6 +609,11 @@ msgstr ""
 msgid "The date of the last modification"
 msgstr ""
 
+#: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:108
+#: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:223
+msgid "Done on"
+msgstr ""
+
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:76
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:223
 msgid "Last update date"
