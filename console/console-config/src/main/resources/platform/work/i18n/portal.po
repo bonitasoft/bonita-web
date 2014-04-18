@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-17 03:00+0200\n"
+"POT-Creation-Date: 2014-04-18 03:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,6 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:72
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:36
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:32
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
@@ -392,7 +391,6 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:118
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:179
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
@@ -420,7 +418,6 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:90
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:36
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
@@ -778,13 +775,11 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:33
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:45
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:54
 msgid "Configuration"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:34
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:68
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:56
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:39
 msgid "Profiles"
 msgstr ""
@@ -794,8 +789,6 @@ msgid "Show all profiles of portal"
 msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:42
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:50
 msgid "Organization"
 msgstr ""
 
@@ -804,7 +797,6 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:111
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:116
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:82
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:44
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "Users"
 msgstr ""
@@ -815,7 +807,6 @@ msgstr ""
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:61
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:46
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
 msgid "Groups"
 msgstr ""
@@ -827,7 +818,6 @@ msgstr ""
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:64
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:104
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:48
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:37
 msgid "Roles"
 msgstr ""
@@ -3091,19 +3081,6 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
-msgid "Apps management"
-msgstr ""
-
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
-msgid "Analytics"
-msgstr ""
-
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:60
-msgid "Reports"
-msgstr ""
-
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
 #: console/console-war/src/main/webapp/login.jsp:118
 msgid "User"
@@ -3275,6 +3252,10 @@ msgstr ""
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
 msgid "Monitoring"
+msgstr ""
+
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
+msgid "Analytics"
 msgstr ""
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:41
