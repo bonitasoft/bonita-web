@@ -28,13 +28,13 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeRea
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.CompoundAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.AnchorElement;
-import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Element;
@@ -45,12 +45,12 @@ import com.google.gwt.user.client.Element;
  */
 public class UserMetadataBuilder extends MetadataBuilder {
 
-    interface Templates extends SafeHtmlTemplates {
-        @SafeHtmlTemplates.Template("<div class=\"definition email\"><label>{0}: </label><span><a href='mailto:{1}'>{1}</a></span></div>")
-        SafeHtml email(String email, String label);
+    public interface Templates extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<span><a href='mailto:{0}'>{0}</a></span>")
+        SafeHtml email(String email);
     }
     
-    private static Templates TEMPLATES = GWT.create(Templates.class);
+    public static Templates TEMPLATES = GWT.create(Templates.class);
     
     public void addFirstName() {
         add(firstName());
@@ -107,8 +107,12 @@ public class UserMetadataBuilder extends MetadataBuilder {
 
     private ItemDetailsMetadata eMail(AbstractContactDataItem contact) {
         String email = contact.getEmail() == null ? _("No data") : contact.getEmail(); 
-        DivElement definition = DivElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.email(_("Email"), email))));
-        return new ItemDetailsMetadata(new DeployedAttributeReader(UserItem.DEPLOY_PROFESSIONAL_DATA, ProfessionalContactDataItem.ATTRIBUTE_EMAIL), new Html(definition));
+        SpanElement span = SpanElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.email(email))));
+        Definition definition = new Definition(_("Email") + ": ", new Html(span));
+        definition.addClass("email");
+        return new ItemDetailsMetadata(
+                new DeployedAttributeReader(UserItem.DEPLOY_PROFESSIONAL_DATA, ProfessionalContactDataItem.ATTRIBUTE_EMAIL), 
+                new Html(definition.getElement()));
     }
 
     public void addUserName() {

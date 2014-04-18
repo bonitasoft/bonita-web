@@ -23,6 +23,7 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
+import org.bonitasoft.console.client.uib.SafeHtmlParser;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
@@ -36,6 +37,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
@@ -46,6 +48,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+
+import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Nicolas Tith
@@ -186,7 +191,8 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     }
 
     private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {
-        Definition definition = new Definition(_("Email") + ": ", tooltip, contactData.getEmail());
+        SpanElement span = SpanElement.as(Element.as(SafeHtmlParser.parseFirst(UserMetadataBuilder.TEMPLATES.email(contactData.getEmail()))));
+        Definition definition = new Definition(_("Email") + ": ", new Html(span));
         definition.addClass(CssClass.BREAK_WORD);
         return definition;
     }
