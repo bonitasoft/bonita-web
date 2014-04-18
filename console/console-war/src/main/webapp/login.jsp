@@ -91,8 +91,19 @@
 
 <script type="text/javascript" src="portal/scripts/jquery/jquery-1.6.4.js"></script>
 <script>
-	/* Add url hash to form action url */
 	$(document).ready(function() {
+		if (window != window.top) {
+			try {
+				if (window.frameElement.id == "bonitaframe") {
+					/* if the login jsp is displayed inside a "bonitaframe" iframe it probably means the session is invalid so refresh the whole page */
+					window.parent.location.reload();
+					return;
+				}
+			} catch (e) {
+				/* nothing to do (bonita is probably displayed inside an iframe of a different domain app) */
+			}
+		}
+		/* Add url hash to form action url */
 		var form = $('#LoginForm');
 		form.attr('action', form.attr('action') + window.location.hash);
 	});
