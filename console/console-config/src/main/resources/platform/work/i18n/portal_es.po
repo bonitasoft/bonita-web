@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-17 07:05+0200\n"
-"PO-Revision-Date: 2014-04-17 01:51-0400\n"
+"PO-Revision-Date: 2014-04-17 22:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1290,7 +1290,7 @@ msgstr "The App cannot be enabled"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
 msgid "Entity Mapping must be resolved before enabling the App."
-msgstr "Entity Mapping must be resolved before enabling the App."
+msgstr "El mapeo de entidades debe esta resuelto antes de habilitar la App."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
 msgid "Parameters must be resolved before enabling the App."
