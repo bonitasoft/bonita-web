@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-17 03:00+0200\n"
-"PO-Revision-Date: 2014-04-16 22:35-0400\n"
+"POT-Creation-Date: 2014-04-18 03:00+0200\n"
+"PO-Revision-Date: 2014-04-18 09:40-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -76,7 +76,6 @@ msgstr "Tarefas executadas"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:72
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:36
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:32
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:30
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
@@ -387,7 +386,6 @@ msgstr "Exibir um formulário de caso da aplicação %app_name%"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:83
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:118
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:179
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
@@ -415,7 +413,6 @@ msgstr "Versão"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:102
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:90
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:36
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
@@ -651,7 +648,7 @@ msgstr "Realizado por"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/more/HumanTaskMetadataView.java:92
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/view/StartedByDelegateAttributeReder.java:54
 msgid " for "
-msgstr " for "
+msgstr " para "
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:38
 msgid "Do it"
@@ -773,13 +770,11 @@ msgstr "Aviso: você está conectado como usuário técnico. Este utilizador tem
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:33
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:45
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:54
 msgid "Configuration"
 msgstr "Configuração"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/ConfigurationMenuItem.java:34
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:68
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:56
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:39
 msgid "Profiles"
 msgstr "Privilégio"
@@ -789,8 +784,6 @@ msgid "Show all profiles of portal"
 msgstr "Mostrar todos os perfis do portal"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:42
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:50
 msgid "Organization"
 msgstr "Organização"
 
@@ -799,7 +792,6 @@ msgstr "Organização"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:111
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:116
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleQuickDetailsPage.java:82
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:44
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "Users"
 msgstr "Usuários"
@@ -810,7 +802,6 @@ msgstr "Mostrar a lista de usuários"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:38
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:61
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:46
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:36
 msgid "Groups"
 msgstr "Grupos"
@@ -822,7 +813,6 @@ msgstr "Mostrar a lista de grupos"
 #: console/console-war/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:39
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:64
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:104
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:48
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:37
 msgid "Roles"
 msgstr "Funções"
@@ -934,7 +924,7 @@ msgstr "Iniciar uma instância da app %app_name%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:34
 msgid "The App cannot be enabled"
-msgstr "The App cannot be enabled"
+msgstr "A aplicação não pode ser ativada"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
 msgid "Entity Mapping must be resolved before enabling the App."
@@ -942,11 +932,11 @@ msgstr "O mapeamento de entidades deve ser resolvido antes de ativar a aplicaç�
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
 msgid "Parameters must be resolved before enabling the App."
-msgstr "Parameters must be resolved before enabling the App."
+msgstr "Os parâmetros devem ser resolvidos antes de ativar a aplicação."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:48
 msgid "Connector definitions must be resolved before enabling the App."
-msgstr "Connector definitions must be resolved before enabling the App."
+msgstr "As definições de conectores devem ser resolvidas antes de ativar a aplicação."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/statistics/StatisticsSection.java:46
 msgid "Statistics"
@@ -1217,23 +1207,23 @@ msgstr "Mapeamento de ator"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:60
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
-msgstr "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
+msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas da aplicação."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:63
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:67
 msgid " To do so, go to %entitymappingprofilelink%."
-msgstr " To do so, go to %entitymappingprofilelink%."
+msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:68
 msgid "Click here to go to Profile listing page"
-msgstr "Click here to go to Profile listing page"
+msgstr "Clique aqui para ir para a página de perfis"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:71
 msgid "To do so, contact your administrator"
-msgstr "To do so, contact your administrator"
+msgstr "Para fazer isso, contate o administrador"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:82
 msgid "Actor name"
@@ -1247,7 +1237,7 @@ msgstr "Nome de exibição"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:114
 msgid "User (%nb_user%)"
-msgstr "User (%nb_user%)"
+msgstr "Usuário(%nb_user%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:115
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:82
@@ -1257,15 +1247,15 @@ msgstr "Adicionar um usuário"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:120
 msgid "Group (%nb_group%)"
-msgstr "Group (%nb_group%)"
+msgstr "Grupo(%nb_group%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:126
 msgid "Role (%nb_role%)"
-msgstr "Role (%nb_role%)"
+msgstr "Função(%nb_role%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:132
 msgid "Membership (%nb_membership%)"
-msgstr "Membership (%nb_membership%)"
+msgstr "Associação(%nb_membership%)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectUserForActorPage.java:70
 msgid "Add a user to %actor_name%"
@@ -2279,7 +2269,7 @@ msgstr "Mapeamento"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:81
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
-msgstr "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
+msgstr "Este perfil estará disponível no próximo login para os usuários que são mapeadas. Se você mapeou o perfil para você mesmo, ele estará disponível depois que você atualizar a página no seu navegador."
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:93
 msgid "Users mapping"
@@ -2526,7 +2516,7 @@ msgstr "Sua sessão expirou. Por favor, faça o login e tente novamente."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/api/callback/HttpCallback.java:108
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
-msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
+msgstr "Nenhuma resposta foi recebida até o momento, mas a operação ainda pode estar em andamento. Aguarde alguns segundos antes de recarregar a página."
 
 #: toolkit/toolkit-view/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericNegativeNotZeroValidator.java:30
 msgid "%attribute% must be a negative value diffrent from 0"
@@ -3075,19 +3065,6 @@ msgstr "Cancelar este formulário"
 msgid "message"
 msgstr "mensagem"
 
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
-msgid "Apps management"
-msgstr "Gerenciamento de apps"
-
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
-#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
-msgid "Analytics"
-msgstr "Analítica"
-
-#: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:60
-msgid "Reports"
-msgstr "Relatórios"
-
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
 #: console/console-war/src/main/webapp/login.jsp:118
 msgid "User"
@@ -3107,11 +3084,11 @@ msgstr "O administrador pode instalar um app, gerenciar a organização e manipu
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:37
 msgid "Process manager"
-msgstr "Process manager"
+msgstr "Gerente de processo"
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:39
 msgid "The Process manager can supervise designated apps, and manage cases and tasks of those apps."
-msgstr "The Process manager can supervise designated apps, and manage cases and tasks of those apps."
+msgstr "O Gerente de Processo pode supervisionar as aplicações designadas e gerenciar os casos e tarefas dessas aplicações."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/framework/json/JacksonDeserializer.java:53
 msgid "Can't parse json, non-well formed content"
@@ -3207,7 +3184,7 @@ msgstr "gerenciar tarefas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
 msgid "Manage tasks of apps that an entity with this profile can supervise as PM."
-msgstr "Manage tasks of apps that an entity with this profile can supervise as PM."
+msgstr "Gerencia as tarefas das aplicações que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 msgid "visualize cases"
@@ -3219,7 +3196,7 @@ msgstr "gerenciar casos"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
 msgid "Manage cases of apps that an entity with this profile can supervise as PM."
-msgstr "Manage cases of apps that an entity with this profile can supervise as PM."
+msgstr "Gerencia os casos das aplicações que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 msgid "visualize & start apps"
@@ -3231,7 +3208,7 @@ msgstr "gerenciar aplicativos"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
 msgid "Manage apps that an entity with this profile can supervise as PM."
-msgstr "Manage apps that an entity with this profile can supervise as PM."
+msgstr "Gerencia as aplicações que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "manage users"
@@ -3261,6 +3238,10 @@ msgstr "user privilege settings"
 msgid "Monitoring"
 msgstr "Monitoramento"
 
+#: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
+msgid "Analytics"
+msgstr "Analítica"
+
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:41
 msgid "Manage Look and Feel"
 msgstr "Gerenciar aparência"
@@ -3271,11 +3252,11 @@ msgstr "Look and Feel"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:42
 msgid "Manage custom pages"
-msgstr "Manage custom pages"
+msgstr "Gerenciar páginas personalizadas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:42
 msgid "Custom Pages"
-msgstr "Custom Pages"
+msgstr "Páginas personalizadas"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:84
 msgid "Apps %appName% in version %version% already exists"
@@ -3351,7 +3332,7 @@ msgstr "Ocorreu um erro ao iniciar o processo %processId%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/CaseEngineClient.java:84
 msgid "Can't start process %processId%, user %userId% not found"
-msgstr "Can't start process %processId%, user %userId% not found"
+msgstr "Impossível iniciar o processo %processId%, usuário %userId% não encontrado"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:42
 msgid "Can't update user. User not found"
