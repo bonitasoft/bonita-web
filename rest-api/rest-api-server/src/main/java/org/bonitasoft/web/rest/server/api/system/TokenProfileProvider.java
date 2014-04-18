@@ -17,31 +17,33 @@ package org.bonitasoft.web.rest.server.api.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.engine.profile.ProfileEntry;
+import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
+
 /**
  * @author Vincent Elcrin
  */
-public class UserRightsBuilder {
+public class TokenProfileProvider implements UserRightsBuilder.TokenProvider {
 
-    private org.bonitasoft.engine.session.APISession session;
+    private List<String> tokens = new ArrayList<String>();
 
-    private TokenProvider provider;
-
-    private SHA1Generator generator = new SHA1Generator();
-
-    interface TokenProvider {
-        List<String> getTokens();
-    }
-
-    public UserRightsBuilder(org.bonitasoft.engine.session.APISession session, TokenProvider provider) {
-        this.session = session;
-        this.provider = provider;
-    }
-
-    public List<String> build() {
-        List<String> rights = new ArrayList<String>();
-        for (String token : provider.getTokens()) {
-            rights.add(generator.getHash(token.concat(String.valueOf(session.getId()))));
+    public TokenProfileProvider(List<Profile> profiles, ProfileEntryEngineClient client) {
+        for (Profile profile : profiles) {
+            for (ProfileEntry entry : client.getProfileEntriesByProfile(profile.getId())) {
+                add(entry.getPage());
+            }
         }
-        return rights;
+    }
+
+    private void add(String token) {
+        if(token != null) {
+            tokens.add(token);
+        }
+    }
+
+    @Override
+    public List<String> getTokens() {
+        return tokens;
     }
 }

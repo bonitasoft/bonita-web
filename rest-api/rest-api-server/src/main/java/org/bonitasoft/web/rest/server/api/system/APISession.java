@@ -85,36 +85,19 @@ public class APISession extends ConsoleAPI<SessionItem> {
         return profileApi.listProfilesForUser(apiSession.getUserId());
     }
 
-    private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<String> userRights = new ArrayList<String>();
-        final SHA1Generator sha1Generator = new SHA1Generator();
-        ListExtractor<String, ProfileEntry> extractor = new ListExtractor<String, ProfileEntry>();
-        for (final Profile profile : profiles) {
-            final List<ProfileEntry> profileEntries = getProfileEntriesForProfile(profile.getId(), apiSession);
-            List<String> tokens = extractor.extract(profileEntries, new ListExtractor.Extractor<String, ProfileEntry>() {
-                @Override
-                public String extract(ProfileEntry entry) {
-                    return entry.getPage();
-                }
-            });
-            for (final String token : tokens) {
-                if (token != null) {
-                    userRights.add(sha1Generator.getHash(token.concat(String.valueOf(apiSession.getId()))));
-                }
-
-            }
-        }
+    private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession session) {
+        final List<String> rights = new UserRightsBuilder(session, new TokenProfileProvider(profiles, createProfileEntryEngineClient(session)))
+                .build();
         // TODO restrict the current user from being able to call the logout directly as a profileEntry (is it possible)?
-        if (isLogoutDisabled(apiSession.getTenantId())) {
-            userRights.add(LoginManagerProperties.LOGOUT_DISABLED);
+        if (isLogoutDisabled(session.getTenantId())) {
+            rights.add(LoginManagerProperties.LOGOUT_DISABLED);
         }
-        return JSonSerializer.serialize(userRights);
+        return JSonSerializer.serialize(rights);
     }
 
-    private List<ProfileEntry> getProfileEntriesForProfile(final Long profileId, final org.bonitasoft.engine.session.APISession apiSession) {
-        final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
-        final ProfileEntryEngineClient profileEntryApi = engineClientFactory.createProfileEntryEngineClient();
-        return profileEntryApi.getProfileEntriesByProfile(profileId);
+    private ProfileEntryEngineClient createProfileEntryEngineClient(org.bonitasoft.engine.session.APISession session) {
+        final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(session));
+        return engineClientFactory.createProfileEntryEngineClient();
     }
 
     /**
@@ -128,6 +111,6 @@ public class APISession extends ConsoleAPI<SessionItem> {
     }
 
     public String getVersion() {
-        return "";
+        return new BonitaVersion(BonitaVersion.STREAM).toString();
     }
 }

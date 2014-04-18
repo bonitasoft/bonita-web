@@ -14,34 +14,25 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vincent Elcrin
  */
-public class UserRightsBuilder {
+public class TokenListProviderTest {
 
-    private org.bonitasoft.engine.session.APISession session;
+    @Test
+    public void should_return_the_list_of_provided_token_without_null() throws Exception {
 
-    private TokenProvider provider;
+        TokenListProvider provider = new TokenListProvider(Arrays.asList(
+                "token 1",
+                null,
+                "token 2"));
 
-    private SHA1Generator generator = new SHA1Generator();
-
-    interface TokenProvider {
-        List<String> getTokens();
-    }
-
-    public UserRightsBuilder(org.bonitasoft.engine.session.APISession session, TokenProvider provider) {
-        this.session = session;
-        this.provider = provider;
-    }
-
-    public List<String> build() {
-        List<String> rights = new ArrayList<String>();
-        for (String token : provider.getTokens()) {
-            rights.add(generator.getHash(token.concat(String.valueOf(session.getId()))));
-        }
-        return rights;
+        assertThat(provider.getTokens()).containsExactly("token 1", "token 2");
     }
 }

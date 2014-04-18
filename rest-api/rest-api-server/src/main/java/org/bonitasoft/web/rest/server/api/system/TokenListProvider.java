@@ -20,28 +20,28 @@ import java.util.List;
 /**
  * @author Vincent Elcrin
  */
-public class UserRightsBuilder {
+public class TokenListProvider implements UserRightsBuilder.TokenProvider {
 
-    private org.bonitasoft.engine.session.APISession session;
+    private List<String> tokens = new ArrayList<String>();
 
-    private TokenProvider provider;
-
-    private SHA1Generator generator = new SHA1Generator();
-
-    interface TokenProvider {
-        List<String> getTokens();
+    public TokenListProvider(List<String> tokens) {
+        addAll(tokens);
     }
 
-    public UserRightsBuilder(org.bonitasoft.engine.session.APISession session, TokenProvider provider) {
-        this.session = session;
-        this.provider = provider;
-    }
-
-    public List<String> build() {
-        List<String> rights = new ArrayList<String>();
-        for (String token : provider.getTokens()) {
-            rights.add(generator.getHash(token.concat(String.valueOf(session.getId()))));
+    private void addAll(List<String> tokens) {
+        for (String token : tokens) {
+            add(token);
         }
-        return rights;
+    }
+
+    private void add(String token) {
+        if(token != null) {
+            this.tokens.add(token);
+        }
+    }
+
+    @Override
+    public List<String> getTokens() {
+        return tokens;
     }
 }
