@@ -28,22 +28,21 @@ public class Arg {
     private final Object value;
 
     public Arg(final String name, final Object value) {
-        super();
         this.name = name;
         this.value = value;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getValue() {
-        return this.value == null ? null : this.value.toString();
+        return value == null ? null : value.toString();
     }
 
     @Override
     public String toString() {
-        return this.name + ":" + getValue();
+        return name + ":" + getValue();
     }
 
 }

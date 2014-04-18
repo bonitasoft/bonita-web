@@ -24,6 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.accessor.IActivityAccessor;
+import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
@@ -87,15 +89,19 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
     }
 
     private RawView createMoreDetailsPage(APIID id) {
-        TaskMoreDetailsAdminPage page = new TaskMoreDetailsAdminPage(isArchived());
+        RawView page = getTaskMoreDetailsPage();
         page.addParameter(PARAMETER_ITEM_ID, id.toString());
         return page;
     }
 
+	protected RawView getTaskMoreDetailsPage() {
+		return new TaskMoreDetailsAdminPage(isArchived());
+	}
+
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final IFlowNodeItem item) {
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addCaseId(item, true);
+        metadatas.addCaseId(item,  getCaseMoreDetailsPage() , getArchivedCaseMoreDetailsPage());
         metadatas.addDueDate(getArchivedDateFormat());
         metadatas.addAppsName();
         if (!(item.getRootContainerProcess().ensureName().equals(item.getProcess().ensureName()))){
@@ -107,6 +113,14 @@ public class TaskQuickDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNo
         }
         return metadatas.build();
     }
+
+	protected String getArchivedCaseMoreDetailsPage() {
+		return ArchivedCaseMoreDetailsAdminPage.TOKEN;
+	}
+
+	protected String getCaseMoreDetailsPage() {
+		return CaseMoreDetailsAdminPage.TOKEN;
+	}
 
     protected FORMAT getArchivedDateFormat() {
         return isArchived() ? FORMAT.DISPLAY : FORMAT.DISPLAY_RELATIVE;

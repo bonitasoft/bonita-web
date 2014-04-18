@@ -28,7 +28,9 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
+import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
@@ -80,7 +82,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ArchivedHumanTaskItem task) {
         MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
-        metadatas.addCaseId(task, false);
+        metadatas.addCaseId(task, CaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.TOKEN);
         metadatas.addDueDate(DateFormat.FORMAT.DISPLAY_RELATIVE);
         metadatas.addAppsName();
         metadatas.addPriority();

@@ -31,7 +31,7 @@ public class BonitaPageItem extends Item {
 
     public static final String ATTRIBUTE_DESCRIPTION = "description";
 
-    public static final String ATTRIBUTE_MENU_NAME = "menuName";
+    public static final String ATTRIBUTE_DISPLAY_NAME = "displayName";
 
     public BonitaPageItem(String token, String name, String description, String menuName) {
         setId(APIID.makeAPIID(token));
@@ -65,7 +65,7 @@ public class BonitaPageItem extends Item {
     }
 
     private void setMenuName(String menuName) {
-        this.setAttribute(ATTRIBUTE_MENU_NAME, menuName);
+        this.setAttribute(ATTRIBUTE_DISPLAY_NAME, menuName);
     }
 
     public String getName() {
@@ -81,7 +81,7 @@ public class BonitaPageItem extends Item {
     }
 
     public String getMenuName() {
-        return this.getAttributeValue(ATTRIBUTE_MENU_NAME);
+        return this.getAttributeValue(ATTRIBUTE_DISPLAY_NAME);
     }
 
     @Override

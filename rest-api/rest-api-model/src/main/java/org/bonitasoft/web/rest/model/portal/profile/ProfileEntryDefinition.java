@@ -14,10 +14,12 @@
  */
 package org.bonitasoft.web.rest.model.portal.profile;
 
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.EnumValidator;
 
 /**
@@ -65,6 +67,7 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
         createAttribute(ProfileEntryItem.ATTRIBUTE_PARENT_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, ItemAttribute.TYPE.ITEM_ID)
                 .isMandatory();
+        createAttribute(ProfileEntryItem.ATTRIBUTE_IS_CUSTOM, ItemAttribute.TYPE.BOOLEAN);
         createAttribute(ProfileEntryItem.ATTRIBUTE_TYPE, ItemAttribute.TYPE.ENUM)
                 .isMandatory()
                 .addValidator(new EnumValidator(
@@ -72,6 +75,7 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
                         ProfileEntryItem.VALUE_TYPE.link.name()
                         ));
         createAttribute(ProfileEntryItem.ATTRIBUTE_PAGE, ItemAttribute.TYPE.STRING);
+        createAttribute(ProfileEntryItem.ATTRIBUTE_IS_CUSTOM_ICON, ItemAttribute.TYPE.IMAGE);
     }
 
     @Override

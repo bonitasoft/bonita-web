@@ -31,7 +31,7 @@ public abstract class ConsoleAPI<T extends IItem> extends API<T> {
     /**
      * Get the session to access the engine SDK
      */
-    protected final APISession getEngineSession() {
+    protected APISession getEngineSession() {
         if (this.sessionSingleton == null) {
             this.sessionSingleton = (APISession) getHttpSession().getAttribute("apiSession");
         }

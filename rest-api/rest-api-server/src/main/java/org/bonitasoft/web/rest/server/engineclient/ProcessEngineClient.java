@@ -191,7 +191,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchProcessDefinitionsSupervisedBy(final long userId, final SearchOptions searchOptions) {
         try {
-            return getProcessApi().searchUncategorizedProcessDeploymentInfosSupervisedBy(userId, searchOptions);
+            return getProcessApi().searchProcessDeploymentInfosSupervisedBy(userId, searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching process definition supervised by user " + userId, e);
         }

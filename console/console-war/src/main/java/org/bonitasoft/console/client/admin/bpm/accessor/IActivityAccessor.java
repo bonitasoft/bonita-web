@@ -32,7 +32,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class IActivityAccessor {
 
-    private IFlowNodeItem item;
+    private final IFlowNodeItem item;
 
     public IActivityAccessor(IFlowNodeItem item) {
         if (!item.isActivity()) {
