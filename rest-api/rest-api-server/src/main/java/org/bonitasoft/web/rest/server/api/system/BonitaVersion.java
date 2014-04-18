@@ -30,10 +30,8 @@ public class BonitaVersion {
 
     private String version;
 
-    public static final InputStream STREAM = BonitaVersion.class.getClassLoader().getResourceAsStream("VERSION");
-
-    public BonitaVersion(InputStream stream) {
-        version = readVersion(stream);
+    public BonitaVersion(VersionFile file) {
+        version = readVersion(file.getStream());
     }
 
     private String readVersion(InputStream stream) {

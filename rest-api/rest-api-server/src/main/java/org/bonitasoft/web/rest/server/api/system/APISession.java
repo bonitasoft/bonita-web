@@ -111,6 +111,6 @@ public class APISession extends ConsoleAPI<SessionItem> {
     }
 
     public String getVersion() {
-        return new BonitaVersion(BonitaVersion.STREAM).toString();
+        return new BonitaVersion(new VersionFile()).toString();
     }
 }
