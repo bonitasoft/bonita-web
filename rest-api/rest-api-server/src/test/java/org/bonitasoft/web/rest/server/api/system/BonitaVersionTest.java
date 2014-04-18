@@ -17,8 +17,6 @@ package org.bonitasoft.web.rest.server.api.system;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,7 +24,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author Vincent Elcrin
@@ -37,38 +34,42 @@ public class BonitaVersionTest {
     @Mock
     private VersionFile file;
 
+    @Mock
     private InputStream stream;
-
-    @Before
-    public void setUp() throws Exception {
-        stream = IOUtils.toInputStream("1.0.0");
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        IOUtils.closeQuietly(stream);
-    }
 
     @Test
     public void should_read_version_stream_to_return_its_content() throws Exception {
+        InputStream stream = IOUtils.toInputStream("1.0.0");
         given(file.getStream()).willReturn(stream);
 
         BonitaVersion version = new BonitaVersion(file);
 
         assertThat(version.toString()).isEqualTo("1.0.0");
+        IOUtils.closeQuietly(stream);
+    }
+
+    @Test
+    public void should_trim_extra_new_line_character() throws Exception {
+        InputStream stream = IOUtils.toInputStream("1.0.0\n");
+        given(file.getStream()).willReturn(stream);
+
+        BonitaVersion version = new BonitaVersion(file);
+
+        assertThat(version.toString()).isEqualTo("1.0.0");
+        IOUtils.closeQuietly(stream);
     }
 
     @Test
     public void should_return_an_empty_version_when_the_stream_is_null() throws Exception {
+        given(file.getStream()).willReturn(null);
 
-        BonitaVersion version = new BonitaVersion(null);
+        BonitaVersion version = new BonitaVersion(file);
 
         assertThat(version.toString()).isEqualTo("");
     }
 
     @Test
     public void should_return_an_empty_version_when_it_is_unable_to_read_the_file() throws Exception {
-        InputStream stream = mock(InputStream.class);
         given(stream.read()).willThrow(new RuntimeException());
         given(file.getStream()).willReturn(stream);
 

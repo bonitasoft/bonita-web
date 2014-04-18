@@ -30,11 +30,13 @@ public class BonitaVersion {
 
     private String version;
 
+    private VersionFile file;
+
     public BonitaVersion(VersionFile file) {
-        version = readVersion(file.getStream());
+        this.file = file;
     }
 
-    private String readVersion(InputStream stream) {
+    private String read(InputStream stream) {
         if (stream != null) {
             try {
                 return IOUtils.toString(stream);
@@ -59,6 +61,9 @@ public class BonitaVersion {
 
     @Override
     public String toString() {
-        return version;
+        if(version == null) {
+            version = read(file.getStream());
+        }
+        return version.trim();
     }
 }

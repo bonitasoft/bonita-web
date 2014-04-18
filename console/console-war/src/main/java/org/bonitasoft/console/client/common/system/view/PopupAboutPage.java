@@ -16,11 +16,12 @@
  */
 package org.bonitasoft.console.client.common.system.view;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
+import org.bonitasoft.web.toolkit.client.Session;
+import org.bonitasoft.web.toolkit.client.common.session.SessionItem;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Julien Mege
@@ -44,7 +45,7 @@ public class PopupAboutPage extends Page {
      * get version from html host page in meta tag named version.
      */
     private String getVersion() {
-        return $("meta[name='version']").attr("content");
+        return Session.getParameter(SessionItem.ATTRIBUTE_VERSION);
     }
 
     @Override
