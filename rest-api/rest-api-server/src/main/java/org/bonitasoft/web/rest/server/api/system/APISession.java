@@ -14,15 +14,12 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.login.LoginManagerProperties;
 import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.engine.profile.Profile;
-import org.bonitasoft.engine.profile.ProfileEntry;
-import org.bonitasoft.web.rest.server.ListExtractor;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
@@ -65,7 +62,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
     public String getUserRights(final org.bonitasoft.engine.session.APISession apiSession) {
         final List<Profile> profiles = getProfilesForUser(apiSession);
         if (apiSession.isTechnicalUser()) {
-            return JSonSerializer.serialize(new UserRightsBuilder(apiSession).buildFrom(Arrays.asList(
+            return JSonSerializer.serialize(new UserRightsBuilder(apiSession, new TokenListProvider(Arrays.asList(
                     "userlistingadmin",
                     "rolelistingadmin",
                     "grouplistingadmin",
@@ -73,7 +70,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
                     "profilelisting",
                     "tenantMaintenance",
                     "pagelisting",
-                    "businessdatamodelimport")));
+                    "businessdatamodelimport"))));
         } else {
             return getUserRightsForProfiles(profiles, apiSession);
         }
