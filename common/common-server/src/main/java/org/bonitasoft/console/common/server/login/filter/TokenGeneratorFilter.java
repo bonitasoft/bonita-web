@@ -17,6 +17,7 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -58,7 +59,9 @@ public class TokenGeneratorFilter implements Filter {
         if (apiTokenFromClient == null) {
             apiTokenFromClient = new APIToken().getToken();
             req.getSession().setAttribute("api_token", apiTokenFromClient);
-            LOGGER.log(LOGGER.getLevel(), "Bonita BPM API Token created: " + apiTokenFromClient);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(LOGGER.getLevel(), "Bonita BPM API Token generated: " + apiTokenFromClient);    
+            }            
         }
         
         res.addHeader("X-Bonita-API-Token", apiTokenFromClient.toString());

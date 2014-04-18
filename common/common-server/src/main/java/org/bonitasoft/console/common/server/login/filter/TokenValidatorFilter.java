@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,9 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
             String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
 
             if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
-                LOGGER.log(LOGGER.getLevel(), "TokenValidationFailed, expected: " + apiToken + ", received: " + headerFromRequest);
+                if (LOGGER.isLoggable(Level.FINE)) {
+                        LOGGER.log(Level.FINE, "TokenValidationFailed, expected: " + apiToken + ", received: " + headerFromRequest);    
+                }
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }
