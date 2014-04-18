@@ -76,7 +76,7 @@
 							.bgLeft(@detailsPanel-definition-processBg);
 						}
 					}
-					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date{
+					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date, &.lastupdatedate, &.creationdate{
 						label{
 							.bgLeft(@detailsPanel-definition-dueDateBg);
 						}
@@ -87,6 +87,13 @@
 					//		.bgLeft(@detailsPanel-definition-userBg);
 					//	}
 					//}
+					
+					&.createdby, &.updatedby{
+						label {
+							.bgLeft(@detailsPanel-definition-userBg);
+						}
+					}
+					
 					&.human_task{
 						label {
 							.bgLeft(@detailsPanel-definition-human-taskBg);

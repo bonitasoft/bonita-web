@@ -37,6 +37,14 @@ public class ProfileEntryItemConverter extends ItemConverter<ProfileEntryItem, P
         item.setDescription(profileEntry.getDescription());
         item.setParentId(profileEntry.getParentId());
         item.setPage(profileEntry.getPage());
+        item.setIsCustom(profileEntry.isCustom());
+        if (item.isCustom() && profileEntry.getParentId() != 0) {
+            item.setIcon(ProfileEntryItem.DEFAULT_ICON_BLACK);
+        } else if (item.isCustom() && profileEntry.getParentId() == 0) {
+            item.setIcon(ProfileEntryItem.DEFAULT_ICON_WHITE);
+        } else {
+            item.setIcon("");
+        }
         return item;
     }
 

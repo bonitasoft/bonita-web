@@ -50,7 +50,7 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
         createAttribute(BonitaPageItem.ATTRIBUTE_TOKEN, ItemAttribute.TYPE.STRING);
         createAttribute(BonitaPageItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
         createAttribute(BonitaPageItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.STRING);
-        createAttribute(BonitaPageItem.ATTRIBUTE_MENU_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(BonitaPageItem.ATTRIBUTE_DISPLAY_NAME, ItemAttribute.TYPE.STRING);
     }
 
     @Override

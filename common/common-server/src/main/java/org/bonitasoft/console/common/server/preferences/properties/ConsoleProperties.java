@@ -47,6 +47,11 @@ public class ConsoleProperties {
     public static final String ATTACHMENT_MAX_SIZE = "form.attachment.max.size";
 
     /**
+     * Custom page debug mode
+     */
+    public static final String CUSTOM_PAGE_DEBUG = "custom.page.debug";
+
+    /**
      * Instances attribute
      */
     private static Map<Long, ConsoleProperties> INSTANCES = new HashMap<Long, ConsoleProperties>();
@@ -78,13 +83,13 @@ public class ConsoleProperties {
         return tenancyProperties;
     }
 
-    protected ConsoleProperties(File propertiesFile) {
+    protected ConsoleProperties(final File propertiesFile) {
         // Read properties file.
         this.propertiesFile = propertiesFile;
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(this.propertiesFile);
-            this.properties.load(inputStream);
+            properties.load(inputStream);
         } catch (final IOException e) {
             logSevere(e, "Bonita console properties file " + this.propertiesFile.getPath() + " could not be loaded.");
         } finally {
@@ -93,28 +98,28 @@ public class ConsoleProperties {
     }
 
     public String getProperty(final String propertyName) {
-        if (this.properties == null) {
+        if (properties == null) {
             return null;
         }
-        return this.properties.getProperty(propertyName);
+        return properties.getProperty(propertyName);
     }
 
     public String getProperty(final String propertyName, final String defaultValue) {
-        if (this.properties == null) {
+        if (properties == null) {
             return defaultValue;
         }
-        return this.properties.getProperty(propertyName, defaultValue);
+        return properties.getProperty(propertyName, defaultValue);
     }
 
     public void removeProperty(final String propertyName) throws IOException {
-        if (this.properties != null) {
-            this.properties.remove(propertyName);
+        if (properties != null) {
+            properties.remove(propertyName);
             OutputStream outputStream = null;
             try {
-                outputStream = new FileOutputStream(this.propertiesFile);
-                this.properties.store(outputStream, null);
+                outputStream = new FileOutputStream(propertiesFile);
+                properties.store(outputStream, null);
             } catch (final IOException e) {
-                logSevere(e, "Bonita console properties file " + this.propertiesFile.getPath() + " could not be loaded.");
+                logSevere(e, "Bonita console properties file " + propertiesFile.getPath() + " could not be loaded.");
             } finally {
                 closeOuptutStream(outputStream);
             }
@@ -122,14 +127,14 @@ public class ConsoleProperties {
     }
 
     public void setProperty(final String propertyName, final String propertyValue) throws IOException {
-        if (this.properties != null) {
-            this.properties.setProperty(propertyName, propertyValue);
+        if (properties != null) {
+            properties.setProperty(propertyName, propertyValue);
             OutputStream outputStream = null;
             try {
-                outputStream = new FileOutputStream(this.propertiesFile);
-                this.properties.store(outputStream, null);
+                outputStream = new FileOutputStream(propertiesFile);
+                properties.store(outputStream, null);
             } catch (final IOException e) {
-                logSevere(e, "Bonita console properties file " + this.propertiesFile.getPath() + " could not be loaded.");
+                logSevere(e, "Bonita console properties file " + propertiesFile.getPath() + " could not be loaded.");
             } finally {
                 closeOuptutStream(outputStream);
             }
@@ -144,27 +149,32 @@ public class ConsoleProperties {
         return 15;
     }
 
-    private void closeInputStream(InputStream inputStream) {
+    public boolean isPageInDebugMode() {
+        final String debugMode = this.getProperty(CUSTOM_PAGE_DEBUG);
+        return Boolean.parseBoolean(debugMode);
+    }
+
+    private void closeInputStream(final InputStream inputStream) {
         if (inputStream != null) {
             try {
                 inputStream.close();
             } catch (final IOException e) {
-                logSevere(e, "Bonita console properties file stream " + this.propertiesFile.getPath() + " could not be closed.");
+                logSevere(e, "Bonita console properties file stream " + propertiesFile.getPath() + " could not be closed.");
             }
         }
     }
 
-    private void closeOuptutStream(OutputStream outputStream) {
+    private void closeOuptutStream(final OutputStream outputStream) {
         if (outputStream != null) {
             try {
                 outputStream.close();
             } catch (final IOException e) {
-                logSevere(e, "Bonita console properties file stream " + this.propertiesFile.getPath() + " could not be closed.");
+                logSevere(e, "Bonita console properties file stream " + propertiesFile.getPath() + " could not be closed.");
             }
         }
     }
 
-    private void logSevere(final IOException e, String message) {
+    private void logSevere(final IOException e, final String message) {
         if (LOGGER.isLoggable(Level.SEVERE)) {
             LOGGER.log(Level.SEVERE, message, e);
         }

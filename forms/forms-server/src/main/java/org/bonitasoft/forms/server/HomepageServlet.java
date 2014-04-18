@@ -28,7 +28,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,7 +56,7 @@ import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
  * 
  * @author Ruiheng Fan, Vincent Elcrin, Anthony Birembaut
  */
-public class HomepageServlet extends HttpServlet {
+public class HomepageServlet extends ThemeResourceServlet {
 
     /**
      * UID
@@ -68,11 +67,6 @@ public class HomepageServlet extends HttpServlet {
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(HomepageServlet.class.getName());
-
-    /**
-     * Theme parameter
-     */
-    public static final String THEME_PARAM = "theme";
 
     /**
      * portal UI mode parameter
@@ -134,7 +128,7 @@ public class HomepageServlet extends HttpServlet {
     }
 
     protected String getThemeName(final HttpServletRequest request) {
-        return request.getParameter(THEME_PARAM);
+        return request.getParameter(THEME_PARAM_NAME);
     }
 
     protected String getUrlPrefix(final HttpServletRequest request) {
@@ -147,7 +141,7 @@ public class HomepageServlet extends HttpServlet {
             // if it doesn't, retrieve it from the engine and create a timestamp file with the theme last update date,
             // if it does retrieve the last update date from the engine and compare it to the timestamp file,
             // if the last update date is more recent, retrieve the theme again from the engine
-            final File themesParentFolder = ThemeResourceServlet.getThemesParentFolder(request);
+            final File themesParentFolder = getResourcesParentFolder(request);
             final File themeFolder = new File(themesParentFolder, PORTAL_THEME_NAME);
             final APISession apiSession = getEngineSession(request);
             if (themeFolder.exists()) {
@@ -166,7 +160,7 @@ public class HomepageServlet extends HttpServlet {
             } else {
                 updateThemeFromEngine(apiSession, themeFolder);
             }
-            ThemeResourceServlet.getThemePackageFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
+            getResourceFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while loading the file " + getFileName(isForm) + " in theme " + PORTAL_THEME_NAME, e);
