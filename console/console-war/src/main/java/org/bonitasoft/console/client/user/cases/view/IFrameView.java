@@ -43,7 +43,7 @@ public class IFrameView extends Composite {
 
     public IFrameView(final String url) {
         initWidget(binder.createAndBindUi(this));
-        frame.setId("bonitaframe");
+        frame.setId("formframe");
         frame.setSrc(url);
     }
 
