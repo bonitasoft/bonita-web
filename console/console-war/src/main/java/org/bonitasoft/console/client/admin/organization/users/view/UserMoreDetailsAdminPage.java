@@ -42,7 +42,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
-import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
@@ -92,7 +91,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final UserItem item) {
         final UserMetadataBuilder metadatas = new UserMetadataBuilder();
-        metadatas.addEmail();
+        metadatas.addEmail(item.getProfessionalData());
         metadatas.addUserName();
         metadatas.addJobTitle();
         metadatas.addManager();

@@ -82,7 +82,7 @@ public class UserQuickDetailsAdminPage extends UserQuickDetailsPage {
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final UserItem item) {
         UserMetadataBuilder metadatas = new UserMetadataBuilder();
-        metadatas.addEmail();
+        metadatas.addEmail(item.getProfessionalData());
         metadatas.addManager();
         metadatas.addUserName();
         metadatas.addLastConnectionDate(FORMAT.DISPLAY_RELATIVE);

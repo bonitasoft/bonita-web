@@ -20,14 +20,24 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import static org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader.DEFAULT_FORMAT;
 
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.console.client.uib.SafeHtmlParser;
+import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.CompoundAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Colin PUY
@@ -35,6 +45,13 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
  */
 public class UserMetadataBuilder extends MetadataBuilder {
 
+    interface Templates extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<div class=\"definition email\"><label>{0}: </label><span><a href='mailto:{1}'>{1}</a></span></div>")
+        SafeHtml email(String email, String label);
+    }
+    
+    private static Templates TEMPLATES = GWT.create(Templates.class);
+    
     public void addFirstName() {
         add(firstName());
     }
@@ -84,15 +101,14 @@ public class UserMetadataBuilder extends MetadataBuilder {
                 _("Last login"), _("The date of the last connection of the user"));
     }
 
-    public void addEmail() {
-        add(eMail());
+    public void addEmail(AbstractContactDataItem contact) {
+        add(eMail(contact));
     }
 
-    private ItemDetailsMetadata eMail() {
-        return new ItemDetailsMetadata(
-                new DeployedAttributeReader(UserItem.DEPLOY_PROFESSIONAL_DATA, ProfessionalContactDataItem.ATTRIBUTE_EMAIL)
-                .setDefaultValue("No data"),
-                _("Email"), _("User's email"));
+    private ItemDetailsMetadata eMail(AbstractContactDataItem contact) {
+        String email = contact.getEmail() == null ? _("No data") : contact.getEmail(); 
+        DivElement definition = DivElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.email(_("Email"), email))));
+        return new ItemDetailsMetadata(new DeployedAttributeReader(UserItem.DEPLOY_PROFESSIONAL_DATA, ProfessionalContactDataItem.ATTRIBUTE_EMAIL), new Html(definition));
     }
 
     public void addUserName() {
