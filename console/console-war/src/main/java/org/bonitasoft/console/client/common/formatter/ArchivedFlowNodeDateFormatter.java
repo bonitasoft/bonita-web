@@ -37,7 +37,7 @@ public class ArchivedFlowNodeDateFormatter extends ItemTableCellFormatter {
         if (task.isAborted()) {
             this.table.addCell(newPrefixSpan(_("Aborted on:")), new Span(getText()));
         } else {
-            this.table.addCell(newPrefixSpan(_("Performed on:")), new Span(getText()));
+            this.table.addCell(newPrefixSpan(_("Done on:")), new Span(getText()));
         }
     }
 
