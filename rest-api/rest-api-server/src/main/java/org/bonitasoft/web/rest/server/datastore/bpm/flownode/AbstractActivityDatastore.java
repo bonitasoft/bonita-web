@@ -149,7 +149,8 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
     }
 
     protected void update(final CONSOLE_ITEM item, final Map<String, String> attributes) {
-        updateState(item, MapUtil.getValue(attributes, FlowNodeItem.ATTRIBUTE_STATE, null));
+        updateState(item, MapUtil.getValue(attributes, FlowNodeItem.ATTRIBUTE_STATE, null),
+                MapUtil.getValue(attributes, FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID, null));
     }
 
     /**
@@ -158,7 +159,7 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
      * @param state
      *            The state to set
      */
-    protected void updateState(final CONSOLE_ITEM item, final String state) {
+    protected void updateState(final CONSOLE_ITEM item, final String state, String userExecuteById) {
         try {
             if (state == null) {
                 return;
@@ -166,10 +167,8 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
             if (HumanTaskItem.VALUE_STATE_SKIPPED.equals(state) && item instanceof FlowNodeItem) {
                 getProcessAPI().setActivityStateByName(item.getId().toLong(), ActivityStates.SKIPPED_STATE);
             } else if (HumanTaskItem.VALUE_STATE_COMPLETED.equals(state) && item instanceof ActivityItem) {
-                if (item instanceof HumanTaskItem && item.hasAttribute(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID)
-                        && item.getExecutedBySubstituteUserId() != null) {
-                    final long userId = ((HumanTaskItem) item).getExecutedBySubstituteUserId().toLong();
-                    getProcessAPI().executeFlowNode(userId, item.getId().toLong());
+                if (userExecuteById != null) {
+                    getProcessAPI().executeFlowNode(Long.valueOf(userExecuteById), item.getId().toLong());
                 } else {
                     getProcessAPI().executeFlowNode(item.getId().toLong());
                 }
