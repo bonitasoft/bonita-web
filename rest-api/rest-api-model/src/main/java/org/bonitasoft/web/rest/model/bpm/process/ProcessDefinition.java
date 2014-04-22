@@ -78,6 +78,7 @@ public class ProcessDefinition extends ItemDefinition<ProcessItem> {
         createAttribute(ProcessItem.ATTRIBUTE_DEPLOYED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ProcessItem.ATTRIBUTE_DEPLOYMENT_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
+        createAttribute(ProcessItem.ATTRIBUTE_ACTOR_INITIATOR_ID, ItemAttribute.TYPE.ITEM_ID);
     }
 
     @Override
