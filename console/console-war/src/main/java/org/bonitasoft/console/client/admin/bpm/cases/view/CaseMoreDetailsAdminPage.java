@@ -145,8 +145,8 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
                 .addHiddenFilter(ArchivedTaskItem.FILTER_IS_TERMINAL, ArchivedTaskItem.VALUE_IS_TERMINAL_TRUE)
 
                 .addColumn(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
-                .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE), _("Done date"))
-                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Done by"))
+                .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE), _("Performed date"))
+                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Perform by"))
                 .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID), _("For"))
                 .addColumn(new DescriptionAttributeReader(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))

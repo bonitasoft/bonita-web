@@ -48,7 +48,7 @@ public class ArchivedFlowNodeExecutedByFormatter extends ItemTableCellFormatter 
         if (task.isAborted()) {
             table.addCell(newPrefixSpan(_("Aborted by:")), new Span(getText() + " " + forUser));
         } else {
-            table.addCell(newPrefixSpan(_("Done by:")), new Span(getText() + " " + forUser));
+            table.addCell(newPrefixSpan(_("Performed by:")), new Span(getText() + " " + forUser));
         }
     }
 

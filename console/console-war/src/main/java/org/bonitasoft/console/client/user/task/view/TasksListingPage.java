@@ -185,7 +185,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         return new ItemTable(Definitions.get(ArchivedHumanTaskDefinition.TOKEN))
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
                 .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Done date"), true)
+                .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
                 .addColumn(
                         new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
                                 ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
