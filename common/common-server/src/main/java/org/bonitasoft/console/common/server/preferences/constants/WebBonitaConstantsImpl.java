@@ -55,9 +55,9 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     private String workFolderPath = null;
 
-    private final String consoleWorkFolderPath = null;
-
     private String formsWorkFolderPath = null;
+
+    private final String workLibFolderPath = null;
 
     private String bdmWorkFolderPath;
 
@@ -206,10 +206,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
 
     @Override
     public String getBDMWorkFolderPath() {
-        if (this.bdmWorkFolderPath == null) {
-            this.bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+        if (bdmWorkFolderPath == null) {
+            bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
         }
-        return this.bdmWorkFolderPath;
+        return bdmWorkFolderPath;
     }
 
 }
