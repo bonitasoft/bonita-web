@@ -159,7 +159,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     public Document getFormDefinitionDocument(final Map<String, Object> context) throws IOException, InvalidFormDefinitionException, FormNotFoundException,
             SessionTimeoutException {
 
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             defaultLogger.log(Level.FINEST, "### " + time + " - getFormDefinitionDocument - start ");
@@ -218,7 +218,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws SessionTimeoutException
      */
     protected long getProcessDefinitionID(final Map<String, Object> context) throws InvalidSessionException, FormNotFoundException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             defaultLogger.log(Level.FINEST, "### " + time + " - getProcessDefinitionID - start");
@@ -291,7 +291,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             CanceledFormException, FormNotFoundException, FormAlreadySubmittedException, ForbiddenApplicationAccessException, FormInErrorException,
             MigrationProductVersionNotIdenticalException, NoCredentialsInSessionException, SkippedFormException, SessionTimeoutException,
             TaskAssignationException, AbortedFormException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (defaultLogger.isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             defaultLogger.log(Level.FINEST, "### " + time + " - isAllowed - start");
@@ -482,10 +482,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws FormAlreadySubmittedException
      */
     protected void canUserViewActivityInstanceForm(final APISession session, final User user, final IFormWorkflowAPI workflowAPI,
-            final long activityInstanceID, final String formId, long userId) throws BPMEngineException, InvalidSessionException,
-            ForbiddenFormAccessException,
-            SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, FormNotFoundException, FormAlreadySubmittedException,
-            AbortedFormException {
+            final long activityInstanceID, final String formId, final long userId) throws BPMEngineException, InvalidSessionException,
+            ForbiddenFormAccessException, SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, FormNotFoundException,
+            FormAlreadySubmittedException, AbortedFormException {
 
         try {
             // TODO verify if the user is admin. In this case, he can access the form
@@ -563,7 +562,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws SessionTimeoutException
      */
     protected void canUserViewInstanceForm(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processInstanceID,
-            final String formId, long userId) throws InvalidSessionException, BPMEngineException, FormNotFoundException, ForbiddenFormAccessException,
+            final String formId, final long userId) throws InvalidSessionException, BPMEngineException, FormNotFoundException, ForbiddenFormAccessException,
             SessionTimeoutException {
 
         try {
@@ -617,8 +616,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws BPMEngineException
      */
     protected void canUserInstantiateProcess(final APISession session, final User user, final IFormWorkflowAPI workflowAPI, final long processDefinitionID,
-            final long userId)
-            throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException, FormNotFoundException {
+            final long userId) throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException, FormNotFoundException {
 
         try {
             // TODO verify if the user is admin. In this case, he can access the form
@@ -683,9 +681,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Serializable resolveExpression(final Expression expression, final Map<String, Object> context) throws FormNotFoundException,
-            FormInitializationException,
-            SessionTimeoutException, FileTooBigException, IOException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+            FormInitializationException, SessionTimeoutException, FileTooBigException, IOException {
+        final FormContextUtil ctxu = new FormContextUtil(context);
         Serializable result = null;
         if (expression != null) {
             if (getLogger().isLoggable(Level.FINEST)) {
@@ -857,9 +854,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Serializable> resolveExpressions(final List<Expression> expressions, final Map<String, Object> context) throws FormNotFoundException,
-            FormInitializationException,
-            SessionTimeoutException, FileTooBigException, IOException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+            FormInitializationException, SessionTimeoutException, FileTooBigException, IOException {
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - resolveExpressions - start - nb of expressions " + expressions.size());
@@ -966,7 +962,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @SuppressWarnings("unchecked")
     public Map<String, Object> executeActions(final List<FormAction> actions, final Map<String, Object> context) throws FileTooBigException,
             FormNotFoundException, FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
-        FormContextUtil formContextUtil = new FormContextUtil(context);
+        final FormContextUtil formContextUtil = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - executeActions - start - nb of actions " + actions.size());
@@ -1000,8 +996,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 // retrieve the process definition id from the context
                 processDefinitionID = formContextUtil.getProcessDefinitionId();
 
-                newProcessInstanceID = workflowAPI.executeActionsAndStartInstance(session, userID, processDefinitionID, fieldValues, actions,
-                        locale, submitButtonId, transientDataContext);
+                newProcessInstanceID = workflowAPI.executeActionsAndStartInstance(session, userID, processDefinitionID, fieldValues, actions, locale,
+                        submitButtonId, transientDataContext);
                 urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                 urlContext.remove(FormServiceProviderUtil.TASK_UUID);
                 urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, String.valueOf(newProcessInstanceID));
@@ -1154,7 +1150,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public FormURLComponents getNextFormURLParameters(final String formId, final Map<String, Object> context) throws FormNotFoundException,
             SessionTimeoutException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         logTime("getNextFormURLParameters - start");
         final Map<String, Object> urlContext = getUrlContext(context);
         final APISession session = ctxu.getAPISessionFromContext();
@@ -1332,7 +1328,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Map<String, String> getAttributesToInsert(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getAttributesToInsert - start");
@@ -1382,7 +1378,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     public List<FormValidator> validateField(final List<FormValidator> validators, final String fieldId, final FormFieldValue fieldValue,
             final String submitButtonId, final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException,
             FileTooBigException, IOException, BPMExpressionEvaluationException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - validateField - start " + fieldId);
@@ -1462,7 +1458,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     public List<FormValidator> validatePage(final List<FormValidator> validators, final Map<String, FormFieldValue> fields, final String submitButtonId,
             final Map<String, Object> context) throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException,
             IOException, BPMExpressionEvaluationException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - validatePage - start");
@@ -1535,7 +1531,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Date getDeployementDate(final Map<String, Object> context) throws FormNotFoundException, IOException, SessionTimeoutException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getDeployementDate - start");
@@ -1623,7 +1619,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public IApplicationConfigDefAccessor getApplicationConfigDefinition(final Document formDefinitionDocument, final Map<String, Object> context)
             throws SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getApplicationConfigDefinition - start");
@@ -1699,7 +1695,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     protected IApplicationFormDefAccessor getApplicationFormDefinition(final String formId, final Document formDefinitionDocument,
             final Date applicationDeploymentDate, final Map<String, Object> context) throws ApplicationFormDefinitionNotFoundException,
             InvalidFormDefinitionException, InvalidSessionException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         IApplicationFormDefAccessor formDefAccessor = null;
         long processDefinitionID;
         try {
@@ -1763,7 +1759,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public File getApplicationResourceDir(final Date applicationDeploymentDate, final Map<String, Object> context)
             throws ApplicationFormDefinitionNotFoundException, SessionTimeoutException, IOException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getApplicationResourceDir - start");
@@ -1858,7 +1854,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public boolean isEditMode(final String formID, final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         long activityInstanceID = -1;
         boolean isEditMode = false;
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
@@ -1925,17 +1921,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     public Map<String, Object> skipForm(final String formID, final Map<String, Object> context) throws FormNotFoundException, FormSubmissionException,
             FormAlreadySubmittedException, IllegalActivityTypeException, SessionTimeoutException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - skipForm - start");
         }
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         final Map<String, Object> urlContext = new HashMap<String, Object>();
+
         if (context.get(FormServiceProviderUtil.URL_CONTEXT) != null) {
             urlContext.putAll(getUrlContext(context));
         }
         final APISession session = ctxu.getAPISessionFromContext();
+        final Long userId = ctxu.getUserId();
         try {
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
                 final long activityInstanceID = getActivityInstanceId(urlContext);
@@ -1943,7 +1941,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 try {
                     final boolean isTaskReady = workflowAPI.isTaskReady(session, activityInstanceID);
                     if (isTaskReady) {
-                        workflowAPI.terminateTask(session, activityInstanceID);
+                        workflowAPI.terminateTask(session, userId, activityInstanceID);
                         urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                         urlContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
                         processInstanceID = workflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID);
@@ -1956,10 +1954,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         throw new FormAlreadySubmittedException();
                     }
                 } catch (final UserNotFoundException e) {
-                    final String message = "The user with ID " + session.getUserId() + " does not exist!";
-                    if (getLogger().isLoggable(Level.INFO)) {
-                        getLogger().log(Level.INFO, message, e);
-                    }
+                    final String message = "The user with ID " + userId + " does not exist!";
+                    logSevereWithContext(message, e, context);
                     throw new SessionTimeoutException(message);
                 } catch (final ActivityInstanceNotFoundException e) {
                     final String message = "The activity instance with ID " + activityInstanceID + " does not exist!";
@@ -1977,10 +1973,14 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
                 final long processDefinitionID = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
                 try {
-                    final long newProcessInstanceID = workflowAPI.startInstance(session, processDefinitionID);
+                    final long newProcessInstanceID = workflowAPI.startInstance(session, userId, processDefinitionID);
                     urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
                     urlContext.remove(FormServiceProviderUtil.TASK_UUID);
                     urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, String.valueOf(newProcessInstanceID));
+                } catch (final UserNotFoundException e) {
+                    final String message = "The user with ID " + userId + " does not exist!";
+                    logSevereWithContext(message, e, context);
+                    throw new FormSubmissionException();
                 } catch (final ProcessDefinitionNotFoundException e) {
                     final String message = "The process definition with ID " + processDefinitionID + " does not exist!";
                     logSevereWithContext(message, e, context);
@@ -2028,7 +2028,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - skipForm - start");
@@ -2119,7 +2119,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public ClassLoader getClassloader(final Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException {
-        FormContextUtil ctxu = new FormContextUtil(context);
+        final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getClassloader - start");
@@ -2146,7 +2146,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
     }
 
-    private Map<Long, Set<Long>> getProcessActors(final APISession session, long userId) throws BPMEngineException {
+    private Map<Long, Set<Long>> getProcessActors(final APISession session, final long userId) throws BPMEngineException {
         try {
             final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
             final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
@@ -2211,7 +2211,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return id;
     }
 
-    private void logInfoMessageWithContext(final String message, final Throwable e, Map<String, Object> context) {
+    private void logInfoMessageWithContext(final String message, final Throwable e, final Map<String, Object> context) {
         if (getLogger().isLoggable(Level.INFO)) {
             getLogger().log(Level.INFO, message, e, context);
         }
@@ -2223,7 +2223,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
     }
 
-    private void logSevereMessageWithContext(final Throwable e, final String message, Map<String, Object> context) {
+    private void logSevereMessageWithContext(final Throwable e, final String message, final Map<String, Object> context) {
         if (getLogger().isLoggable(Level.SEVERE)) {
             getLogger().log(Level.SEVERE, message, e, context);
         }

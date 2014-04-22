@@ -269,8 +269,8 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Serializable getActivityFieldValue(APISession session, long activityInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue) throws InvalidSessionException, FileTooBigException, IOException,
-            BPMExpressionEvaluationException, BPMEngineException;
+            Locale locale, boolean isCurrentValue) throws InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException,
+            BPMEngineException;
 
     /**
      * Retrieve a field value
@@ -294,8 +294,8 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Serializable getActivityFieldValue(APISession session, long activityInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws InvalidSessionException, FileTooBigException,
-            IOException, BPMExpressionEvaluationException, BPMEngineException;
+            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws InvalidSessionException, FileTooBigException, IOException,
+            BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Retrieve a field value
@@ -389,8 +389,8 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Serializable getInstanceFieldValue(APISession session, long processInstanceID, Expression expression, Map<String, FormFieldValue> fieldValues,
-            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws InvalidSessionException, FileTooBigException,
-            IOException, BPMExpressionEvaluationException, BPMEngineException;
+            Locale locale, boolean isCurrentValue, Map<String, Serializable> context) throws InvalidSessionException, FileTooBigException, IOException,
+            BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Start terminate a task and execute a number of actions specifying the pressed submit button id
@@ -415,8 +415,7 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     void executeActionsAndTerminate(APISession session, long userID, long activityInstanceID, Map<String, FormFieldValue> fieldValues,
-            List<FormAction> actions,
-            Locale locale, String submitButtonId, Map<String, Serializable> context) throws InvalidSessionException,
+            List<FormAction> actions, Locale locale, String submitButtonId, Map<String, Serializable> context) throws InvalidSessionException,
             ActivityInstanceNotFoundException, ProcessInstanceNotFoundException, RetrieveException, FileTooBigException, IOException,
             BPMExpressionEvaluationException, BPMEngineException;
 
@@ -483,19 +482,23 @@ public interface IFormWorkflowAPI {
      * 
      * @param session
      *            the API session
+     * @param userID
+     *            the user ID to perform the task
      * @param activityInstanceID
      *            the activity instance ID
      * @throws InvalidSessionException
      * @throws BPMEngineException
      * @throws FlowNodeExecutionException
      */
-    void terminateTask(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException, FlowNodeExecutionException;
+    void terminateTask(APISession session, long userID, long activityInstanceID) throws BPMEngineException, InvalidSessionException, FlowNodeExecutionException;
 
     /**
      * Start an instance
      * 
      * @param session
      *            the API session
+     * @param userID
+     *            the user ID to start the process
      * @param processDefinitionID
      *            the process definition ID
      * @return the process instance ID
@@ -505,9 +508,11 @@ public interface IFormWorkflowAPI {
      * @throws CreationException
      * @throws ExecutionException
      * @throws ProcessActivationException
+     * @throws UserNotFoundException
      */
-    long startInstance(APISession session, long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException,
-            RetrieveException, ProcessDefinitionNotEnabledException, RetrieveException, CreationException, ProcessActivationException, ExecutionException;
+    long startInstance(APISession session, long userID, long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException,
+            InvalidSessionException, RetrieveException, ProcessDefinitionNotEnabledException, RetrieveException, CreationException, ProcessActivationException,
+            ExecutionException, UserNotFoundException;
 
     /**
      * Check if the user can istantiate a process definition
@@ -615,8 +620,8 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Map<String, Serializable> getActivityFieldsValues(APISession session, long activityInstanceID, List<Expression> expressions,
-            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue) throws InvalidSessionException,
-            FileTooBigException, IOException, BPMExpressionEvaluationException, BPMEngineException;
+            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue) throws InvalidSessionException, FileTooBigException, IOException,
+            BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Retrieve some fields initial value
@@ -709,8 +714,8 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Map<String, Serializable> getInstanceFieldsValues(APISession session, long processInstanceID, List<Expression> expressions,
-            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue) throws InvalidSessionException,
-            FileTooBigException, IOException, BPMExpressionEvaluationException, BPMEngineException;
+            Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue) throws InvalidSessionException, FileTooBigException, IOException,
+            BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Retrieve some fields initial value
