@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-22 07:02+0200\n"
-"PO-Revision-Date: 2014-04-22 02:35-0400\n"
+"PO-Revision-Date: 2014-04-23 00:47-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -3238,11 +3238,11 @@ msgstr "The platform already exist !"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:45
 msgid "Password must contain at least %number% digits"
-msgstr "Password must contain at least %number% digits"
+msgstr "Passwort muss mindestens %number% Zahlen enthalten"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:52
 msgid "Password must contain at least %number% lower case characters"
-msgstr "Password must contain at least %number% lower case characters"
+msgstr "Passwort muss mindestens %number% lower case characters enthalten"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:59
 msgid "Password must contain at least %number% upper case characters"
@@ -3250,7 +3250,7 @@ msgstr "Password must contain at least %number% upper case characters"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:66
 msgid "Password must contain at least %number% special characters"
-msgstr "Password must contain at least %number% special characters"
+msgstr "Passwort muss mindestens %number% Sonderzeichen enthalten"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:72
 msgid "Password must be at least %number% characters long"
