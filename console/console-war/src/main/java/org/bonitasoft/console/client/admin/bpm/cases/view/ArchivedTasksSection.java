@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.bpm.cases.section;
+package org.bonitasoft.console.client.admin.bpm.cases.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
@@ -39,17 +39,17 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.SpanPrepen
  */
 public class ArchivedTasksSection extends Section {
 
-    private ItemTable tasksTable;
+    private final ItemTable tasksTable;
 
-    public ArchivedTasksSection(ArchivedCaseItem item) {
+    public ArchivedTasksSection(final ArchivedCaseItem item) {
         super(_("Done tasks"));
         addClass("tasks");
         tasksTable = buildTasksTable(item);
         addBody(tasksTable);
     }
 
-    private ItemTable buildTasksTable(ArchivedCaseItem item) {
-        ItemTable tasksTable = getTaskTable(item);
+    protected ItemTable buildTasksTable(final ArchivedCaseItem item) {
+        final ItemTable tasksTable = getTaskTable(item);
         tasksTable.addClass("archived");
         tasksTable.setView(VIEW_TYPE.VIEW_LIST);
         tasksTable.addActions(new ArchivedTaskRedirectionAction());
@@ -71,7 +71,7 @@ public class ArchivedTasksSection extends Section {
                 .setOrder(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, false);
     }
 
-    public void setNbLinesByPages(int nbLinesByPage) {
+    public void setNbLinesByPages(final int nbLinesByPage) {
         tasksTable.setNbLinesByPage(nbLinesByPage);
     }
 }

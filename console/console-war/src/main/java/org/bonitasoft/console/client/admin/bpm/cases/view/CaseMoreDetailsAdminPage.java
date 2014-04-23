@@ -146,7 +146,8 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
 
                 .addColumn(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
                 .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_ARCHIVED_DATE), _("Performed date"))
-                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Performed by"))
+                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Perform by"))
+                .addColumn(new DeployedUserReader(ArchivedTaskItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID), _("For"))
                 .addColumn(new DescriptionAttributeReader(ArchivedTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ArchivedTaskItem.ATTRIBUTE_DESCRIPTION),
                         _("Description"))
                 .addCellFormatter(ArchivedTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
@@ -163,7 +164,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
         archivedTasksTable.addClass("archived");
     }
 
-	protected void buildDoneTasks(final CaseItem item) {
+    protected void buildDoneTasks(final CaseItem item) {
         final ItemTable doneTasksTable = getArchivedTaskTable(item);
         prepareArchivedTasksTable(doneTasksTable);
         final Section section = new Section(_("Done tasks"),
@@ -179,7 +180,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
         subtasksTable.setActions(getTaskRedirectionAction());
     }
 
-	private void buildComments(final APIID caseId) {
+    private void buildComments(final APIID caseId) {
         addBody(new CommentSectionSnippet(caseId)
                 .build());
     }

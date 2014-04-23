@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -200,7 +200,11 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         	metadatas.AddSubAppsVersion();
         }
         metadatas.addDueDate(getArchivedDateFormat());
-        metadatas.addLastUpdateDate(FORMAT.DISPLAY);
+        if (isArchived()) {
+            metadatas.addDoneOn(FORMAT.DISPLAY);
+        } else {
+            metadatas.addLastUpdateDate(FORMAT.DISPLAY);
+        }
         metadatas.addAssignedDate(FORMAT.DISPLAY);
         return metadatas.build();
     }
