@@ -71,15 +71,34 @@ public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements API
         if (isDeployable(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, deploys, item)) {
             item.setDeploy(
                     ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID,
-                    new UserDatastore(getEngineSession()).get(item.getStartedByUserId()));
+                    getUserDatastore().get(item.getStartedByUserId()));
+        }
+
+        if (isDeployable(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
+            item.setDeploy(
+                    ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
+                    getUserDatastore().get(item.getStartedBySubstituteUserId()));
         }
 
         if (isDeployable(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, deploys, item)) {
             item.setDeploy(
                     ArchivedCaseItem.ATTRIBUTE_PROCESS_ID,
-                    new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
+                    getProcessDatastore().get(item.getProcessId()));
         }
+    }
 
+    /**
+     * @return
+     */
+    protected ProcessDatastore getProcessDatastore() {
+        return new ProcessDatastore(getEngineSession());
+    }
+
+    /**
+     * @return
+     */
+    protected UserDatastore getUserDatastore() {
+        return new UserDatastore(getEngineSession());
     }
 
     @Override

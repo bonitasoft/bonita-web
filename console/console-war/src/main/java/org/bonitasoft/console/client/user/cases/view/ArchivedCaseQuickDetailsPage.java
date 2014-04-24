@@ -60,6 +60,7 @@ public class ArchivedCaseQuickDetailsPage extends ItemQuickDetailsPage<ArchivedC
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+        defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
@@ -70,7 +71,7 @@ public class ArchivedCaseQuickDetailsPage extends ItemQuickDetailsPage<ArchivedC
         metadatas.addAppsVersion();
         metadatas.addState();
         metadatas.addStartDate();
-        metadatas.addStartedBy();
+        metadatas.addStartedBy(item.getStartedByUser(), item.getStartedBySubstituteUser());
         return metadatas.build();
     }
 

@@ -16,28 +16,21 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_NAME;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_CONNECTOR_VERSION;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.ATTRIBUTE_PROCESS_ID;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static java.util.Arrays.*;
+import static junit.framework.Assert.*;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.connector.ConnectorImplementationDescriptor;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.connector.ConnectorNotFoundException;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessConnectorDependencyDatastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -86,7 +79,8 @@ public class ProcessConnectorDependencyDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     @SuppressWarnings("unchecked")
     public void searchThrowExceptionIfProcessIdIsUnknown() throws Exception {
-        when(this.processAPI.getConnectorImplementation(anyLong(), anyString(), anyString())).thenThrow(ProcessDefinitionNotFoundException.class);
+        when(this.processAPI.getConnectorImplementation(anyLong(), anyString(), anyString())).thenThrow(
+                new ConnectorNotFoundException(new NullPointerException()));
         final Map<String, String> filters = buildFilters(1L, "aConnectorName", "1");
 
         this.datastore.search(0, 10, null, null, filters);

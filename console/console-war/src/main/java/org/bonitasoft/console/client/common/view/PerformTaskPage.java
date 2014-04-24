@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.client.common.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +23,7 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
@@ -34,7 +33,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -69,7 +67,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         PRIVILEGES.add("reportlistingadminext");
     }
 
-    public static final String PARAMETER_USER_ID = "userid";
+    public static final String PARAMETER_USER_ID = "userId";
 
     public final static String ASSIGN_AND_PERFORM_USER_TASK = "true";
 
@@ -84,6 +82,12 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         this.addParameter(PARAMETER_ITEM_ID, taskId.toString());
     }
 
+    public PerformTaskPage(final APIID taskId, APIID userId) {
+        this();
+        this.addParameter(PARAMETER_ITEM_ID, taskId.toString());
+        this.addParameter(PARAMETER_USER_ID, userId.toString());
+    }
+
     @Override
     public String defineToken() {
         return TOKEN;
@@ -96,13 +100,10 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
     @Override
     public void buildView(final HumanTaskItem task) {
-        if (task.getAssignedId() == null) {
-            addBody(createFormIframe(task, true));
-        } else if (!task.getAssignedId().equals(getUserId())) {
-            ViewController.showView(TasksListingPage.TOKEN);
-            throw new APIException(_("This task is already assigned to someone else."));
-        } else {
+        if (task.getAssignedId() != null) {
             addBody(createFormIframe(task, false));
+        } else {
+            addBody(createFormIframe(task, true));
         }
     }
 
@@ -129,6 +130,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
             frameURL.append("&tenant=").append(tenantId);
         }
 
+        String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);
+        if (userId == null) {
+            userId = getUserId().toString();
+        }
+
         frameURL.append("#form=")
                 .append(URL.encodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
                 .append(URL.encodeQueryString(item.getProcess().getVersion())).append(UUID_SEPERATOR)
@@ -141,6 +147,10 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
         if (assignTask) {
             frameURL.append("&assignTask=true");
+        }
+        if (getParameter(PARAMETER_USER_ID) != null && !getParameter(PARAMETER_USER_ID).isEmpty()) {
+            frameURL.append("&" + PARAMETER_USER_ID + "=");
+            frameURL.append(getParameter(PARAMETER_USER_ID));
         }
 
         return frameURL.toString();
