@@ -35,7 +35,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 public class ConnectorSection extends Section {
 
     public ConnectorSection(ProcessItem process, ConfigurationState state) {
-        super(new JsId("connectors"), _("Connector Definitions"));
+        super(new JsId("connectors"), _("Connector definitions"));
 
         ConfigurationStateText configurationStateText = new ConfigurationStateText(state);
         ItemTable connectorsItemTable = connectorsItemTable(process);

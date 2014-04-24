@@ -128,6 +128,15 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
+     * Get the folder of Tenant pages files
+     * 
+     * @throws ConsoleException
+     */
+    public File getPagesFolder() {
+        return getFolderFromBonitaHome(webBonitaConstants.getPagesWorkFolderPath());
+    }
+
+    /**
      * Get the profile folder to store the report dashboard configuration.
      * 
      * @throws ConsoleException
@@ -143,6 +152,15 @@ public class WebBonitaConstantsUtils {
      */
     public File getFormsWorkFolder() {
         return getFolderFromBonitaHome(webBonitaConstants.getFormsWorkFolderPath());
+    }
+
+    /**
+     * Get the Tenant folder where to write BDM work files.
+     * 
+     * @throws ConsoleException
+     */
+    public File geBDMWorkFolder() {
+        return getFolderFromBonitaHome(webBonitaConstants.getBDMWorkFolderPath());
     }
 
     /**
@@ -203,4 +221,5 @@ public class WebBonitaConstantsUtils {
         }
         return folder;
     }
+
 }

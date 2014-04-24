@@ -25,10 +25,12 @@ import org.bonitasoft.web.toolkit.client.ui.component.Button;
  */
 public class ButtonPrimaryAction extends Button {
 
+    public static final String BTN_PRIMARY_ACTION_CLASS = "btn-primary-action";
+
     public ButtonPrimaryAction(String label, String tooltip, Action action) {
         super(label, tooltip, action);
     }
-    
+
     public ButtonPrimaryAction(String id, String label, String tooltip, Action action) {
         super(id, label, tooltip, action);
     }
@@ -36,7 +38,7 @@ public class ButtonPrimaryAction extends Button {
     @Override
     protected void postProcessHtml() {
         super.postProcessHtml();
-        element.addClassName("btn-primary-action");
+        element.addClassName(BTN_PRIMARY_ACTION_CLASS);
     }
-    
+
 }

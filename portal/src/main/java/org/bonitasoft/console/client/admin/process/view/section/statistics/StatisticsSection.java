@@ -58,7 +58,7 @@ public class StatisticsSection extends Section {
         return nbFailedTasks;
     }
 
-    private Action newShowTaskListingAction() {
+    protected Action newShowTaskListingAction() {
         return new RedirectionAction(TaskListingAdminPage.TOKEN, getParamMap("_f", TaskListingAdminPage.FILTER_PRIMARY_FAILED));
     }
 
@@ -81,15 +81,15 @@ public class StatisticsSection extends Section {
         return nbCasesOngoing;
     }
 
-    private Action newShowArchivedCaseListingAction() {
+    protected Action newShowArchivedCaseListingAction() {
         return new RedirectionAction(CaseListingAdminPage.TOKEN, getParamMap("_f", CaseListingAdminPage.FILTER_SECONDARY_ARCHIVED_CASES));
     }
 
-    private Action newShowCaseListingAction(ProcessItem process) {
+    protected Action newShowCaseListingAction(ProcessItem process) {
         return new RedirectionAction(CaseListingAdminPage.TOKEN, getParamMap("_fid", process.getId().toString()));
     }
 
-    private Map<String, String> getParamMap(final String name, final String value) {
+    protected Map<String, String> getParamMap(final String name, final String value) {
         final HashMap<String, String> paramMap = new HashMap<String, String>();
         paramMap.put(name, value);
         return paramMap;

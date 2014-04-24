@@ -47,7 +47,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     public String defineToken() {
         return TOKEN;
     }
- 
+
     @Override
     protected boolean isDescriptionBeforeMetadatas() {
         return false;
@@ -78,18 +78,18 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     protected void buildBody(final ProfileItem item) {
         if (item.isDefault().equals("false")) {
             DoubleSection mappingSection = new DoubleSection(new JsId("Mapping"), _("Mapping"));
-            mappingSection.addDescription(_("This profile will be available to the users mapped upon next login."));
+            mappingSection.addDescription(_("This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."));
             mappingSection.addBody(createUsersSection(item), createGroupsSection(item), createRolesSection(item), createMembershipsSection(item));
             addBody(mappingSection);
         } else {
             addBody(createUsersSection(item), createGroupsSection(item), createRolesSection(item), createMembershipsSection(item));
-        }     
+        }
     }
 
     private Section createUsersSection(final ProfileItem profile) {
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put(UserItem.FILTER_PROFILE_ID, profile.getId().toString());
-        
+
         final Section userSection = new Section(new JsId("Users"), _("Users mapping"));
         userSection.addBody(createUserTable(profile));
         userSection.addBody(createAddUserButton(profile));
@@ -149,7 +149,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
         return new ItemTableAction(_("remove"), _("Delete this member"),
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new DeleteProfileMemberPage(profile.getId(), profileMember.getId()))));
     }
-    
+
     private ButtonAction createAddGroupButton(final ProfileItem profile) {
         return new ButtonAction("btn-addgroup", _("Add a group"), "",
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new AddGroupToProfileMemberPage(profile.getId()))));
@@ -159,7 +159,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
         Section roleSection = new Section(new JsId("Roles"), _("Roles mapping"), createRoleTable(profile));
         roleSection.addBody(createAddRoleButton(profile));
         return roleSection;
-          
+
     }
 
     private ItemTable createRoleTable(final ProfileItem profile) {

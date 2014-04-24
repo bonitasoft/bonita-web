@@ -5,23 +5,24 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.model.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Guo Yongtao
- * 
+ *
  */
 public class User implements Serializable {
 
@@ -63,10 +64,10 @@ public class User implements Serializable {
     /**
      * the user rights
      */
-    private List<String> availableFeatures;
+    private List<String> availableFeatures = new ArrayList<String>();
 
     /**
-     * 
+     *
      * Default constructor.
      */
     public User() {
@@ -76,7 +77,7 @@ public class User implements Serializable {
 
     /**
      * Default Constructor.
-     * 
+     *
      * @param username
      * @param aIsAdmin
      * @param aLocale
@@ -153,7 +154,13 @@ public class User implements Serializable {
         setFeatures(userProfile.getFeatures());
     }
 
-    private List<String> getFeatures() {
+    public void addFeature(String feature) {
+        if (this.availableFeatures != null) {
+            this.availableFeatures.add(feature);
+        }
+    }
+
+    public List<String> getFeatures() {
         return this.availableFeatures;
     }
 }

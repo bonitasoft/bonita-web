@@ -22,24 +22,23 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.admin.bpm.cases.action.ArchivedTaskRedirectionAction;
+import org.bonitasoft.console.client.admin.bpm.cases.action.TaskRedirectionAction;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.AttachmentsFiller;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.LastExecutedTaskFiller;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.OpenTasksFiller;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
-import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
+import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -77,6 +76,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+        defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(CaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
@@ -86,13 +86,29 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startedOn());
-        metadatas.add(startedBy());
+        metadatas.add(startedBy(item.getStartedByUser(), item.getStartedBySubstituteUser()));
         return metadatas;
     }
+    private ItemDetailsMetadata startedBy(UserItem startedByUser, UserItem startedBySubstituteUser) {
+        if (startedByUser.getId().toLong().equals(startedBySubstituteUser.getId().toLong())) {
+            return addStartedBy();
+        } else {
+            return addStartedBySubstitute(startedByUser, startedBySubstituteUser);
+        }
+    }
 
-    protected ItemDetailsMetadata startedBy() {
-        return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID), _("Started by"),
-                _("The user that has started this case"));
+    private ItemDetailsMetadata addStartedBy() {
+        return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID),
+                _("Started by"), _("The user that has started this case"));
+    }
+
+    private ItemDetailsMetadata addStartedBySubstitute(UserItem executedByUser, UserItem startedBySubstituteUser) {
+        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+        attributeReader.setStartedBySubstitute(startedBySubstituteUser);
+        attributeReader.setStartedBy(executedByUser);
+        return new ItemDetailsMetadata(attributeReader,
+                _("Started by"),
+                _("Name of the user who started this case"));
     }
 
     protected ItemDetailsMetadata startedOn() {
@@ -127,7 +143,11 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
 
     private Definition numberOfOpenedTasksDefinition(final CaseItem item) {
         return new Definition(_("Number of open tasks : %nb_openTask%", new Arg("nb_openTask", "")), "%%",
-                new Link(_("No opened task"), _("Link to the tasks"), TaskListingAdminPage.TOKEN).addFiller(new OpenTasksFiller(item)));
+                new Link(_("No opened task"), _("Link to the tasks"), getTaskListingPage()).addFiller(new OpenTasksFiller(item)));
+    }
+
+    protected String getTaskListingPage() {
+        return TaskListingAdminPage.TOKEN;
     }
 
     private Definition numberOfAttachmentDefinition(final CaseItem item) {
@@ -158,7 +178,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 .addCellFormatter(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, new SpanPrepender(_("Failed")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .setOrder(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, false)
-                .setDefaultAction(new RedirectionAction(TaskMoreDetailsAdminPage.TOKEN, new Arg(TaskItem.ATTRIBUTE_ID, item.getId().toString())));
+                .setActions(getTaskRedirectionAction());
     }
 
     protected abstract ItemDefinition getHumanTasksDefinition();
@@ -173,6 +193,14 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
      */
     protected void prepareFailedTasksTable(final ItemTable tasksTable) {
         tasksTable.setNbLinesByPage(5);
+    }
+
+    protected ArchivedTaskRedirectionAction getArchivedTaskRedirectionAction() {
+        return new ArchivedTaskRedirectionAction();
+    }
+
+    protected TaskRedirectionAction getTaskRedirectionAction() {
+        return new TaskRedirectionAction();
     }
 
 }

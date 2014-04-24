@@ -18,14 +18,17 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.ArchivedActivitySearchDescriptorConverter;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.ArchivedHumanTaskSearchDescriptorConverter;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
@@ -67,6 +70,31 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // C.R.U.D.S
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public ItemSearchResult<CONSOLE_ITEM> search(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters) {
+        try {
+            // can't use the ArchivedFlowNodeSearchDescriptorConverter to map web filter to engine ones since
+            // the supervisor id filter isn't handle in engine but is a specific method
+            String supervisorIdString = filters.remove(HumanTaskItem.FILTER_SUPERVISOR_ID);
+            final SearchOptionsCreator creator = makeSearchOptionCreator(page, resultsByPage, search, orders, filters);
+            if (StringUtils.isNotBlank(supervisorIdString)) {
+                filters.put(HumanTaskItem.FILTER_SUPERVISOR_ID, supervisorIdString);
+            }
+
+            final SearchResult<ENGINE_ITEM> results = runSearch(creator, filters);
+
+            return new ItemSearchResult<CONSOLE_ITEM>(
+                    page,
+                    resultsByPage,
+                    results.getCount(),
+                    convertEngineToConsoleItemsList(results.getResult()));
+
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     @Override

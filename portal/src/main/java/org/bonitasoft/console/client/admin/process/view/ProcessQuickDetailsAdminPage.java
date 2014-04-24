@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -70,8 +70,9 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
     @Override
     protected void buildToolbar(ProcessItem process) {
         addToolbarLink(new MoreButton(_("Show more details about this apps"), createMoreDetailsAction(process)));
+        
     }
-    
+
     private Action createMoreDetailsAction(final ProcessItem process) {
     	return new CheckValidSessionBeforeAction(new ActionShowView(new ProcessMoreDetailsAdminPage(process)));
     }

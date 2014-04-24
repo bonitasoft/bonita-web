@@ -30,10 +30,11 @@ public class CaseItemConverter extends ItemConverter<CaseItem, ProcessInstance> 
         item.setLastUpdateDate(process.getLastUpdate());
         item.setState(process.getState());
         item.setStartDate(process.getStartDate());
-        item.setStartedByUserId(process.getStartedBy());
         item.setEndDate(process.getEndDate());
         item.setProcessId(process.getProcessDefinitionId());
         item.setRootCaseId(process.getRootProcessInstanceId());
+        item.setStartedByUserId(process.getStartedBy());
+        item.setStartedBySubstituteUserId(process.getStartedBySubstitute());
         return item;
     }
 

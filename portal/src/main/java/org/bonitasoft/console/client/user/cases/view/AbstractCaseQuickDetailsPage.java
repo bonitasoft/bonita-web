@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
+import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.console.client.user.cases.view.AbstractCaseQuickDetailsPage.CommentsTableAsyncBuilder;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedTasksSection;
 import org.bonitasoft.console.client.user.task.view.AbstractTaskDetailsPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
@@ -40,6 +42,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
@@ -60,7 +63,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuickDetailsPage<T> implements PluginCase {
 
@@ -78,16 +81,21 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+        defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(CaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
 
     @Override
-    protected LinkedList<ItemDetailsMetadata> defineMetadatas(final T item) {
+    protected LinkedList<ItemDetailsMetadata> defineMetadatas(final CaseItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startDate());
-        metadatas.add(startedBy());
+        if (item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
+            metadatas.add(addStartedBy());
+        } else {
+            metadatas.add(addStartedByDelegate(item.getStartedByUser(), item.getStartedBySubstituteUser()));
+        }
         return metadatas;
     }
 
@@ -100,9 +108,18 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
         return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_START_DATE, _("Started on"), _("The date while the case has been started"));
     }
 
-    private ItemDetailsMetadata startedBy() {
+    private ItemDetailsMetadata addStartedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID),
                 _("Started by"), _("The user that has started this case"));
+    }
+
+    private ItemDetailsMetadata addStartedByDelegate(UserItem startedByUser, UserItem startedByDelegateUser) {
+        StartedByDelegateAttributeReder addStartedByDelegate = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+        addStartedByDelegate.setStartedBySubstitute(startedByDelegateUser);
+        addStartedByDelegate.setStartedBy(startedByUser);
+        return new ItemDetailsMetadata(addStartedByDelegate,
+                _("Started by"),
+                _("Name of the user who started this case"));
     }
 
     @Override
@@ -180,7 +197,7 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
     protected abstract ItemDefinition getArchivedTasksDefinition();
 
     /**
-     * @param subtasksTable
+     * @param commentsTable
      */
     protected void prepareCommentsTable(final ItemTable commentsTable) {
         commentsTable.setNbLinesByPage(3);
@@ -189,18 +206,18 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
 
     /**
      * Class helper to build CommentsTable Asynchronously.
-     * 
+     *
      * An instance of this class is used to build the common comments
      * table with {@link AbstractTaskDetailsPage#buildComments(APIID, CommentsTableAsyncBuilder)}
-     * 
+     *
      * @author Vincent Elcrin
-     * 
+     *
      */
     public class CommentsTableAsyncBuilder {
 
         /**
          * Build comments section with table and form
-         * 
+         *
          * @param itemDefinition
          * @param item
          */

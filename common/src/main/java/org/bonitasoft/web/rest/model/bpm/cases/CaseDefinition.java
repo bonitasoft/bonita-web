@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,7 +23,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * Process instance definition
- * 
+ *
  * @author Séverin Moussel *
  */
 public class CaseDefinition extends ItemDefinition {
@@ -61,11 +61,12 @@ public class CaseDefinition extends ItemDefinition {
     protected void defineAttributes() {
         createAttribute(CaseItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CaseItem.ATTRIBUTE_STATE, ItemAttribute.TYPE.ENUM);
-        createAttribute(CaseItem.ATTRIBUTE_START_DATE, ItemAttribute.TYPE.DATETIME);
+        createAttribute(CaseItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CaseItem.ATTRIBUTE_START_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(CaseItem.ATTRIBUTE_END_DATE, ItemAttribute.TYPE.DATETIME);
-        createAttribute(CaseItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
     }
 
     @Override

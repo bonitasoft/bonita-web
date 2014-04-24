@@ -27,13 +27,13 @@ import java.util.Date;
 
 /**
  * process instance item
- * 
+ *
  * @author Haojie Yuan
  */
 public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniqueId {
-    
+
     public static final String ATTRIBUTE_VARIABLES = "variables";
-    
+
     public CaseItem() {
         super();
     }
@@ -44,15 +44,18 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String ATTRIBUTE_STATE = "state";
 
-    public static final String ATTRIBUTE_START_DATE = "start";
-
-    public static final String ATTRIBUTE_STARTED_BY_USER_ID = "started_by";
-
-    public static final String ATTRIBUTE_END_DATE = "end_date";
 
     public static final String ATTRIBUTE_PROCESS_ID = "processDefinitionId";
 
     public static final String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
+
+    public static final String ATTRIBUTE_STARTED_BY_USER_ID = "started_by";
+
+    public static final String ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID = "startedBySubstitute";
+
+    public static final String ATTRIBUTE_START_DATE = "start";
+
+    public static final String ATTRIBUTE_END_DATE = "end_date";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -103,6 +106,11 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
         return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_USER_ID));
     }
 
+
+    public UserItem getStartedBySubstituteUser() {
+        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
+    }
+
     public ProcessItem getProcess() {
         return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
     }
@@ -124,6 +132,10 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public APIID getStartedByUserId() {
         return getAttributeValueAsAPIID(ATTRIBUTE_STARTED_BY_USER_ID);
+    }
+
+    public APIID getStartedBySubstituteUserId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
     }
 
     public Date getEndDate() {
@@ -165,7 +177,7 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     }
 
     /**
-     * 
+     *
      * @param date
      *            Must be SQL formated date
      */
@@ -187,6 +199,18 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public void setStartedByUserId(final String userId) {
         setAttribute(ATTRIBUTE_STARTED_BY_USER_ID, userId);
+    }
+
+    public void setStartedBySubstituteUserId(final Long userId) {
+        setAttribute(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
+    }
+
+    public void setStartedBySubstituteUserId(final APIID userId) {
+        setAttribute(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
+    }
+
+    public void setStartedBySubstituteUserId(final String userId) {
+        setAttribute(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
     }
 
     public void setEndDate(final String date) {

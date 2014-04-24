@@ -24,23 +24,34 @@ import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidatorEngine;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.form.AbstractForm;
 
 /**
  * Execute an update for an ItemForm.
- * 
+ *
  * @param <ITEM_TYPE>
  *            The type of the item that will be updated
- * 
+ *
  * @author Vincent Elcrin
  */
 public class UpdateItemWithDeployFormAction<ITEM_TYPE extends IItem> extends ItemFormAction<ITEM_TYPE> {
 
     private final String[] deploys;
 
+    private Promise errorPromise;
+
+    public interface Promise {
+        public void apply(String message, Integer errorCode);
+    }
+
+    public void onError(Promise errorPromise) {
+        this.errorPromise = errorPromise;
+    }
+
     /**
      * Default constructor.
-     * 
+     *
      * @param itemDefinition
      *            The definition of the item to update.
      * @param form
@@ -53,7 +64,7 @@ public class UpdateItemWithDeployFormAction<ITEM_TYPE extends IItem> extends Ite
 
     /**
      * Default constructor.
-     * 
+     *
      * @param itemDefinition
      *            The definition of the item to update.
      */
@@ -80,10 +91,9 @@ public class UpdateItemWithDeployFormAction<ITEM_TYPE extends IItem> extends Ite
         ValidatorEngine.validate(this.form.getValues(), this.itemDefinition.getValidators());
 
         // Call REST API to update item following by deploys
-        new APICaller(itemDefinition).update(this.getParameter("id"),
+        new APICaller(this.itemDefinition).update(this.getParameter("id"),
                 values,
                 new UpdateDeploysCallback(updateQueue));
-
     }
 
     private class UpdateDeploysCallback extends APICallback {
@@ -106,8 +116,17 @@ public class UpdateItemWithDeployFormAction<ITEM_TYPE extends IItem> extends Ite
             }
         }
 
+        @Override
+        public void onError(String message, Integer errorCode) {
+            if (errorPromise != null) {
+                errorPromise.apply(message, errorCode);
+            } else {
+                super.onError(message, errorCode);
+            }
+        }
+
         private HashMap<String, String> popValues(LinkedHashMap<ItemDefinition<?>, HashMap<String, String>> queue,
-                final ItemDefinition<?> itemDefinition) {
+                                                  final ItemDefinition<?> itemDefinition) {
             return queue.remove(itemDefinition);
         }
 

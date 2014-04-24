@@ -5,36 +5,31 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.EMPTY_LIST;
-import static junit.framework.Assert.assertTrue;
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem.ATTRIBUTE_PROCESS_ID;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+import static junit.framework.Assert.*;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.*;
 
 import java.util.HashMap;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.connector.ConnectorCriterion;
 import org.bonitasoft.engine.bpm.connector.ConnectorImplementationDescriptor;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.connector.ConnectorNotFoundException;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
@@ -47,7 +42,7 @@ import org.mockito.Mock;
 
 /**
  * @author Colin PUY
- * 
+ *
  */
 @SuppressWarnings("unchecked")
 public class ProcessConnectorDatastoreTest extends APITestWithMock {
@@ -104,7 +99,7 @@ public class ProcessConnectorDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void getThrowExceptionIfProcessDefinitionIsNotFound() throws Exception {
         when(this.processAPI.getConnectorImplementation(anyLong(), anyString(), anyString()))
-                .thenThrow(ProcessDefinitionNotFoundException.class);
+                .thenThrow(new ConnectorNotFoundException(null));
 
         this.processConnectorDatastore.get(anAPIID("1", "name", "1"));
     }
@@ -112,7 +107,7 @@ public class ProcessConnectorDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void searchThrowExceptionIfProcessDefinitionIsNotFound() throws Exception {
         when(this.processAPI.getConnectorImplementations(anyLong(), anyInt(), anyInt(), any(ConnectorCriterion.class)))
-                .thenThrow(ProcessDefinitionNotFoundException.class);
+                .thenThrow(new NullPointerException());
 
         this.processConnectorDatastore.search(0, 10, null, null, aProcessIdFilter("1"));
     }

@@ -14,6 +14,10 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
+import java.util.List;
+import java.util.Map;
+
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.engine.identity.UserUpdater;
@@ -26,13 +30,14 @@ import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.FlowNodeEngineClient;
+import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.exception.APIAttributeException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -40,9 +45,10 @@ import java.util.Map;
 public class UserDatastore extends CommonDatastore<UserItem, User>
         implements DatastoreHasGet<UserItem> {
 
-    private EngineClientFactory engineClientFactory;
-    private UserItemConverter userItemConverter;
-    
+    protected EngineClientFactory engineClientFactory;
+
+    protected UserItemConverter userItemConverter;
+
     public UserDatastore(final APISession engineSession) {
         super(engineSession);
         userItemConverter = new UserItemConverter();
@@ -65,6 +71,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
         return userItemConverter.convert(user);
     }
 
+    @Override
     public UserItem get(final APIID id) {
         User user = getUserEngineClient().get(id.toLong());
         return userItemConverter.convert(user);
@@ -72,7 +79,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
     /**
      * Search for users
-     * 
+     *
      * @param page
      *            The page to display
      * @param resultsByPage
@@ -86,22 +93,87 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
      * @return This method returns an ItemSearch result containing the returned data and information about the total possible results.
      */
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search,
-            final Map<String, String> filters, final String orders) {
-        
-        SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, 
-                new Sorts(orders, new UserSearchAttributeConverter()), 
-                new Filters(filters, new UserFilterCreator()));
+                                             final Map<String, String> filters, final String orders) {
 
-        SearchResult<User> engineSearchResults = getUserEngineClient().search(searchOptionsCreator.create());
-        
-        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(), 
-                userItemConverter.convert(engineSearchResults.getResult()));
+        if (filters.containsKey(UserItem.FILTER_PROCESS_ID)) {
+            String processId = filters.get(UserItem.FILTER_PROCESS_ID);
+            filters.remove(UserItem.FILTER_PROCESS_ID);
+            return searchUsersWhoCanStartProcess(processId, page, resultsByPage, search, filters, orders);
+        } else if (filters.containsKey(UserItem.FILTER_HUMAN_TASK_ID)) {
+            String taskId = filters.get(UserItem.FILTER_HUMAN_TASK_ID);
+            filters.remove(UserItem.FILTER_HUMAN_TASK_ID);
+            return searchUsersWhoCanPerformTask(taskId, page, resultsByPage, search, filters, orders);
+        } else {
+            return searchUsers(page, resultsByPage, search, filters, orders);
+        }
+
     }
 
+    private ItemSearchResult<UserItem> searchUsers(final int page, final int resultsByPage, final String search,
+                                                   final Map<String, String> filters, final String orders) {
+
+        SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
+                resultsByPage, search, filters, orders);
+
+        SearchResult<User> engineSearchResults = getUserEngineClient().search(searchOptionsCreator.create());
+
+        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(),
+                userItemConverter.convert(engineSearchResults.getResult()));
+
+    }
+
+    protected ItemSearchResult<UserItem> searchUsersWhoCanStartProcess(final String processId, final int page, final int resultsByPage, final String search,
+                                                                       final Map<String, String> filters, final String orders) {
+
+        SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
+                resultsByPage, search, filters, orders);
+
+        SearchResult<User> engineSearchResults;
+        try {
+            engineSearchResults = getProcessEngineClient().getProcessApi().searchUsersWhoCanStartProcessDefinition(Long.valueOf(processId),
+                    searchOptionsCreator.create());
+        } catch (NumberFormatException e) {
+            throw new APIAttributeException(UserItem.FILTER_PROCESS_ID, "Cannot convert process id: " + processId + " into long.");
+        } catch (SearchException e) {
+            throw new APIException(e);
+        }
+
+        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(),
+                userItemConverter.convert(engineSearchResults.getResult()));
+
+    }
+
+    protected ItemSearchResult<UserItem> searchUsersWhoCanPerformTask(final String taskId, final int page, final int resultsByPage, final String search,
+                                                                      final Map<String, String> filters, final String orders) {
+
+        SearchResult<User> engineSearchResults;
+        try {
+            SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page,
+                    resultsByPage, search, filters, orders);
+            engineSearchResults = getProcessEngineClient().getProcessApi().searchUsersWhoCanExecutePendingHumanTask(Long.valueOf(taskId),
+                    searchOptionsCreator.create());
+
+        } catch (NumberFormatException e) {
+            throw new APIAttributeException(UserItem.FILTER_HUMAN_TASK_ID, "Cannot convert human task id: " + taskId + " into long.");
+        }
+
+        return new ItemSearchResult<UserItem>(page, resultsByPage, engineSearchResults.getCount(),
+                userItemConverter.convert(engineSearchResults.getResult()));
+
+    }
+
+    private SearchOptionsCreator buildSearchOptionCreator(final int page,
+                                                          final int resultsByPage, final String search,
+                                                          final Map<String, String> filters, final String orders) {
+        SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search,
+                new Sorts(orders, new UserSearchAttributeConverter()),
+                new Filters(filters, new UserFilterCreator()));
+        return searchOptionsCreator;
+    }
 
     /**
      * Delete users
-     * 
+     *
      * @param ids
      */
     public void delete(final List<APIID> ids) {
@@ -112,10 +184,17 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     // CONVERTS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     // protected for tests
     protected UserEngineClient getUserEngineClient() {
         return engineClientFactory.createUserEngineClient();
+    }
+
+    protected ProcessEngineClient getProcessEngineClient() {
+        return engineClientFactory.createProcessEngineClient();
+    }
+
+    protected FlowNodeEngineClient getFlowNodeEngineClient() {
+        return engineClientFactory.createFlowNodeEngineClient();
     }
 
     @Override

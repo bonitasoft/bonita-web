@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
 
@@ -61,12 +61,8 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
             return engineClient.searchUncategorizedProcessDefinitionsUserCanStart(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
         } else if (isFilteringOn(filters, ProcessItem.FILTER_USER_ID)) {
             return engineClient.searchProcessDeploymentInfos(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
-        } else if (isFilteringOn(filters, ProcessItem.FILTER_SUPERVISOR_ID, ProcessItem.FILTER_CATEGORY_ID)) {
-            return engineClient.searchProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
-
         } else if (isFilteringOn(filters, ProcessItem.FILTER_SUPERVISOR_ID)) {
-            return engineClient.searchUncategorizedProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
-
+            return engineClient.searchProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
         } else {
             return engineClient.searchProcessDefinitions(searchOptions);
         }
@@ -86,6 +82,6 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
     }
 
     private ItemSearchResult<ProcessItem> convertResult(int page, int nbResultsByPage, final SearchResult<ProcessDeploymentInfo> result) {
-        return new ItemSearchResultConverter<ProcessItem, ProcessDeploymentInfo>(page, nbResultsByPage, result, new ProcessItemConverter()).toItemSearchResult();
+        return new ItemSearchResultConverter<ProcessItem, ProcessDeploymentInfo>(page, nbResultsByPage, result, new ProcessItemConverter(engineClient.getProcessApi())).toItemSearchResult();
     }
 }

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,8 +40,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Séverin Moussel
  */
 public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>, APIHasAdd<CaseItem>, APIHasSearch<CaseItem>, APIHasDelete {
-    
-    
+
     @Override
     protected ItemDefinition defineItemDefinition() {
         return Definitions.get(CaseDefinition.TOKEN);
@@ -51,7 +50,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
     public CaseItem add(final CaseItem caseItem) {
         return new CaseDatastore(getEngineSession()).add(caseItem);
     }
-    
+
     @Override
     public CaseItem get(final APIID id) {
         return new CaseDatastore(getEngineSession()).get(id);
@@ -59,7 +58,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
 
     @Override
     public ItemSearchResult<CaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+                                             final Map<String, String> filters) {
 
         // Check that team manager and supervisor filters are not used together
         if (filters.containsKey(CaseItem.FILTER_TEAM_MANAGER_ID) && filters.containsKey(CaseItem.FILTER_SUPERVISOR_ID)) {
@@ -81,6 +80,12 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
             item.setDeploy(
                     CaseItem.ATTRIBUTE_STARTED_BY_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getStartedByUserId()));
+        }
+
+        if (isDeployable(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
+            item.setDeploy(
+                    CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
+                    new UserDatastore(getEngineSession()).get(item.getStartedBySubstituteUserId()));
         }
 
         if (isDeployable(CaseItem.ATTRIBUTE_PROCESS_ID, deploys, item)) {

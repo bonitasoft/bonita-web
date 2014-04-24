@@ -55,9 +55,11 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     private String workFolderPath = null;
 
-    private String consoleWorkFolderPath = null;
-
     private String formsWorkFolderPath = null;
+
+    private final String workLibFolderPath = null;
+
+    private String bdmWorkFolderPath;
 
     /**
      * Default constructor.
@@ -66,10 +68,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     private String getPlatformFolderPath() {
-        if (this.platformFolderPath == null) {
-            this.platformFolderPath = clientFolderPath + platformFolderName + File.separator;
+        if (platformFolderPath == null) {
+            platformFolderPath = clientFolderPath + platformFolderName + File.separator;
         }
-        return this.platformFolderPath;
+        return platformFolderPath;
     }
 
     /**
@@ -77,10 +79,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     @Override
     public String getTenantsFolderPath() {
-        if (this.tenantsFolderPath == null) {
-            this.tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;
+        if (tenantsFolderPath == null) {
+            tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;
         }
-        return this.tenantsFolderPath;
+        return tenantsFolderPath;
     }
 
     /**
@@ -88,10 +90,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     @Override
     public String getTenantTemplateFolderPath() {
-        if (this.tenantTemplateFolderPath == null) {
-            this.tenantTemplateFolderPath = getPlatformFolderPath() + tenantTemplateFolderName + File.separator;
+        if (tenantTemplateFolderPath == null) {
+            tenantTemplateFolderPath = getPlatformFolderPath() + tenantTemplateFolderName + File.separator;
         }
-        return this.tenantTemplateFolderPath;
+        return tenantTemplateFolderPath;
     }
 
     /**
@@ -99,10 +101,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     @Override
     public String getTempFolderPath() {
-        if (this.tempFolderPath == null) {
-            this.tempFolderPath = getPlatformFolderPath() + tmpFolderName + File.separator;
+        if (tempFolderPath == null) {
+            tempFolderPath = getPlatformFolderPath() + tmpFolderName + File.separator;
         }
-        return this.tempFolderPath;
+        return tempFolderPath;
     }
 
     @Override
@@ -115,10 +117,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     @Override
     public String getConfFolderPath() {
-        if (this.confFolderPath == null) {
-            this.confFolderPath = getPlatformFolderPath() + confFolderName + File.separator;
+        if (confFolderPath == null) {
+            confFolderPath = getPlatformFolderPath() + confFolderName + File.separator;
         }
-        return this.confFolderPath;
+        return confFolderPath;
     }
 
     @Override
@@ -166,11 +168,19 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
+    public String getPagesWorkFolderPath() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getWorkFolderPath() {
-        if (this.workFolderPath == null) {
-            this.workFolderPath = getPlatformFolderPath() + workFolderName + File.separator;
+        if (workFolderPath == null) {
+            workFolderPath = getPlatformFolderPath() + workFolderName + File.separator;
         }
-        return this.workFolderPath;
+        return workFolderPath;
     }
 
     /**
@@ -178,10 +188,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     @Override
     public String getFormsWorkFolderPath() {
-        if (this.formsWorkFolderPath == null) {
-            this.formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
+        if (formsWorkFolderPath == null) {
+            formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
         }
-        return this.formsWorkFolderPath;
+        return formsWorkFolderPath;
     }
 
     @Override
@@ -192,6 +202,14 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getPortalGroupIconsFolderPath() {
         return null;
+    }
+
+    @Override
+    public String getBDMWorkFolderPath() {
+        if (bdmWorkFolderPath == null) {
+            bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+        }
+        return bdmWorkFolderPath;
     }
 
 }

@@ -15,7 +15,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Fabio Lombardi
- * 
+ *
  */
 public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
 
@@ -49,7 +49,7 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
         createAttribute(BonitaPageItem.ATTRIBUTE_TOKEN, ItemAttribute.TYPE.STRING);
         createAttribute(BonitaPageItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
         createAttribute(BonitaPageItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.STRING);
-        createAttribute(BonitaPageItem.ATTRIBUTE_MENU_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(BonitaPageItem.ATTRIBUTE_DISPLAY_NAME, ItemAttribute.TYPE.STRING);
     }
 
     @Override
@@ -61,4 +61,5 @@ public class BonitaPageDefinition extends ItemDefinition<BonitaPageItem> {
     protected BonitaPageItem _createItem() {
         return new BonitaPageItem();
     }
+
 }

@@ -1,7 +1,9 @@
 package org.bonitasoft.console.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
@@ -75,33 +77,37 @@ import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDe
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
 import org.bonitasoft.web.toolkit.client.AvailableTokens;
+import org.bonitasoft.web.toolkit.client.SHA1;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
+import com.google.gwt.core.shared.GWT;
 
 /**
  * console client page
- * 
+ *
  * @author Yongtao Guo, Haojie Yuan, Zhiheng Yang
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
-    
-    
+
+
     @Override
     public Page defineViewTokens(final String token) {
-                
+
 //        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
         List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
-        
+
+        GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
+
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
         } else if (DeactivateUserWarningPopUp.TOKEN.equals(token)) {
             return new DeactivateUserWarningPopUp();
 
-        // Manage Cases pages
+            // Manage Cases pages
         } else if (CaseListingAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new CaseListingAdminPage();
         } else if (CaseQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
@@ -116,12 +122,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // return new ListGroupPage();
         } else if (DisplayCaseFormPage.TOKEN.equals(token) && isUserAuthorized(DisplayCaseFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new DisplayCaseFormPage();
-        
-        // Import export organization page    
+
+            // Import export organization page
         } else if (OrganizationImportAndExportPage.TOKEN.equals(token) && isUserAuthorized(OrganizationImportAndExportPage.PRIVILEGES, currentUserAccessRights)) {
             return new OrganizationImportAndExportPage();
-            
-        // Manage Users pages    
+
+            // Manage Users pages
         } else if (UserListingAdminPage.TOKEN.equals(token) && isUserAuthorized(UserListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new UserListingAdminPage();
         } else if (UserQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(UserQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
@@ -140,12 +146,14 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ListMembershipPage();
         } else if (UpdateUserPage.TOKEN.equals(token) && isUserAuthorized(UpdateUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new UpdateUserPage();
-            
-        // Manage Apps pages    
+
+            // Manage Apps pages For Admin
         } else if (ProcessListingAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessListingAdminPage();
         } else if (ProcessQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessQuickDetailsAdminPage();
+        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+            return new ProcessMoreDetailsAdminPage();
         /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
             return new StartProcessOnBehalfPage();*/
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, currentUserAccessRights)) {
@@ -154,8 +162,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new CreateCategoryAndAddToProcessPage();
         } else if (AddProcessCategoryPage.TOKEN.equals(token) && isUserAuthorized(AddProcessCategoryPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddProcessCategoryPage();
-        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
-            return new ProcessMoreDetailsAdminPage();
         } else if (ListProcessActorUserPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorUserPage.PRIVILEGES, currentUserAccessRights)) {
             return new ListProcessActorUserPage();
         } else if (ListProcessActorGroupPage.TOKEN.equals(token) && isUserAuthorized(ListProcessActorGroupPage.PRIVILEGES, currentUserAccessRights)) {
@@ -172,8 +178,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new SelectGroupForActorPage();
         } else if (SelectRoleForActorPage.TOKEN.equals(token) && isUserAuthorized(SelectRoleForActorPage.PRIVILEGES, currentUserAccessRights)) {
             return new SelectRoleForActorPage();
-            
-        // Manage Roles pages    
+
+            // Manage Roles pages
         } else if (RoleListingPage.TOKEN.equals(token) && isUserAuthorized(RoleListingPage.PRIVILEGES, currentUserAccessRights) ) {
             return new RoleListingPage();
         } else if (RoleQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(RoleQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
@@ -182,8 +188,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new AddRolePage();
         } else if (UpdateRolePage.TOKEN.equals(token) && isUserAuthorized(UpdateRolePage.PRIVILEGES, currentUserAccessRights)) {
             return new UpdateRolePage();
-            
-        // Manage Groups pages        
+
+            // Manage Groups pages
         } else if (GroupListingAdminPage.TOKEN.equals(token) && isUserAuthorized(GroupListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new GroupListingAdminPage();
         } else if (GroupQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(GroupQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
@@ -192,8 +198,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new AddGroupPage();
         } else if (UpdateGroupPage.TOKEN.equals(token) && isUserAuthorized(UpdateGroupPage.PRIVILEGES, currentUserAccessRights)) {
             return new UpdateGroupPage();
-        
-        // User Privileges settings pages
+
+            // User Privileges settings pages
         } else if (ProfileListingPage.TOKEN.equals(token) && isUserAuthorized(ProfileListingPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProfileListingPage();
         } else if (ProfileMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
@@ -212,12 +218,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new AddMembershipToProfileMemberPage();
         } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(DeleteProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new DeleteProfileMemberPage();
-            
-            
+
+
         } else if (DeleteActorMemberPage.TOKEN.equals(token)) {
             return new DeleteActorMemberPage();
-        
-        // Manage Tasks pages           
+
+            // Manage Tasks pages
         } else if (TaskListingAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskListingAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskListingAdminPage();
         } else if (SelectUserAndAssignTaskPage.TOKEN.equals(token) && isUserAuthorized(SelectUserAndAssignTaskPage.PRIVILEGES, currentUserAccessRights)) {
@@ -235,8 +241,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (EditThemePage.TOKEN.equals(token)) {
             return new EditThemePage();
         */
-            
-        // Visualize & do tasks   
+
+            // Visualize & do tasks
         } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights) ) {
             return new TasksListingPage();
         } else if (HumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
@@ -249,8 +255,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ArchivedHumanTaskMoreDetailsPage();
         } else if (PerformTaskPage.TOKEN.equals(token) && isUserAuthorized(PerformTaskPage.PRIVILEGES, currentUserAccessRights)) {
             return new PerformTaskPage();
-        
-        // Visualize & Start Apps      
+
+            // Visualize & Start Apps
         } else if (ProcessListingPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessListingPage();
         } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
@@ -259,8 +265,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessMoreDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(StartProcessFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new StartProcessFormPage();
-        
-        // Visualize Cases    
+
+            // Visualize Cases
         } else if (CaseListingPage.TOKEN.equals(token) && isUserAuthorized(CaseListingPage.PRIVILEGES, currentUserAccessRights)) {
             return new CaseListingPage();
         } else if (CaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
@@ -279,26 +285,117 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new PopupAboutPage();
         } else if (ChangeLangPage.TOKEN.equals(token)) {
             return new ChangeLangPage();
-            
+
         } else {
             return new BlankPage();
         }
     }
 
-    private boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
-       
+
+
+    protected String listAUthorizedTokens(List<String> currentUserAccessRights) {
+        String result = "";
+
+        Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
+
+        for (Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
+            result = isUserAuthorized(entry.getValue(), currentUserAccessRights)? result+ entry.getKey() +", " : result;
+        }
+
+        return result;
+
+    }
+
+    protected Map<String, List<String>> buildApplicationPagesPrivileges() {
+        Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
+        pagePrivileges.put(CaseQuickDetailsAdminPage.TOKEN, CaseQuickDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(CaseMoreDetailsAdminPage.TOKEN, CaseMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(ArchivedCaseQuickDetailsAdminPage.TOKEN, ArchivedCaseQuickDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(ArchivedCaseMoreDetailsAdminPage.TOKEN, ArchivedCaseMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(DisplayCaseFormPage.TOKEN, DisplayCaseFormPage.PRIVILEGES);
+        pagePrivileges.put(OrganizationImportAndExportPage.TOKEN, OrganizationImportAndExportPage.PRIVILEGES);
+        pagePrivileges.put(UserListingAdminPage.TOKEN, UserListingAdminPage.PRIVILEGES);
+        pagePrivileges.put(UserQuickDetailsAdminPage.TOKEN, UserQuickDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(UserQuickDetailsPage.TOKEN, UserQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(UserMoreDetailsAdminPage.TOKEN, UserMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(PopupAddUserPage.TOKEN, PopupAddUserPage.PRIVILEGES);
+        pagePrivileges.put(AddMembershipPage.TOKEN, AddMembershipPage.PRIVILEGES);
+        pagePrivileges.put(DeleteMembershipPage.TOKEN, DeleteMembershipPage.PRIVILEGES);
+        pagePrivileges.put(ListMembershipPage.TOKEN, ListMembershipPage.PRIVILEGES);
+        pagePrivileges.put(UpdateUserPage.TOKEN, UpdateUserPage.PRIVILEGES);
+        pagePrivileges.put(ProcessListingAdminPage.TOKEN, ProcessListingAdminPage.PRIVILEGES);
+        pagePrivileges.put(ProcessQuickDetailsAdminPage.TOKEN, ProcessQuickDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(ProcessMoreDetailsAdminPage.TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(UploadProcessPage.TOKEN, UploadProcessPage.PRIVILEGES);
+        pagePrivileges.put(CreateCategoryAndAddToProcessPage.TOKEN, CreateCategoryAndAddToProcessPage.PRIVILEGES);
+        pagePrivileges.put(AddProcessCategoryPage.TOKEN, AddProcessCategoryPage.PRIVILEGES);
+        pagePrivileges.put(ListProcessActorUserPage.TOKEN, ListProcessActorUserPage.PRIVILEGES);
+        pagePrivileges.put(ListProcessActorGroupPage.TOKEN, ListProcessActorGroupPage.PRIVILEGES);
+        pagePrivileges.put(ListProcessActorRolePage.TOKEN, ListProcessActorRolePage.PRIVILEGES);
+        pagePrivileges.put(ListProcessActorMembershipPage.TOKEN, ListProcessActorMembershipPage.PRIVILEGES);
+        pagePrivileges.put(SelectMembershipForActorPage.TOKEN, SelectMembershipForActorPage.PRIVILEGES);
+        pagePrivileges.put(SelectUserForActorPage.TOKEN, SelectUserForActorPage.PRIVILEGES);
+        pagePrivileges.put(SelectGroupForActorPage.TOKEN, SelectGroupForActorPage.PRIVILEGES);
+        pagePrivileges.put(SelectRoleForActorPage.TOKEN, SelectRoleForActorPage.PRIVILEGES);
+        pagePrivileges.put(RoleListingPage.TOKEN, RoleListingPage.PRIVILEGES);
+        pagePrivileges.put(RoleQuickDetailsPage.TOKEN, RoleQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(AddRolePage.TOKEN, AddRolePage.PRIVILEGES);
+        pagePrivileges.put(UpdateRolePage.TOKEN, UpdateRolePage.PRIVILEGES);
+        pagePrivileges.put(GroupListingAdminPage.TOKEN, GroupListingAdminPage.PRIVILEGES);
+        pagePrivileges.put(GroupQuickDetailsAdminPage.TOKEN, GroupQuickDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(AddGroupPage.TOKEN, AddGroupPage.PRIVILEGES);
+        pagePrivileges.put(UpdateGroupPage.TOKEN, UpdateGroupPage.PRIVILEGES);
+        pagePrivileges.put(ProfileListingPage.TOKEN, ProfileListingPage.PRIVILEGES);
+        pagePrivileges.put(ProfileMoreDetailsPage.TOKEN, ProfileMoreDetailsPage.PRIVILEGES);
+        pagePrivileges.put(ProfileQuickDetailsPage.TOKEN, ProfileQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(EditProfilePage.TOKEN, EditProfilePage.PRIVILEGES);
+        pagePrivileges.put(AddGroupToProfileMemberPage.TOKEN, AddGroupToProfileMemberPage.PRIVILEGES);
+        pagePrivileges.put(AddRoleToProfileMemberPage.TOKEN, AddRoleToProfileMemberPage.PRIVILEGES);
+        pagePrivileges.put(AddUserToProfileMemberPage.TOKEN, AddUserToProfileMemberPage.PRIVILEGES);
+        pagePrivileges.put(AddMembershipToProfileMemberPage.TOKEN, AddMembershipToProfileMemberPage.PRIVILEGES);
+        pagePrivileges.put(DeleteProfileMemberPage.TOKEN, DeleteProfileMemberPage.PRIVILEGES);
+        pagePrivileges.put(TaskListingAdminPage.TOKEN, TaskListingAdminPage.PRIVILEGES);
+        pagePrivileges.put(SelectUserAndAssignTaskPage.TOKEN, SelectUserAndAssignTaskPage.PRIVILEGES);
+        pagePrivileges.put(TaskQuickDetailsAdminPage.TOKEN, TaskQuickDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(TaskMoreDetailsAdminPage.TOKEN, TaskMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(TasksListingPage.TOKEN, TasksListingPage.PRIVILEGES);
+        pagePrivileges.put(HumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(HumanTaskMoreDetailsPage.TOKEN, HumanTaskMoreDetailsPage.PRIVILEGES);
+        pagePrivileges.put(ArchivedHumanTaskQuickDetailsPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(ArchivedHumanTaskMoreDetailsPage.TOKEN, ArchivedHumanTaskMoreDetailsPage.PRIVILEGES);
+        pagePrivileges.put(PerformTaskPage.TOKEN, PerformTaskPage.PRIVILEGES);
+        pagePrivileges.put(ProcessListingPage.TOKEN, ProcessListingPage.PRIVILEGES);
+        pagePrivileges.put(ProcessQuickDetailsPage.TOKEN, ProcessQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(ProcessMoreDetailsPage.TOKEN, ProcessMoreDetailsPage.PRIVILEGES);
+        pagePrivileges.put(StartProcessFormPage.TOKEN, StartProcessFormPage.PRIVILEGES);
+        pagePrivileges.put(CaseListingPage.TOKEN, CaseListingPage.PRIVILEGES);
+        pagePrivileges.put(CaseQuickDetailsPage.TOKEN, CaseQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(ArchivedCaseQuickDetailsPage.TOKEN, ArchivedCaseQuickDetailsPage.PRIVILEGES);
+        pagePrivileges.put(ArchivedCaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.PRIVILEGES);
+        pagePrivileges.put(CaseMoreDetailsPage.TOKEN, CaseMoreDetailsPage.PRIVILEGES);
+
+
+
+
+        return pagePrivileges;
+    }
+
+    protected boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
+
         String sessionId = new String(Session.getParameter("session_id"));
-        
+
         for (String privilege: privileges) {
-            
+
             String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
-            
+
             if (accessRights.contains(calcSHA1.toUpperCase())) {
+                GWT.log("User is granted access to targeted page thanks to : "+ privilege );
                 return true;
             }
-            
-        }      
-              
+
+        }
+
         return false;
     }
+
 }

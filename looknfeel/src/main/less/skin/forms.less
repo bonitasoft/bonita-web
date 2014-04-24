@@ -121,6 +121,11 @@ form{
 				border-color: @form-input-error-borderColor;
 			}
 		}
+		.disabled .uploader {
+          input, .input, a {
+               .disablePointerAsLink();
+          }
+        }
 	}
 	.dropdown.autocomplete{
 		z-index: @zIndex-dropdown;

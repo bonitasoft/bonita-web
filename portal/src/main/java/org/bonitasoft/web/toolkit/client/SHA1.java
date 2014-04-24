@@ -6,7 +6,7 @@
  *      BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
  *      or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
  *******************************************************************************/
-package org.bonitasoft.console.client;
+package org.bonitasoft.web.toolkit.client;
 
 
 /**
@@ -14,7 +14,7 @@ package org.bonitasoft.console.client;
  *
  */
 public class SHA1 {
-    
+
     public static native String calcSHA1(String s) /*-{
     //
     // A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined

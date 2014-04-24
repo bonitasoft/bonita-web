@@ -40,8 +40,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     private String workFolderPath = null;
 
-    private final String consoleWorkFolderPath = null;
-
     private String formsWorkFolderPath = null;
 
     public static final String gadgetsWorkFolderName = "gadgets";
@@ -82,9 +80,15 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String reportsWorkFolderPath = null;
 
+    public static final String pagesWorkFolderName = "pages";
+
+    private String pagesWorkFolderPath = null;
+
     public static final String pdfWorkFolderName = "pdf";
 
     private String pdfWorkFolderPath = null;
+
+    private String bdmWorkFolderPath;
 
     /**
      * Default constructor.
@@ -171,6 +175,17 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
+    public String getPagesWorkFolderPath() {
+        if (pagesWorkFolderPath == null) {
+            pagesWorkFolderPath = getWorkFolderPath() + pagesWorkFolderName + File.separator;
+        }
+        return pagesWorkFolderPath;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getFormsWorkFolderPath() {
         if (formsWorkFolderPath == null) {
             formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
@@ -248,5 +263,13 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
             groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
         }
         return groupsIconsWorkFolderPath;
+    }
+
+    @Override
+    public String getBDMWorkFolderPath() {
+        if (bdmWorkFolderPath == null) {
+            bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+        }
+        return bdmWorkFolderPath;
     }
 }

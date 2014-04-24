@@ -2,7 +2,7 @@
   a {
     color: @detailsPanel-link-color;
   }
-  a:hover {
+  a:hover, a:hover span{
     cursor: pointer;
     text-decoration: underline;
   }
@@ -29,9 +29,9 @@
 		}
 		.metadatas{
             a {
-              color:#035;
+              color: @link-color;
             }
-            a:hover {
+            a:hover, a:hover span{
               cursor: pointer;
               text-decoration: underline;
             }
@@ -72,7 +72,7 @@
 							.bgLeft(@detailsPanel-definition-processBg);
 						}
 					}
-					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date{
+					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date, &.lastupdatedate, &.creationdate{
 						label{
 							.bgLeft(@detailsPanel-definition-dueDateBg);
 						}
@@ -83,6 +83,13 @@
 					//		.bgLeft(@detailsPanel-definition-userBg);
 					//	}
 					//}
+					
+					&.createdby, &.updatedby{
+						label {
+							.bgLeft(@detailsPanel-definition-userBg);
+						}
+					}
+					
 					&.human_task{
 						label {
 							.bgLeft(@detailsPanel-definition-human-taskBg);

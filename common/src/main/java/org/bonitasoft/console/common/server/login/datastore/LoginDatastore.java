@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.login.datastore;
 
+import java.io.Serializable;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +57,33 @@ public class LoginDatastore {
             apiSession = getLoginAPI().login(username, password);
         } catch (final LoginException e) {
             final String errorMessage = "Error while logging in the engine API.";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, errorMessage);
+            }
+            throw new BonitaException(e);
+        }
+        return apiSession;
+    }
+
+    /**
+     * login.
+     *
+     * @return APISession aAPISession
+     * @throws BonitaException
+     */
+    public APISession login(Map<String, Serializable> credentials) throws BonitaException {
+        APISession apiSession = null;
+        try {
+            if (credentials == null) {
+                final String errorMessage = "Error while logging in on the engine API.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage);
+                }
+                throw new LoginException(errorMessage);
+            }
+            apiSession = getLoginAPI().login(credentials);
+        } catch (final LoginException e) {
+            final String errorMessage = "Error while logging in on the engine API.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, errorMessage);
             }

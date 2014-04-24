@@ -17,8 +17,8 @@
 package org.bonitasoft.web.toolkit.client.ui.component.form.button;
 
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
-import org.bonitasoft.web.toolkit.client.ui.component.form.Form.FormSubmitAction;
 
 /**
  * @author Séverin Moussel
@@ -29,7 +29,7 @@ public class FormSubmitButton extends FormButton {
     /**
      * TODO : refactor FormSubmitButton must extends ButtonAction and implements FormNode
      */
-    public FormSubmitButton(final JsId jsid, final String label, final String tooltip, final FormSubmitAction action) {
+    public FormSubmitButton(final JsId jsid, final String label, final String tooltip, final Action action) {
         super(jsid, label, tooltip, action);
     }
 

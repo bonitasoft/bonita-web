@@ -30,6 +30,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Refreshable;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.CustomPanel;
+import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.DeleteItemPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
@@ -43,7 +44,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 /**
  * This Class defines the main controller of the entire GWT application. It is responsible for the interaction between the
  * different components spread all over the window.
- * 
+ *
  * @author Julien Mege
  */
 public class ViewController {
@@ -78,7 +79,7 @@ public class ViewController {
 
     /**
      * Get the ViewController instance.
-     * 
+     *
      * @return the unique instance of the ViewController.
      */
     public static ViewController getInstance() {
@@ -216,14 +217,14 @@ public class ViewController {
         }
         rootElement.appendChild(widgetElement);
 
-        widget.onLoad();
         ViewController.updateUI(rootElement, true);
+        widget.onLoad();
 
         MainEventBus.getInstance().fireEventFromSource(new ChangeViewEvent(view), getInstance());
 
         return view;
     }
-    
+
     public static void showPopup(final String token) {
         showPopup(token, new TreeIndexed<String>());
     }

@@ -92,9 +92,14 @@
                 .pages_added .pager{
                     display: none;
                 }
-                .pages_added .table .thead .tr .th_1{
-                    width: 180px;
-                    min-width: 100px;
+                .pages_added .table .thead .tr {
+	                .th_1{
+	                    width: 180px;
+	                    min-width: 100px;
+	                    &.th_icon {
+	                    	 width: auto;
+	                    }
+	                }
                 }
                 .pages_to_add .table .thead .tr .th_2{
                     width: 120px;

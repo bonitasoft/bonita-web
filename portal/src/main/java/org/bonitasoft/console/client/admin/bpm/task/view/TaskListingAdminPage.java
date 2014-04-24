@@ -36,6 +36,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -98,17 +99,17 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
         return filters;
     }
 
-    private ItemListingFilter humanFilter() {
+    protected ItemListingFilter humanFilter() {
         return new ItemListingFilter(FILTER_PRIMARY_HUMAN_TASK, _("Pending"), _("Tasks "), TABLE_HUMAN_TASK).addFilter(TaskItem.ATTRIBUTE_STATE,
                 TaskItem.VALUE_STATE_READY);
     }
 
-    private ItemListingFilter failedFilter() {
+    protected ItemListingFilter failedFilter() {
         return new ItemListingFilter(FILTER_PRIMARY_FAILED, _("Failed"), _("Tasks "), TABLE_ALL).addFilter(TaskItem.ATTRIBUTE_STATE,
                 TaskItem.VALUE_STATE_FAILED);
     }
 
-    private ItemListingFilter performedFilter() {
+    protected ItemListingFilter performedFilter() {
         return new ItemListingFilter(FILTER_PRIMARY_PERFORMED, _("Done"), _("Tasks "), TABLE_HISTORY);
     }
 
@@ -153,7 +154,15 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         new FlowNodeIconFormatter(UserItem.DEFAULT_USER_ICON))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
-                ,new TaskQuickDetailsAdminPage());
+                ,getTaskQuickDetailsPage());
+    }
+
+    protected ArchivableItemDetailsPage<IFlowNodeItem> getTaskQuickDetailsPage() {
+        return new TaskQuickDetailsAdminPage();
+    }
+
+    protected ArchivableItemDetailsPage<IFlowNodeItem> getArchivedTaskQuickDetailsPage() {
+        return new TaskQuickDetailsAdminPage(true);
     }
 
     private ItemListingTable createHumanTaskListingTable() {
@@ -179,7 +188,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
                         .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
                 ,
-                new TaskQuickDetailsAdminPage());
+                getTaskQuickDetailsPage());
     }
 
     private ItemListingTable createArchivedListingTable() {
@@ -199,7 +208,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_PRIORITY, new PriorityCssCellFormatter())
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 ,
-                new TaskQuickDetailsAdminPage(true));
+                getArchivedTaskQuickDetailsPage());
     }
 
     /**

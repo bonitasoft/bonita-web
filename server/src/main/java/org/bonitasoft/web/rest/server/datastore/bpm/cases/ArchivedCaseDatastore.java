@@ -5,16 +5,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
+
+import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -36,8 +38,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
-import java.util.Map;
-
 /**
  * @author Séverin Moussel
  */
@@ -57,19 +57,19 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         result.setLastUpdateDate(item.getLastUpdate());
         result.setState(item.getState());
         result.setStartDate(item.getStartDate());
-        result.setStartedByUserId(item.getStartedBy());
         result.setEndDate(item.getEndDate());
         result.setProcessId(item.getProcessDefinitionId());
         result.setArchivedDate(item.getArchiveDate());
         result.setSourceObjectId(item.getSourceObjectId());
         result.setRootCaseId(item.getRootProcessInstanceId());
-
+        result.setStartedByUserId(item.getStartedBy());
+        result.setStartedBySubstituteUserId(item.getStartedBySubstitute());
         return result;
     }
 
     @Override
     public ItemSearchResult<ArchivedCaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+                                                     final Map<String, String> filters) {
 
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
@@ -104,7 +104,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
                         .searchArchivedProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_SUPERVISOR_ID), builder.done());
             }
 
-            if(filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
+            if (filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
                 builder.filter(ArchivedProcessInstancesSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
                 return processAPI.searchArchivedProcessInstancesInAllStates(builder.done());
             }

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
-import org.bonitasoft.console.client.user.cases.view.FormsView;
+import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.Session;
@@ -46,11 +46,14 @@ import com.google.gwt.user.client.Element;
  */
 public class StartProcessFormPage extends Page {
 
-    public final static String TOKEN = "StartProcess";
+    public static final String ATTRIBUTE_USER_ID = "userId";
+
+	public final static String TOKEN = "StartProcess";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
+    	PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
@@ -75,7 +78,7 @@ public class StartProcessFormPage extends Page {
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
 
-        String userId = this.getParameter("userId");
+        String userId = this.getParameter(ATTRIBUTE_USER_ID);
         if (userId == null) {
             userId = Session.getUserId().toString();
         }
@@ -98,10 +101,10 @@ public class StartProcessFormPage extends Page {
                 .append(processVersion)
                 .append("$entry&process=")
                 .append(processId)
-                .append("&autoInstantiate=false&mode=form&user=")
+                .append("&autoInstantiate=false&mode=form&userId=")
                 .append(userId);
-
-        addBody(new UiComponent(new FormsView(frameURL.toString())));
+  
+        addBody(new UiComponent(new IFrameView(frameURL.toString())));
     }
 
     @Override

@@ -33,8 +33,13 @@
 				//padding: @header-login-profileLabel-padding;
 				.menuitem_userName{
 					>a{
+						color: @header-login-settings-link-textColor;
+						padding: @header-login-welcomeMessage-margin;
+					}
+				}
+				.menuitem_userName.downArrow{
+					>a{
 						.bg(@header-login-profileLink-bg, no-repeat, transparent, 90%, 50%);
-						color: @header-login-profileLink-textColor;
 						padding: @header-login-profileLink-padding;
 						color: @header-login-settings-link-textColor;
 					}
@@ -105,25 +110,25 @@
 		>div >ul.dropdownmenu.notCustom >li{
 			 &.current, &.current:hover {
 				a{
-					&.tasklistinguser{
+					&.tasklistinguser {
 						.bg(@header-menu-link-tasksSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
 					}
-					&.caselistinguser{
+					&.caselistinguser {
 						.bg(@header-menu-link-casesSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
 					}
-					&.processlistinguser{
+					&.processlistinguser {
 						.bg(@header-menu-link-appsSelected-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
 					}
 				}
 			}
 			a{
-				&.tasklistinguser{
+				&.tasklistinguser {
 					.bg(@header-menu-link-tasks-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
 				}
-				&.caselistinguser{
+				&.caselistinguser {
 					.bg(@header-menu-link-cases-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
 				}
-				&.processlistinguser{
+				&.processlistinguser {
 					.bg(@header-menu-link-apps-bg, no-repeat, @header-menu-link-bgColor, @header-menu-link-bgX, @header-menu-link-bgY);
 				}
 			}

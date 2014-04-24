@@ -20,14 +20,12 @@ import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstance;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
@@ -67,7 +65,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
      *            The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
-    protected static final FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
+    protected static FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
 
         result.setId(item.getId());
         result.setName(item.getName());
@@ -80,7 +78,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         result.setState(item.getState());
         result.setType(item.getType().name());
         result.setRootContainerId(item.getRootContainerId());
-
+        result.setExecutedBySubstituteUserId(item.getExecutedBySubstitute());
         return result;
     }
 

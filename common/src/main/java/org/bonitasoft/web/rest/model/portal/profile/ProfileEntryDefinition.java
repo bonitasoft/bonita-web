@@ -64,17 +64,20 @@ public class ProfileEntryDefinition extends ItemDefinition<ProfileEntryItem> {
         createAttribute(ProfileEntryItem.ATTRIBUTE_PARENT_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, ItemAttribute.TYPE.ITEM_ID)
                 .isMandatory();
+        createAttribute(ProfileEntryItem.ATTRIBUTE_IS_CUSTOM, ItemAttribute.TYPE.BOOLEAN);
         createAttribute(ProfileEntryItem.ATTRIBUTE_TYPE, ItemAttribute.TYPE.ENUM)
                 .isMandatory()
                 .addValidator(new EnumValidator(
                         ProfileEntryItem.VALUE_TYPE.folder.name(),
                         ProfileEntryItem.VALUE_TYPE.link.name()
-                        ));
+                ));
         createAttribute(ProfileEntryItem.ATTRIBUTE_PAGE, ItemAttribute.TYPE.STRING);
+        createAttribute(ProfileEntryItem.ATTRIBUTE_IS_CUSTOM_ICON, ItemAttribute.TYPE.IMAGE);
     }
 
     @Override
     public ProfileEntryItem _createItem() {
         return new ProfileEntryItem();
     }
+
 }

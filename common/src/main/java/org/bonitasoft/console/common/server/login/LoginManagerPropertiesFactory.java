@@ -20,6 +20,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.login.LoginManagerProperties;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**

@@ -36,7 +36,7 @@ import com.google.gwt.user.client.Element;
 
 /**
  * @author Fabio Lombardi
- * 
+ *
  */
 public class DisplayCaseFormPage extends Page {
 
@@ -75,8 +75,8 @@ public class DisplayCaseFormPage extends Page {
 
     @Override
     public void buildView() {
-        FormsView view = new FormsView(getCaseOverviewUrl());
-        this.addBody(new UiComponent(view));
+        IFrameView view = new IFrameView(getCaseOverviewUrl());
+        addBody(new UiComponent(view));
         view.addTool(new ButtonBack());
     }
 
@@ -105,7 +105,7 @@ public class DisplayCaseFormPage extends Page {
 
         frameURL.append("#form=")
                 .append(processName)
-                .append(this.UUID_SEPERATOR)
+                .append(UUID_SEPERATOR)
                 .append(processVersion)
                 .append("$recap&mode=form&instance=")
                 .append(caseId).append("&recap=true");
@@ -136,6 +136,5 @@ public class DisplayCaseFormPage extends Page {
     protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
         return null;
     }
-
 
 }

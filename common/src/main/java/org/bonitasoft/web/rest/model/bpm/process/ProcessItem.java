@@ -61,6 +61,8 @@ public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpd
 
     public static final String ATTRIBUTE_DISPLAY_DESCRIPTION = "displayDescription";
 
+    public static final String ATTRIBUTE_ACTOR_INITIATOR_ID = "actorinitiatorid";
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,6 +154,11 @@ public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpd
         return this.getAttributeValueAsDate(ATTRIBUTE_LAST_UPDATE_DATE);
     }
 
+    public String getActorInitiatorId() {
+        return this.getAttributeValue(ATTRIBUTE_ACTOR_INITIATOR_ID);
+    }
+
+
     // SETTERS
 
     @Override
@@ -227,6 +234,18 @@ public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpd
     @Override
     public void setLastUpdateDate(final Date date) {
         this.setAttribute(ATTRIBUTE_LAST_UPDATE_DATE, date);
+    }
+
+    public void setActorInitiatorId(final Long id) {
+        setActorInitiatorId(id.toString());
+    }
+
+    public void setActorInitiatorId(final APIID id) {
+        setActorInitiatorId(id.toString());
+    }
+
+    public void setActorInitiatorId(final String id) {
+        this.setAttribute(ATTRIBUTE_ACTOR_INITIATOR_ID, id);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.toolkit.client.ui;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.util.List;
 
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -65,10 +63,10 @@ public abstract class Page extends View {
      */
     @Override
     protected void _fillWidget(final Element rootElement) {
-        this.rootClassName = "page";
+        rootClassName = "page";
 
         defineTitle();
-        assert this.title != null : "Missing page title on " + this.getClass().toString().replaceAll(".*\\.", "");
+        assert title != null : "Missing page title on " + this.getClass().toString().replaceAll(".*\\.", "");
 
         super._fillWidget(rootElement);
 
@@ -90,7 +88,7 @@ public abstract class Page extends View {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected Page addAction(final JsId jsid, final String label, final String tooltip, final Action action) {
-        this.actions.append(new Link(jsid, label, tooltip, action));
+        actions.append(new Link(jsid, label, tooltip, action));
         return this;
     }
 
@@ -121,7 +119,7 @@ public abstract class Page extends View {
      * @return the title
      */
     public Title getTitle() {
-        return this.title;
+        return title;
     }
 
     /**
@@ -140,12 +138,12 @@ public abstract class Page extends View {
     }
 
     private void initToolbar() {
-        if (this.toolbar == null) {
-            this.toolbar = new ContainerStyled<Clickable>();
-            this.toolbar.setRootTagClass("toolbar");
+        if (toolbar == null) {
+            toolbar = new ContainerStyled<Clickable>();
+            toolbar.setRootTagClass("toolbar");
 
             // add toolbar to the header
-            addHeader(this.toolbar);
+            addHeader(toolbar);
         }
     }
 
@@ -157,8 +155,8 @@ public abstract class Page extends View {
     protected void setToolbar(final Link... links) {
         initToolbar();
 
-        this.toolbar.empty();
-        this.toolbar.append(links);
+        toolbar.empty();
+        toolbar.append(links);
     }
 
     /**
@@ -176,7 +174,7 @@ public abstract class Page extends View {
     protected void addToolbarButton(final String label, final String tooltip, final Action action) {
         initToolbar();
 
-        this.toolbar.append(new Button(new JsId(label), label, tooltip, action));
+        toolbar.append(new Button(new JsId(label), label, tooltip, action));
     }
 
     /**
@@ -193,21 +191,23 @@ public abstract class Page extends View {
     @Deprecated()
     protected void addToolbarLink(final JsId id, final String label, final String tooltip, final Action action) {
         initToolbar();
-        this.toolbar.append(new Link(id, label, tooltip, action));
+        toolbar.append(new Link(id, label, tooltip, action));
     }
 
     protected void addToolbarLink(final Clickable link) {
-        initToolbar();
-        this.toolbar.append(link);
+        if (link != null) {
+            initToolbar();
+            toolbar.append(link);
+        }
     }
 
     @Override
     protected List<Element> makeHeaderElements(final Container<AbstractComponent> header) {
-        if (!"popup".equals(this.parentElement.getId())) {
-            header.prepend(this.actions);
+        if (!"popup".equals(parentElement.getId())) {
+            header.prepend(actions);
         }
 
-        header.prepend(this.title);
+        header.prepend(title);
 
         // MOVED TO TOOLBAR INITIALIZATION
         // add the toolbar to the header if not null
@@ -220,8 +220,8 @@ public abstract class Page extends View {
 
     @Override
     protected List<Element> makeFooterElements(final Container<AbstractComponent> footer) {
-        if ("popup".equals(this.parentElement.getId())) {
-            footer.prepend(this.actions);
+        if ("popup".equals(parentElement.getId())) {
+            footer.prepend(actions);
         }
         return super.makeFooterElements(footer);
     }
@@ -245,8 +245,8 @@ public abstract class Page extends View {
 
     @Override
     protected void refreshAll() {
-        if (this.toolbar != null) {
-            this.toolbar.empty();
+        if (toolbar != null) {
+            toolbar.empty();
         }
         super.refreshAll();
     }

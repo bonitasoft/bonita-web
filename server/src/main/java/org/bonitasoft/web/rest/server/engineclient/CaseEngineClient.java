@@ -16,9 +16,20 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.process.*;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessActivationException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
+import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
@@ -28,10 +39,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundExc
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Colin PUY
@@ -43,43 +50,54 @@ public class CaseEngineClient {
 
     protected ProcessAPI processAPI;
 
-    public CaseEngineClient(ProcessAPI processAPI) {
+    public CaseEngineClient(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
-    
-    public ProcessInstance start(long processId) {
-        return start(processId, null);
+
+    public ProcessInstance start(final long userId, final long processId) {
+        return start(userId, processId, null);
     }
-    
-    public ProcessInstance start(long processId, Map<String, Serializable> variables) {
+
+    public ProcessInstance start(final long userId, final long processId, final Map<String, Serializable> variables) {
         try {
-            if (variables == null || variables.isEmpty()) {
-                return processAPI.startProcess(processId);
+            if (userId != -1L) {
+                if (variables == null || variables.isEmpty()) {
+                    return processAPI.startProcess(userId, processId);
+                } else {
+                    return processAPI.startProcess(userId, processId, variables);
+                }
             } else {
-                return processAPI.startProcess(processId, variables);
+                if (variables == null || variables.isEmpty()) {
+                    return processAPI.startProcess(processId);
+                } else {
+                    return processAPI.startProcess(processId, variables);
+                }
             }
-        } catch (ProcessDefinitionNotFoundException e) {
+        } catch (final ProcessDefinitionNotFoundException e) {
             throw new APIException(new _("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
-        } catch (ProcessActivationException e) {
+        } catch (final ProcessActivationException e) {
             throw new APIException(new _("Can't start process, process %processId% is not enabled", new Arg("processId", processId)), e);
-        } catch (ProcessExecutionException e) {
+        } catch (final ProcessExecutionException e) {
             throw new APIException(new _("Error occured when starting process %processId%", new Arg("processId", processId)), e);
+        } catch (final UserNotFoundException e) {
+            throw new APIException(
+                    new _("Can't start process %processId%, user %userId% not found", new Arg("processId", processId), new Arg("userId", userId)), e);
         }
     }
-    
+
     public long countOpenedCases() {
-        SearchOptions search = new SearchOptionsBuilder(0, 0).done();
+        final SearchOptions search = new SearchOptionsBuilder(0, 0).done();
         try {
             return processAPI.searchOpenProcessInstances(search).getCount();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new APIException("Error when counting opened cases", e);
         }
     }
-    
-    public List<ArchivedProcessInstance> searchArchivedCasesInAllStates(SearchOptions searchOptions) {
+
+    public List<ArchivedProcessInstance> searchArchivedCasesInAllStates(final SearchOptions searchOptions) {
         try {
             return processAPI.searchArchivedProcessInstancesInAllStates(searchOptions).getResult();
-        } catch (SearchException e) {
+        } catch (final SearchException e) {
             throw new APIException("Error when searching cases in all state", e);
         }
     }

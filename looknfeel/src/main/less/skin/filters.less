@@ -164,6 +164,14 @@
                         .bgHoverFilter(@filtersPanel-filters-bgAll);
                     }
 				}
+				
+				&.allpagesfilter{
+					.bgFilter(@customPagefiltersPanel-filters-bgAll);
+                    &:hover{
+                        .bgHoverFilter(@customPagefiltersPanel-filters-bgAll);
+                    }
+				}
+				
 				&.humantask{
 					.bgFilter(@filtersPanel-filters-bgHumanTask);
                     &:hover{
@@ -243,6 +251,9 @@
 				}
 				&.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all{
 					.bgCurrentFilter(@filtersPanel-filters-bgAllSelected);
+				}
+				&.allpagesfilter{
+					.bgCurrentFilter(@customPagefiltersPanel-filters-bgAllSelected);
 				}
 				&.humantask{
 					.bgCurrentFilter(@filtersPanel-filters-bgHumanTaskSelected);
