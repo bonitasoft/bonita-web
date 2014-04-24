@@ -62,11 +62,12 @@ public class CaseDefinition extends ItemDefinition {
     protected void defineAttributes() {
         createAttribute(CaseItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CaseItem.ATTRIBUTE_STATE, ItemAttribute.TYPE.ENUM);
-        createAttribute(CaseItem.ATTRIBUTE_START_DATE, ItemAttribute.TYPE.DATETIME);
+        createAttribute(CaseItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CaseItem.ATTRIBUTE_START_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(CaseItem.ATTRIBUTE_END_DATE, ItemAttribute.TYPE.DATETIME);
-        createAttribute(CaseItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
     }
 
     @Override

@@ -16,17 +16,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.*;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +52,7 @@ public class CategoryDatastoreTest extends APITestWithMock {
     @SuppressWarnings("unchecked")
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
-        when(processAPI.createCategory(anyString(), anyString())).thenThrow(AlreadyExistsException.class);
+        when(processAPI.createCategory(anyString(), anyString())).thenThrow(new AlreadyExistsException("category already exists"));
 
         categoryDatastore.add(aCategoryItem().build());
     }

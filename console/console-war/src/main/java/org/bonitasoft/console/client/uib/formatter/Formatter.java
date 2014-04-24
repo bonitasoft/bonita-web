@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.uib.formatter;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.Date;
 

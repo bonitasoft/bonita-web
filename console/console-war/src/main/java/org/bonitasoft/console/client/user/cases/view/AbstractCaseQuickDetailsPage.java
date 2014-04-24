@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
+import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.cases.view.AbstractCaseQuickDetailsPage.CommentsTableAsyncBuilder;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedTasksSection;
@@ -41,6 +42,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
@@ -79,16 +81,21 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+        defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(CaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
 
     @Override
-    protected LinkedList<ItemDetailsMetadata> defineMetadatas(final T item) {
+    protected LinkedList<ItemDetailsMetadata> defineMetadatas(final CaseItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startDate());
-        metadatas.add(startedBy());
+        if (item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
+            metadatas.add(addStartedBy());        
+        } else {
+            metadatas.add(addStartedByDelegate(item.getStartedByUser(), item.getStartedBySubstituteUser()));
+        }    
         return metadatas;
     }
 
@@ -101,9 +108,18 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
         return new ItemDetailsMetadata(CaseItem.ATTRIBUTE_START_DATE, _("Started on"), _("The date while the case has been started"));
     }
 
-    private ItemDetailsMetadata startedBy() {
+    private ItemDetailsMetadata addStartedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID),
                 _("Started by"), _("The user that has started this case"));
+    }
+    
+    private ItemDetailsMetadata addStartedByDelegate(UserItem startedByUser, UserItem startedByDelegateUser) {
+        StartedByDelegateAttributeReder addStartedByDelegate = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+        addStartedByDelegate.setStartedBySubstitute(startedByDelegateUser);
+        addStartedByDelegate.setStartedBy(startedByUser);
+        return new ItemDetailsMetadata(addStartedByDelegate,
+                _("Started by"),
+                _("Name of the user who started this case"));
     }
 
     @Override

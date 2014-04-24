@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.user.task.view.more;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 public class MetadataMessages {
 
@@ -94,6 +94,18 @@ public class MetadataMessages {
 
     String no_description() {
         return _("No description.");
+    }
+    
+    String done_by_title() {
+        return _("The user who did the task.");
+    }
+    
+    String done_by_label() {
+        return _("Done by");
+    }
+
+    public String done_on_label() {
+        return _("Done on");
     }
 
 }

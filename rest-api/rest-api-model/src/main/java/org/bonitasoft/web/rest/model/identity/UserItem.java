@@ -79,8 +79,10 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
     public static final String FILTER_PROFILE_ID = "profile_id";
 
     public static final String FILTER_INDIRECT_PROFILE_ID = "indirect_profile_id";
-    
-	public static final String FILTER_PROCESS_ID = "process_id";
+
+    public static final String FILTER_PROCESS_ID = "process_id";
+
+    public static final String FILTER_HUMAN_TASK_ID = "task_id";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COUNTERS

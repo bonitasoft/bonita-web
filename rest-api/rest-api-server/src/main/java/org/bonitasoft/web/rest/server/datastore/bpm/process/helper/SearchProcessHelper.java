@@ -82,6 +82,6 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
     }
 
     private ItemSearchResult<ProcessItem> convertResult(int page, int nbResultsByPage, final SearchResult<ProcessDeploymentInfo> result) {
-        return new ItemSearchResultConverter<ProcessItem, ProcessDeploymentInfo>(page, nbResultsByPage, result, new ProcessItemConverter()).toItemSearchResult();
+        return new ItemSearchResultConverter<ProcessItem, ProcessDeploymentInfo>(page, nbResultsByPage, result, new ProcessItemConverter(engineClient.getProcessApi())).toItemSearchResult();
     }
 }
