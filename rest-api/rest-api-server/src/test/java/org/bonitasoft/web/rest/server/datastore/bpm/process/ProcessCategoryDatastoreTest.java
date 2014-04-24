@@ -16,18 +16,15 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.rest.model.builder.bpm.process.ProcessCategoryItemBuilder.aProcessCategory;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.ProcessCategoryItemBuilder.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.*;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessCategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +53,7 @@ public class ProcessCategoryDatastoreTest extends APITestWithMock {
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryOnProcessIsForbidden() throws Exception {
         ProcessCategoryItem processCategory = aProcessCategory().build();
-        doThrow(AlreadyExistsException.class).when(processAPI)
+        doThrow(new AlreadyExistsException("this thing already exists!")).when(processAPI)
                 .addCategoriesToProcess(processCategory.getProcessId().toLong(), asList(processCategory.getCategoryId().toLong()));
 
         processCategoryDatastore.add(processCategory);

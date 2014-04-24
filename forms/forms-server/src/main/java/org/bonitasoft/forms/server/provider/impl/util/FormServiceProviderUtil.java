@@ -166,6 +166,11 @@ public class FormServiceProviderUtil {
     public static final String USER = "user";
 
     /**
+     * user id parameter used to "do for" and "start for"
+     */
+    public static final String USER_ID = "userId";
+
+    /**
      * form mode type
      */
     public static final String MODE = "mode";

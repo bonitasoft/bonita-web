@@ -46,6 +46,8 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
     public static String ATTRIBUTE_TYPE = "type";
 
     public static String ATTRIBUTE_EXECUTED_BY_USER_ID = "executedBy";
+    
+    public static String ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID = "executedBySubstitute";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -142,6 +144,16 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
 
     public UserItem getExecutedByUser();
 
+    public void setExecutedBySubstituteUserId(final APIID id);
+
+    public void setExecutedBySubstituteUserId(final String id);
+
+    public void setExecutedBySubstituteUserId(final Long id);
+
+    public APIID getExecutedBySubstituteUserId();
+
+    public UserItem getExecutedBySubstituteUser();
+    
     public ProcessItem getProcess();
 
     public CaseItem getCase();

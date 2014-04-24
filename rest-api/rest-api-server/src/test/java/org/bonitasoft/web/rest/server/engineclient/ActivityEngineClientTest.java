@@ -17,10 +17,9 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.*;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
@@ -46,7 +45,7 @@ public class ActivityEngineClientTest extends APITestWithMock {
     
     @Test(expected = APIException.class)
     public void getDataInstance_throw_exception_if_data_is_not_found() throws Exception {
-        when(processAPI.getActivityDataInstance(anyString(), anyLong())).thenThrow(DataNotFoundException.class);
+        when(processAPI.getActivityDataInstance(anyString(), anyLong())).thenThrow(new DataNotFoundException(new NullPointerException()));
         
         activityEngineClient.getDataInstance("aName", 1L);
     }
