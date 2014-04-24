@@ -26,7 +26,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.web.rest.server.APITestWithMock;
-import org.bonitasoft.web.rest.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class CategoryDatastoreTest extends APITestWithMock {
     @SuppressWarnings("unchecked")
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
-        when(processAPI.createCategory(anyString(), anyString())).thenThrow(AlreadyExistsException.class);
+        when(processAPI.createCategory(anyString(), anyString())).thenThrow(new AlreadyExistsException(""));
 
         categoryDatastore.add(aCategoryItem().build());
     }
