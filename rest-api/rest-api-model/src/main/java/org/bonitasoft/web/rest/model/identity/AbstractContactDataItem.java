@@ -51,7 +51,7 @@ public abstract class AbstractContactDataItem extends Item implements ItemHasUni
 
     public static final String ATTRIBUTE_WEBSITE = "website";
 
-    public static final Long MAX_EMAIL_LENGTH = 50L;// FIXME set to 254L when migration + tests on all DB
+    public static final Long MAX_EMAIL_LENGTH = 254L;
 
     public AbstractContactDataItem() {
         super();

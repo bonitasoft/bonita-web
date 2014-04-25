@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.toolkit.client.data.api.request;
 
+import org.bonitasoft.web.toolkit.client.UserSessionVariables;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 
 import com.google.gwt.http.client.Request;
@@ -91,6 +92,10 @@ public class HttpRequest {
         }
         if (contentType != null) {
             builder.setHeader("Content-Type", (contentType != null ? contentType : "text/plain") + ";charset=UTF-8");
+        }
+        
+        if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
+            builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
         }
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);

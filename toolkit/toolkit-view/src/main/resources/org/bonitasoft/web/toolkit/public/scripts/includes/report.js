@@ -1,11 +1,12 @@
 /* jshint browser:true, jquery:true */
 /* global localeRange:false, localePresets:false*/
 
-var cookie = document.cookie;
-var bosCookieValue = getCookie("bos_cookie");
-var bosCookieObj = jQuery.parseJSON(bosCookieValue);
+var bonitasoft = (function(bonitasoft) {
+	bonitasoft.locale = getCookie("BOS_Locale") || "en";
+	return bonitasoft;
+}(bonitasoft || {}));
 
-$.getScript("scripts/includes/daterangepicker." + (bosCookieObj ? bosCookieObj._l : "en") + ".js");
+$.getScript("scripts/includes/daterangepicker." + bonitasoft.locale + ".js");
 
 function getProfileId() {
     var paramsMap = {};
@@ -18,7 +19,7 @@ function getProfileId() {
 }
 
 function removeReportStyle() {
-    $("table, div, tr", $(".report")).each(function () {
+    $("table, div", $(".report")).each(function () {
         var elt = $(this);
         if (elt.attr("style")) {
             if (elt.attr("style").indexOf("background") != -1) {
@@ -62,7 +63,8 @@ function hookReportFormSubmition(localeDateFormat, prefix) {
 
     $(document).delegate(".report .bonita_report_hyperlink a, .report area", "click", function (event) {
         event.stopPropagation();
-        var urlToRefresh = this.href + "&locale=" + bosCookieObj._l + "&_pf=" + getProfileId();
+        event.preventDefault();
+        var urlToRefresh = this.href + "&locale=" + bonitasoft.locale + "&_pf=" + getProfileId();
         $.ajax({
             url: urlToRefresh,
             cache: false,
@@ -120,7 +122,7 @@ function refreshReport(e, localeDateFormat, prefix) {
         	window.showLoader();
         },
         url: urlRefresh,
-        data: params + "&locale=" + (bosCookieObj ? bosCookieObj._l : "en") + "&_pf=" + getProfileId(),
+        data: params + "&locale=" + bonitasoft.locale + "&_pf=" + getProfileId(),
         cache: false,
         async: true,
         success: function (refreshResponse) {

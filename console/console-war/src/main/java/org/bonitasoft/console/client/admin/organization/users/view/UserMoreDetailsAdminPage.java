@@ -23,6 +23,8 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
+import org.bonitasoft.console.client.uib.SafeHtmlParser;
+import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
@@ -35,6 +37,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
@@ -45,6 +48,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+
+import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Nicolas Tith
@@ -90,7 +96,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final UserItem item) {
         final UserMetadataBuilder metadatas = new UserMetadataBuilder();
-        metadatas.addEmail();
+        metadatas.addEmail(item.getProfessionalData());
         metadatas.addUserName();
         metadatas.addJobTitle();
         metadatas.addManager();
@@ -163,7 +169,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         definitions.append(new Definition(_("Country") + ": ", _("the country of the user company"), professionalData.getCountry()));
         definitions.append(new Definition(_("Zip code") + ": ", _("the zip code of the user company"), professionalData.getZipCode()));
         definitions.append(new Definition(_("State") + ": ", _("the state of the user company"), professionalData.getState()));
-        definitions.append(new Definition(_("Email") + ": ", _("the professional email the user"), professionalData.getEmail()));
+        definitions.append(emailDefinition(professionalData, _("the professional email the user")));
         definitions.append(new Definition(_("Phone") + ": ", _("the professional phone number of the user"), professionalData.getPhoneNumber()));
         definitions.append(new Definition(_("Mobile") + ": ", _("the professional mobile phone number of the user"), professionalData
                 .getMobileNumber()));
@@ -178,10 +184,19 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         definitions.append(new Definition(_("Country") + ": ", _("the country of the user"), item.getCountry()));
         definitions.append(new Definition(_("Zip code") + ": ", _("the zip code of the user"), item.getZipCode()));
         definitions.append(new Definition(_("State") + ": ", _("the state of the user"), item.getState()));
-        definitions.append(new Definition(_("Email") + ": ", _("the personnal email the user"), item.getEmail()));
+        definitions.append(emailDefinition(item, _("the personnal email the user")));
         definitions.append(new Definition(_("Phone") + ": ", _("the personnal phone number of the user"), item.getPhoneNumber()));
         definitions.append(new Definition(_("Mobile") + ": ", _("the personnal mobile phone number of the user"), item.getMobileNumber()));
         return personalInformationSection.addBody(definitions);
+    }
+
+    private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {
+        String email = contactData.getEmail() != null ? contactData.getEmail() : "";
+        SpanElement span = SpanElement.as(Element.as(SafeHtmlParser.parseFirst(UserMetadataBuilder.TEMPLATES.email(email))));
+        Definition definition = new Definition(_("Email") + ": ", new Html(span));
+        definition.addClass(CssClass.BREAK_WORD);
+        definition.addClass("metadatas");
+        return definition;
     }
 
     @Override

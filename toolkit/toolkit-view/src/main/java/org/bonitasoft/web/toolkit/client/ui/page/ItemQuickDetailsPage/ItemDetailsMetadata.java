@@ -55,7 +55,11 @@ public class ItemDetailsMetadata {
     }
 
     public ItemDetailsMetadata(final String attributeName, Html html) {
-        this.attributeReader = new AttributeReader(attributeName);
+        this(new AttributeReader(attributeName) ,html);
+    }
+    
+    public ItemDetailsMetadata(AbstractAttributeReader attributeReader, Html html) {
+        this.attributeReader = attributeReader;
         representation = html;
     }
 

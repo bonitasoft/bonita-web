@@ -16,7 +16,6 @@ package org.bonitasoft.web.toolkit.client.common.session;
 
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -25,12 +24,12 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  * 
  * @author Julien Mege
  */
-public class SessionDefinition extends ItemDefinition {
+public class SessionDefinition extends ItemDefinition<SessionItem> {
 
     /**
      * Singleton
      */
-    public static final SessionDefinition get() {
+    public static SessionDefinition get() {
         return (SessionDefinition) Definitions.get(TOKEN);
     }
 
@@ -40,8 +39,6 @@ public class SessionDefinition extends ItemDefinition {
      * the URL of user resource
      */
     private static final String API_URL = "../API/system/session";
-
-    private static final String PLURAL_RESOURCES_URL = "../API/system/session";
 
     @Override
     public String defineToken() {
@@ -67,14 +64,9 @@ public class SessionDefinition extends ItemDefinition {
         createAttribute(SessionItem.ATTRIBUTE_USERNAME, ItemAttribute.TYPE.STRING);
         createAttribute(SessionItem.ATTRIBUTE_CONF, ItemAttribute.TYPE.STRING);
     }
-    
-//    @Override
-//    protected void defineDeploys() {
-//        declareDeployable(SessionItem.ATTRIBUTE_CONF, new SHA1Definition());
-//    }
 
     @Override
-    public IItem _createItem() {
+    public SessionItem _createItem() {
         return new SessionItem();
     }
 
