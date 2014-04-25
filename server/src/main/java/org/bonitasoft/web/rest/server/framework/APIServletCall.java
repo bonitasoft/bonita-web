@@ -5,19 +5,17 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.framework;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +26,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
 import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -46,23 +48,23 @@ import org.bonitasoft.web.toolkit.server.ServletCall;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class APIServletCall extends ServletCall {
 
-    public static final String PARAMETER_FILTER = "f";
+    private static final String PARAMETER_COUNTER = "n";
 
-    public static final String PARAMETER_SEARCH = "s";
+    private static final String PARAMETER_DEPLOY = "d";
 
-    public static final String PARAMETER_ORDER = "o";
+    private static final String PARAMETER_FILTER = "f";
 
-    public static final String PARAMETER_LIMIT = "c";
+    private static final String PARAMETER_SEARCH = "s";
 
-    public static final String PARAMETER_PAGE = "p";
+    private static final String PARAMETER_ORDER = "o";
 
-    public static final String PARAMETER_COUNTER = "n";
+    private static final String PARAMETER_LIMIT = "c";
 
-    public static final String PARAMETER_DEPLOY = "d";
+    private static final String PARAMETER_PAGE = "p";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // REQUEST PARSING
@@ -87,6 +89,7 @@ public class APIServletCall extends ServletCall {
         head("Pragma", "No-cache");
         head("Cache-Control", "no-cache,no-store,no-transform,max-age=0");
         head("Expires", df.format(expdate));
+
     }
 
     /**
@@ -107,7 +110,7 @@ public class APIServletCall extends ServletCall {
      * <li>item id (if defined)</li>
      * <li>parameters</li>
      * </ul>
-     * 
+     *
      * @param request
      */
     @Override
@@ -122,6 +125,9 @@ public class APIServletCall extends ServletCall {
 
         apiName = path[1];
         resourceName = path[2];
+
+        // Fixes BS-400. This is ugly.
+        I18n.getInstance();
 
         api = APIs.get(apiName, resourceName);
         api.setCaller(this);
@@ -219,7 +225,7 @@ public class APIServletCall extends ServletCall {
 
     /**
      * Get deploys and add them in json representation in map<String, String>
-     * 
+     *
      * Workaround to be able to have included json objects in main object in PUT request
      * You have to unserialize them to be able to use them in java representation 
      */

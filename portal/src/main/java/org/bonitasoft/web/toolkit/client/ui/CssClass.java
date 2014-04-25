@@ -39,4 +39,6 @@ public interface CssClass {
     public static final String CELL = "cell";
 
     public static final String DISABLED = "disabled";
+
+    public static final String BREAK_WORD = "break-word";
 }
