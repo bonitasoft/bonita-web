@@ -12,25 +12,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.uib;
+package org.bonitasoft.web.rest.server.api.system;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Node;
-import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.safehtml.client.HasSafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.client.DOM;
+import java.util.Arrays;
 
-public class SafeHtmlParser {
+import org.junit.Test;
 
-    public static NodeList<Node> parse(final SafeHtml html) {
-        Element element = DOM.createDiv();
-        element.setInnerHTML(html.asString());
-        return element.getChildNodes();
-    }
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public static Node parseFirst(final SafeHtml html) {
-        return parse(html).getItem(0);
+/**
+ * @author Vincent Elcrin
+ */
+public class TokenListProviderTest {
+
+    @Test
+    public void should_return_the_list_of_provided_token_without_null() throws Exception {
+
+        TokenListProvider provider = new TokenListProvider(Arrays.asList(
+                "token 1",
+                null,
+                "token 2"));
+
+        assertThat(provider.getTokens()).containsExactly("token 1", "token 2");
     }
 }

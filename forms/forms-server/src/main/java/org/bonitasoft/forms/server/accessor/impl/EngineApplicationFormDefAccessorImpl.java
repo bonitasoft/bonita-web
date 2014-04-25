@@ -184,9 +184,15 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             // we don't need the activity name when trying to display the default confirmation page
             if (activityInstanceID != -1 && !isConfirmationPage) {
                 if (isCurrentValue) {
-                    final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
-                    activityName = activityInstance.getName();
-                    activityDisplayName = activityInstance.getDisplayName();
+                    try {
+                        final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
+                        activityName = activityInstance.getName();
+                        activityDisplayName = activityInstance.getDisplayName();
+                    } catch (final ActivityInstanceNotFoundException e) {
+                        final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+                        activityName = archivedActivityInstance.getName();
+                        activityDisplayName = archivedActivityInstance.getDisplayName();
+                    }
                 } else {
                     final ArchivedActivityInstance activityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
                     activityName = activityInstance.getName();

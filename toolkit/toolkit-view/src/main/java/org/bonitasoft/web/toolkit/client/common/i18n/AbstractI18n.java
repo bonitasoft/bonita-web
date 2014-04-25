@@ -18,6 +18,7 @@ package org.bonitasoft.web.toolkit.client.common.i18n;
 
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -971,7 +972,7 @@ public abstract class AbstractI18n {
         this.locales.put(locale, map);
     }
 
-    public final static void load(final LOCALE locale) {
+    public static void load(final LOCALE locale) {
         I18N_instance.loadLocale(locale);
     }
 
@@ -989,11 +990,11 @@ public abstract class AbstractI18n {
         this.defaultLocale = locale;
     }
 
-    public final static void setDefaultLocale(final LOCALE locale) {
+    public static void setDefaultLocale(final LOCALE locale) {
         I18N_instance._setDefaultLocale(locale);
     }
 
-    public final static LOCALE stringToLocale(final String localeString) {
+    public static LOCALE stringToLocale(final String localeString) {
 
         for (final LOCALE locale : LOCALE.values()) {
             if (locale.toString().equals(localeString)) {
@@ -1032,7 +1033,7 @@ public abstract class AbstractI18n {
     }
 
     public static String _(final String string) {
-        return string.isEmpty() ? "" : I18N_instance.getText(string);
+        return StringUtil.isBlank(string) ? "" : I18N_instance.getText(string);
     }
 
     public static String _(final String string, final Arg... args) {
@@ -1044,7 +1045,7 @@ public abstract class AbstractI18n {
     }
 
     public static String _(final String string, final LOCALE locale, final Arg... args) {
-        return string.isEmpty() ? "" : I18N_instance.getText(locale, string, args);
+        return StringUtil.isBlank(string) ? "" : I18N_instance.getText(locale, string, args);
     }
 
 }

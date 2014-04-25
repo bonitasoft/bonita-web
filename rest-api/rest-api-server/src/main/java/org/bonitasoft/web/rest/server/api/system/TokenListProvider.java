@@ -12,25 +12,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.uib;
+package org.bonitasoft.web.rest.server.api.system;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Node;
-import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.safehtml.client.HasSafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.client.DOM;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SafeHtmlParser {
+/**
+ * @author Vincent Elcrin
+ */
+public class TokenListProvider implements UserRightsBuilder.TokenProvider {
 
-    public static NodeList<Node> parse(final SafeHtml html) {
-        Element element = DOM.createDiv();
-        element.setInnerHTML(html.asString());
-        return element.getChildNodes();
+    private List<String> tokens = new ArrayList<String>();
+
+    public TokenListProvider(List<String> tokens) {
+        addAll(tokens);
     }
 
-    public static Node parseFirst(final SafeHtml html) {
-        return parse(html).getItem(0);
+    private void addAll(List<String> tokens) {
+        for (String token : tokens) {
+            add(token);
+        }
+    }
+
+    private void add(String token) {
+        if(token != null) {
+            this.tokens.add(token);
+        }
+    }
+
+    @Override
+    public List<String> getTokens() {
+        return tokens;
     }
 }
