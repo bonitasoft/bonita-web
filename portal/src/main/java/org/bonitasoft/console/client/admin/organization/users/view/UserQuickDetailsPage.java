@@ -58,13 +58,13 @@ public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
     public UserQuickDetailsPage() {
         super(Definitions.get(UserDefinition.TOKEN));
     }
-
+    
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final UserItem item) {
         UserMetadataBuilder metadatas = new UserMetadataBuilder();
-        metadatas.addEmail();
-        metadatas.addUserName();
+        metadatas.addEmail(item.getProfessionalData());
         metadatas.addManager();
+        metadatas.addUserName();
         metadatas.addJobTitle();
         metadatas.addLastConnectionDate();
         metadatas.addLastUpdateDate();

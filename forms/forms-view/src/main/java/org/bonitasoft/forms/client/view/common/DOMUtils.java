@@ -57,8 +57,8 @@ public class DOMUtils {
     /**
      * Id of the element of the form frame
      */
-    public static final String FORM_FRAME_ID = "formframe";
-    
+    public static final String FORM_FRAME_ID = "bonitaframe";
+
     /**
      * Instance attribute
      */

@@ -29,6 +29,10 @@ public class PropertiesFactory {
     public static SecurityProperties getSecurityProperties(final long tenantId) {
         return SecurityProperties.getInstance(tenantId);
     }
+    
+    public static SecurityProperties getSecurityProperties() {
+        return SecurityProperties.getInstance();
+    }
 
     public static ConsoleProperties getConsoleProperties(final long tenantId) {
         return ConsoleProperties.getInstance(tenantId);

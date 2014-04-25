@@ -14,31 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client;
+package org.bonitasoft.console.common.server.api.token;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.UUID;
 
 /**
  * @author Paul AMAR
  *
  */
-public class UserSessionVariables {
+public class APIToken {
     
-    public static final String API_TOKEN = "token_api";
-
-    private static Map<String, String> userVariables = new HashMap<String, String>();
+    private String APIToken;
     
-    public static void addUserVariable(String name, String value) {
-        userVariables.put(name, value);
+    public APIToken() {
+        this.APIToken = UUID.randomUUID().toString();
     }
     
-    public static String getUserVariable(String name) {
-        return userVariables.get(name);
+    public String getToken() {
+        return this.APIToken;
     }
     
-    public static void removeUserVariable(String name) {
-        userVariables.remove(name);
-    }
 }
