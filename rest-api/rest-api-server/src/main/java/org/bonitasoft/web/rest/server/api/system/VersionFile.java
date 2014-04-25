@@ -12,25 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.uib;
+package org.bonitasoft.web.rest.server.api.system;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Node;
-import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.safehtml.client.HasSafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.client.DOM;
+import java.io.InputStream;
 
-public class SafeHtmlParser {
+/**
+ * @author Vincent Elcrin
+ */
+public class VersionFile {
 
-    public static NodeList<Node> parse(final SafeHtml html) {
-        Element element = DOM.createDiv();
-        element.setInnerHTML(html.asString());
-        return element.getChildNodes();
-    }
-
-    public static Node parseFirst(final SafeHtml html) {
-        return parse(html).getItem(0);
+    public InputStream getStream() {
+        return VersionFile.class.getClassLoader().getResourceAsStream("VERSION");
     }
 }

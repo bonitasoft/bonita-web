@@ -27,7 +27,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
 import org.bonitasoft.test.toolkit.server.MockHttpServletResponse;
-import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -48,6 +47,9 @@ public abstract class AbstractConsoleTest extends AbstractJUnitWebTest {
         // init default tenant
         TenantsManagementUtils.addDirectoryForTenant(1);
 
+        // init default tenant
+        TenantsManagementUtils.addDirectoryForTenant(1);
+        
         new BonitaRestAPIServlet();
         consoleTestSetUp();
     }
