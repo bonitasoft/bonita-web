@@ -48,12 +48,12 @@ public class StartProcessFormPage extends Page {
 
     public static final String ATTRIBUTE_USER_ID = "userId";
 
-	public final static String TOKEN = "StartProcess";
+    public final static String TOKEN = "StartProcess";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
-    	PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
@@ -86,7 +86,7 @@ public class StartProcessFormPage extends Page {
         StringBuilder frameURL = new StringBuilder();
 
         frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?ui=form&locale=")
+                .append("homepage?gwt.codesvr=127.0.0.1:9997&ui=form&locale=")
                 .append(locale);
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
@@ -103,7 +103,7 @@ public class StartProcessFormPage extends Page {
                 .append(processId)
                 .append("&autoInstantiate=false&mode=form&userId=")
                 .append(userId);
-  
+
         addBody(new UiComponent(new IFrameView(frameURL.toString())));
     }
 
