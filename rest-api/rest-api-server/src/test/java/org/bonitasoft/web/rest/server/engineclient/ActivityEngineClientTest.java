@@ -30,11 +30,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-public class ActivityEngineClientTest extends APITestWithMock {
 
+public class ActivityEngineClientTest extends APITestWithMock {
+    
     @Mock
     private ProcessAPI processAPI;
-
+    
     private ActivityEngineClient activityEngineClient;
 
     @Before
@@ -42,11 +43,11 @@ public class ActivityEngineClientTest extends APITestWithMock {
         initMocks(this);
         activityEngineClient = new ActivityEngineClient(processAPI);
     }
-
+    
     @Test(expected = APIException.class)
     public void getDataInstance_throw_exception_if_data_is_not_found() throws Exception {
-        when(processAPI.getActivityDataInstance(anyString(), anyLong())).thenThrow(new DataNotFoundException(null));
-
+        when(processAPI.getActivityDataInstance(anyString(), anyLong())).thenThrow(DataNotFoundException.class);
+        
         activityEngineClient.getDataInstance("aName", 1L);
     }
 
