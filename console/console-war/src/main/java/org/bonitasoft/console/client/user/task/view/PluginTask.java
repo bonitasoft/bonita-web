@@ -24,6 +24,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.Plugin;
  */
 public interface PluginTask extends Plugin {
 
-    public static final String PLUGIN_TOKEN = "tasklistinguser";
+    public static final String PLUGIN_TOKEN = TasksListingPage.TOKEN;
 
 }

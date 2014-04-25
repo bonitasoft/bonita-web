@@ -101,9 +101,9 @@ public class StartProcessFormPage extends Page {
                 .append(processVersion)
                 .append("$entry&process=")
                 .append(processId)
-                .append("&autoInstantiate=false&mode=form&user=")
+                .append("&autoInstantiate=false&mode=form&userId=")
                 .append(userId);
-
+  
         addBody(new UiComponent(new IFrameView(frameURL.toString())));
     }
 

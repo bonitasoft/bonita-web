@@ -41,82 +41,85 @@ public class CaseEngineClientTest extends APITestWithMock {
 
     @Mock
     private ProcessAPI processAPI;
+
     private CaseEngineClient caseEngineClient;
-    
+
     @Before
     public void setUp() {
         initMocks(this);
         caseEngineClient = new CaseEngineClient(processAPI);
     }
-    
+
     private Map<String, Serializable> someVariables() {
-        Map<String, Serializable> map = new HashMap<String, Serializable>();
+        final Map<String, Serializable> map = new HashMap<String, Serializable>();
         map.put("variable", 1L);
         return map;
     }
-    
+
     @Test
     public void a_process_can_be_started_without_variables() throws Exception {
-        long expectedProcessId = 1L;
-        
-        caseEngineClient.start(expectedProcessId);
-        
-        verify(processAPI).startProcess(expectedProcessId);
+        final long expectedProcessId = 1L;
+        final long userId = 1L;
+
+        caseEngineClient.start(userId, expectedProcessId);
+
+        verify(processAPI).startProcess(userId, expectedProcessId);
     }
-    
+
     @Test
     public void a_process_can_be_started_with_variables() throws Exception {
-        long expectedProcessId = 1L;
-        Map<String, Serializable> variables = someVariables();
-        
-        caseEngineClient.start(expectedProcessId, variables);
-        
-        verify(processAPI).startProcess(expectedProcessId, variables);
+        final long expectedProcessId = 1L;
+        final long userId = 1L;
+        final Map<String, Serializable> variables = someVariables();
+
+        caseEngineClient.start(userId, expectedProcessId, variables);
+
+        verify(processAPI).startProcess(userId, expectedProcessId, variables);
     }
 
     @Test(expected = APIException.class)
     public void cant_create_case_if_process_definition_is_not_found() throws Exception {
         when(processAPI.startProcess(anyLong())).thenThrow(new ProcessDefinitionNotFoundException(""));
-        
-        caseEngineClient.start(1L);
+
+        caseEngineClient.start(-1L, 1L);
     }
-    
+
     @Test(expected = APIException.class)
     public void cant_create_case_if_process_is_not_activated() throws Exception {
         when(processAPI.startProcess(anyLong())).thenThrow(new ProcessActivationException(""));
-        
-        caseEngineClient.start(1L);
+
+        caseEngineClient.start(-1L, 1L);
     }
-    
+
     @Test(expected = APIException.class)
     public void we_get_an_exception_if_process_fail_to_start() throws Exception {
         when(processAPI.startProcess(anyLong())).thenThrow(new ProcessExecutionException(""));
-        
-        caseEngineClient.start(1L);
+
+        caseEngineClient.start(-1L, 1L);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test(expected = APIException.class)
     public void cant_create_case_with_variables_if_process_definition_is_not_found() throws Exception {
         when(processAPI.startProcess(anyLong(), anyMap())).thenThrow(new ProcessDefinitionNotFoundException(""));
-        
-        caseEngineClient.start(1L, someVariables());
+
+        caseEngineClient.start(-1L, 1L, someVariables());
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test(expected = APIException.class)
     public void cant_create_case_with_variables_if_process_is_not_activated() throws Exception {
         when(processAPI.startProcess(anyLong(), anyMap())).thenThrow(new ProcessActivationException(""));
-        
-        caseEngineClient.start(1L, someVariables());
+
+        caseEngineClient.start(-1L, 1L, someVariables());
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test(expected = APIException.class)
     public void we_get_an_exception_if_process_fail_to_start_with_variables() throws Exception {
         when(processAPI.startProcess(anyLong(), anyMap())).thenThrow(new ProcessExecutionException(""));
-        
-        caseEngineClient.start(1L, someVariables());
+
+        caseEngineClient.start(-1L, 1L, someVariables());
     }
 
 }

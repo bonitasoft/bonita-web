@@ -102,6 +102,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
     protected List<String> defineDeploys() {
         final List<String> deploys = super.defineDeploys();
         deploys.add(ArchivedHumanTaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID);
+        deploys.add(ArchivedHumanTaskItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID);
         return deploys;
     }
 

@@ -157,14 +157,14 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                 ,getTaskQuickDetailsPage());
     }
 
-	protected ArchivableItemDetailsPage<IFlowNodeItem> getTaskQuickDetailsPage() {
-		return new TaskQuickDetailsAdminPage();
-	}
+    protected ArchivableItemDetailsPage<IFlowNodeItem> getTaskQuickDetailsPage() {
+        return new TaskQuickDetailsAdminPage();
+    }
 
-	protected ArchivableItemDetailsPage<IFlowNodeItem> getArchivedTaskQuickDetailsPage() {
-		return new TaskQuickDetailsAdminPage(true);
-	}
-	
+    protected ArchivableItemDetailsPage<IFlowNodeItem> getArchivedTaskQuickDetailsPage() {
+        return new TaskQuickDetailsAdminPage(true);
+    }
+    
     private ItemListingTable createHumanTaskListingTable() {
         return new ItemListingTable(new JsId(TABLE_HUMAN_TASK), _("Human Task"),
                 new ItemTable(HumanTaskDefinition.get())

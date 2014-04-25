@@ -35,63 +35,73 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class CaseSarter {
 
-    private CaseItem caseItem;
-    private CaseEngineClient caseEngineClient;
-    private ProcessEngineClient processEngineClient;
-    private Long processId;
+    private final CaseItem caseItem;
 
-    public CaseSarter(CaseItem caseItem, CaseEngineClient caseEngineClient, ProcessEngineClient processEngineClient) {
+    private final CaseEngineClient caseEngineClient;
+
+    private final ProcessEngineClient processEngineClient;
+
+    private final Long processId;
+
+    private final Long delegateUserId;
+
+    public CaseSarter(final CaseItem caseItem, final CaseEngineClient caseEngineClient, final ProcessEngineClient processEngineClient) {
         this.caseItem = caseItem;
-        this.processId = caseItem.getProcessId().toLong();
+        processId = caseItem.getProcessId().toLong();
+        if (caseItem.hasAttribute(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID) && caseItem.getStartedBySubstituteUserId() != null) {
+            delegateUserId = caseItem.getStartedBySubstituteUserId().toLong();
+        } else {
+            delegateUserId = -1L;
+        }
         this.caseEngineClient = caseEngineClient;
         this.processEngineClient = processEngineClient;
     }
-    
+
     public CaseItem start() {
-        HashMap<String, Serializable> variables = getVariables(caseItem);
+        final HashMap<String, Serializable> variables = getVariables(caseItem);
         if (variables.isEmpty()) {
             return startCase();
         } else {
             return startCaseWithVariables(variables);
         }
     }
-    
-    private HashMap<String, Serializable> getVariables(CaseItem caseItem) {
-        String jsonVariables = caseItem.getAttributeValue(CaseItem.ATTRIBUTE_VARIABLES);
+
+    private HashMap<String, Serializable> getVariables(final CaseItem caseItem) {
+        final String jsonVariables = caseItem.getAttributeValue(CaseItem.ATTRIBUTE_VARIABLES);
         if (StringUtil.isBlank(jsonVariables)) {
             return new HashMap<String, Serializable>();
         }
         return buildVariablesMap(jsonVariables);
     }
 
-    private HashMap<String, Serializable> buildVariablesMap(String jsonValue) {
-        List<DataDefinition> dataDefinitions = processEngineClient.getProcessDataDefinitions(processId);
-        
-        HashMap<String, Serializable> map = new HashMap<String, Serializable>();
-        for (VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
-            DataDefinition data = getDataDefinitionByName(var.getName(), dataDefinitions);
+    private HashMap<String, Serializable> buildVariablesMap(final String jsonValue) {
+        final List<DataDefinition> dataDefinitions = processEngineClient.getProcessDataDefinitions(processId);
+
+        final HashMap<String, Serializable> map = new HashMap<String, Serializable>();
+        for (final VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
+            final DataDefinition data = getDataDefinitionByName(var.getName(), dataDefinitions);
             map.put(var.getName(), var.getSerializableValue(data.getClassName()));
         }
         return map;
     }
 
-    private CaseItem startCaseWithVariables(HashMap<String, Serializable> variables) {
-        ProcessInstance processInstance = caseEngineClient.start(processId, variables);
+    private CaseItem startCaseWithVariables(final HashMap<String, Serializable> variables) {
+        final ProcessInstance processInstance = caseEngineClient.start(delegateUserId, processId, variables);
         return new CaseItemConverter().convert(processInstance);
     }
 
     private CaseItem startCase() {
-        ProcessInstance processInstance = caseEngineClient.start(processId);
+        final ProcessInstance processInstance = caseEngineClient.start(delegateUserId, processId);
         return new CaseItemConverter().convert(processInstance);
     }
 
-    private DataDefinition getDataDefinitionByName(String dataName, List<DataDefinition> dataDefinitions) {
-        for (DataDefinition dataDefinition : dataDefinitions) {
+    private DataDefinition getDataDefinitionByName(final String dataName, final List<DataDefinition> dataDefinitions) {
+        for (final DataDefinition dataDefinition : dataDefinitions) {
             if (dataDefinition.getName().equals(dataName)) {
                 return dataDefinition;
             }
         }
-        throw new APIException(new _("Data definition %dataName% doesn't exists for process %processId%", 
-                new Arg("dataName", dataName), new Arg("processId", caseItem.getProcessId())));
+        throw new APIException(new _("Data definition %dataName% doesn't exists for process %processId%", new Arg("dataName", dataName), new Arg("processId",
+                caseItem.getProcessId())));
     }
 }

@@ -19,16 +19,11 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
-import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
-import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
-import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
-import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
-import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -40,7 +35,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractAPITask<ITEM> {
 
-	@Override
+    @Override
     protected HumanTaskDefinition defineItemDefinition() {
         return HumanTaskDefinition.get();
     }
@@ -89,7 +84,7 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
         final List<String> attributes = super.defineReadOnlyAttributes();
         attributes.add(HumanTaskItem.ATTRIBUTE_ACTOR_ID);
         attributes.add(HumanTaskItem.ATTRIBUTE_ASSIGNED_DATE);
-
+        attributes.remove(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID);// allow user execute instead someone else
         return attributes;
     }
 

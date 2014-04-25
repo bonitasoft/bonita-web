@@ -65,7 +65,6 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         result.setAssignedDate(item.getClaimedDate());
         result.setPriority(item.getPriority() != null ? item.getPriority().toString().toLowerCase() : null);
         result.setDueDate(item.getExpectedEndDate());
-
         return result;
     }
 

@@ -22,30 +22,39 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 public class CaseItemBuilder {
 
     private long processId;
+
     private String jsonVariables;
+
+    private long userId;
 
     public static CaseItemBuilder aCaseItem() {
         return new CaseItemBuilder();
     }
-    
-    public CaseItemBuilder withProcessId(long processId) {
+
+    public CaseItemBuilder withProcessId(final long processId) {
         this.processId = processId;
         return this;
     }
-    
-    public CaseItemBuilder withVariables(String jsonVariables) {
+
+    public CaseItemBuilder withUserId(final long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public CaseItemBuilder withVariables(final String jsonVariables) {
         this.jsonVariables = jsonVariables;
         return this;
     }
-    
+
     public CaseItem build() {
-        CaseItem item = new CaseItem();
+        final CaseItem item = new CaseItem();
         setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_PROCESS_ID, processId);
+        setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userId);
         setAttributeIfNotNull(item, CaseItem.ATTRIBUTE_VARIABLES, jsonVariables);
         return item;
     }
-    
-    private void setAttributeIfNotNull(CaseItem caseItem, String attributeName, Object attributeValue) {
+
+    private void setAttributeIfNotNull(final CaseItem caseItem, final String attributeName, final Object attributeValue) {
         if (attributeValue != null) {
             caseItem.setAttribute(attributeName, attributeValue);
         }

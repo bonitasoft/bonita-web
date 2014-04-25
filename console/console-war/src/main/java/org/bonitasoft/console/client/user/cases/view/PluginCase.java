@@ -24,6 +24,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.Plugin;
  */
 public interface PluginCase extends Plugin {
 
-    public static final String PLUGIN_TOKEN = "caselistinguser";
+    public static final String PLUGIN_TOKEN = CaseListingPage.TOKEN;
 
 }

@@ -35,16 +35,16 @@ public class ArchivedFlowNodeDateFormatter extends ItemTableCellFormatter {
     public void execute() {
         ArchivedFlowNodeItem task = (ArchivedFlowNodeItem) getItem();
         if (task.isAborted()) {
-            this.table.addCell(newPrefixSpan(_("Aborted on:")), new Span(getText()));
+            table.addCell(newPrefixSpan(_("Aborted on:")), new Span(getText()));
         } else {
-            this.table.addCell(newPrefixSpan(_("Performed on:")), new Span(getText()));
+            table.addCell(newPrefixSpan(_("Performed on:")), new Span(getText()));
         }
     }
 
     private String getText() {
-        return this.attributeReader.read(this.item);
+        return attributeReader.read(item);
     }
-    
+
     protected Component newPrefixSpan(String prefix) {
         return new Span(prefix).addClass("prepend");
     }

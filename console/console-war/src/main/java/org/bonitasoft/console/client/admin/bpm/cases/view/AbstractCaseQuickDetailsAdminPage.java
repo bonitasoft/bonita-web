@@ -28,8 +28,8 @@ import org.bonitasoft.console.client.admin.bpm.cases.filler.AttachmentsFiller;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.LastExecutedTaskFiller;
 import org.bonitasoft.console.client.admin.bpm.cases.filler.OpenTasksFiller;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
-import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
+import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
@@ -38,6 +38,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -75,6 +76,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     protected List<String> defineDeploys() {
         final List<String> defineDeploys = new ArrayList<String>();
         defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+        defineDeploys.add(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         defineDeploys.add(CaseItem.ATTRIBUTE_PROCESS_ID);
         return defineDeploys;
     }
@@ -84,13 +86,29 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startedOn());
-        metadatas.add(startedBy());
+        metadatas.add(startedBy(item.getStartedByUser(), item.getStartedBySubstituteUser()));
         return metadatas;
     }
+    private ItemDetailsMetadata startedBy(UserItem startedByUser, UserItem startedBySubstituteUser) {
+        if (startedByUser.getId().toLong().equals(startedBySubstituteUser.getId().toLong())) {
+            return addStartedBy();
+        } else {
+            return addStartedBySubstitute(startedByUser, startedBySubstituteUser);
+        }
+    }
 
-    protected ItemDetailsMetadata startedBy() {
-        return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID), _("Started by"),
-                _("The user that has started this case"));
+    private ItemDetailsMetadata addStartedBy() {
+        return new ItemDetailsMetadata(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID),
+                _("Started by"), _("The user that has started this case"));
+    }
+    
+    private ItemDetailsMetadata addStartedBySubstitute(UserItem executedByUser, UserItem startedBySubstituteUser) {
+        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+        attributeReader.setStartedBySubstitute(startedBySubstituteUser);
+        attributeReader.setStartedBy(executedByUser);
+        return new ItemDetailsMetadata(attributeReader,
+                _("Started by"),
+                _("Name of the user who started this case"));
     }
 
     protected ItemDetailsMetadata startedOn() {
