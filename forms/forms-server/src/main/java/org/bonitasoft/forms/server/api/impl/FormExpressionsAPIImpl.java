@@ -675,7 +675,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     if (LOGGER.isLoggable(Level.WARNING)) {
                         LOGGER.log(Level.WARNING,
                                 "The attachment to set should be either a String or a groovy expression returning a String which is not the case of value : "
-                                        + action.getDataName());
+                                        + action.getVariableName());
                     }
                 }
             } else {
