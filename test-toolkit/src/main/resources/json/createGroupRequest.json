@@ -1,0 +1,7 @@
+{
+  "icon":"",
+  "name":"testGroup",
+  "displayName":"Test Group",
+  "parent_path":"parentGroup",
+  "description":"test group description"
+}

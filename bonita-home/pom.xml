@@ -1,21 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.bonitasoft.console</groupId>
-		<artifactId>bonita-console</artifactId>
-		<version>6.3.0-SNAPSHOT</version>
+        <groupId>org.bonitasoft.console</groupId>
+        <artifactId>bonita-console</artifactId>
+        <version>6.3.0-SNAPSHOT</version>
 	</parent>
-
 	<artifactId>bonita-home</artifactId>
 	<packaging>jar</packaging>
-
 	<name>web bonita-home</name>
 
   	<properties>
     	<jacoco.skip>true</jacoco.skip>
+        <bonita.home>${project.build.directory}/bonita-home</bonita.home>
   	</properties>
 
 	<build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${bonita.home}/home</targetPath>
+            </resource>
+        </resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -36,13 +42,11 @@
 									<overWrite>true</overWrite>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-engine-home
-							</outputDirectory>
+							    <outputDirectory>${bonita.home}</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
-						<id>unpack-security-config</id>
+						<id>unpack-looknfeel</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -51,119 +55,19 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.bonitasoft.console</groupId>
-									<artifactId>common-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-forms-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.forms</groupId>
-									<artifactId>forms-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-console-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.console</groupId>
-									<artifactId>console-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-toolkit-looknfeel</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.web.toolkit</groupId>
-									<artifactId>toolkit-looknfeel</artifactId>
+									<artifactId>looknfeel</artifactId>
 									<version>${project.version}</version>
 									<classifier>css</classifier>
 									<type>zip</type>
 									<overWrite>false</overWrite>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita-home/bonita/client/platform/tenant-template/work/theme/portal
-							</outputDirectory>
+							    <outputDirectory>${bonita.home}/home/client/platform/tenant-template/work/theme/portal</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-engine-bonita_home</id>
-						<phase>generate-resources</phase>
-						<goals>
-			            	<goal>run</goal>
-            			</goals>
-            			<configuration>
-            				<tasks>
-	            				<copy todir="${project.build.directory}/bonita-home/bonita" overwrite="false">
-	            					<fileset dir="${project.build.directory}/bonita-engine-home/home" />
-	            				</copy>
-	            			</tasks>
-            			</configuration>
-            		</execution>
-					<execution>
-						<id>overwrite-engine-conf</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<copy todir="${project.build.directory}/bonita-home/bonita" overwrite="true">
-									<fileset dir="${project.basedir}/src/main/resources" erroronmissingdir="false"/>
-								</copy>
-							</tasks>
-						</configuration>
-					</execution>
-            	</executions>
-            </plugin>
-            
-            
+			<!--Create bonita home zip-->
             <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>

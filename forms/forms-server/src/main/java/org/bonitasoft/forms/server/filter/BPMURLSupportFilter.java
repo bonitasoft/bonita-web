@@ -368,7 +368,7 @@ public class BPMURLSupportFilter implements Filter {
     /**
      * Is console view mode
      * 
-     * @param httpRequest
+     * @param request
      * @return isConsole flag
      */
     protected boolean isForm(final HttpServletRequest request) {
