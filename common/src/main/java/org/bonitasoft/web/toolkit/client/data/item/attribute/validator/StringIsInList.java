@@ -20,8 +20,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.List;
 
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-
 /**
  * @author Paul AMAR
  * 
@@ -44,13 +42,13 @@ public class StringIsInList extends AbstractStringValidator {
     @Override
     protected void _check(final String attributeValue) {
         final StringBuilder cleanList = new StringBuilder();
-        for (final String s : this.listString) {
+        for (final String s : listString) {
             cleanList.append(s).append(", ");
             if (s.equals(attributeValue)) {
                 return;
             }
         }
-        addError(_("%attribute% must be one of {%list%}", new Arg("list", cleanList.toString().substring(0, cleanList.length() - 2))));
+        addError(_("%attribute% must be one of {%list%}").replace("%list%", cleanList.toString().substring(0, cleanList.length() - 2)));
 
     }
 

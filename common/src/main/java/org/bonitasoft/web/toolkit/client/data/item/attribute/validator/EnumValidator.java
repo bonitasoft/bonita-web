@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-
 /**
  * @author Paul AMAR
  * 
@@ -53,13 +51,13 @@ public class EnumValidator extends AbstractStringValidator {
     @Override
     protected void _check(final String attributeValue) {
         final StringBuilder cleanList = new StringBuilder();
-        for (final String s : this.listString) {
+        for (final String s : listString) {
             cleanList.append(s).append(", ");
             if (s.equals(attributeValue)) {
                 return;
             }
         }
-        addError(_("%attribute% must be one of {%list%}", new Arg("list", cleanList.toString().substring(0, cleanList.length() - 2))));
+        addError(_("%attribute% must be one of {%list%}").replace("%list%", cleanList.toString().substring(0, cleanList.length() - 2)));
 
     }
 
