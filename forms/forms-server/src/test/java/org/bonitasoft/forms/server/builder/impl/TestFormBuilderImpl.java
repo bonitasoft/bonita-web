@@ -28,6 +28,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.bonitasoft.engine.expression.ExpressionType;
+import org.bonitasoft.engine.operation.LeftOperand;
 import org.bonitasoft.forms.client.model.ActionType;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormValidator;
@@ -86,7 +87,6 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.createFormDefinition();
         // formBuilder.addWelcomePage("resources/application/welcome.html");
         // formBuilder.addExternalWelcomePage("resources/application/external-welcome.html");
-        formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression("addLabel", "process label with accents éèà", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addLayout("/process-template.html");
@@ -126,11 +126,11 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.addCellsStyle("table-cellStyle");
         formBuilder.addHeadingsStyle("table-headings-cellStyle", true, true, false, false);
 
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", false, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget1", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", false, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TYPE_TRANSIENT_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", false, "=", null, "button1");
+        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
 
         formBuilder.addConfirmationLayout("/process-confirmation-template.html");
@@ -138,8 +138,28 @@ public class TestFormBuilderImpl extends FormsTestCase {
                 String.class.getName(), GROOVY);
 
         formBuilder.addEntryForm("processName--1.0--1--request$entry");
+        formBuilder.addPermissions("process#processName--1.0");
+        formBuilder.addTransientData("transientData", Boolean.class.getName());
+        formBuilder.addTransientDataExpression(null, "true", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addPage("activitypage1");
+        formBuilder.addLabelExpression("addLabel", "activitypage1 label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
+        formBuilder.addLayout("/activity-page1-template.html");
+        formBuilder.addWidget("activitypage1widget1", WidgetType.LISTBOX_SIMPLE);
+        formBuilder.addAvailableValue();
+        formBuilder.addLabelExpression("addLabel", "available value 1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValueExpression("addValue", "availablevalue1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addAvailableValue();
+        formBuilder.addLabelExpression("addLabel", "available value 2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValueExpression("addValue", "availablevalue2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addItemsStyle("items_class_names");
+        formBuilder.addWidget("activitypage1widget2", WidgetType.PASSWORD);
+        formBuilder.addValidator("activitywidget2validator1", "classname", null, null);
+        formBuilder.addLabelExpression(null, "activity widget2 validator1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValidator("activitywidget2validator2", "classname", null, null);
+        formBuilder.addLabelExpression(null, "activity widget2 validator2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
 
         formBuilder.addEntryForm("processName--1.0--1--validate$entry");
+        formBuilder.addPermissions("process#processName--1.0");
         formBuilder.addTransientData("transientData", Boolean.class.getName());
         formBuilder.addTransientDataExpression(null, "true", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
         formBuilder.addPage("activitypage1");
@@ -239,9 +259,14 @@ public class TestFormBuilderImpl extends FormsTestCase {
         Assert.assertEquals(3, applicationFormDefAccessor.getActions("processPage2").size());
         final FormAction action = applicationFormDefAccessor.getActions("processPage2").get(0);
         Assert.assertEquals(ActionType.ASSIGNMENT, action.getType());
-        Assert.assertEquals("variable1", action.getDataName());
+        Assert.assertEquals("variable1", action.getVariableName());
+        Assert.assertEquals(LeftOperand.TYPE_DATA, action.getVariableType());
         Assert.assertEquals("=", action.getOperator());
         Assert.assertEquals("field_processpage1widget1", action.getExpression().getContent());
+        final FormAction action2 = applicationFormDefAccessor.getActions("processPage2").get(1);
+        Assert.assertEquals(ActionType.ASSIGNMENT, action2.getType());
+        Assert.assertEquals("variable2", action2.getVariableName());
+        Assert.assertEquals(LeftOperand.TYPE_TRANSIENT_DATA, action2.getVariableType());
         Assert.assertEquals(2, applicationFormDefAccessor.getPageValidators("processPage2").size());
         final FormValidator validator = applicationFormDefAccessor.getPageValidators("processPage2").get(0);
         Assert.assertEquals("processpage2validator1", validator.getId());

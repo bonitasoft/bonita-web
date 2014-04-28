@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.web.toolkit.client.common.session;
 
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
@@ -25,10 +24,6 @@ public class SessionItem extends Item {
 
     public SessionItem() {
         super();
-    }
-
-    public SessionItem(final IItem item) {
-        super(item);
     }
 
     public static final String ATTRIBUTE_SESSIONID = "session_id";
@@ -44,23 +39,10 @@ public class SessionItem extends Item {
     public static final String ATTRIBUTE_ICON = "icon";
 
     public static final String ATTRIBUTE_IS_TECHNICAL_USER = "is_technical_user";
+
+    public static final String ATTRIBUTE_VERSION = "version";
     
     public static final String ATTRIBUTE_CONF = "conf";
-
-    /**
-     * Default Constructor.
-     */
-    public SessionItem(final String sessionId) {
-        this.setAttribute(ATTRIBUTE_SESSIONID, sessionId);
-    }
-
-    public SessionItem(final String sessionId, final String userId, final String userName, final String isTechnicalUser) {
-        this.setAttribute(ATTRIBUTE_SESSIONID, sessionId);
-        this.setAttribute(ATTRIBUTE_USERID, userId);
-        this.setAttribute(ATTRIBUTE_USERNAME, userName);
-        this.setAttribute(ATTRIBUTE_IS_TECHNICAL_USER, isTechnicalUser);
-
-    }
 
     @Override
     public ItemDefinition getItemDefinition() {

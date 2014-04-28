@@ -579,7 +579,7 @@ public class FormFieldValuesUtil {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws FormInitializationException 
+     * @throws FormInitializationException
      */
     public void setFormWidgetValues(final long tenantID, final FormWidget formWidget, final Map<String, Serializable> evaluatedExpressions,
             final Map<String, Object> context) throws FormNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException, IOException,
@@ -863,7 +863,7 @@ public class FormFieldValuesUtil {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws FormInitializationException 
+     * @throws FormInitializationException
      */
     public void setFormWidgetsValues(final long tenantID,
             final List<FormWidget> widgets,
@@ -973,8 +973,8 @@ public class FormFieldValuesUtil {
 
     protected boolean isExpressionDynamic(final Expression expression) {
         if (expression != null
-                && !ExpressionType.TYPE_I18N.equals(expression.getExpressionType())
-                && !ExpressionType.TYPE_CONSTANT.equals(expression.getExpressionType())) {
+                && !ExpressionType.TYPE_I18N.name().equals(expression.getExpressionType())
+                && !ExpressionType.TYPE_CONSTANT.name().equals(expression.getExpressionType())) {
             return true;
         }
         return false;

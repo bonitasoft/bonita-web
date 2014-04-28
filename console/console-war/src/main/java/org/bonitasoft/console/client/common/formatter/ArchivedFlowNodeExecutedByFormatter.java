@@ -37,18 +37,18 @@ public class ArchivedFlowNodeExecutedByFormatter extends ItemTableCellFormatter 
     @Override
     public void execute() {
         ArchivedFlowNodeItem task = (ArchivedFlowNodeItem) getItem();
-        String forUser = "";
+        String byUser = "";
         if (isExecuteUserIsNotSubstituteUser(task)) {
             UserItem substitute = (UserItem) task.getDeploy(IFlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID);
-            forUser = _("for %firstname% %lastname%",
+            byUser = _("%firstname% %lastname% for",
                     new Arg("firstname", substitute.getFirstName()),
                     new Arg("lastname", substitute.getLastName())
-                    );
+                    ) + " ";
         }
         if (task.isAborted()) {
-            table.addCell(newPrefixSpan(_("Aborted by:")), new Span(getText() + " " + forUser));
+            table.addCell(newPrefixSpan(_("Aborted by:")), new Span(byUser + getText()));
         } else {
-            table.addCell(newPrefixSpan(_("Performed by:")), new Span(getText() + " " + forUser));
+            table.addCell(newPrefixSpan(_("Performed by:")), new Span(byUser + getText()));
         }
     }
 

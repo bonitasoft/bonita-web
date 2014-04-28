@@ -14,13 +14,12 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.login.LoginManagerProperties;
 import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.engine.profile.Profile;
-import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
@@ -31,93 +30,71 @@ import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.session.SessionItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Julien Mege
  */
 public class APISession extends ConsoleAPI<SessionItem> {
 
-    public static final String APISESSION = "apiSession";
-
     public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
 
     @Override
-    protected ItemDefinition defineItemDefinition() {
-        return Definitions.get(SessionDefinition.TOKEN);
+    protected SessionDefinition defineItemDefinition() {
+        return (SessionDefinition) Definitions.get(SessionDefinition.TOKEN);
     }
 
     @Override
     public SessionItem get(final APIID unusedId) {
         final org.bonitasoft.engine.session.APISession apiSession = getEngineSession();
         final SessionItem session = new SessionItem();
-        
+
         if (apiSession != null) {
             session.setAttribute(SessionItem.ATTRIBUTE_SESSIONID, String.valueOf(apiSession.getId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
-
+            session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
         return session;
     }
 
     public String getUserRights(final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<Profile> profiles = getProfilesForUser(apiSession.getUserId(), apiSession);
+        final List<Profile> profiles = getProfilesForUser(apiSession);
         if (apiSession.isTechnicalUser()) {
-            return getUserRightsForTechnicalUser(apiSession);
+            return JSonSerializer.serialize(new UserRightsBuilder(apiSession, new TokenListProvider(Arrays.asList(
+                    "userlistingadmin",
+                    "rolelistingadmin",
+                    "grouplistingadmin",
+                    "importexportorganization",
+                    "profilelisting",
+                    "tenantMaintenance",
+                    "pagelisting",
+                    "businessdatamodelimport"))).build());
         } else {
             return getUserRightsForProfiles(profiles, apiSession);
         }
     }
 
-    private List<Profile> getProfilesForUser(final long userId, final org.bonitasoft.engine.session.APISession apiSession) {
+    private List<Profile> getProfilesForUser(final org.bonitasoft.engine.session.APISession apiSession) {
         final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
         final ProfileEngineClient profileApi = engineClientFactory.createProfileEngineClient();
         return profileApi.listProfilesForUser(apiSession.getUserId());
     }
 
-    private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<String> userRights = new ArrayList<String>();
-        final SHA1Generator sha1Generator = new SHA1Generator();
-        for (final Profile profile : profiles) {
-            final List<ProfileEntry> profileEntries = getProfileEntriesForProfile(profile.getId(), apiSession);
-            for (final ProfileEntry profileEntry : profileEntries) {
-
-                // User rights are defined by the Profile Entries of a profile
-                final String userRight = profileEntry.getPage();
-                if (userRight != null) {
-                    userRights.add(sha1Generator.getHash(userRight.concat(String.valueOf(apiSession.getId()))));
-                }
-
-            }
-        }
+    private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession session) {
+        final List<String> rights = new UserRightsBuilder(session, new TokenProfileProvider(profiles, createProfileEntryEngineClient(session)))
+                .build();
         // TODO restrict the current user from being able to call the logout directly as a profileEntry (is it possible)?
-        if (isLogoutDisabled(apiSession.getTenantId())) {
-            userRights.add(LoginManagerProperties.LOGOUT_DISABLED);
+        if (isLogoutDisabled(session.getTenantId())) {
+            rights.add(LoginManagerProperties.LOGOUT_DISABLED);
         }
-        return JSonSerializer.serialize(userRights);
+        return JSonSerializer.serialize(rights);
     }
 
-    private List<ProfileEntry> getProfileEntriesForProfile(final Long profileId, final org.bonitasoft.engine.session.APISession apiSession) {
-        final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
-        final ProfileEntryEngineClient profileEntryApi = engineClientFactory.createProfileEntryEngineClient();
-        return profileEntryApi.getProfileEntriesByProfile(profileId);
-    }
-
-    private String getUserRightsForTechnicalUser(final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<String> userRights = new ArrayList<String>();
-        final SHA1Generator sha1Generator = new SHA1Generator();
-        userRights.add(sha1Generator.getHash("userlistingadmin".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("rolelistingadmin".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("grouplistingadmin".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("importexportorganization".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("profilelisting".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("tenantMaintenance".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("pagelisting".concat(String.valueOf(apiSession.getId()))));
-        userRights.add(sha1Generator.getHash("businessdatamodelimport".concat(String.valueOf(apiSession.getId()))));
-        return JSonSerializer.serialize(userRights);
+    private ProfileEntryEngineClient createProfileEntryEngineClient(org.bonitasoft.engine.session.APISession session) {
+        final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(session));
+        return engineClientFactory.createProfileEntryEngineClient();
     }
 
     /**
@@ -130,4 +107,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
         return loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
     }
 
+    public String getVersion() {
+        return new BonitaVersion(new VersionFile()).toString();
+    }
 }
