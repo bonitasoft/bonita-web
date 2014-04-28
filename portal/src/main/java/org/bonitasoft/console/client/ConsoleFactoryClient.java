@@ -83,6 +83,7 @@ import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
+
 import com.google.gwt.core.shared.GWT;
 
 /**
@@ -97,7 +98,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     @Override
     public Page defineViewTokens(final String token) {
 
-//        List<String> currentUserAccessRights = new ArrayList<String>(Session.getArrayParameter("conf"));
         List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));

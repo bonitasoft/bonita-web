@@ -39,7 +39,7 @@ public abstract class AbstractAuthorizationFilter implements Filter {
     /**
      * Logger
      */
-    protected static final Logger LOGGER = Logger.getLogger(RestAPIAuthorizationFilter.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(AbstractAuthorizationFilter.class.getName());
 
     private String excludePatterns = null;
 

@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.client.menu.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Collections;
 import java.util.List;
@@ -66,11 +66,11 @@ public class LoginBox extends RawView {
 
     public static final String TOKEN = "LoginBox";
 
-    private static final String NAVIGATION_MENU = "menu";
+    protected static final String NAVIGATION_MENU = "menu";
 
     public static final String LOGOUT_URL = "../logoutservice";
 
-    private MenuFolder userNameMenu = new MenuFolder(new JsId("userName"), "initializing");
+    protected MenuFolder userNameMenu = new MenuFolder(new JsId("userName"), "initializing");
 
     private final Image userNameAvatar = new EmptyImage(0, 0);
 
@@ -108,7 +108,7 @@ public class LoginBox extends RawView {
         return new LogoutUrl(new UrlBuilder(), locale);
     }
 
-    private void addProfileMenu() {
+    protected void addProfileMenu() {
         if (isTechUser()) {
             loadTechUserProfileMenu();
         } else {
@@ -120,17 +120,17 @@ public class LoginBox extends RawView {
         return "true".equals(Session.getParameter("is_technical_user"));
     }
 
-    private String getTechUserName() {
+    protected String getTechUserName() {
         return Session.getParameter("user_name");
     }
 
-    private Container<AbstractComponent> createGreetings() {
+    protected Container<AbstractComponent> createGreetings() {
         return new Container<AbstractComponent>(new JsId("userData"))
                 .append(createUserNameMenu().addClass("userName"))
                 .append(this.userNameAvatar.addClass("userAvatar"));
     }
 
-    private void loadTechUserProfileMenu() {
+    protected void loadTechUserProfileMenu() {
         this.userNameMenu.setLabel(getTechUserName());
         ViewController.showView(getTechnicalUserMenu(), NAVIGATION_MENU);
         ViewController.showPopup(TechnicalUserWarningView.TOKEN);
@@ -199,7 +199,7 @@ public class LoginBox extends RawView {
         return new Menu(userNameMenu);
     }
 
-    private Menu createSettingsMenu() {
+    protected Menu createSettingsMenu() {
         return new Menu(new MenuFolder(new JsId("options"), _("Settings"),
                 createLanguageLink(),
                 createAboutLink()));

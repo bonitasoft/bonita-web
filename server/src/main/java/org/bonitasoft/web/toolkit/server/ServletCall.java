@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -133,24 +135,42 @@ public abstract class ServletCall {
      */
     public final String getInputStream() {
         if (inputStream == null) {
+            
+            BufferedReader reader = null;
             try {
-                final BufferedReader reader = request.getReader();
+
+                // BS-8474 - use custom reader instead of request reader to avoid JBoss5.1 bug
+                // see https://issues.jboss.org/browse/JBAS-7817
+                ServletInputStream stream = request.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+
                 final StringBuilder sb = new StringBuilder();
                 String line = reader.readLine();
                 while (line != null) {
                     sb.append(line + "\n");
                     line = reader.readLine();
                 }
-                reader.close();
 
                 inputStream = sb.toString();
 
             } catch (final IOException e) {
                 throw new RuntimeException("Can't read input Stream.", e);
+            } finally {
+                closeQuietly(reader);
             }
         }
 
         return inputStream;
+    }
+
+    private void closeQuietly(BufferedReader reader) {
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                // do nothing / close quietly
+            }
+        }
     }
 
     /**
