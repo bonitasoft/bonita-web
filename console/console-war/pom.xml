@@ -293,6 +293,7 @@
 				<dependency>
 					<groupId>org.bonitasoft.engine</groupId>
 					<artifactId>bonita-server</artifactId>
+					<scope>runtime</scope>
 				</dependency>
 
 				<dependency>
