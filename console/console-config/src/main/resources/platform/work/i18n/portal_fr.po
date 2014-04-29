@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-25 05:01+0200\n"
-"PO-Revision-Date: 2014-04-25 00:31-0400\n"
+"POT-Creation-Date: 2014-04-29 05:03+0200\n"
+"PO-Revision-Date: 2014-04-29 00:33-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -314,7 +314,7 @@ msgstr "La catégorie %categoryName% existe déjà"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/helper/ProcessItemConverter.java:65
 msgid "Process definition not found for id %processId%"
-msgstr "Process definition not found for id %processId%"
+msgstr "La définition du processus est introuvable pour l'id %processId%"
 
 #: rest-api/rest-api-server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:224
 msgid "This group has already been mapped to actor"
@@ -1056,7 +1056,7 @@ msgid "No response has been received yet, but the background operation might sti
 msgstr "Aucune réponse reçue pour l'instant, mais l'opération est peut-être toujours en cours. Veuillez patienter quelques secondes avant de recharger la page."
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
-#: console/console-war/src/main/webapp/login.jsp:118
+#: console/console-war/src/main/webapp/login.jsp:129
 msgid "User"
 msgstr "Utilisateur"
 
@@ -1941,7 +1941,7 @@ msgstr "Perform by"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:150
 msgid "For"
-msgstr "For"
+msgstr "Pour"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:170
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedTasksSection.java:45
@@ -2264,7 +2264,7 @@ msgstr "Entrez le nom d'utilisateur pour cet utilisateur"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
-#: console/console-war/src/main/webapp/login.jsp:126
+#: console/console-war/src/main/webapp/login.jsp:137
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -3185,7 +3185,7 @@ msgstr "Tâche automatique (exécutée automatiquement)"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:43
 msgid "for %firstname% %lastname%"
-msgstr "for %firstname% %lastname%"
+msgstr "pour %firstname% %lastname%"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:49
 msgid "Aborted by:"
@@ -3418,15 +3418,15 @@ msgstr "Ce service est actuellement hors ligne pour maintenance. Veuillez essaye
 msgid "Unable to log in. Please check your username and password."
 msgstr "Impossible de se connecter. Veuillez vérifier votre nom d'utilisateur et le mot de passe."
 
-#: console/console-war/src/main/webapp/login.jsp:103
+#: console/console-war/src/main/webapp/login.jsp:114
 msgid "Welcome to"
 msgstr "Bienvenue sur"
 
-#: console/console-war/src/main/webapp/login.jsp:103
+#: console/console-war/src/main/webapp/login.jsp:114
 msgid "Bonita BPM Portal"
 msgstr "Bonita BPM Portal"
 
-#: console/console-war/src/main/webapp/login.jsp:112
+#: console/console-war/src/main/webapp/login.jsp:123
 msgid "Login form"
 msgstr "Formulaire de connexion"
 

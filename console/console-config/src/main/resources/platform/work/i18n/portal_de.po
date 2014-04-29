@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-25 05:01+0200\n"
-"PO-Revision-Date: 2014-04-25 00:33-0400\n"
+"POT-Creation-Date: 2014-04-29 05:03+0200\n"
+"PO-Revision-Date: 2014-04-29 00:34-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1056,7 +1056,7 @@ msgid "No response has been received yet, but the background operation might sti
 msgstr "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 
 #: common/common-server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:23
-#: console/console-war/src/main/webapp/login.jsp:118
+#: console/console-war/src/main/webapp/login.jsp:129
 msgid "User"
 msgstr "Benutzer"
 
@@ -2264,7 +2264,7 @@ msgstr "Enter the username for this user"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
 #: console/console-war/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
-#: console/console-war/src/main/webapp/login.jsp:126
+#: console/console-war/src/main/webapp/login.jsp:137
 msgid "Password"
 msgstr "Passwort"
 
@@ -3007,7 +3007,7 @@ msgstr "Teilprozess"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:198
 msgid "The sub process responsible for the creation of this task"
-msgstr "The sub process responsible for the creation of this task"
+msgstr "Der Teilprozess ist verantwortlich für die Erstellung dieser Aufgabe"
 
 #: console/console-war/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:204
 msgid "Subprocess version"
@@ -3418,15 +3418,15 @@ msgstr "This service is offline for maintenance. Please try later."
 msgid "Unable to log in. Please check your username and password."
 msgstr "Login nicht möglich. Bitte überprüfen Sie Ihren Benutzernamen und Passwort."
 
-#: console/console-war/src/main/webapp/login.jsp:103
+#: console/console-war/src/main/webapp/login.jsp:114
 msgid "Welcome to"
 msgstr "Willkommen bei"
 
-#: console/console-war/src/main/webapp/login.jsp:103
+#: console/console-war/src/main/webapp/login.jsp:114
 msgid "Bonita BPM Portal"
 msgstr "Bonita BPM Portal"
 
-#: console/console-war/src/main/webapp/login.jsp:112
+#: console/console-war/src/main/webapp/login.jsp:123
 msgid "Login form"
 msgstr "Login-Formular"
 
