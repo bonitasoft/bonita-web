@@ -255,9 +255,9 @@ public final class XMLForms {
     public static final String VARIABLE = "variable";
 
     /**
-     * the left operand data is external or not
+     * the variable element name
      */
-    public static final String IS_EXTERNAL = "is-external";
+    public static final String VARIABLE_TYPE = "variable-type";
 
     /**
      * the operator element name

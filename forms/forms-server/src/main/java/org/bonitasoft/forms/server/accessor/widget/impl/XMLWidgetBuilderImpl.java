@@ -16,21 +16,33 @@
  */
 package org.bonitasoft.forms.server.accessor.widget.impl;
 
-import org.bonitasoft.forms.client.model.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.bonitasoft.forms.client.model.ActionType;
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FileWidgetInputType;
+import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.FormFieldAvailableValue;
+import org.bonitasoft.forms.client.model.FormSubtitle;
+import org.bonitasoft.forms.client.model.FormValidator;
+import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.client.model.ReducedFormSubtitle.SubTitlePosition;
 import org.bonitasoft.forms.client.model.ReducedFormValidator.ValidatorPosition;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.SelectMode;
+import org.bonitasoft.forms.client.model.WidgetType;
 import org.bonitasoft.forms.server.accessor.impl.util.XPathUtil;
 import org.bonitasoft.forms.server.accessor.widget.IXMLWidgetBuilder;
 import org.bonitasoft.forms.server.constants.XMLForms;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Accessor used to read the page nodes in the XML definition file and retrieve the widgets and validators
@@ -468,12 +480,12 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
     protected FormAction parseAction(final Node actionNode) throws InvalidFormDefinitionException {
         final ActionType actionType = getActionTypeValue(getStringByXpath(actionNode, "@" + XMLForms.TYPE));
         final String variableId = getStringByXpath(actionNode, XMLForms.VARIABLE);
-        final boolean isExternal = getBooleanValue(getNodeByXpath(actionNode, XMLForms.IS_EXTERNAL));
+        final String variableType = getStringByXpath(actionNode, XMLForms.VARIABLE_TYPE);
         final String operator = getStringByXpath(actionNode, XMLForms.OPERATOR);
         final String inputType = getStringByXpath(actionNode, XMLForms.INPUT_TYPE);
         final Expression expression = xmlExpressionsUtil.parseExpression(actionNode);
         final String submitButtonId = getStringByXpath(actionNode, XMLForms.SUBMIT_BUTTON);
-        return new FormAction(actionType, variableId, isExternal, operator, inputType, expression, submitButtonId);
+        return new FormAction(actionType, variableId, variableType, operator, inputType, expression, submitButtonId);
     }
 
     protected ItemPosition getItemPositionValue(final Node node) throws InvalidFormDefinitionException {

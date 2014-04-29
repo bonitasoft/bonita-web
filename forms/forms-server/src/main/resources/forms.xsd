@@ -402,7 +402,7 @@
 				<xsd:complexType>
 					<xsd:all>
 						<xsd:element name="variable" type="xsd:string" minOccurs="0" />
-						<xsd:element name="external" type="xsd:boolean" minOccurs="0" />
+						<xsd:element name="variable-type" type="xsd:string" minOccurs="0" />
 						<xsd:element name="attachment" type="xsd:string" minOccurs="0" />
 						<xsd:element name="operator" type="xsd:string" minOccurs="0" />
 						<xsd:element name="input-type" type="xsd:string" minOccurs="0" />
