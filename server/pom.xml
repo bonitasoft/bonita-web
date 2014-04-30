@@ -251,6 +251,12 @@
                     <type>war</type>
                     <scope>provided</scope>
                 </dependency>
+                <dependency>
+                    <groupId>org.bonitasoft.engine</groupId>
+                    <artifactId>bonita-server</artifactId>
+                    <version>${bonita.engine.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
             </dependencies>
 
             <build>
@@ -279,12 +285,6 @@
                             <contextPath>bonita</contextPath>
                         </configuration>
                         <dependencies>
-                            <dependency>
-                                <groupId>org.bonitasoft.engine</groupId>
-                                <artifactId>bonita-server</artifactId>
-                                <version>${bonita.engine.version}</version>
-                                <scope>runtime</scope>
-                            </dependency>
                             <dependency>
                                 <groupId>org.bonitasoft.web.tooling</groupId>
                                 <artifactId>bonita-web-devtools</artifactId>
