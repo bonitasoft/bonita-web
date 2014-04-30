@@ -46,7 +46,14 @@ public class TestStringFormatEmailValidator {
     }
 
     @Test
-    public void testEmailErreur() {
+    public void testEmailErrorWithWhiteSpace() {
+        final StringFormatEmailValidator test = new StringFormatEmailValidator();
+        test.check("paul amar@bonitasoft.com");
+        assertTrue(test.hasError());
+    }
+
+    @Test
+    public void testEmailError() {
         final StringFormatEmailValidator test = new StringFormatEmailValidator();
         test.check("paul.amar");
         assertTrue(test.hasError());

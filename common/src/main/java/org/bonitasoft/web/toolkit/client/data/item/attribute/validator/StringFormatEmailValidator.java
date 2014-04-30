@@ -30,6 +30,15 @@ public class StringFormatEmailValidator extends AbstractStringFormatValidator {
     }
 
     @Override
+    protected final void _check(final String attributeValue) {
+        if (attributeValue.contains(" ")) {
+            addError(defineErrorMessage());
+        } else {
+            super._check(attributeValue);
+        }
+    }
+
+    @Override
     protected String defineErrorMessage() {
         return _("%attribute% is not a valid email");
     }

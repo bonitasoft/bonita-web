@@ -75,10 +75,10 @@ public abstract class AbstractStringFormatValidator extends AbstractStringValida
      * @see org.bonitasoft.console.client.toolkit.item.attribute.checker.AttributeStringChecker#check(java.lang.String)
      */
     @Override
-    protected final void _check(final String attributeValue) {
+    protected void _check(final String attributeValue) {
 
-        final boolean match = this.regexp.test(attributeValue);
-        if (this.exclude && match || !this.exclude && !match) {
+        final boolean match = regexp.test(attributeValue);
+        if (exclude && match || !exclude && !match) {
             addError(defineErrorMessage());
         }
     }
