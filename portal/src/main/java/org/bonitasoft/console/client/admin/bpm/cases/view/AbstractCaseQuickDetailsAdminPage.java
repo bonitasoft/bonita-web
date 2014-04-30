@@ -86,14 +86,15 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startedOn());
-        metadatas.add(startedBy(item.getStartedByUser(), item.getStartedBySubstituteUser()));
+        metadatas.add(startedBy(item));
         return metadatas;
     }
-    private ItemDetailsMetadata startedBy(UserItem startedByUser, UserItem startedBySubstituteUser) {
-        if (startedByUser.getId().toLong().equals(startedBySubstituteUser.getId().toLong())) {
+    
+    private ItemDetailsMetadata startedBy(final T item) {
+        if (item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
             return addStartedBy();
         } else {
-            return addStartedBySubstitute(startedByUser, startedBySubstituteUser);
+            return addStartedBySubstitute(item.getStartedByUser(), item.getStartedBySubstituteUser());
         }
     }
 
