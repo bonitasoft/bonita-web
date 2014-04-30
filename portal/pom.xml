@@ -22,6 +22,7 @@
             <artifactId>console-common</artifactId>
             <classifier>sources</classifier>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
 
 		<!-- Compile dependency -->
@@ -69,7 +70,7 @@
         <dependency>
             <groupId>com.googlecode.gwtquery</groupId>
             <artifactId>gwtquery</artifactId>
-            <version>1.4.0</version>
+            <version>1.4.1</version>
         </dependency>
     </dependencies>
 	<build>
