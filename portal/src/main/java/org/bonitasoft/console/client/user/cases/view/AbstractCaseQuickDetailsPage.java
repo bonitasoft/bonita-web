@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.user.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -91,7 +91,8 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
         final LinkedList<ItemDetailsMetadata> metadatas = new LinkedList<ItemDetailsMetadata>();
         metadatas.add(processVersion());
         metadatas.add(startDate());
-        if (item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
+        if (item.getStartedByUserId() == null || item.getStartedBySubstituteUserId() == null
+                || item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
             metadatas.add(addStartedBy());
         } else {
             metadatas.add(addStartedByDelegate(item.getStartedByUser(), item.getStartedBySubstituteUser()));

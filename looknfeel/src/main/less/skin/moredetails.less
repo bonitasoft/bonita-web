@@ -317,6 +317,7 @@
 
 #bonitaframe, .forms-view, .forms-view .frame {
   height: 100%;
+  min-width: @moreDetails-min-width;
   width: 100%;
 }
 
@@ -336,6 +337,14 @@
   display: block !important;
   overflow: hidden;
 }
-.page_custompage_ >.body + .footer{
+#bonitaframe{
+	display: block;
+}
+.page_custompage_ {
+	>.body + .footer{
 	display: none;
+	}
+	.body{
+		overflow: visible;
+	}
 }

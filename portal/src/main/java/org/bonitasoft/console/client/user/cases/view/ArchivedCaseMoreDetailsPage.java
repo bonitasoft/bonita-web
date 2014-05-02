@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.user.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -85,7 +85,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
         final MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
         metadatas.addAppsVersion();
         metadatas.addStartDate();
-        metadatas.addStartedBy(item.getStartedByUser(), item.getStartedBySubstituteUser());
+        metadatas.addStartedBy(item);
         metadatas.addLastUpdateDate();
         metadatas.addState();
         return metadatas.build();
