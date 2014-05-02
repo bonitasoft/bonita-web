@@ -10,9 +10,6 @@
 		
 		.sections_panel{
 			li{
-				color: @filtersPanel-textColor;
-				font-weight: @filtersPanel-fontWeight;
-				.fontSize(@filtersPanel-fontSize);
 				.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
 				display: block;
 				padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
@@ -20,10 +17,18 @@
 				position: relative;
 				&.current{
 					background: @twoCols-sectionsPanel-section-bgColor;
-					color: @twoCols-filtersCurrent-link-textColor;
+					a{
+						color: @twoCols-filtersCurrent-link-textColor;
+					}
 				}
 				&:hover{
 					.pointerAsLink();
+				}
+				
+				a{
+					color: @filtersPanel-textColor;
+					font-weight: @filtersPanel-fontWeight;
+					.fontSize(@filtersPanel-fontSize);
 				}
 			}
 		}
