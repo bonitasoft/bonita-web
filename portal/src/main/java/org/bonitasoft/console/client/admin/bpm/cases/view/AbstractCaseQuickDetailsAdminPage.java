@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.admin.bpm.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -91,7 +91,8 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     }
     
     private ItemDetailsMetadata startedBy(final T item) {
-        if (item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
+        if (item.getStartedByUserId() == null || item.getStartedBySubstituteUserId() == null
+                || item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
             return addStartedBy();
         } else {
             return addStartedBySubstitute(item.getStartedByUser(), item.getStartedBySubstituteUser());

@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.common.metadata;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
@@ -53,11 +53,12 @@ public class MetadataCaseBuilder extends MetadataBuilder {
                 _("The date while the case has been started"));
     }
     
-    public MetadataCaseBuilder addStartedBy(UserItem startedByUser, UserItem startedBySubstituteUser) {
-        if (startedByUser.getId().toLong().equals(startedBySubstituteUser.getId().toLong())) {
+    public MetadataCaseBuilder addStartedBy(CaseItem item) {
+        if (item.getStartedByUserId() == null || item.getStartedBySubstituteUserId() == null
+                || item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
             add(createStartedBy());
         } else {
-            add(addStartedBySubstitute(startedByUser, startedBySubstituteUser));
+            add(addStartedBySubstitute(item.getStartedByUser(), item.getStartedBySubstituteUser()));
         }
         return this;
     }

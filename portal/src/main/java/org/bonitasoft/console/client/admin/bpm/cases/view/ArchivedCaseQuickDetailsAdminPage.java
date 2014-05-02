@@ -70,9 +70,7 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
         MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
         metadatas.addAppsVersion();
         metadatas.addStartDate();
-        if (item.getStartedByUserId() != null) {
-            metadatas.addStartedBy(item.getStartedByUser(), item.getStartedBySubstituteUser());
-        }
+        metadatas.addStartedBy(item);
         return metadatas.build();
     }
 
