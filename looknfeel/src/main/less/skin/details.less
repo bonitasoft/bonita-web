@@ -15,6 +15,16 @@
 			a + a, a + css3-container + a{ margin-left: @button-marginBetween; }
 		}
 		.metadatas{
+            a {
+              color: @link-color;
+            }
+            a:hover, a:hover span{
+              cursor: pointer;
+              text-decoration: underline;
+            }
+            a label {
+              .pointerAsLink();
+            }
 			H1{
 				.fontSize(@detailsPanel-metadatas-title-fontSize);
 				overflow: @detailsPanel-metadatas-title-overflow;
@@ -44,12 +54,12 @@
 					label{
 						padding: @detailsPanel-definition-padding;
 					}
-					&.displayname, &.version {
+					&.displayname, &.version, &.parent-task {
 						label{
 							.bgLeft(@detailsPanel-definition-processBg);
 						}
 					}
-					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date{
+					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date, &.lastupdatedate, &.creationdate{
 						label{
 							.bgLeft(@detailsPanel-definition-dueDateBg);
 						}
@@ -60,6 +70,13 @@
 					//		.bgLeft(@detailsPanel-definition-userBg);
 					//	}
 					//}
+
+					&.createdby, &.updatedby{
+						label {
+							.bgLeft(@detailsPanel-definition-userBg);
+						}
+					}
+
 					&.human_task{
 						label {
 							.bgLeft(@detailsPanel-definition-human-taskBg);
