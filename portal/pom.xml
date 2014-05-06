@@ -1,0 +1,250 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+        <groupId>org.bonitasoft.console</groupId>
+        <artifactId>bonita-console</artifactId>
+        <version>6.3.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>console-client</artifactId>
+	<name>Bonita portal</name>
+	<packaging>war</packaging>
+
+	<properties>
+		<permutations>All</permutations>
+		<jacoco.skip>true</jacoco.skip>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+	</properties>
+
+	<dependencies>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>console-common</artifactId>
+            <classifier>sources</classifier>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+		<!-- Compile dependency -->
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-view</artifactId>
+			<version>${project.version}</version>
+            <scope>provided</scope>
+		</dependency>
+
+		<!-- GWT dependency (sources) -->
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-view</artifactId>
+			<classifier>sources</classifier>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-rpc</artifactId>
+			<classifier>sources</classifier>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-model</artifactId>
+			<version>${project.version}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- GWT deps -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+    </dependencies>
+	<build>
+		<plugins>
+
+			<!-- War configuration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes>
+						.gwt-tmp/**,
+						WEB-INF/deploy/**
+					</packagingExcludes>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                    <archiveClasses>true</archiveClasses>
+                    <attachClasses>true</attachClasses>
+				</configuration>
+			</plugin>
+
+            <!-- Export jar & test-jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+            <!-- Configure GWT-Maven plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<configuration>
+					<localWorkers>2</localWorkers>
+					<disableCastChecking>true</disableCastChecking>
+					<disableClassMetadata>true</disableClassMetadata>
+					<module>org.bonitasoft.console.${permutations}BonitaConsole</module>
+                    <!--Configure gwt:run-->
+                    <noServer>true</noServer>
+                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <port>8080</port>
+                    <runTarget>bonita/login.jsp</runTarget>
+				</configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<configuration>
+							<skipITs>true</skipITs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <version>1.3.1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsSrcDir>src/main/webapp/portal/scripts</jsSrcDir>
+                    <sourceIncludes>
+                        <include>bonita-utils.js</include>
+                        <include>bonita-model.js</include>
+                    </sourceIncludes>
+                    <debug>true</debug>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.htmlunit</groupId>
+                        <artifactId>htmlunit</artifactId>
+                        <version>2.13</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!--Unpack & copy forms design where they belong-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-forms-design</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.bonitasoft.forms</groupId>
+                                    <artifactId>forms-design</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/forms-design</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-html-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html"
+                                        file="${project.build.directory}/forms-design/html/page.html" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html"
+                                        file="${project.build.directory}/forms-design/html/process.html" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html"
+                                        file="${project.build.directory}/forms-design/html/error.html" />
+                                <copy
+                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html"
+                                        file="${project.build.directory}/forms-design/html/confirm.html" />
+
+                                <copy todir="${project.build.directory}/${project.artifactId}-${project.version}/portal">
+                                    <fileset dir="${project.build.directory}/forms-design/application/application" includes="**/*" />
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <permutations>Light</permutations>
+            </properties>
+        </profile>
+    </profiles>
+</project>

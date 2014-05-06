@@ -10,8 +10,8 @@
 
 	<fileSets>
 		<fileSet>
-			<outputDirectory>/</outputDirectory>
-			<directory>${project.build.directory}/bonita-home</directory>
+			<outputDirectory>/bonita</outputDirectory>
+			<directory>${project.build.directory}/bonita-home/home</directory>
 			<includes>
 				<include>**/*</include>
 			</includes>

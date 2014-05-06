@@ -44,7 +44,8 @@ public class FormActionAdapter implements Serializable {
     public Operation getEngineOperation(final FormAction formAction) {
         final OperationBuilder operationBuilder = new OperationBuilder().createNewInstance();
         final LeftOperandBuilder leftOperandBuilder = new LeftOperandBuilder();
-        final LeftOperand leftOperand = leftOperandBuilder.createNewInstance().setName(formAction.getDataName()).setExternal(formAction.isExternal()).done();
+        final LeftOperand leftOperand = leftOperandBuilder.createNewInstance().setName(formAction.getVariableName()).setType(formAction.getVariableType())
+                .done();
         final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
         final Expression expression = expressionAdapter.getEngineExpression(formAction.getExpression());
         final OperatorType operatorType = OperatorType.valueOf(formAction.getType().name());
