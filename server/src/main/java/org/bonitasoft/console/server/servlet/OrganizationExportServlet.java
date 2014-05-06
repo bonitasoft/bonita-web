@@ -16,6 +16,16 @@
  */
 package org.bonitasoft.console.server.servlet;
 
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -24,17 +34,6 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 
 /**
  * @author Chong Zhao
@@ -88,7 +87,7 @@ public class OrganizationExportServlet extends HttpServlet {
             out.flush();
 
         } catch (final InvalidSessionException e) {
-            final String message = "Session expires. Please login again.";
+            final String message = "Session expired. Please log in again.";
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, message, e);
             }
