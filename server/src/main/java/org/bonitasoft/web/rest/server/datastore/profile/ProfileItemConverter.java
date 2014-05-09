@@ -27,12 +27,11 @@ import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 public class ProfileItemConverter extends ItemConverter<ProfileItem, Profile> {
 
     @Override
-    public ProfileItem convert(Profile profile) {
+    public ProfileItem convert(final Profile profile) {
         final ProfileItem item = new ProfileItem();
         item.setId(profile.getId());
         item.setName(profile.getName());
         item.setDescription(profile.getDescription());
-        item.setIcon(profile.getIconPath());
         item.setIsDefault(profile.isDefault());
         return item;
     }
