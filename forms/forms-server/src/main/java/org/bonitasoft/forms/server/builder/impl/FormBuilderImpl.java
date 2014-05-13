@@ -2105,6 +2105,37 @@ public class FormBuilderImpl implements IFormBuilder {
     public IFormBuilder addDependentExpression(final String name, final String content, final String expressionType, final String returnType,
             final String interpreter) throws InvalidFormDefinitionException {
 
+        return addDependentExpression(name, content, expressionType, returnType, interpreter, true);
+    }
+
+    /**
+     * Add an expression to the current element, as its the dependent expressions
+     * 
+     * @param name
+     *            the name of the expression
+     * @param content
+     *            the real script code of the expression
+     * @param expressionType
+     * @param returnType
+     * @param interpreter
+     * @param isSameLevelDependency
+     */
+    @Override
+    public IFormBuilder addDependentExpression(final String name, final String content, final String expressionType, final String returnType,
+            final String interpreter, final boolean isSameLevelDependency) throws InvalidFormDefinitionException {
+
+        if (isSameLevelDependency) {
+            final String[] expressionElementNames = { XMLForms.EXPRESSION };
+            try {
+                peekParentFirst(expressionElementNames);
+            } catch (final InvalidFormDefinitionException e) {
+                final String errorMessage = "The method addDependentExpression can only be called once an expression has been created.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new InvalidFormDefinitionException(errorMessage, e);
+            }
+        }
         Element dependenciesElement = findChildElement(currentElement, XMLForms.DEPENDENCIES);
         if (dependenciesElement == null) {
             dependenciesElement = document.createElement(XMLForms.DEPENDENCIES);
@@ -2113,7 +2144,28 @@ public class FormBuilderImpl implements IFormBuilder {
             currentElement = dependenciesElement;
         }
         addExpression(name, content, expressionType, returnType, interpreter);
-        currentElement = (Element) dependenciesElement.getParentNode();
+        return this;
+    }
+
+    /**
+     * End an expression dependencies group
+     * 
+     * @return an implementation of {@link IFormBuilder}
+     * @throws InvalidFormDefinitionException
+     */
+    @Override
+    public IFormBuilder endExpressionDependencies() throws InvalidFormDefinitionException {
+        final String[] expressionElementNames = { XMLForms.EXPRESSION };
+        try {
+            currentElement = (Element) currentElement.getParentNode();
+            peekParentFirst(expressionElementNames);
+        } catch (final InvalidFormDefinitionException e) {
+            final String errorMessage = "The method endExpressionDependencies can only be called once an expression dependency has been created.";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, errorMessage, e);
+            }
+            throw new InvalidFormDefinitionException(errorMessage, e);
+        }
         return this;
     }
 
@@ -2531,12 +2583,43 @@ public class FormBuilderImpl implements IFormBuilder {
      *             if no element among the current element's parents has one of the required type
      */
     protected Element peek(final String[] elementTypes) throws InvalidFormDefinitionException {
+
+        Element element = currentElement;
         final List<String> elementTypesList = Arrays.asList(elementTypes);
-        while (currentElement.getParentNode() != null && currentElement.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
-            if (elementTypesList.contains(currentElement.getNodeName())) {
+        while (element.getParentNode() != null && element.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
+            if (elementTypesList.contains(element.getNodeName())) {
+                currentElement = element;
                 return currentElement;
             }
-            currentElement = (Element) currentElement.getParentNode();
+            element = (Element) element.getParentNode();
+        }
+        if (elementTypesList.contains(element.getNodeName())) {
+            currentElement = element;
+            return currentElement;
+        } else {
+            throw new InvalidFormDefinitionException("No required element present among the parents of the current element.");
+        }
+    }
+
+    /**
+     * Retrieve the first element in the DOM whose type is among the element types provided
+     * 
+     * @param elementTypes
+     *            array of required element types
+     * @return the first {@link Element} in the stack whose type is among the element types provided
+     * @throws InvalidFormDefinitionException
+     *             if no element among the current element's parents has one of the required type
+     */
+    protected Element peekParentFirst(final String[] elementTypes) throws InvalidFormDefinitionException {
+
+        Element element = currentElement;
+        final List<String> elementTypesList = Arrays.asList(elementTypes);
+        while (element.getParentNode() != null && element.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
+            element = (Element) element.getParentNode();
+            if (elementTypesList.contains(element.getNodeName())) {
+                currentElement = element;
+                return currentElement;
+            }
         }
         if (elementTypesList.contains(currentElement.getNodeName())) {
             return currentElement;
