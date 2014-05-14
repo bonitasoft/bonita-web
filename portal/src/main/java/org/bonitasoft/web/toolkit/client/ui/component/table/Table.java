@@ -118,7 +118,7 @@ public class Table extends AbstractTable implements Refreshable {
 
     private boolean showSearch = true;
 
-    private boolean selectLineOnClick = false;
+    private boolean selectLineOnClick = true;
 
     private String defaultSearch = "";
 
