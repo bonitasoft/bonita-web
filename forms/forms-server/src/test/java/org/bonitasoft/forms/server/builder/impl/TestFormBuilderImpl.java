@@ -30,6 +30,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.operation.LeftOperand;
 import org.bonitasoft.forms.client.model.ActionType;
+import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormValidator;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -196,6 +197,17 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.addInitialValueExpression("addInitialValue", "10-01-2009", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addDisplayFormat("mm/dd/yyyy");
 
+        formBuilder.addWidget("activitypage2widget2", WidgetType.EDITABLE_GRID);
+        formBuilder.addInitialValueExpression("ListOfList", "ListOfList", ExpressionType.TYPE_LIST.name(), List.class.getName(), null);
+        formBuilder.addDependentExpression("row1", "row1", ExpressionType.TYPE_LIST.name(), List.class.getName(), null);
+        formBuilder.addDependentExpression("column1", "row1column1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null, false);
+        formBuilder.addDependentExpression("column2", "row1column2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.endExpressionDependencies();
+        formBuilder.addDependentExpression("row2", "row2", ExpressionType.TYPE_LIST.name(), List.class.getName(), null);
+        formBuilder.addDependentExpression("column1", "row2column1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null, false);
+        formBuilder.addDependentExpression("column2", "row2column2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.endExpressionDependencies();
+
         formBuilder.addConfirmationLayout("/activity-confirmation-template.html");
         formBuilder.addConfirmationMessageExpression("ConfirmationMessage", "${\"confirmation message\"}", ExpressionType.TYPE_CONSTANT.name(),
                 String.class.getName(), GROOVY);
@@ -236,6 +248,7 @@ public class TestFormBuilderImpl extends FormsTestCase {
         final InputStream inputStream = new FileInputStream(complexProcessDefinition);
         final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         final Document document = builder.parse(inputStream);
+        final String formXMLContent = toString(document);
         inputStream.close();
         final XMLApplicationConfigDefAccessorImpl applicationConfigDefAccessor = new XMLApplicationConfigDefAccessorImpl(1, document);
         Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, applicationConfigDefAccessor.getMigrationProductVersion());
@@ -282,6 +295,20 @@ public class TestFormBuilderImpl extends FormsTestCase {
         Assert.assertTrue(tableWidget.hasTopHeadings());
         Assert.assertFalse(tableWidget.hasRightHeadings());
         Assert.assertFalse(tableWidget.hasBottomHeadings());
+
+        final XMLApplicationFormDefAccessorImpl applicationFormDefAccessorActivity = new XMLApplicationFormDefAccessorImpl(1, document,
+                "processName--1.0--1--validate$entry", null, null);
+        final FormWidget gridWidget = applicationFormDefAccessorActivity.getPageWidgets("activitypage2").get(2);
+        final Expression gridInitialValueExpression = gridWidget.getInitialValueExpression();
+        Assert.assertEquals(ExpressionType.TYPE_LIST.name(), gridInitialValueExpression.getExpressionType());
+        final List<Expression> listOfListExpression = gridInitialValueExpression.getDependencies();
+        Assert.assertEquals(2, listOfListExpression.size());
+        final Expression row1Expression = listOfListExpression.get(0);
+        final List<Expression> row1tExpressions = row1Expression.getDependencies();
+        Assert.assertEquals(2, row1tExpressions.size());
+        final Expression row2Expression = listOfListExpression.get(1);
+        final List<Expression> row2Expressions = row2Expression.getDependencies();
+        Assert.assertEquals(2, row2Expressions.size());
 
         applicationFormDefAccessor = new XMLApplicationFormDefAccessorImpl(1000, document, "processName--1.0--1--validate$entry", null, null);
         final List<TransientData> transientData = applicationFormDefAccessor.getTransientData();

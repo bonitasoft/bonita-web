@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.LoginManagerFactory;
@@ -114,8 +115,8 @@ public class LogoutServlet extends HttpServlet {
                     loginPage = loginManager.getLoginpageURL(request, tenantId, encodedRedirectURL);
                 } else {
                     final String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
-                    if (loginURL != null) {
-                        loginPage = loginURL;
+                    if (StringUtils.isNotEmpty(loginURL)) {
+                        loginPage = buildLoginPageUrl(loginURL);
                     } else {
                         if (localeStr != null) {
                             // Append tenant parameter in url parameters
@@ -138,6 +139,10 @@ public class LogoutServlet extends HttpServlet {
             }
             throw new ServletException(e);
         }
+    }
+
+    protected String buildLoginPageUrl(final String loginURL) {
+        return new RedirectUrlBuilder(new URLProtector().protectRedirectUrl(loginURL)).build().getUrl();
     }
 
     /**

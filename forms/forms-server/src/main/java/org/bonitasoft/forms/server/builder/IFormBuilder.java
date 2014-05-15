@@ -783,6 +783,29 @@ public interface IFormBuilder {
             throws InvalidFormDefinitionException;
 
     /**
+     * Add dependent expressions
+     * 
+     * @param name
+     * @param content
+     * @param expressionType
+     * @param returnType
+     * @param interpreter
+     * @param isSameLevelDependency
+     * @return
+     * @throws InvalidFormDefinitionException
+     */
+    IFormBuilder addDependentExpression(String name, String content, String expressionType, String returnType, String interpreter, boolean isSameLevelDependency)
+            throws InvalidFormDefinitionException;
+
+    /**
+     * End an expression dependencies group
+     * 
+     * @return an implementation of {@link IFormBuilder}
+     * @throws InvalidFormDefinitionException
+     */
+    IFormBuilder endExpressionDependencies() throws InvalidFormDefinitionException;
+
+    /**
      * Add parameter expression
      * 
      * @param name
