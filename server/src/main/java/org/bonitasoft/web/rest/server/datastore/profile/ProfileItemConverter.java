@@ -26,6 +26,24 @@ import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
  */
 public class ProfileItemConverter extends ItemConverter<ProfileItem, Profile> {
 
+    private static final String USER_PROFILE_NAME = "User";
+
+    private static final String ADMIN_PROFILE_NAME = "Administrator";
+
+    private static final String PROCESSMANAGER_PROFILE_NAME = "Process manager";
+
+    private static final String TEAMMANAGER_PROFILE_NAME = "Team manager";
+
+    private static final String USER_PROFILE_ICONPATH = "/profiles/profileUser.png";
+
+    private static final String ADMIN_PROFILE_ICONPATH = "/profiles/profileAdmin.png";
+
+    private static final String PROCESSMANAGER_PROFILE_ICONPATH = "/profiles/profileProcessManager.png";
+
+    private static final String TEAMMANAGER_PROFILE_ICONPATH = "/profiles/profileTeamManager.png";
+
+    private static final String DEFAULT_PROFILE_ICONPATH = "/profiles/profileDefault.png";
+
     @Override
     public ProfileItem convert(final Profile profile) {
         final ProfileItem item = new ProfileItem();
@@ -33,7 +51,22 @@ public class ProfileItemConverter extends ItemConverter<ProfileItem, Profile> {
         item.setName(profile.getName());
         item.setDescription(profile.getDescription());
         item.setIsDefault(profile.isDefault());
+        item.setIcon(getIconPath(profile.getName()));
         return item;
+    }
+
+    protected String getIconPath(final String profileName) {
+        if (USER_PROFILE_NAME.equals(profileName)) {
+            return USER_PROFILE_ICONPATH;
+        } else if (ADMIN_PROFILE_NAME.equals(profileName)) {
+            return ADMIN_PROFILE_ICONPATH;
+        } else if (PROCESSMANAGER_PROFILE_NAME.equals(profileName)) {
+            return PROCESSMANAGER_PROFILE_ICONPATH;
+        } else if (TEAMMANAGER_PROFILE_NAME.equals(profileName)) {
+            return TEAMMANAGER_PROFILE_ICONPATH;
+        } else {
+            return DEFAULT_PROFILE_ICONPATH;
+        }
     }
 
 }
