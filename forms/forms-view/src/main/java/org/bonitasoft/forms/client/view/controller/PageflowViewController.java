@@ -206,7 +206,7 @@ public class PageflowViewController {
                     final String autoInstantiate = (String) urlContext.get(URLUtils.AUTO_INSTANTIATE);
                     // retrieve the already started cookie value
                     String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
-                    ArrayList<Long> processIdArray = new ArrayList<Long>();
+                    ArrayList<String> processIdArray = new ArrayList<String>();
                     boolean processIdIsInCookie = false;
                     // build the new array to set in the cookie after consuming
                     if (processIdArrayAsString != null) {
@@ -214,9 +214,9 @@ public class PageflowViewController {
                         JSONArray jsonArray = jsonValue.isArray();
                         if (jsonArray != null) {
                             for (int i = 0; i < jsonArray.size(); i++) {
-                                String cookieValue = jsonArray.get(i).isNumber().toString();
+                                String cookieValue = jsonArray.get(i).isString().stringValue();
                                 if (!processUUIDStr.equals(cookieValue)) {
-                                    processIdArray.add(Long.valueOf(cookieValue));
+                                    processIdArray.add(cookieValue);
                                 } else {
                                     processIdIsInCookie = true;
                                 }
