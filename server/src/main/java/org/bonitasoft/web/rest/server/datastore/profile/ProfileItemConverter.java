@@ -26,23 +26,23 @@ import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
  */
 public class ProfileItemConverter extends ItemConverter<ProfileItem, Profile> {
 
-    private static final String USER_PROFILE_NAME = "User";
+    public static final String USER_PROFILE_NAME = "User";
 
-    private static final String ADMIN_PROFILE_NAME = "Administrator";
+    public static final String ADMIN_PROFILE_NAME = "Administrator";
 
-    private static final String PROCESSMANAGER_PROFILE_NAME = "Process manager";
+    public static final String PROCESSMANAGER_PROFILE_NAME = "Process manager";
 
-    private static final String TEAMMANAGER_PROFILE_NAME = "Team manager";
+    public static final String TEAMMANAGER_PROFILE_NAME = "Team manager";
 
-    private static final String USER_PROFILE_ICONPATH = "/profiles/profileUser.png";
+    public static final String USER_PROFILE_ICONPATH = "/profiles/profileUser.png";
 
-    private static final String ADMIN_PROFILE_ICONPATH = "/profiles/profileAdmin.png";
+    public static final String ADMIN_PROFILE_ICONPATH = "/profiles/profileAdmin.png";
 
-    private static final String PROCESSMANAGER_PROFILE_ICONPATH = "/profiles/profileProcessManager.png";
+    public static final String PROCESSMANAGER_PROFILE_ICONPATH = "/profiles/profileProcessManager.png";
 
-    private static final String TEAMMANAGER_PROFILE_ICONPATH = "/profiles/profileTeamManager.png";
+    public static final String TEAMMANAGER_PROFILE_ICONPATH = "/profiles/profileTeamManager.png";
 
-    private static final String DEFAULT_PROFILE_ICONPATH = "/profiles/profileDefault.png";
+    public static final String DEFAULT_PROFILE_ICONPATH = "/profiles/profileDefault.png";
 
     @Override
     public ProfileItem convert(final Profile profile) {
