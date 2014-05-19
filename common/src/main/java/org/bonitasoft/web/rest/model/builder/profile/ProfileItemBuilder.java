@@ -34,6 +34,8 @@ public class ProfileItemBuilder {
 
     protected boolean isDefault = false;
 
+    protected String iconPath;
+
     public static ProfileItemBuilder aProfileItem() {
         return new ProfileItemBuilder();
     }
@@ -44,6 +46,7 @@ public class ProfileItemBuilder {
         item.setName(name);
         item.setDescription(description);
         item.setIsDefault(isDefault);
+        item.setIcon(iconPath);
         return item;
     }
 
@@ -69,6 +72,11 @@ public class ProfileItemBuilder {
 
     public ProfileItemBuilder withDescription(final String description) {
         this.description = description;
+        return this;
+    }
+
+    public ProfileItemBuilder withIcon(final String iconPath) {
+        this.iconPath = iconPath;
         return this;
     }
 

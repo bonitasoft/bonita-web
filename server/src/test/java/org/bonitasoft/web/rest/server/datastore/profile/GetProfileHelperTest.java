@@ -55,6 +55,6 @@ public class GetProfileHelperTest extends APITestWithMock {
 
         final ProfileItem item = getProfileHelper.get(APIID.makeAPIID(1L));
 
-        assertTrue(areEquals(aProfileItem().fromEngineItem(aKnownProfile).build(), item));
+        assertTrue(areEquals(aProfileItem().fromEngineItem(aKnownProfile).withIcon(ProfileItemConverter.DEFAULT_PROFILE_ICONPATH).build(), item));
     }
 }

@@ -37,7 +37,7 @@ public class ProfileItemConverterTest extends APITestWithMock {
 
         final ProfileItem item = new ProfileItemConverter().convert(profile);
 
-        assertTrue(areEquals(aProfileItem().fromEngineItem(profile).build(), item));
+        assertTrue(areEquals(aProfileItem().fromEngineItem(profile).withIcon(ProfileItemConverter.DEFAULT_PROFILE_ICONPATH).build(), item));
     }
 
 }
