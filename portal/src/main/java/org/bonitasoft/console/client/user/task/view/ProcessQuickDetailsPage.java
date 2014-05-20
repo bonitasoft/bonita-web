@@ -27,11 +27,12 @@ import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
+import org.bonitasoft.console.client.user.task.action.AddProcesIdToCookieThenDisplayProcessInstanciationFormAction;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
-import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
+import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
@@ -44,10 +45,10 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
  */
 public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> implements PluginProcess {
 
-    public static String TOKEN = "processquickdetails";    
-    
+    public static String TOKEN = "processquickdetails";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
@@ -63,8 +64,10 @@ public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> i
     }
 
     private Link newStartButton(final ProcessItem item) {
-        return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this app"),
-                new RedirectionAction(StartProcessFormPage.TOKEN, StartProcessFormPage.getItemParams(item)));
+        RawView view = new StartProcessFormPage();
+        view.setParameters(StartProcessFormPage.getItemParams(item));
+        AddProcesIdToCookieThenDisplayProcessInstanciationFormAction action = new AddProcesIdToCookieThenDisplayProcessInstanciationFormAction(view);
+        return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this app"), action);
     }
 
     @Override
