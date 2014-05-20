@@ -37,7 +37,7 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
 
     private static final String ALREADY_STARTED_ARRAY_COOKIE_KEY = "AlreadyStartedProcessId";
 
-    private final RawView view;
+    protected final RawView view;
 
     public AddProcesIdToCookieThenDisplayProcessInstanciationFormAction(RawView view) {
         this.view = view;
@@ -50,7 +50,7 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
         ViewController.showView(view.getToken(), parameters);
     }
 
-    private void setAlreadyStartedCookie(TreeIndexed<String> parameters) {
+    protected void setAlreadyStartedCookie(TreeIndexed<String> parameters) {
         String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
         String processId = parameters.getValue("id");
         ArrayList<String> processIdArray = new ArrayList<String>();
