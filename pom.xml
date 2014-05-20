@@ -545,7 +545,7 @@
                                 <artifactItem>
                                     <groupId>org.bonitasoft.console</groupId>
                                     <artifactId>bonita-home</artifactId>
-                                    <classifer>full</classifer>
+                                    <classifier>full</classifier>
                                     <version>${project.version}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
