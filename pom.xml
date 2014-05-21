@@ -5,7 +5,7 @@
 	<artifactId>bonita-console</artifactId>
 	<name>bonita console</name>
 	<packaging>pom</packaging>
-	<version>6.3.1-SNAPSHOT</version>
+	<version>6.4.0-SNAPSHOT</version>
 
 	<modules>
         <module>looknfeel</module>
@@ -23,7 +23,7 @@
 	</scm>
 
 	<properties>
-		<bonita.engine.version>6.3.1-SNAPSHOT</bonita.engine.version>
+		<bonita.engine.version>6.4.0-SNAPSHOT</bonita.engine.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
