@@ -135,13 +135,9 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
 
     @Override
     protected void fillDeploys(final ProcessItem item, final List<String> deploys) {
-        addDeployer(createDeployedByDeployer());
+        addDeployer(new UserDeployer(
+                new UserDatastore(getEngineSession()), ProcessItem.ATTRIBUTE_DEPLOYED_BY_USER_ID));
         super.fillDeploys(item, deploys);
-    }
-
-    private UserDeployer createDeployedByDeployer() {
-        return new UserDeployer(new UserDatastore(getEngineSession()),
-                ProcessItem.ATTRIBUTE_DEPLOYED_BY_USER_ID);
     }
 
     @Override
