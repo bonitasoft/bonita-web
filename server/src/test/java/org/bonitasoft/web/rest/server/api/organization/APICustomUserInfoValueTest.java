@@ -11,11 +11,13 @@ import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,10 @@ import static org.mockito.Mockito.verify;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class APICustomUserInfoValueTest {
+
+    static {
+        ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
+    }
 
     @Mock(answer = Answers.RETURNS_MOCKS)
     private APIServletCall caller;
@@ -132,7 +138,7 @@ public class APICustomUserInfoValueTest {
         update.setValue("foo");
         given(engine.setCustomUserInfoValue(1L, 2L, "foo")).willReturn(update);
 
-        CustomUserInfoItem value = api.update(APIID.makeAPIID(1L, 2L), Collections.singletonMap("value", "foo"));
+        CustomUserInfoItem value = api.update(APIID.makeAPIID(2L, 1L), Collections.singletonMap("value", "foo"));
 
         assertThat(value.getValue()).isEqualTo("foo");
     }

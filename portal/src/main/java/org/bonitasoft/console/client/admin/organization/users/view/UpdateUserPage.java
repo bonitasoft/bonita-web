@@ -39,6 +39,7 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
 
@@ -93,6 +94,7 @@ public class UpdateUserPage extends Page {
         form = addDetails(form);
         form = addProfessionalBusinessCard(form);
         form = addPersonalBusinessCard(form);
+        form = addCustomInformation(form);
 
         final String itemId = this.getParameter(PARAMETER_USER_ID);
         form.addHiddenEntry(PARAMETER_USER_ID, itemId);
@@ -205,6 +207,14 @@ public class UpdateUserPage extends Page {
                         UserItem.ATTRIBUTE_USERNAME,
                         UserItem.ATTRIBUTE_ID)
                 .closeTab();
+    }
+
+    private Form addCustomInformation(final Form form) {
+        form.openTab(_("Other"));
+        form.addEntry(new UiComponent(new CustomUserInformationComposite(
+                new CustomUserInformationModels(getParameter(PARAMETER_USER_ID), 0, 10))));
+        form.closeTab();
+        return form;
     }
 
     @Override
