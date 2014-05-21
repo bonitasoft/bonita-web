@@ -54,7 +54,7 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
      *            The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
-    public static final ArchivedHumanTaskItem fillConsoleItem(final ArchivedHumanTaskItem result, final ArchivedHumanTaskInstance item) {
+    public static ArchivedHumanTaskItem fillConsoleItem(final ArchivedHumanTaskItem result, final ArchivedHumanTaskInstance item) {
         ArchivedTaskDatastore.fillConsoleItem(result, item);
 
         result.setActorId(APIID.makeAPIID(item.getActorId()));
