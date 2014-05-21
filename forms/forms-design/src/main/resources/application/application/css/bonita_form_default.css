@@ -257,7 +257,7 @@ div#bonita-identification-area {
 	cursor: pointer;
 	height: 16px;
 	width: 20px;
-	background: transparent url(../themeResource?theme=portal&location=images/sprite.png) no-repeat scroll
+	background: transparent url(../themeResource?theme=portal&location=images/cleardot.gif) no-repeat scroll
 		-584px 0px;
 }
 
