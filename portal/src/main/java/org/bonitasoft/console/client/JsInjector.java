@@ -14,22 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.javascript.libs.jqueryplugins;
+package org.bonitasoft.console.client;
 
-import org.bonitasoft.console.client.javascript.libs.ResourceClientBunble;
-
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.resources.client.TextResource;
+import com.google.gwt.core.client.ScriptInjector;
 
 /**
  * @author Vincent Elcrin
  * 
  */
-public interface Placeholder extends ResourceClientBunble {
+public class JsInjector {
 
-    Placeholder INSTANCE = GWT.create(Placeholder.class);
-
-    @Source(RESOURCES_PATH + "scripts/jquery/plugins/jquery.placeholder.min.js")
-    TextResource js();
-
+    public void inject(String script) {
+        ScriptInjector.fromString(script)
+                .setWindow(ScriptInjector.TOP_WINDOW)
+                .inject();
+    }
 }
