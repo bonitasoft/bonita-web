@@ -6,10 +6,10 @@ import com.google.gwt.user.cellview.client.CellList;
 /**
  * @author Vincent Elcrin
  */
-public class TemplateList<T> extends CellList<T> {
+public class Repeater<T> extends CellList<T> {
 
-    public TemplateList(final LineTemplate<T> line) {
-        super(line, new Resources() {
+    public Repeater(final TemplateRepeat<T> template) {
+        super(template, new Resources() {
 
             @Override
             public ImageResource cellListSelectedBackground() {
@@ -18,7 +18,7 @@ public class TemplateList<T> extends CellList<T> {
 
             @Override
             public Style cellListStyle() {
-                return new LineStyle(line.getStyle());
+                return new CellStyle(template.getStyle());
             }
         });
     }

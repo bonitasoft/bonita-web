@@ -4,8 +4,11 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.dom.client.*;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.Window;
 import org.bonitasoft.console.client.mvp.event.DirtyInputEvent;
 import org.bonitasoft.console.client.mvp.event.DirtyInputHandler;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
@@ -13,20 +16,14 @@ import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 /**
  * @author Vincent Elcrin
  */
-public class LineTemplate<T> extends AbstractCell<T> {
-
-    public interface Line<T> {
-
-        public SafeHtml render(Cell.Context context, T value);
-    }
-
-    private final Line<T> line;
+public abstract class TemplateRepeat<T> extends AbstractCell<T> {
 
     private String style;
 
-    public LineTemplate(Line<T> line, String style) {
+    private GwtEvent.Type<DirtyInputHandler<T>> dirtyInputEventType = new GwtEvent.Type<DirtyInputHandler<T>>();
+
+    public TemplateRepeat(String style) {
         super(BrowserEvents.CLICK, BrowserEvents.KEYDOWN);
-        this.line = line;
         this.style = style;
     }
 
@@ -39,25 +36,27 @@ public class LineTemplate<T> extends AbstractCell<T> {
         if (value == null) {
             return;
         }
-        sb.append(line.render(context, value));
+        sb.append(render(context, value));
     }
 
+    public abstract SafeHtml render(Cell.Context context, T value);
+
     @Override
-    public void onBrowserEvent(Context context, Element parent, T value, NativeEvent event, ValueUpdater<T> valueUpdater) {
+    public void onBrowserEvent(Context context, Element parent, T item, NativeEvent event, ValueUpdater<T> valueUpdater) {
         Element element = Element.as(event.getEventTarget());
         if (element.getTagName().equalsIgnoreCase(InputElement.TAG)) {
             final InputElement input = InputElement.as(element);
-            notify(context, event, input);
+            notify(context, event, input, item);
         }
-        super.onBrowserEvent(context, parent, value, event, valueUpdater);
+        super.onBrowserEvent(context, parent, item, event, valueUpdater);
     }
 
-    public void listen(DirtyInputHandler handler) {
-        MainEventBus.getInstance().addHandler(DirtyInputEvent.TYPE, handler);
+    public void listen(DirtyInputHandler<T> handler) {
+        MainEventBus.getInstance().addHandler(dirtyInputEventType, handler);
     }
 
-    private void notify(Context context, NativeEvent event, InputElement input) {
-        MainEventBus.getInstance().fireEventFromSource(new DirtyInputEvent(event, context, input), this);
+    private void notify(Context context, NativeEvent event, InputElement input, T item) {
+        MainEventBus.getInstance().fireEventFromSource(new DirtyInputEvent<T>(dirtyInputEventType, event, context, input, item), this);
     }
 
     @Override

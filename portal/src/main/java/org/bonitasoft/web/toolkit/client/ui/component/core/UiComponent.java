@@ -18,8 +18,9 @@
 package org.bonitasoft.web.toolkit.client.ui.component.core;
 
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
@@ -31,36 +32,33 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
  */
 public class UiComponent extends Component implements FormNode {
 
+    private static Panel pound = new AbsolutePanel();
+
+    static {
+        pound.setVisible(false);
+        RootPanel.get().add(pound);
+    }
+
     private UIObject uiObject;
 
-    public UiComponent(UIObject uiObject) {
+    private boolean adopt;
+
+    public UiComponent(UIObject uiObject, boolean adopt) {
         this.uiObject = uiObject;
+        this.adopt = adopt;
+    }
+
+    public UiComponent(UIObject uiObject) {
+        this(uiObject, false);
     }
 
     @Override
     protected Element makeElement() {
 
-        if(uiObject instanceof Widget) {
-            adopt((Widget) uiObject);
+        if(adopt && uiObject instanceof Widget) {
+            pound.add((Widget) uiObject);
         }
 
         return uiObject.getElement();
-    }
-
-    class WidgetWrapper extends SimplePanel {
-
-        WidgetWrapper(Widget child) {
-            super(child);
-        }
-
-        public void attach() {
-            onAttach();
-        }
-    }
-
-    private void adopt(Widget widget) {
-        WidgetWrapper wrapper = new WidgetWrapper(widget);
-        wrapper.attach();
-        RootPanel.detachOnWindowClose(wrapper);
     }
 }

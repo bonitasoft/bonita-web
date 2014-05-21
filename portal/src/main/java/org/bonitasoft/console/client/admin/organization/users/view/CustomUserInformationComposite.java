@@ -1,23 +1,24 @@
 package org.bonitasoft.console.client.admin.organization.users.view;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import org.bonitasoft.console.client.mvp.LineTemplate;
-import org.bonitasoft.console.client.mvp.TemplateList;
+import org.bonitasoft.console.client.mvp.Repeater;
+import org.bonitasoft.console.client.mvp.TemplateRepeat;
 import org.bonitasoft.console.client.mvp.event.DirtyInputEvent;
 import org.bonitasoft.console.client.mvp.event.DirtyInputHandler;
-import org.bonitasoft.console.client.mvp.event.ModelLoadEvent;
-import org.bonitasoft.console.client.mvp.event.ModelLoadHandler;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 
 /**
  * @author Vincent Elcrin
  */
-public class CustomUserInformationComposite extends Composite implements ModelLoadHandler<CustomUserInformationModels>, DirtyInputHandler {
+public class CustomUserInformationComposite extends Composite {
 
     interface Template extends SafeHtmlTemplates {
 
@@ -28,36 +29,39 @@ public class CustomUserInformationComposite extends Composite implements ModelLo
         public SafeHtml line(int line, String name, String description, String value);
     }
 
-    private CustomUserInformationModels model;
-
     private static final Template TEMPLATE = GWT.create(Template.class);
 
-    private LineTemplate<CustomUserInfoItem> line = new LineTemplate<CustomUserInfoItem>(new LineTemplate.Line<CustomUserInfoItem>() {
+    TemplateRepeat<CustomUserInfoItem> template = new TemplateRepeat<CustomUserInfoItem>("formentry") {
 
         @Override
         public SafeHtml render(Cell.Context context, CustomUserInfoItem information) {
             CustomUserInfoDefinitionItem definition = information.getDefinition();
-            return TEMPLATE.line(context.getIndex() + 1, definition.getName(), definition.getDescription(), information.getValue());
+            return TEMPLATE.line(
+                    context.getIndex() + 1,
+                    definition.getName(),
+                    definition.getDescription(),
+                    information.getValue());
         }
-    }, "formentry");
+    };
 
-    final TemplateList<CustomUserInfoItem> list = new TemplateList<CustomUserInfoItem>(line);
+    private Repeater<CustomUserInfoItem> repeater = new Repeater<CustomUserInfoItem>(template);
 
-    public CustomUserInformationComposite(CustomUserInformationModels model) {
-        initWidget(list);
-        this.model = model;
-        model.observe(this);
-        line.listen(this);
-        list.setRowData(model.getInformation());
-    }
+    public CustomUserInformationComposite(final CustomUserInformationModel model) {
+        initWidget(repeater);
+        model.search(0, 10, new CustomUserInformationModel.Callback() {
 
-    @Override
-    public void onModelLoad(ModelLoadEvent<CustomUserInformationModels> event) {
-        list.setRowData(event.getModel().getInformation());
-    }
+            @Override
+            void onSuccess(List<CustomUserInfoItem> information) {
+                repeater.setRowData(information);
+            }
+        });
 
-    @Override
-    public void onDirtyInput(DirtyInputEvent event) {
-        model.update(event.getContext().getIndex(), event.getInput().getValue());
+        template.listen(new DirtyInputHandler<CustomUserInfoItem>() {
+
+            @Override
+            public void onDirtyInput(DirtyInputEvent<CustomUserInfoItem> event) {
+                model.update(event.getItem(), event.getInput().getValue());
+            }
+        });
     }
 }

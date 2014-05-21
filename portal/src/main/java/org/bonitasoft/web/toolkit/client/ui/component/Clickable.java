@@ -18,6 +18,7 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -138,9 +139,7 @@ public abstract class Clickable extends Component {
     @Override
     protected void postProcessHtml() {
         if (isEnabled()) {
-            /* Remove dblclick for unable deploy the same process twice */
             $(this.element).click(new Function() {
-
                 @Override
                 public boolean f(final Event e) {
                     if (!Clickable.this.action.isStarted) {
@@ -158,7 +157,6 @@ public abstract class Clickable extends Component {
                     }
                     return false;
                 }
-
             });
         }
     }

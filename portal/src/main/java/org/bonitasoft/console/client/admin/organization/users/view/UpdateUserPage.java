@@ -211,8 +211,9 @@ public class UpdateUserPage extends Page {
 
     private Form addCustomInformation(final Form form) {
         form.openTab(_("Other"));
-        form.addEntry(new UiComponent(new CustomUserInformationComposite(
-                new CustomUserInformationModels(getParameter(PARAMETER_USER_ID), 0, 10))));
+        form.addEntry(new UiComponent(
+                new CustomUserInformationComposite(new CustomUserInformationModel(getParameter(PARAMETER_USER_ID))),
+                true));
         form.closeTab();
         return form;
     }

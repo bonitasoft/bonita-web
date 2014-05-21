@@ -36,7 +36,7 @@ public class Link extends Clickable {
 
     public static enum IMAGE_POSITION {
         LEFT, RIGHT
-    };
+    }
 
     private IMAGE_POSITION imagePosition = IMAGE_POSITION.LEFT;
 

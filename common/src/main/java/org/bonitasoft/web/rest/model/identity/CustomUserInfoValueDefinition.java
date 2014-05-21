@@ -23,9 +23,9 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 /**
  * @author Vincent Elcrin
  */
-public class CustomUserInfoAssociationDefinition extends ItemDefinition<CustomUserInfoItem> {
+public class CustomUserInfoValueDefinition extends CustomUserInfoDefinition {
 
-    public static final String TOKEN = "customuserinfo/user";
+    public static final String TOKEN = "customuserinfo/value";
 
     @Override
     protected String defineToken() {
@@ -34,27 +34,10 @@ public class CustomUserInfoAssociationDefinition extends ItemDefinition<CustomUs
 
     @Override
     protected String defineAPIUrl() {
-        return "../API/customuserinfo/user";
+        return "../API/customuserinfo/value";
     }
 
-    @Override
-    protected void defineAttributes() {
-        createAttribute(CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID, ItemAttribute.TYPE.ITEM_ID);
-        createAttribute(CustomUserInfoItem.ATTRIBUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
-        createAttribute(CustomUserInfoItem.ATTRIBUTE_VALUE, ItemAttribute.TYPE.STRING);
-    }
-
-    @Override
-    protected void definePrimaryKeys() {
-        setPrimaryKeys(CustomUserInfoItem.ATTRIBUTE_USER_ID, CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID);
-    }
-
-    @Override
-    protected CustomUserInfoItem _createItem() {
-        return new CustomUserInfoItem();
-    }
-
-    public static CustomUserInfoAssociationDefinition get() {
-        return (CustomUserInfoAssociationDefinition) Definitions.get(TOKEN);
+    public static CustomUserInfoValueDefinition get() {
+        return (CustomUserInfoValueDefinition) Definitions.get(TOKEN);
     }
 }

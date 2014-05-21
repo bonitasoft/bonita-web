@@ -5,7 +5,7 @@ import com.google.gwt.event.shared.EventHandler;
 /**
  * @author Vincent Elcrin
  */
-public interface DirtyInputHandler extends EventHandler {
+public interface DirtyInputHandler<T> extends EventHandler {
 
-    public void onDirtyInput(DirtyInputEvent event);
+    public void onDirtyInput(DirtyInputEvent<T> event);
 }

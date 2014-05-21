@@ -5,11 +5,11 @@ import com.google.gwt.user.cellview.client.CellList;
 /**
  * @author Vincent Elcrin
  */
-public class LineStyle implements CellList.Style {
+public class CellStyle implements CellList.Style {
 
     private final String style;
 
-    public LineStyle(String style) {
+    public CellStyle(String style) {
         this.style = style;
     }
 
