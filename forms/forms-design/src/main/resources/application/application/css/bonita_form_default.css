@@ -98,7 +98,7 @@ span.bonita_form_radio, .bonita_form_text {
 	-webkit-box-shadow: 2px 2px 2px #d8d8d8;
 	-moz-box-shadow: 2px 2px 2px #d8d8d8;
 	-o-box-shadow: 2px 2px 2px #d8d8d8;
-	behavior: url(PIE.htc);
+	behavior: url(../../css/PIE.htc);
 }
 .bonita_form_button * {
 	vertical-align: middle;
@@ -135,7 +135,7 @@ input.bonita_form_field, select.bonita_form_field, select.bonita_datetime_list_i
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-webkit-box-shadow: 0 0 0 #cccccc;
-	*behavior: url(boxsizing.htc);
+	*behavior: url(../../css/boxsizing.htc);
 	-moz-box-sizing: border-box;
 	padding: 5px 5px 5px 5px;
 	box-sizing: border-box;
@@ -197,7 +197,7 @@ div#bonita-banneraltbas {
 	background: -ms-linear-gradient(top,	#CD0807 0%,#B20706 100%); /* IE10+ */
 	background: linear-gradient(to bottom,	#CD0807 0%, #B20706 100%); /* W3C */
 	-pie-background: linear-gradient(#CD0807 0%, #B20706 100%) #CD0807;
-	behavior: url(PIE.htc);
+	behavior: url(../../css/PIE.htc);
 }
 
 .bonita_process_label {

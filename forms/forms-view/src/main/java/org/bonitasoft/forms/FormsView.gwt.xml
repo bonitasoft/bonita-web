@@ -5,8 +5,6 @@
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name="com.google.gwt.i18n.I18N"/>
 
-	<inherits name='org.bonitasoft.web.rest.RestModel' />
-
 	<!-- French language, independent of country					-->
 	<extend-property name="locale" values="fr"/>
 
@@ -51,7 +49,4 @@
 	
 	<!-- Source path of the module                                  -->
 	<source path="client" />
-
-	<!-- Servlets for RPC calls                                     -->
- 	<servlet path="/formsService" class="org.bonitasoft.forms.server.FormsServlet" />
 </module>

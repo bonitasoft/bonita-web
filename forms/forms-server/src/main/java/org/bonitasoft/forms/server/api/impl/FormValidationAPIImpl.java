@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
@@ -243,13 +244,13 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
+     * @throws BPMExpressionEvaluationException  
      */
     protected List<FormValidator> validateField(final APISession session, final long processDefinitionID, final long processInstanceID,
             final long activityInstanceID, final List<FormValidator> validators, final String fieldId, final FormFieldValue value, final String submitButtonId,
             final Locale userLocale, final Map<String, Serializable> transientDataContext) throws FormValidationException, ProcessInstanceNotFoundException,
             ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException, ExpressionEvaluationException {
+            IOException, BPMExpressionEvaluationException {
 
         final IFormWorkflowAPI formWorkflowAPI = FormAPIFactory.getFormWorkflowAPI();
         final List<FormValidator> nonCompliantValidators = new ArrayList<FormValidator>();
@@ -303,13 +304,13 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws ExpressionEvaluationException
+     * @throws BPMExpressionEvaluationException 
      */
     protected List<FormValidator> validatePage(final APISession session, final long processDefinitionID, final long processInstanceID,
             final long activityInstanceID, final List<FormValidator> validators, final Map<String, FormFieldValue> fields, final String submitButtonId,
             final Locale userLocale, final Map<String, Serializable> transientDataContext) throws FormValidationException, ProcessInstanceNotFoundException,
             ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException, ExpressionEvaluationException {
+            IOException, BPMExpressionEvaluationException {
 
         final IFormWorkflowAPI formWorkflowAPI = FormAPIFactory.getFormWorkflowAPI();
         final List<FormValidator> nonCompliantValidators = new ArrayList<FormValidator>();
@@ -335,15 +336,15 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
     /**
      * {@inheritDoc}
      * 
-     * @throws ExpressionEvaluationException
      * @throws ArchivedFlowNodeInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     @Override
     public List<FormValidator> validateActivityField(final APISession session, final long activityInstanceID, final List<FormValidator> validators,
             final String fieldId, final FormFieldValue fieldValue, final String submitButtonId, final Locale userLocale,
             final Map<String, Serializable> transientDataContext) throws FormValidationException, ProcessInstanceNotFoundException,
             ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException, ExpressionEvaluationException, ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException {
+            IOException, ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException, BPMExpressionEvaluationException {
         final IFormWorkflowAPI formWorkflowAPI = FormAPIFactory.getFormWorkflowAPI();
         final long processInstanceID = formWorkflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID);
         final long processDefinitionID = formWorkflowAPI.getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID);
@@ -354,48 +355,43 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
     /**
      * {@inheritDoc}
      * 
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     @Override
     public List<FormValidator> validateInstanceField(final APISession session, final long processInstanceID, final List<FormValidator> validators,
             final String fieldId, final FormFieldValue fieldValue, final String submitButtonId, final Locale userLocale,
             final Map<String, Serializable> transientDataContext) throws FormValidationException, ProcessInstanceNotFoundException,
             ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException, ExpressionEvaluationException, ArchivedProcessInstanceNotFoundException {
+            IOException, ArchivedProcessInstanceNotFoundException, BPMExpressionEvaluationException {
         final IFormWorkflowAPI formWorkflowAPI = FormAPIFactory.getFormWorkflowAPI();
         final long processDefinitionID = formWorkflowAPI.getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID);
         return validateField(session, processDefinitionID, processInstanceID, -1, validators, fieldId, fieldValue, submitButtonId, userLocale,
                 transientDataContext);
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExpressionEvaluationException
-     */
     @Override
     public List<FormValidator> validateProcessField(final APISession session, final long processDefinitionID, final List<FormValidator> validators,
             final String fieldId, final FormFieldValue fieldValue, final String submitButtonId, final Locale userLocale,
             final Map<String, Serializable> transientDataContext) throws FormValidationException, ProcessInstanceNotFoundException,
             ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, FileTooBigException,
-            IOException, ExpressionEvaluationException {
+            IOException, BPMExpressionEvaluationException {
         return validateField(session, processDefinitionID, -1, -1, validators, fieldId, fieldValue, submitButtonId, userLocale, transientDataContext);
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     @Override
     public List<FormValidator> validateActivityPage(final APISession session, final long activityInstanceID, final List<FormValidator> validators,
             final Map<String, FormFieldValue> fields, final String submitButtonId, final Locale userLocale, final Map<String, Serializable> transientDataContext)
             throws FormValidationException, ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException,
-            ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException {
+            BPMEngineException, InvalidSessionException, FileTooBigException, IOException,
+            ArchivedProcessInstanceNotFoundException, ArchivedFlowNodeInstanceNotFoundException, BPMExpressionEvaluationException {
         final IFormWorkflowAPI formWorkflowAPI = FormAPIFactory.getFormWorkflowAPI();
         final long processInstanceID = formWorkflowAPI.getProcessInstanceIDFromActivityInstanceID(session, activityInstanceID);
         final long processDefinitionID = formWorkflowAPI.getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID);
@@ -406,30 +402,25 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
     /**
      * {@inheritDoc}
      * 
-     * @throws ExpressionEvaluationException
      * @throws ArchivedProcessInstanceNotFoundException
+     * @throws BPMExpressionEvaluationException 
      */
     @Override
     public List<FormValidator> validateInstancePage(final APISession session, final long processInstanceID, final List<FormValidator> validators,
             final Map<String, FormFieldValue> fields, final String submitButtonId, final Locale userLocale, final Map<String, Serializable> transientDataContext)
             throws FormValidationException, ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException,
-            ArchivedProcessInstanceNotFoundException {
+            BPMEngineException, InvalidSessionException, FileTooBigException, IOException,
+            ArchivedProcessInstanceNotFoundException, BPMExpressionEvaluationException {
         final IFormWorkflowAPI formWorkflowAPI = FormAPIFactory.getFormWorkflowAPI();
         final long processDefinitionID = formWorkflowAPI.getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID);
         return validatePage(session, processDefinitionID, processInstanceID, -1, validators, fields, submitButtonId, userLocale, transientDataContext);
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExpressionEvaluationException
-     */
     @Override
     public List<FormValidator> validateProcessPage(final APISession session, final long processDefinitionID, final List<FormValidator> validators,
             final Map<String, FormFieldValue> fields, final String submitButtonId, final Locale userLocale, final Map<String, Serializable> transientDataContext)
             throws FormValidationException, ProcessInstanceNotFoundException, ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException,
-            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, ExpressionEvaluationException {
+            BPMEngineException, InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException {
         return validatePage(session, processDefinitionID, -1, -1, validators, fields, submitButtonId, userLocale, transientDataContext);
     }
 }

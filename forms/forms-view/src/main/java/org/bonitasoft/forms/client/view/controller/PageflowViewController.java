@@ -16,12 +16,11 @@
  */
 package org.bonitasoft.forms.client.view.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 
-import com.google.gwt.user.client.Timer;
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.ReducedFormPage;
-import org.bonitasoft.forms.client.model.ReducedHtmlTemplate;
 import org.bonitasoft.forms.client.model.exception.AbortedFormException;
 import org.bonitasoft.forms.client.model.exception.CanceledFormException;
 import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
@@ -37,6 +36,7 @@ import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
 import org.bonitasoft.web.rest.model.user.User;
+import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -45,6 +45,10 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -124,6 +128,8 @@ public class PageflowViewController {
      */
     protected String elementId;
 
+    protected static String ALREADY_STARTED_ARRAY_COOKIE_KEY = "AlreadyStartedProcessId";
+
     /**
      * Constructor
      * 
@@ -198,10 +204,32 @@ public class PageflowViewController {
                 final String instanceUUIDStr = (String) urlContext.get(URLUtils.INSTANCE_ID_PARAM);
                 if (processUUIDStr != null) {
                     final String autoInstantiate = (String) urlContext.get(URLUtils.AUTO_INSTANTIATE);
+                    // retrieve the already started cookie value
+                    String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
+                    ArrayList<String> processIdArray = new ArrayList<String>();
+                    boolean processIdIsInCookie = false;
+                    // build the new array to set in the cookie after consuming
+                    if (processIdArrayAsString != null) {
+                        JSONValue jsonValue = JSONParser.parseStrict(processIdArrayAsString);
+                        JSONArray jsonArray = jsonValue.isArray();
+                        if (jsonArray != null) {
+                            for (int i = 0; i < jsonArray.size(); i++) {
+                                String cookieValue = jsonArray.get(i).isString().stringValue();
+                                if (!processUUIDStr.equals(cookieValue)) {
+                                    processIdArray.add(cookieValue);
+                                } else {
+                                    processIdIsInCookie = true;
+                                }
+                            }
+                        }
+                    }
                     final ConfirmationPageHandler confirmationPageHandler = createConfirmationPageHandler();
                     final FormTerminationHandler formTerminationHandler = new FormTerminationHandler(confirmationPageHandler);
+
                     // if the parameter autoInstanciate is set explicitly to false, the we skip the form
                     if (!Boolean.FALSE.toString().equals(autoInstantiate)) {
+                        // write the cookie without the process id
+                        Cookies.setCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY, JSonSerializer.serialize(processIdArray));
                         formsServiceAsync.skipForm(formID, urlContext, formTerminationHandler);
                     } else {
                         final FlowPanel buttonContainer = new FlowPanel();
@@ -394,8 +422,8 @@ public class PageflowViewController {
 
     private String getDefaultConfirmationMessage() {
         String confirmationMessage = null;
-        if(urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
-            confirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String)urlContext.get(URLUtils.INSTANCE_ID_PARAM));
+        if (urlContext.containsKey(URLUtils.INSTANCE_ID_PARAM)) {
+            confirmationMessage = FormsResourceBundle.getMessages().instanceSubmissionConfirmationMessage((String) urlContext.get(URLUtils.INSTANCE_ID_PARAM));
         } else {
             confirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
         }

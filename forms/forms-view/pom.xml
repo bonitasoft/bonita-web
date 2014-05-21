@@ -2,7 +2,7 @@
 	<parent>
 		<artifactId>forms-parent</artifactId>
 		<groupId>org.bonitasoft.forms</groupId>
-		<version>6.3.0-SNAPSHOT</version>
+		<version>6.3.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bonitasoft.forms</groupId>
@@ -14,11 +14,6 @@
   	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.bonitasoft.web</groupId>
-			<artifactId>bonita-rest-model</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-rpc</artifactId>
@@ -42,65 +37,5 @@
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack-forms-config</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.forms</groupId>
-									<artifactId>forms-config</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/forms-config</outputDirectory>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.bonitasoft.forms</groupId>
-									<artifactId>forms-design</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>${project.build.directory}/forms-design</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-design-resources</id>
-						<phase>generate-resources</phase>
-						<goals>
-			            	<goal>run</goal>
-            			</goals>
-            			<configuration>
-            				<tasks>
-	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
-	            					<fileset dir="${project.build.directory}/forms-config/platform/tenant-template/work/theme/portal" />
-	            				</copy>
-	            				<copy todir="${project.build.directory}/classes/org/bonitasoft/forms/public" overwrite="true">
-	            					<fileset dir="${project.build.directory}/forms-design/application/application" />
-	            				</copy>
-	            			</tasks>
-            			</configuration>
-            		</execution>
-            	</executions>
-            </plugin>
-		</plugins>
 	</build>
-
 </project>

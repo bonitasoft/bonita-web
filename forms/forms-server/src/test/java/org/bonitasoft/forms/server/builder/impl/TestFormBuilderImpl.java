@@ -28,7 +28,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.bonitasoft.engine.expression.ExpressionType;
+import org.bonitasoft.engine.operation.LeftOperand;
 import org.bonitasoft.forms.client.model.ActionType;
+import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormValidator;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -86,7 +88,6 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.createFormDefinition();
         // formBuilder.addWelcomePage("resources/application/welcome.html");
         // formBuilder.addExternalWelcomePage("resources/application/external-welcome.html");
-        formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression("addLabel", "process label with accents éèà", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addLayout("/process-template.html");
@@ -126,11 +127,11 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.addCellsStyle("table-cellStyle");
         formBuilder.addHeadingsStyle("table-headings-cellStyle", true, true, false, false);
 
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", false, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget1", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", false, "=", null, "button1");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TYPE_TRANSIENT_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
-        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", false, "=", null, "button1");
+        formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
 
         formBuilder.addConfirmationLayout("/process-confirmation-template.html");
@@ -138,8 +139,28 @@ public class TestFormBuilderImpl extends FormsTestCase {
                 String.class.getName(), GROOVY);
 
         formBuilder.addEntryForm("processName--1.0--1--request$entry");
+        formBuilder.addPermissions("process#processName--1.0");
+        formBuilder.addTransientData("transientData", Boolean.class.getName());
+        formBuilder.addTransientDataExpression(null, "true", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addPage("activitypage1");
+        formBuilder.addLabelExpression("addLabel", "activitypage1 label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
+        formBuilder.addLayout("/activity-page1-template.html");
+        formBuilder.addWidget("activitypage1widget1", WidgetType.LISTBOX_SIMPLE);
+        formBuilder.addAvailableValue();
+        formBuilder.addLabelExpression("addLabel", "available value 1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValueExpression("addValue", "availablevalue1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addAvailableValue();
+        formBuilder.addLabelExpression("addLabel", "available value 2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValueExpression("addValue", "availablevalue2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addItemsStyle("items_class_names");
+        formBuilder.addWidget("activitypage1widget2", WidgetType.PASSWORD);
+        formBuilder.addValidator("activitywidget2validator1", "classname", null, null);
+        formBuilder.addLabelExpression(null, "activity widget2 validator1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.addValidator("activitywidget2validator2", "classname", null, null);
+        formBuilder.addLabelExpression(null, "activity widget2 validator2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
 
         formBuilder.addEntryForm("processName--1.0--1--validate$entry");
+        formBuilder.addPermissions("process#processName--1.0");
         formBuilder.addTransientData("transientData", Boolean.class.getName());
         formBuilder.addTransientDataExpression(null, "true", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
         formBuilder.addPage("activitypage1");
@@ -175,6 +196,17 @@ public class TestFormBuilderImpl extends FormsTestCase {
         formBuilder.addWidget("activitypage2widget2", WidgetType.DATE);
         formBuilder.addInitialValueExpression("addInitialValue", "10-01-2009", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addDisplayFormat("mm/dd/yyyy");
+
+        formBuilder.addWidget("activitypage2widget2", WidgetType.EDITABLE_GRID);
+        formBuilder.addInitialValueExpression("ListOfList", "ListOfList", ExpressionType.TYPE_LIST.name(), List.class.getName(), null);
+        formBuilder.addDependentExpression("row1", "row1", ExpressionType.TYPE_LIST.name(), List.class.getName(), null);
+        formBuilder.addDependentExpression("column1", "row1column1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null, false);
+        formBuilder.addDependentExpression("column2", "row1column2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.endExpressionDependencies();
+        formBuilder.addDependentExpression("row2", "row2", ExpressionType.TYPE_LIST.name(), List.class.getName(), null);
+        formBuilder.addDependentExpression("column1", "row2column1", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null, false);
+        formBuilder.addDependentExpression("column2", "row2column2", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null);
+        formBuilder.endExpressionDependencies();
 
         formBuilder.addConfirmationLayout("/activity-confirmation-template.html");
         formBuilder.addConfirmationMessageExpression("ConfirmationMessage", "${\"confirmation message\"}", ExpressionType.TYPE_CONSTANT.name(),
@@ -216,6 +248,7 @@ public class TestFormBuilderImpl extends FormsTestCase {
         final InputStream inputStream = new FileInputStream(complexProcessDefinition);
         final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         final Document document = builder.parse(inputStream);
+        final String formXMLContent = toString(document);
         inputStream.close();
         final XMLApplicationConfigDefAccessorImpl applicationConfigDefAccessor = new XMLApplicationConfigDefAccessorImpl(1, document);
         Assert.assertEquals(FormBuilderImpl.PRODUCT_VERSION, applicationConfigDefAccessor.getMigrationProductVersion());
@@ -239,9 +272,14 @@ public class TestFormBuilderImpl extends FormsTestCase {
         Assert.assertEquals(3, applicationFormDefAccessor.getActions("processPage2").size());
         final FormAction action = applicationFormDefAccessor.getActions("processPage2").get(0);
         Assert.assertEquals(ActionType.ASSIGNMENT, action.getType());
-        Assert.assertEquals("variable1", action.getDataName());
+        Assert.assertEquals("variable1", action.getVariableName());
+        Assert.assertEquals(LeftOperand.TYPE_DATA, action.getVariableType());
         Assert.assertEquals("=", action.getOperator());
         Assert.assertEquals("field_processpage1widget1", action.getExpression().getContent());
+        final FormAction action2 = applicationFormDefAccessor.getActions("processPage2").get(1);
+        Assert.assertEquals(ActionType.ASSIGNMENT, action2.getType());
+        Assert.assertEquals("variable2", action2.getVariableName());
+        Assert.assertEquals(LeftOperand.TYPE_TRANSIENT_DATA, action2.getVariableType());
         Assert.assertEquals(2, applicationFormDefAccessor.getPageValidators("processPage2").size());
         final FormValidator validator = applicationFormDefAccessor.getPageValidators("processPage2").get(0);
         Assert.assertEquals("processpage2validator1", validator.getId());
@@ -257,6 +295,20 @@ public class TestFormBuilderImpl extends FormsTestCase {
         Assert.assertTrue(tableWidget.hasTopHeadings());
         Assert.assertFalse(tableWidget.hasRightHeadings());
         Assert.assertFalse(tableWidget.hasBottomHeadings());
+
+        final XMLApplicationFormDefAccessorImpl applicationFormDefAccessorActivity = new XMLApplicationFormDefAccessorImpl(1, document,
+                "processName--1.0--1--validate$entry", null, null);
+        final FormWidget gridWidget = applicationFormDefAccessorActivity.getPageWidgets("activitypage2").get(2);
+        final Expression gridInitialValueExpression = gridWidget.getInitialValueExpression();
+        Assert.assertEquals(ExpressionType.TYPE_LIST.name(), gridInitialValueExpression.getExpressionType());
+        final List<Expression> listOfListExpression = gridInitialValueExpression.getDependencies();
+        Assert.assertEquals(2, listOfListExpression.size());
+        final Expression row1Expression = listOfListExpression.get(0);
+        final List<Expression> row1tExpressions = row1Expression.getDependencies();
+        Assert.assertEquals(2, row1tExpressions.size());
+        final Expression row2Expression = listOfListExpression.get(1);
+        final List<Expression> row2Expressions = row2Expression.getDependencies();
+        Assert.assertEquals(2, row2Expressions.size());
 
         applicationFormDefAccessor = new XMLApplicationFormDefAccessorImpl(1000, document, "processName--1.0--1--validate$entry", null, null);
         final List<TransientData> transientData = applicationFormDefAccessor.getTransientData();

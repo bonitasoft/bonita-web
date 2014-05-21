@@ -17,13 +17,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,6 +39,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.forms.client.model.ActionType;
@@ -52,6 +60,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Implementation of the {@link IFormBuilder} interface generating an XML form definition file
@@ -105,6 +114,8 @@ public class FormBuilderImpl implements IFormBuilder {
      */
     private static FormBuilderImpl INSTANCE = null;
 
+    private final Validator validator;
+
     /**
      * @return the FormExpressionsAPI instance
      */
@@ -117,6 +128,8 @@ public class FormBuilderImpl implements IFormBuilder {
 
     /**
      * Private constructor to prevent instantiation
+     * 
+     * @throws SAXException
      */
     protected FormBuilderImpl() {
         productVersion = PRODUCT_VERSION;
@@ -135,6 +148,26 @@ public class FormBuilderImpl implements IFormBuilder {
         } catch (final Exception e) {
             // Nothing to do: indent-number is not supported
         }
+
+        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+        Schema schema;
+        InputStream schemaStream = null;
+        try {
+            schemaStream = this.getClass().getResourceAsStream("/forms.xsd");
+            schema = factory.newSchema(new StreamSource(schemaStream));
+        } catch (SAXException e) {
+            throw new RuntimeException("unable to initialize the xsd validator form the forms", e);
+        } finally {
+            if (schemaStream != null) {
+                try {
+                    schemaStream.close();
+                } catch (IOException e) {
+                    LOGGER.log(Level.INFO, "Unable to close schema input stream", e);
+                }
+            }
+        }
+        validator = schema.newValidator();
     }
 
     /**
@@ -148,7 +181,7 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws IOException
      */
     @Override
-    public File done() throws IOException {
+    public File done() throws IOException, InvalidFormDefinitionException {
 
         final File formsDefinitionFile = File.createTempFile("forms", ".xml", WebBonitaConstantsUtils.getInstance().getTempFolder());
         formsDefinitionFile.deleteOnExit();
@@ -165,6 +198,10 @@ public class FormBuilderImpl implements IFormBuilder {
             transformer.transform(source, resultat);
 
             final byte[] xmlContent = outputStream.toByteArray();
+
+            //commented because studio might generate forms that are not complient with xsd but still working
+//            validateAgainstFormsXSD(xmlContent);
+
             outputStream.close();
 
             final FileOutputStream fileOutputStream = new FileOutputStream(formsDefinitionFile);
@@ -175,9 +212,22 @@ public class FormBuilderImpl implements IFormBuilder {
                 fileOutputStream.close();
             }
         } catch (final TransformerException e) {
-            LOGGER.log(Level.WARNING, "Error while generating the forms definition file.", e);
+            throw new InvalidFormDefinitionException("Error while generating the forms definition file.", e);
         }
         return formsDefinitionFile;
+    }
+
+    void validateAgainstFormsXSD(final byte[] xmlContent) throws InvalidFormDefinitionException {
+
+        String content = new String(xmlContent, Charset.forName("UTF-8"));
+        try {
+            StreamSource source = new StreamSource(new StringReader(content));
+            validator.validate(source);
+        } catch (SAXException e) {
+            throw new InvalidFormDefinitionException("Unable to parse the forms.xml using the forms.xsd", e);
+        } catch (IOException e) {
+            throw new InvalidFormDefinitionException("Unable to read the forms.xml", e);
+        }
     }
 
     /**
@@ -245,7 +295,8 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws InvalidFormDefinitionException
      */
     @Override
-    public IFormBuilder addAction(final ActionType actionType, final String variableName, final boolean isExternal, final String operator,
+    public IFormBuilder addAction(final ActionType actionType, final String variableName, final String variableType,
+            final String operator,
             final String operatorInputType, final String submitButtonId) throws InvalidFormDefinitionException {
         final String[] actionsParentsNames = { XMLForms.PAGE };
         try {
@@ -266,7 +317,7 @@ public class FormBuilderImpl implements IFormBuilder {
         final Element actionElement = document.createElement(XMLForms.ACTION);
         actionElement.setAttribute(XMLForms.TYPE, actionType.name());
         addChild(actionElement, XMLForms.VARIABLE, variableName, false, true);
-        addChild(actionElement, XMLForms.IS_EXTERNAL, Boolean.toString(isExternal), false, true);
+        addChild(actionElement, XMLForms.VARIABLE_TYPE, variableType, false, true);
         addChild(actionElement, XMLForms.OPERATOR, operator, false, true);
         addChild(actionElement, XMLForms.INPUT_TYPE, operatorInputType, false, true);
         addChild(actionElement, XMLForms.SUBMIT_BUTTON, submitButtonId, false, true);
@@ -2054,6 +2105,37 @@ public class FormBuilderImpl implements IFormBuilder {
     public IFormBuilder addDependentExpression(final String name, final String content, final String expressionType, final String returnType,
             final String interpreter) throws InvalidFormDefinitionException {
 
+        return addDependentExpression(name, content, expressionType, returnType, interpreter, true);
+    }
+
+    /**
+     * Add an expression to the current element, as its the dependent expressions
+     * 
+     * @param name
+     *            the name of the expression
+     * @param content
+     *            the real script code of the expression
+     * @param expressionType
+     * @param returnType
+     * @param interpreter
+     * @param isSameLevelDependency
+     */
+    @Override
+    public IFormBuilder addDependentExpression(final String name, final String content, final String expressionType, final String returnType,
+            final String interpreter, final boolean isSameLevelDependency) throws InvalidFormDefinitionException {
+
+        if (isSameLevelDependency) {
+            final String[] expressionElementNames = { XMLForms.EXPRESSION };
+            try {
+                peekParentFirst(expressionElementNames);
+            } catch (final InvalidFormDefinitionException e) {
+                final String errorMessage = "The method addDependentExpression can only be called once an expression has been created.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new InvalidFormDefinitionException(errorMessage, e);
+            }
+        }
         Element dependenciesElement = findChildElement(currentElement, XMLForms.DEPENDENCIES);
         if (dependenciesElement == null) {
             dependenciesElement = document.createElement(XMLForms.DEPENDENCIES);
@@ -2062,7 +2144,28 @@ public class FormBuilderImpl implements IFormBuilder {
             currentElement = dependenciesElement;
         }
         addExpression(name, content, expressionType, returnType, interpreter);
-        currentElement = (Element) dependenciesElement.getParentNode();
+        return this;
+    }
+
+    /**
+     * End an expression dependencies group
+     * 
+     * @return an implementation of {@link IFormBuilder}
+     * @throws InvalidFormDefinitionException
+     */
+    @Override
+    public IFormBuilder endExpressionDependencies() throws InvalidFormDefinitionException {
+        final String[] expressionElementNames = { XMLForms.EXPRESSION };
+        try {
+            currentElement = (Element) currentElement.getParentNode();
+            peekParentFirst(expressionElementNames);
+        } catch (final InvalidFormDefinitionException e) {
+            final String errorMessage = "The method endExpressionDependencies can only be called once an expression dependency has been created.";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, errorMessage, e);
+            }
+            throw new InvalidFormDefinitionException(errorMessage, e);
+        }
         return this;
     }
 
@@ -2480,12 +2583,43 @@ public class FormBuilderImpl implements IFormBuilder {
      *             if no element among the current element's parents has one of the required type
      */
     protected Element peek(final String[] elementTypes) throws InvalidFormDefinitionException {
+
+        Element element = currentElement;
         final List<String> elementTypesList = Arrays.asList(elementTypes);
-        while (currentElement.getParentNode() != null && currentElement.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
-            if (elementTypesList.contains(currentElement.getNodeName())) {
+        while (element.getParentNode() != null && element.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
+            if (elementTypesList.contains(element.getNodeName())) {
+                currentElement = element;
                 return currentElement;
             }
-            currentElement = (Element) currentElement.getParentNode();
+            element = (Element) element.getParentNode();
+        }
+        if (elementTypesList.contains(element.getNodeName())) {
+            currentElement = element;
+            return currentElement;
+        } else {
+            throw new InvalidFormDefinitionException("No required element present among the parents of the current element.");
+        }
+    }
+
+    /**
+     * Retrieve the first element in the DOM whose type is among the element types provided
+     * 
+     * @param elementTypes
+     *            array of required element types
+     * @return the first {@link Element} in the stack whose type is among the element types provided
+     * @throws InvalidFormDefinitionException
+     *             if no element among the current element's parents has one of the required type
+     */
+    protected Element peekParentFirst(final String[] elementTypes) throws InvalidFormDefinitionException {
+
+        Element element = currentElement;
+        final List<String> elementTypesList = Arrays.asList(elementTypes);
+        while (element.getParentNode() != null && element.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
+            element = (Element) element.getParentNode();
+            if (elementTypesList.contains(element.getNodeName())) {
+                currentElement = element;
+                return currentElement;
+            }
         }
         if (elementTypesList.contains(currentElement.getNodeName())) {
             return currentElement;

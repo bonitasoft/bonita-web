@@ -42,7 +42,7 @@ public interface IFormBuilder {
      *             if the generated document is not valid
      * @throws IOException
      */
-    File done() throws IOException;
+    File done() throws IOException, InvalidFormDefinitionException;
 
     /**
      * Initiate the form definition
@@ -364,6 +364,8 @@ public interface IFormBuilder {
      *            the action type
      * @param variableName
      *            the name of the variable (if it's a set variable action)
+     * @param variableName
+     *            the type of the variable, it can be document, data, and other types handled by the engine
      * @param operator
      *            the operator for the action
      * @param operatorInputType
@@ -373,7 +375,8 @@ public interface IFormBuilder {
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
-    IFormBuilder addAction(ActionType actionType, String variableName, boolean isExternal, String operator, String operatorInputType, String submitButtonId)
+    IFormBuilder addAction(ActionType actionType, String variableName, String variableType, String operator, String operatorInputType,
+            String submitButtonId)
             throws InvalidFormDefinitionException;
 
     /**
@@ -778,6 +781,29 @@ public interface IFormBuilder {
      */
     IFormBuilder addDependentExpression(String name, String content, String expressionType, String returnType, String interpreter)
             throws InvalidFormDefinitionException;
+
+    /**
+     * Add dependent expressions
+     * 
+     * @param name
+     * @param content
+     * @param expressionType
+     * @param returnType
+     * @param interpreter
+     * @param isSameLevelDependency
+     * @return
+     * @throws InvalidFormDefinitionException
+     */
+    IFormBuilder addDependentExpression(String name, String content, String expressionType, String returnType, String interpreter, boolean isSameLevelDependency)
+            throws InvalidFormDefinitionException;
+
+    /**
+     * End an expression dependencies group
+     * 
+     * @return an implementation of {@link IFormBuilder}
+     * @throws InvalidFormDefinitionException
+     */
+    IFormBuilder endExpressionDependencies() throws InvalidFormDefinitionException;
 
     /**
      * Add parameter expression
