@@ -26,32 +26,26 @@ import org.bonitasoft.engine.profile.impl.ProfileImpl;
 public class EngineProfileBuilder {
 
     private String name;
+
     private String description;
-    private String iconPath;
 
     public static EngineProfileBuilder anEngineProfile() {
         return new EngineProfileBuilder();
     }
 
-    public EngineProfileBuilder withName(String name) {
+    public EngineProfileBuilder withName(final String name) {
         this.name = name;
         return this;
     }
 
-    public EngineProfileBuilder withDescription(String description) {
+    public EngineProfileBuilder withDescription(final String description) {
         this.description = description;
         return this;
     }
 
-    public EngineProfileBuilder withIconPath(String path) {
-        this.iconPath = path;
-        return this;
-    }
-
     public Profile build() {
-        ProfileImpl profile = new ProfileImpl(name);
+        final ProfileImpl profile = new ProfileImpl(name);
         profile.setDescription(description);
-        profile.setIconPath(iconPath);
         return profile;
     }
 
