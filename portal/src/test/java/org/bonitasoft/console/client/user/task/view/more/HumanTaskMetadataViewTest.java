@@ -36,11 +36,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.google.gwt.dom.client.AnchorElement;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.LabelElement;
-import com.google.gwt.dom.client.ParagraphElement;
-import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.i18n.client.DateTimeFormatInfo;
 import com.google.gwt.i18n.client.impl.LocaleInfoImpl;
 import com.google.gwtmockito.GwtMock;
@@ -55,21 +50,24 @@ import com.google.gwtmockito.fakes.FakeUiBinderProvider;
 @RunWith(GwtMockitoTestRunner.class)
 public class HumanTaskMetadataViewTest {
 
-    @GwtMock
-    SpanElement spanElement;
+    // @GwtMock
+    // SpanElement spanElement;
+    //
+    // @GwtMock
+    // SpanElement spanElement2;
 
-    @GwtMock
-    AnchorElement anchorElement;
-
-    @GwtMock
-    DivElement divElement;
-
-    @GwtMock
-    LabelElement labelElement;
-
-    @GwtMock
-    ParagraphElement paragraphElement;
-
+    // @GwtMock
+    // AnchorElement anchorElement;
+    //
+    // @GwtMock
+    // DivElement divElement;
+    //
+    // @GwtMock
+    // LabelElement labelElement;
+    //
+    // @GwtMock
+    // ParagraphElement paragraphElement;
+    //
     @GwtMock
     LocaleInfoImpl localeInfoImpl;
 
@@ -97,10 +95,6 @@ public class HumanTaskMetadataViewTest {
         when(humanTaskItem.getExecutedBySubstituteUserId()).thenReturn(APIID.makeAPIID(1L));
         when(humanTaskItem.getCaseId()).thenReturn(APIID.makeAPIID(10L));
         when(humanTaskItem.getDueDate()).thenReturn("2012-12-05 00:00:00.000");
-        // due to some bug in GWTMockito that sets a mock DateTimeFormatInfo to its DateTimeFormat with no behaviour for ampms() method that should return a new
-        // String[]{"AM", "PM"}
-        // we cannot use the date formatting with 'MM/dd/YYYY h:mm a'
-        // this have been fixed in the 1.1.4-SNAPSHOT version
         when(humanTaskItem.getAssignedDate()).thenReturn("2011-01-04 12:25:00.123");
         UserItem userItem = mock(UserItem.class);
         when(userItem.getFirstName()).thenReturn("UserFirstname");
@@ -110,19 +104,20 @@ public class HumanTaskMetadataViewTest {
 
         HumanTaskMetadataView humanTaskMetadataView = new HumanTaskMetadataView(humanTaskItem);
         String priorityValue = Formatter.formatPriority(IHumanTaskItem.VALUE_PRIORITY_NORMAL);
-        verify(spanElement, times(1)).setInnerText(priorityValue);
+        verify(humanTaskMetadataView.priority, times(1)).setInnerText(priorityValue);
         String assignedToValue = Formatter.formatUser(userItem);
-        verify(spanElement, times(2)).setInnerText(assignedToValue);
+        verify(humanTaskMetadataView.assignedTo, times(1)).setInnerText(assignedToValue);
+        verify(humanTaskMetadataView.doneBy, times(1)).setInnerText(assignedToValue);
         String dueDateValue = Formatter.formatDate(humanTaskItem.getDueDate(), DISPLAY_RELATIVE);
-        verify(spanElement, times(1)).setInnerText(dueDateValue);
-        verify(divElement, never()).removeFromParent();
+        verify(humanTaskMetadataView.dueDate, times(1)).setInnerText(dueDateValue);
+        verify(humanTaskMetadataView.doneByContainer, never()).removeFromParent();
 
         String lastUpdateDateLabel = humanTaskMetadataView.messages.last_update_date_label() + ": ";
         String lastUpdateDateTitle = humanTaskMetadataView.messages.last_update_date_title();
-        verify(labelElement, times(1)).setTitle(lastUpdateDateTitle);
-        verify(labelElement, times(1)).setInnerText(lastUpdateDateLabel);
+        verify(humanTaskMetadataView.labelDoneOn, times(1)).setTitle(lastUpdateDateTitle);
+        verify(humanTaskMetadataView.labelDoneOn, times(1)).setInnerText(lastUpdateDateLabel);
         String assignedDate = Formatter.formatDate(humanTaskItem.getAssignedDate(), DISPLAY);
-        verify(spanElement, times(1)).setInnerText(assignedDate);
+        verify(humanTaskMetadataView.assignedDate, times(1)).setInnerText(assignedDate);
 
     }
 
@@ -135,9 +130,6 @@ public class HumanTaskMetadataViewTest {
         when(humanTaskItem.getExecutedBySubstituteUserId()).thenReturn(APIID.makeAPIID(2L));
         when(humanTaskItem.getCaseId()).thenReturn(APIID.makeAPIID(10L));
         when(humanTaskItem.getDueDate()).thenReturn("2012-12-05 00:00:00.000");
-        // due to some bug in GWTMockito that sets a mock DateTimeFormatInfo to its DateTimeFormat with no behaviour for ampms() method that should return a new
-        // String[]{"AM", "PM"}
-        // we cannot use the date formatting with 'MM/dd/YYYY h:mm a'
         when(humanTaskItem.getAssignedDate()).thenReturn("2011-01-04 12:25:00.123");
         UserItem userItem = mock(UserItem.class);
         when(userItem.getFirstName()).thenReturn("UserFirstname");
@@ -151,22 +143,22 @@ public class HumanTaskMetadataViewTest {
 
         HumanTaskMetadataView humanTaskMetadataView = new HumanTaskMetadataView(humanTaskItem);
         String priorityValue = Formatter.formatPriority(IHumanTaskItem.VALUE_PRIORITY_NORMAL);
-        verify(spanElement, times(1)).setInnerText(priorityValue);
+        verify(humanTaskMetadataView.priority, times(1)).setInnerText(priorityValue);
         String assignedToValue = Formatter.formatUser(userItem);
-        verify(spanElement, times(1)).setInnerText(assignedToValue);
+        verify(humanTaskMetadataView.assignedTo, times(1)).setInnerText(assignedToValue);
         String dueDateValue = Formatter.formatDate(humanTaskItem.getDueDate(), DISPLAY_RELATIVE);
-        verify(spanElement, times(1)).setInnerText(dueDateValue);
+        verify(humanTaskMetadataView.dueDate, times(1)).setInnerText(dueDateValue);
         String executedByUser = Formatter.formatUser(humanTaskItem.getExecutedBySubstituteUser()) + _(" for ")
                 + Formatter.formatUser(humanTaskItem.getExecutedByUser());
-        verify(spanElement, times(1)).setInnerText(executedByUser);
-        verify(divElement, never()).removeFromParent();
+        verify(humanTaskMetadataView.doneBy, times(1)).setInnerText(executedByUser);
+        verify(humanTaskMetadataView.doneByContainer, never()).removeFromParent();
 
         String lastUpdateDateLabel = humanTaskMetadataView.messages.last_update_date_label() + ": ";
         String lastUpdateDateTitle = humanTaskMetadataView.messages.last_update_date_title();
-        verify(labelElement, times(1)).setTitle(lastUpdateDateTitle);
-        verify(labelElement, times(1)).setInnerText(lastUpdateDateLabel);
+        verify(humanTaskMetadataView.labelDoneOn, times(1)).setTitle(lastUpdateDateTitle);
+        verify(humanTaskMetadataView.labelDoneOn, times(1)).setInnerText(lastUpdateDateLabel);
         String assignedDate = Formatter.formatDate(humanTaskItem.getAssignedDate(), DISPLAY);
-        verify(spanElement, times(1)).setInnerText(assignedDate);
+        verify(humanTaskMetadataView.assignedDate, times(1)).setInnerText(assignedDate);
 
     }
 
@@ -179,9 +171,6 @@ public class HumanTaskMetadataViewTest {
         when(humanTaskItem.getExecutedBySubstituteUserId()).thenReturn(APIID.makeAPIID(2L));
         when(humanTaskItem.getCaseId()).thenReturn(APIID.makeAPIID(10L));
         when(humanTaskItem.getDueDate()).thenReturn("2012-12-05 00:00:00.000");
-        // due to some bug in GWTMockito that sets a mock DateTimeFormatInfo to its DateTimeFormat with no behaviour for ampms() method that should return a new
-        // String[]{"AM", "PM"}
-        // we cannot use the date formatting with 'MM/dd/YYYY h:mm a'
         String assignedDateStr = "2011-01-04 12:25:00.123";
         when(humanTaskItem.getAssignedDate()).thenReturn(assignedDateStr);
         UserItem userItem = mock(UserItem.class);
@@ -196,21 +185,21 @@ public class HumanTaskMetadataViewTest {
 
         HumanTaskMetadataView humanTaskMetadataView = new HumanTaskMetadataView(humanTaskItem);
         String priorityValue = Formatter.formatPriority(IHumanTaskItem.VALUE_PRIORITY_NORMAL);
-        verify(spanElement, times(1)).setInnerText(priorityValue);
+        verify(humanTaskMetadataView.priority, times(1)).setInnerText(priorityValue);
         String assignedToValue = Formatter.formatUser(userItem);
-        verify(spanElement, times(1)).setInnerText(assignedToValue);
+        verify(humanTaskMetadataView.assignedTo, times(1)).setInnerText(assignedToValue);
         String dueDateValue = Formatter.formatDate(humanTaskItem.getDueDate(), DISPLAY_RELATIVE);
-        verify(spanElement, times(1)).setInnerText(dueDateValue);
+        verify(humanTaskMetadataView.dueDate, times(1)).setInnerText(dueDateValue);
         String executedByUser = Formatter.formatUser(humanTaskItem.getExecutedBySubstituteUser()) + _(" for ")
                 + Formatter.formatUser(humanTaskItem.getExecutedByUser());
-        verify(spanElement, times(1)).setInnerText(executedByUser);
-        verify(divElement, never()).removeFromParent();
+        verify(humanTaskMetadataView.doneBy, times(1)).setInnerText(executedByUser);
+        verify(humanTaskMetadataView.doneByContainer, never()).removeFromParent();
 
         String lastUpdateDateLabel = humanTaskMetadataView.messages.done_on_label() + ": ";
-        verify(labelElement, never()).setTitle(anyString());
-        verify(labelElement, times(1)).setInnerText(lastUpdateDateLabel);
+        verify(humanTaskMetadataView.doneBy, never()).setTitle(anyString());
+        verify(humanTaskMetadataView.labelDoneOn, times(1)).setInnerText(lastUpdateDateLabel);
         String assignedDate = Formatter.formatDate(assignedDateStr, DISPLAY);
-        verify(spanElement, times(1)).setInnerText(assignedDate);
+        verify(humanTaskMetadataView.assignedDate, times(1)).setInnerText(assignedDate);
 
     }
 

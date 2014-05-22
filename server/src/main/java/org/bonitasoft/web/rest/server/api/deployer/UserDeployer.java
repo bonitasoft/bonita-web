@@ -35,7 +35,6 @@ public class UserDeployer implements Deployer {
     public UserDeployer(DatastoreHasGet<UserItem> getter, String attribute) {
         this.getter = getter;
         this.attribute = attribute;
-
     }
 
     @Override

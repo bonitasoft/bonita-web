@@ -3,7 +3,7 @@
 	<parent>
         <groupId>org.bonitasoft.console</groupId>
         <artifactId>bonita-console</artifactId>
-        <version>6.3.0-SNAPSHOT</version>
+        <version>6.4.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>bonita-home</artifactId>
 	<packaging>jar</packaging>
@@ -19,6 +19,10 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <targetPath>${bonita.home}/home</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${bonita.home}/engine-less</targetPath>
             </resource>
         </resources>
 
@@ -46,7 +50,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>unpack-looknfeel</id>
+						<id>unpack-looknfeel-for-full-bonita-home</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -62,9 +66,29 @@
 									<overWrite>false</overWrite>
 								</artifactItem>
 							</artifactItems>
-							    <outputDirectory>${bonita.home}/home/client/platform/tenant-template/work/theme/portal</outputDirectory>
+                            <outputDirectory>${bonita.home}/home/client/platform/tenant-template/work/theme/portal</outputDirectory>
 						</configuration>
 					</execution>
+                    <execution>
+                        <id>unpack-looknfeel-for-engine-less-bonita-home</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.bonitasoft.console</groupId>
+                                    <artifactId>looknfeel</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>css</classifier>
+                                    <type>zip</type>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${bonita.home}/engine-less/client/platform/tenant-template/work/theme/portal</outputDirectory>
+                        </configuration>
+                    </execution>
 				</executions>
 			</plugin>
 			<!--Create bonita home zip-->
@@ -80,9 +104,10 @@
 						<phase>package</phase>
 						<configuration>
 							<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
-							<appendAssemblyId>false</appendAssemblyId>
+							<appendAssemblyId>true</appendAssemblyId>
 							<descriptors>
-								<descriptor>assembly.xml</descriptor>
+								<descriptor>assembly-full.xml</descriptor>
+                                <descriptor>assembly-engine-less.xml</descriptor>
 							</descriptors>
 						</configuration>
 					</execution>
