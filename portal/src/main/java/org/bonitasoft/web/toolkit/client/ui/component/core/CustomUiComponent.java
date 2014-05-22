@@ -15,23 +15,46 @@
 package org.bonitasoft.web.toolkit.client.ui.component.core;
 
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.UIObject;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Created by Vincent Elcrin
  * Date: 02/10/13
  * Time: 16:22
  */
-public class UiComponent extends Component {
+public class CustomUiComponent extends UiComponent {
 
-    protected final UIObject uiObject;
-
-    public UiComponent(final UIObject uiObject) {
-        this.uiObject = uiObject;
+    public CustomUiComponent(final UIObject uiObject) {
+        super(uiObject);
     }
 
     @Override
     protected Element makeElement() {
-        return uiObject.getElement();
+
+        if (uiObject instanceof Widget) {
+            adopt((Widget) uiObject);
+        }
+
+        return super.makeElement();
+    }
+
+    class WidgetWrapper extends SimplePanel {
+
+        WidgetWrapper(final Widget child) {
+            super(child);
+        }
+
+        public void attach() {
+            onAttach();
+        }
+    }
+
+    private void adopt(final Widget widget) {
+        final WidgetWrapper wrapper = new WidgetWrapper(widget);
+        wrapper.attach();
+        RootPanel.detachOnWindowClose(wrapper);
     }
 }
