@@ -22,7 +22,7 @@ public class CustomUserInformationComposite extends Composite {
 
     interface Template extends SafeHtmlTemplates {
 
-        @Template("<div class=\"formentry formentry_firstname mandatory text\">" +
+        @Template("<div class=\"formentry mandatory text\">" +
                 "<div class=\"label\"><label title=\"{2}\">{1}</label></div>" +
                 "<div class=\"input\"><input type=\"text\" name=\"{1}\" maxlength=\"50\" value=\"{3}\" tabindex=\"{0}\"></div>" +
                 "</div>")
@@ -31,7 +31,7 @@ public class CustomUserInformationComposite extends Composite {
 
     private static final Template TEMPLATE = GWT.create(Template.class);
 
-    TemplateRepeat<CustomUserInfoItem> template = new TemplateRepeat<CustomUserInfoItem>("formentry") {
+    private TemplateRepeat<CustomUserInfoItem> template = new TemplateRepeat<CustomUserInfoItem>("formentry") {
 
         @Override
         public SafeHtml render(Cell.Context context, CustomUserInfoItem information) {
@@ -55,7 +55,6 @@ public class CustomUserInformationComposite extends Composite {
                 repeater.setRowData(information);
             }
         });
-
         template.listen(new DirtyInputHandler<CustomUserInfoItem>() {
 
             @Override

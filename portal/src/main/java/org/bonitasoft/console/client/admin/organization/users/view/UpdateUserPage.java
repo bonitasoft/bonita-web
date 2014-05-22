@@ -39,6 +39,7 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
@@ -54,6 +55,8 @@ public class UpdateUserPage extends Page {
     public static final String TOKEN = "updateuser";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
+
+    private UpdateUserFormAction submitAction = new UpdateUserFormAction();
 
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
@@ -98,7 +101,7 @@ public class UpdateUserPage extends Page {
 
         final String itemId = this.getParameter(PARAMETER_USER_ID);
         form.addHiddenEntry(PARAMETER_USER_ID, itemId);
-        form.addButton(new JsId("save"), _("Save"), _("Save this user modifications"), new UpdateUserFormAction());
+        form.addButton(new JsId("save"), _("Save"), _("Save this user modifications"), submitAction);
         form.addFiller(new FormFiller() {
 
             @Override
@@ -210,11 +213,18 @@ public class UpdateUserPage extends Page {
     }
 
     private Form addCustomInformation(final Form form) {
+        final CustomUserInformationModel model = new CustomUserInformationModel(getParameter(PARAMETER_USER_ID));
         form.openTab(_("Other"));
         form.addEntry(new UiComponent(
-                new CustomUserInformationComposite(new CustomUserInformationModel(getParameter(PARAMETER_USER_ID))),
+                new CustomUserInformationComposite(model),
                 true));
         form.closeTab();
+        submitAction.onSubmit(new Action() {
+            @Override
+            public void execute() {
+                model.flushChanges();
+            }
+        });
         return form;
     }
 

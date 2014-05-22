@@ -23,7 +23,7 @@ public abstract class TemplateRepeat<T> extends AbstractCell<T> {
     private GwtEvent.Type<DirtyInputHandler<T>> dirtyInputEventType = new GwtEvent.Type<DirtyInputHandler<T>>();
 
     public TemplateRepeat(String style) {
-        super(BrowserEvents.CLICK, BrowserEvents.KEYDOWN);
+        super(BrowserEvents.CLICK, BrowserEvents.KEYUP);
         this.style = style;
     }
 
@@ -49,6 +49,11 @@ public abstract class TemplateRepeat<T> extends AbstractCell<T> {
             notify(context, event, input, item);
         }
         super.onBrowserEvent(context, parent, item, event, valueUpdater);
+    }
+
+    @Override
+    public boolean isEditing(Context context, Element parent, T value) {
+        return true;
     }
 
     public void listen(DirtyInputHandler<T> handler) {
