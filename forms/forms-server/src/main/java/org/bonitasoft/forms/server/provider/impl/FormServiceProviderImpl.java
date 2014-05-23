@@ -764,9 +764,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             } catch (final BPMExpressionEvaluationException e) {
-                if (getLogger().isLoggable(Level.FINE)) {
-                    getLogger().log(Level.FINE, e.getMessage(), e, context);
-                }
+                logSevereWithContext(e.getMessage(), e, context);
                 throw new FormInitializationException(e.getMessage());
 
             } catch (final InvalidSessionException e) {

@@ -33,14 +33,11 @@ public class ProfileItemConverterTest extends APITestWithMock {
 
     @Test
     public void testProfileItemConvertion() {
-        Profile profile = anEngineProfile()
-                .withName("aName")
-                .withDescription("aDescription")
-                .withIconPath("aPath").build();
+        final Profile profile = anEngineProfile().withName("aName").withDescription("aDescription").build();
 
-        ProfileItem item = new ProfileItemConverter().convert(profile);
+        final ProfileItem item = new ProfileItemConverter().convert(profile);
 
-        assertTrue(areEquals(aProfileItem().fromEngineItem(profile).build(), item));
+        assertTrue(areEquals(aProfileItem().fromEngineItem(profile).withIcon(ProfileItemConverter.DEFAULT_PROFILE_ICONPATH).build(), item));
     }
 
 }
