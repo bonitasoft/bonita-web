@@ -45,6 +45,7 @@ public class UiComponent extends Component implements FormNode {
         this.adopt = adopt;
     }
 
+    public UiComponent(UIObject uiObject) {
         this(uiObject, false);
     }
 
