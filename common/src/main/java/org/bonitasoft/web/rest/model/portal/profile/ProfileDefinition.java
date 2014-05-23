@@ -69,11 +69,11 @@ public class ProfileDefinition extends ItemDefinition<ProfileItem> {
         
         createAttribute(ProfileItem.ATTRIBUTE_UPDATED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         
-        createAttribute(ProfileItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATE);
+        createAttribute(ProfileItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
         
         createAttribute(ProfileItem.ATTRIBUTE_CREATED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         
-        createAttribute(ProfileItem.ATTRIBUTE_CREATION_DATE, ItemAttribute.TYPE.DATE);
+        createAttribute(ProfileItem.ATTRIBUTE_CREATION_DATE, ItemAttribute.TYPE.DATETIME);
     }
 
     @Override
