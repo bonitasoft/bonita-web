@@ -50,11 +50,11 @@ public class GetProfileHelperTest extends APITestWithMock {
 
     @Test
     public void testWeCanRetrieveAProfile() throws Exception {
-        Profile aKnownProfile = anEngineProfile().withName("aName").withDescription("aDescription").withIconPath("aPath").build();
+        final Profile aKnownProfile = anEngineProfile().withName("aName").withDescription("aDescription").build();
         when(profileClient.getProfile(1L)).thenReturn(aKnownProfile);
 
-        ProfileItem item = getProfileHelper.get(APIID.makeAPIID(1L));
+        final ProfileItem item = getProfileHelper.get(APIID.makeAPIID(1L));
 
-        assertTrue(areEquals(aProfileItem().fromEngineItem(aKnownProfile).build(), item));
+        assertTrue(areEquals(aProfileItem().fromEngineItem(aKnownProfile).withIcon(ProfileItemConverter.DEFAULT_PROFILE_ICONPATH).build(), item));
     }
 }

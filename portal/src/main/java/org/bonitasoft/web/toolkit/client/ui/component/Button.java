@@ -19,6 +19,8 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.utils.TypedString;
 
+import com.google.gwt.uibinder.client.UiConstructor;
+
 /**
  * A standard push-button component of the USerXP toolkit
  * 
@@ -26,6 +28,10 @@ import org.bonitasoft.web.toolkit.client.ui.utils.TypedString;
  */
 public class Button extends Link {
 
+    @UiConstructor
+    public Button(String label) {
+        super(label, null, (Action) null);
+    }
     /**
      * This constructor must be prefered to other
      */
