@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -32,27 +31,21 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Nicolas Tith
  * @author Séverin Moussel
  */
-public class APIProfile extends ConsoleAPI<ProfileItem> implements
-        APIHasGet<ProfileItem>,
-        APIHasSearch<ProfileItem>
-{
-
-    private static final String PROFILES_ICON_FOLDER_PATH = "/" + WebBonitaConstants.PROFILES_ICONS_FOLDER_NAME;
+public class APIProfile extends ConsoleAPI<ProfileItem> implements APIHasGet<ProfileItem>, APIHasSearch<ProfileItem> {
 
     @Override
     protected ComposedDatastore<ProfileItem> defineDefaultDatastore() {
 
-        ProfileEngineClient profileClient = createProfileEngineClient();
+        final ProfileEngineClient profileClient = createProfileEngineClient();
 
-        ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<ProfileItem>();
+        final ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<ProfileItem>();
         datastore.setGetHelper(new GetProfileHelper(profileClient));
         datastore.setSearchHelper(new SearchProfilesHelper(profileClient));
         return datastore;
     }
 
     private ProfileEngineClient createProfileEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
-                .createProfileEngineClient();
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession())).createProfileEngineClient();
     }
 
     @Override
