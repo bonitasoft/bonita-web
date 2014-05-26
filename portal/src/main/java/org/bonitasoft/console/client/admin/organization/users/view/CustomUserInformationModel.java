@@ -12,6 +12,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIUpdateRequest;
+import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
@@ -47,10 +48,17 @@ public class CustomUserInformationModel {
 
         @Override
         public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-            onSuccess(JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()));
+
+            final ApiSearchResultPager pagination = ApiSearchResultPager.parse(headers.get("Content-Range"));
+
+            onSuccess(
+                    JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()),
+                    pagination.getCurrentPage(),
+                    pagination.getNbTotalResults(),
+                    pagination.getNbResultsByPage());
         }
 
-        abstract void onSuccess(List<CustomUserInfoItem> information);
+        abstract void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total);
     }
 
     public void search(final int page, final int size, Callback callback) {

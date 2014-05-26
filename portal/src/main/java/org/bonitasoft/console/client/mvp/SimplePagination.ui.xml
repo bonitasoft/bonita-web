@@ -1,0 +1,8 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:HTMLPanel styleName="pager">
+        <span ui:field="label" class="results_count" />
+        <!--<a class="prev disabled disable">Previous</a>-->
+        <!--<a class="next enable">Next</a>-->
+    </g:HTMLPanel>
+</ui:UiBinder>
