@@ -77,7 +77,7 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
 
     @Override
     public CustomUserInfoItem update(APIID id, Map<String, String> attributes) {
-        assertThat(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only value attribute can be updated"));
+        assertThat(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only the value attribute can be updated"));
 
         return converter.convert(getClient().setCustomUserInfoValue(
                 id.getPartAsLong(1),

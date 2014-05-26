@@ -75,9 +75,9 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
             final String orders,
             final Map<String, String> filters) {
 
-        assertThat(search == null, new _("Search term are not supported by this api"));
-        assertThat(filters == null || filters.isEmpty(), new _("Filters are not supported by this api"));
-        assertThat(orders.equals(FIX_ORDER), new _("Sort is not supported by this api"));
+        assertThat(search == null, new _("Search terms are not supported by this API"));
+        assertThat(filters == null || filters.isEmpty(), new _("Filters are not supported by this API"));
+        assertThat(orders.equals(FIX_ORDER), new _("Sorting is not supported by this API"));
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
         List<CustomUserInfoDefinitionItem> result = new ArrayList<CustomUserInfoDefinitionItem>();

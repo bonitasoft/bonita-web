@@ -53,9 +53,9 @@ public class APICustomUserInfoUser extends ConsoleAPI<CustomUserInfoItem> implem
 
     @Override
     public ItemSearchResult<CustomUserInfoItem> search(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
-        assertThat(containsOnly(FILTER_USER_ID, filters), new _("%name% filter is the only mandatory filter", new Arg("name", FILTER_USER_ID)));
-        assertThat(orders.equals(FIX_ORDER), new _("Sort is not supported by this api"));
-        assertThat(search == null, new _("Search term are not supported by this api"));
+        assertThat(containsOnly(FILTER_USER_ID, filters), new _("The only mandatory filter is %name%", new Arg("name", FILTER_USER_ID)));
+        assertThat(orders.equals(FIX_ORDER), new _("Sorting is not supported by this API"));
+        assertThat(search == null, new _("Search terms are not supported by this API"));
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
         List<CustomUserInfo> items = client.listCustomInformation(
