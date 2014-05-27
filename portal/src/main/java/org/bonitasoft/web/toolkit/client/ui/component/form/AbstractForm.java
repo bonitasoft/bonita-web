@@ -276,7 +276,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      * @param section
      *            The section to add
      */
-    protected final AbstractForm openSection(final Section section) {
+    public final AbstractForm openSection(final Section section) {
         // A section can't contain a section as direct child
         if (this.containers.size() > 1 && this.containers.lastElement() instanceof FormEntries) {
             closeSection();
@@ -320,7 +320,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      * Close the currently opened Section.<br>
      * If no section stacked, the function does nothing
      */
-    protected final AbstractForm closeSection() {
+    public final AbstractForm closeSection() {
         this.containers.pop();
         return this;
     }

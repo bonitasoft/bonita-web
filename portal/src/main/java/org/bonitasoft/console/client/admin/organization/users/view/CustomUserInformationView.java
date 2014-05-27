@@ -33,13 +33,18 @@ import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 
 public class CustomUserInformationView extends Composite {
 
+    private boolean editable;
+
     interface Template extends SafeHtmlTemplates {
 
         @Template("<div class=\"formentry mandatory text\">" +
                 "<div class=\"label\"><label title=\"{2}\">{1}</label></div>" +
                 "<div class=\"input\"><input type=\"text\" name=\"{1}\" maxlength=\"50\" value=\"{3}\" tabindex=\"{0}\"></div>" +
                 "</div>")
-        public SafeHtml line(int line, String name, String description, String value);
+        public SafeHtml editable(int line, String name, String description, String value);
+
+        @Template("<div class=\"definition _1 odd\"><label title=\"{1}\">{0}: </label><span>{2}</span></div>")
+        public SafeHtml readOnly(String name, String description, String value);
     }
 
     private static final Template TEMPLATE = GWT.create(Template.class);
@@ -49,14 +54,22 @@ public class CustomUserInformationView extends Composite {
         @Override
         public SafeHtml render(Context context, CustomUserInfoItem information) {
             CustomUserInfoDefinitionItem definition = information.getDefinition();
-            return TEMPLATE.line(context.getIndex() + 1, definition.getName(),
-                    definition.getDescription(), information.getValue());
+            if(editable) {
+                return TEMPLATE.editable(context.getIndex() + 1, definition.getName(),
+                        definition.getDescription(), information.getValue());
+            }
+            return TEMPLATE.readOnly(definition.getName(), definition.getDescription(), information.getValue());
         }
     };
 
     private Repeater<CustomUserInfoItem> repeater = new Repeater<CustomUserInfoItem>(template);
 
     public CustomUserInformationView(final CustomUserInformationModel model) {
+        this(model, false);
+    }
+
+    public CustomUserInformationView(final CustomUserInformationModel model, boolean editable) {
+        this.editable = editable;
         final FlowPanel panel = new FlowPanel();
         panel.add(repeater);
         initWidget(panel);
@@ -65,7 +78,7 @@ public class CustomUserInformationView extends Composite {
             @Override
             void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
                 repeater.setRowData(information);
-                panel.add(new SimplePagination(page, pageSize, total));
+                panel.add(new SimplePagination(page + 1, pageSize, total));
             }
         });
         template.listen(new DirtyInputHandler<CustomUserInfoItem>() {

@@ -44,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
@@ -127,6 +128,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         addBody(membershipSection(user));
         addBody(businessCardSection(user.getProfessionalData()));
         addBody(personalInformationSection(user.getPersonnalData()));
+        addBody(customInformationSection(user));
     }
 
     @Override
@@ -188,6 +190,14 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         definitions.append(new Definition(_("Phone") + ": ", _("the personnal phone number of the user"), item.getPhoneNumber()));
         definitions.append(new Definition(_("Mobile") + ": ", _("the personnal mobile phone number of the user"), item.getMobileNumber()));
         return personalInformationSection.addBody(definitions);
+    }
+
+    private Section customInformationSection(UserItem user) {
+        final Section customInformationSection = new Section(new JsId("customInformationSection"), _("Custom information"));
+        final ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
+        definitions.append(new UiComponent(
+                new CustomUserInformationView(new CustomUserInformationModel(user.getId().toString())), true));
+        return customInformationSection.addBody(definitions);
     }
 
     private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {

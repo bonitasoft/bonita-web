@@ -26,6 +26,7 @@ import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminP
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
@@ -43,8 +44,10 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Tab;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 
 /**
  * @author Yongtao Guo
@@ -214,17 +217,18 @@ public class UpdateUserPage extends Page {
 
     private Form addCustomInformation(final Form form) {
         final CustomUserInformationModel model = new CustomUserInformationModel(getParameter(PARAMETER_USER_ID));
-        form.openTab(_("Other"));
-        form.addEntry(new UiComponent(
-                new CustomUserInformationView(model),
+
+        final Tab tab = new Tab(_("Other"));
+        tab.append(new UiComponent(
+                new CustomUserInformationView(model, true),
                 true));
-        form.closeTab();
         submitAction.onSubmit(new Action() {
             @Override
             public void execute() {
                 model.flushChanges();
             }
         });
+        form.openSection(tab).closeSection();
         return form;
     }
 
