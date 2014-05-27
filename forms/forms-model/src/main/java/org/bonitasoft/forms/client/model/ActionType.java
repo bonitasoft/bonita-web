@@ -22,5 +22,5 @@ package org.bonitasoft.forms.client.model;
  * @author Anthony Birembaut
  */
 public enum ActionType {
-    ASSIGNMENT, JAVA_METHOD, XPATH_UPDATE_QUERY, EXECUTE_CONNECTOR;
+    ASSIGNMENT, JAVA_METHOD, XPATH_UPDATE_QUERY, DELETION, EXECUTE_CONNECTOR;
 }
