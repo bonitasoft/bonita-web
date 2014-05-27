@@ -227,7 +227,7 @@ public class PageflowViewController {
                     final FormTerminationHandler formTerminationHandler = new FormTerminationHandler(confirmationPageHandler);
 
                     // if the parameter autoInstanciate is set explicitly to false, the we skip the form
-                    if (!Boolean.FALSE.toString().equals(autoInstantiate)) {
+                    if (!Boolean.FALSE.toString().equals(autoInstantiate) || processIdIsInCookie) {
                         // write the cookie without the process id
                         Cookies.setCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY, JSonSerializer.serialize(processIdArray));
                         formsServiceAsync.skipForm(formID, urlContext, formTerminationHandler);
