@@ -36,6 +36,7 @@ public class SimplePagination extends Composite {
     }
 
     private static Binder binder = GWT.create(Binder.class);
+
     @UiField
     SpanElement label;
 
