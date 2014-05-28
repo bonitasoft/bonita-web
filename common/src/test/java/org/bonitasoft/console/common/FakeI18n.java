@@ -15,7 +15,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.bonitasoft.web.toolkit.client.common.i18n;
+package org.bonitasoft.console.common;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 /**
  * Created by Vincent Elcrin

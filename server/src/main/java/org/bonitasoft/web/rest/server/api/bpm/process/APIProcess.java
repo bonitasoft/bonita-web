@@ -145,7 +145,7 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
 
     }
 
-    private String uploadIcon(final String iconTempPath) {
+    String uploadIcon(final String iconTempPath) {
         final String path = uploadAutoRename(
                 ProcessItem.ATTRIBUTE_ICON,
                 iconTempPath,
