@@ -22,11 +22,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
+import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
-import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
@@ -45,9 +46,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Tab;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 
 /**
  * @author Yongtao Guo
@@ -216,7 +214,8 @@ public class UpdateUserPage extends Page {
     }
 
     private Form addCustomInformation(final Form form) {
-        final CustomUserInformationModel model = new CustomUserInformationModel(getParameter(PARAMETER_USER_ID));
+        final CustomUserInformationModel model = new CustomUserInformationModel(
+                new RequestFactory(), getParameter(PARAMETER_USER_ID));
 
         final Tab tab = new Tab(_("Other"));
         tab.append(new UiComponent(

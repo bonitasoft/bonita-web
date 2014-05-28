@@ -23,6 +23,7 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
+import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.console.client.uib.SafeHtmlParser;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
@@ -61,9 +62,9 @@ import com.google.gwt.user.client.Element;
 public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     public static final String TOKEN = "usermoredetailsadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
         PRIVILEGES.add(GroupListingAdminPage.TOKEN);
@@ -84,11 +85,11 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         if (user.isEnabled()) {
             setTitle(user.getTitle() + " " + user.getFirstName() + " " + user.getLastName());
         } else {
-            setTitle(user.getTitle() + " " + user.getFirstName() + " " + user.getLastName(), 
+            setTitle(user.getTitle() + " " + user.getFirstName() + " " + user.getLastName(),
                     new Text("inactive").addClass("inactive-user").setTooltip(_("Inactive user")));
         }
     }
-    
+
     @Override
     protected boolean isDescriptionBeforeMetadatas() {
         return false;
@@ -195,8 +196,9 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     private Section customInformationSection(UserItem user) {
         final Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
         final ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
-        definitions.append(new UiComponent(
-                new CustomUserInformationView(new CustomUserInformationModel(user.getId().toString())), true));
+        definitions.append(new UiComponent(new CustomUserInformationView(
+                        new CustomUserInformationModel(new RequestFactory(), user.getId().toString())), true
+        ));
         return customInformationSection.addBody(definitions);
     }
 

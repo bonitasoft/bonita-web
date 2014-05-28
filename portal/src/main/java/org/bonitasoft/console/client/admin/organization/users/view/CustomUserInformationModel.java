@@ -1,9 +1,26 @@
+/**
+ * Copyright (C) 2014 Bonitasoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.console.client.admin.organization.users.view;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoValueDefinition;
@@ -20,11 +37,14 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public class CustomUserInformationModel {
 
+    private RequestFactory requestFactory;
+
     private String userId;
 
     private Map<APIID, IItem> changes = new HashMap<APIID, IItem>();
 
-    public CustomUserInformationModel(String userId) {
+    public CustomUserInformationModel(RequestFactory requestFactory, String userId) {
+        this.requestFactory = requestFactory;
         this.userId = userId;
     }
 
@@ -36,7 +56,7 @@ public class CustomUserInformationModel {
 
     public void flushChanges() {
         for (APIID id : changes.keySet()) {
-            APIUpdateRequest request = new APIUpdateRequest(CustomUserInfoValueDefinition.get());
+            APIUpdateRequest request = requestFactory.createUpdate(CustomUserInfoValueDefinition.get());
             request.setId(id);
             request.setItem(changes.get(id));
             request.run();
@@ -60,7 +80,7 @@ public class CustomUserInformationModel {
     }
 
     public void search(final int page, final int size, Callback callback) {
-        APISearchRequest request = new APISearchRequest(CustomUserInfoDefinition.get());
+        APISearchRequest request = requestFactory.createSearch(CustomUserInfoDefinition.get());
         request.setPage(page);
         request.setResultsPerPage(size);
         request.addFilter(CustomUserInfoItem.ATTRIBUTE_USER_ID, userId);
