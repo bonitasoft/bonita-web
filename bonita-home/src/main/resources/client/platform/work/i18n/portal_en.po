@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-23 01:03+0200\n"
-"PO-Revision-Date: 2014-05-27 17:32-0400\n"
+"POT-Creation-Date: 2014-05-29 01:01+0200\n"
+"PO-Revision-Date: 2014-05-28 20:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -646,7 +646,7 @@ msgstr "MMMM dd, yyyy"
 msgid " for "
 msgstr " for "
 
-#: portal/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:84
+#: portal/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:82
 msgid "message"
 msgstr "message"
 
