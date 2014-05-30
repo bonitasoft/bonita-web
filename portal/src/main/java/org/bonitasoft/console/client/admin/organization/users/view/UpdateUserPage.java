@@ -219,8 +219,7 @@ public class UpdateUserPage extends Page {
 
         final Tab tab = new Tab(_("Other"));
         tab.append(new UiComponent(
-                new CustomUserInformationView(model, true),
-                true));
+                new CustomUserInformationView(model, true)));
         submitAction.onSubmit(new Action() {
             @Override
             public void execute() {

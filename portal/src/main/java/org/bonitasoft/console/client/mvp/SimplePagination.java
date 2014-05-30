@@ -23,9 +23,12 @@ import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.ui.component.event.ActionEvent;
 
 public class SimplePagination extends Composite {
 
@@ -64,5 +67,15 @@ public class SimplePagination extends Composite {
                             new Arg("start_result", page),
                             new Arg("end_result", pageSize),
                             new Arg("total_results", total));
+    }
+
+    @UiHandler("previous")
+    void doPrevious(ActionEvent e) {
+        Window.alert("previous");
+    }
+
+    @UiHandler("next")
+    void doNext(ActionEvent e) {
+        Window.alert("next");
     }
 }

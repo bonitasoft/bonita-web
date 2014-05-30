@@ -29,7 +29,14 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
  */
 public class UiComponent extends Component implements FormNode {
 
-    private static Panel pound = new AbsolutePanel();
+    private static Panel pound = new AbsolutePanel() {
+
+        @Override
+        public void add(Widget child) {
+            getChildren().add(child);
+            adopt(child);
+        }
+    };
 
     static {
         pound.setVisible(false);
@@ -38,21 +45,14 @@ public class UiComponent extends Component implements FormNode {
 
     protected final UIObject uiObject;
 
-    private boolean adopt;
-
-    public UiComponent(final UIObject uiObject, boolean adopt) {
-        this.uiObject = uiObject;
-        this.adopt = adopt;
-    }
-
     public UiComponent(UIObject uiObject) {
-        this(uiObject, false);
+        this.uiObject = uiObject;
     }
 
     @Override
     protected Element makeElement() {
 
-        if(adopt && uiObject instanceof Widget) {
+        if(uiObject instanceof Widget) {
             pound.add((Widget) uiObject);
         }
 

@@ -197,8 +197,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         final Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
         final ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
         definitions.append(new UiComponent(new CustomUserInformationView(
-                        new CustomUserInformationModel(new RequestFactory(), user.getId().toString())), true
-        ));
+                        new CustomUserInformationModel(new RequestFactory(), user.getId().toString()))));
         return customInformationSection.addBody(definitions);
     }
 
