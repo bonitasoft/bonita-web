@@ -22,7 +22,6 @@ import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,26 +57,15 @@ public class CustomUserInformationModelTest {
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
     }
 
-    @After
-    public void validate() {
-        validateMockitoUsage();
-    }
-
     @Test
     public void should_search_for_the_user_custom_information() throws Exception {
         CustomUserInformationModel model = new CustomUserInformationModel(requestFactory, "3");
-        CustomUserInformationModel.Callback callback = new CustomUserInformationModel.Callback() {
-            @Override
-            void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
-            }
-        };
 
-        model.search(4, 1, callback);
+        model.search(4, 1, null);
 
         verify(searchRequest).setPage(4);
         verify(searchRequest).setResultsPerPage(1);
         verify(searchRequest).addFilter("userId", "3");
-        verify(searchRequest).setCallback(callback);
     }
 
     @Test

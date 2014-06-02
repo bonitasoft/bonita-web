@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.mvp.Paginate;
 import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
@@ -43,6 +44,22 @@ public class CustomUserInformationModel {
 
     private Map<APIID, IItem> changes = new HashMap<APIID, IItem>();
 
+    public static abstract class Callback extends APICallback {
+
+        @Override
+        public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+            ApiSearchResultPager pagination = ApiSearchResultPager.parse(headers.get("Content-Range"));
+            onSuccess(
+                    JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()),
+                    pagination.getCurrentPage(),
+                    pagination.getNbResultsByPage(),
+                    pagination.getNbTotalResults());
+        }
+
+        abstract void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total);
+
+    }
+
     public CustomUserInformationModel(RequestFactory requestFactory, String userId) {
         this.requestFactory = requestFactory;
         this.userId = userId;
@@ -64,27 +81,20 @@ public class CustomUserInformationModel {
         changes.clear();
     }
 
-    public static abstract class Callback extends APICallback {
+    public Paginate search(int page, int size, final Callback callback) {
+        Paginate paginate = new Paginate() {
 
-        @Override
-        public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-            ApiSearchResultPager pagination = ApiSearchResultPager.parse(headers.get("Content-Range"));
-            onSuccess(
-                    JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()),
-                    pagination.getCurrentPage(),
-                    pagination.getNbResultsByPage(),
-                    pagination.getNbTotalResults());
-        }
+            @Override
+            public void loadPage(int page, int size) {
+                APISearchRequest request = requestFactory.createSearch(CustomUserInfoDefinition.get());
+                request.setPage(page);
+                request.setResultsPerPage(size);
+                request.addFilter(CustomUserInfoItem.ATTRIBUTE_USER_ID, userId);
+                request.run(callback);
+            }
+        };
+        paginate.loadPage(page, size);
+        return paginate;
 
-        abstract void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total);
-    }
-
-    public void search(final int page, final int size, Callback callback) {
-        APISearchRequest request = requestFactory.createSearch(CustomUserInfoDefinition.get());
-        request.setPage(page);
-        request.setResultsPerPage(size);
-        request.addFilter(CustomUserInfoItem.ATTRIBUTE_USER_ID, userId);
-        request.setCallback(callback);
-        request.run();
     }
 }

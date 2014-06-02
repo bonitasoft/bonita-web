@@ -23,6 +23,7 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import org.bonitasoft.console.client.mvp.Paginate;
 import org.bonitasoft.console.client.mvp.Repeater;
 import org.bonitasoft.console.client.mvp.SimplePagination;
 import org.bonitasoft.console.client.mvp.TemplateRepeat;
@@ -64,6 +65,10 @@ public class CustomUserInformationView extends Composite {
 
     private Repeater<CustomUserInfoItem> repeater = new Repeater<CustomUserInfoItem>(template);
 
+    private SimplePagination pagination;
+
+    private Paginate paginate;
+
     public CustomUserInformationView(final CustomUserInformationModel model) {
         this(model, false);
     }
@@ -73,12 +78,17 @@ public class CustomUserInformationView extends Composite {
         final FlowPanel panel = new FlowPanel();
         panel.add(repeater);
         initWidget(panel);
-        model.search(0, 10, new CustomUserInformationModel.Callback() {
+
+        paginate = model.search(0, 10, new CustomUserInformationModel.Callback() {
 
             @Override
             void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
                 repeater.setRowData(information);
-                panel.add(new SimplePagination(page + 1, pageSize, total));
+                if(pagination == null) {
+                    pagination = new SimplePagination(page, pageSize, total, paginate);
+                    panel.add(pagination);
+                }
+                pagination.setPage(page);
             }
         });
         template.listen(new DirtyInputHandler<CustomUserInfoItem>() {

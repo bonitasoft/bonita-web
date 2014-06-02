@@ -24,7 +24,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
@@ -33,6 +32,8 @@ import org.bonitasoft.web.toolkit.client.ui.component.event.ActionEvent;
 public class SimplePagination extends Composite {
 
     private int page = 0, pageSize = 0, total = 0;
+
+    private Paginate paginate;
 
     interface Binder extends UiBinder<HTMLPanel, SimplePagination> {
 
@@ -44,38 +45,39 @@ public class SimplePagination extends Composite {
     SpanElement label;
 
     @UiConstructor
-    public SimplePagination(int page, int pageSize, int total) {
+    public SimplePagination(int page, int pageSize, int total, Paginate paginate) {
         initWidget(binder.createAndBindUi(this));
+        this.paginate = paginate;
         this.page = page;
         this.pageSize = pageSize;
         this.total = total;
-        label.setInnerText(labelizeProgress());
+        label.setInnerText(labelize());
     }
 
     public void setPage(int page) {
         this.page = page;
-        label.setInnerText(labelizeProgress());
+        label.setInnerText(labelize());
     }
 
-    public String labelizeProgress() {
+    public String labelize() {
         if (pageSize == total) {
             return _("%start_result% of %total_results%",
-                            new Arg("start_result", page),
+                            new Arg("start_result", page + 1),
                             new Arg("total_results", total));
         }
         return _("%start_result% - %end_result% of %total_results%",
-                            new Arg("start_result", page),
+                            new Arg("start_result", page + 1),
                             new Arg("end_result", pageSize),
                             new Arg("total_results", total));
     }
 
     @UiHandler("previous")
     void doPrevious(ActionEvent e) {
-        Window.alert("previous");
+        paginate.loadPage(page - 1, pageSize);
     }
 
     @UiHandler("next")
     void doNext(ActionEvent e) {
-        Window.alert("next");
+        paginate.loadPage(page + 1, pageSize);
     }
 }
