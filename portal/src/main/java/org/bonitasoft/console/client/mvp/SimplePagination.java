@@ -66,25 +66,27 @@ public class SimplePagination extends Composite {
     }
 
     private void buildWidget() {
-
-        if (pageSize ==  total) {
-            label.setInnerText(_("%start_result% of %total_results%",
-                    new Arg("start_result", pageSize),
-                    new Arg("total_results", total)));
-            return;
-        }
-
         int startIndex = (page * pageSize) + 1;
-        int endIndex = startIndex + pageSize;
-        if(endIndex >= total) {
+        int endIndex = pageSize + startIndex - 1;
+        if(endIndex > total) {
             endIndex = total;
         }
-        label.setInnerText(_("%start_result% - %end_result% of %total_results%",
-                new Arg("start_result", startIndex),
-                new Arg("end_result", endIndex),
-                new Arg("total_results", total)));
+        label.setInnerText(stringify(startIndex, endIndex, total));
         enable(previous, page > 0);
         enable(next, endIndex < total);
+    }
+
+    private String stringify(int startIndex, int endIndex, int total) {
+        if (startIndex == endIndex) {
+            return _("%start_result% of %total_results%",
+                    new Arg("start_result", startIndex),
+                    new Arg("total_results", total));
+        } else {
+            return _("%start_result% - %end_result% of %total_results%",
+                    new Arg("start_result", startIndex),
+                    new Arg("end_result", endIndex),
+                    new Arg("total_results", total));
+        }
     }
 
     private void enable(Component component, boolean enabled) {
