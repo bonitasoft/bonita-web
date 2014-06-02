@@ -26,7 +26,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
+import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.event.ActionEvent;
 
 public class SimplePagination extends Composite {
@@ -44,6 +47,12 @@ public class SimplePagination extends Composite {
     @UiField
     SpanElement label;
 
+    @UiField
+    ButtonAction previous;
+
+    @UiField
+    ButtonAction next;
+
     @UiConstructor
     public SimplePagination(int page, int pageSize, int total, Paginate paginate) {
         initWidget(binder.createAndBindUi(this));
@@ -51,24 +60,41 @@ public class SimplePagination extends Composite {
         this.page = page;
         this.pageSize = pageSize;
         this.total = total;
-        label.setInnerText(labelize());
+        previous.setVisible(pageSize < total);
+        next.setVisible(pageSize < total);
+        buildWidget();
+    }
+
+    private void buildWidget() {
+
+        if (pageSize ==  total) {
+            label.setInnerText(_("%start_result% of %total_results%",
+                    new Arg("start_result", pageSize),
+                    new Arg("total_results", total)));
+            return;
+        }
+
+        int startIndex = (page * pageSize) + 1;
+        int endIndex = startIndex + pageSize;
+        if(endIndex >= total) {
+            endIndex = total;
+        }
+        label.setInnerText(_("%start_result% - %end_result% of %total_results%",
+                new Arg("start_result", startIndex),
+                new Arg("end_result", endIndex),
+                new Arg("total_results", total)));
+        enable(previous, page > 0);
+        enable(next, endIndex < total);
+    }
+
+    private void enable(Component component, boolean enabled) {
+        component.setEnabled(enabled);
+        component.setStyleName("disable", !enabled);
     }
 
     public void setPage(int page) {
         this.page = page;
-        label.setInnerText(labelize());
-    }
-
-    public String labelize() {
-        if (pageSize == total) {
-            return _("%start_result% of %total_results%",
-                            new Arg("start_result", page + 1),
-                            new Arg("total_results", total));
-        }
-        return _("%start_result% - %end_result% of %total_results%",
-                            new Arg("start_result", page + 1),
-                            new Arg("end_result", pageSize),
-                            new Arg("total_results", total));
+        buildWidget();
     }
 
     @UiHandler("previous")
