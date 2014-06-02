@@ -199,7 +199,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         model.search(0, 0, new CustomUserInformationModel.Callback() {
             @Override
             void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
-                if(total > 0) {
+                if (total > 0) {
                     Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
                     ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
                     definitions.append(new UiComponent(new CustomUserInformationView(model)));

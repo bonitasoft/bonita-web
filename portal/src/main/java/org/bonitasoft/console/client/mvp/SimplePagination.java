@@ -68,7 +68,7 @@ public class SimplePagination extends Composite {
     private void buildWidget() {
         int startIndex = (page * pageSize) + 1;
         int endIndex = pageSize + startIndex - 1;
-        if(endIndex > total) {
+        if (endIndex > total) {
             endIndex = total;
         }
         label.setInnerText(stringify(startIndex, endIndex, total));

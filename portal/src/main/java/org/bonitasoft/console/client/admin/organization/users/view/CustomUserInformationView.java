@@ -55,7 +55,7 @@ public class CustomUserInformationView extends Composite {
         @Override
         public SafeHtml render(Context context, CustomUserInfoItem information) {
             CustomUserInfoDefinitionItem definition = information.getDefinition();
-            if(editable) {
+            if (editable) {
                 return TEMPLATE.editable(context.getIndex() + 1, definition.getName(),
                         definition.getDescription(), information.getValue());
             }
@@ -84,7 +84,7 @@ public class CustomUserInformationView extends Composite {
             @Override
             void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
                 repeater.setRowData(information);
-                if(pagination == null) {
+                if (pagination == null) {
                     pagination = new SimplePagination(page, pageSize, total, paginate);
                     panel.add(pagination);
                 }
