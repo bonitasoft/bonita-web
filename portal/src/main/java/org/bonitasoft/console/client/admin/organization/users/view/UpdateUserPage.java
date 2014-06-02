@@ -28,6 +28,7 @@ import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
 import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
@@ -218,8 +219,13 @@ public class UpdateUserPage extends Page {
                 new RequestFactory(), getParameter(PARAMETER_USER_ID));
 
         final Tab tab = new Tab(_("Other"));
-        tab.append(new UiComponent(
-                new CustomUserInformationView(model, true)));
+        model.search(0, 0, new CustomUserInformationModel.Callback() {
+            @Override
+            void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
+                tab.setTabVisibility(total > 0);
+            }
+        });
+        tab.append(new UiComponent(new CustomUserInformationView(model, true)));
         submitAction.onSubmit(new Action() {
             @Override
             public void execute() {
@@ -227,6 +233,7 @@ public class UpdateUserPage extends Page {
             }
         });
         form.openSection(tab).closeSection();
+        tab.setTabVisibility(false);
         return form;
     }
 
