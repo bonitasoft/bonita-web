@@ -28,6 +28,8 @@ import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 
 import com.google.gwt.dom.client.FormElement;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -73,8 +75,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
     protected FormPanel formPanel;
 
     protected FlowPanel buttonPanel;
-
-    protected Label uploadLabel;
 
     protected Label cancelLabel;
 
@@ -163,11 +163,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             loadingImage.setTitle(FormsResourceBundle.getMessages().uploadingLabel());
 
             buttonPanel = new FlowPanel();
-
-            uploadLabel = new Label();
-            uploadLabel.setText(FormsResourceBundle.getMessages().uploadButtonLabel());
-            uploadLabel.setTitle(FormsResourceBundle.getMessages().uploadButtonTitle());
-            uploadLabel.setStyleName("bonita_upload_button");
             cancelLabel = new Label();
             cancelLabel.setText(FormsResourceBundle.getMessages().cancelButtonLabel());
             cancelLabel.setTitle(FormsResourceBundle.getMessages().cancelButtonTitle());
@@ -181,7 +176,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             removeLabel.setTitle(FormsResourceBundle.getMessages().removeButtonTitle());
             removeLabel.setStyleName("bonita_upload_button");
 
-            buttonPanel.add(uploadLabel);
             buttonPanel.add(cancelLabel);
             buttonPanel.add(modifyLabel);
             buttonPanel.add(removeLabel);
@@ -192,7 +186,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             if (value != null && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
                 fileDownloadWidget.setFileName(value);
                 formPanel.setVisible(false);
-                uploadLabel.setVisible(false);
             } else {
                 fileDownloadWidget.setVisible(false);
                 modifyLabel.setVisible(false);
@@ -204,15 +197,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             filePanel.add(loadingImage);
             filePanel.add(fileDownloadWidget);
             filePanel.add(buttonPanel);
-
-            uploadLabel.addClickHandler(new ClickHandler() {
-
-                @Override
-                public void onClick(final ClickEvent event) {
-                    formPanel.submit();
-                }
-            });
-
             modifyLabel.addClickHandler(new ClickHandler() {
 
                 @Override
@@ -221,7 +205,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileDownloadWidget.setVisible(false);
                     modifyLabel.setVisible(false);
                     removeLabel.setVisible(false);
-                    uploadLabel.setVisible(true);
                     cancelLabel.setVisible(true);
                 }
             });
@@ -238,7 +221,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileDownloadWidget.resetDownloadlink();
                     modifyLabel.setVisible(false);
                     removeLabel.setVisible(false);
-                    uploadLabel.setVisible(true);
                     cancelLabel.setVisible(false);
                 }
             });
@@ -251,7 +233,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileDownloadWidget.setVisible(true);
                     modifyLabel.setVisible(true);
                     removeLabel.setVisible(true);
-                    uploadLabel.setVisible(false);
                     cancelLabel.setVisible(false);
                 }
             });
@@ -289,12 +270,19 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         fileUpload = addFileUploalToFormPanel(FileUloadName);
     }
 
-    protected FileUpload addFileUploalToFormPanel(final String fileUloadName) {
+    protected FileUpload addFileUploalToFormPanel(final String fileUploadName) {
 
         final FileUpload fileUpload = new FileUpload();
+        fileUpload.addChangeHandler(new ChangeHandler() {
+
+            @Override
+            public void onChange(ChangeEvent event) {
+                formPanel.submit();
+            }
+        });
         fileUpload.setStyleName("bonita_file_upload");
         // mandatory because we are in a true form with a post action
-        fileUpload.setName(fileUloadName);
+        fileUpload.setName(fileUploadName);
         if (DOMUtils.getInstance().isIE8()) {
             fileUpload.getElement().setPropertyString("contentEditable", "false");
         }
@@ -302,6 +290,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         final UploadSubmitHandler uploadHandler = new UploadSubmitHandler();
         formPanel.addSubmitHandler(uploadHandler);
         formPanel.addSubmitCompleteHandler(uploadHandler);
+
         return fileUpload;
     }
 
@@ -351,7 +340,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             fileDownloadWidget.setVisible(true);
             modifyLabel.setVisible(true);
             removeLabel.setVisible(true);
-            uploadLabel.setVisible(false);
             cancelLabel.setVisible(false);
         }
     }

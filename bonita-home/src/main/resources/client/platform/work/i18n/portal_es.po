@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-23 01:03+0200\n"
-"PO-Revision-Date: 2014-05-27 17:37-0400\n"
+"POT-Creation-Date: 2014-05-29 01:01+0200\n"
+"PO-Revision-Date: 2014-05-31 17:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -646,7 +646,7 @@ msgstr "MMMM dd, yyyy"
 msgid " for "
 msgstr " para "
 
-#: portal/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:84
+#: portal/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:82
 msgid "message"
 msgstr "mensaje"
 
