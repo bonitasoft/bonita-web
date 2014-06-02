@@ -26,6 +26,7 @@ import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
 import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.console.client.uib.SafeHtmlParser;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
@@ -129,7 +130,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         addBody(membershipSection(user));
         addBody(businessCardSection(user.getProfessionalData()));
         addBody(personalInformationSection(user.getPersonnalData()));
-        addBody(customInformationSection(user));
+        addCustomInformationSection(user);
     }
 
     @Override
@@ -193,12 +194,19 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         return personalInformationSection.addBody(definitions);
     }
 
-    private Section customInformationSection(UserItem user) {
-        final Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
-        final ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
-        definitions.append(new UiComponent(new CustomUserInformationView(
-                        new CustomUserInformationModel(new RequestFactory(), user.getId().toString()))));
-        return customInformationSection.addBody(definitions);
+    private void addCustomInformationSection(UserItem user) {
+        final CustomUserInformationModel model = new CustomUserInformationModel(new RequestFactory(), user.getId().toString());
+        model.search(0, 0, new CustomUserInformationModel.Callback() {
+            @Override
+            void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
+                if(total > 0) {
+                    Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
+                    ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
+                    definitions.append(new UiComponent(new CustomUserInformationView(model)));
+                    addBody(customInformationSection.addBody(definitions));
+                }
+            }
+        });
     }
 
     private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {
