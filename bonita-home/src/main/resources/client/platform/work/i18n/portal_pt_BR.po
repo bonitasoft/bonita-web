@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-22 22:10+0200\n"
-"PO-Revision-Date: 2014-06-01 17:35-0400\n"
+"PO-Revision-Date: 2014-06-02 17:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2186,7 +2186,7 @@ msgstr "Executado por"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:150
 msgid "by"
-msgstr "by"
+msgstr "por"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:141
 msgid "No task done"
@@ -2302,7 +2302,7 @@ msgstr "Nome da tarefa:"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:43
 msgid "%firstname% %lastname% for"
-msgstr "%firstname% %lastname% for"
+msgstr "%firstname% %lastname% para"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/formatter/ArchivedFlowNodeExecutedByFormatter.java:49
 msgid "Aborted by:"
