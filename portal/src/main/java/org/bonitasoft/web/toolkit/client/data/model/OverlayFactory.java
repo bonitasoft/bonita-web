@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2013 BonitaSoft S.A.
+/**
+ * Copyright (C) 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,32 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.bonitasoft.web.toolkit.client.data.model;
 
-package org.bonitasoft.web.toolkit.client.common.i18n;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsonUtils;
 
 /**
- * Created by Vincent Elcrin
- * Date: 23/09/13
- * Time: 18:40
+ * 
+ * @author Baptiste Mesta
+ *
  */
-public class FakeI18n extends AbstractI18n {
+public class OverlayFactory {
 
-    private String l10n;
-
-    public FakeI18n() {
-        I18N_instance = this;
+    public static OverlayImpl create(String json) {
+        return JsonUtils.safeEval(json);
     }
 
-    @Override
-    public void loadLocale(LOCALE locale) {
+    public static JsArray<OverlayImpl> createArray(String json) {
+        return JsonUtils.safeEval(json);
     }
 
-    @Override
-    protected String getText(LOCALE locale, String key) {
-        return l10n;
-    }
-
-    public void setL10n(String value) {
-        l10n = value;
-    }
 }

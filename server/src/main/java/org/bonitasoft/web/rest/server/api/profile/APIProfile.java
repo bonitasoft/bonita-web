@@ -14,10 +14,13 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
+import java.util.List;
+
+import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.datastore.ComposedDatastore;
 import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.web.rest.server.datastore.profile.SearchProfilesHelper;
@@ -32,27 +35,33 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Nicolas Tith
  * @author Séverin Moussel
  */
-public class APIProfile extends ConsoleAPI<ProfileItem> implements
-        APIHasGet<ProfileItem>,
-        APIHasSearch<ProfileItem>
-{
+public class APIProfile extends ConsoleAPI<ProfileItem> implements APIHasGet<ProfileItem>, APIHasSearch<ProfileItem> {
 
-    private static final String PROFILES_ICON_FOLDER_PATH = "/" + WebBonitaConstants.PROFILES_ICONS_FOLDER_NAME;
+    @Override
+    protected void fillDeploys(ProfileItem item, List<String> deploys) {
+        addDeployer(getDeployerFactory().createUserDeployer(PageItem.ATTRIBUTE_CREATED_BY_USER_ID));
+        addDeployer(getDeployerFactory().createUserDeployer(PageItem.ATTRIBUTE_UPDATED_BY_USER_ID));
+        
+        super.fillDeploys(item, deploys);
+    }
 
+    protected DeployerFactory getDeployerFactory() {
+        return new DeployerFactory(getEngineSession());
+    }
+    
     @Override
     protected ComposedDatastore<ProfileItem> defineDefaultDatastore() {
 
-        ProfileEngineClient profileClient = createProfileEngineClient();
+        final ProfileEngineClient profileClient = createProfileEngineClient();
 
-        ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<ProfileItem>();
+        final ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<ProfileItem>();
         datastore.setGetHelper(new GetProfileHelper(profileClient));
         datastore.setSearchHelper(new SearchProfilesHelper(profileClient));
         return datastore;
     }
 
     private ProfileEngineClient createProfileEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
-                .createProfileEngineClient();
+        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession())).createProfileEngineClient();
     }
 
     @Override

@@ -27,53 +27,73 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 public class ProfileItemBuilder {
 
     protected long id = 1L;
+
     protected String name = "aName";
+
     protected String description = "aDescription";
-    protected String icon = "anIcon";
+
     protected boolean isDefault = false;
+
+    protected String iconPath;
+    
+    protected long createdBy = 0;
+    
+    protected String createdOn = null;
+    
+    protected long updatedBy = 0;
+    
+    protected String updatedOn = null;
+    
 
     public static ProfileItemBuilder aProfileItem() {
         return new ProfileItemBuilder();
     }
 
     public ProfileItem build() {
-        ProfileItem item = new ProfileItem();
+        final ProfileItem item = new ProfileItem();
         item.setId(id);
         item.setName(name);
         item.setDescription(description);
-        item.setIcon(icon);
         item.setIsDefault(isDefault);
+        item.setIcon(iconPath);
+        item.setUpdatedByUserId(updatedBy);
+        item.setLastUpdateDate(updatedOn);
+        item.setCreatedByUserId(createdBy);
+        item.setCreationDate(createdOn);
         return item;
     }
-    
+
     public Profile toProfile() {
-    	ProfileImpl profile = new ProfileImpl(name);
-    	profile.setDescription(description);
-    	profile.setIconPath(icon);
-    	profile.setDefault(isDefault);
-    	return profile;
+        final ProfileImpl profile = new ProfileImpl(name);
+        profile.setDescription(description);
+        profile.setDefault(isDefault);
+        return profile;
     }
-    
-    public ProfileItemBuilder fromEngineItem(Profile profile) {
+
+    public ProfileItemBuilder fromEngineItem(final Profile profile) {
         id = profile.getId();
         name = profile.getName();
         description = profile.getDescription();
-        icon = profile.getIconPath();
         isDefault = profile.isDefault();
         return this;
     }
 
-    public ProfileItemBuilder withName(String name) {
+    public ProfileItemBuilder withName(final String name) {
         this.name = name;
         return this;
     }
 
-    public ProfileItemBuilder withDescription(String description) {
+    public ProfileItemBuilder withDescription(final String description) {
         this.description = description;
         return this;
     }
-    
-    public ProfileItemBuilder isDefault(boolean isDefault) {
+
+    public ProfileItemBuilder withIcon(final String iconPath) {
+        this.iconPath = iconPath;
+        return this;
+    }
+
+    public ProfileItemBuilder isDefault(final boolean isDefault) {
         this.isDefault = isDefault;
         return this;
     }
