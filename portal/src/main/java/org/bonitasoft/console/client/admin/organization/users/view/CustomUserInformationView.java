@@ -40,7 +40,7 @@ public class CustomUserInformationView extends Composite {
 
         @Template("<div class=\"formentry mandatory text\">" +
                 "<div class=\"label\"><label title=\"{2}\">{1}</label></div>" +
-                "<div class=\"input\"><input type=\"text\" name=\"{1}\" maxlength=\"50\" value=\"{3}\" tabindex=\"{0}\"></div>" +
+                "<div class=\"input\"><input type=\"text\" name=\"{1}\" maxlength=\"255\" value=\"{3}\" tabindex=\"{0}\"></div>" +
                 "</div>")
         public SafeHtml editable(int line, String name, String description, String value);
 
