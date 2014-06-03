@@ -23,8 +23,10 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
+import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.console.client.uib.SafeHtmlParser;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.MembershipItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
@@ -44,6 +46,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
@@ -60,9 +63,9 @@ import com.google.gwt.user.client.Element;
 public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     public static final String TOKEN = "usermoredetailsadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
         PRIVILEGES.add(GroupListingAdminPage.TOKEN);
@@ -83,11 +86,11 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         if (user.isEnabled()) {
             setTitle(user.getTitle() + " " + user.getFirstName() + " " + user.getLastName());
         } else {
-            setTitle(user.getTitle() + " " + user.getFirstName() + " " + user.getLastName(), 
+            setTitle(user.getTitle() + " " + user.getFirstName() + " " + user.getLastName(),
                     new Text("inactive").addClass("inactive-user").setTooltip(_("Inactive user")));
         }
     }
-    
+
     @Override
     protected boolean isDescriptionBeforeMetadatas() {
         return false;
@@ -127,6 +130,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         addBody(membershipSection(user));
         addBody(businessCardSection(user.getProfessionalData()));
         addBody(personalInformationSection(user.getPersonnalData()));
+        addCustomInformationSection(user);
     }
 
     @Override
@@ -188,6 +192,21 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
         definitions.append(new Definition(_("Phone") + ": ", _("the personnal phone number of the user"), item.getPhoneNumber()));
         definitions.append(new Definition(_("Mobile") + ": ", _("the personnal mobile phone number of the user"), item.getMobileNumber()));
         return personalInformationSection.addBody(definitions);
+    }
+
+    private void addCustomInformationSection(UserItem user) {
+        final CustomUserInformationModel model = new CustomUserInformationModel(new RequestFactory(), user.getId().toString());
+        model.search(0, 0, new CustomUserInformationModel.Callback() {
+            @Override
+            void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
+                if (total > 0) {
+                    Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
+                    ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
+                    definitions.append(new UiComponent(new CustomUserInformationView(model)));
+                    addBody(customInformationSection.addBody(definitions));
+                }
+            }
+        });
     }
 
     private Definition emailDefinition(final AbstractContactDataItem contactData, String tooltip) {

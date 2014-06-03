@@ -34,17 +34,6 @@ class PagerLink extends Link {
      * @param table
      * @param number
      * @param label
-     */
-    public PagerLink(final Table table, final int number, final String label) {
-        this(table, number, label, true, false);
-    }
-
-    /**
-     * Default constructor.
-     * 
-     * @param table
-     * @param number
-     * @param label
      * @param active
      */
     public PagerLink(final Table table, final int number, final String label, final boolean active) {

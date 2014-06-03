@@ -1,0 +1,9 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:button="urn:import:org.bonitasoft.web.toolkit.client.ui.component.button">
+    <g:HTMLPanel styleName="pager">
+        <span ui:field="label" class="results_count" />
+        <button:ButtonAction ui:field="previous" label="Previous" styleName="prev"/>
+        <button:ButtonAction ui:field="next" label="Next" styleName="next"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

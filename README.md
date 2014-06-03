@@ -10,10 +10,14 @@ For develoment purpose use the *dev* profile (don't compile every gwt permutatio
     mvn clean install -Pdev
     
 ## Execution in hosted mode for dev/debug ##
-In console-war module :
+In server module :
+
+    mvn jetty:run -Pdev [-Dbonita.home=/path/to/bonita/home]
     
-    mvn -Pdev gwt:run [-Dbonita.home=/path/to/bonita/home]
-    mvn -Pdev gwt:debug [-Dbonita.home=/path/to/bonita/home]
+In portal module :
+     
+    Super dev mode: mvn -Pdev process-classes gwt:run-codeserver
+    Dev mode: mvn -Pdev gwt:debug
     
 ## Structure ##
 
@@ -22,40 +26,28 @@ Contains the common maven configuration such as:
 - the definition of all the dependencies version, e.g., junit.version, bonita.engine.version, gwt.version, ...
 - the maven repositories
 
-### Bonita-home module ###
+### bonita-home module ###
 Aggregate engine bonita home and web config modules to build a usable bonita home folder (available in target/bonita-home-${project.version}/bonita)
 
-### Common module ###
-### common-config
-Contains the common client configuration to add to BONITA_HOME.
-
-### common-server
-Contains the back-end business logic, i.e., the code executed on the server side.
+### common module ###
+Contains the back-end business logic, i.e., the code executed on the server side. But also contains shared code between back end and front (e.g. model) and the implement of the REST API. 
 
 ### common-test-toolkit
 Contains integration tests utils
 
-### Console module
+### portal module
 Module containing portal implementation
-
-#### console-config
-Contains the console client configuration to add to BONITA_HOME.
-
-#### console-server
-Contains the server side code of portal
-	
-#### console-war
 Contains the source code of the client, i.e., the code cross-compiled to javascript and all the resources; 
 Build the portal web application
-		
+
+### server module
+Contains the server side code of portal
+	
 ### Form module ###
 Module containing forms implementation
 
-#### forms-config
-Contains the forms client configuration to add to BONITA_HOME.
-
 #### forms-design
-// TODO
+Contains customizable theme shared between form's web application & studio.
 
 #### forms-model
 Contains the source code of the model definition.
@@ -68,17 +60,3 @@ Contains the back-end business logic, i.e., the code executed on the server side
 
 #### forms-view
 Contains the source code of the client, i.e., the code cross-compiled to javascript and all the resources; 
-
-
-### Rest-api module ###
-Module containing rest api implementation over engine api
-
-#### rest-api-model
-Contains the rest api model
-
-#### rest-api-server
-Contains the server side of rest api
-
-### toolkit module ###
-Commons classes for server and client side.
-Will be dispatched in proper modules
