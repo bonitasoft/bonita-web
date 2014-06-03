@@ -18,12 +18,12 @@ package org.bonitasoft.console.client.admin.organization.users.view;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.validateMockitoUsage;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,13 +71,45 @@ public class CustomUserInformationModelTest {
     @Test
     public void should_send_value_change_on_flush() throws Exception {
         CustomUserInformationModel model = new CustomUserInformationModel(requestFactory, "6");
-        CustomUserInfoItem item = new CustomUserInfoItem();
-        item.setUserId(6L);
-        item.setDefinition(APIID.makeAPIID("2"));
+        CustomUserInfoItem item = createInformation(6L, 2L);
         model.update(item, "value");
 
         model.flushChanges();
 
         verify(updateRequest).setId(APIID.makeAPIID(Arrays.asList("6", "2")));
+    }
+
+    @Test
+    public void should_send_all_changed_values_on_flush() throws Exception {
+        CustomUserInformationModel model = new CustomUserInformationModel(requestFactory, "6");
+        CustomUserInfoItem information1 = createInformation(5L, 8L);
+        CustomUserInfoItem information2 = createInformation(7L, 4L);
+        model.update(information1, "value");
+        model.update(information2, "value");
+
+        model.flushChanges();
+
+        verify(updateRequest, atLeastOnce()).setId(APIID.makeAPIID(Arrays.asList("5", "8")));
+        verify(updateRequest, atLeastOnce()).setId(APIID.makeAPIID(Arrays.asList("7", "4")));
+    }
+
+    @Test
+    public void should_send_an_information_value_change_only_once() throws Exception {
+        CustomUserInformationModel model = new CustomUserInformationModel(requestFactory, "6");
+        CustomUserInfoItem information = createInformation(4L, 1L);
+        model.update(information, "value 1");
+        model.update(information, "value 2");
+
+        model.flushChanges();
+
+        verify(updateRequest, times(1)).setId(APIID.makeAPIID(Arrays.asList("4", "1")));
+        // didn't manage to verify the value. Mockito#verify throw some weird error.
+    }
+
+    private CustomUserInfoItem createInformation(long userId, long definitionId) {
+        CustomUserInfoItem item = new CustomUserInfoItem();
+        item.setUserId(userId);
+        item.setDefinition(APIID.makeAPIID(definitionId));
+        return item;
     }
 }
