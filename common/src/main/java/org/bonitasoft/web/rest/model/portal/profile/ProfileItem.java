@@ -14,6 +14,10 @@
  */
 package org.bonitasoft.web.rest.model.portal.profile;
 
+import java.util.Date;
+
+import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -35,6 +39,14 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
     public static final String FILTER_USER_ID = "user_id";
     
     public static final String ATTRIBUTE_IS_DEFAULT = "is_default";
+    
+    public static final String ATTRIBUTE_LAST_UPDATE_DATE = "lastUpdateDate";
+
+    public static final String ATTRIBUTE_CREATION_DATE = "creationDate";
+
+    public static final String ATTRIBUTE_CREATED_BY_USER_ID = "createdBy";
+    
+    public static final String ATTRIBUTE_UPDATED_BY_USER_ID = "updatedBy";
 
     public ProfileItem() {
         super();
@@ -67,6 +79,54 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
         setAttribute(ATTRIBUTE_DESCRIPTION, description);
     }
     
+    public void setCreationDate(String date) {
+        setAttribute(ATTRIBUTE_CREATION_DATE, date);
+    }
+
+    public void setCreationDate(Date date) {
+        setAttribute(ATTRIBUTE_CREATION_DATE, date); 
+    }
+
+    public void setCreatedByUserId(String id) {
+        setAttribute(ATTRIBUTE_CREATED_BY_USER_ID, id);
+    }
+
+    public void setCreatedByUserId(Long id) {
+        setAttribute(ATTRIBUTE_CREATED_BY_USER_ID, id);
+    }
+
+    public void setCreatedByUserId(APIID id) {
+        setAttribute(ATTRIBUTE_CREATED_BY_USER_ID, id);
+    }
+    
+    public UserItem getCreatedByUser() {
+        return (UserItem) getDeploy(ATTRIBUTE_CREATED_BY_USER_ID);
+    }
+
+    public void setUpdatedByUserId(String id) {
+        setAttribute(ATTRIBUTE_UPDATED_BY_USER_ID, id);
+    }
+
+    public void setUpdatedByUserId(Long id) {
+        setAttribute(ATTRIBUTE_UPDATED_BY_USER_ID, id);
+    }
+
+    public void setUpdatedByUserId(APIID id) {
+        setAttribute(ATTRIBUTE_UPDATED_BY_USER_ID, id);
+    }
+
+    public void setLastUpdateDate(final String date) {
+        setAttribute(ATTRIBUTE_LAST_UPDATE_DATE, date);
+    }
+
+    public void setLastUpdateDate(final Date date) {
+        setAttribute(ATTRIBUTE_LAST_UPDATE_DATE, date);
+    }
+    
+    public UserItem getUpdatedByUser() {
+        return (UserItem) getDeploy(ATTRIBUTE_UPDATED_BY_USER_ID);
+    }
+
     public void setIsDefault(final Boolean isDefault) {
         setAttribute(ATTRIBUTE_IS_DEFAULT, isDefault);
     }
