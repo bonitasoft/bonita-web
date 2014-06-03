@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.model.builder.profile;
 
+import java.util.Date;
+
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.impl.ProfileImpl;
 
@@ -28,6 +30,14 @@ public class EngineProfileBuilder {
     private String name;
 
     private String description;
+
+    private long lastUpdatedBy;
+
+    private long createdBy;
+
+    private Date creationDate;
+
+    private Date lastUpdateDate;
 
     public static EngineProfileBuilder anEngineProfile() {
         return new EngineProfileBuilder();
@@ -46,6 +56,10 @@ public class EngineProfileBuilder {
     public Profile build() {
         final ProfileImpl profile = new ProfileImpl(name);
         profile.setDescription(description);
+        profile.setCreatedBy(createdBy);
+        profile.setLastUpdatedBy(lastUpdatedBy);
+        profile.setCreationDate(creationDate);
+        profile.setLastUpdateDate(lastUpdateDate);
         return profile;
     }
 

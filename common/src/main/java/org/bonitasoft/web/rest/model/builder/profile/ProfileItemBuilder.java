@@ -35,6 +35,15 @@ public class ProfileItemBuilder {
     protected boolean isDefault = false;
 
     protected String iconPath;
+    
+    protected long createdBy = 0;
+    
+    protected String createdOn = null;
+    
+    protected long updatedBy = 0;
+    
+    protected String updatedOn = null;
+    
 
     public static ProfileItemBuilder aProfileItem() {
         return new ProfileItemBuilder();
@@ -47,6 +56,10 @@ public class ProfileItemBuilder {
         item.setDescription(description);
         item.setIsDefault(isDefault);
         item.setIcon(iconPath);
+        item.setUpdatedByUserId(updatedBy);
+        item.setLastUpdateDate(updatedOn);
+        item.setCreatedByUserId(createdBy);
+        item.setCreationDate(createdOn);
         return item;
     }
 
