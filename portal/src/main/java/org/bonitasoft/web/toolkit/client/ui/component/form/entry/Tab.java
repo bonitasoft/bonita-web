@@ -20,11 +20,16 @@ import org.bonitasoft.web.toolkit.client.ui.html.XML;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.UIObject;
 
 /**
  * @author Séverin Moussel
  */
 public class Tab extends Fieldset {
+
+    private boolean tabVisibility = true;
+
+    private Element header;
 
     /**
      * Default Constructor.
@@ -49,12 +54,21 @@ public class Tab extends Fieldset {
         super.postProcessHtml();
     }
 
+    public void setTabVisibility(boolean visibility) {
+        this.tabVisibility = visibility;
+        if(header != null) {
+            UIObject.setVisible(header, tabVisibility);
+        }
+    }
+
     @Override
     protected Element makeLabel() {
-        return XML.makeElement(
+        header = XML.makeElement(
                 HTML.div(new HTMLClass("header"))
                         + HTML.h1() + this.label + HTML._h1()
                         + HTML._div()
-                );
+        );
+        UIObject.setVisible(header, tabVisibility);
+        return header;
     }
 }

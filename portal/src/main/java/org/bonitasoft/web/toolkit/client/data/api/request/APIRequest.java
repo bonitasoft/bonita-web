@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2014 Bonitasoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.web.toolkit.client.data.api.request;
 
 import java.util.ArrayList;
@@ -8,7 +24,6 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.ui.component.form.AbstractForm;
 
 public abstract class APIRequest {
 
@@ -73,20 +88,6 @@ public abstract class APIRequest {
         return request;
     }
 
-    public static APIAddRequest add(final AbstractForm item, final ItemDefinition itemDefinition, final APICallback callback) {
-        final APIAddRequest request = new APIAddRequest(itemDefinition);
-        request.setItem(item);
-        request.setCallback(callback);
-        return request;
-    }
-
-    public static APIAddRequest add(final Map<String, String> item, final ItemDefinition itemDefinition, final APICallback callback) {
-        final APIAddRequest request = new APIAddRequest(itemDefinition);
-        request.setItem(item);
-        request.setCallback(callback);
-        return request;
-    }
-
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UPDATE
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,20 +111,6 @@ public abstract class APIRequest {
     }
 
     public static APIUpdateRequest update(final APIID id, final Map<String, String> item, final ItemDefinition itemDefinition, final APICallback callback) {
-        final APIUpdateRequest request = new APIUpdateRequest(itemDefinition);
-
-        request.setId(id);
-        request.setItem(item);
-        request.setCallback(callback);
-
-        return request;
-    }
-
-    public static APIUpdateRequest update(final String id, final AbstractForm item, final ItemDefinition itemDefinition, final APICallback callback) {
-        return update(APIID.makeAPIID(id), item, itemDefinition, callback);
-    }
-
-    public static APIUpdateRequest update(final APIID id, final AbstractForm item, final ItemDefinition itemDefinition, final APICallback callback) {
         final APIUpdateRequest request = new APIUpdateRequest(itemDefinition);
 
         request.setId(id);

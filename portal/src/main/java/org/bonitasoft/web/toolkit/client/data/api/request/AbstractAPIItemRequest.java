@@ -47,14 +47,6 @@ abstract class AbstractAPIItemRequest extends AbstractAPIRequest {
         this.item = item;
     }
 
-    /**
-     * @param form
-     *            the form to set
-     */
-    public void setItem(final AbstractForm form) {
-        this.form = form;
-    }
-
     public void setItem(final Map<String, String> map) {
         this.map = map;
     }

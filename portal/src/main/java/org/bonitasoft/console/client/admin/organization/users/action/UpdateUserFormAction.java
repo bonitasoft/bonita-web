@@ -18,9 +18,13 @@ package org.bonitasoft.console.client.admin.organization.users.action;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.UpdateItemWithDeployFormAction;
 
 /**
@@ -31,6 +35,8 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.UpdateItemWithDeployForm
  * @author Colin PUY
  */
 public class UpdateUserFormAction extends UpdateItemWithDeployFormAction<UserItem> {
+
+    private List<Action> submitActions = new ArrayList<Action>();
 
     public UpdateUserFormAction() {
         super(UserDefinition.get(), UserItem.DEPLOY_PROFESSIONAL_DATA, UserItem.DEPLOY_PERSONNAL_DATA);
@@ -53,9 +59,16 @@ public class UpdateUserFormAction extends UpdateItemWithDeployFormAction<UserIte
             this.getForm().addError(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Passwords don't match"));
         } else {
             super.execute();
+            for(Action action: submitActions) {
+                action.execute();
+            }
         }
     }
-    
+
+    public void onSubmit(Action action) {
+        submitActions.add(action);
+    }
+
     private String getMessageFromErrorMessage(String message) {
         int indexStartMessage = message.indexOf("\"message\""); 
         if (indexStartMessage >= 0) {
