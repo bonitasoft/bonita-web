@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-22 09:53+0200\n"
-"PO-Revision-Date: 2014-06-02 17:33-0400\n"
+"POT-Creation-Date: 2014-06-04 09:55+0200\n"
+"PO-Revision-Date: 2014-06-04 17:34-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2920,7 +2920,7 @@ msgstr "OK"
 msgid "You will be rediected"
 msgstr "Sie werden umgeleitet"
 
-#: portal/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:84
+#: portal/src/test/java/org/bonitasoft/web/toolkit/client/common/exception/http/JsonExceptionSerializerTest.java:82
 msgid "message"
 msgstr "message"
 
