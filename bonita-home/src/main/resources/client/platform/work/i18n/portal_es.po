@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-29 01:01+0200\n"
-"PO-Revision-Date: 2014-06-03 20:33-0400\n"
+"POT-Creation-Date: 2014-06-05 01:01+0200\n"
+"PO-Revision-Date: 2014-06-05 20:58-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -267,6 +267,14 @@ msgstr "La categoría %categoryName% ya existe"
 msgid "Process definition not found for id %processId%"
 msgstr "No se encuentra la definición del proceso con identificador %processId%"
 
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/CustomUserInfoEngineClient.java:52
+msgid "An error occurred while creating a definition"
+msgstr "An error occurred while creating a definition"
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/CustomUserInfoEngineClient.java:60
+msgid "An error occurred while deleting an item with the id %id%"
+msgstr "An error occurred while deleting an item with the id %id%"
+
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:84
 msgid "Apps %appName% in version %version% already exists"
 msgstr "La aplicación %appName% en versión %version% ya existe"
@@ -379,6 +387,20 @@ msgstr "No se puede convertir json, el contenido no está bien formateado"
 msgid "Json can't be mapped to "
 msgstr "Json no puede ser mapeado a "
 
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoUser.java:56
+msgid "The only mandatory filter is %name%"
+msgstr "The only mandatory filter is %name%"
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoUser.java:57
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoDefinition.java:80
+msgid "Sorting is not supported by this API"
+msgstr "Sorting is not supported by this API"
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoUser.java:58
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoDefinition.java:78
+msgid "Search terms are not supported by this API"
+msgstr "Search terms are not supported by this API"
+
 #: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:45
 msgid "Password must contain at least %number% digits"
 msgstr "La contraseña debe tener al menos %number% dígitos"
@@ -398,6 +420,14 @@ msgstr "La contraseña debe tener al menos %number% caracteres especiales"
 #: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/password/validator/RobustnessPasswordValidator.java:72
 msgid "Password must be at least %number% characters long"
 msgstr "Contraseña debe tener al menos %number% caracteres"
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoValue.java:80
+msgid "Only the value attribute can be updated"
+msgstr "Only the value attribute can be updated"
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/api/organization/APICustomUserInfoDefinition.java:79
+msgid "Filters are not supported by this API"
+msgstr "Filters are not supported by this API"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/api/platform/APIPlatform.java:61
 msgid "The platform already exist !"
@@ -475,25 +505,25 @@ msgid "%attribute% is not a valid Color value"
 msgstr "%attribute%   no es un Color válido"
 
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericMinMaxValidator.java:71
-#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:71
+#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:63
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/DateMinMaxValidator.java:64
 msgid "%attribute% must be more or equal than %value%"
 msgstr "% atributo % debe ser igual o más que el % de valor"
 
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericMinMaxValidator.java:75
-#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:75
+#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:67
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/DateMinMaxValidator.java:68
 msgid "%attribute% must be more than %value%"
 msgstr "% atributo % debe ser más que % value %"
 
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericMinMaxValidator.java:82
-#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:82
+#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:74
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/DateMinMaxValidator.java:75
 msgid "%attribute% must be less or equal than %value%"
 msgstr "%attribute% debe ser menor o igual que %value%"
 
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/NumericMinMaxValidator.java:86
-#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:86
+#: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/StringMinMaxLengthValidator.java:78
 #: common/src/main/java/org/bonitasoft/web/toolkit/client/data/item/attribute/validator/DateMinMaxValidator.java:79
 msgid "%attribute% must be less than %value%"
 msgstr "%attribute% debe ser menor que %value%"
@@ -778,7 +808,7 @@ msgstr "Actualizar un grupo"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/UpdateGroupPage.java:68
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:72
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:99
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:106
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:265
 msgid "Save"
 msgstr "Guardar"
@@ -1085,7 +1115,7 @@ msgstr "Escriba la descripción de esta función"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:47
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:122
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:195
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:202
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:64
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:60
 msgid "First name"
@@ -1093,7 +1123,7 @@ msgstr "Nombre"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/section/UsersListSection.java:48
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:123
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:196
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:203
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:65
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:68
 msgid "Last name"
@@ -1118,7 +1148,7 @@ msgid "Select the role of this user in the selected group"
 msgstr "Seleccione el rol de este usuario en el grupo seleccionado"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AddMembershipPage.java:102
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:143
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:147
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:98
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectMembershipForActorPage.java:99
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectUserForActorPage.java:83
@@ -1194,34 +1224,34 @@ msgid "Last login"
 msgstr "Última sesión"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:125
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:198
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:205
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:135
 msgid "Job title"
 msgstr "Profesión"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:87
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:90
 msgid "Inactive user"
 msgstr "Usuario Inactivo"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:117
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:120
 msgid "Edit user"
 msgstr "Actualizar usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:117
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:120
 msgid "Update the user"
 msgstr "Actualizar el usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:134
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:138
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserQuickDetailsPage.java:102
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserQuickDetailsPage.java:111
 msgid "Membership"
 msgstr "Membresía"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:143
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:147
 msgid "Add a new membership to this user"
 msgstr "Añadir una nueva membresía a este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:154
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:158
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:127
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:122
@@ -1232,66 +1262,66 @@ msgstr "Añadir una nueva membresía a este usuario"
 msgid "Delete"
 msgstr "Eliminar"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:154
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:158
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:127
 msgid "Delete this membership"
 msgstr "Eliminar esta membresía"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:165
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:154
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:169
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:161
 msgid "Business card"
 msgstr "Tarjeta de visita"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:167
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:182
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:117
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:157
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:171
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:186
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:124
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:164
 msgid "Address"
 msgstr "Dirección"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:167
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:171
 msgid "the company address of the user"
 msgstr "la dirección de la empresa del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:168
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:183
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:121
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:161
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:172
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:187
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:128
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:168
 msgid "City"
 msgstr "Ciudad"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:168
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:183
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:172
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:187
 msgid "the city"
 msgstr "la ciudad"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:169
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:184
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:125
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:165
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:173
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:188
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:132
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:172
 msgid "Country"
 msgstr "País"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:169
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:173
 msgid "the country of the user company"
 msgstr "el país del usuario de la empresa "
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:170
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:185
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:129
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:169
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:174
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:189
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:136
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:176
 msgid "Zip code"
 msgstr "Código postal"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:170
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:174
 msgid "the zip code of the user company"
 msgstr "el código postal de la empresa usuaria"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:171
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:186
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:133
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:173
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:175
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:190
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:140
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:180
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:198
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:108
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceTable.java:44
@@ -1306,72 +1336,77 @@ msgstr "el código postal de la empresa usuaria"
 msgid "State"
 msgstr "Estado/Provincia"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:171
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:175
 msgid "the state of the user company"
 msgstr "el estado de la empresa usuaria"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:172
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:176
 msgid "the professional email the user"
 msgstr "el profesional de correo electrónico del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:173
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:188
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:141
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:181
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:177
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:192
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:148
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:188
 msgid "Phone"
 msgstr "Teléfono"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:173
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:177
 msgid "the professional phone number of the user"
 msgstr "el número de teléfono profesional del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:174
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:189
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:145
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:185
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:178
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:193
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:152
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:192
 msgid "Mobile"
 msgstr "Móvil"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:174
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:178
 msgid "the professional mobile phone number of the user"
 msgstr "el número de profesional del teléfono móvil del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:180
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:114
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:184
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:121
 msgid "Personal information"
 msgstr "Información personal"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:182
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:186
 msgid "the address of the user"
 msgstr "la dirección del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:184
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:188
 msgid "the country of the user"
 msgstr "el país del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:185
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:189
 msgid "the zip code of the user"
 msgstr "el código postal del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:186
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:190
 msgid "the state of the user"
 msgstr "el estado del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:187
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:191
 msgid "the personnal email the user"
 msgstr "el personal de correo electrónico al usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:188
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:192
 msgid "the personnal phone number of the user"
 msgstr "el número de teléfono personal del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:189
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:193
 msgid "the personnal mobile phone number of the user"
 msgstr "el número de teléfono móvil personal del usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:196
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:137
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:177
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:203
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:221
+msgid "Other"
+msgstr "Otro"
+
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:215
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:144
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:184
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:111
 msgid "Email"
 msgstr "Correo Electrónico"
@@ -1406,128 +1441,128 @@ msgstr "¿Está seguro que desea eliminar esta membresía?"
 msgid "Do not delete this membership"
 msgstr "No elimine esta membresía"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:75
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:81
 msgid "Edit a user"
 msgstr "Actualizar un usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:93
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:60
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:125
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:87
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:93
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:60
 msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:94
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
 #: server/src/main/webapp/login.jsp:137
 msgid "Password"
 msgstr "Contraseña"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:88
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:94
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:61
 msgid "Enter the password for this user"
 msgstr "Introduzca la contraseña para este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:89
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:95
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:62
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:69
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:89
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:95
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:62
 msgid "Confirm the password for this user"
 msgstr "Confirme la contraseña para este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:90
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:96
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:94
 msgid "Avatar"
 msgstr "Avatar"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:90
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:96
 msgid "Select an avatar for this user"
 msgstr "Seleccionar un avatar de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:99
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:106
 msgid "Save this user modifications"
 msgstr "Guardar esta modificaciones"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:118
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:158
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:125
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:165
 msgid "Enter the address of this user"
 msgstr "Introduzca la dirección de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:122
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:162
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:129
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:169
 msgid "Enter the city of this user"
 msgstr "Introduce la ciudad de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:126
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:166
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:133
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:173
 msgid "Enter the country of this user"
 msgstr "Introduzca el país de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:130
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:170
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:137
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:177
 msgid "Enter the zip code of this user"
 msgstr "Ingrese el código postal de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:134
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:174
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:141
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:181
 msgid "Enter the state of this user"
 msgstr "Introduzca el estado de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:138
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:178
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:145
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:185
 msgid "Enter the email of this user"
 msgstr "Introduzca el correo electrónico de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:142
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:182
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:149
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:189
 msgid "Enter the phone of this user"
 msgstr "Introduzca el teléfono de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:146
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:186
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:153
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:193
 msgid "Enter the mobile phone of this user"
 msgstr "Introduzca el teléfono móvil de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:194
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:201
 msgid "Details"
 msgstr "Detalles"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:195
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:202
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:64
 msgid "Enter the first name of this user"
 msgstr "Introduzca el nombre de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:196
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:203
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:65
 msgid "Enter the last name of this user"
 msgstr "Introduzca el apellido de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:197
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:204
 msgid "Title"
 msgstr "Título"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:197
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:204
 msgid "Enter the title of this user"
 msgstr "Introduzca el título de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:198
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:205
 msgid "Enter the job title of this user"
 msgstr "Escriba el cargo de este usuario"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:202
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:209
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:146
 msgid "Manager"
 msgstr "Gerente"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:203
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:210
 msgid "Select the manager of this user"
 msgstr "Seleccione el gerente de este usuario"
 
@@ -1563,7 +1598,7 @@ msgid "Close"
 msgstr "Cerrar"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:53
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:59
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
@@ -3061,6 +3096,16 @@ msgstr "Actualizar esta tabla"
 msgid "Display a summary of all apps"
 msgstr "Mostrar un Resumen de todas las aplicaciones"
 
+#: portal/src/main/java/org/bonitasoft/console/client/mvp/SimplePagination.java:81
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Pager.java:147
+msgid "%start_result% of %total_results%"
+msgstr "%start_result% de %total_results%"
+
+#: portal/src/main/java/org/bonitasoft/console/client/mvp/SimplePagination.java:85
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Pager.java:154
+msgid "%start_result% - %end_result% of %total_results%"
+msgstr "%start_result% - %end_result% of %total_results%"
+
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/CatchAllExceptionHandler.java:42
 msgid "The application encountered an error."
 msgstr "The application encountered an error."
@@ -3279,14 +3324,6 @@ msgstr "Anterior"
 msgid "Next"
 msgstr "Siguiente"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Pager.java:147
-msgid "%start_result% of %total_results%"
-msgstr "%start_result% de %total_results%"
-
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Pager.java:154
-msgid "%start_result% - %end_result% of %total_results%"
-msgstr "%start_result% - %end_result% of %total_results%"
-
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableFiller.java:89
 msgid "The page you try to display is out of range."
 msgstr "La página que intenta visualizar está fuera de rango."
@@ -3314,7 +3351,7 @@ msgstr "Tipo de búsqueda"
 msgid "Actions"
 msgstr "acciones"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/PagerLink.java:64
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/PagerLink.java:53
 msgid "Go to page %pagenumber%"
 msgstr "ir a la pagina %pagenumber%"
 
