@@ -58,6 +58,7 @@ import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -80,6 +81,7 @@ import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.SHA1;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
@@ -93,14 +95,16 @@ import com.google.gwt.core.shared.GWT;
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
-
-
     @Override
-    public Page defineViewTokens(final String token) {
+    public RawView defineViewTokens(final String token) {
 
         List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
+
+        if("myprettypage".equals(token)) {
+            return new AngularIFrameView("myprettypage");
+        }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
