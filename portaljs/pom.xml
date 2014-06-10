@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+        <groupId>org.bonitasoft.console</groupId>
+        <artifactId>bonita-console</artifactId>
+        <version>6.4.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>bonita-portal-js</artifactId>
+	<name>bonita portal js</name>
+	<packaging>jar</packaging>
+	
+	<build>
+		<plugins>
+			<plugin>
+			    <groupId>pl.allegro</groupId>
+			    <artifactId>grunt-maven-plugin</artifactId>
+			    <version>1.3.1</version>
+			    <configuration>
+			        <!-- relative to src/main/webapp/, default: static -->
+			        <sourceDirectory>.</sourceDirectory>
+			        <jsSourceDirectory>.</jsSourceDirectory>
+
+			        <!-- example options usage to get verbose output in logs -->
+			        <gruntOptions>
+			            <gruntOption>--verbose</gruntOption>
+			        </gruntOptions>
+
+			        <!-- example npm install env variable -->
+			        <npmEnvironmentVar>
+			            <PHANTOMJS_CDNURL>http://cnpmjs.org/downloads</PHANTOMJS_CDNURL>
+			        </npmEnvironmentVar>
+
+			        <!-- example options usage to filter variables in given resource -->
+			        <filteredResources>
+			            <filteredResource>maven-properties.json</filteredResource>
+			        </filteredResources>
+
+			    </configuration>
+			    <executions>
+			        <execution>
+			            <goals>
+			                <goal>create-resources</goal>
+			                <goal>npm</goal>
+			                <!-- or npm-offline if npm failure is not an option -->
+			                <goal>bower</goal>
+			                <goal>grunt</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
