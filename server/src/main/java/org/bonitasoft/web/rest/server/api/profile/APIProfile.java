@@ -14,9 +14,13 @@
  */
 package org.bonitasoft.web.rest.server.api.profile;
 
+import java.util.List;
+
+import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.datastore.ComposedDatastore;
 import org.bonitasoft.web.rest.server.datastore.profile.GetProfileHelper;
 import org.bonitasoft.web.rest.server.datastore.profile.SearchProfilesHelper;
@@ -33,6 +37,18 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  */
 public class APIProfile extends ConsoleAPI<ProfileItem> implements APIHasGet<ProfileItem>, APIHasSearch<ProfileItem> {
 
+    @Override
+    protected void fillDeploys(ProfileItem item, List<String> deploys) {
+        addDeployer(getDeployerFactory().createUserDeployer(PageItem.ATTRIBUTE_CREATED_BY_USER_ID));
+        addDeployer(getDeployerFactory().createUserDeployer(PageItem.ATTRIBUTE_UPDATED_BY_USER_ID));
+        
+        super.fillDeploys(item, deploys);
+    }
+
+    protected DeployerFactory getDeployerFactory() {
+        return new DeployerFactory(getEngineSession());
+    }
+    
     @Override
     protected ComposedDatastore<ProfileItem> defineDefaultDatastore() {
 

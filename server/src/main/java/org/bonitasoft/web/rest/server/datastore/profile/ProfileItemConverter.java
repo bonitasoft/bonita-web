@@ -52,6 +52,10 @@ public class ProfileItemConverter extends ItemConverter<ProfileItem, Profile> {
         item.setDescription(profile.getDescription());
         item.setIsDefault(profile.isDefault());
         item.setIcon(getIconPath(profile.getName()));
+        item.setUpdatedByUserId(profile.getLastUpdatedBy());
+        item.setLastUpdateDate(profile.getLastUpdateDate());
+        item.setCreatedByUserId(profile.getCreatedBy());
+        item.setCreationDate(profile.getCreationDate());
         return item;
     }
 
