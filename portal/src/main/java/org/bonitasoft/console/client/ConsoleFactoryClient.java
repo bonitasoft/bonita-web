@@ -103,7 +103,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
 
         if("angulariframe".equals(token)) {
-            return new AngularIFrameView("angulariframe");
+            return new AngularIFrameView("angulariframe", "#");
         }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
