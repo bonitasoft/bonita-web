@@ -15,6 +15,7 @@ module.exports = function (grunt) {
 	// Time how long tasks take. Can help when optimizing build times
 	require('time-grunt')(grunt);
 	grunt.loadNpmTasks('grunt-connect-proxy');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	// Define the configuration for all the tasks
 	grunt.initConfig({
@@ -353,15 +354,19 @@ module.exports = function (grunt) {
 		//     }
 		//   }
 		// },
-		// uglify: {
-		//   dist: {
-		//     files: {
-		//       '<%= yeoman.dist %>/scripts/scripts.js': [
-		//         '<%= yeoman.dist %>/scripts/scripts.js'
-		//       ]
-		//     }
-		//   }
-		// },
+		uglify: {
+		  dist: {
+		    files: {
+		      '<%= yeoman.dist %>/scripts/bonita-portal-2.0.js': [
+		        '<%= yeoman.dist %>/scripts/*.js'
+		      ]
+		    }
+		  },
+		  options: {
+		  	sourceMap: true,
+        sourceMapName: '<%= yeoman.dist %>/scripts/bonita-portal-2.0.map'
+		  }
+		},
 		// concat: {
 		//   dist: {}
 		// },
@@ -420,6 +425,17 @@ module.exports = function (grunt) {
 		'rev',
 		'usemin',
 		'htmlmin'
+	]);
+
+	grunt.registerTask('uglication', [
+		'clean:dist',
+		'bowerInstall',
+		'useminPrepare',
+		'concurrent:dist',
+		'autoprefixer',
+		'concat',
+		'copy:dist',
+		'uglify'
 	]);
 
 	grunt.registerTask('default', [

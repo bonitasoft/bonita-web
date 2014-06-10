@@ -59,6 +59,7 @@ import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
+import org.bonitasoft.console.client.angular.AngularNativeView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -80,7 +81,6 @@ import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
 import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.SHA1;
 import org.bonitasoft.web.toolkit.client.Session;
-import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
@@ -104,6 +104,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         if("angulariframe".equals(token)) {
             return new AngularIFrameView("angulariframe");
+        }
+        if ("angularnative".equals(token)) {
+            return new AngularNativeView("angularnative");
         }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
