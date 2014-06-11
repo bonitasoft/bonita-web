@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
@@ -146,23 +147,56 @@ public class BPMEngineAPIUtil {
         }
     }
 
-    public Serializable executeCommand(CommandAPI commandAPI, String name, Map<String, Serializable> parameters) throws BPMEngineException,
+    /**
+     * Get the engine profile API
+     *
+     * @param session
+     *        API session
+     * @return an instance of {@link ProfileAPI}
+     * @throws BPMEngineException
+     * @throws InvalidSessionException
+     */
+    public ProfileAPI getProfileAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
+        try {
+            return TenantAPIAccessor.getProfileAPI(session);
+        } catch (final BonitaHomeNotSetException e) {
+            final String message = "Bonita home system variable is not defined";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, message, e);
+            }
+            throw new BPMEngineException(message);
+        } catch (final UnknownAPITypeException e) {
+            final String message = "The engine API Implementation is unknown.";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, message, e);
+            }
+            throw new BPMEngineException(message);
+        } catch (final ServerAPIException e) {
+            final String message = "The engine client was not able to communicate with the engine server.";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, message, e);
+            }
+            throw new BPMEngineException(message);
+        }
+    }
+
+    public Serializable executeCommand(final CommandAPI commandAPI, final String name, final Map<String, Serializable> parameters) throws BPMEngineException,
             InvalidSessionException {
         try {
             return commandAPI.execute(name, parameters);
-        } catch (CommandNotFoundException e) {
+        } catch (final CommandNotFoundException e) {
             final String message = "The command " + name + " could not be found.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
             throw new BPMEngineException(message);
-        } catch (CommandParameterizationException e) {
+        } catch (final CommandParameterizationException e) {
             final String message = "The command " + name + " expect different parameters types.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
             throw new BPMEngineException(message);
-        } catch (CommandExecutionException e) {
+        } catch (final CommandExecutionException e) {
             final String message = "A error occured while executing the command.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
@@ -170,4 +204,5 @@ public class BPMEngineAPIUtil {
             throw new BPMEngineException(message);
         }
     }
+
 }
