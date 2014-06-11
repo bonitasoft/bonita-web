@@ -6,6 +6,6 @@ package org.bonitasoft.console.client.angular;
 public class AngularResourceRoot {
 
     public String contextualize(String url) {
-        return "/" + url;
+        return "../portal.js/" + url;
     }
 }
