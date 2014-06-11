@@ -10,7 +10,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/bonita/views/main.html',
+        templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
       .otherwise({
