@@ -14,7 +14,10 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component;
 
-import com.google.gwt.event.dom.client.DomEvent;
+import static com.google.gwt.query.client.GQuery.$;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.user.client.Event;
@@ -26,8 +29,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.event.ActionEvent;
 import org.bonitasoft.web.toolkit.client.ui.component.event.ActionHandler;
 import org.bonitasoft.web.toolkit.client.ui.utils.TypedString;
-
-import static com.google.gwt.query.client.GQuery.$;
 
 /**
  * @author Séverin Moussel
@@ -138,16 +139,12 @@ public abstract class Clickable extends Component {
     @Override
     protected void postProcessHtml() {
         if (isEnabled()) {
-            /* Remove dblclick for unable deploy the same process twice */
             $(this.element).click(new Function() {
-
                 @Override
                 public boolean f(final Event e) {
                     if (!Clickable.this.action.isStarted) {
                         if (Clickable.this.action != null && isEnabled()) {
                             Clickable.this.action.execute();
-                            // re introduce native gwt event mechanism!
-                            DomEvent.fireNativeEvent(e, Clickable.this);
                         }
                         e.stopPropagation();
                         try {
@@ -158,8 +155,20 @@ public abstract class Clickable extends Component {
                     }
                     return false;
                 }
-
             });
+            addDomHandler(new ClickHandler() {
+
+                @Override
+                public void onClick(ClickEvent event) {
+                    if (!Clickable.this.action.isStarted) {
+                        if (Clickable.this.action != null && isEnabled()) {
+                            Clickable.this.action.execute();
+                        }
+                    }
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            }, ClickEvent.getType());
         }
     }
 
