@@ -8,6 +8,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.Window;
@@ -50,8 +51,7 @@ public class AngularNativeView extends RawView {
         @Override
         public void onSuccess(Void result) {
             if (scriptsToLoad.isEmpty()) {
-                ScriptInjector.fromString("angular.bootstrap(document.getElementById('angular-application'), ['portaljsApp']);")
-                        .setWindow(ScriptInjector.TOP_WINDOW).inject();
+
             } else {
                 ScriptInjector.fromUrl(scriptsToLoad.poll()).setWindow(ScriptInjector.TOP_WINDOW).setCallback(this).inject();
             }
@@ -72,10 +72,15 @@ public class AngularNativeView extends RawView {
 
     @Override
     public void buildView() {
-
         addBody(new UiComponent(binder.createAndBindUi(this)));
-        ScriptInjector.fromUrl("//localhost:9000/bower_components/angular/angular.js").setWindow(ScriptInjector.TOP_WINDOW)
-                .setCallback(new ChainingScriptLoadingCallBack()).inject();
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                ScriptInjector
+                        .fromString("angular.bootstrap(document.getElementById('angular-application'), ['portaljsApp', 'ngRoute', 'ngCookies', 'ngResource']);")
+                        .setWindow(ScriptInjector.TOP_WINDOW).inject();
+            }
+        });
         addClass("page");
     }
 
