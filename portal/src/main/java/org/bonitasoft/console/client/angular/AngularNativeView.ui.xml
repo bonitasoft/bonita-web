@@ -17,6 +17,9 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:HTMLPanel tag="table" styleName="body">
+    <div id='angular-application' ng-app="portaljsApp">
         <div><p>Hello Hello PoutpoutPapillon !! </p></div>
+  		<div class="container" ng-view=""></div>
+    </div>
     </g:HTMLPanel>
 </ui:UiBinder>
