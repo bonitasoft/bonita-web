@@ -15,6 +15,7 @@ module.exports = function (grunt) {
 	// Time how long tasks take. Can help when optimizing build times
 	require('time-grunt')(grunt);
 	grunt.loadNpmTasks('grunt-connect-proxy');
+    grunt.loadNpmTasks('grunt-connect-rewrite');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	// Define the configuration for all the tasks
@@ -74,18 +75,20 @@ module.exports = function (grunt) {
 			server : {
 				proxies: [
 					{
-						context: '/api',
+                        context: '/bonita/API',
 						host: 'localhost',
 						port: 8080,
 						https: false,
 						changeOrigin: false,
-						xforward: false,
-						rewrite: {
-								'^/api': '/bonita/API'
-						}
-					}
+						xforward: false
+                    }
 				]
 			},
+            rules: [
+                // Contextualize app
+                { from: '^/bonita/(.*)$', to: '/$1' },
+                { from: '^(?!/bonita/)(.*)$', to: '/bonita$1', redirect: 'permanent' }
+            ],
 			livereload: {
 				options: {
 					open: true,
@@ -99,7 +102,9 @@ module.exports = function (grunt) {
 						}
 
 						// Setup the proxy
-						var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+                        var middlewares = [
+                            require('grunt-connect-proxy/lib/utils').proxyRequest,
+                            require('grunt-connect-rewrite/lib/utils').rewriteRequest];
 
 						// Serve static files.
 						options.base.forEach(function(base) {
@@ -390,6 +395,7 @@ module.exports = function (grunt) {
 			'clean:server',
 			'bowerInstall',
 			'concurrent:server',
+            'configureRewriteRules',
 			'configureProxies:server',
 			'autoprefixer',
 			'connect:livereload',

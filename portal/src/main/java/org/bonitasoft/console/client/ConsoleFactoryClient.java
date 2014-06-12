@@ -87,6 +87,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.user.client.History;
 
 /**
  * console client page
@@ -102,9 +103,10 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
 
-        if("angulariframe".equals(token)) {
-            return new AngularIFrameView(token, "#");
+        if(token.startsWith("ng-")) {
+            return new AngularIFrameView(token, "#" + token.substring(token.indexOf("-") + 1) + History.getToken());
         }
+
         if ("angularnative".equals(token)) {
             return new AngularNativeView("angularnative");
         }
