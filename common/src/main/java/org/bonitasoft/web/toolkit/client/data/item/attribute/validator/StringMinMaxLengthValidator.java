@@ -38,14 +38,6 @@ public class StringMinMaxLengthValidator extends AbstractStringValidator {
         this(minLength, false, maxLength, false);
     }
 
-    public StringMinMaxLengthValidator(final Integer min, final Boolean includeMin, final Integer max) {
-        this(min, includeMin, max, false);
-    }
-
-    public StringMinMaxLengthValidator(final Integer min, final Integer max, final Boolean includeMax) {
-        this(min, false, max, includeMax);
-    }
-
     public StringMinMaxLengthValidator(final Integer minLength, final Boolean includeMin, final Integer maxLength, final Boolean includeMax) {
         super();
 
