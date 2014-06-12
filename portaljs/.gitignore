@@ -1,7 +1,12 @@
 **/node_modules
+src/main/webapp/static/node_modules
 **/dist
+src/main/webapp/static/dist
 **/.tmp
+src/main/webapp/static/.tmp
 **/.sass-cache
+src/main/webapp/static/.sass-cache
 **/app/bower_components
-**/target
-**/target-grunt
+src/main/webapp/static/app/bower_components
+target
+target-grunt

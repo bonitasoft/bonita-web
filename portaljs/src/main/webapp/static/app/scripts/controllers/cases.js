@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('portaljsApp')
-  .controller('CasesCtrl', ['$scope', '$cookies', function ($scope, $cookies) {
+  .controller('CasesCtrl', ['$scope', '$location', function ($scope, $location) {
     $scope.cases=[{'name' :'Case1'}, {'name' :'Case2'}];
-    console.log($cookies);
+    $scope.goToUsersLink= '#'+$location.path() + '?_p=userlistingadmin&_f=enabledusers';
+
   }]);

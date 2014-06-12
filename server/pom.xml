@@ -269,7 +269,7 @@
                             <webAppConfig>
                                 <contextPath>/bonita</contextPath>
                                 <baseResource implementation="org.mortbay.resource.ResourceCollection">
-                                    <resourcesAsCSV>${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp,${basedir}/../portal/src/main/webapp/static/</resourcesAsCSV>
+                                    <resourcesAsCSV>${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp,${basedir}/../portaljs/src/main/webapp/static/app/</resourcesAsCSV>
                                 </baseResource>
                             </webAppConfig>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
