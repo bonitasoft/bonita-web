@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 BonitaSoft S.A.
+ * Copyright (C) 2009, 2014 BonitaSoft S.A.
  * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,6 +88,7 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
  * implementation of {@link IFormWorkflowAPI}
  * 
  * @author Anthony Birembaut
+ * @author Celine Souchet
  */
 public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
@@ -718,7 +718,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public void terminateTask(final APISession session, final long userID, final long activityInstanceID) throws BPMEngineException, InvalidSessionException,
             FlowNodeExecutionException {
-
         final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
         processAPI.executeFlowNode(userID, activityInstanceID);
     }
@@ -727,71 +726,11 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public boolean canUserInstantiateProcessDefinition(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long processDefinitionID)
-            throws ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, ActorNotFoundException {
-        boolean can = false;
-        final List<ActorInstance> actors = bpmEngineAPIUtil.getProcessAPI(session).getActors(processDefinitionID, 0, 1, null);
-        if (actors != null && !actors.isEmpty()) {
-            final long actorInitiatorId = bpmEngineAPIUtil.getProcessAPI(session).getActorInitiator(processDefinitionID).getId();
-            if (userProcessActors != null) {
-                can = userProcessActors.get(processDefinitionID).contains(actorInitiatorId);
-            }
-        } else {
-            can = true;
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "The process " + processDefinitionID + " contains no actors");
-            }
-        }
-        return can;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canUserSeeProcessInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long processInstanceID)
+    public boolean canUserSeeProcessInstance(final APISession session, final boolean isInvolvedInProcessInstance, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
         // FIXME restore this once the admin case will be handled in FormServiceProviderImpl#canUserViewInstanceForm
         // return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    @Override
-    public boolean isUserInvolvedInActivityInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long activityInstanceID,
-            final long userId) throws ActivityInstanceNotFoundException, BPMEngineException, ProcessDefinitionNotFoundException, InvalidSessionException {
-
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        long actorID = -1;
-        long assigneeID = -1;
-
-        try {
-            final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
-            actorID = humanTaskInstance.getActorId();
-            assigneeID = humanTaskInstance.getAssigneeId();
-        } catch (final ActivityInstanceNotFoundException e) {
-            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
-            if (archivedActivityInstance instanceof ArchivedHumanTaskInstance) {
-                actorID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getActorId();
-                assigneeID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getAssigneeId();
-            } else {
-                throw new ActivityInstanceNotFoundException(activityInstanceID);
-            }
-        }
-        boolean isInvolved = false;
-        if (session.getUserId() == assigneeID) {
-            isInvolved = true;
-        } else if (userId != -1 && assigneeID != 0L) {
-            isInvolved = true;
-        } else if (assigneeID == 0L && userProcessActors != null) {
-            final long processDefinitionID = getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID);
-            final Set<Long> userActorIds = userProcessActors.get(processDefinitionID);
-            isInvolved = userActorIds.contains(actorID);
-        }
-        return isInvolved;
     }
 
     /**
