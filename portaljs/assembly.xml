@@ -10,7 +10,7 @@
 	<fileSets>
 		<fileSet>
 			<outputDirectory>/portal.js</outputDirectory>
-			<directory>${basedir}/target-grunt/dist/</directory>
+			<directory>${basedir}/dist/</directory>
 			<includes>
 				<include>**/*</include>
 			</includes>
