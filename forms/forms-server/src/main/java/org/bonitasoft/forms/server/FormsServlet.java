@@ -948,8 +948,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     /**
      * @param user
      */
-    private void manageLogoutDisplay(final User user, long tenantId) {
-        List<String> features = user.getFeatures();
+    private void manageLogoutDisplay(final User user, final long tenantId) {
+        final List<String> features = user.getFeatures();
         if (features != null && (!features.contains(LoginManagerProperties.LOGOUT_ENABLED) || !features.contains(LoginManagerProperties.LOGOUT_DISABLED))) {
             if (loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled()) {
                 features.add(LoginManagerProperties.LOGOUT_DISABLED);
