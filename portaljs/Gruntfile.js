@@ -86,8 +86,8 @@ module.exports = function (grunt) {
 			},
             rules: [
                 // Contextualize app
-                { from: '^/bonita/(.*)$', to: '/$1' },
-                { from: '^(?!/bonita/)(.*)$', to: '/bonita$1', redirect: 'permanent' }
+                { from: '^/bonita/portaljs(.*)$', to: '/$1' },
+                { from: '^(?!/bonita/portaljs)(.*)$', to: '/bonita/portaljs$1', redirect: 'permanent' }
             ],
 			livereload: {
 				options: {
