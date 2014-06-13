@@ -772,7 +772,9 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        //restore once BS-8953 is fixed engine-side
+        //return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        return true;
     }
 
     /**
