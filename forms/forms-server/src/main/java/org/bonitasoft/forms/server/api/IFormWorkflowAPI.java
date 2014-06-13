@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -49,7 +49,7 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 
 /**
  * Workflow service useful to bind the form to bonita server
- * 
+ *
  * @author Anthony Birembaut
  * @author Celine Souchet
  */
@@ -57,7 +57,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Check the child and parent pocesses and retrieve the next task uuid if it is in the user task list
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceId
@@ -75,7 +75,7 @@ public interface IFormWorkflowAPI {
      * Retrieve any task id of the user todolist. If the process UUID is valid, the task belong to the process otherwise any task from the user todolist can be
      * returned.
      * Return null if no task is found.
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -91,7 +91,7 @@ public interface IFormWorkflowAPI {
      * Retrieve any task id of the user todolist. If the process instance UUID is valid, the task belong to the process instance otherwise any task from the
      * user todolist can be returned.
      * Return null if no task is found.
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -106,7 +106,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the deployment date of a process definition
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -119,7 +119,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the migration date of a process definition
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -132,7 +132,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -152,7 +152,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -172,7 +172,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -190,7 +190,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -208,7 +208,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -228,7 +228,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -248,7 +248,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -273,7 +273,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -298,7 +298,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -320,7 +320,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -343,7 +343,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -368,7 +368,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve a field value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -394,7 +394,7 @@ public interface IFormWorkflowAPI {
     /**
      * Start terminate a task and execute a number of actions specifying the pressed submit button id
      * (this way, only actions related to this button will be performed)
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -421,7 +421,7 @@ public interface IFormWorkflowAPI {
     /**
      * Instantiate a process and execute actions specifying the pressed submit button id
      * (this way, only actions related to this button will be performed).
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -446,7 +446,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the step attributes for the activity
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -463,7 +463,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Return the activity edition state
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -478,7 +478,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Execute a task
-     * 
+     *
      * @param session
      *            the API session
      * @param userID
@@ -493,7 +493,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Start an instance
-     * 
+     *
      * @param session
      *            the API session
      * @param userID
@@ -515,7 +515,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Check if a user can see a process instance
-     * 
+     *
      * @param session
      *            the API session
      * @param isInvolvedInProcessInstance
@@ -534,7 +534,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -561,7 +561,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -586,7 +586,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -608,7 +608,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -628,7 +628,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -655,7 +655,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -680,7 +680,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -703,7 +703,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -723,7 +723,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -748,7 +748,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -771,7 +771,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -791,7 +791,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve some fields initial value
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -809,7 +809,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the process instance ID from an activity instance ID
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -824,7 +824,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the process definition ID from an activity instance ID
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -839,7 +839,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the process definition ID from a process instance ID
-     * 
+     *
      * @param session
      *            the API session
      * @param processInstanceID
@@ -855,7 +855,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the process ID for a given process definition UUID
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionUUIDStr
@@ -869,7 +869,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve an activity definition UUID for a given activity instance
-     * 
+     *
      * @param session
      *            the API session
      * @param activityInstanceID
@@ -887,7 +887,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Check if a process is enabled
-     * 
+     *
      * @param session
      *            the API session
      * @param processDefinitionID
@@ -903,7 +903,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Retrieve the task name of an activity
-     * 
+     *
      * @param session
      * @param activityInstanceID
      * @return the activity name
@@ -917,7 +917,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Assign a task to the user of whom belong the session
-     * 
+     *
      * @param session
      *            the user's session
      * @param taskId
@@ -931,7 +931,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * indicate if the activity instance ID passed matches a ready task
-     * 
+     *
      * @param session
      *            the user's session
      * @param activityInstanceID
@@ -941,5 +941,21 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     boolean isTaskReady(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException;
+
+    /**
+     * Indicate if the user is admin or process owner for the current process
+     * 
+     * @param session
+     * @param processInstanceID
+     * @return
+     * @throws UserNotFoundException
+     * @throws InvalidSessionException
+     * @throws ProcessInstanceNotFoundException
+     * @throws ProcessDefinitionNotFoundException
+     * @throws ArchivedProcessInstanceNotFoundException
+     * @throws BPMEngineException
+     */
+    boolean isUserAdminOrProcessOwner(APISession session, long processInstanceID) throws UserNotFoundException, InvalidSessionException,
+            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException;
 
 }
