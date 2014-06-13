@@ -103,13 +103,13 @@ import org.w3c.dom.Document;
 
 /**
  * Implementation of FormServiceProvider based on Bonita execution engine
- * 
+ *
  * @author QiXiang Zhang, Anthony Birembaut, Haojie Yuan, Vincent Elcrin, Julien Mege
  */
 public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
-     * 
+     *
      */
     private static final String UI_FORM_MODE = "form";
 
@@ -207,7 +207,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Return the process definition ID based on the context map
-     * 
+     *
      * @param context
      *        Map of context
      * @return the ProcessDefinitionID
@@ -454,7 +454,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Check if a user can view an activity instance form
-     * 
+     *
      * @param session
      *        the API session
      * @param user
@@ -535,7 +535,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Check if a user can view a process instance form
-     * 
+     *
      * @param session
      *        the API session
      * @param user
@@ -561,9 +561,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             SessionTimeoutException {
 
         try {
-            // FIXME verify if the user is admin. In this case, he can access the form
-            // TODO verify if the user is process supervisor of the process. In this case, he can access the form
-            if (!workflowAPI.canUserSeeProcessInstance(session, getProcessActors(session, userId), processInstanceID)) {
+            if (!workflowAPI.isUserAdminOrProcessOwner(session, processInstanceID)
+                    && !workflowAPI.canUserSeeProcessInstance(session, getProcessActors(session, userId), processInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the " + getFormType(formId)
                         + " form of process instance " + processInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
@@ -573,6 +572,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
         } catch (final ProcessInstanceNotFoundException e) {
             final String message = "The process instance with ID " + processInstanceID + " does not exist!";
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e);
+            }
+            throw new FormNotFoundException(message);
+        } catch (final ArchivedProcessInstanceNotFoundException e) {
+            final String message = "The archived process instance with ID " + processInstanceID + " does not exist!";
             if (getLogger().isLoggable(Level.INFO)) {
                 getLogger().log(Level.INFO, message, e);
             }
@@ -594,7 +599,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Check if a user can access a process instantiation form
-     * 
+     *
      * @param session
      *        the API session
      * @param user
@@ -641,7 +646,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Parse the formId to extract the form type
-     * 
+     *
      * @param formId
      *        the form ID
      * @return "entry", "view" or "recap"
@@ -840,7 +845,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws FormInitializationException
      * @throws BPMEngineEvaluationExpressionException
      */
@@ -1060,7 +1065,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Convert type of all fields contains in formFieldValues
-     * 
+     *
      * @param formFieldValues
      * @param throwException
      * @return
@@ -1078,7 +1083,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Convert type if a working modifier is found in {@link FormFieldValue}
-     * 
+     *
      * @param formFieldValue
      * @param throwException
      * @return
@@ -1128,7 +1133,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Check if str is empty or blank
-     * 
+     *
      * @param str
      * @return
      */
@@ -1362,7 +1367,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMExpressionEvaluationException
      */
     @Override
@@ -1440,7 +1445,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws IOException
      * @throws FileTooBigException
      * @throws BPMExpressionEvaluationException
@@ -1554,7 +1559,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Retrieve the process deployementDate
-     * 
+     *
      * @param session
      *        the API session
      * @param processDefinitionID
@@ -1672,7 +1677,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     /**
      * Get a Form Definition Accessor object
-     * 
+     *
      * @param formId
      *        the form ID
      * @param formDefinitionDocument
