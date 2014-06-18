@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-06 03:02+0200\n"
-"PO-Revision-Date: 2014-06-16 22:33-0400\n"
+"PO-Revision-Date: 2014-06-17 17:33-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -51,7 +51,7 @@ msgstr "Tareas"
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:50
 #: portal/src/main/java/org/bonitasoft/console/client/menu/view/technicaluser/OrganizationMenuItem.java:36
 msgid "Organization"
-msgstr "Organizacion"
+msgstr "Organización"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:44
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
@@ -2187,7 +2187,7 @@ msgstr "el número de teléfono móvil personal del usuario"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:203
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:221
 msgid "Other"
-msgstr "Otro"
+msgstr "Otras"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:215
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:144
