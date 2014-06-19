@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 BonitaSoft S.A.
+ * Copyright (C) 2009, 2014 BonitaSoft S.A.
  * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
-import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
@@ -53,6 +51,7 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
  * Workflow service useful to bind the form to bonita server
  *
  * @author Anthony Birembaut
+ * @author Celine Souchet
  */
 public interface IFormWorkflowAPI {
 
@@ -515,29 +514,12 @@ public interface IFormWorkflowAPI {
             ExecutionException, UserNotFoundException;
 
     /**
-     * Check if the user can istantiate a process definition
-     *
-     * @param session
-     *            the API session
-     * @param userProcessActors
-     *            the process actors of the user
-     * @param processDefinitionID
-     *            the process definition UUID
-     * @return true if the user is involved in the process instance. False otherwise
-     * @throws ProcessInstanceNotFoundException
-     * @throws BPMEngineException
-     * @throws ActorNotFoundException
-     */
-    boolean canUserInstantiateProcessDefinition(APISession session, Map<Long, Set<Long>> userProcessActors, long processDefinitionID)
-            throws ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, InvalidSessionException, ActorNotFoundException;
-
-    /**
      * Check if a user can see a process instance
      *
      * @param session
      *            the API session
-     * @param userProcessActors
-     *            the process actors of the user
+     * @param isInvolvedInProcessInstance
+     *            true if the user is involved in the process instance; otherwise false
      * @param processInstanceID
      *            the process instance UUID
      * @return true if the user is involved in the process instance. False otherwise
@@ -546,30 +528,9 @@ public interface IFormWorkflowAPI {
      * @throws UserNotFoundException
      * @throws ProcessDefinitionNotFoundException
      */
-    boolean canUserSeeProcessInstance(APISession session, Map<Long, Set<Long>> userProcessActors, long processInstanceID)
+    boolean canUserSeeProcessInstance(APISession session, boolean isInvolvedInProcessInstance, long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException, UserNotFoundException,
             ProcessDefinitionNotFoundException;
-
-    /**
-     * Check if the user is involved in an activity instance or if the user is performing for someone else
-     *
-     * @param session
-     *            the API session
-     * @param userProcessActors
-     *            the process actors of the user
-     * @param activityInstanceID
-     *            the activity instance ID
-     * @param userId
-     *            userid used to "Start for" or "do for"
-     * @return true if the user is involved in the activity instance. False otherwise
-     * @throws ActivityInstanceNotFoundException
-     * @throws BPMEngineException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
-     */
-    boolean isUserInvolvedInActivityInstance(APISession session, Map<Long, Set<Long>> userProcessActors, long activityInstanceID, long userId)
-            throws ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException, ProcessDefinitionNotFoundException,
-            ArchivedFlowNodeInstanceNotFoundException;
 
     /**
      * Retrieve some fields initial value
