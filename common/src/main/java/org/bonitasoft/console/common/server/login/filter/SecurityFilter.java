@@ -26,7 +26,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 
 /**
@@ -50,7 +49,6 @@ public class SecurityFilter implements Filter {
 
         // Mitigate/Prevent XSS
         res.addHeader("X-XSS-Protection", "1; mode=block");
-        res.addHeader("X-WebKit-CSP", "default-src 'self'"); 
         
         // X-frame-options (ClickJacking)
         res.addHeader("X-Frame-Options", "SAMEORIGIN");
