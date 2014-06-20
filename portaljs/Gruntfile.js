@@ -15,16 +15,16 @@ module.exports = function (grunt) {
 	// Time how long tasks take. Can help when optimizing build times
 	require('time-grunt')(grunt);
 	grunt.loadNpmTasks('grunt-connect-proxy');
-    grunt.loadNpmTasks('grunt-connect-rewrite');
+  grunt.loadNpmTasks('grunt-connect-rewrite');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	// Define the configuration for all the tasks
 	grunt.initConfig({
 
 		// Project settings
-		yeoman: {
+		portaljs: {
 			// configurable paths
-			app: require('./bower.json').appPath || 'app',
+			app: 'main',
 			dist: 'dist'
 		},
 
@@ -35,18 +35,18 @@ module.exports = function (grunt) {
 				tasks: ['bowerInstall']
 			},
 			js: {
-				files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+				files: ['<%= portaljs.app %>/features/**/*.js', '<%= portaljs.app %>/commons/**/*.js', '<%= portaljs.app %>/assets/**/*.js', '<%= portaljs.app %>/app.js'],
 				tasks: ['newer:jshint:all'],
 				options: {
 					livereload: true
 				}
 			},
 			jsTest: {
-				files: ['test/spec/{,*/}*.js'],
+				files: ['test/spec/**/*.js'],
 				tasks: ['newer:jshint:test', 'karma']
 			},
 			styles: {
-				files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+				files: ['<%= portaljs.app %>/styles/{,*/}*.css'],
 				tasks: ['newer:copy:styles', 'autoprefixer']
 			},
 			gruntfile: {
@@ -57,9 +57,8 @@ module.exports = function (grunt) {
 					livereload: '<%= connect.options.livereload %>'
 				},
 				files: [
-					'<%= yeoman.app %>/{,*/}*.html',
-					'.tmp/styles/{,*/}*.css',
-					'<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+					'<%= portaljs.app %>/**/*.html',
+					'.tmp/styles/{,*/}*.css'
 				]
 			}
 		},
@@ -75,13 +74,13 @@ module.exports = function (grunt) {
 			server : {
 				proxies: [
 					{
-                        context: '/bonita/API',
+            context: '/bonita/API',
 						host: 'localhost',
 						port: 8080,
 						https: false,
 						changeOrigin: false,
 						xforward: false
-                    }
+          }
 				]
 			},
             rules: [
@@ -94,7 +93,7 @@ module.exports = function (grunt) {
 					open: true,
 					base: [
 						'.tmp',
-						'<%= yeoman.app %>'
+						'<%= portaljs.app %>'
 					],
 					middleware: function (connect, options) {
 						if (!Array.isArray(options.base)) {
@@ -125,13 +124,13 @@ module.exports = function (grunt) {
 					base: [
 						'.tmp',
 						'test',
-						'<%= yeoman.app %>'
+						'<%= portaljs.app %>'
 					]
 				}
 			},
 			dist: {
 				options: {
-					base: '<%= yeoman.dist %>'
+					base: '<%= portaljs.dist %>'
 				}
 			}
 		},
@@ -143,13 +142,13 @@ module.exports = function (grunt) {
 				reporter: require('jshint-stylish')
 			},
 			all: [
-				'<%= yeoman.app %>/scripts/{,*/}*.js'
+				'<%= portaljs.app %>/**/*.js'
 			],
 			test: {
 				options: {
 					jshintrc: 'test/.jshintrc'
 				},
-				src: ['test/spec/{,*/}*.js']
+				src: ['test/spec/**/*.js']
 			}
 		},
 
@@ -160,8 +159,8 @@ module.exports = function (grunt) {
 					dot: true,
 					src: [
 						'.tmp',
-						'<%= yeoman.dist %>/*',
-						'!<%= yeoman.dist %>/.git*'
+						'<%= portaljs.dist %>/*',
+						'!<%= portaljs.dist %>/.git*'
 					]
 				}]
 			},
@@ -186,8 +185,8 @@ module.exports = function (grunt) {
 		// Automatically inject Bower components into the app
 		bowerInstall: {
 			app: {
-				src: ['<%= yeoman.app %>/index.html'],
-				ignorePath: '<%= yeoman.app %>/'
+				src: ['<%= portaljs.app %>/index.html'],
+				ignorePath: '<%= portaljs.app %>/'
 			}
 		},
 
@@ -196,10 +195,8 @@ module.exports = function (grunt) {
 			dist: {
 				files: {
 					src: [
-						'<%= yeoman.dist %>/scripts/{,*/}*.js',
-						'<%= yeoman.dist %>/styles/{,*/}*.css',
-						'<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-						'<%= yeoman.dist %>/styles/fonts/*'
+						'<%= portaljs.dist %>/**/*.js',
+						'<%= portaljs.dist %>/styles/{,*/}*.css'
 					]
 				}
 			}
@@ -209,9 +206,9 @@ module.exports = function (grunt) {
 		// concat, minify and revision files. Creates configurations in memory so
 		// additional tasks can operate on them
 		useminPrepare: {
-			html: '<%= yeoman.app %>/index.html',
+			html: '<%= portaljs.app %>/index.html',
 			options: {
-				dest: '<%= yeoman.dist %>',
+				dest: '<%= portaljs.dist %>',
 				flow: {
 					html: {
 						steps: {
@@ -226,39 +223,17 @@ module.exports = function (grunt) {
 
 		// Performs rewrites based on rev and the useminPrepare configuration
 		usemin: {
-			html: ['<%= yeoman.dist %>/{,*/}*.html'],
-			css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+			html: ['<%= portaljs.dist %>/**/*.html'],
+			css: ['<%= portaljs.dist %>/styles/{,*/}*.css'],
 			options: {
-				assetsDirs: ['<%= yeoman.dist %>']
+				assetsDirs: ['<%= portaljs.dist %>']
 			}
 		},
 
 		// The following *-min tasks produce minified files in the dist folder
 		cssmin: {
 			options: {
-				root: '<%= yeoman.app %>'
-			}
-		},
-
-		imagemin: {
-			dist: {
-				files: [{
-					expand: true,
-					cwd: '<%= yeoman.app %>/images',
-					src: '{,*/}*.{png,jpg,jpeg,gif}',
-					dest: '<%= yeoman.dist %>/images'
-				}]
-			}
-		},
-
-		svgmin: {
-			dist: {
-				files: [{
-					expand: true,
-					cwd: '<%= yeoman.app %>/images',
-					src: '{,*/}*.svg',
-					dest: '<%= yeoman.dist %>/images'
-				}]
+				root: '<%= portaljs.app %>'
 			}
 		},
 
@@ -272,9 +247,9 @@ module.exports = function (grunt) {
 				},
 				files: [{
 					expand: true,
-					cwd: '<%= yeoman.dist %>',
-					src: ['*.html', 'views/{,*/}*.html'],
-					dest: '<%= yeoman.dist %>'
+					cwd: '<%= portaljs.dist %>',
+					src: ['*.html', '**/*.html'],
+					dest: '<%= portaljs.dist %>'
 				}]
 			}
 		},
@@ -296,7 +271,7 @@ module.exports = function (grunt) {
 		// Replace Google CDN references
 		cdnify: {
 			dist: {
-				html: ['<%= yeoman.dist %>/*.html']
+				html: ['<%= portaljs.dist %>/*.html']
 			}
 		},
 
@@ -306,26 +281,16 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					dot: true,
-					cwd: '<%= yeoman.app %>',
-					dest: '<%= yeoman.dist %>',
+					cwd: '<%= portaljs.app %>',
+					dest: '<%= portaljs.dist %>',
 					src: [
-						'*.{ico,png,txt}',
-						'.htaccess',
-						'*.html',
-						'views/{,*/}*.html',
-						'images/{,*/}*.{webp}',
-						'fonts/*'
+						'**/*.html'
 					]
-				}, {
-					expand: true,
-					cwd: '.tmp/images',
-					dest: '<%= yeoman.dist %>/images',
-					src: ['generated/*']
 				}]
-			},
+      },
 			styles: {
 				expand: true,
-				cwd: '<%= yeoman.app %>/styles',
+				cwd: '<%= portaljs.app %>/styles',
 				dest: '.tmp/styles/',
 				src: '{,*/}*.css'
 			}
@@ -340,9 +305,7 @@ module.exports = function (grunt) {
 				'copy:styles'
 			],
 			dist: [
-				'copy:styles',
-				'imagemin',
-				'svgmin'
+				'copy:styles'
 			]
 		},
 
@@ -352,26 +315,26 @@ module.exports = function (grunt) {
 		// cssmin: {
 		//   dist: {
 		//     files: {
-		//       '<%= yeoman.dist %>/styles/main.css': [
+		//       '<%= portaljs.dist %>/styles/main.css': [
 		//         '.tmp/styles/{,*/}*.css',
-		//         '<%= yeoman.app %>/styles/{,*/}*.css'
+		//         '<%= portaljs.app %>/styles/{,*/}*.css'
 		//       ]
 		//     }
 		//   }
+		// // },
+		// uglify: {
+		//   dist: {
+		//     files: {
+		//       '<%= portaljs.dist %>/scripts/bonita-portal-2.0.js': [
+		//         '<%= portaljs.dist %>/scripts/*.js'
+		//       ]
+		//     }
+		//   },
+		//   options: {
+		//   	sourceMap: true,
+  //       sourceMapName: '<%= portaljs.dist %>/scripts/bonita-portal-2.0.map'
+		//   }
 		// },
-		uglify: {
-		  dist: {
-		    files: {
-		      '<%= yeoman.dist %>/scripts/bonita-portal-2.0.js': [
-		        '<%= yeoman.dist %>/scripts/*.js'
-		      ]
-		    }
-		  },
-		  options: {
-		  	sourceMap: true,
-        sourceMapName: '<%= yeoman.dist %>/scripts/bonita-portal-2.0.map'
-		  }
-		},
 		// concat: {
 		//   dist: {}
 		// },

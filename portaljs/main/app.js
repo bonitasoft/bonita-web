@@ -10,13 +10,13 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html',
+                templateUrl: 'features/poc/views/main.html',
                 controller: 'MainCtrl'
             }).when('/cases', {
-                templateUrl: 'views/cases.html',
+                templateUrl: 'features/poc/views/cases.html',
                 controller: 'CasesCtrl'
             }).when('/users', {
-                templateUrl: 'views/users.tpl.html',
+                templateUrl: 'features/poc/views/users.tpl.html',
                 controller: 'UsersCtrl'
             })
             .otherwise({

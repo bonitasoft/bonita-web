@@ -1,12 +1,11 @@
 **/node_modules
-src/main/webapp/static/node_modules
+node_modules
 **/dist
-src/main/webapp/static/dist
+dist
 **/.tmp
-src/main/webapp/static/.tmp
+.tmp
 **/.sass-cache
-src/main/webapp/static/.sass-cache
-**/app/bower_components
-src/main/webapp/static/app/bower_components
+**/main/assets
+main/assets
 target
 target-grunt
