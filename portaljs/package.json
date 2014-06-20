@@ -38,6 +38,7 @@
     "karma-opera-launcher": "~0.1.0",
     "karma-safari-launcher": "~0.1.1",
     "load-grunt-tasks": "~0.4.0",
+    "protractor": "^0.24.2",
     "time-grunt": "~0.2.1"
   },
   "engines": {
