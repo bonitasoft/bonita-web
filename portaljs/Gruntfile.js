@@ -17,6 +17,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-connect-proxy');
   grunt.loadNpmTasks('grunt-connect-rewrite');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-ngdocs');
 
 	// Define the configuration for all the tasks
 	grunt.initConfig({
@@ -345,7 +346,10 @@ module.exports = function (grunt) {
 				configFile: 'karma.conf.js',
 				singleRun: true
 			}
-		}
+		},
+    ngdocs: {
+      all: ['<%= portaljs.app %>/features/**/*.js', '<%= portaljs.app %>/commons/**/*.js', '<%= portaljs.app %>/app.js']
+    }
 	});
 
 

@@ -15,7 +15,7 @@ module.exports = function(config) {
       'main/app.js',
       'main/assets/angular-*/*.js',
       'main/features/**/*.js',
-      'main/commons/**/*.js',
+      'main/common/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
