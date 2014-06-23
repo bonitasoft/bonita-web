@@ -269,7 +269,7 @@
                             <webAppConfig>
                                 <contextPath>/bonita</contextPath>
                                 <baseResource implementation="org.mortbay.resource.ResourceCollection">
-                                    <resourcesAsCSV>${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp,${basedir}/../portaljs/app</resourcesAsCSV>
+                                    <resourcesAsCSV>${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp</resourcesAsCSV>
                                 </baseResource>
                             </webAppConfig>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
@@ -291,7 +291,7 @@
                                 <version>${slf4j.version}</version>
                                 <scope>runtime</scope>
 					        </dependency>
-					        
+
                             <!-- DATASOURCE JNDI -->
                             <dependency>
                                 <groupId>commons-dbcp</groupId>
@@ -339,7 +339,7 @@
                             </dependency>
                         </dependencies>
                     </plugin>
-                    
+
                     <!-- Themes needs to be on the classes path -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
