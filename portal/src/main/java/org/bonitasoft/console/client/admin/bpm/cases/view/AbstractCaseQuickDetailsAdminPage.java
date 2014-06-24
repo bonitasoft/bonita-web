@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.admin.bpm.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -42,6 +42,7 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -89,7 +90,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
         metadatas.add(startedBy(item));
         return metadatas;
     }
-    
+
     private ItemDetailsMetadata startedBy(final T item) {
         if (item.getStartedByUserId() == null || item.getStartedBySubstituteUserId() == null
                 || item.getStartedByUserId().toLong().equals(item.getStartedBySubstituteUserId().toLong())) {
@@ -172,12 +173,12 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 .addHiddenFilter(TaskItem.ATTRIBUTE_CASE_ID, item.getId())
                 .addHiddenFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_FAILED)
                 .addColumn(TaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
-                .addColumn(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Update date"))
+                .addColumn(new DateAttributeReader(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE), _("Update date"))
                 .addColumn(new DeployedUserReader(TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID), _("Executed by"))
                 .addColumn(new DescriptionAttributeReader(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, TaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
                 .addCellFormatter(TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID + "_" + TaskItem.ATTRIBUTE_EXECUTED_BY_USER_ID, new SpanPrepender(_("Executed by:")))
-                .addCellFormatter(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, new SpanPrepender(_("Failed")))
+                .addCellFormatter(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, new SpanPrepender(_("Failed on:")))
                 .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")))
                 .setOrder(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, false)
                 .setActions(getTaskRedirectionAction());
