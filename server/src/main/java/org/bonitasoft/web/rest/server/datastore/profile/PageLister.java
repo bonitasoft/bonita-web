@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.datastore.profile;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,9 @@ public class PageLister {
 
     protected final static List<BonitaPageItem> pages = new ArrayList<BonitaPageItem>();
     static {
-        pages.add(new BonitaPageItem("ng-users", _("manage users"), _("manage users"), _("NG Users")));
-        pages.add(new BonitaPageItem("ng-cases", _("manage cases"), _("manage cases"), _("NG Cases")));
+        pages.add(new BonitaPageItem("tasklistingtm", _("manage tasks"), _("manage tasks"), _("Tasks")));
+        pages.add(new BonitaPageItem("userstm", _("manage users"), _("manage users"), _("Users")));
+        pages.add(new BonitaPageItem("caseadmin", _("manage cases"), _("manage cases"), _("Cases Admin")));
         pages.add(new BonitaPageItem("tasklistinguser", _("visualize & do tasks"), _("visualize & do tasks"), _("Tasks")));
         pages.add(new BonitaPageItem("tasklistingadmin", _("manage tasks"), _("manage tasks"), _("Tasks")));
         pages.add(new BonitaPageItem("tasklistingpm", _("Manage tasks of apps that an entity with this profile can supervise as PM."), _("Manage tasks of apps that an entity with this profile can supervise as PM."), _("Tasks")));

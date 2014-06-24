@@ -58,8 +58,6 @@ import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
-import org.bonitasoft.console.client.angular.AngularIFrameView;
-import org.bonitasoft.console.client.angular.AngularNativeView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -87,7 +85,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.History;
 
 /**
  * console client page
@@ -102,14 +99,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
-
-        if(token.startsWith("ng-")) {
-            return new AngularIFrameView(token, "#" + token.substring(token.indexOf("-") + 1) + History.getToken());
-        }
-
-        if ("angularnative".equals(token)) {
-            return new AngularNativeView("angularnative");
-        }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
