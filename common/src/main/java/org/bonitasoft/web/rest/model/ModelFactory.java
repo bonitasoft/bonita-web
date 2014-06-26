@@ -22,6 +22,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.connector.ArchivedConnectorInstanceDefinition;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
@@ -44,6 +45,9 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoValueDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.MembershipDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
@@ -56,7 +60,6 @@ import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityDefinition;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -82,6 +85,12 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new GroupDefinition();
         } else if (MembershipDefinition.TOKEN.equals(token)) {
             return new MembershipDefinition();
+        } else if (CustomUserInfoDefinition.TOKEN.equals(token)) {
+            return new CustomUserInfoDefinition();
+        } else if (CustomUserInfoDefinitionDefinition.TOKEN.equals(token)) {
+            return new CustomUserInfoDefinitionDefinition();
+        } else if (CustomUserInfoValueDefinition.TOKEN.equals(token)) {
+            return new CustomUserInfoValueDefinition();
         }
 
         // bpm.process
