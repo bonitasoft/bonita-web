@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-24 07:33+0200\n"
-"PO-Revision-Date: 2014-06-24 02:37-0400\n"
+"POT-Creation-Date: 2014-06-25 07:06+0200\n"
+"PO-Revision-Date: 2014-06-25 17:39-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2480,7 +2480,7 @@ msgstr "Importar uma organização existente"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:82
 msgid "This will import a file containing your whole organization data."
-msgstr "Isso irá importar um arquivo que contém os dados de toda a organização."
+msgstr "Esta ação importará um arquivo que contém os dados de toda a organização."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:83
 msgid "Be careful, your organization will be merged with existing data."
@@ -2513,7 +2513,7 @@ msgstr "Exportar a organização instalada"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:114
 msgid "This will export a file containing your whole organization data. "
-msgstr "Isso irá exportar um arquivo que contém todos os dados de organizações. "
+msgstr "Esta ação exportará um arquivo que contém todos os dados da organização. "
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/OrganizationImportAndExportPage.java:115
 msgid "Data included are : Users, groups and roles"
