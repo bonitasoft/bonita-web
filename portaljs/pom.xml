@@ -9,7 +9,7 @@
 	<artifactId>bonita-portal-js</artifactId>
 	<name>bonita portal js</name>
 	<packaging>pom</packaging>
-	
+
 	<build>
 		<plugins>
             <plugin>
@@ -18,15 +18,55 @@
                 <version>1.2.1</version>
                 <executions>
                     <execution>
+                        <id>npm-exec</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bower-exec</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>bower</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt-exec</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>grunt</executable>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bower-link-exec</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>bower</executable>
+                            <arguments>
+                                <argument>link</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <executable>grunt</executable>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
