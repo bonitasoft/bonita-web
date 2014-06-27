@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Url;
 
 /**
  * @author Séverin Moussel, Paul Amar
- * 
+ *
  * @param <T>
  *            The class of the items that will be displayed in this page.
  */
@@ -220,7 +220,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Define the filters that will displayed as most important.
-     * 
+     *
      * @return This method must return the list of filters to display in the right display order
      */
     protected List<Clickable> defineFilterPanelActions() {
@@ -240,14 +240,14 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Define the filters that will displayed as most important.
-     * 
+     *
      * @return This method must return the list of filters to display in the right display order
      */
     protected abstract LinkedList<ItemListingFilter> definePrimaryFilters();
 
     /**
      * (OPTIONAL) Define title of the primary filters section
-     * 
+     *
      * @return This method can return the title of the section. If null then no text will be added
      */
     protected Title definePrimaryFiltersTitle() {
@@ -271,7 +271,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * (OPTIONAL) Define the filters that will displayed as less important.
-     * 
+     *
      * @return This method must return the list of filters to display in the right display order
      */
     protected LinkedList<ItemListingFilter> defineSecondaryFilters() {
@@ -280,7 +280,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * (OPTIONAL) Define title of the secondary filters section
-     * 
+     *
      * @return This method can return the title of the section. If null then no text will be added
      */
     protected Title defineSecondaryFiltersTitle() {
@@ -308,14 +308,14 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Define the filters automatically filled with items from a linked resource.
-     * 
+     *
      * @return This method must return the definition of a resource dependent filters list
      */
     protected abstract ItemListingResourceFilter defineResourceFilters();
 
     /**
      * (OPTIONAL) Define title of the resource filters section
-     * 
+     *
      * @return This method can return the title of the section. If null then no text will be added
      */
     protected Title defineResourceFiltersTitle() {
@@ -324,7 +324,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Add filters to a defined section.
-     * 
+     *
      * @param filters
      *            The filters to add
      * @param section
@@ -341,6 +341,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
                     filter.getTooltip(),
                     action
                     );
+            link.forceToolTip();
             action.setLink(link);
             filter.setLink(link);
 
@@ -362,7 +363,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Add title to the header of the section
-     * 
+     *
      * @param title
      *            Title to add
      * @param section
@@ -394,9 +395,9 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
         /**
          * The action called to sort the tables.
-         * 
+         *
          * @author Paul AMAR
-         * 
+         *
          */
         private final class ChangeSortAction extends Action {
 
@@ -409,7 +410,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
             /**
              * Default Constructor.
-             * 
+             *
              * @param sort
              *            The column to sort
              */
@@ -442,7 +443,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
         /**
          * Default constructor.
-         * 
+         *
          * @param filter
          *            The filter to display
          */
@@ -484,7 +485,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
         /**
          * Show a table defined by its name.
-         * 
+         *
          * @param tableName
          *            The name of the table to show
          */
@@ -502,7 +503,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
         /**
          * Hide a table defined by its name.
-         * 
+         *
          * @param tableName
          *            The name of the table to hide
          */
@@ -683,7 +684,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Define the default sorting.
-     * 
+     *
      * @return This method must return the default sort that must be used.
      * @deprecated don't add sort order on page but on tables, use {@link ItemTable#setOrder(String, boolean)}
      */
@@ -694,7 +695,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
     /**
      * Define the list of tables that can be displayed by filters.
-     * 
+     *
      * @return This method must return a list of ItemListingTable
      */
     protected abstract LinkedList<ItemListingTable> defineTables();
