@@ -61,12 +61,11 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: false,
+
     reporters: ['progress', 'html'],
 
-    // the default configuration
     htmlReporter: {
-      outputDir: 'karmaReports',
-      templatePath: __dirname+'/jasmine_template.html'
+      outputFile: 'test/reports.html'
     }
 
   });
