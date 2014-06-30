@@ -62,10 +62,10 @@ module.exports = function(config) {
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
-    reporters: ['progress', 'html'],
+    reporters: ['dots', 'junit'],
 
-    htmlReporter: {
-      outputFile: 'test/reports.html'
+    junitReporter: {
+      outputFile: 'test/reports.xml'
     }
 
   });
