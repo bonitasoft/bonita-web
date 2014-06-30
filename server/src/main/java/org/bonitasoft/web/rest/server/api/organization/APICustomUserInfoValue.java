@@ -38,8 +38,8 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_VALUE;
-import static org.bonitasoft.web.rest.server.api.APIAssert.assertThat;
-import static org.bonitasoft.web.rest.server.api.APIAssert.containsOnly;
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.containsOnly;
 
 /**
  * @author Vincent Elcrin
@@ -77,7 +77,7 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
 
     @Override
     public CustomUserInfoItem update(APIID id, Map<String, String> attributes) {
-        assertThat(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only the value attribute can be updated"));
+        check(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only the value attribute can be updated"));
 
         return converter.convert(getClient().setCustomUserInfoValue(
                 id.getPartAsLong(1),
