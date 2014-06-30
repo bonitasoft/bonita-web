@@ -4,7 +4,6 @@ angular
     .module('portaljsApp', [
         'ngCookies',
         'ngResource',
-        'ngSanitize',
         'ngRoute'
     ])
     .config(function ($routeProvider) {
