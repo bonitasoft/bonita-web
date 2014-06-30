@@ -25,9 +25,9 @@ import org.bonitasoft.web.toolkit.client.common.i18n._;
 /**
  * @author Vincent Elcrin
  */
-public class APIAssert {
+public class APIPreconditions {
 
-    public static void assertThat(boolean condition, _ message) {
+    public static void check(boolean condition, _ message) {
         if(!condition) {
             throw new APIException(message);
         }
