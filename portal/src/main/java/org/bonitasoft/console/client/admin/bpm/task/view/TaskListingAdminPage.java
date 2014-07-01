@@ -37,20 +37,19 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
-import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.TreeNode;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.FlowNodeContextAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.AppResourceFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
@@ -111,8 +110,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
     @Override
     protected ItemListingResourceFilter defineResourceFilters() {
-        return new ItemListingResourceFilter(new APISearchRequest(ProcessDefinition.get()),
-                ProcessItem.ATTRIBUTE_DISPLAY_NAME, ProcessItem.ATTRIBUTE_ICON, TABLE_ALL)
+        return new AppResourceFilter(TABLE_ALL)
                 .addFilterMapping(TaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID)
                 .addFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_READY);
     }
