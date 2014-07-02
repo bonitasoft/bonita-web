@@ -5,16 +5,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.toolkit.client.ui.page.itemListingPage;
+
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,7 +29,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class ItemListingFilter {
 
@@ -47,13 +49,15 @@ public class ItemListingFilter {
 
     private Link link = null;
 
+    private String additionnalInfo;
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Default constructor with String... for tables listing.
-     * 
+     *
      * @param name
      *            The name of the table (used for filtering)
      * @param label
@@ -69,7 +73,7 @@ public class ItemListingFilter {
 
     /**
      * Default constructor with a List<String> for tables listing.
-     * 
+     *
      * @param name
      *            The name of the table (used for filtering)
      * @param label
@@ -93,7 +97,7 @@ public class ItemListingFilter {
 
     /**
      * Add a filter to set to tables while displaying this filter.
-     * 
+     *
      * @param name
      *            The name of the filter. Can be an attribute or a filter form the IItem to display
      * @param value
@@ -110,7 +114,7 @@ public class ItemListingFilter {
 
     /**
      * Add a filter to set to tables while displaying this filter.
-     * 
+     *
      * @param name
      *            The name of the filter. Can be an attribute or a filter form the IItem to display
      * @param value
@@ -124,7 +128,7 @@ public class ItemListingFilter {
     /**
      * Set a list of filters to set to tables while displaying this filter.<br>
      * This method removes previously added filters.
-     * 
+     *
      * @param filters
      *            A map of filters under the form <filterName; filterValue>
      * @return This method returns "this" to allow cascading calls.
@@ -142,7 +146,7 @@ public class ItemListingFilter {
 
     /**
      * Define an image to display in the filter button.
-     * 
+     *
      * @param imageUrl
      *            The url of the image to display
      * @return This method returns "this" to allow cascading calls.
@@ -204,7 +208,7 @@ public class ItemListingFilter {
 
     /**
      * set a boolean to know if the filter is a ressource or a custom filter
-     * 
+     *
      * @param boolean isRessourceFilter
      */
     public void setIsResourceFilter(final boolean isRessourceFilter) {
@@ -224,6 +228,18 @@ public class ItemListingFilter {
      */
     public void setLink(final Link link) {
         this.link = link;
+    }
+
+    public boolean hasAdditionnalInfo() {
+        return !isBlank(additionnalInfo);
+    }
+
+    public String getAdditionnalInfo() {
+        return additionnalInfo;
+    }
+
+    public void setAdditionnalInfo(String additionnalInfo) {
+        this.additionnalInfo = additionnalInfo;
     }
 
 }
