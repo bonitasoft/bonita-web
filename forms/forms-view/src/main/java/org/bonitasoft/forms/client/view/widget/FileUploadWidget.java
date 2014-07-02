@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,6 +25,7 @@ import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.FormElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -35,6 +34,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -49,7 +49,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Widget displaying either a file upload input if its initial value is null or a download link and file upload input to overide the current file
- * 
+ *
  * @author Anthony Birembaut
  */
 public class FileUploadWidget extends Composite implements ValueChangeHandler<Boolean> {
@@ -106,7 +106,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
     /**
      * Constructor
-     * 
+     *
      * @param contextMap
      * @param fieldId
      * @param fileWidgetInputType
@@ -317,7 +317,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
          */
         @Override
         public void onSubmitComplete(final SubmitCompleteEvent event) {
-            String response = event.getResults();
+            String response = getPlainTextResult(event);
             response = URL.decodeQueryString(response);
             response = response.replaceAll("&amp;", "&");
             response = response.replaceAll("&lt;", "<");
@@ -341,6 +341,17 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             modifyLabel.setVisible(true);
             removeLabel.setVisible(true);
             cancelLabel.setVisible(false);
+        }
+
+        /**
+         * See BS-9072 - To avoid xss attack we return text/plain output in fileuploadservlet.
+         * But GWT is converting plain text in html element (pre).
+         * Need to do this hack to get real servlet response
+         */
+        private String getPlainTextResult(SubmitCompleteEvent event) {
+            Element label = DOM.createLabel();
+            label.setInnerHTML(event.getResults());
+            return label.getInnerText();
         }
     }
 

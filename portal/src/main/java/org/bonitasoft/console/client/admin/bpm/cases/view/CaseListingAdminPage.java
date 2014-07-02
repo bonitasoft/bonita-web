@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,29 +24,27 @@ import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
-import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.AppResourceFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTable;
 
 /**
  * CaseListingPage - List all the cases in 3 panels view
- * 
+ *
  * @author Nicolas Tith
  * @author Colin PUY
  */
 public class CaseListingAdminPage extends CaseListingPage {
 
     public static final String TOKEN = "caselistingadmin";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(CaseListingAdminPage.TOKEN);
     }
@@ -85,15 +81,8 @@ public class CaseListingAdminPage extends CaseListingPage {
 
     @Override
     protected ItemListingResourceFilter defineResourceFilters() {
-
-        final ItemListingResourceFilter cases = new ItemListingResourceFilter(
-                new APISearchRequest(Definitions.get(ProcessDefinition.TOKEN)),
-                ProcessItem.ATTRIBUTE_DISPLAY_NAME,
-                ProcessItem.ATTRIBUTE_ICON,
-                TABLE_CASES_ALL
-                ).addFilterMapping(CaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID);
-        return cases;
-
+        return new AppResourceFilter(TABLE_CASES_ALL)
+                .addFilterMapping(CaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID);
     }
 
     @Override
@@ -107,18 +96,18 @@ public class CaseListingAdminPage extends CaseListingPage {
     protected ItemListingTable allCasesAdminTable() {
         return new ItemListingTable(new JsId(TABLE_CASES_ALL), _("All"),
                 buildAllCasesItemTable(CaseDefinition.get(), CaseItem.ATTRIBUTE_ID)
-                .addGroupedMultipleDeleteAction(_("Delete selected cases"), CaseDefinition.get(), _("case"), _("cases")),
+                        .addGroupedMultipleDeleteAction(_("Delete selected cases"), CaseDefinition.get(), _("case"), _("cases")),
                 getCaseQuickDetailsPage());
     }
 
-	protected ItemQuickDetailsPage<CaseItem> getCaseQuickDetailsPage() {
-		return new CaseQuickDetailsAdminPage();
-	}
+    protected ItemQuickDetailsPage<CaseItem> getCaseQuickDetailsPage() {
+        return new CaseQuickDetailsAdminPage();
+    }
 
-	protected ItemQuickDetailsPage<ArchivedCaseItem> getArchivedCaseQuickDetailsPage() {
-		return new ArchivedCaseQuickDetailsAdminPage();
-	}
-    
+    protected ItemQuickDetailsPage<ArchivedCaseItem> getArchivedCaseQuickDetailsPage() {
+        return new ArchivedCaseQuickDetailsAdminPage();
+    }
+
     @Override
     public String defineToken() {
         return TOKEN;

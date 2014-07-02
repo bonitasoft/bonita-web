@@ -33,7 +33,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * Servlet allowing to upload a File.
- * 
+ *
  * @author Julien Mege
  */
 public abstract class FileUploadServlet extends HttpServlet {
@@ -90,7 +90,7 @@ public abstract class FileUploadServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         defineUploadDirectoryPath(request);
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/plain;charset=UTF-8");
         final PrintWriter responsePW = response.getWriter();
         try {
 

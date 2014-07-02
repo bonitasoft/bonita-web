@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -49,6 +47,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.AppResourceFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingFilter;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingResourceFilter;
@@ -57,7 +56,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.itemListingPage.ItemListingTabl
 
 /**
  * @author Séverin Moussel
- * 
  */
 public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements PluginTask {
 
@@ -284,10 +282,8 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
 
     @Override
     protected ItemListingResourceFilter defineResourceFilters() {
-        return new ItemListingResourceFilter(
+        return new AppResourceFilter(
                 new APISearchRequest(Definitions.get(ProcessDefinition.TOKEN)).addFilter(ProcessItem.FILTER_USER_ID, Session.getUserId().toString()),
-                ProcessItem.ATTRIBUTE_DISPLAY_NAME,
-                ProcessItem.ATTRIBUTE_ICON,
                 TABLE_AVAILABLE)
                 .addFilterMapping(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID)
                 .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());

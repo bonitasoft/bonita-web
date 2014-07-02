@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,7 @@ import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormat
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
-import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
+import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
@@ -38,9 +38,6 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttribut
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
-import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
-import org.bonitasoft.web.toolkit.client.ui.component.Button;
-import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -50,7 +47,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 
 /**
  * @author Nicolas Tith
- * 
+ *
  */
 public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
 
@@ -71,12 +68,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     @Override
     protected void buildToolbar(final CaseItem item) {
         addToolbarLink(new ButtonBack());
-        addToolbarLink(newButtonDisplayCaseForm(item));
-    }
-
-    private Clickable newButtonDisplayCaseForm(final CaseItem item) {
-        return new Button("btn-overview", _("Overview"), _("Display the case form"),
-                new ActionShowView(new DisplayCaseFormPage(item)));
+        addToolbarLink(new CaseOverviewButton(item));
     }
 
     @Override
