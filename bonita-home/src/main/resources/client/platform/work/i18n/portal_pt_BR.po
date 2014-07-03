@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-28 01:02+0200\n"
-"PO-Revision-Date: 2014-07-01 10:26-0400\n"
+"POT-Creation-Date: 2014-07-02 01:13+0200\n"
+"PO-Revision-Date: 2014-07-01 20:42-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -29,11 +29,11 @@ msgstr "Instâncias de processo"
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:83
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:109
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:79
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:108
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:183
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:28
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:228
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:226
 #: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:69
 msgid "Apps"
 msgstr "Apps"
@@ -42,8 +42,8 @@ msgstr "Apps"
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:26
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:27
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:81
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:102
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:80
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:100
 msgid "Tasks"
 msgstr "Tarefas"
 
@@ -682,7 +682,7 @@ msgstr "mensagem"
 
 #: portal/src/main/java/org/bonitasoft/console/client/uib/formatter/Formatter.java:35
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:220
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:132
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:130
 msgid "Unassigned"
 msgstr "Não atribuído"
 
@@ -820,9 +820,9 @@ msgstr "Save this group changes"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:71
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:82
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileListingPage.java:56
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:108
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:136
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:211
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:97
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:134
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:209
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:119
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:134
 #: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:86
@@ -847,10 +847,10 @@ msgstr "Todos os grupos"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddGroupToProfileMemberPage.java:104
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileListingPage.java:104
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddRoleToProfileMemberPage.java:105
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:144
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:164
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:193
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:219
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:142
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:162
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:191
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:217
 #: portal/src/main/java/org/bonitasoft/console/client/common/component/snippet/CommentSectionSnippet.java:139
 msgid "Icon"
 msgstr "Ícone"
@@ -872,18 +872,18 @@ msgstr "Ícone"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/EditCaseVariablePopUp.java:78
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:32
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedTasksSection.java:64
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:140
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:160
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:188
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:215
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:138
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:158
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:186
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:213
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceTable.java:43
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:67
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/RoleMetadataBuilder.java:34
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/ArchivedTasksSection.java:59
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:145
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:163
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:170
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:187
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:168
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:185
 #: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:120
 msgid "Name"
 msgstr "Nome"
@@ -1606,12 +1606,12 @@ msgstr "As senhas não combinam"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:75
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:143
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:163
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:191
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:218
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:174
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:191
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:141
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:161
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:189
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:216
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:172
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:189
 msgid "App"
 msgstr "App"
 
@@ -2378,12 +2378,12 @@ msgid "Pending tasks"
 msgstr "Tarefas pendentes"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:126
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:145
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:192
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:143
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:190
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:250
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:146
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:92
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:171
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:169
 msgid "Due date"
 msgstr "Prazo final"
 
@@ -2393,8 +2393,8 @@ msgid "Due in:"
 msgstr "Venceu em:"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:140
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:220
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:188
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:218
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:186
 msgid "Performed date"
 msgstr "Data de execução"
 
@@ -2438,32 +2438,32 @@ msgstr "Tipo da variável"
 msgid "Edit this value"
 msgstr "Editar este valor"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:66
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:62
 msgid "Opened"
 msgstr "Aberto"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:66
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:62
 msgid "Cases "
 msgstr "Casos "
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:77
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:73
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:101
 msgid "Archived"
 msgstr "Arquivados"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:77
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:73
 msgid "Cases started or worked on by someone"
 msgstr "Casos iniciados ou com atuação de algum usuário"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:110
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:99
 msgid "Delete selected cases"
 msgstr "Excluir casos selecionados"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:110
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:99
 msgid "case"
 msgstr "caso"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:110
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:99
 msgid "cases"
 msgstr "casos"
 
@@ -2510,62 +2510,62 @@ msgstr "Pronto desde %task_last_update%"
 msgid "Failed on %task_last_update%"
 msgstr "Falha em %task_last_update%"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:94
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:93
 msgid "Pending"
 msgstr "Pendente"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:94
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:99
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:104
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:93
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:98
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:103
 msgid "Tasks "
 msgstr "Tarefas "
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:99
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:156
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:98
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:154
 msgid "Failed"
 msgstr "Falhou"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:104
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:278
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:103
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:276
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:38
 msgid "Done"
 msgstr "Feito"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:139
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:159
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:187
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:214
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:137
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:157
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:185
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:212
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:214
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:60
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:169
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:167
 msgid "Priority"
 msgstr "Prioridade"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:165
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:163
 msgid "Failed on"
 msgstr "Falha em"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:183
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:181
 msgid "Human Task"
 msgstr "Tarefa humana"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:196
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:194
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/SelectUserAndAssignTaskPage.java:62
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:137
 msgid "Assign"
 msgstr "Atribuir"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:196
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:194
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:137
 msgid "Assign task to someone"
 msgstr "Atribuir a tarefa a alguém"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:197
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:195
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:133
 msgid "Unassign"
 msgstr "Cancelar a atribuição"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:197
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:195
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskMoreDetailsAdminPage.java:133
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:58
 msgid "Unassign this task. Other allowed users will see it"
@@ -3002,63 +3002,63 @@ msgstr "O usuário que instalou esta app"
 msgid "The user who did the task."
 msgstr "O usuário que fez a tarefa."
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:117
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:115
 msgid "Available"
 msgstr "Disponível"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:145
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:143
 msgid "Assigned to me"
 msgstr "Atribuído a mim"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:158
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:156
 msgid "Hidden to me"
 msgstr "Ocultar"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:181
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:179
 msgid "Performed"
 msgstr "Realizado"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:229
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:227
 msgid "Select an App in the list below to display the available tasks"
 msgstr "Selecione uma aplicação na lista abaixo para exibir as tarefas disponíveis"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:240
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:238
 msgid "Status"
 msgstr "Status"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:253
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:251
 msgid "My tasks"
 msgstr "Minhas tarefas"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:253
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:251
 msgid "Tasks assigned to me"
 msgstr "Tarefas atribuídas para mim"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:259
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:257
 msgid "Available tasks"
 msgstr "Tarefas disponíveis"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:259
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:257
 msgid "Unassigned tasks I can do"
 msgstr "Tarefas não atribuídas que eu posso executar"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:265
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:263
 msgid "To do"
 msgstr "Para fazer"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:265
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:263
 msgid "Tasks I can do"
 msgstr "Tarefas que posso executar"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:278
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:276
 msgid "Display tasks I have done"
 msgstr "Exibir tarefas nas quais eu atuei"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:282
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:280
 msgid "Hidden"
 msgstr "Oculto"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:282
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:280
 msgid "Display tasks I'm ignoring"
 msgstr "Exibir tarefas que eu estou ignorando"
 
@@ -3189,32 +3189,32 @@ msgstr "Você será redirecionado"
 msgid "The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support"
 msgstr "O aplicativo encontrou um erro inesperado. Por favor, tente novamente.\nSe o erro persistir, contacte o suporte da Bonitasoft"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:588
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:595
 msgid "ascending"
 msgstr "crescente"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:595
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:602
 msgid "descending"
 msgstr "decrescente"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:618
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:625
 msgid "Sort by"
 msgstr "Ordenar por"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:635
 msgid "Enter the text to search for"
 msgstr "Digite o texto para Pesquisar"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:628
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:635
 msgid "Search..."
 msgstr "Pesquisar..."
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:629
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:636
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/Table.java:438
 msgid "Search"
 msgstr "Pesquisar"
 
-#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:629
+#: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/itemListingPage/ItemListingPage.java:636
 msgid "Update this page using the defined search query"
 msgstr "Atualizar esta página usando a consulta definida"
 
