@@ -1,8 +1,8 @@
 msgid ""
 msgstr "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 01:13+0200\n"
-"PO-Revision-Date: 2014-07-03 17:48-0400\n"
+"POT-Creation-Date: 2014-07-04 01:02+0200\n"
+"PO-Revision-Date: 2014-07-03 20:34-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -860,7 +860,7 @@ msgstr "Icône"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/SubGroupSection.java:39
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:100
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:33
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:195
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:182
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/cases/CasesSection.java:55
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CreateCategoryAndAddToProcessPage.java:83
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:55
@@ -940,8 +940,8 @@ msgstr "Sélectionne le groupe parent"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/EditGroupForm.java:48
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:35
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:203
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:211
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:190
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:198
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CreateCategoryAndAddToProcessPage.java:85
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileListingPage.java:106
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/EditProfilePage.java:81
@@ -1324,7 +1324,7 @@ msgstr "le code postal de l'entreprise de l'utilisateur"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:190
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:140
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:180
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:198
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:185
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:100
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceTable.java:44
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:68
@@ -1604,7 +1604,7 @@ msgstr "Fermer"
 msgid "Passwords don't match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:75
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:68
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:141
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:161
@@ -1615,97 +1615,97 @@ msgstr "Les mots de passe ne correspondent pas"
 msgid "App"
 msgstr "App"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:84
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:82
 msgid "Install"
 msgstr "Installer"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:84
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
 msgid "Opens a popup to install an app"
 msgstr "Ouvre une pop up pour installer une App"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:99
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:152
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:161
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:145
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:154
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileListingPage.java:98
 msgid "Enabled"
 msgstr "Activés"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:99
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
 msgid "Enabled Apps"
 msgstr "Apps activées"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:104
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:167
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:97
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:160
 msgid "Disabled"
 msgstr "Désactivés"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:104
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:97
 msgid "Disabled Apps"
 msgstr "Apps désactivées"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:109
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:102
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:98
 msgid "Resolved"
 msgstr "Résolue"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:109
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:102
 msgid "Resolved Apps"
 msgstr "Apps résolues"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:115
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:108
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationSection.java:98
 msgid "Unresolved"
 msgstr "Non résolue"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:115
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:108
 msgid "Unresolved Apps"
 msgstr "Apps non résolues"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:131
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:124
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:44
 #: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:105
 msgid "Categories"
 msgstr "Catégories"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:155
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:148
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:142
 msgid "Disable"
 msgstr "Désactiver"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:155
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:148
 msgid "Disable selected apps"
 msgstr "Désactiver les Apps sélectionnées"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:170
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
 msgid "Enable"
 msgstr "Activer"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:170
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
 msgid "Enable selected apps"
 msgstr "Activer les Apps sélectionnées"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:183
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:176
 msgid "Delete selected apps"
 msgstr "Supprimer les Apps sélectionnées"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:183
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:176
 msgid "app"
 msgstr "App"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:171
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:183
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:176
 msgid "apps"
 msgstr "Apps"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:181
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:174
 msgid "Deletable"
 msgstr "À supprimer"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:196
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:183
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/connector/ConnectorSection.java:56
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:37
 #: portal/src/main/java/org/bonitasoft/console/client/common/system/view/PopupAboutPage.java:41
@@ -1714,7 +1714,7 @@ msgstr "À supprimer"
 msgid "Version"
 msgstr "Version"
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:209
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:196
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:69
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessMoreDetailsPage.java:70
 msgid "Installed on"
