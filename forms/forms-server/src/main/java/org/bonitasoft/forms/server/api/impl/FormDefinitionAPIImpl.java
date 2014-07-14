@@ -65,6 +65,7 @@ import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormServiceProviderNotFoundException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
@@ -171,8 +172,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         context.put(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE, applicationDeploymentDate);
         FormServiceProvider formServiceProvider = null;
         formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
-        final IApplicationFormDefAccessor applicationDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, formDefinitionDocument,
-                context);
+        final IApplicationFormDefAccessor applicationDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, formDefinitionDocument, context);
         return applicationDefAccessor;
     }
 
@@ -191,15 +191,6 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     public String getProductVersion(final Map<String, Object> context) throws FormServiceProviderNotFoundException, SessionTimeoutException,
             ApplicationFormDefinitionNotFoundException {
         return getApplicationConfigDefinition(context).getProductVersion();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getHomePage(final Map<String, Object> context) throws FormServiceProviderNotFoundException, SessionTimeoutException,
-            ApplicationFormDefinitionNotFoundException {
-        return getApplicationConfigDefinition(context).getHomePage();
     }
 
     /**
@@ -245,13 +236,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     @Override
     public String getFormPermissions(final String formID, final Map<String, Object> context) throws ApplicationFormDefinitionNotFoundException,
             InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        String formPermissions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPermissions(formID, locale,
-                applicationDeploymentDate);
+        String formPermissions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPermissions(formID, locale, applicationDeploymentDate);
         if (formPermissions == null) {
             formPermissions = getApplicationFormDefinition(formID, context).getFormPermissions();
             if (formID != null) {
-                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPermissions(formID, locale, applicationDeploymentDate,
-                        formPermissions);
+                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPermissions(formID, locale, applicationDeploymentDate, formPermissions);
             }
         }
         return formPermissions;
@@ -279,13 +268,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     @Override
     public String getFormPageLayout(final String formID, final String pageID, final Map<String, Object> context)
             throws ApplicationFormDefinitionNotFoundException, InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        String formPageLayout = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPageLayout(formID, locale,
-                applicationDeploymentDate, pageID);
+        String formPageLayout = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getFormPageLayout(formID, locale, applicationDeploymentDate, pageID);
         if (formPageLayout == null) {
             formPageLayout = getApplicationFormDefinition(formID, context).getFormPageLayout(pageID);
             if (formID != null) {
-                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPageLayout(formID, locale, applicationDeploymentDate, pageID,
-                        formPageLayout);
+                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeFormPageLayout(formID, locale, applicationDeploymentDate, pageID, formPageLayout);
             }
         }
         return formPageLayout;
@@ -347,8 +334,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             // store bodycontent in the cach using formId PageId
             String bodyContentId = null;
             if (formID != null) {
-                bodyContentId = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageLayoutContent(formID, pageId, locale,
-                        applicationDeploymentDate,
+                bodyContentId = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageLayoutContent(formID, pageId, locale, applicationDeploymentDate,
                         formPage.getPageLayout().getBodyContent());
             }
             formPage.getPageLayout().setBodyContentId(bodyContentId);
@@ -389,8 +375,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         try {
             htmlTemplate = getPageLayout(templatePath, applicationDeploymentDate, context);
         } catch (final FileNotFoundException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Page layout not fount. Using the default page template.");
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Page layout not found. Using the default page template.");
             }
             boolean isActivity = false;
             @SuppressWarnings("unchecked")
@@ -458,13 +444,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     @Override
     public List<TransientData> getFormTransientData(final String formID, final Map<String, Object> context) throws InvalidFormDefinitionException,
             FormNotFoundException, ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        List<TransientData> transientData = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getTransientData(formID, locale,
-                applicationDeploymentDate);
+        List<TransientData> transientData = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getTransientData(formID, locale, applicationDeploymentDate);
         if (transientData == null) {
             transientData = getApplicationFormDefinition(formID, context).getTransientData();
             if (formID != null) {
-                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeTransientData(formID, locale, applicationDeploymentDate,
-                        transientData);
+                FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storeTransientData(formID, locale, applicationDeploymentDate, transientData);
             }
         }
         return transientData;
@@ -480,14 +464,12 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formID, context);
         for (final String pageId : pageIds) {
-            List<FormAction> pageActions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getPageActions(formID, locale,
-                    applicationDeploymentDate,
+            List<FormAction> pageActions = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).getPageActions(formID, locale, applicationDeploymentDate,
                     formID, pageId);
             if (pageActions == null) {
                 pageActions = applicationFormDefinition.getActions(pageId);
                 if (formID != null) {
-                    FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageActions(formID, locale, applicationDeploymentDate, formID,
-                            pageId,
+                    FormCacheUtilFactory.getTenantFormCacheUtil(tenantID).storePageActions(formID, locale, applicationDeploymentDate, formID, pageId,
                             pageActions);
                 }
             }
@@ -588,13 +570,10 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         return decodeString(stringBuffer.toString(), encodedStrings);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Map<String, Serializable> getTransientDataContext(final List<TransientData> transientData, final Locale userLocale, final Map<String, Object> context)
             throws FormNotFoundException, FormServiceProviderNotFoundException, ClassNotFoundException, SessionTimeoutException, FileTooBigException,
-            IOException {
+            IOException, FormInitializationException {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
         final Map<String, Serializable> transientDataContext = new HashMap<String, Serializable>();
         final List<Expression> expressionsToEvaluate = new ArrayList<Expression>();
@@ -614,19 +593,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                 try {
                     evaluatedValue = resolvedExpressions.get(data.getExpression().getName());
                     if (evaluatedValue != null) {
-                        final ClassLoader classloader = evaluatedValue.getClass().getClassLoader();
                         try {
-                            Class<?> dataClass;
-                            if (classloader != null) {
-                                try {
-                                    dataClass = Class.forName(className, true, classloader);
-                                } catch (final ClassNotFoundException e) {
-                                    dataClass = Class.forName(className);
-                                }
-                            } else {
-                                dataClass = Class.forName(className);
-                            }
-                            evaluatedValue.getClass().asSubclass(dataClass);
+                            // Load both classes in the current classloader because evaluatedValue comes from another classloader (server side)
+                            Class<?> dataClass = Thread.currentThread().getContextClassLoader().loadClass(className);
+                            Class<?> localEvaluatedValueClass = Thread.currentThread().getContextClassLoader().loadClass(evaluatedValue.getClass().getName());
+                            localEvaluatedValueClass.asSubclass(dataClass);
                         } catch (final ClassCastException e) {
                             throw new IllegalArgumentException();
                         }

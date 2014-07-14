@@ -1,0 +1,34 @@
+// Vertical centering - step 1
+#MaintenancePage{
+	.bg(@maintenancePage-main-bg, @maintenancePage-main-bgRepeat, @maintenancePage-main-bgColor);
+	#Floater{
+		float: left;
+		height: 50%;
+		margin-bottom: 0 - ((@loginPage-formContainer-height + @header-login-height + @header-menu-height)  / 2);
+	}
+	#MaintenanceContainer{
+		
+		// Vertical centering
+		clear:both;
+		position:relative;
+		overflow: hidden;
+		
+		// Horizontal centering
+		margin:0 auto;
+		text-align:left;
+		
+		.bg(@maintenancePage-maintenanceContainer-bg, @maintenancePage-maintenanceContainer-bgRepeat);
+		width: @maintenancePage-maintenanceContainer-width;
+		height: @maintenancePage-maintenanceContainer-height;
+		padding: @maintenancePage-maintenanceContainer-padding;
+		word-wrap: break-word;
+		#Message{
+			color: @maintenancePage-message-textColor;
+			display: block;
+			padding: @maintenancePage-message-padding;
+			margin: @maintenancePage-message-margin;
+			.fontSize(@maintenancePage-message-fontSize);
+			text-align: @maintenancePage-message-textAlign;
+		}
+	}
+}

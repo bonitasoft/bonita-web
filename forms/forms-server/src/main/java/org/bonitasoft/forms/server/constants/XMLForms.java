@@ -35,11 +35,6 @@ public final class XMLForms {
     public static final String FORMS_DEFINITION = "forms-definition";
 
     /**
-     * the forms definition home page
-     */
-    public static final String HOME_PAGE = "home-page";
-
-    /**
      * the application element name
      */
     public static final String APPLICATION = "application";
@@ -260,9 +255,9 @@ public final class XMLForms {
     public static final String VARIABLE = "variable";
 
     /**
-     * the left operand data is external or not
+     * the variable element name
      */
-    public static final String IS_EXTERNAL = "is-external";
+    public static final String VARIABLE_TYPE = "variable-type";
 
     /**
      * the operator element name

@@ -4,20 +4,18 @@
 	<parent>
 		<artifactId>forms-parent</artifactId>
 		<groupId>org.bonitasoft.forms</groupId>
-		<version>6.1.1-SNAPSHOT</version>
+		<version>6.4.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>forms-server</artifactId>
 	<name>forms server</name>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-config</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>console-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-rpc</artifactId>
@@ -29,19 +27,8 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bonitasoft.web</groupId>
-			<artifactId>bonita-rest-model</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.web</groupId>
-			<artifactId>bonita-rest-server</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-server</artifactId>
-			<version>${project.version}</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.htmlparser.jericho</groupId>
@@ -69,6 +56,10 @@
 			<groupId>org.bonitasoft.engine</groupId>
 			<artifactId>bonita-common</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.bonitasoft.engine</groupId>
 			<artifactId>bonita-server</artifactId>
@@ -101,7 +92,7 @@
         <!-- Local JNDI implementation -->
         <dependency>
 			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>common-test-toolkit</artifactId>
+			<artifactId>test-toolkit</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
@@ -113,7 +104,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<systemPropertyVariables>
-						<bonita.home>${project.build.directory}/bonita/home</bonita.home>
+						<bonita.home>${bonita.home.test}/bonita</bonita.home>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
@@ -146,7 +137,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>unpack-engine-config-tree</id>
+						<id>unpack-bonita-home</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -154,45 +145,14 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.bonitasoft.engine</groupId>
+									<groupId>org.bonitasoft.console</groupId>
 									<artifactId>bonita-home</artifactId>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita
-							</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-config-tree</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-                                <artifactItem>
-                                    <groupId>org.bonitasoft.console</groupId>
-                                    <artifactId>common-config</artifactId>
                                     <version>${project.version}</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <excludes>META*/**</excludes>
-                                </artifactItem>
-								<artifactItem>
-									<groupId>org.bonitasoft.forms</groupId>
-									<artifactId>forms-config</artifactId>
-									<version>${project.version}</version>
 									<type>zip</type>
 									<overWrite>true</overWrite>
-									<excludes>META*/**</excludes>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>
-								${project.build.directory}/bonita/home/client/
-							</outputDirectory>
+							<outputDirectory>${project.build.directory}/bonita-home</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>

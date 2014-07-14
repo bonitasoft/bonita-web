@@ -25,6 +25,14 @@ div.bonita_form_container {
 	margin: 0 auto;
 }
 
+div.bonita_form_container select{
+	font-family: arial;
+}
+
+div.bonita_form_container select option{
+	font-family: Signika-Regular;
+}
+
 @media screen and (max-width: 1250px) {
 	div.bonita_form_container {
 		width: 100%;
@@ -40,7 +48,7 @@ span.bonita_form_radio, .bonita_form_text {
 	font-weight: normal;
 }
 
-button.bonita_form_button {
+.bonita_form_button {
 	text-align: center;
 	outline-color: #F9F9F9;
 	text-transform: uppercase;
@@ -90,13 +98,13 @@ button.bonita_form_button {
 	-webkit-box-shadow: 2px 2px 2px #d8d8d8;
 	-moz-box-shadow: 2px 2px 2px #d8d8d8;
 	-o-box-shadow: 2px 2px 2px #d8d8d8;
-	behavior: url(PIE.htc);
+	behavior: url(../../css/PIE.htc);
 }
-button.bonita_form_button * {
+.bonita_form_button * {
 	vertical-align: middle;
 }
 
-button.bonita_form_button + button.bonita_form_button {
+.bonita_form_button + button.bonita_form_button {
 	margin-left: 5px;
 }
 
@@ -107,9 +115,14 @@ button.bonita_form_button + button.bonita_form_button {
 	-webkit-appearance: none;
 	border: 0;
 	border-radius: 0;
-	font-family: Signika-Regular;
+	font-family: arial;	
 	font-size: 100%;
 }
+
+.bonita_form_field.list_container select option{
+	font-family: Signika-Regular;
+}
+
 .bonita_form_field.list_container{
 	background: url(../images/form-select.png) no-repeat right center;
 	overflow: hidden;
@@ -122,7 +135,7 @@ input.bonita_form_field, select.bonita_form_field, select.bonita_datetime_list_i
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-webkit-box-shadow: 0 0 0 #cccccc;
-	*behavior: url(boxsizing.htc);
+	*behavior: url(../../css/boxsizing.htc);
 	-moz-box-sizing: border-box;
 	padding: 5px 5px 5px 5px;
 	box-sizing: border-box;
@@ -153,7 +166,7 @@ textarea.bonita_form_field, div.bonita_form_field div.bonita_rich_text {
 	height:75px;
 }
 
-div.bonita_form_label {
+.bonita_form_label {
 	color: #282626;
 	font-size: 100%;
 	font-weight: normal;
@@ -184,7 +197,7 @@ div#bonita-banneraltbas {
 	background: -ms-linear-gradient(top,	#CD0807 0%,#B20706 100%); /* IE10+ */
 	background: linear-gradient(to bottom,	#CD0807 0%, #B20706 100%); /* W3C */
 	-pie-background: linear-gradient(#CD0807 0%, #B20706 100%) #CD0807;
-	behavior: url(PIE.htc);
+	behavior: url(../../css/PIE.htc);
 }
 
 .bonita_process_label {
@@ -199,10 +212,11 @@ div#bonita-banneraltbas {
 }
 
 div#bonita-identification-area {
-	right: 0;
 	position: absolute;
-	font-size: 14px;
 	top: 0;
+	right: 0;
+	z-index: 9999;
+	font-size: 14px;
 	color: #333333;
 	line-height: 25px;
 	margin-right: 10px;
@@ -217,11 +231,16 @@ div#bonita-identification-area {
 
 .bonita_username,
 .bonita_logout_button {
-	padding: 0 20px;
+	padding: 0 7px;
+}
+
+.bonita_user_xp_link {
+    padding: 0 7px;
 }
 
 .bonita_user_xp_label {
-	padding: 0 10px 0 20px;
+	padding: 0 2px;
+	cursor: pointer;
 }
 
 .bonita_logout_button,
@@ -229,7 +248,7 @@ div#bonita-identification-area {
 	border-left: 1px solid #323232;
 }
 
-.bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover {
+.bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover, .bonita_user_xp_label, .bonita_user_xp_label:visited, .bonita_user_xp_label:hover {
 	text-decoration: none;
 	color: #B20706;
 }
@@ -238,7 +257,7 @@ div#bonita-identification-area {
 	cursor: pointer;
 	height: 16px;
 	width: 20px;
-	background: transparent url(../images/sprite.png) no-repeat scroll
+	background: transparent url(../themeResource?theme=portal&location=images/sprite.png) no-repeat scroll
 		-584px 0px;
 }
 
@@ -261,7 +280,7 @@ div#bonita_form {
 	width: 230px;
 	margin-top: 5px;
 	float: right;
-	background-image: url(../images/bloc-identification.png);
+	background-image: url(../themeResource?theme=portal&location=images/bloc-identification.png);
 }
 
 .bonita_avatar {

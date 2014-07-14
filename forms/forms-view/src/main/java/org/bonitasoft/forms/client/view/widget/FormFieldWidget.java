@@ -19,14 +19,14 @@ package org.bonitasoft.forms.client.view.widget;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
 import org.bonitasoft.forms.client.model.ReducedFormSubtitle.SubTitlePosition;
@@ -54,7 +54,6 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -63,7 +62,6 @@ import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
@@ -124,14 +122,14 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     protected String fieldOutputType;
 
     /**
+     * the widget label
+     */
+    private LabelWidget labelWidget;
+
+    /**
      * the widget field
      */
     protected Widget fieldWidget;
-
-    /**
-     * the mandatory widget
-     */
-    protected InlineLabel mandatoryWidget;
 
     /**
      * Date format for date picker
@@ -186,7 +184,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * Map of suggestions for the suggestion box
      */
-    protected Map<String, String> suggestionsMap;
+    protected TreeMap<String, String> suggestionsMap;
 
     /**
      * Constructor
@@ -208,9 +206,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @param widgetData
      *            the widget data object
      * @param fieldValue
-     * @param formID
-     *            the formID as a string
-     * @param isCurrentValue
+     * @param contextMap
      * @param mandatoryFieldSymbol
      * @param mandatoryFieldClasses
      */
@@ -489,10 +485,31 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
         if (popupStyle != null && popupStyle.length() > 0) {
             suggestionDisplay.setPopupStyleName(popupStyle);
         }
-        suggestionsMap = new HashMap<String, String>();
+        suggestionsMap = new TreeMap<String, String>();
         final MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+
+        // this fix the reordering of numbers
+        Comparator<String> numberComparator = new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+
+                if (stringIsDouble(o1) && stringIsDouble(o2)) {
+                    return Double.valueOf(o1).compareTo(Double.valueOf(o2));
+                }
+                return o1.compareTo(o2);
+            }
+
+            private boolean stringIsDouble(String str) {
+                return str.matches("^(([0-9]*)|(([0-9]*)[\\.,\\,]([0-9]*)))$");
+            }
+
+        };
+        oracle.setComparator(numberComparator);
+
         String labelValue = null;
         final String fieldValueStr = getStringValue(fieldValue);
+        widgetData.getAvailableValues();
         for (final ReducedFormFieldAvailableValue availableValue : widgetData.getAvailableValues()) {
             final String label = availableValue.getLabel();
             final String value = availableValue.getValue();
@@ -712,13 +729,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      *            the widget data object
      */
     protected void createWidget(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
-
         // label creation
-        HTML labelWidget = null;
         if (widgetData.isMandatory() || (widgetData.getLabel() != null && widgetData.getLabel().length() > 0)) {
-            labelWidget = createLabelWidget(widgetData);
-        }
-        if (labelWidget != null) {
+            labelWidget = new LabelWidget(widgetData, mandatoryFieldSymbol, mandatoryFieldClasses);
             if (ItemPosition.LEFT.equals(widgetData.getLabelPosition())) {
                 addLabel(labelWidget, "bonita_form_label_left");
             } else if (ItemPosition.TOP.equals(widgetData.getLabelPosition())) {
@@ -883,7 +896,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
             toolTipPopupFrame.setWidget(new Label(widgetData.getPopupTooltip()));
             toolTipPopupFrame.addStyleName("bonita_form_popup_tooltip");
 
-            final Image toolTipIcon = new Image("images/tooltip.gif");
+            final Image toolTipIcon = new Image("themeResource?theme=portal&location=images/tooltip.gif");
             toolTipIcon.setStylePrimaryName("bonita_form_popup_tooltip_img");
             theOuterToolTipPanel.add(toolTipIcon);
             theOuterToolTipPanel.setStylePrimaryName("bonita_form_popup_tooltip_icon");
@@ -912,50 +925,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
         }
     }
 
-    private HTML createLabelWidget(final ReducedFormWidget widgetData) {
-        final HTML labelWidget = new HTML();
-
-        if (widgetData.getLabel() != null && widgetData.getLabel().length() > 0) {
-            if (widgetData.allowHTMLInLabel()) {
-                labelWidget.setHTML(widgetData.getLabel() + " ");
-            } else {
-                labelWidget.setText(widgetData.getLabel() + " ");
-            }
-        }
-
-        // mandatory fields symbol display
-        if (isMandatory(widgetData)) {
-            appendMandatorySymbol(labelWidget);
-        }
-
-        labelWidget.setStyleName("bonita_form_label");
-        return labelWidget;
-    }
-
-    private void appendMandatorySymbol(final HTML labelWidget) {
-        DOM.appendChild(labelWidget.getElement(), createMandatorySymbol().getElement());
-    }
-
     private void addLabel(final HTML labelWidget, final String styleName) {
         labelWidget.addStyleName(styleName);
         fieldContainer.add(labelWidget);
-    }
-
-    private InlineLabel createMandatorySymbol() {
-        mandatoryWidget = new InlineLabel();
-        if (mandatoryFieldSymbol == null || mandatoryFieldSymbol.equals("#defaultMandatoryFieldSymbol")) {
-            mandatoryFieldSymbol = FormsResourceBundle.getMessages().defaultMandatoryFieldSymbol();
-        }
-        mandatoryWidget.setText(mandatoryFieldSymbol);
-        mandatoryWidget.setStyleName("bonita_form_mandatory");
-        if (mandatoryFieldClasses != null && mandatoryFieldClasses.length() > 0) {
-            mandatoryWidget.addStyleName(mandatoryFieldClasses);
-        }
-        return mandatoryWidget;
-    }
-
-    private boolean isMandatory(final ReducedFormWidget widgetData) {
-        return !widgetType.equals(WidgetType.HIDDEN) && widgetData.isMandatory();
     }
 
     /**
@@ -971,7 +943,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * Get the string display value for a date
      * 
-     * @param FormFieldValue
+     * @param fieldValue
      *            the field value object
      * @return the date as a String
      */
@@ -1039,7 +1011,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * Get the string display value for a date
      * 
-     * @param widgetData
+     * @param text
      *            the widget data object
      * @return the date as a String
      */
@@ -1088,7 +1060,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * add generic features to the field widgets
      * 
-     * @param widget
+     * @param fieldWidget
      *            the GWT widget
      * @param widgetData
      *            the widget data object
@@ -1551,7 +1523,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @param mandatoryLabel
      */
     public void setMandatoryLabel(final String mandatoryLabel) {
-        mandatoryWidget.setText(mandatoryLabel);
+        labelWidget.setMandatoryText(mandatoryLabel);
     }
 
     /**

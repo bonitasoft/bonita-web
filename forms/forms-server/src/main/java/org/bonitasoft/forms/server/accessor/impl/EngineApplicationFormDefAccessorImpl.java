@@ -28,6 +28,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataDefinition;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
@@ -51,7 +52,6 @@ import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
 import org.bonitasoft.forms.server.accessor.widget.IEngineWidgetBuilder;
 import org.bonitasoft.forms.server.accessor.widget.WidgetBuilderFactory;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
@@ -155,8 +155,9 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
     /**
      * Default constructor.
      * 
-     * @param processDefinitionUUID
-     * @param activityName
+     * @param session
+     * @param processDefinitionID
+     * @param activityInstanceID
      * @param includeProcessVariables
      * @param isEditMode
      */
@@ -183,9 +184,15 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
             // we don't need the activity name when trying to display the default confirmation page
             if (activityInstanceID != -1 && !isConfirmationPage) {
                 if (isCurrentValue) {
-                    final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
-                    activityName = activityInstance.getName();
-                    activityDisplayName = activityInstance.getDisplayName();
+                    try {
+                        final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
+                        activityName = activityInstance.getName();
+                        activityDisplayName = activityInstance.getDisplayName();
+                    } catch (final ActivityInstanceNotFoundException e) {
+                        final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+                        activityName = archivedActivityInstance.getName();
+                        activityDisplayName = archivedActivityInstance.getDisplayName();
+                    }
                 } else {
                     final ArchivedActivityInstance activityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
                     activityName = activityInstance.getName();
@@ -315,8 +322,6 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
      * create the widgets data objects and put it in the applicationWidgets list
      * 
      * @param applicationDataFields
-     * @param attachments
-     * @param isEditMode
      */
     protected void createWidgets(final Set<DataDefinition> applicationDataFields) {
         final boolean includeInitialValues = !(activityName == null && isEditMode);
@@ -336,9 +341,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
      * create the widgets data objects and put it in the activityWidgets list
      * 
      * @param applicationDataFields
-     * @param attachments
      * @param activityDataFields
-     * @param isEditMode
      */
     protected void createWidgets(final Set<DataDefinition> applicationDataFields, final Set<DataDefinition> activityDataFields) {
         createWidgets(applicationDataFields);
@@ -584,7 +587,7 @@ public class EngineApplicationFormDefAccessorImpl implements IApplicationFormDef
     /**
      * {@inheritDoc}
      * 
-     * @throws ProcessNotFoundException
+     * @throws InvalidFormDefinitionException
      */
     @Override
     public Expression getPageLabelExpression(final String pageId) throws InvalidFormDefinitionException {

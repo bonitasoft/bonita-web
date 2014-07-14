@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="all-in-one" version="2.5">
+
+	<display-name>Bonita</display-name>
+
+	<filter>
+		<filter-name>WebResourceOptimizer</filter-name>
+		<filter-class>ro.isdc.wro.http.WroFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>WebResourceOptimizer</filter-name>
+		<url-pattern>/css/bonita.css</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>ro.isdc.wro.http.WroServletContextListener</listener-class>
+	</listener>
+	
+	<!-- THEME RESOURCE PROXY -->
+	<servlet>
+		<servlet-name>themeResource</servlet-name>
+		<servlet-class>org.eclipse.jetty.servlets.ProxyServlet$Transparent</servlet-class>
+		<load-on-startup>2</load-on-startup>
+		<init-param>
+			<param-name>ProxyTo</param-name>
+			<param-value>http://localhost:8888/portal/themeResource</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Prefix</param-name>
+			<param-value>/css/themeResource</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>themeResource</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

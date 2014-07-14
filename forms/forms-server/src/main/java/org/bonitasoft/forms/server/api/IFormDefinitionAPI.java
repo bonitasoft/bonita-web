@@ -33,6 +33,7 @@ import org.bonitasoft.forms.client.model.TransientData;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormServiceProviderNotFoundException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
@@ -44,19 +45,6 @@ import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
  * @author Anthony Birembaut, Haojie Yuan
  */
 public interface IFormDefinitionAPI {
-
-    /**
-     * Retrieve the application home page URL as a string
-     * 
-     * @param context
-     *            Map containing the URL parameters
-     * @return the application home page URL
-     * @throws FormServiceProviderNotFoundException
-     * @throws SessionTimeoutException
-     * @throws ApplicationFormDefinitionNotFoundException
-     */
-    String getHomePage(Map<String, Object> context) throws FormServiceProviderNotFoundException, SessionTimeoutException,
-            ApplicationFormDefinitionNotFoundException;
 
     /**
      * Retrieve the application permission string
@@ -292,10 +280,11 @@ public interface IFormDefinitionAPI {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
+     * @throws FormInitializationException 
      */
     Map<String, Serializable> getTransientDataContext(List<TransientData> transientData, Locale userLocale, Map<String, Object> context)
             throws FormNotFoundException, FormServiceProviderNotFoundException, ClassNotFoundException, SessionTimeoutException, FileTooBigException,
-            IOException;
+            IOException, FormInitializationException;
 
     /**
      * Set the application definition deploy date

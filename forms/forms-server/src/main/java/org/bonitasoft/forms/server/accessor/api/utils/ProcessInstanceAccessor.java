@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.forms.server.accessor.api.utils;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.forms.server.accessor.api.ProcessInstanceAccessorEngineClient;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 
 /**
  * @author Vincent Elcrin
@@ -35,10 +35,10 @@ public class ProcessInstanceAccessor {
 
     public ProcessInstanceAccessor(final ProcessInstanceAccessorEngineClient processInstanceAccessor, final long id) throws BPMEngineException {
         this.processInstanceAccessor = processInstanceAccessor;
-        fecthConfiguration(id);
+        fetchConfiguration(id);
     }
 
-    private void fecthConfiguration(final long id) throws BPMEngineException {
+    private void fetchConfiguration(final long id) throws BPMEngineException {
         this.id = id;
         try {
             getProcessInstance(id);

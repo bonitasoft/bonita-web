@@ -63,7 +63,7 @@ public class FormApplicationViewController {
     /**
      * The PICTURE_PLACEHOLDER
      */
-    protected static final String PICTURE_PLACEHOLDER = "images/cleardot.gif";
+    protected static final String PICTURE_PLACEHOLDER = "themeResource?theme=portal&location=images/cleardot.gif";
 
     /**
      * Id of the element of the application template in witch the title has to be injected
@@ -94,6 +94,16 @@ public class FormApplicationViewController {
      * Id of the element of the process template in witch the open to user experience button has to be injected
      */
     protected static final String OPEN_USER_XP_ELEMENT_ID = "bonita_user_xp_link";
+
+    /**
+     * Logout Hidden constant
+     */
+    public static final String LOGOUT_DISABLED = "logout.link.hidden";
+
+    /**
+     * Logout Visible constant
+     */
+    public static final String LOGOUT_ENABLED = "logout.link.visible";
 
     /**
      * forms RPC service
@@ -275,11 +285,13 @@ public class FormApplicationViewController {
                             if (applicationConfig.getApplicationLabel() != null && DOM.getElementById(APPLICATION_LABEL_ELEMENT_ID) != null) {
                                 domUtils.insertInElement(applicationHTMLPanel, APPLICATION_LABEL_ELEMENT_ID, applicationConfig.getApplicationLabel());
                             }
-                            if (DOM.getElementById(LOGOUT_WIDGET_ELEMENT_ID) != null) {
+                            if ((user.getFeatures() == null || user.getFeatures().contains(LOGOUT_ENABLED))
+                                    && DOM.getElementById(LOGOUT_WIDGET_ELEMENT_ID) != null) {
                                 final UserLogoutWidget logoutWidget = new UserLogoutWidget(user, urlContext);
                                 applicationHTMLPanel.add(logoutWidget, LOGOUT_WIDGET_ELEMENT_ID);
                             }
-                            if (DOM.getElementById(LOGOUT_BUTTON_ELEMENT_ID) != null) {
+                            if ((user.getFeatures() == null || user.getFeatures().contains(LOGOUT_ENABLED))
+                                    && DOM.getElementById(LOGOUT_BUTTON_ELEMENT_ID) != null) {
                                 Anchor logoutLink = null;
                                 if (user.isAnonymous()) {
                                     logoutLink = new Anchor(FormsResourceBundle.getMessages().loginButtonLabel());
@@ -340,35 +352,22 @@ public class FormApplicationViewController {
                                 applicationHTMLPanel.add(refreshButton, REFRESH_BUTTON_ELEMENT_ID);
                             }
                             if (DOM.getElementById(OPEN_USER_XP_ELEMENT_ID) != null && !user.isAutoLogin()) {
-                                final Label userXPLabel = new Label(FormsResourceBundle.getMessages().openUserXPButtonLabel());
-                                userXPLabel.setStyleName("bonita_user_xp_label");
                                 final Image userXPIcon = new Image(PICTURE_PLACEHOLDER);
                                 userXPIcon.setStyleName("bonita_user_xp_icon");
+                                final Label userXPLabel = new Label(FormsResourceBundle.getMessages().openUserXPButtonLabel());
+                                userXPLabel.setStyleName("bonita_user_xp_label");
+                                userXPLabel.addClickHandler(goToPortalHandler(applicationConfig));
                                 userXPIcon.setTitle(FormsResourceBundle.getMessages().openUserXPButtonTitle());
-                                userXPIcon.addClickHandler(new ClickHandler() {
-
-                                    @Override
-                                    public void onClick(final ClickEvent event) {
-
-                                        String userXPURL = applicationConfig.getUserXPURL();
-                                        if (userXPURL == null) {
-                                            userXPURL = DEFAULT_USER_XP_URL;
-                                        }
-                                        if (user.useCredentialTransmission()) {
-                                            formsServiceAsync.generateTemporaryToken(new GenerateTemporaryTokenHandler(userXPURL));
-                                        } else {
-                                            urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
-                                        }
-                                    }
-                                });
-                                applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
+                                userXPIcon.addClickHandler(goToPortalHandler(applicationConfig));
                                 applicationHTMLPanel.add(userXPIcon, OPEN_USER_XP_ELEMENT_ID);
+                                applicationHTMLPanel.add(userXPLabel, OPEN_USER_XP_ELEMENT_ID);
                             }
                             if (onloadAttributeValue != null) {
                                 domUtils.javascriptEval(onloadAttributeValue);
                             }
                             buildPageFlow(applicationConfig, applicationHTMLPanel);
                         }
+
                     });
                     theRequestBuilder.send();
                 } else {
@@ -379,6 +378,7 @@ public class FormApplicationViewController {
                 Window.alert("Error while trying to query the form layout :" + e.getMessage());
             }
         }
+
 
         @Override
         public void onUnhandledFailure(final Throwable caught) {
@@ -406,6 +406,25 @@ public class FormApplicationViewController {
                 formsServiceAsync.getApplicationErrorTemplate(formId, urlContext, new ErrorPageHandler(null, formId, errorMessage, t, elementId));
             }
         }
+    }
+
+    private ClickHandler goToPortalHandler(final ReducedApplicationConfig applicationConfig) {
+        return new ClickHandler() {
+            
+            @Override
+            public void onClick(final ClickEvent event) {
+                
+                String userXPURL = applicationConfig.getUserXPURL();
+                if (userXPURL == null) {
+                    userXPURL = DEFAULT_USER_XP_URL;
+                }
+                if (user.useCredentialTransmission()) {
+                    formsServiceAsync.generateTemporaryToken(new GenerateTemporaryTokenHandler(userXPURL));
+                } else {
+                    urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
+                }
+            }
+        };
     }
 
     void buildPageFlow(final ReducedApplicationConfig applicationConfig, final HTMLPanel applicationHTMLPanel) {

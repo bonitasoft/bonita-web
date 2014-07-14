@@ -55,6 +55,11 @@ public class DOMUtils {
     public static final String PAGE_LABEL_ELEMENT_ID = "bonita_form_page_label";
 
     /**
+     * Id of the element of the form frame
+     */
+    public static final String FORM_FRAME_ID = "bonitaframe";
+
+    /**
      * Instance attribute
      */
     protected static DOMUtils INSTANCE = null;
@@ -462,31 +467,6 @@ public class DOMUtils {
     }
 
     /**
-     * resize a frame to fit its content's height this method is meant to be called in the form frame (not in the
-     * application/console window)
-     * 
-     * @param frameId
-     *            the ID of the frame to resize
-     * @return true if the frame was found, false otherwise
-     */
-    native public boolean resizeFrame(String frameId)
-    /*-{
-        var formFrameWindow = window.parent;
-        var framePageHeight = formFrameWindow.document.body.offsetHeight + 10;
-        if (formFrameWindow != window.top) {
-            var parentWindow = formFrameWindow.parent;
-            var formFrame = parentWindow.document.getElementById(frameId);
-            if (formFrame != null) {
-                if (formFrame.scrollHeight < framePageHeight) {
-                    formFrame.style.height = framePageHeight + "px";
-                }
-                return true;
-            }
-        }
-        return false;
-    }-*/;
-
-    /**
      * Indicates whether the page is in a frame or not this method is meant to be called in the form frame (not in the
      * application window)
      * 
@@ -497,7 +477,7 @@ public class DOMUtils {
         var applicationWindow = window.parent;
         if (applicationWindow == window.top) {
             return false;
-        } else {
+        } else {	
             return true;
         }
     }-*/;
@@ -590,7 +570,7 @@ public class DOMUtils {
         Element theElement;
         theElement = DOM.getElementById("loading");
         if (theElement != null) {
-            theElement.getStyle().setProperty("display", "block");
+            theElement.getStyle().setProperty("display", "table");
             theElement.getStyle().setProperty("zIndex", "999");
         }
     }

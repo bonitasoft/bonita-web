@@ -130,8 +130,8 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
         }
         if (formNode == null) {
             final String message = "The node for the form " + formId + " was not found in the forms definition file";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, message);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, message);
             }
             throw new ApplicationFormDefinitionNotFoundException(message);
         }
@@ -367,7 +367,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
                 }
                 throw new InvalidFormDefinitionException(errorMessage);
             } else {
-                label = xmlExpressionsUtil.parseExpression(pageLabelNode);
+                label = xmlExpressionsUtil.parseExpression(pageId, pageLabelNode);
             }
         }
         return label;
@@ -457,7 +457,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
                 final Node valueNode = getNodeByXpath(dataNode, XMLForms.VALUE);
                 Expression value = null;
                 if (valueNode != null) {
-                    value = xmlExpressionsUtil.parseExpression(valueNode);
+                    value = xmlExpressionsUtil.parseExpression(name, valueNode);
                 }
                 transientData.add(new TransientData(name, className, value));
             }

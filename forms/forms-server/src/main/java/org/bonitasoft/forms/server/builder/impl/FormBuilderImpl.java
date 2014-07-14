@@ -17,13 +17,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,6 +39,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.forms.client.model.ActionType;
@@ -52,6 +60,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Implementation of the {@link IFormBuilder} interface generating an XML form definition file
@@ -63,7 +72,7 @@ public class FormBuilderImpl implements IFormBuilder {
     /**
      * the product version constant
      */
-    public static final String PRODUCT_VERSION = "6.1";
+    public static final String PRODUCT_VERSION = "6.3";
 
     /**
      * the product version
@@ -105,6 +114,8 @@ public class FormBuilderImpl implements IFormBuilder {
      */
     private static FormBuilderImpl INSTANCE = null;
 
+    private final Validator validator;
+
     /**
      * @return the FormExpressionsAPI instance
      */
@@ -117,24 +128,46 @@ public class FormBuilderImpl implements IFormBuilder {
 
     /**
      * Private constructor to prevent instantiation
+     * 
+     * @throws SAXException
      */
     protected FormBuilderImpl() {
-        this.productVersion = PRODUCT_VERSION;
+        productVersion = PRODUCT_VERSION;
 
-        this.documentBuilderFactory.setValidating(true);
+        documentBuilderFactory.setValidating(true);
 
         // ignore white space can only be set if parser is validating
-        this.documentBuilderFactory.setIgnoringElementContentWhitespace(true);
+        documentBuilderFactory.setIgnoringElementContentWhitespace(true);
         // select xml schema as the schema language (a.o.t. DTD)
-        this.documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
+        documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
         final URL xsdURL = Thread.currentThread().getContextClassLoader().getResource("forms.xsd");
-        this.documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdURL.toExternalForm());
+        documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdURL.toExternalForm());
 
         try {
-            this.transformerFactory.setAttribute("indent-number", Integer.valueOf(2));
+            transformerFactory.setAttribute("indent-number", Integer.valueOf(2));
         } catch (final Exception e) {
             // Nothing to do: indent-number is not supported
         }
+
+        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+        Schema schema;
+        InputStream schemaStream = null;
+        try {
+            schemaStream = this.getClass().getResourceAsStream("/forms.xsd");
+            schema = factory.newSchema(new StreamSource(schemaStream));
+        } catch (SAXException e) {
+            throw new RuntimeException("unable to initialize the xsd validator form the forms", e);
+        } finally {
+            if (schemaStream != null) {
+                try {
+                    schemaStream.close();
+                } catch (IOException e) {
+                    LOGGER.log(Level.INFO, "Unable to close schema input stream", e);
+                }
+            }
+        }
+        validator = schema.newValidator();
     }
 
     /**
@@ -148,23 +181,27 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws IOException
      */
     @Override
-    public File done() throws IOException {
+    public File done() throws IOException, InvalidFormDefinitionException {
 
         final File formsDefinitionFile = File.createTempFile("forms", ".xml", WebBonitaConstantsUtils.getInstance().getTempFolder());
         formsDefinitionFile.deleteOnExit();
 
-        this.document.appendChild(this.rootElement);
+        document.appendChild(rootElement);
 
-        final Source source = new DOMSource(this.document);
+        final Source source = new DOMSource(document);
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         final Result resultat = new StreamResult(new OutputStreamWriter(outputStream, "UTF-8"));
         try {
-            final Transformer transformer = this.transformerFactory.newTransformer();
+            final Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             transformer.transform(source, resultat);
 
             final byte[] xmlContent = outputStream.toByteArray();
+
+            //commented because studio might generate forms that are not complient with xsd but still working
+//            validateAgainstFormsXSD(xmlContent);
+
             outputStream.close();
 
             final FileOutputStream fileOutputStream = new FileOutputStream(formsDefinitionFile);
@@ -175,9 +212,22 @@ public class FormBuilderImpl implements IFormBuilder {
                 fileOutputStream.close();
             }
         } catch (final TransformerException e) {
-            LOGGER.log(Level.WARNING, "Error while generating the forms definition file.", e);
+            throw new InvalidFormDefinitionException("Error while generating the forms definition file.", e);
         }
         return formsDefinitionFile;
+    }
+
+    void validateAgainstFormsXSD(final byte[] xmlContent) throws InvalidFormDefinitionException {
+
+        String content = new String(xmlContent, Charset.forName("UTF-8"));
+        try {
+            StreamSource source = new StreamSource(new StringReader(content));
+            validator.validate(source);
+        } catch (SAXException e) {
+            throw new InvalidFormDefinitionException("Unable to parse the forms.xml using the forms.xsd", e);
+        } catch (IOException e) {
+            throw new InvalidFormDefinitionException("Unable to read the forms.xml", e);
+        }
     }
 
     /**
@@ -190,47 +240,20 @@ public class FormBuilderImpl implements IFormBuilder {
 
         DocumentBuilder builder;
         try {
-            builder = this.documentBuilderFactory.newDocumentBuilder();
+            builder = documentBuilderFactory.newDocumentBuilder();
 
-            this.document = builder.newDocument();
-            this.document.setXmlVersion("1.0");
+            document = builder.newDocument();
+            document.setXmlVersion("1.0");
 
-            this.rootElement = this.document.createElement(XMLForms.FORMS_DEFINITION);
-            this.rootElement.setAttribute(XMLForms.PRODUCT_VERSION, this.productVersion);
-            final Element migrationVersionElement = this.document.createElement(XMLForms.MIGRATION_PRODUCT_VERSION);
-            migrationVersionElement.setTextContent(this.productVersion);
-            this.rootElement.appendChild(migrationVersionElement);
-            this.currentElement = this.rootElement;
+            rootElement = document.createElement(XMLForms.FORMS_DEFINITION);
+            rootElement.setAttribute(XMLForms.PRODUCT_VERSION, productVersion);
+            final Element migrationVersionElement = document.createElement(XMLForms.MIGRATION_PRODUCT_VERSION);
+            migrationVersionElement.setTextContent(productVersion);
+            rootElement.appendChild(migrationVersionElement);
+            currentElement = rootElement;
         } catch (final ParserConfigurationException e) {
             LOGGER.log(Level.WARNING, "Invalid parser configuration", e);
         }
-        return this;
-    }
-
-    /**
-     * Add an user defined homepage to the webapp
-     * 
-     * @param url
-     *            the absolute URL of the homepage
-     * @return an implementation of {@link IFormBuilder}
-     * @throws InvalidFormDefinitionException
-     */
-    @Override
-    public IFormBuilder addHomePage(final String url) throws InvalidFormDefinitionException {
-        final String[] homePageParentsNames = { XMLForms.FORMS_DEFINITION };
-        try {
-            peek(homePageParentsNames);
-        } catch (final InvalidFormDefinitionException e) {
-            final String errorMessage = "The addition of a home page is only supported on elements of type " + Arrays.asList(homePageParentsNames);
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
-            }
-            throw new InvalidFormDefinitionException(errorMessage, e);
-        }
-        checkArgNotNull("home page url", url);
-        final Element homePageElement = this.document.createElement(XMLForms.HOME_PAGE);
-        homePageElement.setTextContent(url);
-        push(homePageElement);
         return this;
     }
 
@@ -249,7 +272,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("migration product version", migrationProductVersion);
-        final Element migrationProductVersionElement = this.document.createElement(XMLForms.MIGRATION_PRODUCT_VERSION);
+        final Element migrationProductVersionElement = document.createElement(XMLForms.MIGRATION_PRODUCT_VERSION);
         migrationProductVersionElement.setTextContent(migrationProductVersion);
         push(migrationProductVersionElement);
         return this;
@@ -272,9 +295,9 @@ public class FormBuilderImpl implements IFormBuilder {
      * @throws InvalidFormDefinitionException
      */
     @Override
-    public IFormBuilder addAction(final ActionType actionType, final String variableName, final boolean isExternal, final String operator,
-            final String operatorInputType,
-            final String submitButtonId) throws InvalidFormDefinitionException {
+    public IFormBuilder addAction(final ActionType actionType, final String variableName, final String variableType,
+            final String operator,
+            final String operatorInputType, final String submitButtonId) throws InvalidFormDefinitionException {
         final String[] actionsParentsNames = { XMLForms.PAGE };
         try {
             peek(actionsParentsNames);
@@ -286,15 +309,15 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("action type", actionType);
-        Element actionsElement = findChildElement(this.currentElement, XMLForms.ACTIONS);
+        Element actionsElement = findChildElement(currentElement, XMLForms.ACTIONS);
         if (actionsElement == null) {
-            actionsElement = this.document.createElement(XMLForms.ACTIONS);
+            actionsElement = document.createElement(XMLForms.ACTIONS);
         }
         push(actionsElement);
-        final Element actionElement = this.document.createElement(XMLForms.ACTION);
+        final Element actionElement = document.createElement(XMLForms.ACTION);
         actionElement.setAttribute(XMLForms.TYPE, actionType.name());
         addChild(actionElement, XMLForms.VARIABLE, variableName, false, true);
-        addChild(actionElement, XMLForms.IS_EXTERNAL, Boolean.toString(isExternal), false, true);
+        addChild(actionElement, XMLForms.VARIABLE_TYPE, variableType, false, true);
         addChild(actionElement, XMLForms.OPERATOR, operator, false, true);
         addChild(actionElement, XMLForms.INPUT_TYPE, operatorInputType, false, true);
         addChild(actionElement, XMLForms.SUBMIT_BUTTON, submitButtonId, false, true);
@@ -352,12 +375,12 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        Element availableValuesElement = findChildElement(this.currentElement, XMLForms.AVAILABLE_VALUES);
+        Element availableValuesElement = findChildElement(currentElement, XMLForms.AVAILABLE_VALUES);
         if (availableValuesElement == null) {
-            availableValuesElement = this.document.createElement(XMLForms.AVAILABLE_VALUES);
+            availableValuesElement = document.createElement(XMLForms.AVAILABLE_VALUES);
         }
         push(availableValuesElement);
-        final Element availableValuesArrayElement = this.document.createElement(XMLForms.VALUES_ARRAY);
+        final Element availableValuesArrayElement = document.createElement(XMLForms.VALUES_ARRAY);
         push(availableValuesArrayElement);
         return this;
     }
@@ -383,12 +406,12 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        Element initialValueElement = findChildElement(this.currentElement, XMLForms.INITIAL_VALUE);
+        Element initialValueElement = findChildElement(currentElement, XMLForms.INITIAL_VALUE);
         if (initialValueElement == null) {
-            initialValueElement = this.document.createElement(XMLForms.INITIAL_VALUE);
+            initialValueElement = document.createElement(XMLForms.INITIAL_VALUE);
         }
         push(initialValueElement);
-        final Element initilaValueArrayElement = this.document.createElement(XMLForms.EXPRESSION_ARRAY);
+        final Element initilaValueArrayElement = document.createElement(XMLForms.EXPRESSION_ARRAY);
         push(initilaValueArrayElement);
         return this;
     }
@@ -414,7 +437,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element rowElement = this.document.createElement(XMLForms.ROW);
+        final Element rowElement = document.createElement(XMLForms.ROW);
         push(rowElement);
         return this;
     }
@@ -440,19 +463,19 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        if (!this.currentElement.getNodeName().equals(XMLForms.ROW)) {
-            Element availableValuesElement = findChildElement(this.currentElement, XMLForms.AVAILABLE_VALUES);
+        if (!currentElement.getNodeName().equals(XMLForms.ROW)) {
+            Element availableValuesElement = findChildElement(currentElement, XMLForms.AVAILABLE_VALUES);
             if (availableValuesElement == null) {
-                availableValuesElement = this.document.createElement(XMLForms.AVAILABLE_VALUES);
+                availableValuesElement = document.createElement(XMLForms.AVAILABLE_VALUES);
             }
             push(availableValuesElement);
-            Element availableValuesListElement = findChildElement(this.currentElement, XMLForms.VALUES_LIST);
+            Element availableValuesListElement = findChildElement(currentElement, XMLForms.VALUES_LIST);
             if (availableValuesListElement == null) {
-                availableValuesListElement = this.document.createElement(XMLForms.VALUES_LIST);
+                availableValuesListElement = document.createElement(XMLForms.VALUES_LIST);
             }
             push(availableValuesListElement);
         }
-        final Element availableValueElement = this.document.createElement(XMLForms.AVAILABLE_VALUE);
+        final Element availableValueElement = document.createElement(XMLForms.AVAILABLE_VALUE);
         push(availableValueElement);
         return this;
     }
@@ -477,7 +500,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("display format", displayFormat);
-        final Element displayFormatElement = this.document.createElement(XMLForms.DISPLAY_FORMAT);
+        final Element displayFormatElement = document.createElement(XMLForms.DISPLAY_FORMAT);
         displayFormatElement.setTextContent(displayFormat);
         push(displayFormatElement);
         return this;
@@ -504,7 +527,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("error template", templateUri);
         checkStringNotEmpty("error template", templateUri);
-        final Element errorTemplateElement = this.document.createElement(XMLForms.ERROR_TEMPLATE);
+        final Element errorTemplateElement = document.createElement(XMLForms.ERROR_TEMPLATE);
         errorTemplateElement.setTextContent(templateUri);
         push(errorTemplateElement);
         return this;
@@ -532,7 +555,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("confirmation layout", templateUri);
         checkStringNotEmpty("confirmation layout", templateUri);
-        final Element confirmationTemplateElement = this.document.createElement(XMLForms.CONFIRMATION_LAYOUT);
+        final Element confirmationTemplateElement = document.createElement(XMLForms.CONFIRMATION_LAYOUT);
         confirmationTemplateElement.setTextContent(templateUri);
         push(confirmationTemplateElement);
         return this;
@@ -564,7 +587,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element confirmationMessageElement = this.document.createElement(XMLForms.CONFIRMATION_MESSAGE);
+        final Element confirmationMessageElement = document.createElement(XMLForms.CONFIRMATION_MESSAGE);
         push(confirmationMessageElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -590,7 +613,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("items style", cssClasses);
-        final Element itemsStyleElement = this.document.createElement(XMLForms.ITEMS_STYLE);
+        final Element itemsStyleElement = document.createElement(XMLForms.ITEMS_STYLE);
         itemsStyleElement.setTextContent(cssClasses);
         push(itemsStyleElement);
         return this;
@@ -623,12 +646,12 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         Element labelElement = null;
-        if (this.currentElement.getNodeName().equals(XMLForms.APPLICATION)) {
-            labelElement = this.document.createElement(XMLForms.APPLICATION_LABEL);
-        } else if (this.currentElement.getNodeName().equals(XMLForms.PAGE)) {
-            labelElement = this.document.createElement(XMLForms.PAGE_LABEL);
+        if (currentElement.getNodeName().equals(XMLForms.APPLICATION)) {
+            labelElement = document.createElement(XMLForms.APPLICATION_LABEL);
+        } else if (currentElement.getNodeName().equals(XMLForms.PAGE)) {
+            labelElement = document.createElement(XMLForms.PAGE_LABEL);
         } else {
-            labelElement = this.document.createElement(XMLForms.LABEL);
+            labelElement = document.createElement(XMLForms.LABEL);
         }
         push(labelElement);
         addExpression(name, content, expressionType, returnType, interpreter);
@@ -660,7 +683,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element valueElement = this.document.createElement(XMLForms.VALUE);
+        final Element valueElement = document.createElement(XMLForms.VALUE);
         push(valueElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -686,7 +709,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("label style", cssClasses);
-        final Element labelStyleElement = this.document.createElement(XMLForms.LABEL_STYLE);
+        final Element labelStyleElement = document.createElement(XMLForms.LABEL_STYLE);
         labelStyleElement.setTextContent(cssClasses);
         push(labelStyleElement);
         return this;
@@ -712,7 +735,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("label position", labelPosition);
-        final Element labelPositionElement = this.document.createElement(XMLForms.LABEL_POSITION);
+        final Element labelPositionElement = document.createElement(XMLForms.LABEL_POSITION);
         labelPositionElement.setTextContent(labelPosition.name());
         push(labelPositionElement);
         return this;
@@ -742,7 +765,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element mandatoryLabelElement = this.document.createElement(XMLForms.MANDATORY_LABEL);
+        final Element mandatoryLabelElement = document.createElement(XMLForms.MANDATORY_LABEL);
         push(mandatoryLabelElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -769,7 +792,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("mandatory behavior", isMandatory);
-        final Element mandatoryBehaviorElement = this.document.createElement(XMLForms.MANDATORY);
+        final Element mandatoryBehaviorElement = document.createElement(XMLForms.MANDATORY);
         mandatoryBehaviorElement.setTextContent(Boolean.toString(isMandatory));
         push(mandatoryBehaviorElement);
         return this;
@@ -796,7 +819,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("label button behavior", isLabelButton);
-        final Element labelButtonBehaviorElement = this.document.createElement(XMLForms.LABEL_BUTTON);
+        final Element labelButtonBehaviorElement = document.createElement(XMLForms.LABEL_BUTTON);
         labelButtonBehaviorElement.setTextContent(Boolean.toString(isLabelButton));
         push(labelButtonBehaviorElement);
         return this;
@@ -823,7 +846,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("mandatory label style", mandatoryStyle);
-        final Element mandatoryStyleElement = this.document.createElement(XMLForms.MANDATORY_STYLE);
+        final Element mandatoryStyleElement = document.createElement(XMLForms.MANDATORY_STYLE);
         mandatoryStyleElement.setTextContent(mandatoryStyle);
         push(mandatoryStyleElement);
         return this;
@@ -854,7 +877,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element mandatorySymbolElement = this.document.createElement(XMLForms.MANDATORY_SYMBOL);
+        final Element mandatorySymbolElement = document.createElement(XMLForms.MANDATORY_SYMBOL);
         push(mandatorySymbolElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -879,7 +902,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element maxHeigthElement = this.document.createElement(XMLForms.MAX_HEIGHT);
+        final Element maxHeigthElement = document.createElement(XMLForms.MAX_HEIGHT);
         maxHeigthElement.setTextContent(Integer.toString(maxHeight));
         push(maxHeigthElement);
         return this;
@@ -904,7 +927,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element maxLengthElement = this.document.createElement(XMLForms.MAX_LENGTH);
+        final Element maxLengthElement = document.createElement(XMLForms.MAX_LENGTH);
         maxLengthElement.setTextContent(Integer.toString(maxLength));
         push(maxLengthElement);
         return this;
@@ -931,12 +954,12 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("page Id", pageId);
         checkStringNotEmpty("page Id", pageId);
-        Element pagesElement = findChildElement(this.currentElement, XMLForms.PAGES);
+        Element pagesElement = findChildElement(currentElement, XMLForms.PAGES);
         if (pagesElement == null) {
-            pagesElement = this.document.createElement(XMLForms.PAGES);
+            pagesElement = document.createElement(XMLForms.PAGES);
         }
         push(pagesElement);
-        final Element pageElement = this.document.createElement(XMLForms.PAGE);
+        final Element pageElement = document.createElement(XMLForms.PAGE);
         pageElement.setAttribute(XMLForms.ID, escapeSingleQuote(pageId));
         push(pageElement);
         return this;
@@ -965,12 +988,12 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("form Id", formId);
         checkStringNotEmpty("form Id", formId);
-        Element entryFormsElement = findChildElement(this.currentElement, XMLForms.FORMS);
+        Element entryFormsElement = findChildElement(currentElement, XMLForms.FORMS);
         if (entryFormsElement == null) {
-            entryFormsElement = this.document.createElement(XMLForms.FORMS);
+            entryFormsElement = document.createElement(XMLForms.FORMS);
         }
         push(entryFormsElement);
-        final Element entryFormElement = this.document.createElement(XMLForms.FORM);
+        final Element entryFormElement = document.createElement(XMLForms.FORM);
         entryFormElement.setAttribute(XMLForms.ID, escapeSingleQuote(formId));
         addChild(entryFormElement, XMLForms.FORM_TYPE, FormType.entry.name(), true, true);
         push(entryFormElement);
@@ -999,12 +1022,12 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("form Id", formId);
         checkStringNotEmpty("form Id", formId);
-        Element viewFormsElement = findChildElement(this.currentElement, XMLForms.FORMS);
+        Element viewFormsElement = findChildElement(currentElement, XMLForms.FORMS);
         if (viewFormsElement == null) {
-            viewFormsElement = this.document.createElement(XMLForms.FORMS);
+            viewFormsElement = document.createElement(XMLForms.FORMS);
         }
         push(viewFormsElement);
-        final Element viewFormElement = this.document.createElement(XMLForms.FORM);
+        final Element viewFormElement = document.createElement(XMLForms.FORM);
         viewFormElement.setAttribute(XMLForms.ID, escapeSingleQuote(formId));
         addChild(viewFormElement, XMLForms.FORM_TYPE, FormType.view.name(), true, true);
         push(viewFormElement);
@@ -1035,7 +1058,7 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("application name", applicationName);
         checkArgNotNull("application version", applicationVersion);
-        final Element applicationElement = this.document.createElement(XMLForms.APPLICATION);
+        final Element applicationElement = document.createElement(XMLForms.APPLICATION);
         applicationElement.setAttribute(XMLForms.NAME, applicationName);
         applicationElement.setAttribute(XMLForms.VERSION, applicationVersion);
         push(applicationElement);
@@ -1062,7 +1085,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("style", cssClasses);
-        final Element styleElement = this.document.createElement(XMLForms.STYLE);
+        final Element styleElement = document.createElement(XMLForms.STYLE);
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         return this;
@@ -1090,10 +1113,10 @@ public class FormBuilderImpl implements IFormBuilder {
         checkArgNotNull("layout", layoutUri);
         checkStringNotEmpty("layout", layoutUri);
         Element templateElement = null;
-        if (this.currentElement.getNodeName().equals(XMLForms.APPLICATION)) {
-            templateElement = this.document.createElement(XMLForms.APPLICATION_LAYOUT);
+        if (currentElement.getNodeName().equals(XMLForms.APPLICATION)) {
+            templateElement = document.createElement(XMLForms.APPLICATION_LAYOUT);
         } else {
-            templateElement = this.document.createElement(XMLForms.PAGE_LAYOUT);
+            templateElement = document.createElement(XMLForms.PAGE_LAYOUT);
         }
         templateElement.setTextContent(layoutUri);
         push(templateElement);
@@ -1125,7 +1148,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element titleElement = this.document.createElement(XMLForms.TITLE);
+        final Element titleElement = document.createElement(XMLForms.TITLE);
         push(titleElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1161,19 +1184,19 @@ public class FormBuilderImpl implements IFormBuilder {
         checkArgNotNull("validator id", validatorId);
         checkStringNotEmpty("validator id", validatorId);
         Element validatorsElement = null;
-        if (this.currentElement.getNodeName().equals(XMLForms.PAGE)) {
-            validatorsElement = findChildElement(this.currentElement, XMLForms.PAGE_VALIDATORS);
+        if (currentElement.getNodeName().equals(XMLForms.PAGE)) {
+            validatorsElement = findChildElement(currentElement, XMLForms.PAGE_VALIDATORS);
             if (validatorsElement == null) {
-                validatorsElement = this.document.createElement(XMLForms.PAGE_VALIDATORS);
+                validatorsElement = document.createElement(XMLForms.PAGE_VALIDATORS);
             }
         } else {
-            validatorsElement = findChildElement(this.currentElement, XMLForms.VALIDATORS);
+            validatorsElement = findChildElement(currentElement, XMLForms.VALIDATORS);
             if (validatorsElement == null) {
-                validatorsElement = this.document.createElement(XMLForms.VALIDATORS);
+                validatorsElement = document.createElement(XMLForms.VALIDATORS);
             }
         }
         push(validatorsElement);
-        final Element validatorElement = this.document.createElement(XMLForms.VALIDATOR);
+        final Element validatorElement = document.createElement(XMLForms.VALIDATOR);
         validatorElement.setAttribute(XMLForms.ID, validatorId);
         addChild(validatorElement, XMLForms.CLASSNAME, className, true, true);
         addChild(validatorElement, XMLForms.STYLE, cssClasses, false, false);
@@ -1209,7 +1232,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element parameterElement = this.document.createElement(XMLForms.PARAMETER);
+        final Element parameterElement = document.createElement(XMLForms.PARAMETER);
         push(parameterElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1238,12 +1261,12 @@ public class FormBuilderImpl implements IFormBuilder {
         checkArgNotNull("widget id", widgetId);
         checkStringNotEmpty("widget id", widgetId);
         checkArgNotNull("widget type", widgetType);
-        Element widgetsElement = findChildElement(this.currentElement, XMLForms.WIDGETS);
+        Element widgetsElement = findChildElement(currentElement, XMLForms.WIDGETS);
         if (widgetsElement == null) {
-            widgetsElement = this.document.createElement(XMLForms.WIDGETS);
+            widgetsElement = document.createElement(XMLForms.WIDGETS);
         }
         push(widgetsElement);
-        final Element widgetElement = this.document.createElement(XMLForms.WIDGET);
+        final Element widgetElement = document.createElement(XMLForms.WIDGET);
         widgetElement.setAttribute(XMLForms.ID, widgetId);
         widgetElement.setAttribute(XMLForms.TYPE, widgetType.name());
         push(widgetElement);
@@ -1271,7 +1294,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("image preview", attachmentImage);
-        final Element attachmentImageElement = this.document.createElement(XMLForms.DISPLAY_ATTACHMENT_IMAGE);
+        final Element attachmentImageElement = document.createElement(XMLForms.DISPLAY_ATTACHMENT_IMAGE);
         attachmentImageElement.setTextContent(Boolean.toString(attachmentImage));
         push(attachmentImageElement);
         return this;
@@ -1298,7 +1321,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("allow HTML in field", allowHTMLInField);
-        final Element allowHTMLInFieldElement = this.document.createElement(XMLForms.ALLOW_HTML_IN_FIELD);
+        final Element allowHTMLInFieldElement = document.createElement(XMLForms.ALLOW_HTML_IN_FIELD);
         allowHTMLInFieldElement.setTextContent(Boolean.toString(allowHTMLInField));
         push(allowHTMLInFieldElement);
         return this;
@@ -1325,7 +1348,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("allow HTML in label", allowHTMLInLabel);
-        final Element allowHTMLInLabelElement = this.document.createElement(XMLForms.ALLOW_HTML_IN_LABEL);
+        final Element allowHTMLInLabelElement = document.createElement(XMLForms.ALLOW_HTML_IN_LABEL);
         allowHTMLInLabelElement.setTextContent(Boolean.toString(allowHTMLInLabel));
         push(allowHTMLInLabelElement);
         return this;
@@ -1355,12 +1378,12 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("HTML attribute name", name);
         checkArgNotNull("HTML attribute name value", value);
-        Element htmlAttributesElement = findChildElement(this.currentElement, XMLForms.HTML_ATTRIBUTES);
+        Element htmlAttributesElement = findChildElement(currentElement, XMLForms.HTML_ATTRIBUTES);
         if (htmlAttributesElement == null) {
-            htmlAttributesElement = this.document.createElement(XMLForms.HTML_ATTRIBUTES);
+            htmlAttributesElement = document.createElement(XMLForms.HTML_ATTRIBUTES);
         }
         push(htmlAttributesElement);
-        final Element htmlAttributeElement = this.document.createElement(XMLForms.HTML_ATTRIBUTE);
+        final Element htmlAttributeElement = document.createElement(XMLForms.HTML_ATTRIBUTE);
         htmlAttributeElement.setAttribute(XMLForms.NAME, name);
         htmlAttributeElement.setTextContent(value);
         push(htmlAttributeElement);
@@ -1388,7 +1411,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("table style", cssClasses);
-        final Element styleElement = this.document.createElement(XMLForms.TABLE_STYLE);
+        final Element styleElement = document.createElement(XMLForms.TABLE_STYLE);
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         return this;
@@ -1415,7 +1438,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("image style", cssClasses);
-        final Element styleElement = this.document.createElement(XMLForms.IMAGE_STYLE);
+        final Element styleElement = document.createElement(XMLForms.IMAGE_STYLE);
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         return this;
@@ -1442,7 +1465,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("cells style", cssClasses);
-        final Element styleElement = this.document.createElement(XMLForms.CELL_STYLE);
+        final Element styleElement = document.createElement(XMLForms.CELL_STYLE);
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         return this;
@@ -1478,11 +1501,11 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("headings style", cssClasses);
-        final Element styleElement = this.document.createElement(XMLForms.HEADINGS_STYLE);
+        final Element styleElement = document.createElement(XMLForms.HEADINGS_STYLE);
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         peek(styleParentsNames);
-        final Element headingsPositionsElement = this.document.createElement(XMLForms.HEADINGS_POSITIONS);
+        final Element headingsPositionsElement = document.createElement(XMLForms.HEADINGS_POSITIONS);
         addChild(headingsPositionsElement, XMLForms.LEFT_HEADINGS, Boolean.toString(leftHeadings), true, true);
         addChild(headingsPositionsElement, XMLForms.TOP_HEADINGS, Boolean.toString(topHeadings), true, true);
         addChild(headingsPositionsElement, XMLForms.RIGHT_HEADINGS, Boolean.toString(rightHeadings), true, true);
@@ -1513,7 +1536,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("read-only behavior", isReadOnly);
-        final Element mandatoryBehaviorElement = this.document.createElement(XMLForms.READ_ONLY);
+        final Element mandatoryBehaviorElement = document.createElement(XMLForms.READ_ONLY);
         mandatoryBehaviorElement.setTextContent(Boolean.toString(isReadOnly));
         push(mandatoryBehaviorElement);
         return this;
@@ -1544,7 +1567,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element maxColumnsElement = this.document.createElement(XMLForms.MAX_COLUMNS);
+        final Element maxColumnsElement = document.createElement(XMLForms.MAX_COLUMNS);
         push(maxColumnsElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1575,7 +1598,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element maxRowsElement = this.document.createElement(XMLForms.MAX_ROWS);
+        final Element maxRowsElement = document.createElement(XMLForms.MAX_ROWS);
         push(maxRowsElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1606,7 +1629,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element minColumnsElement = this.document.createElement(XMLForms.MIN_COLUMNS);
+        final Element minColumnsElement = document.createElement(XMLForms.MIN_COLUMNS);
         push(minColumnsElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1637,7 +1660,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element minRowsElement = this.document.createElement(XMLForms.MIN_ROWS);
+        final Element minRowsElement = document.createElement(XMLForms.MIN_ROWS);
         push(minRowsElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1665,7 +1688,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("variable columns number behaviour", variableColumnsNumber);
-        final Element variableColumnsNumberElement = this.document.createElement(XMLForms.VARIABLE_COLUMNS);
+        final Element variableColumnsNumberElement = document.createElement(XMLForms.VARIABLE_COLUMNS);
         variableColumnsNumberElement.setTextContent(Boolean.toString(variableColumnsNumber));
         push(variableColumnsNumberElement);
         return this;
@@ -1693,7 +1716,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("variable rows number behaviour", variableRowsNumber);
-        final Element variableRowsNumberElement = this.document.createElement(XMLForms.VARIABLE_ROWS);
+        final Element variableRowsNumberElement = document.createElement(XMLForms.VARIABLE_ROWS);
         variableRowsNumberElement.setTextContent(Boolean.toString(variableRowsNumber));
         push(variableRowsNumberElement);
         return this;
@@ -1725,7 +1748,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element valueColumnIndexElement = this.document.createElement(XMLForms.VALUE_COLUMN_INDEX);
+        final Element valueColumnIndexElement = document.createElement(XMLForms.VALUE_COLUMN_INDEX);
         push(valueColumnIndexElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1747,7 +1770,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("select mode", selectMode);
-        final Element selectModeElement = this.document.createElement(XMLForms.SELECT_MODE);
+        final Element selectModeElement = document.createElement(XMLForms.SELECT_MODE);
         selectModeElement.setTextContent(selectMode.name());
         push(selectModeElement);
         return this;
@@ -1769,7 +1792,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("selected items style", selectedItemsStyle);
-        final Element styleElement = this.document.createElement(XMLForms.SELECTED_ITEMS_STYLE);
+        final Element styleElement = document.createElement(XMLForms.SELECTED_ITEMS_STYLE);
         styleElement.setTextContent(selectedItemsStyle);
         push(styleElement);
         return this;
@@ -1790,7 +1813,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element maxItemsElement = this.document.createElement(XMLForms.MAX_ITEMS);
+        final Element maxItemsElement = document.createElement(XMLForms.MAX_ITEMS);
         maxItemsElement.setTextContent(Integer.toString(maxItems));
         push(maxItemsElement);
         return this;
@@ -1822,12 +1845,12 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull("data name", name);
         checkStringNotEmpty("data name", name);
-        Element transientDataElement = findChildElement(this.currentElement, XMLForms.TRANSIENT_DATA);
+        Element transientDataElement = findChildElement(currentElement, XMLForms.TRANSIENT_DATA);
         if (transientDataElement == null) {
-            transientDataElement = this.document.createElement(XMLForms.TRANSIENT_DATA);
+            transientDataElement = document.createElement(XMLForms.TRANSIENT_DATA);
         }
         push(transientDataElement);
-        final Element dataElement = this.document.createElement(XMLForms.DATA);
+        final Element dataElement = document.createElement(XMLForms.DATA);
         dataElement.setAttribute(XMLForms.NAME, name);
         addChild(dataElement, XMLForms.CLASSNAME, className, true, true);
         push(dataElement);
@@ -1859,7 +1882,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element firstPageElement = this.document.createElement(XMLForms.VALUE);
+        final Element firstPageElement = document.createElement(XMLForms.VALUE);
         push(firstPageElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1889,7 +1912,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element firstPageElement = this.document.createElement(XMLForms.FIRST_PAGE);
+        final Element firstPageElement = document.createElement(XMLForms.FIRST_PAGE);
         push(firstPageElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1920,7 +1943,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element nextPageElement = this.document.createElement(XMLForms.NEXT_PAGE);
+        final Element nextPageElement = document.createElement(XMLForms.NEXT_PAGE);
         push(nextPageElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -1946,7 +1969,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element delayMillisElement = this.document.createElement(XMLForms.DELAY_MILLIS);
+        final Element delayMillisElement = document.createElement(XMLForms.DELAY_MILLIS);
         delayMillisElement.setTextContent(Integer.toString(delayMillis));
         push(delayMillisElement);
         return this;
@@ -1972,7 +1995,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element subTitleElement = this.document.createElement(XMLForms.SUB_TITLE);
+        final Element subTitleElement = document.createElement(XMLForms.SUB_TITLE);
         if (position != null) {
             addChild(subTitleElement, XMLForms.POSITION, position.name(), false, true);
         }
@@ -2007,7 +2030,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element popupToolTipElement = this.document.createElement(XMLForms.POPUP_TOOLTIP);
+        final Element popupToolTipElement = document.createElement(XMLForms.POPUP_TOOLTIP);
         push(popupToolTipElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -2030,7 +2053,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element permissionsElement = this.document.createElement(XMLForms.PERMISSIONS);
+        final Element permissionsElement = document.createElement(XMLForms.PERMISSIONS);
         permissionsElement.setTextContent(permissions);
         push(permissionsElement);
         return this;
@@ -2061,7 +2084,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element nextPageElement = this.document.createElement(XMLForms.NEXT_FORM);
+        final Element nextPageElement = document.createElement(XMLForms.NEXT_FORM);
         push(nextPageElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -2082,15 +2105,67 @@ public class FormBuilderImpl implements IFormBuilder {
     public IFormBuilder addDependentExpression(final String name, final String content, final String expressionType, final String returnType,
             final String interpreter) throws InvalidFormDefinitionException {
 
-        Element dependenciesElement = findChildElement(this.currentElement, XMLForms.DEPENDENCIES);
+        return addDependentExpression(name, content, expressionType, returnType, interpreter, true);
+    }
+
+    /**
+     * Add an expression to the current element, as its the dependent expressions
+     * 
+     * @param name
+     *            the name of the expression
+     * @param content
+     *            the real script code of the expression
+     * @param expressionType
+     * @param returnType
+     * @param interpreter
+     * @param isSameLevelDependency
+     */
+    @Override
+    public IFormBuilder addDependentExpression(final String name, final String content, final String expressionType, final String returnType,
+            final String interpreter, final boolean isSameLevelDependency) throws InvalidFormDefinitionException {
+
+        if (isSameLevelDependency) {
+            final String[] expressionElementNames = { XMLForms.EXPRESSION };
+            try {
+                peekParentFirst(expressionElementNames);
+            } catch (final InvalidFormDefinitionException e) {
+                final String errorMessage = "The method addDependentExpression can only be called once an expression has been created.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new InvalidFormDefinitionException(errorMessage, e);
+            }
+        }
+        Element dependenciesElement = findChildElement(currentElement, XMLForms.DEPENDENCIES);
         if (dependenciesElement == null) {
-            dependenciesElement = this.document.createElement(XMLForms.DEPENDENCIES);
+            dependenciesElement = document.createElement(XMLForms.DEPENDENCIES);
             push(dependenciesElement);
         } else {
-            this.currentElement = dependenciesElement;
+            currentElement = dependenciesElement;
         }
         addExpression(name, content, expressionType, returnType, interpreter);
-        this.currentElement = (Element) dependenciesElement.getParentNode();
+        return this;
+    }
+
+    /**
+     * End an expression dependencies group
+     * 
+     * @return an implementation of {@link IFormBuilder}
+     * @throws InvalidFormDefinitionException
+     */
+    @Override
+    public IFormBuilder endExpressionDependencies() throws InvalidFormDefinitionException {
+        final String[] expressionElementNames = { XMLForms.EXPRESSION };
+        try {
+            currentElement = (Element) currentElement.getParentNode();
+            peekParentFirst(expressionElementNames);
+        } catch (final InvalidFormDefinitionException e) {
+            final String errorMessage = "The method endExpressionDependencies can only be called once an expression dependency has been created.";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, errorMessage, e);
+            }
+            throw new InvalidFormDefinitionException(errorMessage, e);
+        }
         return this;
     }
 
@@ -2107,7 +2182,7 @@ public class FormBuilderImpl implements IFormBuilder {
     protected IFormBuilder addExpression(final String name, final String content, final String expressionType, final String returnType, final String interpreter)
             throws InvalidFormDefinitionException {
 
-        final Element expressionElement = this.document.createElement(XMLForms.EXPRESSION);
+        final Element expressionElement = document.createElement(XMLForms.EXPRESSION);
         addChild(expressionElement, XMLForms.NAME, name, false, true);
         addChild(expressionElement, XMLForms.EXPRESSION_CONTENT, content, true, false);
         addChild(expressionElement, XMLForms.EXPRESSION_TYPE, expressionType, true, true);
@@ -2141,10 +2216,10 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
 
-        if (!this.currentElement.getNodeName().equals(XMLForms.ROW)) {
-            Element initialValueElement = findChildElement(this.currentElement, XMLForms.INITIAL_VALUE);
+        if (!currentElement.getNodeName().equals(XMLForms.ROW)) {
+            Element initialValueElement = findChildElement(currentElement, XMLForms.INITIAL_VALUE);
             if (initialValueElement == null) {
-                initialValueElement = this.document.createElement(XMLForms.INITIAL_VALUE);
+                initialValueElement = document.createElement(XMLForms.INITIAL_VALUE);
             } else {
                 throw new InvalidFormDefinitionException("This element already has an initial value defined.");
             }
@@ -2175,16 +2250,16 @@ public class FormBuilderImpl implements IFormBuilder {
         }
         checkArgNotNull(XMLForms.PATH, resourcePath);
         checkStringNotEmpty(XMLForms.PATH, resourcePath);
-        Element initialValueElement = findChildElement(this.currentElement, XMLForms.INITIAL_VALUE);
+        Element initialValueElement = findChildElement(currentElement, XMLForms.INITIAL_VALUE);
         if (initialValueElement == null) {
-            initialValueElement = this.document.createElement(XMLForms.INITIAL_VALUE);
+            initialValueElement = document.createElement(XMLForms.INITIAL_VALUE);
         } else {
             throw new InvalidFormDefinitionException("This element already has an initial value defined.");
         }
         push(initialValueElement);
-        final Element resourceElement = this.document.createElement(XMLForms.RESOURCE);
+        final Element resourceElement = document.createElement(XMLForms.RESOURCE);
         initialValueElement.appendChild(resourceElement);
-        final Element element = this.document.createElement(XMLForms.PATH);
+        final Element element = document.createElement(XMLForms.PATH);
         element.setTextContent(resourcePath);
         resourceElement.appendChild(element);
         return this;
@@ -2214,9 +2289,9 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        Element availableValuesElement = findChildElement(this.currentElement, XMLForms.AVAILABLE_VALUES);
+        Element availableValuesElement = findChildElement(currentElement, XMLForms.AVAILABLE_VALUES);
         if (availableValuesElement == null) {
-            availableValuesElement = this.document.createElement(XMLForms.AVAILABLE_VALUES);
+            availableValuesElement = document.createElement(XMLForms.AVAILABLE_VALUES);
         }
         push(availableValuesElement);
         addExpression(name, content, expressionType, returnType, interpreter);
@@ -2239,9 +2314,9 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element verticalHeaderElement = this.document.createElement(XMLForms.VERTICAL_HEADER);
+        final Element verticalHeaderElement = document.createElement(XMLForms.VERTICAL_HEADER);
         push(verticalHeaderElement);
-        final Element rowElement = this.document.createElement(XMLForms.EXPRESSION_LIST);
+        final Element rowElement = document.createElement(XMLForms.EXPRESSION_LIST);
         push(rowElement);
         return this;
     }
@@ -2269,10 +2344,10 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        if (this.currentElement.getNodeName().equals(XMLForms.EXPRESSION_LIST)) {
+        if (currentElement.getNodeName().equals(XMLForms.EXPRESSION_LIST)) {
             addExpression(name, content, expressionType, returnType, interpreter);
         } else {
-            final Element verticalHeaderElement = this.document.createElement(XMLForms.VERTICAL_HEADER);
+            final Element verticalHeaderElement = document.createElement(XMLForms.VERTICAL_HEADER);
             push(verticalHeaderElement);
             addExpression(name, content, expressionType, returnType, interpreter);
         }
@@ -2296,9 +2371,9 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element horizontalHeaderElement = this.document.createElement(XMLForms.HORIZONTAL_HEADER);
+        final Element horizontalHeaderElement = document.createElement(XMLForms.HORIZONTAL_HEADER);
         push(horizontalHeaderElement);
-        final Element rowElement = this.document.createElement(XMLForms.EXPRESSION_LIST);
+        final Element rowElement = document.createElement(XMLForms.EXPRESSION_LIST);
         push(rowElement);
         return this;
     }
@@ -2327,10 +2402,10 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        if (this.currentElement.getNodeName().equals(XMLForms.EXPRESSION_LIST)) {
+        if (currentElement.getNodeName().equals(XMLForms.EXPRESSION_LIST)) {
             addExpression(name, content, expressionType, returnType, interpreter);
         } else {
-            final Element horizontalHeaderElement = this.document.createElement(XMLForms.HORIZONTAL_HEADER);
+            final Element horizontalHeaderElement = document.createElement(XMLForms.HORIZONTAL_HEADER);
             push(horizontalHeaderElement);
             addExpression(name, content, expressionType, returnType, interpreter);
         }
@@ -2361,7 +2436,7 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element displayConditionElement = this.document.createElement(XMLForms.DISPLAY_CONDITION);
+        final Element displayConditionElement = document.createElement(XMLForms.DISPLAY_CONDITION);
         push(displayConditionElement);
         addExpression(name, content, expressionType, returnType, interpreter);
         return this;
@@ -2386,9 +2461,9 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element fileInputTypeElement = this.document.createElement(XMLForms.FILE_INPUT_TYPE);
+        final Element fileInputTypeElement = document.createElement(XMLForms.FILE_INPUT_TYPE);
         fileInputTypeElement.setTextContent(fileWidgetInputType.name());
-        this.currentElement.appendChild(fileInputTypeElement);
+        currentElement.appendChild(fileInputTypeElement);
         return this;
     }
 
@@ -2409,9 +2484,9 @@ public class FormBuilderImpl implements IFormBuilder {
             }
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
-        final Element fieldOutputTypeElement = this.document.createElement(XMLForms.FIELD_OUTPUT_TYPE);
+        final Element fieldOutputTypeElement = document.createElement(XMLForms.FIELD_OUTPUT_TYPE);
         fieldOutputTypeElement.setTextContent(fieldOutputType);
-        this.currentElement.appendChild(fieldOutputTypeElement);
+        currentElement.appendChild(fieldOutputTypeElement);
 
         return this;
     }
@@ -2432,7 +2507,7 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException(errorMessage, e);
         }
         checkArgNotNull("input style", cssClasses);
-        final Element styleElement = this.document.createElement(XMLForms.INPUT_STYLE);
+        final Element styleElement = document.createElement(XMLForms.INPUT_STYLE);
         styleElement.setTextContent(cssClasses);
         push(styleElement);
         return this;
@@ -2460,7 +2535,7 @@ public class FormBuilderImpl implements IFormBuilder {
             checkStringNotEmpty(childName, childValue);
         }
         if (childValue != null) {
-            final Element element = this.document.createElement(childName);
+            final Element element = document.createElement(childName);
             element.setTextContent(childValue);
             parentElement.appendChild(element);
         }
@@ -2493,9 +2568,9 @@ public class FormBuilderImpl implements IFormBuilder {
      */
     protected void push(final Element element) {
         if (element.getParentNode() == null) {
-            this.currentElement.appendChild(element);
+            currentElement.appendChild(element);
         }
-        this.currentElement = element;
+        currentElement = element;
     }
 
     /**
@@ -2508,15 +2583,46 @@ public class FormBuilderImpl implements IFormBuilder {
      *             if no element among the current element's parents has one of the required type
      */
     protected Element peek(final String[] elementTypes) throws InvalidFormDefinitionException {
+
+        Element element = currentElement;
         final List<String> elementTypesList = Arrays.asList(elementTypes);
-        while (this.currentElement.getParentNode() != null && this.currentElement.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
-            if (elementTypesList.contains(this.currentElement.getNodeName())) {
-                return this.currentElement;
+        while (element.getParentNode() != null && element.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
+            if (elementTypesList.contains(element.getNodeName())) {
+                currentElement = element;
+                return currentElement;
             }
-            this.currentElement = (Element) this.currentElement.getParentNode();
+            element = (Element) element.getParentNode();
         }
-        if (elementTypesList.contains(this.currentElement.getNodeName())) {
-            return this.currentElement;
+        if (elementTypesList.contains(element.getNodeName())) {
+            currentElement = element;
+            return currentElement;
+        } else {
+            throw new InvalidFormDefinitionException("No required element present among the parents of the current element.");
+        }
+    }
+
+    /**
+     * Retrieve the first element in the DOM whose type is among the element types provided
+     * 
+     * @param elementTypes
+     *            array of required element types
+     * @return the first {@link Element} in the stack whose type is among the element types provided
+     * @throws InvalidFormDefinitionException
+     *             if no element among the current element's parents has one of the required type
+     */
+    protected Element peekParentFirst(final String[] elementTypes) throws InvalidFormDefinitionException {
+
+        Element element = currentElement;
+        final List<String> elementTypesList = Arrays.asList(elementTypes);
+        while (element.getParentNode() != null && element.getParentNode().getNodeType() == Node.ELEMENT_NODE) {
+            element = (Element) element.getParentNode();
+            if (elementTypesList.contains(element.getNodeName())) {
+                currentElement = element;
+                return currentElement;
+            }
+        }
+        if (elementTypesList.contains(currentElement.getNodeName())) {
+            return currentElement;
         } else {
             throw new InvalidFormDefinitionException("No required element present among the parents of the current element.");
         }

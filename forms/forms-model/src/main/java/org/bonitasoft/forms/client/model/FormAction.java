@@ -48,12 +48,7 @@ public class FormAction implements Serializable {
     /**
      * Data Name
      */
-    private String dataName;
-    
-    /**
-     * Indicates the left operand data is external or not
-     */
-    private boolean isExternal;
+    private String variableName;
 
     /**
      * expression
@@ -70,30 +65,37 @@ public class FormAction implements Serializable {
      */
     private Connector connector;
 
+    private String variableType;
+
     /**
      * Constructor.
+     * 
      * @param type
      * @param dataName
      * @param operator
      * @param expression
      */
-    public FormAction(final ActionType type, final String dataName, final boolean isExternal, final String operator, final String operatorInputType, final Expression expression) {
-        this(type, dataName, isExternal, operator, operatorInputType, expression, null);
+    public FormAction(final ActionType type, final String dataName, final String variableType, final String operator,
+            final String operatorInputType, final Expression expression) {
+        this(type, dataName, variableType, operator, operatorInputType, expression, null);
     }
-    
+
     /**
      * Constructor.
+     * 
      * @param type
-     * @param dataName
+     * @param variableName
+     * @param variableType
      * @param operator
      * @param operatorInputType
      * @param expression
      * @param submitButtonId
      */
-    public FormAction(final ActionType type, final String dataName, final boolean isExternal, final String operator, final String operatorInputType, final Expression expression, final String submitButtonId) {
+    public FormAction(final ActionType type, final String variableName, final String variableType, final String operator,
+            final String operatorInputType, final Expression expression, final String submitButtonId) {
         this.type = type;
-        this.dataName = dataName;
-        this.isExternal = isExternal;
+        this.variableName = variableName;
+        this.variableType = variableType;
         this.operator = operator;
         this.operatorInputType = operatorInputType;
         this.expression = expression;
@@ -116,21 +118,20 @@ public class FormAction implements Serializable {
         this.type = type;
     }
 
-    public String getDataName() {
-        return dataName;
+    public String getVariableName() {
+        return variableName;
     }
 
-    public void setDataName(final String dataName) {
-        this.dataName = dataName;
-    }
-    
-    public boolean isExternal() {
-        return isExternal;
+    public void setVariableName(final String dataName) {
+        this.variableName = dataName;
     }
 
-    
-    public void setExternal(boolean isExternal) {
-        this.isExternal = isExternal;
+    public String getVariableType() {
+        return variableType;
+    }
+
+    public void setVariableType(final String variableType) {
+        this.variableType = variableType;
     }
 
     public Expression getExpression() {
@@ -169,7 +170,7 @@ public class FormAction implements Serializable {
         return operatorInputType;
     }
 
-    public void setOperatorInputType(String operatorInputType) {
+    public void setOperatorInputType(final String operatorInputType) {
         this.operatorInputType = operatorInputType;
     }
 

@@ -1,0 +1,67 @@
+.nofilterpage, .page_tenantMaintenance {
+	 > .header h1 {
+    	display: none;
+	}
+	.section{
+		margin: 10*@h 40*@w;
+		h1{
+			.fontSize(24);
+			margin: 4*@h 0 0 0;
+			padding-bottom: 3*@h;
+		}
+		.body {
+			display: table;
+			.cell {
+				display: table-cell;
+				padding-right: 8*@w;
+			}
+		} 
+		p+* {
+			margin-top: 1.5*@h;
+		}
+		
+		.fileupload  {
+			margin-top: 6*@h;
+			label {
+				display: none;
+			}
+		}
+		.formactions {
+			margin: 0;
+			text-align: left;
+		}
+		
+		.warning {
+			font-style: italic;
+		}
+		
+		.btn{
+			margin-top: 6*@h;
+		}
+		&.export{
+			
+			p+css3-container {
+				margin-top: 0;
+			}
+		}
+		
+		ul {
+			padding-bottom: 10px;
+    		padding-left: 15px;
+	}
+		
+		li{
+			list-style: circle outside none;
+		}
+		
+		.tenantStateLabel {
+			font-size: larger;
+		} 
+	}
+	.stateImg {
+		float: left;
+		width: 120px;
+		margin-left: 50px;
+	}
+	
+}

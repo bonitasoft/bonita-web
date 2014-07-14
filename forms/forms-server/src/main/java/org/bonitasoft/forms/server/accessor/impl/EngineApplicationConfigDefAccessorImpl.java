@@ -19,6 +19,8 @@ package org.bonitasoft.forms.server.accessor.impl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.expression.ExpressionType;
@@ -26,8 +28,6 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 
@@ -106,7 +106,7 @@ public class EngineApplicationConfigDefAccessorImpl implements IApplicationConfi
     @Override
     public Expression getApplicationMandatoryLabelExpression() {
         final String mandatoryLabel = DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId()).getApplicationMandatoryLabel();
-        final Expression expression = new Expression("getApplicationMandatoryLabelExpression", mandatoryLabel, ExpressionType.TYPE_I18N.name(),
+        final Expression expression = new Expression("getApplicationMandatoryLabelExpression", mandatoryLabel, ExpressionType.TYPE_CONSTANT.name(),
                 String.class.getName(), null, null);
         return expression;
     }
@@ -117,7 +117,7 @@ public class EngineApplicationConfigDefAccessorImpl implements IApplicationConfi
     @Override
     public Expression getApplicationMandatorySymbolExpression() {
         final String mandatorySymbol = DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId()).getApplicationMandatorySymbol();
-        final Expression expression = new Expression("getApplicationMandatorySymbolExpression", mandatorySymbol, ExpressionType.TYPE_I18N.toString(),
+        final Expression expression = new Expression("getApplicationMandatorySymbolExpression", mandatorySymbol, ExpressionType.TYPE_CONSTANT.toString(),
                 String.class.getName(), null, null);
         return expression;
     }
@@ -173,15 +173,6 @@ public class EngineApplicationConfigDefAccessorImpl implements IApplicationConfi
      */
     @Override
     public String getMigrationProductVersion() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getHomePage() {
-
         return null;
     }
 

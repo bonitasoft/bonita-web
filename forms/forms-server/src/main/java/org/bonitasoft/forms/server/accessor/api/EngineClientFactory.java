@@ -16,10 +16,10 @@
  */
 package org.bonitasoft.forms.server.accessor.api;
 
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.exception.BPMEngineException;
 
 /**
  * @author Colin PUY
@@ -37,7 +37,7 @@ public class EngineClientFactory {
         return new ProcessInstanceAccessorEngineClient(getProcessAPI(session));
     }
 
-    private ProcessAPI getProcessAPI(APISession session) throws BPMEngineException {
+    public ProcessAPI getProcessAPI(APISession session) throws BPMEngineException {
         try {
             return TenantAPIAccessor.getProcessAPI(session);
         } catch (Exception e) {

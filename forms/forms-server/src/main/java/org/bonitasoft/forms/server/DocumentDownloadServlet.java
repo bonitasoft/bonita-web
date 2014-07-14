@@ -13,6 +13,10 @@
  **/
 package org.bonitasoft.forms.server;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,22 +28,17 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.accessor.impl.util.ApplicationResourcesUtils;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
-import org.bonitasoft.forms.server.api.impl.util.BPMEngineAPIUtil;
 
 /**
  * Servlet allowing to download process instances attachments
@@ -99,6 +98,11 @@ public class DocumentDownloadServlet extends HttpServlet {
     protected static final String BUSINESS_ARCHIVE_RESOURCES_DIRECTORY = "documents";
 
     /**
+     * content storage id of the document downloaded
+     */
+    protected static final String CONTENT_STORAGE_ID_PARAM = "contentStorageId";
+
+    /**
      * Util class allowing to work with the BPM engine API
      */
     protected BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
@@ -118,6 +122,7 @@ public class DocumentDownloadServlet extends HttpServlet {
         String fileName = request.getParameter(FILE_NAME_PARAM);
         final String resourcePath = request.getParameter(RESOURCE_FILE_NAME_PARAM);
         final String documentId = request.getParameter(DOCUMENT_ID_PARAM);
+        String contentStorageId = request.getParameter(CONTENT_STORAGE_ID_PARAM);
         final APISession apiSession = (APISession) request.getSession().getAttribute(API_SESSION_PARAM_KEY);
         byte[] fileContent = null;
         if (filePath != null) {
@@ -143,10 +148,19 @@ public class DocumentDownloadServlet extends HttpServlet {
                 fileName = file.getName();
             }
             fileContent = getFileContent(file, filePath);
+        } else if (fileName != null && contentStorageId != null) {
+            try {
+                fileContent = bpmEngineAPIUtil.getProcessAPI(apiSession).getDocumentContent(contentStorageId);
+            } catch (Exception e) {
+                final String errorMessage = "Error while retrieving the document  with content storage ID " + contentStorageId + " from the engine.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new ServletException(errorMessage, e);
+            }
         } else if (documentId != null) {
             try {
                 final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(apiSession);
-                String contentStorageId;
                 try {
                     final Document document = processAPI.getDocument(Long.valueOf(documentId));
                     fileName = document.getContentFileName();
@@ -191,7 +205,7 @@ public class DocumentDownloadServlet extends HttpServlet {
                 if (processDeployementDate == null) {
                     processDeployementDate = workflowAPI.getProcessDefinitionDate(apiSession, processDefinitionID);
                 }
-                final File processDir = ApplicationResourcesUtils.getApplicationResourceDir(apiSession, processDefinitionID, processDeployementDate);
+                final File processDir = FormsResourcesUtils.getApplicationResourceDir(apiSession, processDefinitionID, processDeployementDate);
                 final File resource = new File(processDir, BUSINESS_ARCHIVE_RESOURCES_DIRECTORY + File.separator + resourcePath);
                 if (resource.exists()) {
                     fileName = resource.getName();

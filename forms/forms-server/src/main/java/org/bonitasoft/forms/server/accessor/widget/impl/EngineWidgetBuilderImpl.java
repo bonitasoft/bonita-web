@@ -16,20 +16,37 @@
  */
 package org.bonitasoft.forms.server.accessor.widget.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bonitasoft.engine.bpm.data.DataDefinition;
 import org.bonitasoft.engine.bpm.document.DocumentDefinition;
 import org.bonitasoft.engine.expression.ExpressionType;
-import org.bonitasoft.forms.client.model.*;
+import org.bonitasoft.engine.operation.LeftOperand;
+import org.bonitasoft.forms.client.model.ActionType;
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.FormValidator;
+import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
+import org.bonitasoft.forms.client.model.WidgetType;
 import org.bonitasoft.forms.server.accessor.widget.IEngineWidgetBuilder;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.exception.NotHandledTypeException;
-import org.bonitasoft.forms.server.validator.*;
-
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.bonitasoft.forms.server.validator.CharFieldValidator;
+import org.bonitasoft.forms.server.validator.DateFieldValidator;
+import org.bonitasoft.forms.server.validator.NumericDoubleFieldValidator;
+import org.bonitasoft.forms.server.validator.NumericFloatFieldValidator;
+import org.bonitasoft.forms.server.validator.NumericIntegerFieldValidator;
+import org.bonitasoft.forms.server.validator.NumericLongFieldValidator;
+import org.bonitasoft.forms.server.validator.NumericShortFieldValidator;
 
 /**
  * @author Anthony Birembaut
@@ -128,7 +145,9 @@ public class EngineWidgetBuilderImpl implements IEngineWidgetBuilder {
                 formWidget.setLabel(label + " :");
                 formWidget.setTitle(title);
                 if (includeInitialValue) {
-                    final Expression expression = new Expression("formWidgetValue", dataFieldName, ExpressionType.TYPE_VARIABLE.name(), dataFieldClassName,
+                    final Expression expression = new Expression("formWidgetValue", dataFieldName,
+                            dataDefinition.isTransientData() ? ExpressionType.TYPE_TRANSIENT_VARIABLE.name() : ExpressionType.TYPE_VARIABLE.name(),
+                            dataFieldClassName,
                             null, null);
                     formWidget.setInitialValueExpression(expression);
                 }
@@ -150,7 +169,7 @@ public class EngineWidgetBuilderImpl implements IEngineWidgetBuilder {
 
                 FormAction formAction = null;
                 if (isEditMode) {
-                    formAction = getWidgetAction(id, dataFieldName, dataFieldClassName, isEditMode);
+                    formAction = getWidgetAction(id, dataFieldName, dataDefinition.isTransientData(), dataFieldClassName, isEditMode);
                 }
 
                 formWidget.setFieldOutputType(modifier);
@@ -172,14 +191,17 @@ public class EngineWidgetBuilderImpl implements IEngineWidgetBuilder {
      * 
      * @param widgetId
      * @param dataFieldName
+     * @param isTransient
      * @param dataFieldClassName
      * @param isEditMode
      * @return
      */
-    protected FormAction getWidgetAction(final String widgetId, final String dataFieldName, final String dataFieldClassName, final boolean isEditMode) {
+    protected FormAction getWidgetAction(final String widgetId, final String dataFieldName, final boolean isTransient, final String dataFieldClassName,
+            final boolean isEditMode) {
         final Expression actionExpression = new Expression("widgetAction", IFormExpressionsAPI.FIELDID_PREFIX + widgetId,
                 ExpressionType.TYPE_INPUT.name(), dataFieldClassName, null, null);
-        return new FormAction(ActionType.ASSIGNMENT, dataFieldName, false, "=", null, actionExpression, null);
+        return new FormAction(ActionType.ASSIGNMENT, dataFieldName, isTransient ? LeftOperand.TYPE_TRANSIENT_DATA : LeftOperand.TYPE_DATA, "=", null,
+                actionExpression, null);
     }
 
     /**
