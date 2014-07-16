@@ -23,7 +23,7 @@ package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 public class StringMaxLengthValidator extends StringMinMaxLengthValidator {
 
     public StringMaxLengthValidator(final Integer maxLength) {
-        super(null, maxLength);
+        super(null, false, maxLength, true);
     }
 
 }

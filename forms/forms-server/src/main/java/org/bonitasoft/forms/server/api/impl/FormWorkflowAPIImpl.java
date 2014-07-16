@@ -1,16 +1,16 @@
 /**
- * Copyright (C) 2009 BonitaSoft S.A.
+ * Copyright (C) 2009, 2014 BonitaSoft S.A.
  * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +35,7 @@ import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationExcepti
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
@@ -66,6 +66,7 @@ import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.operation.Operation;
+import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
@@ -87,8 +88,9 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 
 /**
  * implementation of {@link IFormWorkflowAPI}
- * 
+ *
  * @author Anthony Birembaut
+ * @author Celine Souchet
  */
 public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
@@ -110,6 +112,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     public static final String UUID_SEPARATOR = "--";
 
+    public static final String ADMIN_PROFILE_NAME = "Administrator";
+
     /**
      * Logger
      */
@@ -118,7 +122,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     /**
      * Util class allowing to work with the BPM engine API
      */
-    protected BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
+    private final BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
 
     @Override
     public Serializable getActivityFieldValue(final APISession session, final long activityInstanceID, final Expression expression, final Locale locale,
@@ -138,7 +142,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -150,7 +154,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -163,7 +167,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -175,7 +179,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -206,7 +210,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -219,7 +223,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -233,7 +237,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -246,7 +250,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws IOException
      * @throws FileTooBigException
      * @throws BPMEngineException
@@ -285,7 +289,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             evalContext.putAll(context);
         }
         long ProcessInstance = 0;
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
 
         final List<FormAction> actionsToExecute = new ArrayList<FormAction>();
         for (final FormAction action : actions) {
@@ -336,7 +340,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             }
         }
 
-        final CommandAPI commandAPI = bpmEngineAPIUtil.getCommandAPI(session);
+        final CommandAPI commandAPI = getBpmEngineAPIUtil().getCommandAPI(session);
         final Map<String, Serializable> excuteParameters = new HashMap<String, Serializable>();
         final Map<String, Serializable> evalContext = formExpressionsAPI.generateGroovyContext(session, fieldValues, locale, context, true);
         if (context != null) {
@@ -346,7 +350,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_LIST_KEY, (Serializable) buildOperations(actionsToExecute));
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_INPUT_KEY, (Serializable) evalContext);
         excuteParameters.put(FormWorkflowUtil.USER_ID_KEY, userID);
-        bpmEngineAPIUtil.executeCommand(commandAPI, FormWorkflowUtil.EXECUTE_ACTION_AND_TERMINATE, excuteParameters);
+        getBpmEngineAPIUtil().executeCommand(commandAPI, FormWorkflowUtil.EXECUTE_ACTION_AND_TERMINATE, excuteParameters);
     }
 
     /**
@@ -356,7 +360,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public Date getProcessDefinitionDate(final APISession session, final long processDefinitionID) throws ProcessDefinitionNotFoundException,
             BPMEngineException, InvalidSessionException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         return processAPI.getProcessDeploymentInfo(processDefinitionID).getDeploymentDate();
     }
 
@@ -367,7 +371,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public Date getMigrationDate(final APISession session, final long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException,
             InvalidSessionException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         final ProcessDeploymentInfo processDeploymentInfo = processAPI.getProcessDeploymentInfo(processDefinitionID);
         Date migrationDate = null;
         if (!processDeploymentInfo.getDeploymentDate().equals(processDeploymentInfo.getLastUpdateDate())) {
@@ -378,14 +382,14 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     @Override
     public ActivityEditState getTaskEditState(final APISession session, final long activityInstanceID) throws ActivityInstanceNotFoundException,
             ActivityInstanceNotFoundException, BPMEngineException, InvalidSessionException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         String activityInstanceState;
 
         try {
@@ -417,13 +421,13 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      * @throws InvalidSessionException
      * @throws UserNotFoundException
      * @throws SearchException
      * @throws ProcessDefinitionNotFoundException
-     * 
+     *
      */
     @Override
     public long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, BPMEngineException,
@@ -443,7 +447,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * Retrieve the root process instance ID
-     * 
+     *
      * @param processApi
      * @param processInstanceId
      * @return
@@ -495,10 +499,10 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
         long activityInstanceID = -1;
         if (processDefinitionID != -1) {
-            activityInstanceID = bpmEngineAPIUtil.getProcessAPI(session).getOneAssignedUserTaskInstanceOfProcessDefinition(processDefinitionID,
+            activityInstanceID = getBpmEngineAPIUtil().getProcessAPI(session).getOneAssignedUserTaskInstanceOfProcessDefinition(processDefinitionID,
                     session.getUserId());
         } else {
-            final List<HumanTaskInstance> assignedTasks = bpmEngineAPIUtil.getProcessAPI(session).getAssignedHumanTaskInstances(session.getUserId(), 0, 1,
+            final List<HumanTaskInstance> assignedTasks = getBpmEngineAPIUtil().getProcessAPI(session).getAssignedHumanTaskInstances(session.getUserId(), 0, 1,
                     ActivityInstanceCriterion.REACHED_STATE_DATE_ASC);
             if (assignedTasks != null && !assignedTasks.isEmpty()) {
                 activityInstanceID = assignedTasks.get(0).getId();
@@ -517,10 +521,10 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
         long activityInstanceID = -1;
         if (processInstanceID != -1) {
-            activityInstanceID = bpmEngineAPIUtil.getProcessAPI(session)
+            activityInstanceID = getBpmEngineAPIUtil().getProcessAPI(session)
                     .getOneAssignedUserTaskInstanceOfProcessInstance(processInstanceID, session.getUserId());
         } else {
-            final List<HumanTaskInstance> assignedTasks = bpmEngineAPIUtil.getProcessAPI(session).getAssignedHumanTaskInstances(session.getUserId(), 0, 1,
+            final List<HumanTaskInstance> assignedTasks = getBpmEngineAPIUtil().getProcessAPI(session).getAssignedHumanTaskInstances(session.getUserId(), 0, 1,
                     ActivityInstanceCriterion.REACHED_STATE_DATE_ASC);
             if (assignedTasks != null && !assignedTasks.isEmpty()) {
                 activityInstanceID = assignedTasks.get(0).getId();
@@ -546,8 +550,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
         DateFormat dateFormat = null;
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        final IdentityAPI identityAPI = bpmEngineAPIUtil.getIdentityAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        final IdentityAPI identityAPI = getBpmEngineAPIUtil().getIdentityAPI(session);
         long activityInstanceId;
         String activityInstanceDisplayName;
         String activityInstanceName;
@@ -700,26 +704,25 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      */
     @Override
     public long startInstance(final APISession session, final long userID, final long processDefinitionID) throws ProcessDefinitionNotFoundException,
             BPMEngineException, ProcessDefinitionNotEnabledException, InvalidSessionException, CreationException, ProcessActivationException,
             ExecutionException, UserNotFoundException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         return processAPI.startProcess(userID, processDefinitionID).getId();
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      */
     @Override
     public void terminateTask(final APISession session, final long userID, final long activityInstanceID) throws BPMEngineException, InvalidSessionException,
             FlowNodeExecutionException {
-
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         processAPI.executeFlowNode(userID, activityInstanceID);
     }
 
@@ -727,71 +730,28 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public boolean canUserInstantiateProcessDefinition(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long processDefinitionID)
-            throws ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException, ActorNotFoundException {
-        boolean can = false;
-        final List<ActorInstance> actors = bpmEngineAPIUtil.getProcessAPI(session).getActors(processDefinitionID, 0, 1, null);
-        if (actors != null && !actors.isEmpty()) {
-            final long actorInitiatorId = bpmEngineAPIUtil.getProcessAPI(session).getActorInitiator(processDefinitionID).getId();
-            if (userProcessActors != null) {
-                can = userProcessActors.get(processDefinitionID).contains(actorInitiatorId);
-            }
-        } else {
-            can = true;
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "The process " + processDefinitionID + " contains no actors");
+    public boolean isUserAdminOrProcessOwner(final APISession session, final long processInstanceID) throws UserNotFoundException, InvalidSessionException,
+            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException {
+        final ProfileAPI profileAPI = getProfileAPI(session);
+        final List<Profile> profiles = profileAPI.getProfilesForUser(session.getUserId());
+        for (final Profile profile : profiles) {
+            if (ADMIN_PROFILE_NAME.equals(profile.getName())) {
+                return true;
             }
         }
-        return can;
+        final ProcessAPI processAPI = getProcessAPI(session);
+        return processAPI.isUserProcessSupervisor(getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID), session.getUserId());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean canUserSeeProcessInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long processInstanceID)
+     public boolean canUserSeeProcessInstance(final APISession session, final boolean isInvolvedInProcessInstance, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        // FIXME restore this once the admin case will be handled in FormServiceProviderImpl#canUserViewInstanceForm
-        // return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        //restore once BS-8953 is fixed engine-side
+        //return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     */
-    @Override
-    public boolean isUserInvolvedInActivityInstance(final APISession session, final Map<Long, Set<Long>> userProcessActors, final long activityInstanceID,
-            final long userId) throws ActivityInstanceNotFoundException, BPMEngineException, ProcessDefinitionNotFoundException, InvalidSessionException {
-
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        long actorID = -1;
-        long assigneeID = -1;
-
-        try {
-            final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(activityInstanceID);
-            actorID = humanTaskInstance.getActorId();
-            assigneeID = humanTaskInstance.getAssigneeId();
-        } catch (final ActivityInstanceNotFoundException e) {
-            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
-            if (archivedActivityInstance instanceof ArchivedHumanTaskInstance) {
-                actorID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getActorId();
-                assigneeID = ((ArchivedHumanTaskInstance) archivedActivityInstance).getAssigneeId();
-            } else {
-                throw new ActivityInstanceNotFoundException(activityInstanceID);
-            }
-        }
-        boolean isInvolved = false;
-        if (session.getUserId() == assigneeID) {
-            isInvolved = true;
-        } else if (userId != -1 && assigneeID != 0L) {
-            isInvolved = true;
-        } else if (assigneeID == 0L && userProcessActors != null) {
-            final long processDefinitionID = getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID);
-            final Set<Long> userActorIds = userProcessActors.get(processDefinitionID);
-            isInvolved = userActorIds.contains(actorID);
-        }
-        return isInvolved;
     }
 
     /**
@@ -812,7 +772,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -825,7 +785,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -839,7 +799,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -851,7 +811,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -867,7 +827,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -880,7 +840,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -894,7 +854,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -906,7 +866,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -920,7 +880,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -933,7 +893,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -947,7 +907,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws BPMEngineException
      */
     @Override
@@ -964,7 +924,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public long getProcessInstanceIDFromActivityInstanceID(final APISession session, final long activityInstanceID) throws BPMEngineException,
             InvalidSessionException, ActivityInstanceNotFoundException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         try {
             return processAPI.getActivityInstance(activityInstanceID).getParentProcessInstanceId();
         } catch (final ActivityInstanceNotFoundException e) {
@@ -974,13 +934,13 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      */
     @Override
     public long getProcessDefinitionIDFromActivityInstanceID(final APISession session, final long activityInstanceID) throws ActivityInstanceNotFoundException,
             BPMEngineException, InvalidSessionException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         try {
             return processAPI.getActivityInstance(activityInstanceID).getProcessDefinitionId();
         } catch (final ActivityInstanceNotFoundException e) {
@@ -995,7 +955,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public long getProcessDefinitionIDFromProcessInstanceID(final APISession session, final long processInstanceID) throws ProcessInstanceNotFoundException,
             BPMEngineException, ProcessDefinitionNotFoundException, InvalidSessionException, ArchivedProcessInstanceNotFoundException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         try {
             final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceID);
             return processInstance.getProcessDefinitionId();
@@ -1024,7 +984,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public long getProcessDefinitionIDFromUUID(final APISession session, final String processDefinitionUUIDStr) throws ProcessDefinitionNotFoundException,
             BPMEngineException, ProcessDefinitionNotFoundException, InvalidSessionException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         final String[] splittedProcessDefinitionUUID = processDefinitionUUIDStr.split(UUID_SEPARATOR);
         if (splittedProcessDefinitionUUID.length == 2) {
             return processAPI.getProcessDefinitionId(splittedProcessDefinitionUUID[0], splittedProcessDefinitionUUID[1]);
@@ -1042,7 +1002,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public String getActivityDefinitionUUIDFromActivityInstanceID(final APISession session, final long activityInstanceID)
             throws ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException {
 
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         String activityName;
         ProcessDefinition processDefinition;
         try {
@@ -1063,18 +1023,18 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean isProcessEnabled(final APISession session, final long processDefinitionID) throws InvalidSessionException, BPMEngineException,
             ProcessDefinitionNotFoundException {
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         return ActivationState.ENABLED.equals(processAPI.getProcessDeploymentInfo(processDefinitionID).getActivationState());
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      */
     @Override
     public String getActivityName(final APISession session, final long activityInstanceID) throws InvalidSessionException, BPMEngineException,
             ActivityInstanceNotFoundException {
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         String displayName;
         try {
             final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
@@ -1093,7 +1053,11 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     }
 
     private ProcessAPI getProcessAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
-        return bpmEngineAPIUtil.getProcessAPI(session);
+        return getBpmEngineAPIUtil().getProcessAPI(session);
+    }
+
+    private ProfileAPI getProfileAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
+        return bpmEngineAPIUtil.getProfileAPI(session);
     }
 
     /**
@@ -1124,4 +1088,9 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             return false;
         }
     }
+
+    protected BPMEngineAPIUtil getBpmEngineAPIUtil() {
+        return bpmEngineAPIUtil;
+    }
+
 }

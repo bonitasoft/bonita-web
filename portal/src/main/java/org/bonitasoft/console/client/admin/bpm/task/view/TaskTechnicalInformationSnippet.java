@@ -23,7 +23,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class TaskTechnicalInformationSnippet implements SectionSnippet {
 
@@ -31,7 +31,7 @@ public class TaskTechnicalInformationSnippet implements SectionSnippet {
 
     /**
      * Default Constructor.
-     * 
+     *
      * Need {@link ActivityItem#ATTRIBUTE_EXECUTED_BY_USER_ID} to be deployed!
      */
     public TaskTechnicalInformationSnippet(final IActivityAccessor activity) {
@@ -54,9 +54,8 @@ public class TaskTechnicalInformationSnippet implements SectionSnippet {
                     executedByArg);
 
         } else if (TaskItem.VALUE_STATE_FAILED.equals(this.activity.getState())) {
-            template = _("Failed on %task_last_update% by %executed_by%",
-                    new Arg("task_last_update", DateFormat.dateToDisplayShort(this.activity.getLastUpdateDate())),
-                    executedByArg);
+            template = _("Failed on %task_last_update%",
+                    new Arg("task_last_update", DateFormat.dateToDisplay(this.activity.getLastUpdateDate())));
 
         } else if (TaskItem.VALUE_STATE_SKIPPED.equals(this.activity.getState())) {
             template = _("Skipped on %task_last_update% by %executed_by%",

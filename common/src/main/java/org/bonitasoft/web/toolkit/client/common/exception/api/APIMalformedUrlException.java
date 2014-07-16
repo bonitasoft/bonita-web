@@ -38,16 +38,6 @@ public class APIMalformedUrlException extends APIException {
         this.url = url;
     }
 
-    public APIMalformedUrlException(final String url, final String message, final Throwable cause) {
-        super(message, cause);
-        this.url = url;
-    }
-
-    public APIMalformedUrlException(final String url, final Throwable cause) {
-        super(cause);
-        this.url = url;
-    }
-
     /**
      * @return the url
      */

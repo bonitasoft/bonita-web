@@ -72,7 +72,18 @@
             <artifactId>gwtquery</artifactId>
             <version>1.4.1</version>
         </dependency>
-    </dependencies>
+        
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <!--  <classifier>test</classifier> -->
+            <artifactId>console-common</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+  </dependencies>
+    
+    
 	<build>
 		<plugins>
 

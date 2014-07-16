@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,15 +23,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
-import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
-import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
@@ -39,14 +38,14 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 
 /**
  * @author Paul AMAR
- * 
+ *
  */
 public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginCase {
 
     public static final String TOKEN = "casemoredetails";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
@@ -97,12 +96,7 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
     @Override
     protected void buildToolbar(final CaseItem item) {
         addToolbarLink(new ButtonBack());
-        addToolbarLink(newButtonDisplayCaseForm(item));
-    }
-
-    private Clickable newButtonDisplayCaseForm(final CaseItem item) {
-        return new Button("btn-overview", _("Overview"), _("Display the case form"),
-                new ActionShowView(new DisplayCaseFormPage(item)));
+        addToolbarLink(new CaseOverviewButton(item));
     }
 
     @Override

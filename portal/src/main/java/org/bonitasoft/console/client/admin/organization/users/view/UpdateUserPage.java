@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.action.UpdateUserFormAction;
+import org.bonitasoft.console.client.mvp.model.RequestFactory;
 import org.bonitasoft.web.rest.model.identity.AbstractContactDataItem;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.PersonalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
@@ -39,10 +42,11 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
-
-import com.google.gwt.core.client.GWT;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Tab;
 
 /**
  * @author Yongtao Guo
@@ -53,6 +57,8 @@ public class UpdateUserPage extends Page {
     public static final String TOKEN = "updateuser";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
+
+    private UpdateUserFormAction submitAction = new UpdateUserFormAction();
 
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
@@ -93,10 +99,11 @@ public class UpdateUserPage extends Page {
         form = addDetails(form);
         form = addProfessionalBusinessCard(form);
         form = addPersonalBusinessCard(form);
+        form = addCustomInformation(form);
 
         final String itemId = this.getParameter(PARAMETER_USER_ID);
         form.addHiddenEntry(PARAMETER_USER_ID, itemId);
-        form.addButton(new JsId("save"), _("Save"), _("Save this user modifications"), new UpdateUserFormAction());
+        form.addButton(new JsId("save"), _("Save"), _("Save this user modifications"), submitAction);
         form.addFiller(new FormFiller() {
 
             @Override
@@ -205,6 +212,29 @@ public class UpdateUserPage extends Page {
                         UserItem.ATTRIBUTE_USERNAME,
                         UserItem.ATTRIBUTE_ID)
                 .closeTab();
+    }
+
+    private Form addCustomInformation(final Form form) {
+        final CustomUserInformationModel model = new CustomUserInformationModel(
+                new RequestFactory(), getParameter(PARAMETER_USER_ID));
+
+        final Tab tab = new Tab(_("Other"));
+        model.search(0, 0, new CustomUserInformationModel.Callback() {
+            @Override
+            void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
+                tab.setTabVisibility(total > 0);
+            }
+        });
+        tab.append(new UiComponent(new CustomUserInformationView(model, true)));
+        submitAction.onSubmit(new Action() {
+            @Override
+            public void execute() {
+                model.flushChanges();
+            }
+        });
+        form.openSection(tab).closeSection();
+        tab.setTabVisibility(false);
+        return form;
     }
 
     @Override
