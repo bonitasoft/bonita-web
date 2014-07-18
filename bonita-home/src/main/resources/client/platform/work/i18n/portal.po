@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-18 01:03+0200\n"
+"POT-Creation-Date: 2014-07-19 01:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3485,11 +3485,11 @@ msgid "MM/dd/yyyy h:mm:ss a"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:56
-msgid "These %item_name_plural% will be definitely deleted."
+msgid "These %item_name_plural% will be definitively deleted."
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:58
-msgid "This %item_name% will be definitely deleted."
+msgid "This %item_name% will be definitively deleted."
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/form/FormAction.java:55
