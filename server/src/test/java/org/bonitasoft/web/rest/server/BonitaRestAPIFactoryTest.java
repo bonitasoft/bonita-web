@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Vincent Elcrin
  */
-public class BonitaRestAPIFactoryTest {
+public class BonitaRestAPIFactoryTest extends APITestWithMock {
 
     BonitaRestAPIFactory factory;
 
