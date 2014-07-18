@@ -15,8 +15,6 @@
 		<module>forms</module>
         <module>server</module>
         <module>portal</module>
-        <module>portaljs</module>
-
 	</modules>
 
 	<scm>
