@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-18 03:04+0200\n"
-"PO-Revision-Date: 2014-07-17 22:45-0400\n"
+"PO-Revision-Date: 2014-07-18 10:35-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1599,19 +1599,19 @@ msgstr "Mostrar más detalles sobre esta aplicación"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:73
 msgid "Start a app on behalf of another user"
-msgstr "Start a app on behalf of another user"
+msgstr "Iniciar una aplicación en nombre de otro usuario"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:83
 msgid "Start this app on behalf of selected user"
-msgstr "Start this app on behalf of selected user"
+msgstr "Iniciar esta aplicación en nombre de usuario seleccionado"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:89
 msgid "Select a user to start app %app_name% %app_version%"
-msgstr "Select a user to start app %app_name% %app_version%"
+msgstr "Seleccione un usuario para iniciar la aplicación % app_name % app_version %"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:93
 msgid "The openned case will be marked as started by him."
-msgstr "The openned case will be marked as started by him."
+msgstr "El caso abierto se marcará como Iniciado por él."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:122
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
@@ -2614,7 +2614,7 @@ msgstr "Fallido"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:163
 msgid "Failed on"
-msgstr "Failed on"
+msgstr "Error en"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:181
 msgid "Human Task"
@@ -2631,7 +2631,7 @@ msgstr "Completado en %task_last_update% por %executed_by%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:57
 msgid "Failed on %task_last_update%"
-msgstr "Failed on %task_last_update%"
+msgstr "Falló en %task_last_update%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:61
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedTaskTechnicalInformationSnippet.java:53
@@ -2744,7 +2744,7 @@ msgstr "Ejecutado por:"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:181
 msgid "Failed on:"
-msgstr "Failed on:"
+msgstr "Error en:"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:62
 msgid "Opened"
@@ -3165,7 +3165,7 @@ msgstr "El Gestor de Procesos puede supervisar las apps designadas y administrar
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
 msgid "Apps management"
-msgstr "Apps management"
+msgstr "Gestión de aplicaciones"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
@@ -3174,7 +3174,7 @@ msgstr "Análisis"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:60
 msgid "Reports"
-msgstr "Reports"
+msgstr "Reportes"
 
 #: server/src/main/java/org/bonitasoft/console/server/service/OrganizationImportService.java:56
 msgid "Can't import organization. Please check that your file is well-formed"
