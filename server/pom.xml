@@ -253,13 +253,6 @@
 
             <dependencies>
                 <dependency>
-                    <groupId>org.bonitasoft.console</groupId>
-                    <artifactId>console-client</artifactId>
-                    <version>${project.version}</version>
-                    <type>war</type>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
                     <groupId>org.bonitasoft.engine</groupId>
                     <artifactId>bonita-server</artifactId>
                     <version>${bonita.engine.version}</version>
@@ -281,16 +274,17 @@
                                     <value>${bonita.home}</value>
                                 </systemProperty>
                             </systemProperties>
-                            <webApp>
-                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                                    <resourcesAsCSV>src/main/webapp,${basedir}/../portal/target/console-client-${project.version}/</resourcesAsCSV>
+                            <webAppConfig>
+                                <contextPath>/bonita</contextPath>
+                                <baseResource implementation="org.mortbay.resource.ResourceCollection">
+                                    <resourcesAsCSV>${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp</resourcesAsCSV>
                                 </baseResource>
-                            </webApp>
-                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            </webAppConfig>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <webXml>${basedir}/target/console-server-${project.version}/WEB-INF/web.xml</webXml>
                             <jettyConfig>src/test/webapp/WEB-INF/jetty.xml</jettyConfig>
                             <jettyEnvXml>src/test/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
                             <webAppSourceDirectory>${webappDirectory}</webAppSourceDirectory>
-                            <contextPath>bonita</contextPath>
                         </configuration>
                         <dependencies>
                             <dependency>
@@ -305,7 +299,7 @@
                                 <version>${slf4j.version}</version>
                                 <scope>runtime</scope>
 					        </dependency>
-					        
+
                             <!-- DATASOURCE JNDI -->
                             <dependency>
                                 <groupId>commons-dbcp</groupId>
@@ -353,7 +347,7 @@
                             </dependency>
                         </dependencies>
                     </plugin>
-                    
+
                     <!-- Themes needs to be on the classes path -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

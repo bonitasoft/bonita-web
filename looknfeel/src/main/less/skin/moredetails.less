@@ -315,10 +315,15 @@
 	}
 }
 
-#bonitaframe, .forms-view, .forms-view .frame {
-  height: 100%;
-  min-width: @moreDetails-min-width;
+#bonitaframe {
+  height: 100%; 
   width: 100%;
+}
+
+.forms-view &, .forms-view .frame {
+	height: 100%; 
+	width: 100%;
+	min-width: @moreDetails-min-width;
 }
 
 .forms-view .toolbar {
