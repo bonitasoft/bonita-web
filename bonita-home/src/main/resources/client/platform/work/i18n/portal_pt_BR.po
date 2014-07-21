@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 01:02+0200\n"
-"PO-Revision-Date: 2014-07-17 18:28-0400\n"
+"POT-Creation-Date: 2014-07-19 01:02+0200\n"
+"PO-Revision-Date: 2014-07-18 20:36-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -3471,12 +3471,12 @@ msgid "MM/dd/yyyy h:mm:ss a"
 msgstr "dd/mm/yyyy hh:MM:ss"
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:56
-msgid "These %item_name_plural% will be definitely deleted."
-msgstr "Estes %item_name_plural% serão definitivamente excluídos."
+msgid "These %item_name_plural% will be definitively deleted."
+msgstr "These %item_name_plural% will be definitively deleted."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:58
-msgid "This %item_name% will be definitely deleted."
-msgstr "Este % item_name % será definitivamente excluído."
+msgid "This %item_name% will be definitively deleted."
+msgstr "This %item_name% will be definitively deleted."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/form/FormAction.java:55
 msgid "Please wait for your files to be uploaded."
