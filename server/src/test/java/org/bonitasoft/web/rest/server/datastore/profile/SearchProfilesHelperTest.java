@@ -56,36 +56,35 @@ public class SearchProfilesHelperTest extends APITestWithMock {
 
     @Test
     public void testWeCanSearchProfiles() throws Exception {
-        SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
-        List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
+        final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
+        final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
         when(profileClient.searchProfiles(any(SearchOptions.class))).thenReturn(aKnownSearchResult);
 
-        ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, null);
+        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, null);
 
         assertTrue(SearchUtils.areEquals(expectedProfiles, searchResult.getResults()));
     }
 
     @Test
     public void testWeCanListUserProfiles() throws Exception {
-        SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
-        List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
-        when(profileClient.listProfilesForUser(2L))
-                .thenReturn(aKnownSearchResult.getResult());
+        final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
+        final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
+        when(profileClient.listProfilesForUser(2L)).thenReturn(aKnownSearchResult.getResult());
 
-        ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L));
+        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L));
 
         assertTrue(SearchUtils.areEquals(expectedProfiles, searchResult.getResults()));
     }
 
-    private HashMap<String, String> filterOnUserId(long id) {
-        HashMap<String, String> filters = new HashMap<String, String>();
+    private HashMap<String, String> filterOnUserId(final long id) {
+        final HashMap<String, String> filters = new HashMap<String, String>();
         filters.put(ProfileItem.FILTER_USER_ID, String.valueOf(id));
         return filters;
     }
 
     private SearchResultImpl<Profile> aKnownSearchResult() {
-        Profile aKnownProfile = anEngineProfile().withName("aName").withDescription("aDescription").withIconPath("aPath").build();
-        Profile anotherKnownProfile = anEngineProfile().withName("anotherName").withDescription("anotherDescription").withIconPath("anotherPath").build();
+        final Profile aKnownProfile = anEngineProfile().withName("aName").withDescription("aDescription").build();
+        final Profile anotherKnownProfile = anEngineProfile().withName("anotherName").withDescription("anotherDescription").build();
         return SearchUtils.createEngineSearchResult(aKnownProfile, anotherKnownProfile);
     }
 }

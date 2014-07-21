@@ -5,16 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.component.filler.ComponentFiller;
-import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 
 /**
  * Fill the resourceFilter section with the filters found in database.
- * 
+ *
  * @author Séverin Moussel
  */
 public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller {
@@ -23,29 +23,16 @@ public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller
 
     private final ItemListingResourceFilter filter;
 
-    public boolean isBodyEmpty = false;
-
     public ResourceFilterFiller(ItemListingPage<T> itemListingPage, final ItemListingResourceFilter filter) {
         this.itemListingPage = itemListingPage;
         this.filter = filter;
     }
 
-    /**
-     * Define how to read data.
-     * 
-     * @see Filler#getData(APICallback)
-     * 
-     */
     @Override
     protected void getData(final APICallback callback) {
         this.filter.getSearchRequest().run(callback);
     }
 
-    /**
-     * Define how to display data.
-     * 
-     * @see Filler#setData(String, Map)
-     */
     @Override
     protected void setData(final String json, final Map<String, String> headers) {
         final List<IItem> items = JSonItemReader.parseItems(json, this.filter.getSearchRequest().getItemDefinition());
@@ -66,17 +53,12 @@ public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller
                 additionalFilters.put(tableResourceAttributeName, item.getAttributeValue(filterResourceAttributeName));
             }
 
-            // Create resourceListingFilters
-            final ItemListingFilter resourceFilter = new ItemListingFilter(
-                    item.getId().toString(),
-                    item.getAttributeValue(this.filter.getLabelAttributeName()),
-                    item.getAttributeValue(this.filter.getLabelAttributeName()),
-                    this.filter.getTablesToDisplay()
-                    );
+            final ItemListingFilter resourceFilter = createResourceListingFilters(item);
+
             resourceFilter.setIsResourceFilter(true);
             if (!StringUtil.isBlank(this.filter.getIconAttributeName())) {
                 String iconUrl = item.getAttributeValue(this.filter.getIconAttributeName());
-				resourceFilter.setImage(iconUrl != null ? iconUrl : "");
+                resourceFilter.setImage(iconUrl != null ? iconUrl : "");
             }
             resourceFilter.setFilters(additionalFilters);
 
@@ -85,5 +67,14 @@ public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller
 
         itemListingPage.displayFilters(filters);
         itemListingPage.selectRightResourceFilter();
+    }
+
+    private ItemListingFilter createResourceListingFilters(final IItem item) {
+        String label = item.getAttributeValue(this.filter.getLabelAttributeName());
+        ItemListingFilter resourceFilter = new ItemListingFilter(item.getId().toString(), label, label, this.filter.getTablesToDisplay());
+        if (filter instanceof AppResourceFilter) {
+            resourceFilter.setAdditionnalInfo(item.getAttributeValue(ProcessItem.ATTRIBUTE_VERSION));
+        }
+        return resourceFilter;
     }
 }

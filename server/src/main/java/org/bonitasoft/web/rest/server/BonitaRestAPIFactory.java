@@ -47,6 +47,9 @@ import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnectorDepende
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessResolutionProblem;
 import org.bonitasoft.web.rest.server.api.document.APIArchivedDocument;
 import org.bonitasoft.web.rest.server.api.document.APIDocument;
+import org.bonitasoft.web.rest.server.api.organization.APICustomUserInfoDefinition;
+import org.bonitasoft.web.rest.server.api.organization.APICustomUserInfoUser;
+import org.bonitasoft.web.rest.server.api.organization.APICustomUserInfoValue;
 import org.bonitasoft.web.rest.server.api.organization.APIGroup;
 import org.bonitasoft.web.rest.server.api.organization.APIMembership;
 import org.bonitasoft.web.rest.server.api.organization.APIPersonalContactData;
@@ -60,6 +63,7 @@ import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
 import org.bonitasoft.web.rest.server.api.system.APII18nTranslation;
 import org.bonitasoft.web.rest.server.api.system.APISession;
+import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
@@ -89,6 +93,14 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProfessionalContactData();
             } else if ("personalcontactdata".equals(resourceToken)) {
                 return new APIPersonalContactData();
+            }
+        } else if("customuserinfo".equals(apiToken)) {
+            if("definition".equals(resourceToken)) {
+                return new APICustomUserInfoDefinition(new CustomUserInfoEngineClientCreator());
+            } else if("user".equals(resourceToken)) {
+                return new APICustomUserInfoUser(new CustomUserInfoEngineClientCreator());
+            } else if("value".equals(resourceToken)) {
+                return new APICustomUserInfoValue(new CustomUserInfoEngineClientCreator());
             }
         } else if ("system".equals(apiToken)) {
             if ("i18nlocale".equals(resourceToken)) {

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -42,6 +42,7 @@ import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTagType;
 
 import org.bonitasoft.forms.client.model.ActivityAttribute;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
@@ -77,7 +78,7 @@ import org.w3c.dom.Document;
 
 /**
  * Implementation of {@link IFormDefinitionAPI}
- * 
+ *
  * @author Anthony Birembaut, Haojie Yuan
  */
 public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
@@ -124,7 +125,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * Constructor
-     * 
+     *
      * @param document
      * @param applicationDeployementDate
      *            the deployement date of the application
@@ -144,7 +145,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * get the application config definition accessor by FormServiceProvider
-     * 
+     *
      * @return an instance of {@link IApplicationConfigDefAccessor}
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
@@ -159,7 +160,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * get XMLApplicationFormDefAccessorImpl by FormServiceProvider
-     * 
+     *
      * @param formId
      *            the form ID
      * @throws ApplicationFormDefinitionNotFoundException
@@ -345,7 +346,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * Retrieve the template associated with a instantiation form page
-     * 
+     *
      * @param applicationDefAccessor
      *            the application form definition accessor
      * @param formType
@@ -495,7 +496,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * Retrieve the application template data
-     * 
+     *
      * @return a {@link HtmlTemplate} object containing the elements required to
      *         build the level1 (application template)
      * @throws InvalidFormDefinitionException
@@ -595,8 +596,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                     if (evaluatedValue != null) {
                         try {
                             // Load both classes in the current classloader because evaluatedValue comes from another classloader (server side)
-                            Class<?> dataClass = Thread.currentThread().getContextClassLoader().loadClass(className);
-                            Class<?> localEvaluatedValueClass = Thread.currentThread().getContextClassLoader().loadClass(evaluatedValue.getClass().getName());
+                            final Class<?> dataClass = Thread.currentThread().getContextClassLoader().loadClass(className);
+                            final Class<?> localEvaluatedValueClass = Thread.currentThread().getContextClassLoader().loadClass(evaluatedValue.getClass().getName());
                             localEvaluatedValueClass.asSubclass(dataClass);
                         } catch (final ClassCastException e) {
                             throw new IllegalArgumentException();
@@ -629,7 +630,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * get a page layout
-     * 
+     *
      * @param layoutPath
      *            The path of the layout
      * @param applicationDeploymentDate
@@ -681,7 +682,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                     if (SCRIPT_ELEMENT_NAME.equalsIgnoreCase(headChildElement.getName())) {
                         bodyAttributes.put(IE_ONLOAD, headChildElement.getContent().toString());
                     }
-                    headNodes.add(new HeadNode(headChildElement.getName(), nodeAttributes, headChildElement.getContent().toString()));
+                    if (StartTagType.COMMENT.equals(headChildElement.getStartTag().getStartTagType())) {
+                        headNodes.add(new HeadNode(null, nodeAttributes, headChildElement.getStartTag().toString()));
+                    } else {
+                        headNodes.add(new HeadNode(headChildElement.getName(), nodeAttributes, headChildElement.getContent().toString()));
+                    }
                 }
             }
 
@@ -720,7 +725,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * get a layout
-     * 
+     *
      * @param layoutLocation
      *            The location of the layout
      * @param layoutTypeName
@@ -777,7 +782,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                     if (SCRIPT_ELEMENT_NAME.equalsIgnoreCase(headChildElement.getName())) {
                         bodyAttributes.put(IE_ONLOAD, headChildElement.getContent().toString());
                     }
-                    headNodes.add(new HeadNode(headChildElement.getName(), nodeAttributes, headChildElement.getContent().toString()));
+                    if (StartTagType.COMMENT.equals(headChildElement.getStartTag().getStartTagType())) {
+                        headNodes.add(new HeadNode(null, nodeAttributes, headChildElement.getStartTag().toString()));
+                    } else {
+                        headNodes.add(new HeadNode(headChildElement.getName(), nodeAttributes, headChildElement.getContent().toString()));
+                    }
                 }
             } else {
                 final String errorMessage = "Non standard HTML for the " + layoutTypeName + " template : missing body element.";
@@ -826,7 +835,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * Generates the HTML template when no page template is defined
-     * 
+     *
      * @param defaultTemplatePath
      * @param pageWidgets
      * @param pageValidators

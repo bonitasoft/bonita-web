@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,12 +25,16 @@ import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.FormElement;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -47,7 +49,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Widget displaying either a file upload input if its initial value is null or a download link and file upload input to overide the current file
- * 
+ *
  * @author Anthony Birembaut
  */
 public class FileUploadWidget extends Composite implements ValueChangeHandler<Boolean> {
@@ -73,8 +75,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
     protected FormPanel formPanel;
 
     protected FlowPanel buttonPanel;
-
-    protected Label uploadLabel;
 
     protected Label cancelLabel;
 
@@ -106,7 +106,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
     /**
      * Constructor
-     * 
+     *
      * @param contextMap
      * @param fieldId
      * @param fileWidgetInputType
@@ -163,11 +163,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             loadingImage.setTitle(FormsResourceBundle.getMessages().uploadingLabel());
 
             buttonPanel = new FlowPanel();
-
-            uploadLabel = new Label();
-            uploadLabel.setText(FormsResourceBundle.getMessages().uploadButtonLabel());
-            uploadLabel.setTitle(FormsResourceBundle.getMessages().uploadButtonTitle());
-            uploadLabel.setStyleName("bonita_upload_button");
             cancelLabel = new Label();
             cancelLabel.setText(FormsResourceBundle.getMessages().cancelButtonLabel());
             cancelLabel.setTitle(FormsResourceBundle.getMessages().cancelButtonTitle());
@@ -181,7 +176,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             removeLabel.setTitle(FormsResourceBundle.getMessages().removeButtonTitle());
             removeLabel.setStyleName("bonita_upload_button");
 
-            buttonPanel.add(uploadLabel);
             buttonPanel.add(cancelLabel);
             buttonPanel.add(modifyLabel);
             buttonPanel.add(removeLabel);
@@ -192,7 +186,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             if (value != null && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
                 fileDownloadWidget.setFileName(value);
                 formPanel.setVisible(false);
-                uploadLabel.setVisible(false);
             } else {
                 fileDownloadWidget.setVisible(false);
                 modifyLabel.setVisible(false);
@@ -204,15 +197,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             filePanel.add(loadingImage);
             filePanel.add(fileDownloadWidget);
             filePanel.add(buttonPanel);
-
-            uploadLabel.addClickHandler(new ClickHandler() {
-
-                @Override
-                public void onClick(final ClickEvent event) {
-                    formPanel.submit();
-                }
-            });
-
             modifyLabel.addClickHandler(new ClickHandler() {
 
                 @Override
@@ -221,7 +205,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileDownloadWidget.setVisible(false);
                     modifyLabel.setVisible(false);
                     removeLabel.setVisible(false);
-                    uploadLabel.setVisible(true);
                     cancelLabel.setVisible(true);
                 }
             });
@@ -238,7 +221,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileDownloadWidget.resetDownloadlink();
                     modifyLabel.setVisible(false);
                     removeLabel.setVisible(false);
-                    uploadLabel.setVisible(true);
                     cancelLabel.setVisible(false);
                 }
             });
@@ -251,7 +233,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                     fileDownloadWidget.setVisible(true);
                     modifyLabel.setVisible(true);
                     removeLabel.setVisible(true);
-                    uploadLabel.setVisible(false);
                     cancelLabel.setVisible(false);
                 }
             });
@@ -289,12 +270,19 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         fileUpload = addFileUploalToFormPanel(FileUloadName);
     }
 
-    protected FileUpload addFileUploalToFormPanel(final String fileUloadName) {
+    protected FileUpload addFileUploalToFormPanel(final String fileUploadName) {
 
         final FileUpload fileUpload = new FileUpload();
+        fileUpload.addChangeHandler(new ChangeHandler() {
+
+            @Override
+            public void onChange(ChangeEvent event) {
+                formPanel.submit();
+            }
+        });
         fileUpload.setStyleName("bonita_file_upload");
         // mandatory because we are in a true form with a post action
-        fileUpload.setName(fileUloadName);
+        fileUpload.setName(fileUploadName);
         if (DOMUtils.getInstance().isIE8()) {
             fileUpload.getElement().setPropertyString("contentEditable", "false");
         }
@@ -302,6 +290,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         final UploadSubmitHandler uploadHandler = new UploadSubmitHandler();
         formPanel.addSubmitHandler(uploadHandler);
         formPanel.addSubmitCompleteHandler(uploadHandler);
+
         return fileUpload;
     }
 
@@ -328,7 +317,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
          */
         @Override
         public void onSubmitComplete(final SubmitCompleteEvent event) {
-            String response = event.getResults();
+            String response = getPlainTextResult(event);
             response = URL.decodeQueryString(response);
             response = response.replaceAll("&amp;", "&");
             response = response.replaceAll("&lt;", "<");
@@ -351,8 +340,18 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             fileDownloadWidget.setVisible(true);
             modifyLabel.setVisible(true);
             removeLabel.setVisible(true);
-            uploadLabel.setVisible(false);
             cancelLabel.setVisible(false);
+        }
+
+        /**
+         * See BS-9072 - To avoid xss attack we return text/plain output in fileuploadservlet.
+         * But GWT is converting plain text in html element (pre).
+         * Need to do this hack to get real servlet response
+         */
+        private String getPlainTextResult(SubmitCompleteEvent event) {
+            Element label = DOM.createLabel();
+            label.setInnerHTML(event.getResults());
+            return label.getInnerText();
         }
     }
 

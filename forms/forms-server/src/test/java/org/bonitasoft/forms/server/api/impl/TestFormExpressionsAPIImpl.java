@@ -141,23 +141,6 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
     // FIXME
     // Can't understand this test... Why Word-Excel ?
     @Test
-    public void evaluate_expression_on_finished_activity_after_variable_update_should_TODO() throws Exception {
-        ProcessVariable aVariable = aStringVariable("application", "Word");
-        TestHumanTask executedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
-                .startCase().getNextHumanTask().assignTo(getInitiator()).execute();
-        Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
-
-        processAPI.updateProcessDataInstance("application",  executedTask.getCaseId(), "Excel");
-        Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), executedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
-
-        assertEquals(
-                "if Excel-Excel is returned, it means the values of the variable used are the latest ones whereas it should be the ones of when the activity was submited",
-                "Word-Excel", evaluationResult.toString());
-    }
-
-    // FIXME
-    // Can't understand this test... Why Word-Excel ?
-    @Test
     public void evaluate_expression_on_activity_should_TODO() throws Exception {
         ProcessVariable aVariable = aStringVariable("application", "Word");
         TestHumanTask notExecutedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()

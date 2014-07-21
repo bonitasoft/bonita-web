@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -51,6 +49,7 @@ import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.server.FormsTestCase;
 import org.bonitasoft.forms.server.WaitUntil;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
+import org.bonitasoft.forms.server.api.impl.FormWorkflowAPIImpl;
 import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
@@ -63,7 +62,6 @@ import org.w3c.dom.Document;
 
 /**
  * @author QiXiang Zhang, Yongtao Guo
- * 
  */
 public class TestFormServiceProviderImpl extends FormsTestCase {
 
@@ -88,7 +86,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
                 "application",
                 String.class.getName(),
                 expressionBuilder.createNewInstance("word").setContent("Word").setExpressionType(ExpressionType.TYPE_CONSTANT.name())
-                        .setReturnType(String.class.getName()).done());
+                .setReturnType(String.class.getName()).done());
         processBuilder.addDocumentDefinition("doc1").addUrl("www.bonitasoft.org");
         processBuilder.addDocumentDefinition("doc2").addContentFileName("filename.txt").addFile("barFilename.txt");
         processBuilder.addActor("myActor");
@@ -212,7 +210,9 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
     public void testGetDeployementDate() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
-        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
+        urlContext.put(FormServiceProviderUtil.FORM_ID, processDefinition.getName() + FormWorkflowAPIImpl.UUID_SEPARATOR + processDefinition.getVersion()
+                + FormServiceProviderUtil.FORM_ID_SEPARATOR
+                + FormServiceProviderUtil.RECAP_FORM_TYPE);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
@@ -415,7 +415,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
+                final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
                 builder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
                 return processAPI.searchArchivedProcessInstances(builder.done()).getCount() == 1;
             }

@@ -23,10 +23,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
-
-import com.google.gwt.user.client.Element;
 
 /**
  * Define the default structure of all VisualElements of USerXP toolkit
@@ -245,6 +244,8 @@ public abstract class Component extends AbstractComponent {
         }
         return this.element;
     }
+
+
 
     @Override
     public void resetGeneration() {
