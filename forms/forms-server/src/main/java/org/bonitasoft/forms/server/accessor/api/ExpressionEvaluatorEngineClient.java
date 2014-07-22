@@ -24,6 +24,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProcessRuntimeAPI;
 import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.engine.expression.ExpressionEvaluationException;
+import org.bonitasoft.forms.server.accessor.widget.impl.XMLExpressionsUtil;
 import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
 
 /**
@@ -32,63 +33,62 @@ import org.bonitasoft.forms.server.api.impl.util.FormFieldValuesUtil;
  */
 public class ExpressionEvaluatorEngineClient {
 
-    private final ProcessAPI processApi;
+    private ProcessAPI processApi;
 
-    public ExpressionEvaluatorEngineClient(final ProcessAPI processApi) {
+    public ExpressionEvaluatorEngineClient(ProcessAPI processApi) {
         this.processApi = processApi;
     }
 
-    public Map<String, Serializable> evaluateExpressionsOnActivityInstance(final long activityInstanceID,
-            final Map<Expression, Map<String, Serializable>> expressionsWithContext) throws BPMExpressionEvaluationException {
+    public Map<String, Serializable> evaluateExpressionsOnActivityInstance(long activityInstanceID,
+            Map<Expression, Map<String, Serializable>> expressionsWithContext) throws BPMExpressionEvaluationException {
         try {
-
             return getProcessAPI().evaluateExpressionsOnActivityInstance(activityInstanceID, expressionsWithContext);
-        } catch (final ExpressionEvaluationException e) {
+        } catch (ExpressionEvaluationException e) {
             throw new BPMExpressionEvaluationException("Error when evaluating expressions on activity instance " + activityInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
-    public Map<String, Serializable> evaluateExpressionsOnProcessInstance(final long processInstanceID, final Map<Expression, Map<String, Serializable>> expressions)
+    public Map<String, Serializable> evaluateExpressionsOnProcessInstance(long processInstanceID, Map<Expression, Map<String, Serializable>> expressions)
             throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnProcessInstance(processInstanceID, expressions);
-        } catch (final ExpressionEvaluationException e) {
+        } catch (ExpressionEvaluationException e) {
             throw new BPMExpressionEvaluationException("Error when evaluating expressions on process instance " + processInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
-    public Map<String, Serializable> evaluateExpressionsOnProcessDefinition(final long processDefinitionID,
-            final Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
+    public Map<String, Serializable> evaluateExpressionsOnProcessDefinition(long processDefinitionID,
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnProcessDefinition(processDefinitionID, expressions);
-        } catch (final ExpressionEvaluationException e) {
+        } catch (ExpressionEvaluationException e) {
             throw new BPMExpressionEvaluationException("Error when evaluating expressions on process definition " + processDefinitionID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
-    public Map<String, Serializable> evaluateExpressionsOnCompletedActivityInstance(final long activityInstanceID,
-            final Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
+    public Map<String, Serializable> evaluateExpressionsOnCompletedActivityInstance(long activityInstanceID,
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsOnCompletedActivityInstance(activityInstanceID, expressions);
-        } catch (final ExpressionEvaluationException e) {
+        } catch (ExpressionEvaluationException e) {
             throw new BPMExpressionEvaluationException("Error when evaluating expressions on completed activity instance " + activityInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
-    public Map<String, Serializable> evaluateExpressionsOnCompletedProcessInstance(final long processInstanceID,
-            final Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
+    public Map<String, Serializable> evaluateExpressionsOnCompletedProcessInstance(long processInstanceID,
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionOnCompletedProcessInstance(processInstanceID, expressions);
-        } catch (final ExpressionEvaluationException e) {
+        } catch (ExpressionEvaluationException e) {
             throw new BPMExpressionEvaluationException("Error when evaluating expressions on completed process instance " + processInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
 
-    public Map<String, Serializable> evaluateExpressionsAtProcessInstanciation(final long processInstanceID,
-            final Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
+    public Map<String, Serializable> evaluateExpressionsAtProcessInstanciation(long processInstanceID,
+            Map<Expression, Map<String, Serializable>> expressions) throws BPMExpressionEvaluationException {
         try {
             return getProcessAPI().evaluateExpressionsAtProcessInstanciation(processInstanceID, expressions);
-        }catch (final ExpressionEvaluationException e) {
+    	}catch (ExpressionEvaluationException e) {
             throw new BPMExpressionEvaluationException("Error when evaluating expressions on completed process instance " + processInstanceID + ". " + buildEvaluationMessageLogDetail(e), e);
         }
     }
@@ -96,23 +96,23 @@ public class ExpressionEvaluatorEngineClient {
     private ProcessRuntimeAPI getProcessAPI() {
         return processApi;
     }
-
+    
     private String buildEvaluationMessageLogDetail(final ExpressionEvaluationException e) {
-        String[] splitExpressionName = null;
-        String expressionParentName = "unknown";
-        String expressionParentAttribute = "unknown";
+    	String[] splitExpressionName = null;
+    	String expressionParentName = "unknown";
+    	String expressionParentAttribute = "unknown";
+    	
+    	if(e.getExpressionName()!=null){
+    		splitExpressionName = e.getExpressionName().split(FormFieldValuesUtil.EXPRESSION_KEY_SEPARATOR);
 
-        if(e.getExpressionName()!=null){
-            splitExpressionName = e.getExpressionName().split(FormFieldValuesUtil.EXPRESSION_KEY_SEPARATOR);
-
-            if(splitExpressionName.length==2){
-                expressionParentName = splitExpressionName[0];
-                expressionParentAttribute = splitExpressionName[1];
-                return "Error on expression evaluation for the attribute ["+ expressionParentAttribute +"] of object ["+ expressionParentName +"].";
-            }
-        }
-
-        return "Error on expression evaluation for the expression with name ["+ e.getExpressionName() +"].";
+        	if(splitExpressionName.length==2){
+        		expressionParentName = splitExpressionName[0];
+        		expressionParentAttribute = splitExpressionName[1];
+        		return "Error on expression evaluation for the attribute ["+ expressionParentAttribute +"] of object ["+ expressionParentName +"].";
+        	}
+    	}
+    	
+    	return "Error on expression evaluation for the expression with name ["+ e.getExpressionName() +"].";
     }
 
 }

@@ -43,12 +43,9 @@ import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotEnabledException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -923,12 +920,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return results;
     }
 
-    @Override
-    public Map<String, Serializable> resolveQueryExpressions(final List<Expression> expressions, final Map<String, Object> context) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -1669,7 +1660,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             InvalidSessionException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         IApplicationFormDefAccessor formDefAccessor = null;
-        final long processDefinitionID = getProcessDefinitionID(context);
+        long processDefinitionID = getProcessDefinitionID(context);
         final Map<String, Object> urlContext = getUrlContext(context);
         long activityInstanceID = -1;
         if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
@@ -2236,6 +2227,5 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             Logger.getLogger(FormServiceProviderImpl.class.getName()).log(Level.FINEST, "### " + time + " - " + message);
         }
     }
-
 
 }

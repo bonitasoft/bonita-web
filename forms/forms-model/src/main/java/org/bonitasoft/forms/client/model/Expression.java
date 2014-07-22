@@ -38,7 +38,7 @@ public class Expression implements Serializable {
     private String interpreter;
 
     private List<Expression> dependencies;
-
+    
     /**
      * Constructor.
      * @param name
@@ -48,7 +48,7 @@ public class Expression implements Serializable {
      * @param interpreter
      * @param dependencies
      */
-    public Expression(final String name, final String content, final String expressionType, final String returnType, final String interpreter, final List<Expression> dependencies) {
+    public Expression(String name, String content, String expressionType, String returnType, String interpreter, List<Expression> dependencies) {
         super();
         this.name = name;
         this.content = content;
@@ -57,7 +57,7 @@ public class Expression implements Serializable {
         this.interpreter = interpreter;
         this.dependencies = dependencies;
     }
-
+    
     /**
      * Default Constructor
      */

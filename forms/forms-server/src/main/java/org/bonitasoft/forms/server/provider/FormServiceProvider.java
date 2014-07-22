@@ -96,7 +96,7 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      */
     Document getFormDefinitionDocument(Map<String, Object> context) throws FormNotFoundException, IOException, InvalidFormDefinitionException,
-    SessionTimeoutException;
+            SessionTimeoutException;
 
     /**
      * Check if the user is allowed to do an action.
@@ -154,7 +154,7 @@ public interface FormServiceProvider {
      * @throws FormInitializationException
      */
     Serializable resolveExpression(Expression expression, Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException,
-    FileTooBigException, IOException, FormInitializationException;
+            FileTooBigException, IOException, FormInitializationException;
 
     /**
      * Resolve a group of expressions (Groovy in the default implementation, but it can be anything in another implementation).
@@ -172,19 +172,7 @@ public interface FormServiceProvider {
      * @throws FormInitializationException
      */
     Map<String, Serializable> resolveExpressions(List<Expression> expressions, Map<String, Object> context) throws FormNotFoundException,
-    SessionTimeoutException, FileTooBigException, IOException, FormInitializationException;
-
-    /**
-     * Resolve a group of query expressions.
-     * 
-     * @param expressions
-     *        The query expressions to be resolved
-     * @param context
-     *        Map of context (containing the URL parameters and other data)
-     * @return
-     *         the Map of resolved values
-     */
-    Map<String, Serializable> resolveQueryExpressions(List<Expression> expressions, Map<String, Object> context);
+            SessionTimeoutException, FileTooBigException, IOException, FormInitializationException;
 
     /**
      * Execute some actions after a form submission.
@@ -204,7 +192,7 @@ public interface FormServiceProvider {
      *             if any other kind of exception occurs
      */
     Map<String, Object> executeActions(List<FormAction> actions, Map<String, Object> context) throws FileTooBigException, FormNotFoundException,
-    FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException;
+            FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException;
 
     /**
      * Retrieve the next form ID and additional parameters required in the URL to display the next form after a form submission.
@@ -333,7 +321,7 @@ public interface FormServiceProvider {
      * @throws ApplicationFormDefinitionNotFoundException
      */
     IApplicationConfigDefAccessor getApplicationConfigDefinition(Document formDefinitionDocument, Map<String, Object> context) throws SessionTimeoutException,
-    ApplicationFormDefinitionNotFoundException;
+            ApplicationFormDefinitionNotFoundException;
 
     /**
      * Get the form field value for an attachment widget
@@ -348,7 +336,7 @@ public interface FormServiceProvider {
      * @throws FormInitializationException
      */
     FormFieldValue getAttachmentFormFieldValue(Object value, Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException, IOException,
-    FileTooBigException, FormInitializationException;
+            FileTooBigException, FormInitializationException;
 
     /**
      * Check if a specific form is in edit mode (entry form) or not (view form).<br/>
@@ -405,7 +393,7 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      */
     Map<String, Object> skipForm(final String formID, final Map<String, Object> context) throws FormNotFoundException, FormAlreadySubmittedException,
-    IllegalActivityTypeException, FormSubmissionException, SessionTimeoutException;
+            IllegalActivityTypeException, FormSubmissionException, SessionTimeoutException;
 
     /**
      * Get any form from a to do list.<br/>
@@ -436,7 +424,7 @@ public interface FormServiceProvider {
      * @throws ApplicationFormDefinitionNotFoundException
      */
     File getApplicationResourceDir(Date applicationDeploymentDate, Map<String, Object> context) throws IOException, SessionTimeoutException,
-    ApplicationFormDefinitionNotFoundException;
+            ApplicationFormDefinitionNotFoundException;
 
     /**
      * retrieve the right classloader for the context
@@ -490,5 +478,4 @@ public interface FormServiceProvider {
      * @return the transient data context to use
      */
     void removeFormTransientDataContext(HttpSession session, String storageKey, Map<String, Object> context);
-
 }
