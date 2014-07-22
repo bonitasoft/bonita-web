@@ -53,9 +53,9 @@ public class APIArchivedDocument extends ConsoleAPI<ArchivedDocumentItem> {
         ArchivedDocumentItem item = new ArchivedDocumentItem();
         try {
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
-            final DocumentDatastore dataStore = new DocumentDatastore(apiSession);
+            //final DocumentDatastore dataStore = new DocumentDatastore(apiSession);
             final ArchivedDocument document = processAPI.getArchivedProcessDocument(id.toLong());
-            item = dataStore.mapToArchivedDocumentItem(document);
+            //item = dataStore.mapToArchivedDocumentItem(document);
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -78,7 +78,7 @@ public class APIArchivedDocument extends ConsoleAPI<ArchivedDocumentItem> {
         String viewType = null;
         String documentName = null;
         long userId = -1;
-        try {
+        /*try {
             if (filters.containsKey(ArchivedDocumentItem.FILTER_CASE_ID)) {
                 caseId = filters.get(ArchivedDocumentItem.FILTER_CASE_ID);
             }
@@ -118,7 +118,7 @@ public class APIArchivedDocument extends ConsoleAPI<ArchivedDocumentItem> {
             }
         } catch (final Exception e) {
             throw new APIException(e);
-        }
+        }*/
         return new ItemSearchResult<ArchivedDocumentItem>(page, resultsByPage, nbOfDocument, items);
 
     }

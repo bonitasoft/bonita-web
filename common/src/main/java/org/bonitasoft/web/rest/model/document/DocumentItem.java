@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.model.document;
 
+import java.util.Date;
+
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -24,12 +26,12 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 /**
  * Document item
  * 
- * @author Gai Cuisha
+ * @author Gai Cuisha, Fabio Lombardi
  * 
  */
 public class DocumentItem extends Item {
 
-    public DocumentItem() {
+	public DocumentItem() {
         super();
     }
 
@@ -37,115 +39,129 @@ public class DocumentItem extends Item {
         super(item);
     }
 
-    public static final String DOCUMENT_ID = "id";
+    public static final String ATTRIBUTE_ID = "id";
 
-    public static final String DOCUMENT_VERSION = "version";
+    public static final String ATTRIBUTE_VERSION = "version";
 
-    public static final String PROCESSINSTANCE_ID = "processinstanceId";
-
-    public static final String PROCESSINSTANCE_NAME = "processinstanceName";
-
-    public static final String PROCESS_DISPLAY_NAME = "processDisplayName";
-
-    public static final String PROCESS_VERSION = "processinstanceVersion";
-
-    public static final String DOCUMENT_NAME = "documentName";
-
-    public static final String DOCUMENT_AUTHOR = "documentAuthor";
-
-    public static final String DOCUMENT_CREATIONDATE = "documentCreationDate";
-
-    public static final String DOCUMENT_HAS_CONTENT = "documentHasContent";
-
-    public static final String DOCUMENT_CONTENT_FILENAME = "documentContentFileName";
-
-    public static final String DOCUMENT_CONTENT_MIMETYPE = "documentContentMimeType";
-
-    public static final String CONTENT_STORAGE_ID = "contentStorageId";
-
-    public static final String DOCUMENT_URL = "documentURL";
-
-    public static final String DOCUMENT_CREATION_TYPE = "DOCUMENT_CREATION_TYPE";
-
-    public static final String DOCUMENT_UPLOAD = "documentUpload";
+    public static final String ATTRIBUTE_CASE_ID = "caseId";
     
-    /* Filter are in uppercase due to a refactoring (delete FilterKey class), please put them in lowercase if there is no side effect */
-    public static final String FILTER_CASE_ID = "CASE_ID";
-    public static final String FILTER_VIEW_TYPE = "VIEW";
-    public static final String FILTER_USER_ID = "USER_ID";
-    
-    /* idem for values */
-    public static final String VALUE_VIEW_TYPE_ADMINISTRATOR = "ADMINISTRATOR";
-    public static final String VALUE_VIEW_TYPE_USER = "USER";
-    public static final String VALUE_VIEW_TYPE_TEAM_MANAGER = "TEAM_MANAGER";
-    public static final String VALUE_VIEW_TYPE_PROCESS_OWNER = "PROCESS_OWNER";
+    public static final String ATTRIBUTE_NAME = "name";
 
-    public void setDocumentId(final String documentId) {
-        this.setAttribute(DOCUMENT_ID, documentId);
+    public static final String ATTRIBUTE_SUBMITTED_BY_USER_ID = "createdBy";
+    
+    public static final String ATTRIBUTE_CREATION_DATE = "creationDate";
+
+    public static final String ATTRIBUTE_HAS_CONTENT = "documentHasContent";
+
+    public static final String ATTRIBUTE_CONTENT_FILENAME = "fileName";
+
+    public static final String ATTRIBUTE_CONTENT_MIMETYPE = "contentMimeType";
+
+    public static final String ATTRIBUTE_CONTENT_STORAGE_ID = "contentStorageId";
+
+    public static final String ATTRIBUTE_UPLOAD_PATH = "uploadPath";
+    
+    public static final String ATTRIBUTE_URL = "URL";
+
+    public void setId(final String id) {
+        this.setAttribute(ATTRIBUTE_ID, id);
     }
 
-    public void setDocumentVersion(final String documentVersion) {
-        this.setAttribute(DOCUMENT_VERSION, documentVersion);
+    public void setVersion(final String version) {
+        this.setAttribute(ATTRIBUTE_VERSION, version);
     }
 
+    
     public void setCaseId(final String caseId) {
-        this.setAttribute(PROCESSINSTANCE_ID, caseId);
+        this.setAttribute(ATTRIBUTE_CASE_ID, caseId);
     }
 
-    public void setCaseName(final String caseName) {
-        this.setAttribute(PROCESSINSTANCE_NAME, caseName);
+    
+    public void setName(final String name) {
+        this.setAttribute(ATTRIBUTE_NAME, name);
+    }
+    
+    public void setSubmittedBy(final APIID userId) {
+        this.setAttribute(ATTRIBUTE_SUBMITTED_BY_USER_ID, userId.toString());
     }
 
-    public void setProcessDisplayName(final String caseName) {
-        this.setAttribute(PROCESS_DISPLAY_NAME, caseName);
+    
+    public void setSubmittedBy(final Long userId) {
+        this.setAttribute(ATTRIBUTE_SUBMITTED_BY_USER_ID, userId.toString());
     }
 
-    public void setProcessVersion(final String caseVersion) {
-        this.setAttribute(PROCESS_VERSION, caseVersion);
+    public void setCreationDate(String creationDate) {
+        this.setAttribute(ATTRIBUTE_CREATION_DATE, creationDate);
     }
 
-    public void setDocumentName(final String documentName) {
-        this.setAttribute(DOCUMENT_NAME, documentName);
+    public void setCreationDate(final Date creationDate) {
+        this.setAttribute(ATTRIBUTE_CREATION_DATE, creationDate);
+    }
+    
+    public void setHasContent(final String hasContent) {
+        this.setAttribute(ATTRIBUTE_HAS_CONTENT, hasContent);
+    }
+ 
+    public void setFileName(final String fileName) {
+        this.setAttribute(ATTRIBUTE_CONTENT_FILENAME, fileName);
+    }
+    
+    public void setMIMEType(final String MIMEType) {
+        this.setAttribute(ATTRIBUTE_CONTENT_MIMETYPE, MIMEType);
     }
 
-    public void setDocumentAuthor(final APIID userId) {
-        this.setAttribute(DOCUMENT_AUTHOR, userId.toString());
+    public void setStorageId(final String storageId) {
+        this.setAttribute(ATTRIBUTE_CONTENT_STORAGE_ID, storageId);
     }
-
-    public void setDocumentAuthor(final Long userId) {
-        this.setAttribute(DOCUMENT_AUTHOR, userId.toString());
+    public void setUploadPath(final String uploadPath) {
+        this.setAttribute(ATTRIBUTE_UPLOAD_PATH, uploadPath);
     }
-
-    public void setDocumentCreationDate(final String documentCreationDate) {
-        this.setAttribute(DOCUMENT_CREATIONDATE, documentCreationDate);
+    
+    public String getUploadPath() {
+    	return getAttributeValue(ATTRIBUTE_UPLOAD_PATH);
     }
-
-    public void setDocumentHasContent(final String documentHasContent) {
-        this.setAttribute(DOCUMENT_HAS_CONTENT, documentHasContent);
+    
+    public void setURL(final String URL) {
+        this.setAttribute(ATTRIBUTE_URL, URL);
     }
-
-    public void setDocumentFileName(final String documentFileName) {
-        this.setAttribute(DOCUMENT_CONTENT_FILENAME, documentFileName);
+        
+    public String getVersion() {
+    	return getAttributeValue(ATTRIBUTE_VERSION);    	
     }
-
-    public void setDocumentMIMEType(final String documentMIMEType) {
-        this.setAttribute(DOCUMENT_CONTENT_MIMETYPE, documentMIMEType);
+    
+    public APIID getCaseId() {
+    	return getAttributeValueAsAPIID(ATTRIBUTE_CASE_ID);
     }
-
-    public void setDocumentStorageId(final String documentStorageId) {
-        this.setAttribute(CONTENT_STORAGE_ID, documentStorageId);
+    
+    public String getName() {
+    	return getAttributeValue(ATTRIBUTE_NAME);
     }
-
-    public void setDocumentURL(final String documentURL) {
-        this.setAttribute(DOCUMENT_URL, documentURL);
+    public APIID getSubmittedBy() {
+    	return getAttributeValueAsAPIID(ATTRIBUTE_SUBMITTED_BY_USER_ID);
     }
-
-    public void setDocumentCreationType(final String documentCreationType) {
-        this.setAttribute(DOCUMENT_CREATION_TYPE, documentCreationType);
+    
+    public Date getCreationDate() {
+    	return getAttributeValueAsDate(ATTRIBUTE_CREATION_DATE);
     }
-
-    public void setDocumentUpload(final String documentUpload) {
-        this.setAttribute(DOCUMENT_UPLOAD, documentUpload);
+    
+    public boolean hasContent() {
+    	return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_HAS_CONTENT));
+    }
+    
+    public String getFileName() {
+    	return getAttributeValue(ATTRIBUTE_CONTENT_FILENAME);
+    }
+    
+    public String getMIMEType() {
+    	return getAttributeValue(ATTRIBUTE_CONTENT_MIMETYPE);
+    }
+    
+    public String getStorageId() {
+    	return getAttributeValue(ATTRIBUTE_CONTENT_STORAGE_ID);
+    }
+    
+    public String getURL() {
+    	return getAttributeValue(ATTRIBUTE_URL);
     }
 
     @Override

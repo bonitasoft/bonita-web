@@ -27,7 +27,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  */
 public class DocumentDefinition extends ItemDefinition {
 
-    /**
+	 /**
      * Singleton
      */
     public static final DocumentDefinition get() {
@@ -56,28 +56,23 @@ public class DocumentDefinition extends ItemDefinition {
 
     @Override
     protected void defineAttributes() {
-        createAttribute(DocumentItem.DOCUMENT_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_VERSION, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.PROCESSINSTANCE_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.PROCESSINSTANCE_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.PROCESS_DISPLAY_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.PROCESS_VERSION, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_AUTHOR, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_CREATIONDATE, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_HAS_CONTENT, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_CONTENT_FILENAME, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_CONTENT_MIMETYPE, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_URL, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_CREATION_TYPE, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.DOCUMENT_UPLOAD, ItemAttribute.TYPE.STRING);
-
+        createAttribute(DocumentItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(DocumentItem.ATTRIBUTE_VERSION, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_CASE_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(DocumentItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(DocumentItem.ATTRIBUTE_CREATION_DATE, ItemAttribute.TYPE.DATE);
+        createAttribute(DocumentItem.ATTRIBUTE_HAS_CONTENT, ItemAttribute.TYPE.BOOLEAN);
+        createAttribute(DocumentItem.ATTRIBUTE_CONTENT_FILENAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_URL, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_UPLOAD_PATH, ItemAttribute.TYPE.STRING);
     }
 
     @Override
     protected void definePrimaryKeys() {
-        setPrimaryKeys(DocumentItem.DOCUMENT_ID);
+        setPrimaryKeys(DocumentItem.ATTRIBUTE_ID);
     }
 
     @Override
