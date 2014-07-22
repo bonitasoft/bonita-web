@@ -28,7 +28,7 @@ public class APIDocumentTest  extends APITestWithMock {
     public void initializeMocks() {
         initMocks(this);
         //apiDocument = spy(new APIDocument());       
-        doReturn(datastore).when(apiDocument).getDefaultDatastore();
+        doReturn(datastore).when(apiDocument).getDocumentDatastore();
     }
 	
 	@Test
