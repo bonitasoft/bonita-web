@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-16 22:02+0200\n"
-"PO-Revision-Date: 2014-07-22 13:46-0400\n"
+"POT-Creation-Date: 2014-07-23 22:02+0200\n"
+"PO-Revision-Date: 2014-07-23 17:31-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2605,7 +2605,7 @@ msgstr "La page que vous voulez accéder n'est pas disponible."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableFiller.java:96
 msgid "The elements you try to display can't be retrieved due to a server problem."
-msgstr "Due à un problème serveur, l'élément ne peut pas être affiché."
+msgstr "Dû à un problème du serveur, les éléments ne peuvent pas être affichés."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableFiller.java:97
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableFiller.java:105
@@ -2616,7 +2616,7 @@ msgstr "Merci de contacter votre administrateur."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/ItemTableFiller.java:104
 msgid "The elements you try to display can't be retrieved due to a connection problem."
-msgstr "Due a un problème de connexion, l'élément ne peut pas être affiché."
+msgstr "Dû a un problème de connexion, les éléments ne peuvent pas être affichés."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/table/formatter/DefaultItemTableCellFormatter.java:124
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/MessagePage.java:150
@@ -2754,11 +2754,11 @@ msgstr "L'élément n'existe pas."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/FormFiller.java:80
 msgid "The element you try to edit can't be retrieved due to a server problem."
-msgstr "Due a un serveur problème, l'élément ne peut pas être édité."
+msgstr "Dû à un problème du serveur, l'élément ne peut pas être édité."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/FormFiller.java:89
 msgid "The element you try to edit can't be retrieved due to a connection problem."
-msgstr "Due a un problème de connexion l'élément ne peut être édité."
+msgstr "Dû a un problème de connexion, l'élément ne peut pas être édité."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:259
 msgid "Create a new element"
@@ -2833,7 +2833,7 @@ msgstr "Pas implémenté."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemFormFiller.java:59
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
-msgstr "Due a un problème de connexion l'élément ne peut pas être affiché."
+msgstr "Dû a un problème de connexion, l'élément ne peut pas être édité."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/AbstractForm.java:675
 msgid "this field"
