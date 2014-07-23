@@ -190,7 +190,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Constructor
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param contextMap
      * @param mandatoryFieldSymbol
      * @param mandatoryFieldClasses
@@ -204,7 +204,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Constructor
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
      * @param contextMap
      * @param mandatoryFieldSymbol
@@ -253,9 +253,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link TextBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link TextBox}
      */
     @SuppressWarnings("unchecked")
@@ -279,9 +279,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link TextArea} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link TextArea}
      */
     @SuppressWarnings("unchecked")
@@ -308,9 +308,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link RichTextWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link RichTextWidget}
      */
     protected RichTextWidget createRichTextArea(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -328,9 +328,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link PasswordTextBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link PasswordTextBox}
      */
     @SuppressWarnings("unchecked")
@@ -350,9 +350,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link HTML} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link HTML}
      */
     protected HTML createText(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -371,9 +371,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link CheckBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link CheckBox}
      */
     @SuppressWarnings("unchecked")
@@ -395,9 +395,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link RadioButtonGroupWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link RadioButtonGroupWidget}
      */
     @SuppressWarnings("unchecked")
@@ -414,9 +414,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link ListBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link ListBox}
      */
     protected ListBox createListBox(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -439,9 +439,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a multiple select {@link ListBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link ListBox}
      */
     protected ListBox createListBoxMulti(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -471,9 +471,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link SuggestBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link SuggestBox}
      */
     @SuppressWarnings("unchecked")
@@ -550,9 +550,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link CheckboxGroupWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link CheckboxGroupWidget}
      */
     @SuppressWarnings("unchecked")
@@ -570,9 +570,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link DateBox} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link DateBox}
      */
     @SuppressWarnings("unchecked")
@@ -602,9 +602,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link DurationWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link DurationWidget}
      */
     protected DurationWidget createDuration(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -625,9 +625,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link FileUploadWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link FileUploadWidget}
      */
     protected FileUploadWidget createFileUpload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -644,9 +644,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link FileDownloadWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link FileDownloadWidget}
      */
     protected FileDownloadWidget createFileDownload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -659,7 +659,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * 
      * @param widgetData
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @param displayAttachmentImage
      * @return a {@link ImageWidget}
      */
@@ -681,9 +681,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create an {@link TableWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link TableWidget}
      */
     @SuppressWarnings("unchecked")
@@ -697,9 +697,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create an {@link EditableGridWidget} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return an {@link EditableGridWidget}
      */
     @SuppressWarnings("unchecked")
@@ -713,9 +713,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create a {@link Hidden} widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      * @param fieldValue
-     *            the widget value
+     *        the widget value
      * @return a {@link Hidden}
      */
     protected Hidden createHidden(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
@@ -726,7 +726,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Create the widget
      * 
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      */
     protected void createWidget(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
         // label creation
@@ -944,7 +944,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Get the string display value for a date
      * 
      * @param fieldValue
-     *            the field value object
+     *        the field value object
      * @return the date as a String
      */
     protected String getDateAsText(final FormFieldValue fieldValue) {
@@ -965,7 +965,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * @param fieldValue
-     *            the data field value
+     *        the data field value
      * @return a List<String>
      */
     @SuppressWarnings("unchecked")
@@ -986,7 +986,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * @param fieldValue
-     *            the data field value
+     *        the data field value
      * @return a List of List<String>
      */
     @SuppressWarnings("unchecked")
@@ -1012,7 +1012,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Get the string display value for a date
      * 
      * @param text
-     *            the widget data object
+     *        the widget data object
      * @return the date as a String
      */
     protected Date getTextAsDate(final String text) {
@@ -1025,7 +1025,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Get the string value of a {@link FormFieldValue}
      * 
      * @param fieldValue
-     *            the {@link FormFieldValue}
+     *        the {@link FormFieldValue}
      * @return a String
      */
     protected String getStringValue(final FormFieldValue fieldValue) {
@@ -1042,7 +1042,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * Get the Collection<String> value of a {@link FormFieldValue}
      * 
      * @param fieldValue
-     *            the {@link FormFieldValue}
+     *        the {@link FormFieldValue}
      * @return a Collection<String>
      */
     @SuppressWarnings("unchecked")
@@ -1061,9 +1061,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * add generic features to the field widgets
      * 
      * @param fieldWidget
-     *            the GWT widget
+     *        the GWT widget
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      */
     protected void addStandardWidgetFeatures(final Widget fieldWidget, final ReducedFormWidget widgetData) {
         if (isStaticField()) {
@@ -1089,9 +1089,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * attributes before inserting the generated widget in the panel.
      * 
      * @param fieldWidget
-     *            the field widget
+     *        the field widget
      * @param widgetData
-     *            the widget data object
+     *        the widget data object
      */
     protected void insertWidgetInPanel(final Widget fieldWidget, final ReducedFormWidget widgetData) {
         final ElementAttributeSupport elementAttributeSupport = new ElementAttributeSupport();
@@ -1448,8 +1448,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * 
      * @param availableValues
      */
-    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues) {
-        final boolean fireEvents = true;
+    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, boolean fireEvents) {
         switch (widgetType) {
             case RADIOBUTTON_GROUP:
                 final RadioButtonGroupWidget radioButtonGroupWidget = (RadioButtonGroupWidget) fieldWidget;
@@ -1507,8 +1506,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * 
      * @param newTableWidgetAvailableValues
      */
-    public void setTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> newTableWidgetAvailableValues) {
-        final boolean fireEvents = true;
+    public void setTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> newTableWidgetAvailableValues, boolean fireEvents) {
         if (WidgetType.TABLE.equals(widgetType)) {
             final TableWidget formTableWidget = (TableWidget) fieldWidget;
             formTableWidget.setAvailableValues(newTableWidgetAvailableValues, fireEvents);
