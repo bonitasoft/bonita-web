@@ -43,9 +43,12 @@ import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotEnabledException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -2126,6 +2129,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
             if (userId != -1) {
                 parameters.put("USER_ID_KEY", userId);
+                parameters.put("DO_FOR_KEY", true);
             } else {
                 parameters.put("USER_ID_KEY", session.getUserId());
             }
