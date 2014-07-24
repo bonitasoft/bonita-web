@@ -386,6 +386,7 @@ public abstract class API<ITEM extends IItem> {
             if (destinationDirectory.exists()) {
                 final String extension = this.getFileExtension(destinationFilename);
                 final File destinationFile = File.createTempFile("avatar", extension, destinationDirectory);
+                destinationFile.deleteOnExit();
                 destinationFilename = destinationFile.getName().substring(0, destinationFile.getName().length() - extension.length());
             }
 
