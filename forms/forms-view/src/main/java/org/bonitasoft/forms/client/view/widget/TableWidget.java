@@ -171,7 +171,11 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
     protected List<List<ReducedFormFieldAvailableValue>> getAvailableValuesList() {
         if (this.availableValues != null && SelectMode.NONE.equals(this.widgetData.getSelectMode()) && this.maxRows > 0) {
-            final int startIndex = this.currentPageIndex * this.maxRows;
+
+            if (this.currentPageIndex > getLastPageIndex()) {
+                this.currentPageIndex = getLastPageIndex();
+            }
+            int startIndex = this.currentPageIndex * this.maxRows;
             return this.availableValues.subList(startIndex, Math.min(startIndex + this.maxRows, this.availableValues.size()));
         } else {
             return this.availableValues;
@@ -572,7 +576,7 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
         }
     }
-    
+
     @Override
     public void onValueChange(ValueChangeEvent<List<String>> event) {
         for (final ValueChangeHandler<List<String>> valueChangeHandler : valueChangeHandlers) {
