@@ -2127,12 +2127,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         try {
             final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
             final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-            if (userId != -1) {
-                parameters.put("USER_ID_KEY", userId);
-                parameters.put("DO_FOR_KEY", true);
-            } else {
-                parameters.put("USER_ID_KEY", session.getUserId());
-            }
+            parameters.put("USER_ID_KEY", userId);
             parameters.put("HUMAN_TASK_INSTANCE_ID_KEY", humanTaskInstanceId);
             return (Boolean) commandAPI.execute("isInvolvedInHumanTask", parameters);
 
