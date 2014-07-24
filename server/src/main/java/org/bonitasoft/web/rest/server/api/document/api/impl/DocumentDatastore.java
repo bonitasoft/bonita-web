@@ -50,7 +50,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Yongtao Guo, Fabio Lombardi
  * 
  */
-public class DocumentDatastore  extends CommonDatastore<DocumentItem, Document>  implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem> {
+public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem> {
 	
 	protected final WebBonitaConstantsUtils constants;
 
@@ -59,6 +59,7 @@ public class DocumentDatastore  extends CommonDatastore<DocumentItem, Document> 
     final long maxSizeForTenant;
     
     final FileTypeMap mimetypesFileTypeMap;
+    
     /**
      * Default constructor.
      */    

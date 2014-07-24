@@ -4,6 +4,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
@@ -24,6 +25,9 @@ public class APIDocumentTest  extends APITestWithMock {
 	@Mock
 	private APIServletCall caller;
 
+	@Mock
+	private DocumentItem documentItemMock;
+	
 	@Before
     public void initializeMocks() {
         initMocks(this);
@@ -32,7 +36,7 @@ public class APIDocumentTest  extends APITestWithMock {
     }
 	
 	@Test
-	public void testGet() throws Exception {
+	public void it_should_call_the_datastore_get_method() throws Exception {
 		//Given
 		APIID id = APIID.makeAPIID(1l);
 		
@@ -41,12 +45,17 @@ public class APIDocumentTest  extends APITestWithMock {
 		
 		//Then
 		verify(datastore).get(id);
-		//throw new RuntimeException("not yet implemented");*/
 	}
 
 	@Test
-	public void testAdd() throws Exception {
-		//throw new RuntimeException("not yet implemented");
+	public void it_should_call_the_datastore_add_method() throws Exception {
+		//Given		
+		
+		//When
+		apiDocument.add(documentItemMock);
+		
+		//Then
+		verify(datastore).add(documentItemMock);
 	}
 
 }
