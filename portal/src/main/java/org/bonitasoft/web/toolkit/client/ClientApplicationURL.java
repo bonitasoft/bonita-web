@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.toolkit.client;
 
-import static com.google.gwt.query.client.GQuery.$;
-
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.common.Tree;
@@ -383,7 +381,9 @@ public class ClientApplicationURL {
     }
 
     protected void refreshView() {
-        parseUrl();
-        ViewController.showView(_getPageToken(), _getPageAttributes());
+        if (History.getToken().contains("_p=")) {
+            parseUrl();
+            ViewController.showView(_getPageToken(), _getPageAttributes());
+        }
     }
 }

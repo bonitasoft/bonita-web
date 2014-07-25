@@ -53,9 +53,9 @@ public class DeleteMultipleItemsPopupAction extends ActionOnItemIds {
         this.addParameter("itemDef", this.definitionToken);
         if (itemIds.size() > 1) {
             // multiple selection
-            this.addParameter("message", _("These %item_name_plural% will be definitely deleted.", new Arg("item_name_plural", this.itemNamePlural)));
+            this.addParameter("message", _("These %item_name_plural% will be definitively deleted.", new Arg("item_name_plural", this.itemNamePlural)));
         } else {
-            this.addParameter("message", _("This %item_name% will be definitely deleted.", new Arg("item_name", this.itemName)));
+            this.addParameter("message", _("This %item_name% will be definitively deleted.", new Arg("item_name", this.itemName)));
         }
         ViewController.showPopup(ClientApplicationURL.TOKEN_DELETE, getParameters());
     }
