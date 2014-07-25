@@ -6,6 +6,7 @@ target/
 
 # intellij settings
 *.iml
+**/.idea/**
 
 btm1.tlog
 btm2.tlog

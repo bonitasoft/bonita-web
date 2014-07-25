@@ -128,6 +128,7 @@
         <url-pattern>/portal/runreport</url-pattern>
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/login.jsp</url-pattern>
+        <url-pattern>/portal/portal.nocache.js</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
