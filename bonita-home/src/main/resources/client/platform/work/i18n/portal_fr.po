@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-19 03:33+0200\n"
-"PO-Revision-Date: 2014-07-25 00:32-0400\n"
+"PO-Revision-Date: 2014-07-26 00:31-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -497,7 +497,7 @@ msgstr "Le sous-processus qui a créé cette tâche"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:204
 msgid "Subprocess version"
-msgstr "Subprocess version"
+msgstr "Version du sous-processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:214
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:60
@@ -1599,19 +1599,19 @@ msgstr "Afficher plus de détails sur cette apps"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:73
 msgid "Start a app on behalf of another user"
-msgstr "Start a app on behalf of another user"
+msgstr "Démarrer une app au titre en tant qu'un autre utilisateur"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:83
 msgid "Start this app on behalf of selected user"
-msgstr "Start this app on behalf of selected user"
+msgstr "Démarrer cette App à la place de l'utilisateur sélectionné"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:89
 msgid "Select a user to start app %app_name% %app_version%"
-msgstr "Select a user to start app %app_name% %app_version%"
+msgstr "Sélectionner un utilisateur pour démarrer l'app %app_name% %app_version%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:93
 msgid "The openned case will be marked as started by him."
-msgstr "The openned case will be marked as started by him."
+msgstr "Les cas ouverts seront marqués comme démarrés par cet utilisateur."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:122
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
@@ -3145,7 +3145,7 @@ msgstr "Utilisateur"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:25
 msgid "The user can view and perform tasks and can start a new case of an app."
-msgstr "The user can view and perform tasks and can start a new case of an app."
+msgstr "L'utilisateur peut visualiser et réaliser des tâches. Il peut également démarrer un nouveau cas d'application."
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:30
 msgid "Administrator"
@@ -3165,7 +3165,7 @@ msgstr "Le Gestionnaire de Processus supervise les apps qui lui sont attribuées
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
 msgid "Apps management"
-msgstr "Apps management"
+msgstr "Gestion d'apps"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
@@ -3174,7 +3174,7 @@ msgstr "Métriques"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:60
 msgid "Reports"
-msgstr "Reports"
+msgstr "Rapports"
 
 #: server/src/main/java/org/bonitasoft/console/server/service/OrganizationImportService.java:56
 msgid "Can't import organization. Please check that your file is well-formed"

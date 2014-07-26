@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-19 03:33+0200\n"
-"PO-Revision-Date: 2014-07-25 00:37-0400\n"
+"PO-Revision-Date: 2014-07-26 14:34-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -317,7 +317,7 @@ msgstr "Bonita BPM Portal"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/connector/ConnectorSection.java:56
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:183
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/view/SelectRoleAndDoPageOnItem.java:65
 #: portal/src/main/java/org/bonitasoft/console/client/common/view/SelectMembershipAndDoPageOnItem.java:85
@@ -725,11 +725,11 @@ msgstr "%user%"
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:146
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:209
 msgid "Manager"
-msgstr "Gerente"
+msgstr "Responsable"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/UserMetadataBuilder.java:146
 msgid "Manager of the specified user"
-msgstr "Gerente del usuario especificado"
+msgstr "Responsable del usuario especificado"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:43
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:105
@@ -1824,7 +1824,7 @@ msgstr "definiciones de los conectores"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/connector/ConnectorSection.java:57
 msgid "Class name"
-msgstr "Nombre de Clase"
+msgstr "Nombre de la clase"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:34
 msgid "The App cannot be enabled"
@@ -1903,7 +1903,7 @@ msgstr "Añadir una nueva categoría a %%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/AddProcessCategoryPage.java:84
 msgid "Category"
-msgstr "Categoria"
+msgstr "Categoría"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/AddProcessCategoryPage.java:85
 msgid "Select the category which the app will be linked to"
@@ -2249,7 +2249,7 @@ msgstr "Escriba el cargo de este usuario"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:210
 msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
+msgstr "Seleccione el responsable de este usuario"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:221
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:203
