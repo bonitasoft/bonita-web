@@ -211,7 +211,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 	}
 	
 	@Test
-	public void it_should_call_attachDocument_with_new_document_version() {
+	public void it_should_update_document_calling_attachDocument_with_new_document_version() {
 		try {
 			//Given
 			Map<String, String> attributes = new HashMap<String, String>();
@@ -229,7 +229,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 	}
 	
 	@Test
-	public void it_should_call_attachDocumentFromUrl_with_new_document_version() {
+	public void it_should_update_document_calling_attachDocumentFromUrl_with_new_document_version() {
 		try {
 			//Given
 			Map<String, String> attributes = new HashMap<String, String>();
@@ -245,4 +245,34 @@ public class DocumentDatastoreTest extends APITestWithMock {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test(expected = APIException.class)
+	public void it_should_not_update_document_and_throws_exception_for_missing_uploadPath() {
+		//Given
+		Map<String, String> attributes = new HashMap<String, String>();
+		attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc1");
+		APIID id = APIID.makeAPIID(1l);
+		try {
+			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			//When
+		documentDatastore.update(id, attributes);
+	}
+	
+	@Test(expected = APIException.class)
+	public void it_should_not_update_document_and_throws_exception_for_missing_document_name() {
+		//Given
+		Map<String, String> attributes = new HashMap<String, String>();
+		attributes.put(DocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
+		APIID id = APIID.makeAPIID(1l);
+		try {
+			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			//When
+		documentDatastore.update(id, attributes);
+	}	
 }
