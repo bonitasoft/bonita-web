@@ -8,13 +8,25 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.bpm.document.DocumentAttachmentException;
+import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.RetrieveException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -147,15 +159,90 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		documentDatastore.add(mockedDocumentItem);
 		
 	}
-/*
+	
 	@Test
-	public void testAttachDocument() throws Exception {
-		throw new RuntimeException("not yet implemented");
+	public void it_should_call_processAPI_attachDocument_method_with_document_content() throws Exception, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException {
+		//Given
+		URL docUrl = getClass().getResource("/doc.jpg");	
+		
+		//When
+		documentDatastore.attachDocument(1l, "Doc 1", docUrl.getPath(), "NEW_DOCUMENT");
+		
+		//Then
+		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg",  DocumentUtil.getArrayByteFromFile(new File(docUrl.getPath())));
+	}
+
+	
+	@Test
+	public void it_should_call_processAPI_attachDocument_method_with_external_url() throws Exception {
+		//Given
+		
+		//When
+		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT");
+		
+		//Then
+		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
 	}
 
 	@Test
-	public void testAttachDocumentFromUrl() throws Exception {
-		throw new RuntimeException("not yet implemented");
+	public void it_should_call_processAPI_attachNewDocumentVersion_method_with_document_content() {
+		//Given
+		URL docUrl = getClass().getResource("/doc.jpg");	
+		
+		try {
+			//When
+			documentDatastore.attachDocument(1l, "Doc 1", docUrl.getPath(), "NEW_DOCUMENT_VERSION");
+			//Then
+			verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg",  DocumentUtil.getArrayByteFromFile(new File(docUrl.getPath())));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
-*/
+	
+	@Test
+	public void it_should_call_processAPI_attachNewDocumentVersion_method_with_external_url() throws Exception {
+		//Given
+		
+		//When
+		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT_VERSION");
+		
+		//Then
+		verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
+	}
+	
+	@Test
+	public void it_should_call_attachDocument_with_new_document_version() {
+		try {
+			//Given
+			Map<String, String> attributes = new HashMap<String, String>();
+			attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc1");
+			attributes.put(DocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
+			APIID id = APIID.makeAPIID(1l);
+			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+			//When
+			documentDatastore.update(id, attributes);
+			//Then
+			verify(documentDatastore).attachDocument(0l, "Doc1", "C:\\doc.jpg", "NEW_DOCUMENT_VERSION");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void it_should_call_attachDocumentFromUrl_with_new_document_version() {
+		try {
+			//Given
+			Map<String, String> attributes = new HashMap<String, String>();
+			attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc1");
+			attributes.put(DocumentItem.ATTRIBUTE_URL, "http://images/doc.jpg");
+			APIID id = APIID.makeAPIID(1l);
+			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+			//When
+			documentDatastore.update(id, attributes);
+			//Then
+			verify(documentDatastore).attachDocumentFromUrl(0l, "Doc1", "http://images/doc.jpg", "NEW_DOCUMENT_VERSION");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
