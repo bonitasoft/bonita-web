@@ -65,6 +65,8 @@ public class DocumentDatastoreTest extends APITestWithMock {
         documentDatastore = spy(new DocumentDatastore(engineSession, constantsValue, processAPI));
     }
 	
+	//---------- GET METHOD TESTS ------------------------------//
+	
 	@Test
 	public void it_should_call_engine_processAPI_getDocument() throws Exception {
 		//Given
@@ -99,6 +101,8 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		verify(documentDatastore).convertEngineToConsoleItem(any(Document.class));
 	}
 	
+	//---------- CONVERT ITEM TESTS ------------------------------//
+	
 	@Test
 	public void it_should_convert_item_return_item() throws Exception {
 		//When
@@ -114,6 +118,8 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		//Then
 		assertTrue(convertedEngineToConsoleItem == null);
 	}
+	
+	//---------- ADD METHOD TESTS ------------------------------//
 	
 	@Test
 	public void it_should_add_a_document_and_call_attachDocument() throws Exception {
@@ -160,6 +166,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 	}
 	
+	//---------- ATTACH DOCUMENT TESTS ------------------------------//
 	@Test
 	public void it_should_call_processAPI_attachDocument_method_with_document_content() throws Exception, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException {
 		//Given
@@ -170,18 +177,6 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 		//Then
 		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg",  DocumentUtil.getArrayByteFromFile(new File(docUrl.getPath())));
-	}
-
-	
-	@Test
-	public void it_should_call_processAPI_attachDocument_method_with_external_url() throws Exception {
-		//Given
-		
-		//When
-		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT");
-		
-		//Then
-		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
 	}
 
 	@Test
@@ -198,17 +193,8 @@ public class DocumentDatastoreTest extends APITestWithMock {
 			e.printStackTrace();
 		}	
 	}
-	
-	@Test
-	public void it_should_call_processAPI_attachNewDocumentVersion_method_with_external_url() throws Exception {
-		//Given
-		
-		//When
-		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT_VERSION");
-		
-		//Then
-		verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
-	}
+
+	//---------- UPDATE METHOD TESTS ------------------------------//
 	
 	@Test
 	public void it_should_update_document_calling_attachDocument_with_new_document_version() {
@@ -274,5 +260,29 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		}
 			//When
 		documentDatastore.update(id, attributes);
-	}	
+	}
+	
+	//---------- ATTACH DOCUMENT FROM URL TESTS ------------------------------//
+	@Test
+	public void it_should_call_processAPI_attachDocument_method_with_external_url() throws Exception {
+		//Given
+		
+		//When
+		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT");
+		
+		//Then
+		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
+	}
+	
+	@Test
+	public void it_should_call_processAPI_attachNewDocumentVersion_method_with_external_url() throws Exception {
+		//Given
+		
+		//When
+		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT_VERSION");
+		
+		//Then
+		verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
+	}
+	
 }

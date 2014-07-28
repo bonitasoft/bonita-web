@@ -42,6 +42,7 @@ import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -51,7 +52,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Yongtao Guo, Fabio Lombardi
  * 
  */
-public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem> {
+public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem>, DatastoreHasUpdate<DocumentItem> {
 	
 	private static final String NEW_DOCUMENT = "NEW_DOCUMENT";
 	
@@ -110,7 +111,35 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         }
         
 	}
-
+    
+    @Override
+    public DocumentItem update(APIID id, Map<String, String> attributes) {    	
+    	DocumentItem returnedItem = new DocumentItem();
+    	try {
+    		Document document = processAPI.getDocument(id.toLong());
+    		final long caseId = document.getProcessInstanceId();
+    		final String documentName;
+    		final String urlPath;
+    		
+			if (attributes.containsKey(DocumentItem.ATTRIBUTE_NAME) && (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL))) {
+			
+				documentName = attributes.get(DocumentItem.ATTRIBUTE_NAME);
+				if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
+					urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
+					returnedItem = attachDocument(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
+				} else {
+					urlPath = attributes.get(DocumentItem.ATTRIBUTE_URL);
+					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
+				}
+				return returnedItem;
+			} else {
+		        throw new APIException("Error while attaching a new document. Request with bad param value.");
+		    }
+    	} catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+    
 	public DocumentItem attachDocument(final long caseId, final String documentName, final String uploadPath, String operationType) 
                 throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
@@ -160,33 +189,6 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
              item = convertEngineToConsoleItem(document);
         }
         return item;
-    }
-    
-    public DocumentItem update(APIID id, Map<String, String> attributes) {    	
-    	DocumentItem returnedItem = new DocumentItem();
-    	try {
-    		Document document = processAPI.getDocument(id.toLong());
-    		final long caseId = document.getProcessInstanceId();
-    		final String documentName;
-    		final String urlPath;
-    		
-			if (attributes.containsKey(DocumentItem.ATTRIBUTE_NAME) && (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL))) {
-			
-				documentName = attributes.get(DocumentItem.ATTRIBUTE_NAME);
-				if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
-					urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
-					returnedItem = attachDocument(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
-				} else {
-					urlPath = attributes.get(DocumentItem.ATTRIBUTE_URL);
-					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
-				}
-				return returnedItem;
-			} else {
-		        throw new APIException("Error while attaching a new document. Request with bad param value.");
-		    }
-    	} catch (final Exception e) {
-            throw new APIException(e);
-        }
     }
     
     @Override
