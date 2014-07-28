@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-26 07:03+0200\n"
-"PO-Revision-Date: 2014-07-26 14:36-0400\n"
+"PO-Revision-Date: 2014-07-27 14:40-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -136,7 +136,7 @@ msgstr "Json no puede ser mapeado a "
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:224
 msgid "This group has already been mapped to actor"
-msgstr "Este grupo ya ha sido asignado a un actor"
+msgstr "Este grupo ya ha sido mapeado a un actor"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:226
 msgid "Error when adding group to actor member"
@@ -148,11 +148,11 @@ msgstr "Este rol ya ha sido asignado a un actor"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:245
 msgid "This membership has already been mapped to actor"
-msgstr "Esta membresía ya ha sido asignada a un actor"
+msgstr "Esta membresía ya ha sido mapeada a un actor"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ActorMemberDatastore.java:254
 msgid "This user has already been mapped to actor"
-msgstr "Este usuario ya ha sido asignado al actor"
+msgstr "Este usuario ya ha sido mapeado a un actor"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/helper/ProcessItemConverter.java:65
 msgid "Process definition not found for id %processId%"
@@ -1471,7 +1471,7 @@ msgstr "no resuelto"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMembershipPage.java:52
 msgid "Edit memberships of actor %actor_name%"
-msgstr "Editar la membresia del actor %actor_name%"
+msgstr "Editar la membresía del actor %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMembershipPage.java:63
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:133
@@ -1499,7 +1499,7 @@ msgstr "Añadir este usuario a %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectUserForActorPage.java:92
 msgid "Select a user to be added to actor"
-msgstr "Seleccionar un usuario para añadirlo al actor"
+msgstr "Selecciona un usuario para añadirlo al actor"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:56
 msgid "Edit users of actor %actor_name%"
@@ -1513,11 +1513,11 @@ msgstr "Agregar un usuario"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectGroupForActorPage.java:102
 msgid "Add this group to %actor_name%"
-msgstr "Agregar este grupo a %actor_name%"
+msgstr "Añadir este grupo a %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectGroupForActorPage.java:107
 msgid "Add a group to %actor_name%"
-msgstr "Agregar a %actor_name% en grupo"
+msgstr "Añadir un grupo a %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/UserMemberCellFormatter.java:38
 msgid "Deactivated user"
@@ -1525,7 +1525,7 @@ msgstr "Usuario desactivado"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorGroupPage.java:54
 msgid "Edit groups of actor %actor_name%"
-msgstr "Editar grupo de actores %actor_name%"
+msgstr "Editar los grupos del actor %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorGroupPage.java:79
 msgid "add"
@@ -1539,11 +1539,11 @@ msgstr "Agregar un grupo"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:102
 msgid "Add this role to %actor_name%"
-msgstr "Añadir esta función a %actor_name%"
+msgstr "Añadir este rol a %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:107
 msgid "Add a role to %actor_name%"
-msgstr "Agregar un rol a %actor_name%"
+msgstr "Añadir un rol a %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectMembershipForActorPage.java:104
 msgid "Add this membership to %actor_name%"
@@ -1569,7 +1569,7 @@ msgstr "Miembro"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/RemoveCategoryPopUp.java:61
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/DeleteProfileMemberPage.java:73
 msgid "Remove"
-msgstr "Suprimir"
+msgstr "Eliminar"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:58
 msgid "Are you sur you want to remove selected actor members from app ?"
@@ -1582,11 +1582,11 @@ msgstr "¿Confirmar eliminación?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:51
 msgid "Actor mapping"
-msgstr "mapa de actores"
+msgstr "Mapeo de actores"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:60
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
-msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en la aplicación."
+msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) a mapear a los actores. Estas entidades ejecutarán las tareas humanas en la aplicación."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:63
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
