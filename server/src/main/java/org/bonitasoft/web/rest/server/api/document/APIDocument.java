@@ -15,6 +15,7 @@
 package org.bonitasoft.web.rest.server.api.document;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -49,6 +50,11 @@ public class APIDocument extends ConsoleAPI<DocumentItem> {
 	    }
 
 	    @Override
+		public DocumentItem update(APIID id, Map<String, String> attributes) {
+			return getDocumentDatastore().update(id, attributes);
+		}
+
+		@Override
 	    public String defineDefaultSearchOrder() {
 	        return "";
 	    }

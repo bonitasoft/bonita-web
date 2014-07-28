@@ -113,6 +113,7 @@ public class DocumentItem extends Item {
     public void setStorageId(final String storageId) {
         this.setAttribute(ATTRIBUTE_CONTENT_STORAGE_ID, storageId);
     }
+    
     public void setUploadPath(final String uploadPath) {
         this.setAttribute(ATTRIBUTE_UPLOAD_PATH, uploadPath);
     }

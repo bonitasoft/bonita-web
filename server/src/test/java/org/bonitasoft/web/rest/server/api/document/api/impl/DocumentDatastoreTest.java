@@ -116,7 +116,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 		//Then
 		//verify(processAPI).attachDocument(1l, "doc 1", "doc.jpg", "img", documentContent)
-		verify(documentDatastore).attachDocument(1l, "doc 1", docUrl.getPath());
+		verify(documentDatastore).attachDocument(1l, "doc 1", docUrl.getPath(), "NEW_DOCUMENT");
 		//throw new RuntimeException("not yet implemented");
 	}
 	
@@ -133,7 +133,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 		//Then
 		//verify(processAPI).attachDocument(1l, "doc 1", "doc.jpg", "img", documentContent)
-		verify(documentDatastore).attachDocumentFromUrl(1l, "doc 1", "http://images/doc.jpg");
+		verify(documentDatastore).attachDocumentFromUrl(1l, "doc 1", "http://images/doc.jpg", "NEW_DOCUMENT");
 		//throw new RuntimeException("not yet implemented");
 	}
 	

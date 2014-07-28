@@ -4,6 +4,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Map;
+
 import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
@@ -36,7 +38,7 @@ public class APIDocumentTest  extends APITestWithMock {
     }
 	
 	@Test
-	public void it_should_call_the_datastore_get_method() throws Exception {
+	public void it_should_call_the_datastore_get_method(){
 		//Given
 		APIID id = APIID.makeAPIID(1l);
 		
@@ -48,7 +50,7 @@ public class APIDocumentTest  extends APITestWithMock {
 	}
 
 	@Test
-	public void it_should_call_the_datastore_add_method() throws Exception {
+	public void it_should_call_the_datastore_add_method() {
 		//Given		
 		
 		//When
@@ -58,4 +60,16 @@ public class APIDocumentTest  extends APITestWithMock {
 		verify(datastore).add(documentItemMock);
 	}
 
+	@Test
+	public void it_should_call_the_datastore_update_method() {
+		//Given
+		APIID id = APIID.makeAPIID(1l);
+		Map<String, String> attributes = null;
+		
+		//When
+		apiDocument.update(id, attributes);
+		
+		//Then
+		verify(datastore).update(id, attributes);
+	}
 }

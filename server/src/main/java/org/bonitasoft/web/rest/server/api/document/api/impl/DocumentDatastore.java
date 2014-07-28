@@ -18,6 +18,7 @@ package org.bonitasoft.web.rest.server.api.document.api.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
@@ -52,6 +53,10 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem> {
 	
+	private static final String NEW_DOCUMENT = "NEW_DOCUMENT";
+	
+	private static final String NEW_DOCUMENT_VERSION = "NEW_DOCUMENT_VERSION";
+
 	protected final WebBonitaConstantsUtils constants;
 
     protected final ProcessAPI processAPI;
@@ -92,9 +97,9 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
             DocumentItem returnedItem = new DocumentItem();
             if (caseId != -1 && documentName != null) {
                 if (uploadPath != null && !uploadPath.isEmpty()) {
-                    returnedItem = attachDocument(caseId, documentName, uploadPath);
+                    returnedItem = attachDocument(caseId, documentName, uploadPath, NEW_DOCUMENT);
                 } else if (urlPath != null && !urlPath.isEmpty()) {
-                    returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath);
+                    returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, NEW_DOCUMENT);
                 }
                 return returnedItem;
             } else {
@@ -106,7 +111,7 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         
 	}
 
-	public DocumentItem attachDocument(final long caseId, final String documentName, final String uploadPath) 
+	public DocumentItem attachDocument(final long caseId, final String documentName, final String uploadPath, String operationType) 
                 throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
         DocumentItem item = new DocumentItem();
@@ -126,14 +131,18 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
                 mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
             }
         }
-        
         // Attach a new document to a case
-        final Document document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, fileContent);
+        Document document = null;
+        if (operationType.equals(NEW_DOCUMENT)) {
+        	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, fileContent);        	
+        } else if (operationType.equals(NEW_DOCUMENT_VERSION)) {
+        	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, fileContent);
+        } 
         item = convertEngineToConsoleItem(document);
         return item;
     }
 
-    public DocumentItem attachDocumentFromUrl(final long caseId, final String documentName, final String url)
+    public DocumentItem attachDocumentFromUrl(final long caseId, final String documentName, final String url, String operationType)
             throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, ProcessInstanceNotFoundException,
             DocumentAttachmentException, IOException, RetrieveException, ProcessDefinitionNotFoundException {
 
@@ -141,12 +150,43 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         final String fileName = DocumentUtil.getFileNameFromUrl(url);
         final String mimeType = DocumentUtil.getMimeTypeFromUrl(url);
         if (fileName != null && mimeType != null) {
-            
         	// Attach a new document to a case
-            final Document document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, url);
-            item = convertEngineToConsoleItem(document);
+        	 Document document = null;
+             if (operationType.equals(NEW_DOCUMENT)) {
+             	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, url);        	
+             } else if (operationType.equals(NEW_DOCUMENT_VERSION)) {
+             	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, url);
+             } 
+             item = convertEngineToConsoleItem(document);
         }
         return item;
+    }
+    
+    public DocumentItem update(APIID id, Map<String, String> attributes) {    	
+    	DocumentItem returnedItem = new DocumentItem();
+    	try {
+    		Document document = processAPI.getDocument(id.toLong());
+    		final long caseId = document.getProcessInstanceId();
+    		final String documentName;
+    		final String urlPath;
+    		
+			if (attributes.containsKey(DocumentItem.ATTRIBUTE_NAME) && (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL))) {
+			
+				documentName = attributes.get(DocumentItem.ATTRIBUTE_NAME);
+				if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
+					urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
+					returnedItem = attachDocument(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
+				} else {
+					urlPath = attributes.get(DocumentItem.ATTRIBUTE_URL);
+					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
+				}
+				return returnedItem;
+			} else {
+		        throw new APIException("Error while attaching a new document. Request with bad param value.");
+		    }
+    	} catch (final Exception e) {
+            throw new APIException(e);
+        }
     }
     
     @Override
