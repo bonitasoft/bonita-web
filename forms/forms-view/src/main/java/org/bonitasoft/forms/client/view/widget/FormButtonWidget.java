@@ -16,8 +16,7 @@
  */
 package org.bonitasoft.forms.client.view.widget;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -70,7 +69,7 @@ public class FormButtonWidget extends Composite implements HasClickHandlers, Cli
     /**
      * Click handlers registered for the widget
      */
-    protected List<ClickHandler> clickHandlers;
+    protected Map<String, ClickHandler> clickHandlers;
     
     /**
      * Constructor
@@ -155,7 +154,7 @@ public class FormButtonWidget extends Composite implements HasClickHandlers, Cli
      */
     public void onClick(final ClickEvent clickEvent) {
         if (clickHandlers != null) {
-            for (final ClickHandler clickHandler : clickHandlers) {
+            for (final ClickHandler clickHandler : clickHandlers.values()) {
                 clickHandler.onClick(clickEvent);
             }
         }
@@ -164,14 +163,25 @@ public class FormButtonWidget extends Composite implements HasClickHandlers, Cli
     /**
      * {@inheritDoc}
      */
-    public HandlerRegistration addClickHandler(final ClickHandler clickHandler) {
+    public HandlerRegistration addClickHandler(String id, final ClickHandler clickHandler) {
         if (clickHandlers == null) {
-            clickHandlers = new ArrayList<ClickHandler>();
+            clickHandlers = new HashMap<String, ClickHandler>();
         }
-        clickHandlers.add(clickHandler);
+        clickHandlers.put(id, clickHandler);
         return new EventHandlerRegistration(clickHandler);
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    public HandlerRegistration addClickHandler(final ClickHandler clickHandler) {
+        if (clickHandlers == null) {
+            clickHandlers = new HashMap<String, ClickHandler>();
+        }
+        clickHandlers.put(String.valueOf(clickHandler.hashCode()), clickHandler);
+        return new EventHandlerRegistration(clickHandler);
+    }
+
     /**
      * Custom Handler registration
      */
