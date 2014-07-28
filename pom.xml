@@ -29,9 +29,9 @@
 
 		<slf4j.version>1.6.1</slf4j.version>
 		<gwt.version>2.5.1</gwt.version>
-		<!-- The following property is used by the gwt-maven plugin. As it does 
-			not follow the same naming convention as others, we decided to have both 
-			gwt.version and gwtVersion properties. Of course the two properties refer 
+		<!-- The following property is used by the gwt-maven plugin. As it does
+			not follow the same naming convention as others, we decided to have both
+			gwt.version and gwtVersion properties. Of course the two properties refer
 			to the same value. -->
 		<gwtVersion>${gwt.version}</gwtVersion>
 		<wro4j.version>1.7.0</wro4j.version>
@@ -645,18 +645,18 @@
 				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 				<!-- Report output directory, in Jenkins use: -Djacoco.outputDir=${WORKSPACE} -->
 				<jacoco.outputDir>${user.home}</jacoco.outputDir>
-				<!-- The destination file for the code coverage report has to be set 
-					to the same value in the parent pom and in each module pom. Then JaCoCo will 
-					add up information in the same report, so that, it will give the cross-module 
+				<!-- The destination file for the code coverage report has to be set
+					to the same value in the parent pom and in each module pom. Then JaCoCo will
+					add up information in the same report, so that, it will give the cross-module
 					code coverage. -->
 				<!-- Jacoco output file for UTs -->
 				<jacoco.out.ut.file>jacoco-web-ut.exec</jacoco.out.ut.file>
-				<!-- Tells Sonar where the Jacoco coverage result file is located for 
+				<!-- Tells Sonar where the Jacoco coverage result file is located for
 					Unit Tests -->
 				<sonar.jacoco.reportPath>${jacoco.outputDir}/${jacoco.out.ut.file}</sonar.jacoco.reportPath>
 				<!-- Jacoco output file for ITs -->
 				<jacoco.out.it.file>jacoco-web-it.exec</jacoco.out.it.file>
-				<!-- Tells Sonar where the Jacoco coverage result file is located for 
+				<!-- Tells Sonar where the Jacoco coverage result file is located for
 					Integration Tests -->
 				<sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
 			</properties>
@@ -719,7 +719,7 @@
                                         <bonita.home>${bonita.home.test}/bonita</bonita.home>
 									</systemPropertyVariables>
 									<includes>
-										<!--run all possible tests maven failsafe plugin filters classes 
+										<!--run all possible tests maven failsafe plugin filters classes
 											by name add those includes if you want to preserve surefire conventions -->
 										<include>**/Test*.java</include>
 										<include>**/*Test.java</include>
@@ -734,7 +734,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- Avoid executing the tests twice (they are already launched with 
+					<!-- Avoid executing the tests twice (they are already launched with
 						failsafe) -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>

@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.datastore.profile;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.List;
