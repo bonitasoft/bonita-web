@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-24 22:02+0200\n"
-"PO-Revision-Date: 2014-07-28 17:32-0400\n"
+"PO-Revision-Date: 2014-07-29 17:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2581,11 +2581,11 @@ msgstr "Votre session a expirée, Loguez vous de nouveau s'il vous plait."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:56
 msgid "These %item_name_plural% will be definitively deleted."
-msgstr "These %item_name_plural% will be definitively deleted."
+msgstr "Les éléments %item_name_plural% seront définitivement supprimés."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:58
 msgid "This %item_name% will be definitively deleted."
-msgstr "This %item_name% will be definitively deleted."
+msgstr "L'élément %item_name% sera définitivement supprimé."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/form/FormAction.java:55
 msgid "Please wait for your files to be uploaded."
