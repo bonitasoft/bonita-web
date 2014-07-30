@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-25 07:02+0200\n"
-"PO-Revision-Date: 2014-07-28 17:37-0400\n"
+"POT-Creation-Date: 2014-07-30 07:02+0200\n"
+"PO-Revision-Date: 2014-07-30 02:35-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -3284,12 +3284,12 @@ msgid "Please wait for your files to be uploaded."
 msgstr "Aguarde  seus  arquivos serem carregados."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:56
-msgid "These %item_name_plural% will be definitely deleted."
+msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Estes %item_name_plural% serão definitivamente excluídos."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:58
-msgid "This %item_name% will be definitely deleted."
-msgstr "Este % item_name % será definitivamente excluído."
+msgid "This %item_name% will be definitively deleted."
+msgstr "Este %item_name% será definitivamente excluído."
 
 #: common/src/main/java/org/bonitasoft/web/rest/model/bpm/flownode/FlowNodeTypeAttributeReader.java:39
 msgid "Human task"
