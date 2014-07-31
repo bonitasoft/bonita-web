@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-26 07:03+0200\n"
-"PO-Revision-Date: 2014-07-28 06:17-0400\n"
+"PO-Revision-Date: 2014-07-30 08:55-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -553,11 +553,11 @@ msgstr "En attente du transfert du fichier."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:56
 msgid "These %item_name_plural% will be definitively deleted."
-msgstr "These %item_name_plural% will be definitively deleted."
+msgstr "Les éléments %item_name_plural% seront définitivement supprimés."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/action/popup/DeleteMultipleItemsPopupAction.java:58
 msgid "This %item_name% will be definitively deleted."
-msgstr "This %item_name% will be definitively deleted."
+msgstr "L'élément %item_name% sera définitivement supprimé."
 
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/DatePicker.java:66
 msgid "mm/dd/yyyy"
@@ -1108,7 +1108,7 @@ msgstr "Echéance"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:163
 msgid "Failed on"
-msgstr "Failed on"
+msgstr "Échec le"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:181
 msgid "Human Task"
@@ -1126,7 +1126,7 @@ msgstr "Prêt depuis %task_last_update%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskTechnicalInformationSnippet.java:57
 msgid "Failed on %task_last_update%"
-msgstr "Failed on %task_last_update%"
+msgstr "Echec le %task_last_update%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ConnectorInstanceTable.java:44
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/ArchivedConnectorInstanceSectionSnippet.java:68
@@ -1299,7 +1299,7 @@ msgstr "Exécuté par :"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:181
 msgid "Failed on:"
-msgstr "Failed on:"
+msgstr "Échec le :"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedCaseQuickDetailsAdminPage.java:85
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseQuickDetailsAdminPage.java:56
