@@ -223,6 +223,32 @@ public class ProcessEngineClient {
         }
     }
 
+    public SearchResult<ProcessDeploymentInfo> searchProcessDeploymentInfosWithAssignedOrPendingHumanTasksSupervisedBy(final long supervisorId,
+            final SearchOptions searchOptions) {
+        try {
+            return getProcessApi().searchProcessDeploymentInfosWithAssignedOrPendingHumanTasksSupervisedBy(supervisorId, searchOptions);
+        } catch (final SearchException e) {
+            throw new APIException("Error when searching process user can start", e);
+        }
+    }
+
+    public SearchResult<ProcessDeploymentInfo> searchProcessDeploymentInfosWithAssignedOrPendingHumanTasks(final SearchOptions searchOptions) {
+        try {
+            return getProcessApi().searchProcessDeploymentInfosWithAssignedOrPendingHumanTasks(searchOptions);
+        } catch (final SearchException e) {
+            throw new APIException("Error when searching process user can start", e);
+        }
+    }
+
+    public SearchResult<ProcessDeploymentInfo> searchProcessDeploymentInfosWithAssignedOrPendingHumanTasksFor(final long userId,
+            final SearchOptions searchOptions) {
+        try {
+            return getProcessApi().searchProcessDeploymentInfosWithAssignedOrPendingHumanTasksFor(userId, searchOptions);
+        } catch (final SearchException e) {
+            throw new APIException("Error when searching process user can start", e);
+        }
+    }
+
     public SearchResult<ProcessDeploymentInfo> searchProcessDeploymentInfos(final long userId, final SearchOptions searchOptions) {
         try {
             return getProcessApi().searchProcessDeploymentInfos(userId, searchOptions);
