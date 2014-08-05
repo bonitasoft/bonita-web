@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-31 01:03+0200\n"
-"PO-Revision-Date: 2014-08-03 20:38-0400\n"
+"PO-Revision-Date: 2014-08-04 17:38-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -351,7 +351,7 @@ msgstr "Error when deleting groups"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/GroupEngineClient.java:85
 msgid "Can't update group. Group not found"
-msgstr "Can't update group. Group not found"
+msgstr "Não é possível atualizar o grupo. Grupo não encontrado"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/GroupEngineClient.java:87
 msgid "Error when updating group"
@@ -806,7 +806,7 @@ msgstr "Criar este grupo"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/UpdateGroupPage.java:54
 msgid "Update a group"
-msgstr "Update a group"
+msgstr "Atualizar um grupo"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/UpdateGroupPage.java:68
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:72
@@ -817,7 +817,7 @@ msgstr "Salvar"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/UpdateGroupPage.java:68
 msgid "Save this group changes"
-msgstr "Save this group changes"
+msgstr "Salvar alterações neste grupo"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:71
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:82
@@ -973,7 +973,7 @@ msgstr "Editar"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupQuickDetailsAdminPage.java:65
 msgid "Edit this group"
-msgstr "Edit this group"
+msgstr "Editar este grupo"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupQuickDetailsAdminPage.java:80
 msgid "The date of the group creation"
@@ -1000,11 +1000,11 @@ msgstr "Parent group"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupQuickDetailsAdminPage.java:90
 msgid "The group parent path"
-msgstr "The group parent path"
+msgstr "O caminho de acesso do grupo pai"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupQuickDetailsAdminPage.java:95
 msgid "Direct users"
-msgstr "Direct users"
+msgstr "Usuários diretos"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/SubGroupSection.java:34
 msgid "Sub groups"
