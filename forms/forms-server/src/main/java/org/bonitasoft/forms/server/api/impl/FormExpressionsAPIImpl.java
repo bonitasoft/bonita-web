@@ -981,7 +981,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
         for (final Expression expression : expressions) {
             if (expression != null) {
-                expressionsWithContext.put(expressionAdapter.getEngineExpression(expression), context);
+                Map<String, Serializable> generatedContext = generateGroovyContext(session, fieldValues, locale, context, false);
+                expressionsWithContext.put(expressionAdapter.getEngineExpression(expression), generatedContext);
             } else {
                 if (LOGGER.isLoggable(Level.FINE)) {
                     LOGGER.log(Level.FINE, "The expression or its type are null");
@@ -990,7 +991,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         }
 
         if (!expressionsWithContext.isEmpty()) {
-            context = generateGroovyContext(session, fieldValues, locale, context, false);
             result.putAll(getProcessInstanceExpressionEvaluator(session).evaluate(getProcessInstanceAccessor(session, processInstanceId),
                     expressionsWithContext, !isCurrentValue));
         }
@@ -1074,7 +1074,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         final ExpressionAdapter expressionAdapter = new ExpressionAdapter();
         for (final Expression expression : expressions) {
             if (expression != null) {
-                expressionsWithContext.put(expressionAdapter.getEngineExpression(expression), context);
+                Map<String, Serializable> generatedContext = generateGroovyContext(session, fieldValues, locale, context, false);
+                expressionsWithContext.put(expressionAdapter.getEngineExpression(expression), generatedContext);
             } else {
                 if (LOGGER.isLoggable(Level.FINE)) {
                     LOGGER.log(Level.FINE, "The expression or its type are null");
@@ -1083,7 +1084,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         }
 
         if (!expressionsWithContext.isEmpty()) {
-            context = generateGroovyContext(session, fieldValues, locale, context, false);
             result.putAll(getExpressionEvaluator(session).evaluateExpressionsOnProcessDefinition(processDefinitionID, expressionsWithContext));
         }
         return result;
