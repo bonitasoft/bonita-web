@@ -47,6 +47,7 @@ public class ProcessSearchDescriptorConverter implements AttributeConverter {
         mapping.put(ProcessItem.FILTER_SUPERVISOR_ID, "");
         mapping.put(ProcessItem.FILTER_TEAM_MANAGER_ID, "");
         mapping.put(ProcessItem.FILTER_USER_ID, "");
+        mapping.put(ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS, "");
     }
 
     @Override
