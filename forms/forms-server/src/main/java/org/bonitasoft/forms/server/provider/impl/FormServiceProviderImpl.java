@@ -2169,6 +2169,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         Map<String, Serializable> transientDataContext = (Map<String, Serializable>) session.getAttribute(storageKey + "--" + id);
         if (transientDataContext == null) {
             transientDataContext = new HashMap<String, Serializable>();
+        }else{
+            transientDataContext = new HashMap<String, Serializable>(transientDataContext);
         }
         return transientDataContext;
     }
