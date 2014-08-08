@@ -382,19 +382,16 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     public Map<String, Serializable> generateGroovyContext(final APISession session, final Map<String, FormFieldValue> fieldValues, final Locale locale,
             Map<String, Serializable> context, final boolean deleteDocuments) throws FileTooBigException, IOException, InvalidSessionException,
             BPMEngineException {
-	   
-    	final Map<String, Serializable> generatedContext = new HashMap<String, Serializable>();
-        if (context != null) {
-        	generatedContext.putAll(context);        	
+        if (context == null) {
+            context = new HashMap<String, Serializable>();
         }
-        
         for (final Entry<String, FormFieldValue> fieldValuesEntry : fieldValues.entrySet()) {
             final String fieldId = fieldValuesEntry.getKey();
             final Serializable fieldValue = evaluateFieldValueActionExpression(session, fieldId, fieldValues, locale, deleteDocuments);
-            generatedContext.put(FIELDID_PREFIX + fieldId, fieldValue);
+            context.put(FIELDID_PREFIX + fieldId, fieldValue);
         }
-        generatedContext.put(IFormExpressionsAPI.USER_LOCALE, locale);
-        return generatedContext;
+        context.put(IFormExpressionsAPI.USER_LOCALE, locale);
+        return context;
     }
 
     /**
