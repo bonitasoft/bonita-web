@@ -81,7 +81,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PROCESS_ID, HumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        // addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PROCESS_ID, HumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_STATE, HumanTaskInstanceSearchDescriptor.STATE_NAME);
         addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
         // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
@@ -152,6 +152,12 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
                     final SearchResult<ENGINE_ITEM> searchPendingTasksForUser = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksForUser(
                             id.toLong(), builder.done());
                     return searchPendingTasksForUser;
+                } else if (filters.containsKey(HumanTaskItem.ATTRIBUTE_PROCESS_ID)) {
+                    @SuppressWarnings("unchecked")
+                    final SearchResult<ENGINE_ITEM> searchMyAvailableHumanTasks = (SearchResult<ENGINE_ITEM>) getProcessAPI()
+                            .searchAssignedAndPendingHumanTasksFor(APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_PROCESS_ID)).toLong(), id.toLong(),
+                                    builder.done());
+                    return searchMyAvailableHumanTasks;
                 } else {
                     @SuppressWarnings("unchecked")
                     final SearchResult<ENGINE_ITEM> searchMyAvailableHumanTasks = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchMyAvailableHumanTasks(
@@ -179,10 +185,18 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
                             builder.done());
                     return searchResult;
                 } else {
-                    @SuppressWarnings("unchecked")
-                    final SearchResult<ENGINE_ITEM> searchResult = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksManagedBy(teamManagerId,
-                            builder.done());
-                    return searchResult;
+                    if (filters.containsKey(HumanTaskItem.ATTRIBUTE_PROCESS_ID)) {
+                        @SuppressWarnings("unchecked")
+                        final SearchResult<ENGINE_ITEM> searchMyAvailableHumanTasks = (SearchResult<ENGINE_ITEM>) getProcessAPI()
+                                .searchAssignedAndPendingHumanTasks(APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_PROCESS_ID)).toLong(),
+                                        builder.done());
+                        return searchMyAvailableHumanTasks;
+                    } else {
+                        @SuppressWarnings("unchecked")
+                        final SearchResult<ENGINE_ITEM> searchResult = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksManagedBy(teamManagerId,
+                                builder.done());
+                        return searchResult;
+                    }
                 }
             } else {
                 // Custom search

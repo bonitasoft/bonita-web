@@ -59,10 +59,17 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
         } else if (isFilteringOn(filters, ProcessItem.FILTER_USER_ID, ProcessItem.FILTER_CATEGORY_ID)
                 && filters.get(ProcessItem.FILTER_CATEGORY_ID) == null) {
             return engineClient.searchUncategorizedProcessDefinitionsUserCanStart(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
+        } else if (isFilteringOn(filters, ProcessItem.FILTER_USER_ID, ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS)) {
+            return engineClient.searchProcessDeploymentInfosWithAssignedOrPendingHumanTasksFor(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
         } else if (isFilteringOn(filters, ProcessItem.FILTER_USER_ID)) {
             return engineClient.searchProcessDeploymentInfos(getApiId(filters, ProcessItem.FILTER_USER_ID), searchOptions);
+        } else if (isFilteringOn(filters, ProcessItem.FILTER_SUPERVISOR_ID, ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS)) {
+            return engineClient.searchProcessDeploymentInfosWithAssignedOrPendingHumanTasksSupervisedBy(getApiId(filters, ProcessItem.FILTER_USER_ID),
+                    searchOptions);
         } else if (isFilteringOn(filters, ProcessItem.FILTER_SUPERVISOR_ID)) {
             return engineClient.searchProcessDefinitionsSupervisedBy(getApiId(filters, ProcessItem.FILTER_SUPERVISOR_ID), searchOptions);
+        } else if (isFilteringOn(filters, ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS)) {
+            return engineClient.searchProcessDeploymentInfosWithAssignedOrPendingHumanTasks(searchOptions);
         } else {
             return engineClient.searchProcessDefinitions(searchOptions);
         }

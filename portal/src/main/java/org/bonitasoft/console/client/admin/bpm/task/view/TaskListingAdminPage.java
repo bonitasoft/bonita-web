@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,12 +37,15 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.TreeNode;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
+import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.FlowNodeContextAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -110,7 +113,9 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
     @Override
     protected ItemListingResourceFilter defineResourceFilters() {
-        return new AppResourceFilter(TABLE_ALL)
+        return new AppResourceFilter(new APISearchRequest(Definitions.get(ProcessDefinition.TOKEN))
+                .addFilter(ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS, "true"),
+                TABLE_ALL)
                 .addFilterMapping(TaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID)
                 .addFilter(TaskItem.ATTRIBUTE_STATE, TaskItem.VALUE_STATE_READY);
     }
