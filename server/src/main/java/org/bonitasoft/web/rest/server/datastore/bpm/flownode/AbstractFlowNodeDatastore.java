@@ -28,6 +28,7 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -135,12 +136,18 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected SearchResult<ENGINE_ITEM> runSearch(final SearchOptionsBuilder builder, final Map<String, String> filters) {
         try {
-            @SuppressWarnings("unchecked")
-            final SearchResult<ENGINE_ITEM> result = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchFlowNodeInstances(
+            final SearchResult<ENGINE_ITEM> result;
+            if (filters.containsKey(HumanTaskItem.ATTRIBUTE_PROCESS_ID)) {
+                result = (SearchResult<ENGINE_ITEM>) getProcessAPI()
+                        .searchAssignedAndPendingHumanTasks(APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_PROCESS_ID)).toLong(),
+                                builder.done());
+            } else {
+                result = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchFlowNodeInstances(
                     builder.done());
-
+            }
             return result;
         } catch (final Exception e) {
             throw new APIException(e);
@@ -153,7 +160,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
         addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
-        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        // addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
         addFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
 
