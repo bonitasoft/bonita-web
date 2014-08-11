@@ -119,14 +119,12 @@ public class APIServletCall extends ServletCall {
         final String[] path = request.getPathInfo().split("/");
 
         // Read API tokens
-        if (path.length < 2) {
+        if (path.length < 3) {
             throw new APIMalformedUrlException("Missing API or resource name [" + request.getRequestURL() + "]");
         }
 
         apiName = path[1];
-        if (path.length > 2) {
-        	resourceName = path[2];
-        }
+        resourceName = path[2];
         
         // Fixes BS-400. This is ugly.
         I18n.getInstance();
