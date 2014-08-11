@@ -13,3 +13,6 @@ btm2.tlog
 
 *.class
 /en.po
+
+*.orig
+*.tmp
