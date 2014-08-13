@@ -45,23 +45,39 @@ public class DocumentItem extends Item {
 
     public static final String ATTRIBUTE_CASE_ID = "caseId";
     
-    public static final String ATTRIBUTE_NAME = "name";
+    public static final String ATTRIBUTE_NAME = "documentName";
 
-    public static final String ATTRIBUTE_SUBMITTED_BY_USER_ID = "createdBy";
+    public static final String ATTRIBUTE_SUBMITTED_BY_USER_ID = "submittedBy";
     
-    public static final String ATTRIBUTE_CREATION_DATE = "creationDate";
+    public static final String ATTRIBUTE_CREATION_DATE = "documentCreationDate";
 
     public static final String ATTRIBUTE_HAS_CONTENT = "documentHasContent";
 
-    public static final String ATTRIBUTE_CONTENT_FILENAME = "fileName";
+    public static final String ATTRIBUTE_CONTENT_FILENAME = "documentContentFileName";
 
-    public static final String ATTRIBUTE_CONTENT_MIMETYPE = "contentMimeType";
+    public static final String ATTRIBUTE_CONTENT_MIMETYPE = "documentContentMimeType";
 
-    public static final String ATTRIBUTE_CONTENT_STORAGE_ID = "contentStorageId";
+    public static final String ATTRIBUTE_CONTENT_STORAGE_ID = "documentContentStorageId";
 
-    public static final String ATTRIBUTE_UPLOAD_PATH = "uploadPath";
+    public static final String ATTRIBUTE_UPLOAD_PATH = "documentUpload";
     
-    public static final String ATTRIBUTE_URL = "URL";
+    public static final String ATTRIBUTE_URL = "documentURL";
+    
+    /* Attribute kept here for avoiding API break */
+    
+    public static final String DOCUMENT_CREATION_TYPE = "DOCUMENT_CREATION_TYPE";
+    
+    public static final String PROCESSINSTANCE_NAME = "processinstanceName";
+
+    public static final String PROCESS_DISPLAY_NAME = "processDisplayName";
+
+    public static final String PROCESS_VERSION = "processinstanceVersion";
+    
+    public static final String PROCESSINSTANCE_ID = "processinstanceId";
+    
+    public static final String DOCUMENT_AUTHOR = "documentAuthor";
+    
+    /* -------------------------------------------- */
 
     public void setId(final String id) {
         this.setAttribute(ATTRIBUTE_ID, id);
@@ -74,6 +90,7 @@ public class DocumentItem extends Item {
     
     public void setCaseId(final String caseId) {
         this.setAttribute(ATTRIBUTE_CASE_ID, caseId);
+        this.setAttribute(PROCESSINSTANCE_ID, caseId);
     }
 
     
@@ -83,11 +100,13 @@ public class DocumentItem extends Item {
     
     public void setSubmittedBy(final APIID userId) {
         this.setAttribute(ATTRIBUTE_SUBMITTED_BY_USER_ID, userId.toString());
+        this.setAttribute(DOCUMENT_AUTHOR, userId);
     }
 
     
     public void setSubmittedBy(final Long userId) {
         this.setAttribute(ATTRIBUTE_SUBMITTED_BY_USER_ID, userId.toString());
+        this.setAttribute(DOCUMENT_AUTHOR, userId.toString());
     }
 
     public void setCreationDate(String creationDate) {
@@ -137,6 +156,7 @@ public class DocumentItem extends Item {
     public String getName() {
     	return getAttributeValue(ATTRIBUTE_NAME);
     }
+    
     public APIID getSubmittedBy() {
     	return getAttributeValueAsAPIID(ATTRIBUTE_SUBMITTED_BY_USER_ID);
     }
@@ -167,7 +187,29 @@ public class DocumentItem extends Item {
 
     @Override
     public ItemDefinition getItemDefinition() {
-        return new DocumentDefinition();
+    	return new DocumentDefinition();
     }
+
+    /* Methods kept here to avoid API break */
+    
+    public void setProcessInstanceId(final String caseId) {
+    	this.setAttribute(PROCESSINSTANCE_ID, caseId);
+    }
+    
+    public void setCaseName(final String caseName) {
+        this.setAttribute(PROCESSINSTANCE_NAME, caseName);
+    }
+
+    public void setProcessDisplayName(final String caseName) {
+        this.setAttribute(PROCESS_DISPLAY_NAME, caseName);
+    }
+
+    public void setProcessVersion(final String caseVersion) {
+        this.setAttribute(PROCESS_VERSION, caseVersion);
+    }
+    
+	public void setDocumentAuthor(final Long userId) {
+		this.setAttribute(DOCUMENT_AUTHOR, userId);
+	}
 
 }

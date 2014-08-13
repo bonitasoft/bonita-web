@@ -134,7 +134,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 		//Then
 		//verify(processAPI).attachDocument(1l, "doc 1", "doc.jpg", "img", documentContent)
-		verify(documentDatastore).attachDocument(1l, "doc 1", docUrl.getPath(), "NEW_DOCUMENT");
+		verify(documentDatastore).attachDocument(1l, "doc 1", docUrl.getPath(), "AddNewDocument");
 		//throw new RuntimeException("not yet implemented");
 	}
 	
@@ -151,7 +151,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 		//Then
 		//verify(processAPI).attachDocument(1l, "doc 1", "doc.jpg", "img", documentContent)
-		verify(documentDatastore).attachDocumentFromUrl(1l, "doc 1", "http://images/doc.jpg", "NEW_DOCUMENT");
+		verify(documentDatastore).attachDocumentFromUrl(1l, "doc 1", "http://images/doc.jpg", "AddNewDocument");
 		//throw new RuntimeException("not yet implemented");
 	}
 	
@@ -159,6 +159,17 @@ public class DocumentDatastoreTest extends APITestWithMock {
 	public void it_throws_an_exception_adding_a_document_with_invalid_inputs(){
 		//Given
 		mockedDocumentItem.setAttribute(DocumentItem.ATTRIBUTE_CASE_ID, -1);
+		mockedDocumentItem.setAttribute(DocumentItem.PROCESSINSTANCE_ID, -1);
+		mockedDocumentItem.setAttribute(DocumentItem.ATTRIBUTE_NAME, "");
+		//byte[] fileContent = DocumentUtil.getArrayByteFromFile(new File(docUrl));
+		//When
+		documentDatastore.add(mockedDocumentItem);
+		
+	}
+	
+	@Test(expected = APIException.class)
+	public void it_throws_an_exception_adding_a_document_with_missing_inputs(){
+		//Given
 		mockedDocumentItem.setAttribute(DocumentItem.ATTRIBUTE_NAME, "");
 		//byte[] fileContent = DocumentUtil.getArrayByteFromFile(new File(docUrl));
 		//When
@@ -173,7 +184,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		URL docUrl = getClass().getResource("/doc.jpg");	
 		
 		//When
-		documentDatastore.attachDocument(1l, "Doc 1", docUrl.getPath(), "NEW_DOCUMENT");
+		documentDatastore.attachDocument(1l, "Doc 1", docUrl.getPath(), "AddNewDocument");
 		
 		//Then
 		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg",  DocumentUtil.getArrayByteFromFile(new File(docUrl.getPath())));
@@ -186,7 +197,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		
 		try {
 			//When
-			documentDatastore.attachDocument(1l, "Doc 1", docUrl.getPath(), "NEW_DOCUMENT_VERSION");
+			documentDatastore.attachDocument(1l, "Doc 1", docUrl.getPath(), "AddNewVersionDocument");
 			//Then
 			verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg",  DocumentUtil.getArrayByteFromFile(new File(docUrl.getPath())));
 		} catch (Exception e) {
@@ -208,7 +219,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 			//When
 			documentDatastore.update(id, attributes);
 			//Then
-			verify(documentDatastore).attachDocument(0l, "Doc1", "C:\\doc.jpg", "NEW_DOCUMENT_VERSION");
+			verify(documentDatastore).attachDocument(0l, "Doc1", "C:\\doc.jpg", "AddNewVersionDocument");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -226,7 +237,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 			//When
 			documentDatastore.update(id, attributes);
 			//Then
-			verify(documentDatastore).attachDocumentFromUrl(0l, "Doc1", "http://images/doc.jpg", "NEW_DOCUMENT_VERSION");
+			verify(documentDatastore).attachDocumentFromUrl(0l, "Doc1", "http://images/doc.jpg", "AddNewVersionDocument");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -268,7 +279,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		//Given
 		
 		//When
-		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT");
+		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "AddNewDocument");
 		
 		//Then
 		verify(processAPI).attachDocument(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");
@@ -279,7 +290,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		//Given
 		
 		//When
-		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "NEW_DOCUMENT_VERSION");
+		documentDatastore.attachDocumentFromUrl(1l, "Doc 1", "http://images/doc.jpg", "AddNewVersionDocument");
 		
 		//Then
 		verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg");

@@ -68,6 +68,15 @@ public class DocumentDefinition extends ItemDefinition {
         createAttribute(DocumentItem.ATTRIBUTE_CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.ATTRIBUTE_URL, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.ATTRIBUTE_UPLOAD_PATH, ItemAttribute.TYPE.STRING);
+        
+        /* Attributes kept here to avoid API break */
+        createAttribute(DocumentItem.PROCESSINSTANCE_ID, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESSINSTANCE_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESS_DISPLAY_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESS_VERSION, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_AUTHOR, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_CREATION_TYPE, ItemAttribute.TYPE.STRING);
+        /* ---------------------------------------- */
     }
 
     @Override

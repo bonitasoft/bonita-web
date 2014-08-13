@@ -54,9 +54,9 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem>, DatastoreHasUpdate<DocumentItem> {
 	
-	private static final String NEW_DOCUMENT = "NEW_DOCUMENT";
+	private static final String CREATE_NEW_DOCUMENT = "AddNewDocument";
 	
-	private static final String NEW_DOCUMENT_VERSION = "NEW_DOCUMENT_VERSION";
+	private static final String CREATE_NEW_VERSION_DOCUMENT = "AddNewVersionDocument";
 
 	protected final WebBonitaConstantsUtils constants;
 
@@ -90,17 +90,34 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
     @Override
 	public DocumentItem add(DocumentItem item) {
 
-        final long caseId = Long.valueOf(item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID));
+        final long attributeCaseId = Long.valueOf(item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID));
+        long caseId = attributeCaseId;
+        
+        /* Necessary to avoid API break*/
+        if (caseId == -1) {
+        	caseId = Long.valueOf(item.getAttributeValue(DocumentItem.PROCESSINSTANCE_ID));
+        }
+        /* -----------------------------*/
+        
         final String documentName = item.getAttributeValue(DocumentItem.ATTRIBUTE_NAME);
         final String uploadPath = item.getAttributeValue(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
         final String urlPath = item.getAttributeValue(DocumentItem.ATTRIBUTE_URL);
+        
+        /* Necessary to avoid API break*/
+        String operationType = CREATE_NEW_DOCUMENT;
+        final String userSpecifiedOperationType = item.getAttributeValue(DocumentItem.DOCUMENT_CREATION_TYPE);
+        if (userSpecifiedOperationType != null) {
+        	operationType = userSpecifiedOperationType;
+        }
+        /* -----------------------------*/
+        
         try {
             DocumentItem returnedItem = new DocumentItem();
             if (caseId != -1 && documentName != null) {
                 if (uploadPath != null && !uploadPath.isEmpty()) {
-                    returnedItem = attachDocument(caseId, documentName, uploadPath, NEW_DOCUMENT);
+                    returnedItem = attachDocument(caseId, documentName, uploadPath, operationType);
                 } else if (urlPath != null && !urlPath.isEmpty()) {
-                    returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, NEW_DOCUMENT);
+                    returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, operationType);
                 }
                 return returnedItem;
             } else {
@@ -126,10 +143,10 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
 				documentName = attributes.get(DocumentItem.ATTRIBUTE_NAME);
 				if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
 					urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
-					returnedItem = attachDocument(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
+					returnedItem = attachDocument(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT);
 				} else {
 					urlPath = attributes.get(DocumentItem.ATTRIBUTE_URL);
-					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, NEW_DOCUMENT_VERSION);
+					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT);
 				}
 				return returnedItem;
 			} else {
@@ -162,9 +179,9 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         }
         // Attach a new document to a case
         Document document = null;
-        if (operationType.equals(NEW_DOCUMENT)) {
+        if (operationType.equals(CREATE_NEW_DOCUMENT)) {
         	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, fileContent);        	
-        } else if (operationType.equals(NEW_DOCUMENT_VERSION)) {
+        } else if (operationType.equals(CREATE_NEW_VERSION_DOCUMENT)) {
         	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, fileContent);
         } 
         item = convertEngineToConsoleItem(document);
@@ -181,9 +198,9 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         if (fileName != null && mimeType != null) {
         	// Attach a new document to a case
         	 Document document = null;
-             if (operationType.equals(NEW_DOCUMENT)) {
+             if (operationType.equals(CREATE_NEW_DOCUMENT)) {
              	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, url);        	
-             } else if (operationType.equals(NEW_DOCUMENT_VERSION)) {
+             } else if (operationType.equals(CREATE_NEW_VERSION_DOCUMENT)) {
              	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, url);
              } 
              item = convertEngineToConsoleItem(document);
