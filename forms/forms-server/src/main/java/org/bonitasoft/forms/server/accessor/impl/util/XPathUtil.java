@@ -16,16 +16,17 @@
  */
 package org.bonitasoft.forms.server.accessor.impl.util;
 
-import org.bonitasoft.forms.server.constants.XMLForms;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.bonitasoft.forms.server.constants.XMLForms;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Anthony Birembaut
@@ -47,12 +48,12 @@ public abstract class XPathUtil {
      * Retrieve the child node of a node using XPath
      * 
      * @param parentNode
-     *            the node
+     *        the node
      * @param xPath
-     *            the XPath expression
+     *        the XPath expression
      * @return the child {@link Node}
      */
-    protected Node getNodeByXpath(final Node parentNode, final String xPath) {
+    public Node getNodeByXpath(final Node parentNode, final String xPath) {
         Node node = null;
         try {
             node = (Node) xpathEvaluator.evaluate(xPath, parentNode, XPathConstants.NODE);
@@ -68,12 +69,12 @@ public abstract class XPathUtil {
      * Retrieve the child string of a node using XPath
      * 
      * @param parentNode
-     *            the node
+     *        the node
      * @param xPath
-     *            the XPath expression
+     *        the XPath expression
      * @return the child String
      */
-    protected String getStringByXpath(final Node parentNode, final String xPath) {
+    public String getStringByXpath(final Node parentNode, final String xPath) {
         String string = null;
         final Node node = getNodeByXpath(parentNode, xPath);
         if (node != null) {
@@ -86,12 +87,12 @@ public abstract class XPathUtil {
      * Retrieve the child node list of a node using XPath
      * 
      * @param parentNode
-     *            the node
+     *        the node
      * @param xPath
-     *            the XPath expression
+     *        the XPath expression
      * @return the child {@link NodeList}
      */
-    protected NodeList getNodeListByXpath(final Node parentNode, final String xPath) {
+    public NodeList getNodeListByXpath(final Node parentNode, final String xPath) {
         NodeList nodeList = null;
         try {
             nodeList = (NodeList) xpathEvaluator.evaluate(xPath, parentNode, XPathConstants.NODESET);
@@ -107,10 +108,10 @@ public abstract class XPathUtil {
      * Retrieve the integer content of a node (Needed for non mandatory nodes)
      * 
      * @param node
-     *            the node
+     *        the node
      * @return the int value of the node if it exists. 0 otherwise
      */
-    protected int getIntValue(final Node node) {
+    public int getIntValue(final Node node) {
         if (node != null) {
             try {
                 return Integer.parseInt(node.getTextContent());
@@ -127,10 +128,10 @@ public abstract class XPathUtil {
      * Retrieve the boolean content of a node (Needed for non mandatory nodes)
      * 
      * @param node
-     *            the node
+     *        the node
      * @return the boolean value of the node if it exists. false otherwise
      */
-    protected boolean getBooleanValue(final Node node) {
+    public boolean getBooleanValue(final Node node) {
         if (node != null) {
             return Boolean.valueOf(node.getTextContent());
         }
