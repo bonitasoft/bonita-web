@@ -5,23 +5,23 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.test.toolkit.bpm;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityExecutionException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
+import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
@@ -29,7 +29,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TestHumanTask extends AbstractManualTask {
 
@@ -44,11 +43,11 @@ public class TestHumanTask extends AbstractManualTask {
      */
     public TestHumanTask(final ActivityInstance activityInstance) {
         assert activityInstance instanceof HumanTaskInstance;
-        this.humanTaskInstance = (HumanTaskInstance) activityInstance;
+        humanTaskInstance = (HumanTaskInstance) activityInstance;
     }
 
     public HumanTaskInstance getHumanTaskInstance() {
-        return this.humanTaskInstance;
+        return humanTaskInstance;
     }
 
     /**
@@ -57,44 +56,54 @@ public class TestHumanTask extends AbstractManualTask {
     private HumanTaskInstance fetchHumanTaskInstance(final APISession apiSession) {
         try {
             return TestProcess.getProcessAPI(apiSession).getHumanTaskInstance(getId());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new TestToolkitException("Can't get humanTask instance for <" + getId() + ">", e);
         }
     }
 
     public TestHumanTask refreshHumanTaskInstanceInstance() {
-        this.humanTaskInstance = fetchHumanTaskInstance(TestToolkitCtx.getInstance().getInitiator().getSession());
+        humanTaskInstance = fetchHumanTaskInstance(TestToolkitCtx.getInstance().getInitiator().getSession());
         return this;
     }
 
-    public DataInstance getDataInstance(String dataName) {
+    public DataInstance getDataInstance(final String dataName) {
         try {
             return TestProcess.getProcessAPI(TestToolkitCtx.getInstance().getInitiator().getSession())
                     .getActivityDataInstance(dataName, humanTaskInstance.getId());
-        } catch (DataNotFoundException e) {
+        } catch (final DataNotFoundException e) {
             throw new TestToolkitException("Unable to find dataInstance " + dataName, e);
         }
     }
+
+    public ContractDefinition getContractDefinition() {
+        try {
+            return TestProcess.getProcessAPI(TestToolkitCtx.getInstance().getInitiator().getSession())
+                    .getUserTaskContract(humanTaskInstance.getId());
+        } catch (final UserTaskNotFoundException e) {
+            throw new TestToolkitException("Unable to find humanTaskInstance with ID " + humanTaskInstance.getId(), e);
+        }
+    }
+
     /*
      * (non-Javadoc)
      * @see org.bonitasoft.test.AbstractManualTask#getId()
      */
     @Override
     public long getId() {
-        return this.humanTaskInstance.getId();
+        return humanTaskInstance.getId();
     }
 
     public long getCaseId() {
         return humanTaskInstance.getParentProcessInstanceId();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see org.bonitasoft.test.toolkit.bpm.AbstractManualTask#getDescription()
      */
     @Override
     public String getDescription() {
-        return this.humanTaskInstance.getDescription();
+        return humanTaskInstance.getDescription();
     }
 
     /*
@@ -103,7 +112,7 @@ public class TestHumanTask extends AbstractManualTask {
      */
     @Override
     public String getName() {
-        return this.humanTaskInstance.getName();
+        return humanTaskInstance.getName();
     }
 
     // /////////////////////////////////////////////////////////////////////////////
@@ -113,7 +122,7 @@ public class TestHumanTask extends AbstractManualTask {
     private TestHumanTask assignTo(final APISession apiSession, final TestUser user) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         try {
-            processAPI.assignUserTask(this.humanTaskInstance.getId(), user.getId());
+            processAPI.assignUserTask(humanTaskInstance.getId(), user.getId());
         } catch (final Exception e) {
             throw new TestToolkitException("Can't assgin user", e);
         }
@@ -136,9 +145,9 @@ public class TestHumanTask extends AbstractManualTask {
     public TestHumanTask execute(final APISession apiSession) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         try {
-            processAPI.executeFlowNode(this.humanTaskInstance.getId());
+            processAPI.executeFlowNode(humanTaskInstance.getId());
         } catch (final Exception e) {
-            throw new TestToolkitException("Can't execute activity <" + this.humanTaskInstance.getId() + ">.", e);
+            throw new TestToolkitException("Can't execute activity <" + humanTaskInstance.getId() + ">.", e);
         }
         return this;
     }
@@ -176,7 +185,7 @@ public class TestHumanTask extends AbstractManualTask {
 
     /**
      * Wait for human task's state to move to state passed in parameter. Do not execute human task.
-     * 
+     *
      * @param apiSession
      * @param state
      * @return
@@ -185,7 +194,7 @@ public class TestHumanTask extends AbstractManualTask {
         for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
             try {
                 Thread.sleep(SLEEP_TIME_MS);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 throw new TestToolkitException("Can't get process instance <" + getId() + ">. Interrupted", e);
             }
             refreshHumanTaskInstanceInstance();

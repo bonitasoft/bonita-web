@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,7 +22,9 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.data.DataDefinition;
+import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -44,9 +46,9 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
  * Process engine API client
- * 
+ *
  * Wrapper to processAPI for all process methods
- * 
+ *
  * @author Colin PUY
  */
 public class ProcessEngineClient {
@@ -127,7 +129,7 @@ public class ProcessEngineClient {
 
     /**
      * Delete archived process instances by bunch for a given processId
-     * 
+     *
      * @throws ProcessDefinitionNotFoundException
      * @throws DeletionException
      */
@@ -151,7 +153,7 @@ public class ProcessEngineClient {
 
     /**
      * Delete process instances by bunch for a given processId
-     * 
+     *
      * @throws ProcessDefinitionNotFoundException
      * @throws DeletionException
      */
@@ -262,6 +264,15 @@ public class ProcessEngineClient {
             return processAPI.getProcessDataDefinitions(processId, 0, Integer.MAX_VALUE);
         } catch (final ProcessDefinitionNotFoundException e) {
             throw new APIException(new _("Unable to get process data definitions, process %processId% not found", new Arg("processId", processId)));
+        }
+    }
+
+    public ContractDefinition getUserTaskContract(final long userTaskId)
+    {
+        try {
+            return processAPI.getUserTaskContract(userTaskId);
+        } catch (final UserTaskNotFoundException e) {
+            throw new APIException(new _("Unable to get user task contract, task %userTaskId% not found", new Arg("userTaskId", userTaskId)));
         }
     }
 }
