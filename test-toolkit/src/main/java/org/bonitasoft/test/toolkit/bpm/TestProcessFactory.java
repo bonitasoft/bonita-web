@@ -42,13 +42,13 @@ public class TestProcessFactory {
 
     public static final String CONTRACT_RULE_EXPLANATION = "explanation";
 
-    public static final String CONTRACT_RULE_EXPRESSION = "expression";
+    public static final String CONTRACT_RULE_EXPRESSION = " 1 == 1 ";
 
     public static final String CONTRACT_RULE_NAME = "ruleName";
 
     public static final String CONTRACT_INPUT_DESCRIPTION = "description";
 
-    public static final String CONTRACT_INPUT_TYPE = "type";
+    public static final String CONTRACT_INPUT_TYPE = String.class.getName();
 
     public static final String CONTRACT_INPUT_NAME = "inputName";
 
