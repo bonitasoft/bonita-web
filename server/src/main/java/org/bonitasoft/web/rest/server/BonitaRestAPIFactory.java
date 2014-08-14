@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Logger;
 
-import org.bonitasoft.web.rest.model.bpm.contract.ContractDefinition;
+import org.bonitasoft.web.rest.model.bpm.contract.BpmContractDefinition;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCase;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedComment;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICase;
@@ -205,7 +205,7 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIDocument();
             } else if ("archiveddocument".equals(resourceToken)) {
                 return new APIArchivedDocument();
-            } else if (ContractDefinition.TOKEN.equals(resourceToken)) {
+            } else if (BpmContractDefinition.TOKEN.equals(resourceToken)) {
                 return new APIContract();
             }
         } else if ("platform".equals(apiToken)) {

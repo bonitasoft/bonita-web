@@ -14,6 +14,9 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.contract;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -22,30 +25,33 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.web.rest.model.bpm.contract.ContractItem;
+import org.bonitasoft.web.rest.model.bpm.contract.BpmContractItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Laurent Leseigneur
  */
-public class ContractDatastore extends CommonDatastore<ContractItem, ContractDefinition> implements
-DatastoreHasGet<ContractItem>
+public class BpmContractDatastore extends CommonDatastore<BpmContractItem, ContractDefinition> implements
+DatastoreHasGet<BpmContractItem>
 
 {
 
-    public ContractDatastore(final APISession engineSession) {
+    public BpmContractDatastore(final APISession engineSession) {
         super(engineSession);
     }
 
     @Override
-    protected ContractItem convertEngineToConsoleItem(final ContractDefinition engineItem) {
-        final ContractItem result = new ContractItem();
-        result.setInputs(JSonSerializer.serialize(engineItem.getInputs()));
-        result.setRules(JSonSerializer.serialize(engineItem.getRules()));
+    protected BpmContractItem convertEngineToConsoleItem(final ContractDefinition engineItem) {
+        final BpmContractItem result = new BpmContractItem();
+        result.setInputs(toJson(engineItem.getInputs()));
+        result.setRules(toJson(engineItem.getRules()));
         return result;
     }
 
@@ -63,16 +69,34 @@ DatastoreHasGet<ContractItem>
         return TenantAPIAccessor.getProcessAPI(getEngineSession());
     }
 
+    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static JsonFactory jsonFactory = new JsonFactory();
+
+    public static String toJson(final Object object)
+    {
+        final StringWriter stringWriter = new StringWriter();
+        JsonGenerator jsonGenerator;
+        try {
+            jsonGenerator = jsonFactory.createJsonGenerator(stringWriter);
+            objectMapper.writeValue(jsonGenerator, object);
+            return stringWriter.toString();
+        } catch (final IOException e) {
+            return "null";
+        }
+
+    }
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CRUDS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public ContractItem get(final APIID id) {
+    public BpmContractItem get(final APIID id) {
         try {
             return convertEngineToConsoleItem(getProcessAPI().getUserTaskContract(id.toLong()));
         } catch (final Exception e) {
             throw new APIException(e);
         }
     }
+
 }

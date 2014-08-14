@@ -24,7 +24,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  * @author Laurent Leseigneur
  *
  */
-public class ContractDefinition extends ItemDefinition<ContractItem> {
+public class BpmContractDefinition extends ItemDefinition<BpmContractItem> {
 
     public static final String TOKEN = "contract";
 
@@ -38,8 +38,8 @@ public class ContractDefinition extends ItemDefinition<ContractItem> {
     }
 
     @Override
-    protected ContractItem _createItem() {
-        return new ContractItem();
+    protected BpmContractItem _createItem() {
+        return new BpmContractItem();
     }
 
     @Override
@@ -54,12 +54,12 @@ public class ContractDefinition extends ItemDefinition<ContractItem> {
 
     @Override
     protected void defineAttributes() {
-        createAttribute(ContractItem.ATTRIBUTE_INPUTS, ItemAttribute.TYPE.STRING).isMandatory(false);
-        createAttribute(ContractItem.ATTRIBUTE_RULES, ItemAttribute.TYPE.STRING).isMandatory(false);
+        createAttribute(BpmContractItem.ATTRIBUTE_INPUTS, ItemAttribute.TYPE.STRING).isMandatory(false);
+        createAttribute(BpmContractItem.ATTRIBUTE_RULES, ItemAttribute.TYPE.STRING).isMandatory(false);
     }
 
-    public static ContractDefinition get() {
-        return (ContractDefinition) Definitions.get(TOKEN);
+    public static BpmContractDefinition get() {
+        return (BpmContractDefinition) Definitions.get(TOKEN);
     }
 
 }

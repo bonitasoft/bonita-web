@@ -20,7 +20,7 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
 /**
  * @author Laurent Leseigneur
  */
-public class ContractItem extends Item {
+public class BpmContractItem extends Item {
 
     public static final String ATTRIBUTE_INPUTS = "inputs";
     public static final String ATTRIBUTE_RULES = "rules";
@@ -28,13 +28,13 @@ public class ContractItem extends Item {
     /**
      * Default Constructor.
      */
-    public ContractItem() {
+    public BpmContractItem() {
         super();
     }
 
     @Override
-    public ContractDefinition getItemDefinition() {
-        return new ContractDefinition();
+    public BpmContractDefinition getItemDefinition() {
+        return new BpmContractDefinition();
     }
 
     public String getInputs() {

@@ -15,10 +15,10 @@
 package org.bonitasoft.web.rest.server.api.bpm.contract;
 
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.bpm.contract.ContractDefinition;
-import org.bonitasoft.web.rest.model.bpm.contract.ContractItem;
+import org.bonitasoft.web.rest.model.bpm.contract.BpmContractDefinition;
+import org.bonitasoft.web.rest.model.bpm.contract.BpmContractItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
-import org.bonitasoft.web.rest.server.datastore.bpm.contract.ContractDatastore;
+import org.bonitasoft.web.rest.server.datastore.bpm.contract.BpmContractDatastore;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -27,21 +27,21 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 /**
  * @author Laurent Leseigneur
  */
-public class APIContract extends ConsoleAPI<ContractItem> implements APIHasGet<ContractItem> {
+public class APIContract extends ConsoleAPI<BpmContractItem> implements APIHasGet<BpmContractItem> {
 
     @Override
-    protected ItemDefinition<ContractItem> defineItemDefinition() {
-        return ContractDefinition.get();
+    protected ItemDefinition<BpmContractItem> defineItemDefinition() {
+        return BpmContractDefinition.get();
     }
 
 
     @Override
-    public ContractItem get(final APIID id) {
+    public BpmContractItem get(final APIID id) {
         final APISession apiSession = getEngineSession();
-        ContractItem contractItem = null;
+        BpmContractItem contractItem = null;
 
         try {
-            final ContractDatastore dataStore = new ContractDatastore(apiSession);
+            final BpmContractDatastore dataStore = new BpmContractDatastore(apiSession);
             contractItem = dataStore.get(id);
 
         } catch (final Exception e) {
