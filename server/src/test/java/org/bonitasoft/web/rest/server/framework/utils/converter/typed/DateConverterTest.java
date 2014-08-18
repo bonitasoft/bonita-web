@@ -64,13 +64,14 @@ public class DateConverterTest {
         int minute = 43;
         int second = 30;
         int dayOfDateate = 18;
-        c.set(2014, Calendar.AUGUST, dayOfDateate, hourOfDay, minute, second);
+        int year = 2014;
+        c.set(year, Calendar.AUGUST, dayOfDateate, hourOfDay, minute, second);
         String timeZone = "GMT";
         c.setTimeZone(TimeZone.getTimeZone(timeZone));
         c.set(Calendar.MILLISECOND, 0);
         Date date = c.getTime();
 
-        Date converted = converter.convert("Mon Aug " + dayOfDateate + " " + hourOfDay + ":" + minute + ":" + second + " " + timeZone + " 2014");
+        Date converted = converter.convert("Mon Aug " + dayOfDateate + " " + hourOfDay + ":" + minute + ":" + second + " " + timeZone + " " + year);
 
         assertEquals(date.toString() + " is not well converted", date, converted);
     }
