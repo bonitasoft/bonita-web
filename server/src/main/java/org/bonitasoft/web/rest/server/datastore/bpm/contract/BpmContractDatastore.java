@@ -15,7 +15,6 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.contract;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -28,12 +27,12 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.bpm.contract.BpmContractItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.json.JacksonSerializer;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 /**
  * @author Laurent Leseigneur
@@ -43,6 +42,8 @@ DatastoreHasGet<BpmContractItem>
 
 {
 
+    private static final String NULL_AS_STRING = "null";
+
     public BpmContractDatastore(final APISession engineSession) {
         super(engineSession);
     }
@@ -50,6 +51,7 @@ DatastoreHasGet<BpmContractItem>
     @Override
     protected BpmContractItem convertEngineToConsoleItem(final ContractDefinition engineItem) {
         final BpmContractItem result = new BpmContractItem();
+
         result.setInputs(toJson(engineItem.getInputs()));
         result.setRules(toJson(engineItem.getRules()));
         return result;
@@ -69,19 +71,17 @@ DatastoreHasGet<BpmContractItem>
         return TenantAPIAccessor.getProcessAPI(getEngineSession());
     }
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    private static JsonFactory jsonFactory = new JsonFactory();
-
-    public static String toJson(final Object object)
+    public String toJson(final Object object)
     {
-        final StringWriter stringWriter = new StringWriter();
-        JsonGenerator jsonGenerator;
+        final JacksonSerializer jacksonSerializer = new JacksonSerializer();
         try {
-            jsonGenerator = jsonFactory.createJsonGenerator(stringWriter);
-            objectMapper.writeValue(jsonGenerator, object);
-            return stringWriter.toString();
+            return jacksonSerializer.serialize(object);
+        } catch (final JsonGenerationException e) {
+            return NULL_AS_STRING;
+        } catch (final JsonMappingException e) {
+            return NULL_AS_STRING;
         } catch (final IOException e) {
-            return "null";
+            return NULL_AS_STRING;
         }
 
     }

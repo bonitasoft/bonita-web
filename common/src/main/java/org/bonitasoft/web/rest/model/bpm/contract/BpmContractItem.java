@@ -16,14 +16,16 @@ package org.bonitasoft.web.rest.model.bpm.contract;
 
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
  * @author Laurent Leseigneur
  */
-public class BpmContractItem extends Item {
+public class BpmContractItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_INPUTS = "inputs";
     public static final String ATTRIBUTE_RULES = "rules";
+
 
     /**
      * Default Constructor.
@@ -55,5 +57,15 @@ public class BpmContractItem extends Item {
         return this;
     }
 
+    @Override
+    public void setId(final String id) {
+        this.setAttribute(ATTRIBUTE_ID, Long.parseLong(id));
+
+    }
+
+    @Override
+    public void setId(final Long id) {
+        this.setAttribute(ATTRIBUTE_ID, id);
+    }
 
 }

@@ -34,14 +34,25 @@ public class APIContract extends ConsoleAPI<BpmContractItem> implements APIHasGe
         return BpmContractDefinition.get();
     }
 
+    @Override
+    public String defineDefaultSearchOrder() {
+        return "";
+    }
+
+    @Override
+    protected APISession getEngineSession() {
+        return super.getEngineSession();
+    }
 
     @Override
     public BpmContractItem get(final APIID id) {
         final APISession apiSession = getEngineSession();
+
         BpmContractItem contractItem = null;
 
         try {
-            final BpmContractDatastore dataStore = new BpmContractDatastore(apiSession);
+
+            final BpmContractDatastore dataStore = getDataStore(apiSession);
             contractItem = dataStore.get(id);
 
         } catch (final Exception e) {
@@ -49,6 +60,11 @@ public class APIContract extends ConsoleAPI<BpmContractItem> implements APIHasGe
         }
 
         return contractItem;
+    }
+
+    protected BpmContractDatastore getDataStore(final APISession apiSession) {
+        final BpmContractDatastore dataStore = new BpmContractDatastore(apiSession);
+        return dataStore;
     }
 
 }

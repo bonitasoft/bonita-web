@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.web.rest.model.bpm.contract;
 
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
@@ -35,6 +34,7 @@ public class BpmContractDefinition extends ItemDefinition<BpmContractItem> {
 
     @Override
     protected void definePrimaryKeys() {
+        setPrimaryKeys(BpmContractItem.ATTRIBUTE_ID);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class BpmContractDefinition extends ItemDefinition<BpmContractItem> {
     }
 
     public static BpmContractDefinition get() {
-        return (BpmContractDefinition) Definitions.get(TOKEN);
+        return new BpmContractDefinition();
     }
 
 }
