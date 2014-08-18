@@ -79,10 +79,4 @@ public class DateConverterTest {
     public void nonParsableStringThrowAConversionException() throws Exception {
         converter.convert("nonParsable");
     }
-
-    @Test(expected = ConversionException.class)
-    public void shouldConvertWrongDateStringIntoDateThrowsException() throws Exception {
-
-        converter.convert("Mon Feb 30 21:56:10 GMT 2012");
-    }
 }
