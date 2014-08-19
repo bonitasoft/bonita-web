@@ -220,7 +220,21 @@
     <listener>
         <listener-class>org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
     </listener>
-
+	
+	<servlet>
+        <servlet-name>JerseyServlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>org.bonitasoft.web.server.rest.BonitaResourceConfig</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JerseyServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>BonitaRestAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>

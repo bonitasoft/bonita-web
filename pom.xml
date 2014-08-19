@@ -15,6 +15,7 @@
 		<module>forms</module>
         <module>server</module>
         <module>portal</module>
+        <module>rest</module>
 	</modules>
 
 	<scm>
