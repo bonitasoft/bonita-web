@@ -41,7 +41,7 @@ public class AngularIFrameView extends RawView {
             }
         }).execute();
         addBody(new UiComponent(panel));
-        addClass("page");
+        addClass("page page_custompage_");
     }
 
     @Override
