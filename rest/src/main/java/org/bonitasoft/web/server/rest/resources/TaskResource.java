@@ -1,6 +1,8 @@
 package org.bonitasoft.web.server.rest.resources;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,7 +19,6 @@ import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.server.rest.model.Input;
 
-import com.google.gwt.dev.util.collect.HashMap;
 
 @Path("tasks")
 public class TaskResource {
@@ -40,7 +41,7 @@ public class TaskResource {
     @Path("{taskId}/execute")
     @Consumes(MediaType.APPLICATION_JSON)
     public void executeTask(@PathParam("taskId") long taskId, List<Input> inputs) throws FlowNodeExecutionException {
-        HashMap<String, Object> parameters = new HashMap<String, Object>();
+        Map<String, Object> parameters = new HashMap<String, Object>();
         for (Input input : inputs) {
             parameters.put(input.getName(), input.getValue());
         }
