@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-19 07:02+0200\n"
+"POT-Creation-Date: 2014-08-20 07:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -431,7 +431,7 @@ msgid "Custom Pages"
 msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
-msgid "Manage living applications"
+msgid "Manage applications"
 msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
