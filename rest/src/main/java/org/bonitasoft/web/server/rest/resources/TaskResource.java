@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.server.rest.model.Input;
@@ -40,7 +41,7 @@ public class TaskResource {
     @PUT
     @Path("{taskId}/execute")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void executeTask(@PathParam("taskId") long taskId, List<Input> inputs) throws FlowNodeExecutionException {
+    public void executeTask(@PathParam("taskId") long taskId, List<Input> inputs) throws FlowNodeExecutionException, ContractViolationException {
         Map<String, Object> parameters = new HashMap<String, Object>();
         for (Input input : inputs) {
             parameters.put(input.getName(), input.getValue());
