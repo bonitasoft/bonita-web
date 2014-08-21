@@ -2,10 +2,14 @@ package org.bonitasoft.web.server.rest.resources;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
@@ -13,9 +17,11 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.RuleDefinitionImpl;
+import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.server.rest.BonitaResourceConfig;
 import org.bonitasoft.web.server.rest.model.Input;
@@ -47,7 +53,7 @@ public class TaskResourceTest extends JerseyTest {
     }
     
     @Test
-    public void should_throw_error_404_if_task_is_not_found_when_getting_contract() throws Exception {
+    public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
         when(processAPI.getUserTaskContract(2L)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
         
         Response response = target("tasks/2/contract").request().get();
@@ -66,5 +72,27 @@ public class TaskResourceTest extends JerseyTest {
         map.put("aBoolean", true);
         map.put("aString", "hello world");
         verify(processAPI).executeFlowNode(2L, map);
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
+        Input input = new Input("aBoolean", true);
+        doThrow(new ContractViolationException("aMessage", new ArrayList<String>())).when(processAPI).executeFlowNode(anyLong(), anyMap());
+        
+        Response response = target("tasks/2/execute").request().put(Entity.json(asList(input)));
+        
+        assertThat(response.getStatus()).isEqualTo(400);
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
+        Input input = new Input("aBoolean", true);
+        doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeFlowNode(anyLong(), anyMap());
+        
+        Response response = target("tasks/2/execute").request().put(Entity.json(asList(input)));
+        
+        assertThat(response.getStatus()).isEqualTo(500);
     }
 }

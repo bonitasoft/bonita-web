@@ -7,7 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class BonitaResourceConfig extends ResourceConfig {
 
     public BonitaResourceConfig() {
-        packages("org.bonitasoft.web.server.rest.resources", "org.bonitasoft.web.server.rest.exception");
+        packages("org.bonitasoft.web.server.rest.resources");
         register(JacksonFeature.class);
         register(new EngineAPIsBinder());
     }
