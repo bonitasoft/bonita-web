@@ -17,10 +17,8 @@ import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.RuleDefinitionImpl;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
-import org.bonitasoft.web.server.rest.exception.NotFoundExceptionMapper;
+import org.bonitasoft.web.server.rest.BonitaResourceConfig;
 import org.bonitasoft.web.server.rest.model.Input;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -33,10 +31,7 @@ public class TaskResourceTest extends JerseyTest {
     @Override
     protected Application configure() {
         initMocks(this);
-        return new ResourceConfig()
-            .register(new TaskResource(processAPI))
-            .register(JacksonFeature.class)
-            .register(NotFoundExceptionMapper.class);
+        return new BonitaResourceConfig().register(new TaskResource(processAPI));
     }
 
     @Test
