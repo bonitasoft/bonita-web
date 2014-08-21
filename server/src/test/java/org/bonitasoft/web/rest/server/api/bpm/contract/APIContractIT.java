@@ -61,7 +61,6 @@ public class APIContractIT extends AbstractConsoleTest {
                 "[{\"id\":0,\"name\":\"inputName\",\"description\":\"description\",\"type\":\"java.lang.String\"}]");
         assertThat(rules).as("should get contract rules").isEqualTo(
                 "[{\"id\":0,\"name\":\"ruleName\",\"expression\":\" 1 == 1 \",\"explanation\":\"explanation\",\"inputNames\":[\"inputName\"]}]");
-
     }
 
 }
