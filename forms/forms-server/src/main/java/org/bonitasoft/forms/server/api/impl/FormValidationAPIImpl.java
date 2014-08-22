@@ -170,7 +170,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
 
         boolean valid = true;
         try {
-            final ClassLoader processClassLoader = FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            final ClassLoader processClassLoader = new FormsResourcesUtils().getProcessClassLoader(session, processDefinitionID);
             Class<?> validatorClass;
             if (processClassLoader != null) {
                 validatorClass = Class.forName(validatorClassName, true, processClassLoader);

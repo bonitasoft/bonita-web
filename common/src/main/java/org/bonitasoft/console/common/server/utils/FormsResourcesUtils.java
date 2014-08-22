@@ -222,7 +222,6 @@ public class FormsResourcesUtils {
         } else {
             try {
                 ProcessDefinition processDefinition = bpmEngineAPIUtil.getProcessAPI(session).getProcessDefinition(processDefinitionID);
-                // ProcessDeploymentInfo processDeploymentInfo = bpmEngineAPIUtil.getProcessAPI(session).getProcessDeploymentInfo(processDefinitionID);
 
                 String processPath = WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder() + File.separator;
                 final File processDir = new File(processPath, processDefinition.getName() + "--" + processDefinition.getVersion());
