@@ -37,8 +37,4 @@ public class ContractViolationErrorMessage extends ErrorMessage {
     public List<String> getExplanations() {
         return explanations;
     }
-
-    public void setExplanations(List<String> explanations) {
-        this.explanations = explanations;
-    }
 }
