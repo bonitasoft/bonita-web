@@ -67,6 +67,8 @@ public class TaskResource {
             processAPI.executeUserTask(taskId, inputs);
         } catch (ContractViolationException e) {
             throw new BonitaWebApplicationException(Status.BAD_REQUEST, new ContractViolationErrorMessage(e));
+        } catch (UserTaskNotFoundException e) {
+            throw new BonitaWebApplicationException(Status.NOT_FOUND, e);
         } catch (FlowNodeExecutionException e) {
             throw new BonitaWebApplicationException(Status.INTERNAL_SERVER_ERROR, e);
         }

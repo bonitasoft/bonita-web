@@ -17,9 +17,10 @@
 package org.bonitasoft.web.server.rest.resources;
 
 import static java.util.Arrays.asList;
+import static javax.ws.rs.client.Entity.json;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.server.rest.assertions.ResponseAssert.assertThat;
-import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -59,6 +60,15 @@ public class TaskResourceTest extends JerseyTest {
         return new BonitaResourceConfig().register(new TaskResource(processAPI));
     }
 
+    private String readFile(String fileName) throws IOException {
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
+        return IOUtils.toString(resourceAsStream);
+    }
+
+    private Entity<List<Input>> someJson() {
+        return json(asList(new Input("aBoolean", true)));
+    }
+
     @Test
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
         ContractDefinitionImpl contract = new ContractDefinitionImpl();
@@ -91,30 +101,30 @@ public class TaskResourceTest extends JerseyTest {
     }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
-        Input input = new Input("aBoolean", true);
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation"))).when(processAPI).executeUserTask(anyLong(), anyList());
+        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation"))).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
         
-        Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
+        Response response = target("tasks/2/execute").request().post(someJson());
         
         assertThat(response).hasStatus(400);
         assertThat(response).hasJsonBodyEqual(readFile("contractViolationError.json"));
     }
     
     @Test
-    @SuppressWarnings("unchecked")
     public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
-        Input input = new Input("aBoolean", true);
-        doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeUserTask(anyLong(), anyList());
+        doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
         
-        Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
+        Response response = target("tasks/2/execute").request().post(someJson());
         
         assertThat(response.getStatus()).isEqualTo(500);
     }
     
-    private String readFile(String fileName) throws IOException {
-        InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
-        return IOUtils.toString(resourceAsStream);
+    @Test
+    public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
+        doThrow(new UserTaskNotFoundException("task not found")).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
+        
+        Response response = target("tasks/2/execute").request().post(someJson());
+        
+        assertThat(response.getStatus()).isEqualTo(404);
     }
 }
