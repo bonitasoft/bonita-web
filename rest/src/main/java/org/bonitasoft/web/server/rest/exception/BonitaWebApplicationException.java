@@ -11,10 +11,10 @@ public class BonitaWebApplicationException extends WebApplicationException {
     private static final long serialVersionUID = 6494511446015486224L;
 
     public BonitaWebApplicationException(Status status, BonitaException exception) {
-        super(Response.status(status).entity(errorMessage(status, exception)).build());
+        this(status, new ErrorMessage(exception).withStatus(status));
     }
-
-    private static ErrorMessage errorMessage(Status status, Exception exception) {
-        return new ErrorMessage(status.getStatusCode(), exception.getClass().getSimpleName(), exception.getMessage());
+    
+    public BonitaWebApplicationException(Status status, ErrorMessage message) {
+        super(Response.status(status).entity(message.withStatus(status)).build());
     }
 }

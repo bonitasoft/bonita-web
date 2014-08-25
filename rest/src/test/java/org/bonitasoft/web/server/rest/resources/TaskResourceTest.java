@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
@@ -66,7 +66,7 @@ public class TaskResourceTest extends JerseyTest {
         Input input = new Input("aBoolean", true);
         Input input2 = new Input("aString", "hello world");
         
-        target("tasks/2/execute").request().put(Entity.json(asList(input, input2)));
+        target("tasks/2/execute").request().post(Entity.json(asList(input, input2)));
         
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("aBoolean", true);
@@ -78,11 +78,12 @@ public class TaskResourceTest extends JerseyTest {
     @SuppressWarnings("unchecked")
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         Input input = new Input("aBoolean", true);
-        doThrow(new ContractViolationException("aMessage", new ArrayList<String>())).when(processAPI).executeFlowNode(anyLong(), anyMap());
+        doThrow(new ContractViolationException("aMessage", Arrays.asList("first explanation", "second explanation"))).when(processAPI).executeFlowNode(anyLong(), anyMap());
         
-        Response response = target("tasks/2/execute").request().put(Entity.json(asList(input)));
+        Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
         
         assertThat(response.getStatus()).isEqualTo(400);
+        assertThat(response.readEntity(String.class)).isEqualTo("{\"status\":400,\"type\":\"ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
     }
     
     @Test
@@ -91,7 +92,7 @@ public class TaskResourceTest extends JerseyTest {
         Input input = new Input("aBoolean", true);
         doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeFlowNode(anyLong(), anyMap());
         
-        Response response = target("tasks/2/execute").request().put(Entity.json(asList(input)));
+        Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
         
         assertThat(response.getStatus()).isEqualTo(500);
     }

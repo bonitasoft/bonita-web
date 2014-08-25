@@ -20,6 +20,7 @@ import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.server.rest.exception.BonitaWebApplicationException;
+import org.bonitasoft.web.server.rest.exception.ContractViolationErrorMessage;
 import org.bonitasoft.web.server.rest.model.Input;
 
 
@@ -51,7 +52,7 @@ public class TaskResource {
         try {
             processAPI.executeFlowNode(taskId, buildMap(inputs));
         } catch (ContractViolationException e) {
-            throw new BonitaWebApplicationException(Status.BAD_REQUEST, e);
+            throw new BonitaWebApplicationException(Status.BAD_REQUEST, new ContractViolationErrorMessage(e));
         } catch (FlowNodeExecutionException e) {
             throw new BonitaWebApplicationException(Status.INTERNAL_SERVER_ERROR, e);
         }
