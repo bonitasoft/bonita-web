@@ -153,7 +153,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Document getFormDefinitionDocument(final Map<String, Object> context) throws IOException, InvalidFormDefinitionException, FormNotFoundException,
-    SessionTimeoutException {
+            SessionTimeoutException {
 
         final FormContextUtil ctxu = new FormContextUtil(context);
         if (defaultLogger.isLoggable(Level.FINEST)) {
@@ -656,7 +656,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Serializable resolveExpression(final Expression expression, final Map<String, Object> context) throws FormNotFoundException,
-    FormInitializationException, SessionTimeoutException, FileTooBigException, IOException {
+            FormInitializationException, SessionTimeoutException, FileTooBigException, IOException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         Serializable result = null;
         if (expression != null) {
@@ -830,7 +830,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Serializable> resolveExpressions(final List<Expression> expressions, final Map<String, Object> context) throws FormNotFoundException,
-    FormInitializationException, SessionTimeoutException, FileTooBigException, IOException {
+            FormInitializationException, SessionTimeoutException, FileTooBigException, IOException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -936,7 +936,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Object> executeActions(final List<FormAction> actions, final Map<String, Object> context) throws FileTooBigException,
-    FormNotFoundException, FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
+            FormNotFoundException, FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException {
         final FormContextUtil formContextUtil = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -1125,7 +1125,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public FormURLComponents getNextFormURLParameters(final String formId, final Map<String, Object> context) throws FormNotFoundException,
-    SessionTimeoutException {
+            SessionTimeoutException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         logTime("getNextFormURLParameters - start");
         final Map<String, Object> urlContext = getUrlContext(context);
@@ -1190,7 +1190,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     private String getActivityName(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId) throws InvalidSessionException,
-    FormWorflowApiException {
+            FormWorflowApiException {
         try {
             return workflowAPI.getActivityName(session, activityInstanceId);
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1550,7 +1550,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     protected Date getDeployementDate(final APISession session, final long processDefinitionID,
             final Map<String, Object> context) throws ProcessDefinitionNotFoundException, IOException,
-    SessionTimeoutException {
+            SessionTimeoutException {
         Date processDeployementDate = null;
         if (processDefinitionID != -1) {
             try {
@@ -1763,7 +1763,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     @Override
     public FormFieldValue getAttachmentFormFieldValue(final Object value, final Map<String, Object> context) throws SessionTimeoutException, IOException,
-    FileTooBigException, FormInitializationException {
+            FileTooBigException, FormInitializationException {
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - start", context);
@@ -1888,7 +1888,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public Map<String, Object> skipForm(final String formID, final Map<String, Object> context) throws FormNotFoundException, FormSubmissionException,
-    FormAlreadySubmittedException, IllegalActivityTypeException, SessionTimeoutException {
+            FormAlreadySubmittedException, IllegalActivityTypeException, SessionTimeoutException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
@@ -2110,7 +2110,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
     }
 
     protected ClassLoader getProcessClassloader(final long processDefinitionID, final APISession session) {
-        return FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+        return new FormsResourcesUtils().getProcessClassLoader(session, processDefinitionID);
     }
 
     private Boolean canStartProcessDefinition(final APISession session, final long userId, final long processDefinitionId) throws BPMEngineException {
@@ -2178,7 +2178,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         Map<String, Serializable> transientDataContext = (Map<String, Serializable>) session.getAttribute(storageKey + "--" + id);
         if (transientDataContext == null) {
             transientDataContext = new HashMap<String, Serializable>();
-        }else{
+        } else {
             transientDataContext = new HashMap<String, Serializable>(transientDataContext);
         }
         return transientDataContext;
