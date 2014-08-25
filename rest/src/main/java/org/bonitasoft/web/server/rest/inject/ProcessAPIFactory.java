@@ -18,11 +18,13 @@ package org.bonitasoft.web.server.rest.inject;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.server.rest.exception.BonitaWebApplicationException;
 import org.glassfish.hk2.api.Factory;
 
 public class ProcessAPIFactory implements Factory<ProcessAPI> {
@@ -44,8 +46,8 @@ public class ProcessAPIFactory implements Factory<ProcessAPI> {
         APISession apiSession = (APISession) httpRequest.getSession().getAttribute("apiSession");
         try {
             return TenantAPIAccessor.getProcessAPI(apiSession);
-        } catch (Exception e) {
-            throw new WebApplicationException(e, 500);
+        } catch (BonitaException e) {
+            throw new BonitaWebApplicationException(Status.INTERNAL_SERVER_ERROR, e);
         }
     }
 }
