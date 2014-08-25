@@ -14,27 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.server.rest.exception;
+package org.bonitasoft.web.server.rest.utils;
 
-import java.util.List;
+import javax.ws.rs.core.Application;
 
-import org.bonitasoft.engine.bpm.contract.ContractViolationException;
+import org.mockito.Mock;
 
-/**
- * Specific error message for {@link ContractViolationException}, adding explanations to printed json
- * 
- * @author Colin PUY
- */
-public class ContractViolationErrorMessage extends ErrorMessage {
+public class ExceptionMapperTest extends BonitaJerseyTest {
 
-    private List<String> explanations;
+    @Mock
+    protected FakeService fakeService;
     
-    public ContractViolationErrorMessage(ContractViolationException exception) {
-        super(exception);
-        this.explanations = exception.getExplanations();
-    }
-
-    public List<String> getExplanations() {
-        return explanations;
+    @Override
+    protected Application configure() {
+        return super.config().register(new FakeResource(fakeService));
     }
 }

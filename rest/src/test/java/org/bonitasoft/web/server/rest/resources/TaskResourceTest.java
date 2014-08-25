@@ -25,17 +25,13 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.Input;
@@ -44,25 +40,18 @@ import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.RuleDefinitionImpl;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
-import org.bonitasoft.web.server.rest.BonitaResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
+import org.bonitasoft.web.server.rest.utils.BonitaJerseyTest;
 import org.junit.Test;
 import org.mockito.Mock;
 
-public class TaskResourceTest extends JerseyTest {
+public class TaskResourceTest extends BonitaJerseyTest {
 
     @Mock
     private ProcessAPI processAPI;
     
     @Override
     protected Application configure() {
-        initMocks(this);
-        return new BonitaResourceConfig().register(new TaskResource(processAPI));
-    }
-
-    private String readFile(String fileName) throws IOException {
-        InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
-        return IOUtils.toString(resourceAsStream);
+        return super.config().register(new TaskResource(processAPI));
     }
 
     private Entity<List<Input>> someJson() {
@@ -88,7 +77,7 @@ public class TaskResourceTest extends JerseyTest {
         
         Response response = target("tasks/2/contract").request().get();
         
-        assertThat(response.getStatus()).isEqualTo(404);
+        assertThat(response).hasStatus(404);
     }
     
     @Test
@@ -107,7 +96,6 @@ public class TaskResourceTest extends JerseyTest {
         Response response = target("tasks/2/execute").request().post(someJson());
         
         assertThat(response).hasStatus(400);
-        assertThat(response).hasJsonBodyEqual(readFile("contractViolationError.json"));
     }
     
     @Test

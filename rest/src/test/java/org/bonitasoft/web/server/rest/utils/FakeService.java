@@ -14,40 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.server.rest.exception;
+package org.bonitasoft.web.server.rest.utils;
 
-import javax.ws.rs.core.Response.Status;
+import org.bonitasoft.engine.exception.BonitaException;
 
-/**
- * Common error message
- * 
- * @author Colin Puy
- */
-public class ErrorMessage {
+public class FakeService {
 
-    private int status;
-    private String type;
-    private String message;
-    
-    public ErrorMessage(Exception exception) {
-        this.type = exception.getClass().getSimpleName();
-        this.message = exception.getMessage();
-    }
-
-    public String getType() {
-        return type;
-    }
-    
-    public String getMessage() {
-        return message;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-    
-    public ErrorMessage withStatus(Status status) {
-        this.status = status.getStatusCode();
-        return this;
+    public void doSomething() throws BonitaException {
+        
     }
 }

@@ -14,40 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.server.rest.exception;
+package org.bonitasoft.web.server.rest.utils;
 
-import javax.ws.rs.core.Response.Status;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-/**
- * Common error message
- * 
- * @author Colin Puy
- */
-public class ErrorMessage {
+import java.io.IOException;
+import java.io.InputStream;
 
-    private int status;
-    private String type;
-    private String message;
-    
-    public ErrorMessage(Exception exception) {
-        this.type = exception.getClass().getSimpleName();
-        this.message = exception.getMessage();
-    }
+import org.apache.commons.io.IOUtils;
+import org.bonitasoft.web.server.rest.BonitaResourceConfig;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
 
-    public String getType() {
-        return type;
+public class BonitaJerseyTest extends JerseyTest {
+
+    protected ResourceConfig config() {
+        initMocks(this);
+        return new BonitaResourceConfig();
     }
     
-    public String getMessage() {
-        return message;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-    
-    public ErrorMessage withStatus(Status status) {
-        this.status = status.getStatusCode();
-        return this;
+    protected String readFile(String fileName) throws IOException {
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
+        return IOUtils.toString(resourceAsStream);
     }
 }

@@ -1,0 +1,5 @@
+{
+	"status":404,
+	"type":"NotFoundException",
+	"message":"some things has not been found"
+}

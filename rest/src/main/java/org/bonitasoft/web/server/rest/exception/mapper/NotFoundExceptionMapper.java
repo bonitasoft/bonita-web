@@ -14,40 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.server.rest.exception;
+package org.bonitasoft.web.server.rest.exception.mapper;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
-/**
- * Common error message
- * 
- * @author Colin Puy
- */
-public class ErrorMessage {
+import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.web.server.rest.exception.ErrorMessage;
 
-    private int status;
-    private String type;
-    private String message;
-    
-    public ErrorMessage(Exception exception) {
-        this.type = exception.getClass().getSimpleName();
-        this.message = exception.getMessage();
-    }
+@Provider
+public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
 
-    public String getType() {
-        return type;
-    }
-    
-    public String getMessage() {
-        return message;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-    
-    public ErrorMessage withStatus(Status status) {
-        this.status = status.getStatusCode();
-        return this;
+    @Override
+    public Response toResponse(NotFoundException exception) {
+        return Response.status(Status.NOT_FOUND).entity(new ErrorMessage(exception).withStatus(Status.NOT_FOUND)).build();
     }
 }
