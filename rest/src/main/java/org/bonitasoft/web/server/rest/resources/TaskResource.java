@@ -16,9 +16,7 @@
  */
 package org.bonitasoft.web.server.rest.resources;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -33,11 +31,11 @@ import javax.ws.rs.core.Response.Status;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
+import org.bonitasoft.engine.bpm.contract.Input;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.server.rest.exception.BonitaWebApplicationException;
 import org.bonitasoft.web.server.rest.exception.ContractViolationErrorMessage;
-import org.bonitasoft.web.server.rest.model.Input;
 
 
 @Path("tasks")
@@ -66,19 +64,11 @@ public class TaskResource {
     @Path("{taskId}/execute")
     public void executeTask(@PathParam("taskId") long taskId, List<Input> inputs) {
         try {
-            processAPI.executeFlowNode(taskId, buildMap(inputs));
+            processAPI.executeUserTask(taskId, inputs);
         } catch (ContractViolationException e) {
             throw new BonitaWebApplicationException(Status.BAD_REQUEST, new ContractViolationErrorMessage(e));
         } catch (FlowNodeExecutionException e) {
             throw new BonitaWebApplicationException(Status.INTERNAL_SERVER_ERROR, e);
         }
-    }
-
-    private Map<String, Object> buildMap(List<Input> inputs) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        for (Input input : inputs) {
-            parameters.put(input.getName(), input.getValue());
-        }
-        return parameters;
     }
 }
