@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.junit.Before;
@@ -91,30 +89,7 @@ public class ProcessEngineClientTest extends APITestWithMock {
         verify(processAPI).getProcessDataDefinitions(expectedProcessId, 0, Integer.MAX_VALUE);
     }
 
-    @Test(expected = Exception.class)
-    public void getUserTaskContract_shuild_throw_exeception() throws Exception {
-        //given
-        final long userTaskId = -1;
-        when(processAPI.getUserTaskContract(anyLong())).thenThrow(new UserTaskNotFoundException(""));
 
-        //when then exception
-        processEngineClient.getUserTaskContract(userTaskId);
 
-    }
 
-    @Test
-    public void getUserTaskContract_return_contract() throws Exception {
-        final long userTaskId = -1;
-        final ContractDefinition contract = null;
-
-        //given
-        when(processAPI.getUserTaskContract(anyLong())).thenReturn(contract);
-
-        //when
-        processEngineClient.getUserTaskContract(userTaskId);
-
-        //then
-        verify(processAPI).getUserTaskContract(anyLong());
-
-    }
 }
