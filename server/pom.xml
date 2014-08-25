@@ -287,7 +287,7 @@
 							<webAppConfig>
 								<contextPath>/bonita</contextPath>
 								<baseResource implementation="org.mortbay.resource.ResourceCollection">
-									<resourcesAsCSV>/home/colin/workspace/git/bonita/bonita-web/rest/target/classes,${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp</resourcesAsCSV>
+									<resourcesAsCSV>${basedir}/../rest/target/classes,${basedir}/../portal/target/console-client-${project.version}/,${basedir}/target/console-server-${project.version}/,${basedir}/src/main/webapp</resourcesAsCSV>
 								</baseResource>
 							</webAppConfig>
 							        
