@@ -69,7 +69,7 @@ public class TaskResourceTest extends JerseyTest {
         Response response = target("tasks/2/contract").request().get();
         
         assertThat(response).hasStatus(200);
-        assertThat(response).hasBodyEqual(readFile("contract.json"));
+        assertThat(response).hasJsonBodyEqual(readFile("contract.json"));
     }
     
     @Test
@@ -103,7 +103,7 @@ public class TaskResourceTest extends JerseyTest {
         Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
         
         assertThat(response).hasStatus(400);
-        assertThat(response).hasBodyEqual(readFile("contractViolationError.json"));
+        assertThat(response).hasJsonBodyEqual(readFile("contractViolationError.json"));
     }
     
     @Test

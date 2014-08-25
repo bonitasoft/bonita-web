@@ -21,6 +21,9 @@ import javax.ws.rs.core.Response;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.internal.Objects;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
 
     protected ResponseAssert(Response actual) {
@@ -31,18 +34,23 @@ public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
         return new ResponseAssert(actual);
     }
 
-    public ResponseAssert hasBodyEqual(String body) {
+    public ResponseAssert hasJsonBodyEqual(String json) {
         info.description("Response body is not matching. This might introduce an API break");
-        Objects.instance().assertEqual(info, replaceSpaceAndLineBreak(actual.readEntity(String.class)), replaceSpaceAndLineBreak(body)); 
+        Objects.instance().assertEqual(info, getJson(json), getJson(actual.readEntity(String.class))); 
         return this;
+    }
+    
+    private JsonNode getJson(String json) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readTree(json);
+        } catch (Exception e) {
+            throw new AssertionError("Cannot be parsed to json", e);
+        }
     }
     
     public ResponseAssert hasStatus(int status) {
         Objects.instance().assertEqual(info, actual.getStatus(), status);
         return this;
-    }
-    
-    private String replaceSpaceAndLineBreak(String text) {
-        return text.replaceAll("\\s+", "");
     }
 }
