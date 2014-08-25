@@ -1,0 +1,8 @@
+{
+	"inputs":[
+		{"id":0,"name":"anInput","description":"aDescription","type":"aType"}
+	],
+	"rules":[
+		{"id":0,"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}
+	]
+}

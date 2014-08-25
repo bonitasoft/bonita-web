@@ -18,6 +18,7 @@ package org.bonitasoft.web.server.rest.resources;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.bonitasoft.web.server.rest.assertions.ResponseAssert.assertThat;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyMap;
 import static org.mockito.Mockito.doThrow;
@@ -25,13 +26,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
@@ -60,12 +63,13 @@ public class TaskResourceTest extends JerseyTest {
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
         ContractDefinitionImpl contract = new ContractDefinitionImpl();
         contract.addInput(new InputDefinitionImpl("anInput", "aType", "aDescription"));
-        contract.addRule(new RuleDefinitionImpl("aRule", "an expression", "an explenation"));
+        contract.addRule(new RuleDefinitionImpl("aRule", "an expression", "an explanation"));
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
         
-        String responseMsg = target("tasks/2/contract").request().get(String.class);
+        Response response = target("tasks/2/contract").request().get();
         
-        assertThat(responseMsg).isEqualTo("{\"inputs\":[{\"id\":0,\"name\":\"anInput\",\"description\":\"aDescription\",\"type\":\"aType\"}],\"rules\":[{\"id\":0,\"name\":\"aRule\",\"expression\":\"an expression\",\"explanation\":\"an explenation\",\"inputNames\":[]}]}");
+        assertThat(response).hasStatus(200);
+        assertThat(response).hasBodyEqual(readFile("contract.json"));
     }
     
     @Test
@@ -94,12 +98,12 @@ public class TaskResourceTest extends JerseyTest {
     @SuppressWarnings("unchecked")
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         Input input = new Input("aBoolean", true);
-        doThrow(new ContractViolationException("aMessage", Arrays.asList("first explanation", "second explanation"))).when(processAPI).executeFlowNode(anyLong(), anyMap());
+        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation"))).when(processAPI).executeFlowNode(anyLong(), anyMap());
         
         Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
         
-        assertThat(response.getStatus()).isEqualTo(400);
-        assertThat(response.readEntity(String.class)).isEqualTo("{\"status\":400,\"type\":\"ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
+        assertThat(response).hasStatus(400);
+        assertThat(response).hasBodyEqual(readFile("contractViolationError.json"));
     }
     
     @Test
@@ -111,5 +115,10 @@ public class TaskResourceTest extends JerseyTest {
         Response response = target("tasks/2/execute").request().post(Entity.json(asList(input)));
         
         assertThat(response.getStatus()).isEqualTo(500);
+    }
+    
+    private String readFile(String fileName) throws IOException {
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
+        return IOUtils.toString(resourceAsStream);
     }
 }

@@ -1,0 +1,9 @@
+{
+	"status":400, 
+	"type":"ContractViolationException",
+	"message":"aMessage",
+	"explanations":[
+		"first explanation",
+		"second explanation"
+	]
+}
