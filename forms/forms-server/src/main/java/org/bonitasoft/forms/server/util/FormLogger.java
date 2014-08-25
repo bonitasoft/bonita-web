@@ -13,40 +13,21 @@ public class FormLogger implements IFormLogger {
 
     protected Logger LOGGER;
 
-    protected static Map<String, Object> context = new HashMap<String, Object>();
-
     public FormLogger(String className) {
         LOGGER = Logger.getLogger(className);;
     }
 
     @Override
-    public void log(Level level, String message) {
-        logWithoutContext(level, message, null);
+    public void log(Level level, String message, Map<String, Object> pcontext) {
+        this.log(level, message, null, pcontext);
     }
 
     @Override
     public void log(Level level, String message, Throwable e, Map<String, Object> pcontext) {
-        setContext(pcontext);
-        this.log(level, message, e);
-    }
-
-    @Override
-    public void log(Level level, String message, Map<String, Object> pcontext) {
-        setContext(pcontext);
-        this.log(level, message);
-
-    }
-
-    private void logWithoutContext(Level level, String message, Throwable e) {
-        this.log(level, message, e);
-    }
-
-    @Override
-    public void log(Level level, String message, Throwable e) {
         if (e == null)
             e = new Exception();
 
-        FormContextUtil ctxu = new FormContextUtil(context);
+        FormContextUtil ctxu = new FormContextUtil(pcontext);
         String prefixMessage = "";
 
         if (ctxu.getSession() != null && ctxu.getUserName() != null) {
@@ -121,9 +102,4 @@ public class FormLogger implements IFormLogger {
     public boolean isLoggable(Level level) {
         return LOGGER.isLoggable(level);
     }
-
-    public static void setContext(Map<String, Object> pcontext) {
-        context = pcontext;
-    }
-
 }
