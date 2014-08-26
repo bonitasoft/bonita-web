@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-25 05:02+0200\n"
+"POT-Creation-Date: 2014-08-26 05:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3154,32 +3154,28 @@ msgstr ""
 msgid "Error when updating %activityId% activity variables"
 msgstr ""
 
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:86
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:81
 msgid "Apps %appName% in version %version% already exists"
 msgstr ""
 
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:89
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:84
 msgid "Unable to deploy business archive"
 msgstr ""
 
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:97
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:92
 msgid "Unable to enable process"
 msgstr ""
 
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:105
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:100
 msgid "Unable to disable process"
 msgstr ""
 
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:114
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:109
 msgid "Error when updating process deployment informations"
 msgstr ""
 
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:266
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:261
 msgid "Unable to get process data definitions, process %processId% not found"
-msgstr ""
-
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:275
-msgid "Unable to get user task contract, task %userTaskId% not found"
 msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/GroupEngineClient.java:53
