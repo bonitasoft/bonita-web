@@ -13,3 +13,9 @@ btm2.tlog
 
 *.class
 /en.po
+
+*.orig
+*.tmp
+/forms/
+/looknfeel/
+/common/

@@ -16,20 +16,31 @@
  */
 package org.bonitasoft.web.rest.server.framework.utils.converter.typed;
 
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+import org.bonitasoft.web.rest.server.framework.utils.converter.ConversionException;
 import org.bonitasoft.web.rest.server.framework.utils.converter.Converter;
 
 /**
- * @author Colin PUY
+ * @author Nicolas Tith
  * 
  */
-//FIXME : implement when ENGINE-1099 is resolved
 public class DateConverter implements Converter<Date> {
 
     @Override
-    public Date convert(String convert) {
-        throw new RuntimeException("Date converter is not implemented yet");
+    public Date convert(String toBeConverted) throws ConversionException {
+        if (toBeConverted == null || toBeConverted.isEmpty()) {
+            return null;
+        }
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", DateFormatSymbols.getInstance(Locale.ENGLISH));
+            return formatter.parse(toBeConverted);
+        } catch (ParseException e) {
+            throw new ConversionException(toBeConverted + " cannot be converted to Date", e);
+        }
     }
-
 }
