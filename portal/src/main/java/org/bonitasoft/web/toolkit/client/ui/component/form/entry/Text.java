@@ -27,6 +27,8 @@ import com.google.gwt.user.client.Element;
 public class Text extends Input {
 
     public static final long DEFAULT_MAX_LENGTH = 50L;
+    
+    public static final long INCREASED_MAX_LENGTH = 255L;
 
     private String placeholder = null;
 
