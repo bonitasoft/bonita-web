@@ -90,14 +90,16 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
     @Override
 	public DocumentItem add(DocumentItem item) {
 
-        long caseId;
+        long caseId = -1;
         try {
-            caseId = Long.valueOf(item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID));
-
+        	
             /* Necessary to avoid API break */
-            if (caseId < 0) {
-                caseId = Long.valueOf(item.getAttributeValue(DocumentItem.PROCESSINSTANCE_ID));
+            if (item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID) != null) {
+            	caseId = Long.valueOf(item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID));
+            } else if (item.getAttributeValue(DocumentItem.PROCESSINSTANCE_ID) != null ) {
+            	caseId = Long.valueOf(item.getAttributeValue(DocumentItem.PROCESSINSTANCE_ID));            	
             }
+            
         } catch (NumberFormatException e) {
             throw new APIException("Error while attaching a new document. Request with bad case id value.");
         }
