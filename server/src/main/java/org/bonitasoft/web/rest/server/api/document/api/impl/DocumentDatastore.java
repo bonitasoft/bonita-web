@@ -141,12 +141,11 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
     	try {
     		Document document = processAPI.getDocument(id.toLong());
     		final long caseId = document.getProcessInstanceId();
-    		final String documentName;
+    		final String documentName = document.getName();
     		final String urlPath;
     		
-			if (attributes.containsKey(DocumentItem.ATTRIBUTE_NAME) && (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL))) {
+			if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL)) {
 			
-				documentName = attributes.get(DocumentItem.ATTRIBUTE_NAME);
 				if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
 					urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
 					returnedItem = attachDocument(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT);

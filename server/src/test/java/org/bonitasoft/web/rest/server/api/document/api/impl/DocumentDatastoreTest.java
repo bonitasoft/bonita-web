@@ -62,6 +62,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		initMocks(this);
         System.setProperty("bonita.home", "target/bonita-home/bonita");
         when(engineSession.getTenantId()).thenReturn(1L);
+        when(mockedDocument.getName()).thenReturn("Doc 1");
         documentDatastore = spy(new DocumentDatastore(engineSession, constantsValue, processAPI));
     }
 	
@@ -212,14 +213,13 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		try {
 			//Given
 			Map<String, String> attributes = new HashMap<String, String>();
-			attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc1");
 			attributes.put(DocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
 			APIID id = APIID.makeAPIID(1l);
 			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
 			//When
 			documentDatastore.update(id, attributes);
 			//Then
-			verify(documentDatastore).attachDocument(0l, "Doc1", "C:\\doc.jpg", "AddNewVersionDocument");
+			verify(documentDatastore).attachDocument(0l, "Doc 1", "C:\\doc.jpg", "AddNewVersionDocument");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -230,14 +230,13 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		try {
 			//Given
 			Map<String, String> attributes = new HashMap<String, String>();
-			attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc1");
 			attributes.put(DocumentItem.ATTRIBUTE_URL, "http://images/doc.jpg");
 			APIID id = APIID.makeAPIID(1l);
 			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
 			//When
 			documentDatastore.update(id, attributes);
 			//Then
-			verify(documentDatastore).attachDocumentFromUrl(0l, "Doc1", "http://images/doc.jpg", "AddNewVersionDocument");
+			verify(documentDatastore).attachDocumentFromUrl(0l, "Doc 1", "http://images/doc.jpg", "AddNewVersionDocument");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -247,22 +246,7 @@ public class DocumentDatastoreTest extends APITestWithMock {
 	public void it_should_not_update_document_and_throws_exception_for_missing_uploadPath() {
 		//Given
 		Map<String, String> attributes = new HashMap<String, String>();
-		attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc1");
-		APIID id = APIID.makeAPIID(1l);
-		try {
-			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-			//When
-		documentDatastore.update(id, attributes);
-	}
-	
-	@Test(expected = APIException.class)
-	public void it_should_not_update_document_and_throws_exception_for_missing_document_name() {
-		//Given
-		Map<String, String> attributes = new HashMap<String, String>();
-		attributes.put(DocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
+		attributes.put(DocumentItem.ATTRIBUTE_NAME, "Doc 1");
 		APIID id = APIID.makeAPIID(1l);
 		try {
 			when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
