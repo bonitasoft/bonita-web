@@ -43,7 +43,7 @@ public abstract class Item implements IItem {
 
     public Item(final IItem item) {
         super();
-        this.attributes.putAll(item.getAttributes());
+        attributes.putAll(item.getAttributes());
     }
 
     @Override
@@ -192,7 +192,7 @@ public abstract class Item implements IItem {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -203,8 +203,8 @@ public abstract class Item implements IItem {
         setAttribute(
                 name,
                 value,
-                this.applyInputModifiers == null ? applyInputModifiersByDefault : this.applyInputModifiers,
-                this.applyValidators == null ? applyValidatorsByDefault : this.applyValidators);
+                applyInputModifiers == null ? applyInputModifiersByDefault : applyInputModifiers,
+                        applyValidators == null ? applyValidatorsByDefault : applyValidators);
     }
 
     @Override
@@ -216,7 +216,7 @@ public abstract class Item implements IItem {
      * Set a Date attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -231,7 +231,7 @@ public abstract class Item implements IItem {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -250,7 +250,7 @@ public abstract class Item implements IItem {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -265,9 +265,9 @@ public abstract class Item implements IItem {
             realValue = ModifierEngine.modify(realValue, attribute.getInputModifiers());
         }
 
-        this.attributes.put(name, realValue);
+        attributes.put(name, realValue);
         if (applyValidators) {
-            ValidatorEngine.validate(this, this.applyValidatorMandatory == null ? applyValidatorMandatoryByDefault : this.applyValidatorMandatory);
+            ValidatorEngine.validate(this, applyValidatorMandatory == null ? applyValidatorMandatoryByDefault : applyValidatorMandatory);
         }
     }
 
@@ -275,7 +275,7 @@ public abstract class Item implements IItem {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -295,7 +295,7 @@ public abstract class Item implements IItem {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -314,7 +314,7 @@ public abstract class Item implements IItem {
      * Set a Date attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
      *            The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
@@ -327,7 +327,7 @@ public abstract class Item implements IItem {
 
     /**
      * Set a deployed version of an attribute
-     * 
+     *
      * @param attributeName
      *            The name of the attribute to deploy
      * @param item
@@ -335,23 +335,23 @@ public abstract class Item implements IItem {
      */
     @Override
     public final void setDeploy(final String attributeName, final IItem item) {
-        this.deploys.put(attributeName, item);
+        deploys.put(attributeName, item);
     }
 
     /**
      * Remove a deployed version of an attribute
-     * 
+     *
      * @param attributeName
      *            The name of the attribute deploy to remove
      */
     @Override
     public final void removeDeploy(final String attributeName) {
-        this.deploys.remove(attributeName);
+        deploys.remove(attributeName);
     }
 
     /**
      * Set a counter value.
-     * 
+     *
      * @param counterName
      *            The name of the counter to set
      * @param value
@@ -367,29 +367,29 @@ public abstract class Item implements IItem {
 
     /**
      * Indicate if there are no attribute defined.
-     * 
+     *
      * @return This methods returns TRUE if there are no attributes, otherwise FALSE.
      */
     @Override
     public final boolean isEmpty() {
-        return this.attributes.isEmpty();
+        return attributes.isEmpty();
     }
 
     /**
      * Indicate if the attribute exists even if its value is NULL or empty.
-     * 
+     *
      * @param name
      *            The name of the attribute to check.
      * @return This method returns TRUE if the attribute exists, otherwise FALSE.
      */
     @Override
     public final boolean hasAttribute(final String name) {
-        return this.attributes.containsKey(name);
+        return attributes.containsKey(name);
     }
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param attributeName
      *            The name of the attribute
      * @param applyModifiers
@@ -411,7 +411,7 @@ public abstract class Item implements IItem {
         }
 
         // Read an id from a deployed attribute
-        else if (this.deploys.containsKey(attributeName)) {
+        else if (deploys.containsKey(attributeName)) {
 
             final IItem deploy = getDeploy(attributeName);
 
@@ -427,7 +427,7 @@ public abstract class Item implements IItem {
 
             final ItemAttribute attribute = getItemDefinition().getAttribute(attributeName);
 
-            String realValue = this.attributes.get(attributeName);
+            String realValue = attributes.get(attributeName);
 
             if (attribute != null && applyModifiers) {
                 realValue = ModifierEngine.modify(realValue, attribute.getOutputModifiers());
@@ -449,31 +449,31 @@ public abstract class Item implements IItem {
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param attributeName
      *            The name of the attribute
      * @return This function returns the value of the attribute or NULL if not set.
      */
     @Override
     public final String getAttributeValue(final String attributeName) {
-        return this.getAttributeValue(attributeName, this.applyOutputModifiers == null ? applyOutputModifiersByDefault : this.applyOutputModifiers);
+        return this.getAttributeValue(attributeName, applyOutputModifiers == null ? applyOutputModifiersByDefault : applyOutputModifiers);
     }
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param itemAttribute
      *            The attribute
      * @return This function returns the value of the attribute or NULL if not set.
      */
     @Override
     public final String getAttributeValue(final ItemAttribute itemAttribute) {
-        return this.getAttributeValue(itemAttribute.getName(), this.applyOutputModifiers == null ? applyOutputModifiersByDefault : this.applyOutputModifiers);
+        return this.getAttributeValue(itemAttribute.getName(), applyOutputModifiers == null ? applyOutputModifiersByDefault : applyOutputModifiers);
     }
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param itemAttribute
      *            The name of the attribute
      * @param applyModifiers
@@ -551,14 +551,14 @@ public abstract class Item implements IItem {
 
     @Override
     public final Map<String, String> getAttributes() {
-        return this.getAttributes(this.applyOutputModifiers == null ? applyOutputModifiersByDefault : this.applyOutputModifiers);
+        return this.getAttributes(applyOutputModifiers == null ? applyOutputModifiersByDefault : applyOutputModifiers);
     }
 
     @Override
     public final Map<String, String> getAttributes(final boolean applyModifiers) {
         final Map<String, String> results = new HashMap<String, String>();
 
-        for (final String attributeName : this.attributes.keySet()) {
+        for (final String attributeName : attributes.keySet()) {
             results.put(attributeName, this.getAttributeValue(attributeName, applyModifiers));
         }
 
@@ -567,7 +567,7 @@ public abstract class Item implements IItem {
 
     /**
      * Get a deployed version of an attribute
-     * 
+     *
      * @param attributeName
      *            The name of the attribute to deploy
      * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
@@ -576,9 +576,10 @@ public abstract class Item implements IItem {
     public final IItem getDeploy(final String attributeName) {
         // TODO If not deployed, automatically call the API to deploy.
 
-        return this.deploys.get(attributeName);
+        return deploys.get(attributeName);
     }
-    
+
+    @Override
     public Map<String, IItem> getDeploys() {
         return deploys;
     }
@@ -589,7 +590,7 @@ public abstract class Item implements IItem {
 
     @Override
     public final ArrayList<String> getAttributeNames() {
-        return new ArrayList<String>(this.attributes.keySet());
+        return new ArrayList<String>(attributes.keySet());
     }
 
     @Override
@@ -611,15 +612,15 @@ public abstract class Item implements IItem {
     public final void setAttributes(final Map<String, String> attributes) {
         setAttributes(
                 attributes,
-                this.applyInputModifiers == null ? applyInputModifiersByDefault : this.applyInputModifiers,
-                this.applyValidators == null ? applyValidatorsByDefault : this.applyValidators);
+                applyInputModifiers == null ? applyInputModifiersByDefault : applyInputModifiers,
+                        applyValidators == null ? applyValidatorsByDefault : applyValidators);
     }
 
     /**
      * Get the definition of an Item
      * <p>
      * This function must be overridden to return the definition corresponding to the Item type.b
-     * 
+     *
      * @return This function return an instance of ItemDefinition for the current Item type
      */
     @Override
@@ -632,8 +633,8 @@ public abstract class Item implements IItem {
     @Override
     public final String toString() {
         final StringBuilder sb = new StringBuilder();
-        for (final String key : this.attributes.keySet()) {
-            final String rawValue = this.attributes.get(key);
+        for (final String key : attributes.keySet()) {
+            final String rawValue = attributes.get(key);
             final String cleanValue = this.getAttributeValue(key);
 
             sb.append(key).append(" : ").append(rawValue);
@@ -644,7 +645,7 @@ public abstract class Item implements IItem {
             sb.append("\r\n");
         }
 
-        for (Entry<String, IItem> entry : deploys.entrySet()) {
+        for (final Entry<String, IItem> entry : deploys.entrySet()) {
             sb.append(entry.getKey()).append(" : ").append(entry.getValue());
             sb.append("\r\n");
         }
@@ -658,12 +659,12 @@ public abstract class Item implements IItem {
 
         boolean first = true;
         for (final String attribute : getAttributeNames()) {
-            if (this.deploys.containsKey(attribute)) {
+            if (deploys.containsKey(attribute)) {
                 json.append(!first ? "," : "").append(JSonSerializer.quote(attribute)).append(":")
-                        .append(JSonSerializer.serialize(this.deploys.get(attribute)));
+                .append(JSonSerializer.serialize(deploys.get(attribute)));
             } else {
                 json.append(!first ? "," : "").append(JSonSerializer.quote(attribute)).append(":")
-                        .append(JSonSerializer.quote(this.getAttributeValue(attribute)));
+                .append(JSonSerializer.quote(this.getAttributeValue(attribute)));
             }
             first = false;
         }
@@ -677,4 +678,75 @@ public abstract class Item implements IItem {
         return json.toString();
 
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (applyInputModifiers == null ? 0 : applyInputModifiers.hashCode());
+        result = prime * result + (applyOutputModifiers == null ? 0 : applyOutputModifiers.hashCode());
+        result = prime * result + (applyValidatorMandatory == null ? 0 : applyValidatorMandatory.hashCode());
+        result = prime * result + (applyValidators == null ? 0 : applyValidators.hashCode());
+        result = prime * result + (attributes == null ? 0 : attributes.hashCode());
+        result = prime * result + (deploys == null ? 0 : deploys.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (applyInputModifiers == null) {
+            if (other.applyInputModifiers != null) {
+                return false;
+            }
+        } else if (!applyInputModifiers.equals(other.applyInputModifiers)) {
+            return false;
+        }
+        if (applyOutputModifiers == null) {
+            if (other.applyOutputModifiers != null) {
+                return false;
+            }
+        } else if (!applyOutputModifiers.equals(other.applyOutputModifiers)) {
+            return false;
+        }
+        if (applyValidatorMandatory == null) {
+            if (other.applyValidatorMandatory != null) {
+                return false;
+            }
+        } else if (!applyValidatorMandatory.equals(other.applyValidatorMandatory)) {
+            return false;
+        }
+        if (applyValidators == null) {
+            if (other.applyValidators != null) {
+                return false;
+            }
+        } else if (!applyValidators.equals(other.applyValidators)) {
+            return false;
+        }
+        if (attributes == null) {
+            if (other.attributes != null) {
+                return false;
+            }
+        } else if (!attributes.equals(other.attributes)) {
+            return false;
+        }
+        if (deploys == null) {
+            if (other.deploys != null) {
+                return false;
+            }
+        } else if (!deploys.equals(other.deploys)) {
+            return false;
+        }
+        return true;
+    }
+
 }

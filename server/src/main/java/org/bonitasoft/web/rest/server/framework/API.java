@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.server.framework;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,6 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
  * @author Séverin Moussel
- * 
  */
 public abstract class API<ITEM extends IItem> {
 
@@ -80,7 +80,7 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Set the caller.
-     * 
+     *
      * @param caller
      *            The ServletCall responsible of this service.
      */
@@ -352,7 +352,7 @@ public abstract class API<ITEM extends IItem> {
     /**
      * Upload the file to the defined directory.<br>
      * The original filename will be kept.
-     * 
+     *
      * @param attributeName
      *            The name of the attribute representing the file.
      * @param attributeValue
@@ -368,7 +368,7 @@ public abstract class API<ITEM extends IItem> {
     /**
      * Upload the file to the defined directory and rename it to make sure its filename is unique.<br>
      * The original filename will be kept.
-     * 
+     *
      * @param attributeName
      *            The name of the attribute representing the file.
      * @param attributeValue
@@ -386,6 +386,7 @@ public abstract class API<ITEM extends IItem> {
             if (destinationDirectory.exists()) {
                 final String extension = this.getFileExtension(destinationFilename);
                 final File destinationFile = File.createTempFile("avatar", extension, destinationDirectory);
+                destinationFile.deleteOnExit();
                 destinationFilename = destinationFile.getName().substring(0, destinationFile.getName().length() - extension.length());
             }
 
@@ -398,7 +399,7 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Rename and upload the file to the defined directory.
-     * 
+     *
      * @param attributeName
      *            The name of the attribute representing the file.
      * @param attributeValue
@@ -451,12 +452,12 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Get a value in a map of attributes and convert it to an APIID.
-     * 
+     *
      * @param attributes
      *            The map of attributes to search in
      * @param attributeName
      *            The name of the attribute to get.
-     * 
+     *
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final APIID getAttributeAsAPIID(final Map<String, String> attributes, final String attributeName) {
@@ -470,12 +471,12 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Get a value in a map of attributes and convert it to a long.
-     * 
+     *
      * @param attributes
      *            The map of attributes to search in
      * @param attributeName
      *            The name of the attribute to get.
-     * 
+     *
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final Long getAttributeAsLong(final Map<String, String> attributes, final String attributeName) {
@@ -488,12 +489,12 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Get a value in a map of attributes and convert it to an Integer.
-     * 
+     *
      * @param attributes
      *            The map of attributes to search in
      * @param attributeName
      *            The name of the attribute to get.
-     * 
+     *
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final Integer getAttributeAsInteger(final Map<String, String> attributes, final String attributeName) {
@@ -506,12 +507,12 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Get a value in a map of attributes and convert it to an Integer.
-     * 
+     *
      * @param attributes
      *            The map of attributes to search in
      * @param attributeName
      *            The name of the attribute to get.
-     * 
+     *
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final Boolean getAttributeAsBoolean(final Map<String, String> attributes, final String attributeName) {
@@ -528,6 +529,10 @@ public abstract class API<ITEM extends IItem> {
 
     public void addDeployer(final Deployer deployer) {
         deployers.put(deployer.getDeployedAttribute(), deployer);
+    }
+
+    public Map<String, Deployer> getDeployers() {
+        return Collections.unmodifiableMap(deployers);
     }
 
     protected void fillDeploys(final ITEM item, final List<String> deploys) {
@@ -576,7 +581,7 @@ public abstract class API<ITEM extends IItem> {
     /**
      * Upload and replace a file in an item<br />
      * The resulted path will be "filename.ext"
-     * 
+     *
      * @param attributeName
      *            The name of the attribute that contains a file to upload
      * @param item
@@ -591,7 +596,7 @@ public abstract class API<ITEM extends IItem> {
     /**
      * Upload and replace a file in an item<br />
      * The resulted path will be "subFolder/filename.ext"
-     * 
+     *
      * @param attributeName
      *            The name of the attribute that contains a file to upload
      * @param item
@@ -615,7 +620,7 @@ public abstract class API<ITEM extends IItem> {
     /**
      * Upload and replace a file in a map<br />
      * The resulted path will be "filename.ext"
-     * 
+     *
      * @param attributeName
      *            The name of the attribute that contains a file to upload
      * @param item
@@ -630,7 +635,7 @@ public abstract class API<ITEM extends IItem> {
     /**
      * Upload and replace a file in a map<br />
      * The resulted path will be "subFolder/filename.ext"
-     * 
+     *
      * @param attributeName
      *            The name of the attribute that contains a file to upload
      * @param item
@@ -684,7 +689,7 @@ public abstract class API<ITEM extends IItem> {
 
     /**
      * Override this method to define attributes that are not allowed to be set manually during ADD or UPDATE.
-     * 
+     *
      * @return This method must returns a List of forbidden attributes' name.
      */
     protected List<String> defineReadOnlyAttributes() {
