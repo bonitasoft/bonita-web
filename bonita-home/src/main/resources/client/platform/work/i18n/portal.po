@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-02 01:39+0200\n"
+"POT-Creation-Date: 2014-09-03 01:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3362,6 +3362,14 @@ msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:42
 msgid "Custom Pages"
+msgstr ""
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
+msgid "Manage applications"
+msgstr ""
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
+msgid "Applications"
 msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/MembershipDatastore.java:135
