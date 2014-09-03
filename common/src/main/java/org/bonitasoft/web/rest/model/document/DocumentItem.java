@@ -18,6 +18,8 @@ package org.bonitasoft.web.rest.model.document;
 
 import java.util.Date;
 
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -47,6 +49,8 @@ public class DocumentItem extends Item {
     
     public static final String ATTRIBUTE_NAME = "documentName";
 
+    public static final String ATTRIBUTE_DESCRIPTION = "documentDescription";
+    
     public static final String ATTRIBUTE_SUBMITTED_BY_USER_ID = "submittedBy";
     
     public static final String ATTRIBUTE_CREATION_DATE = "documentCreationDate";
@@ -98,12 +102,15 @@ public class DocumentItem extends Item {
         this.setAttribute(ATTRIBUTE_NAME, name);
     }
     
+    public void setDescription(final String description) {
+        setAttribute(ATTRIBUTE_DESCRIPTION, description);
+    }
+    
     public void setSubmittedBy(final APIID userId) {
         this.setAttribute(ATTRIBUTE_SUBMITTED_BY_USER_ID, userId.toString());
         this.setAttribute(DOCUMENT_AUTHOR, userId);
     }
 
-    
     public void setSubmittedBy(final Long userId) {
         this.setAttribute(ATTRIBUTE_SUBMITTED_BY_USER_ID, userId.toString());
         this.setAttribute(DOCUMENT_AUTHOR, userId.toString());
@@ -157,6 +164,10 @@ public class DocumentItem extends Item {
     	return getAttributeValue(ATTRIBUTE_NAME);
     }
     
+    public String getDescription() {
+        return getAttributeValue(ATTRIBUTE_DESCRIPTION);
+    }
+    
     public APIID getSubmittedBy() {
     	return getAttributeValueAsAPIID(ATTRIBUTE_SUBMITTED_BY_USER_ID);
     }
@@ -189,7 +200,11 @@ public class DocumentItem extends Item {
     public ItemDefinition getItemDefinition() {
     	return new DocumentDefinition();
     }
-
+    
+    public UserItem getSubmittedByUser() {
+        return (UserItem) getDeploy(ATTRIBUTE_SUBMITTED_BY_USER_ID);
+    }
+    
     /* Methods kept here to avoid API break */
     
     public void setProcessInstanceId(final String caseId) {
@@ -211,5 +226,9 @@ public class DocumentItem extends Item {
 	public void setDocumentAuthor(final Long userId) {
 		this.setAttribute(DOCUMENT_AUTHOR, userId);
 	}
+	
+	public UserItem getAuthorByUser() {
+        return (UserItem) getDeploy(DOCUMENT_AUTHOR);
+    }
 
 }

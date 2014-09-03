@@ -23,6 +23,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -61,6 +62,13 @@ public class APIDocument extends ConsoleAPI<DocumentItem> {
 
 	    @Override
 	    protected void fillDeploys(final DocumentItem item, final List<String> deploys) {
+	    	addDeployer(getDeployerFactory().createUserDeployer(DocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID));
+	        addDeployer(getDeployerFactory().createUserDeployer(DocumentItem.DOCUMENT_AUTHOR));
+	        super.fillDeploys(item, deploys);
+	    }
+
+	    protected DeployerFactory getDeployerFactory() {
+	    	return new DeployerFactory(getEngineSession());
 	    }
 
 	    @Override

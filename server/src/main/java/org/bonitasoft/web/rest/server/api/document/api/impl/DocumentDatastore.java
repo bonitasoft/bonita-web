@@ -103,11 +103,13 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         } catch (NumberFormatException e) {
             throw new APIException("Error while attaching a new document. Request with bad case id value.");
         }
+        
         /* -----------------------------*/
         
         final String documentName = item.getAttributeValue(DocumentItem.ATTRIBUTE_NAME);
         final String uploadPath = item.getAttributeValue(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
         final String urlPath = item.getAttributeValue(DocumentItem.ATTRIBUTE_URL);
+        String documentDescription = item.getAttributeValue(DocumentItem.ATTRIBUTE_DESCRIPTION);
         
         /* Necessary to avoid API break*/
         String operationType = CREATE_NEW_DOCUMENT;
@@ -121,9 +123,9 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
             DocumentItem returnedItem = new DocumentItem();
             if (caseId != -1 && documentName != null) {
                 if (uploadPath != null && !uploadPath.isEmpty()) {
-                    returnedItem = attachDocument(caseId, documentName, uploadPath, operationType);
+                    returnedItem = attachDocument(caseId, documentName, uploadPath, operationType, documentDescription);
                 } else if (urlPath != null && !urlPath.isEmpty()) {
-                    returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, operationType);
+                    returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, operationType, documentDescription);
                 }
                 return returnedItem;
             } else {
@@ -143,15 +145,20 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
     		final long caseId = document.getProcessInstanceId();
     		final String documentName = document.getName();
     		final String urlPath;
+    		String documentDescription = null;
     		
 			if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL)) {
-			
+				
+				if (attributes.get(DocumentItem.ATTRIBUTE_DESCRIPTION) != null) {
+					documentDescription = attributes.get(DocumentItem.ATTRIBUTE_DESCRIPTION);
+				}
+				
 				if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
 					urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
-					returnedItem = attachDocument(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT);
+					returnedItem = attachDocument(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT, documentDescription);
 				} else {
 					urlPath = attributes.get(DocumentItem.ATTRIBUTE_URL);
-					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT);
+					returnedItem = attachDocumentFromUrl(caseId, documentName, urlPath, CREATE_NEW_VERSION_DOCUMENT, documentDescription);
 				}
 				return returnedItem;
 			} else {
@@ -162,7 +169,7 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         }
     }
     
-	public DocumentItem attachDocument(final long caseId, final String documentName, final String uploadPath, String operationType) 
+	public DocumentItem attachDocument(final long caseId, final String documentName, final String uploadPath, String operationType, String documentDescription) 
                 throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
         DocumentItem item = new DocumentItem();
@@ -185,15 +192,15 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         // Attach a new document to a case
         Document document = null;
         if (operationType.equals(CREATE_NEW_DOCUMENT)) {
-        	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, fileContent);        	
+        	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, fileContent, documentDescription);        	
         } else if (operationType.equals(CREATE_NEW_VERSION_DOCUMENT)) {
-        	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, fileContent);
+        	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, fileContent, documentDescription);
         } 
         item = convertEngineToConsoleItem(document);
         return item;
     }
 
-    public DocumentItem attachDocumentFromUrl(final long caseId, final String documentName, final String url, String operationType)
+    public DocumentItem attachDocumentFromUrl(final long caseId, final String documentName, final String url, String operationType, String documentDescription)
             throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, ProcessInstanceNotFoundException,
             DocumentAttachmentException, IOException, RetrieveException, ProcessDefinitionNotFoundException {
 
@@ -204,9 +211,9 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         	// Attach a new document to a case
         	 Document document = null;
              if (operationType.equals(CREATE_NEW_DOCUMENT)) {
-             	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, url);        	
+             	document = processAPI.attachDocument(caseId, documentName, fileName, mimeType, url, documentDescription);        	
              } else if (operationType.equals(CREATE_NEW_VERSION_DOCUMENT)) {
-             	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, url);
+             	document = processAPI.attachNewDocumentVersion(caseId, documentName, fileName, mimeType, url, documentDescription);
              } 
              item = convertEngineToConsoleItem(document);
         }
