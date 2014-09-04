@@ -24,6 +24,7 @@ import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
@@ -35,31 +36,31 @@ public class UsersListSection extends Section {
     public UsersListSection(String title) {
         super(title);
         addClass("usersmapping");
-        
+        setId(CssId.SECTION_USERLIST);
         usersTable = buildUsersTable();
         addBody(usersTable);
     }
 
     private ItemTable buildUsersTable() {
-       return new ItemTable(Definitions.get(UserDefinition.TOKEN))
-            .addHiddenFilter(UserItem.ATTRIBUTE_ENABLED, "true")
-            .addColumn(UserItem.ATTRIBUTE_ICON, _("Icon"))
-            .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("First name"), true)
-            .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Last name"), true)
-            .setView(VIEW_TYPE.VIEW_LIST)
-            .setDefaultAction(new ShowUserMoreDetailAction());
+        return new ItemTable(Definitions.get(UserDefinition.TOKEN))
+                .addHiddenFilter(UserItem.ATTRIBUTE_ENABLED, "true")
+                .addColumn(UserItem.ATTRIBUTE_ICON, _("Icon"))
+                .addColumn(UserItem.ATTRIBUTE_FIRSTNAME, _("First name"), true)
+                .addColumn(UserItem.ATTRIBUTE_LASTNAME, _("Last name"), true)
+                .setView(VIEW_TYPE.VIEW_LIST)
+                .setDefaultAction(new ShowUserMoreDetailAction());
     }
-    
+
     public UsersListSection filterByGroup(GroupItem group) {
         usersTable.addHiddenFilter(UserItem.FILTER_GROUP_ID, group.getId().toString());
         return this;
     }
-    
+
     public UsersListSection filterByRole(RoleItem role) {
         usersTable.addHiddenFilter(UserItem.FILTER_ROLE_ID, role.getId().toString());
         return this;
     }
-    
+
     public UsersListSection setNbLinesByPage(int nbLines) {
         usersTable.setNbLinesByPage(nbLines);
         return this;

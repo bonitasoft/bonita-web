@@ -26,6 +26,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
@@ -75,9 +76,11 @@ public class ProfileMenuItem extends MenuFolder {
     }
 
     private MenuLink createMenuLink(ProfileItem profile, final String profileName) {
-        return new MenuLink(
+        MenuLink menuLink = new MenuLink(
                 profileName,
                 profile.getAttributeValue(ProfileItem.ATTRIBUTE_DESCRIPTION),
                 new ChangeProfileAction(profile, this, menuListCreator));
+        menuLink.setLinkId(CssId.PROFILE_LINK_PREFIX + profile.getName().replaceAll("\\W", ""));
+        return menuLink;
     }
 }

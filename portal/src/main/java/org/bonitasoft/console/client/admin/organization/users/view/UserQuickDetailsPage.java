@@ -35,6 +35,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.CompoundAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
@@ -48,9 +49,9 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
 
     public static final String TOKEN = "userquickdetails";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
     }
@@ -58,7 +59,7 @@ public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
     public UserQuickDetailsPage() {
         super(Definitions.get(UserDefinition.TOKEN));
     }
-    
+
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final UserItem item) {
         UserMetadataBuilder metadatas = new UserMetadataBuilder();
@@ -88,7 +89,9 @@ public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
     }
 
     protected Section profileSection(final UserItem item) {
-        return new Section(_("Profile"), profileTable(item).setView(VIEW_TYPE.VIEW_LIST));
+        Section userProfileSection = new Section(_("Profile"), profileTable(item).setView(VIEW_TYPE.VIEW_LIST));
+        userProfileSection.setId(CssId.SECTION_USER_PROFILE);
+        return userProfileSection;
     }
 
     protected ItemTable profileTable(final UserItem item) {
@@ -99,7 +102,9 @@ public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
     }
 
     protected Section membershipSection(final UserItem item) {
-        return new Section(_("Membership"), membershipTable(item).setView(VIEW_TYPE.VIEW_LIST));
+        Section membershipSection = new Section(_("Membership"), membershipTable(item).setView(VIEW_TYPE.VIEW_LIST));
+        membershipSection.setId(CssId.QD_SECTION_USER_MEMBERSHIP);
+        return membershipSection;
     }
 
     protected ItemTable membershipTable(final UserItem item) {

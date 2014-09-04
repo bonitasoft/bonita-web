@@ -45,6 +45,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
@@ -132,10 +133,12 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     }
 
     private Section technicalDetailsSection(final CaseItem item) {
-        return new Section(_("Technical details"))
+        Section technicalDetailsSection = new Section(_("Technical details"))
                 .addBody(lastExecutedTaskDefinition(item))
                 .addBody(numberOfOpenedTasksDefinition(item))
                 .addBody(numberOfAttachmentDefinition(item));
+        technicalDetailsSection.setId(CssId.QD_SECTION_TECHNICAL_DETAILS);
+        return technicalDetailsSection;
     }
 
     private Definition lastExecutedTaskDefinition(final CaseItem item) {
@@ -162,10 +165,12 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     private Section failedTaskSection(final CaseItem item) {
         final ItemTable failedTasksTable = getFailedTaskTable(item);
         prepareFailedTasksTable(failedTasksTable);
-        final Section section = new Section(_("Failed tasks"), failedTasksTable.setView(VIEW_TYPE.VIEW_LIST));
-        section.addClass("tasks");
-        section.addClass("failed");
-        return section;
+        final Section failedTaskSection = new Section(_("Failed tasks"), failedTasksTable.setView(VIEW_TYPE.VIEW_LIST));
+        failedTaskSection.addClass("tasks");
+        failedTaskSection.addClass("failed");
+        failedTaskSection.addCssTaskType();
+        failedTaskSection.setId(CssId.QD_SECTION_FAILED_TASKS);
+        return failedTaskSection;
     }
 
     protected ItemTable getFailedTaskTable(final CaseItem item) {

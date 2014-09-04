@@ -24,6 +24,7 @@ import org.bonitasoft.console.client.common.event.handler.HideComponentOnEmptyTa
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -36,7 +37,7 @@ public class ConnectorSection extends Section {
 
     public ConnectorSection(ProcessItem process, ConfigurationState state) {
         super(new JsId("connectors"), _("Connector definitions"));
-
+        setId(CssId.MD_SECTION_CONNECTORS);
         ConfigurationStateText configurationStateText = new ConfigurationStateText(state);
         ItemTable connectorsItemTable = connectorsItemTable(process);
         connectorsItemTable.addItemTableLoadedHandler(
