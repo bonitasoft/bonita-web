@@ -12,6 +12,8 @@ public class DocumentItemConverter  extends ItemConverter<DocumentItem, Document
         item.setId(String.valueOf(engineItem.getId()));
         item.setCaseId(String.valueOf(engineItem.getProcessInstanceId()));
         item.setName(engineItem.getName());
+        item.setVersion(engineItem.getVersion());
+        item.setDescription(engineItem.getDescription());
         item.setSubmittedBy(engineItem.getAuthor());
         item.setFileName(engineItem.getContentFileName());
         item.setCreationDate(engineItem.getCreationDate());

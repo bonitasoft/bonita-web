@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.model.document;
 
+import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -60,6 +61,7 @@ public class DocumentDefinition extends ItemDefinition {
         createAttribute(DocumentItem.ATTRIBUTE_VERSION, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.ATTRIBUTE_CASE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(DocumentItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
         createAttribute(DocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(DocumentItem.ATTRIBUTE_CREATION_DATE, ItemAttribute.TYPE.DATE);
         createAttribute(DocumentItem.ATTRIBUTE_HAS_CONTENT, ItemAttribute.TYPE.BOOLEAN);
