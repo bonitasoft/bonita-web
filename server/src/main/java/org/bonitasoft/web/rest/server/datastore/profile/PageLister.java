@@ -40,6 +40,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("reportlistingadminext", _("Monitoring"), _("Monitoring"), _("Analytics")));
         pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), _("Manage Look and Feel"), _("Look and Feel")));
         pages.add(new BonitaPageItem("pagelisting", _("Manage custom pages"), _("Manage custom pages"), _("Custom Pages")));
+        pages.add(new BonitaPageItem("applicationslistingadmin", _("Manage applications"), _("Manage applications"), _("Applications")));
     }
 
     public List<BonitaPageItem> getPages() {
