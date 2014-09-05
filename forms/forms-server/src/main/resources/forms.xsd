@@ -121,6 +121,7 @@
 			<xsd:element name="label-button" type="xsd:boolean" minOccurs="0" />
 			<xsd:element name="max-items" type="xsd:integer" minOccurs="0" />
 			<xsd:element name="multi-instantiated" type="xsd:boolean" minOccurs="0" />
+			<xsd:element name="document-list" type="xsd:boolean" minOccurs="0" />
 			<xsd:element name="max-instances" type="ExpressionContainer" minOccurs="0" />
 			<xsd:element name="min-instances" type="ExpressionContainer" minOccurs="0" />
 			<xsd:element name="add-label" type="ExpressionContainer" minOccurs="0" />

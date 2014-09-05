@@ -558,7 +558,11 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     public void setMultiple(final boolean multiple) {
         this.reducedFormWidget.setMultiple(multiple);
     }
-
+    
+	public void setDocumentList(boolean documentList) {
+		this.reducedFormWidget.setDocumentList(documentList);
+	}
+	
     public boolean isMultiple() {
         return this.reducedFormWidget.isMultiple();
     }

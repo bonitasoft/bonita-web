@@ -261,6 +261,11 @@ public class ReducedFormWidget implements Serializable, Comparable<ReducedFormWi
     private boolean multiple;
 
     /**
+     * if true indicates that the widget is bound to a document list
+     */
+    private boolean documentList;
+    
+    /**
      * The max number of instances
      */
     private int maxInstances = -1;
@@ -697,8 +702,16 @@ public class ReducedFormWidget implements Serializable, Comparable<ReducedFormWi
         this.multiple = multiple;
     }
 
+	public void setDocumentList(boolean documentList) {
+		this.documentList = documentList;
+	}
+	
     public boolean isMultiple() {
         return multiple;
+    }
+    
+    public boolean isDocumentList() {
+        return documentList;
     }
 
     public int getValueColumnIndex() {
