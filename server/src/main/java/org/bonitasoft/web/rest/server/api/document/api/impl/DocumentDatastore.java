@@ -18,6 +18,7 @@ package org.bonitasoft.web.rest.server.api.document.api.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.activation.FileTypeMap;
@@ -34,15 +35,28 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.RetrieveException;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.identity.User;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.organization.UserFilterCreator;
+import org.bonitasoft.web.rest.server.datastore.organization.UserSearchAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
+import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
+import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
+import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -65,6 +79,8 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
     final long maxSizeForTenant;
     
     final FileTypeMap mimetypesFileTypeMap;
+
+	private final EngineClientFactory engineClientFactory;
     
     /**
      * Default constructor.
@@ -75,6 +91,7 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         this.processAPI = processAPI;
         maxSizeForTenant =  PropertiesFactory.getConsoleProperties(engineSession.getTenantId()).getMaxSize();
         mimetypesFileTypeMap = new MimetypesFileTypeMap();
+        engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(engineSession));
     }
 
     @Override
@@ -227,5 +244,38 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         }
         return null;
     }
+
+    private List<DocumentItem> convertEngineToConsoleItem(List<Document> result) {
+    	if (result != null) {
+            return new DocumentItemConverter().convert(result);
+        }
+        return null;
+    }
+
+	public ItemSearchResult<DocumentItem> search(int page, int resultsByPage,
+			String search, Map<String, String> filters, String orders) {
+		return searchDocument(page, resultsByPage, search, filters, orders);
+	}
+    
+	private ItemSearchResult<DocumentItem> searchDocument(final int page, final int resultsByPage, final String search,
+            final Map<String, String> filters, final String orders) {
+
+		SearchOptionsCreator searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
+
+		try {
+			SearchResult<Document> engineSearchResults = processAPI.searchDocuments(searchOptionsCreator.create());
+			return new ItemSearchResult<DocumentItem>(page, resultsByPage, engineSearchResults.getCount(), convertEngineToConsoleItem(engineSearchResults.getResult()));
+		} catch (SearchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters, final String orders) {
+		SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, new DocumentSearchAttributeConverter()), new Filters(filters, new DocumentFilterCreator()));
+		//SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, null, null);
+		return searchOptionsCreator;
+	}
 
 }
