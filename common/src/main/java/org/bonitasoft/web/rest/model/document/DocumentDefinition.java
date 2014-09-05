@@ -68,7 +68,7 @@ public class DocumentDefinition extends ItemDefinition {
         createAttribute(DocumentItem.ATTRIBUTE_CONTENT_FILENAME, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.ATTRIBUTE_CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_URL, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.ATTRIBUTE_URL, ItemAttribute.TYPE.URL);
         createAttribute(DocumentItem.ATTRIBUTE_UPLOAD_PATH, ItemAttribute.TYPE.STRING);
         
         /* Attributes kept here to avoid API break */
