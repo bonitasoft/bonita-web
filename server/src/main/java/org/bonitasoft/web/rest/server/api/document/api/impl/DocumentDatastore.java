@@ -273,9 +273,13 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
 	}
 
 	private SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters, final String orders) {
-		SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, new DocumentSearchAttributeConverter()), new Filters(filters, new DocumentFilterCreator()));
+		SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, getDocumentSearchAttributeConverter()), new Filters(filters, new DocumentFilterCreator(getDocumentSearchAttributeConverter())));
 		//SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, null, null);
 		return searchOptionsCreator;
+	}
+
+	private DocumentSearchAttributeConverter getDocumentSearchAttributeConverter() {
+		return new DocumentSearchAttributeConverter();
 	}
 
 }

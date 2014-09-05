@@ -11,14 +11,14 @@ import org.bonitasoft.web.rest.server.datastore.organization.UserSearchAttribute
 
 public class DocumentFilterCreator implements FilterCreator {
     
-	private AttributeConverter fieldConverter;
+	private DocumentSearchAttributeConverter converter;
 
-    public DocumentFilterCreator() {
-        this.fieldConverter = new UserSearchAttributeConverter();
+    public DocumentFilterCreator(DocumentSearchAttributeConverter converter) {
+        this.converter = converter;
     }
 	@Override
 	public Filter<? extends Serializable> create(String attribute, String value) {
-		return new Filter<String>(new Field(attribute, fieldConverter), new StrValue(value));
+		return new Filter<String>(new Field(attribute, converter), new StrValue(value));
 	}
 
 }
