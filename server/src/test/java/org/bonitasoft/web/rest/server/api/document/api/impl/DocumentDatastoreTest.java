@@ -20,15 +20,18 @@ import org.bonitasoft.engine.bpm.document.DocumentAttachmentException;
 import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.RetrieveException;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
@@ -53,9 +56,12 @@ public class DocumentDatastoreTest extends APITestWithMock {
 
 	@Mock
 	private Document mockedDocument;
-	
+
+	@Mock
+	private SearchResult<Document> mockedEngineSearchResults;
 
 	private DocumentItem mockedDocumentItem = new DocumentItem();
+
 	
 	@Before
     public void setUp() throws Exception {
@@ -280,4 +286,32 @@ public class DocumentDatastoreTest extends APITestWithMock {
 		verify(processAPI).attachNewDocumentVersion(1l, "Doc 1", "doc.jpg", "image/jpeg", "http://images/doc.jpg", null);
 	}
 	
+	//---------- SEARCH TESTS -------------------------------------------------//
+	@Test
+	public void it_should_call_buildSearchOptionCreator_method() throws SearchException {
+		//Given
+		when(processAPI.searchDocuments(any(SearchOptions.class))).thenReturn(mockedEngineSearchResults);
+		Map<String, String> filters = new HashMap<String, String>();
+		filters.put("submittedBy", "1");
+		
+		//When
+		documentDatastore.searchDocument(0, 10, "hello", filters, "documentName ASC");
+		
+		//Then
+		verify(documentDatastore).buildSearchOptionCreator(0, 10, "hello", filters, "documentName ASC");
+	}
+	
+	@Test
+	public void it_should_call_processAPI_searchDocuments_method() throws SearchException {
+		//Given
+		when(processAPI.searchDocuments(any(SearchOptions.class))).thenReturn(mockedEngineSearchResults);
+		Map<String, String> filters = new HashMap<String, String>();
+		filters.put("submittedBy", "1");
+		
+		//When
+		documentDatastore.searchDocument(0, 10, "hello", filters, "documentName ASC");
+		
+		//Then
+		verify(processAPI).searchDocuments(documentDatastore.searchOptionsCreator.create());
+	}
 }

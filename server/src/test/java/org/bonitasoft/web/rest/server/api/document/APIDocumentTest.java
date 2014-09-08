@@ -72,4 +72,13 @@ public class APIDocumentTest  extends APITestWithMock {
 		//Then
 		verify(datastore).update(id, attributes);
 	}
+	
+	@Test
+	public void it_should_call_the_datastore_search_method() {
+		//When
+		apiDocument.search(0, 10, "hello", "documentName ASC", null);
+		
+		//Then
+		verify(datastore).search(0, 10, "hello", null, "documentName ASC");
+	}
 }
