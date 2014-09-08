@@ -215,7 +215,7 @@ public class DocumentDatastore extends CommonDatastore<DocumentItem, Document>  
         DocumentItem item = new DocumentItem();
         final String fileName = DocumentUtil.getFileNameFromUrl(url);
         final String mimeType = DocumentUtil.getMimeTypeFromUrl(url);
-        if (fileName != null && mimeType != null) {
+        if (fileName != null) {
         	// Attach a new document to a case
         	 Document document = null;
              if (operationType.equals(CREATE_NEW_DOCUMENT)) {
