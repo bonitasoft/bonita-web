@@ -1761,12 +1761,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         }
 
         FormFieldValue formFieldValue = null;
+        String documentName = null;
         if (value != null) {
             if (value instanceof org.bonitasoft.engine.bpm.document.Document) {
             	final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) value;
             	formFieldValue = convertDocumentToFromFieldValue(document);
             } else {
-	            final String documentName = (String) value;
+                documentName = (String) value;
 	            try {
 	                try {
 	                    final Expression documentExpression = new Expression(null, documentName, ExpressionType.TYPE_DOCUMENT.name(),
@@ -1786,17 +1787,17 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 	                logSevereWithContext(message, e, context);
 	                throw new IllegalArgumentException(message);
 	            }
-                if (formFieldValue == null) {
-                    formFieldValue = new FormFieldValue();
-                    formFieldValue.setDocumentName(documentName);
-                    formFieldValue.setDocumentId(-1);
-                    formFieldValue.setDocument(true);
-                }
             }
         }
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - end");
+        }
+        if (formFieldValue == null) {
+            formFieldValue = new FormFieldValue();
+            formFieldValue.setDocumentName(documentName);
+            formFieldValue.setDocumentId(-1);
+            formFieldValue.setDocument(true);
         }
         return formFieldValue;
 
