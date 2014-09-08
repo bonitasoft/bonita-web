@@ -1786,12 +1786,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 	                logSevereWithContext(message, e, context);
 	                throw new IllegalArgumentException(message);
 	            }
+                if (formFieldValue == null) {
+                    formFieldValue = new FormFieldValue();
+                    formFieldValue.setDocumentName(documentName);
+                    formFieldValue.setDocumentId(-1);
+                    formFieldValue.setDocument(true);
+                }
             }
-        }
-        if (formFieldValue == null) {
-            formFieldValue = new FormFieldValue();
-            formFieldValue.setDocumentId(-1);
-            formFieldValue.setDocument(true);
         }
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
