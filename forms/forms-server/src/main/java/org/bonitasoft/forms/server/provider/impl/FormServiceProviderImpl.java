@@ -35,7 +35,6 @@ import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
@@ -103,7 +102,7 @@ import org.w3c.dom.Document;
 
 /**
  * Implementation of FormServiceProvider based on Bonita execution engine
- * 
+ *
  * @author QiXiang Zhang, Anthony Birembaut, Haojie Yuan, Vincent Elcrin, Julien Mege, Celine Souchet
  */
 public class FormServiceProviderImpl implements FormServiceProvider {
@@ -1664,7 +1663,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             InvalidSessionException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         IApplicationFormDefAccessor formDefAccessor = null;
-        long processDefinitionID = getProcessDefinitionID(context);
+        final long processDefinitionID = getProcessDefinitionID(context);
         final Map<String, Object> urlContext = getUrlContext(context);
         long activityInstanceID = -1;
         if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
@@ -1764,10 +1763,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         FormFieldValue formFieldValue = null;
         if (value != null) {
             if (value instanceof org.bonitasoft.engine.bpm.document.Document) {
-            	org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) value;
+            	final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) value;
             	formFieldValue = convertDocumentToFromFieldValue(document);
             } else {
-	            String documentName = (String) value;
+	            final String documentName = (String) value;
 	            try {
 	                try {
 	                    final Expression documentExpression = new Expression(null, documentName, ExpressionType.TYPE_DOCUMENT.name(),
@@ -1788,6 +1787,11 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 	                throw new IllegalArgumentException(message);
 	            }
             }
+        }
+        if (formFieldValue == null) {
+            formFieldValue = new FormFieldValue();
+            formFieldValue.setDocumentId(-1);
+            formFieldValue.setDocument(true);
         }
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
