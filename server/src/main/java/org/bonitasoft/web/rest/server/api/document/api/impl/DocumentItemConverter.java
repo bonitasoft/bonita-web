@@ -1,7 +1,9 @@
 package org.bonitasoft.web.rest.server.api.document.api.impl;
 
 import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 
 public class DocumentItemConverter  extends ItemConverter<DocumentItem, Document> {

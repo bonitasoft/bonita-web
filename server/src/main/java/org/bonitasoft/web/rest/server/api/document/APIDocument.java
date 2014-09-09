@@ -14,17 +14,27 @@
  */
 package org.bonitasoft.web.rest.server.api.document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.bpm.document.ArchivedDocumentsSearchDescriptor;
+import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
+import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -73,6 +83,15 @@ public class APIDocument extends ConsoleAPI<DocumentItem> {
 
 	    @Override
 	    protected void fillCounters(final DocumentItem item, final List<String> counters) {
+	    }
+	    
+	    @Override
+	    public ItemSearchResult<DocumentItem> search(final int page, final int resultsByPage, final String search, final String orders,
+	            final Map<String, String> filters) {
+
+	        final ItemSearchResult<DocumentItem> results = getDocumentDatastore().search(page, resultsByPage, search, filters, orders);
+
+	        return results;
 	    }
 	    
 	    protected DocumentDatastore getDocumentDatastore() {
