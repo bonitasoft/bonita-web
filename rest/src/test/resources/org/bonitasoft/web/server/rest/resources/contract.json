@@ -1,6 +1,6 @@
 {
 	"inputs":[
-		{"name":"anInput","description":"aDescription","type":"aType"}
+		{"name":"anInput","description":"aDescription","type":"TEXT"}
 	],
 	"rules":[
 		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}
