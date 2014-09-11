@@ -5,20 +5,21 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.server.rest.resources;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,23 +40,34 @@ import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 @Produces(MediaType.APPLICATION_JSON)
 public class TaskResource {
 
-    private ProcessAPI processAPI;
+    private final ProcessAPI processAPI;
 
     @Inject
-    public TaskResource(ProcessAPI processAPI) {
+    public TaskResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 
     @GET
     @Path("{taskId}/contract")
-    public ContractDefinition getContract(@PathParam("taskId") long taskId) throws UserTaskNotFoundException {
+    public ContractDefinition getContract(@PathParam("taskId") final long taskId) throws UserTaskNotFoundException {
         return processAPI.getUserTaskContract(taskId);
     }
 
     @POST
     @Path("{taskId}/execute")
-    public void executeTask(@PathParam("taskId") long taskId, List<Input> inputs) throws UserTaskNotFoundException,
+    public void executeTask(@PathParam("taskId") final long taskId, @NotNull final Map<String, Object> inputs) throws UserTaskNotFoundException,
             FlowNodeExecutionException, ContractViolationException {
-        processAPI.executeUserTask(taskId, inputs);
+        processAPI.executeUserTask(taskId, convertToInputs(inputs));
     }
+
+    private List<Input> convertToInputs(final Map<String, Object> map) {
+        final List<Input> inputs = new ArrayList<Input>();
+        if (map != null) {
+            for (final String key : map.keySet()) {
+                inputs.add(new Input(key, map.get(key)));
+            }
+        }
+        return inputs;
+    }
+
 }
