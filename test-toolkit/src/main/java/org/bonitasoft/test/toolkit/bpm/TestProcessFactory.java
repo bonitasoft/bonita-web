@@ -24,6 +24,7 @@ import java.util.Random;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.bpm.bar.BarResource;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
+import org.bonitasoft.engine.bpm.contract.Type;
 import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
@@ -106,7 +107,7 @@ public class TestProcessFactory {
         processDefinitionBuidler.addActor("Employees", true)
         .addDescription("This a default process")
         .addStartEvent("Start")
-        .addUserTask("Activity 1", "Employees").addContract().addInput(CONTRACT_INPUT_NAME, CONTRACT_INPUT_TYPE, CONTRACT_INPUT_DESCRIPTION)
+        .addUserTask("Activity 1", "Employees").addContract().addInput(CONTRACT_INPUT_NAME, Type.TEXT, CONTRACT_INPUT_DESCRIPTION)
         .addRule(CONTRACT_RULE_NAME, CONTRACT_RULE_EXPRESSION, CONTRACT_RULE_EXPLANATION, CONTRACT_INPUT_NAME)
         .addEndEvent("Finish");
         return processDefinitionBuidler;
