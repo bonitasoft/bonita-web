@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static java.util.Arrays.*;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static java.util.Arrays.asList;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APIUpdateCallback;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
@@ -154,10 +155,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         });
     }
 
-    protected ItemListingPage<CaseItem>  getTaskListingPage() {
+    protected ItemListingPage<CaseItem> getTaskListingPage() {
         return new TaskListingAdminPage();
     }
-
 
     protected void showFailedTaskListingPage() {
         ViewController.showView(TaskListingAdminPage.TOKEN, Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
@@ -185,7 +185,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addAppsVersion();
-        metadatas.addCaseId(task,  CaseMoreDetailsAdminPage.TOKEN , ArchivedCaseMoreDetailsAdminPage.TOKEN);
+        metadatas.addCaseId(task, CaseMoreDetailsAdminPage.TOKEN, ArchivedCaseMoreDetailsAdminPage.TOKEN);
         metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();
@@ -195,7 +195,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                 metadatas.addExecutedBy();
             }
         }
-        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))){
+        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))) {
             metadatas.AddSubAppsName();
             metadatas.AddSubAppsVersion();
         }
@@ -227,7 +227,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         if (item.isArchived()) {
             return new ArchivedConnectorInstanceSectionSnippet(item).setNbLinesByPage(10).build();
         } else {
-            return new Section(_("Connectors")).addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
+            Section connectorSection = new Section(_("Connectors"));
+            connectorSection.setId(CssId.MD_SECTION_CONNECTORS);
+            return connectorSection.addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
         }
     }
 

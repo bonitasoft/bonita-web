@@ -137,7 +137,7 @@ public class Section extends Component {
      * Add a list of Components in the Header part of the section.
      * 
      * @param components
-     *            The list of Components to add in the header part of the section.
+     *        The list of Components to add in the header part of the section.
      */
     public final Section addHeader(final AbstractComponent... components) {
         header.append(components);
@@ -159,7 +159,7 @@ public class Section extends Component {
      * Add a list of Components in the Body part of the section.
      * 
      * @param components
-     *            The list of Components to add in the Body part of the section.
+     *        The list of Components to add in the Body part of the section.
      */
     public final Section addBody(final AbstractComponent... components) {
         body.append(components);
@@ -186,7 +186,7 @@ public class Section extends Component {
      * Add a list of Components in the Footer part of the section.
      * 
      * @param components
-     *            The list of Components to add in the Footer part of the section.
+     *        The list of Components to add in the Footer part of the section.
      */
     public final Section addFooter(final AbstractComponent... components) {
         footer.append(components);
@@ -209,6 +209,18 @@ public class Section extends Component {
             descriptionContainer = new Container<Paragraph>(new JsId("section_description"));
         }
         descriptionContainer.append(new Paragraph(description));
+    }
+
+    public void addCssTaskType() {
+        addClass(CssClass.SECTION_TYPE_TASK);
+    }
+
+    public void addCssCaseType() {
+        addClass(CssClass.SECTION_TYPE_CASE);
+    }
+
+    public void addCssCommentType() {
+        addClass(CssClass.SECTION_TYPE_COMMENT);
     }
 
 }
