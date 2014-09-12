@@ -65,6 +65,16 @@ public class TaskResourceTest extends BonitaJerseyTest {
         return json(map);
     }
 
+    private Map<String, Object> aComplexInput() {
+        return aMap()
+                .put("aBoolean", true)
+                .put("aString", "hello world")
+                .put("a_complex_type", aMap()
+                        .put("aBoolean", false)
+                        .put("aNumber", 2).build())
+                .build();
+    }
+
     private Builder<String, Object> aMap() {
         return ImmutableMap.<String, Object> builder();
     }
@@ -93,12 +103,11 @@ public class TaskResourceTest extends BonitaJerseyTest {
 
     @Test
     public void should_execute_a_task_with_given_inputs() throws Exception {
-        String payload = readFile("executeTask.json");
-        Map<String, Object> expectedInputs = aMap().put("aBoolean", true).put("aString", "hello world").build();
+        Map<String, Object> expectedComplexInput = aComplexInput();
 
-        target("tasks/2/execute").request().post(Entity.json(payload));
+        target("tasks/2/execute").request().post(Entity.json(expectedComplexInput));
 
-        verify(processAPI).executeUserTask(2L, expectedInputs);
+        verify(processAPI).executeUserTask(2L, expectedComplexInput);
     }
 
     @Test
@@ -122,15 +131,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
     }
 
     @Test
-    public void should_respond_400_Bad_Request_when_null_parameters() throws Exception {
-
-        Response response = target("tasks/2/execute").request().post(null);
-
-        assertThat(response).hasStatus(BAD_REQUEST);
-    }
-
-    @Test
-    public void should_respond_400_Bad_request_when_not_json() throws Exception {
+    public void should_respond_400_Bad_request_when_trying_to_execute_with_not_json_payload() throws Exception {
 
         Response response = target("tasks/2/execute").request().post(json("not json"));
 

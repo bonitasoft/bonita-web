@@ -24,15 +24,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
-import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.web.server.rest.exception.BonitaWebApplicationException;
 
 @Path("tasks")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -56,9 +53,6 @@ public class TaskResource {
     @Path("{taskId}/execute")
     public void executeTask(@PathParam("taskId") final long taskId, final Map<String, Object> inputs) throws UserTaskNotFoundException,
             FlowNodeExecutionException, ContractViolationException {
-        if (inputs == null) {
-            throw new BonitaWebApplicationException(Status.BAD_REQUEST, new BonitaException("Contract cannot be null"));
-        }
         processAPI.executeUserTask(taskId, inputs);
     }
 
