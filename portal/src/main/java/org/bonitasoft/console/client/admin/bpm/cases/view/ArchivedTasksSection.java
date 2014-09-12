@@ -27,6 +27,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -44,6 +45,8 @@ public class ArchivedTasksSection extends Section {
     public ArchivedTasksSection(final ArchivedCaseItem item) {
         super(_("Done tasks"));
         addClass("tasks");
+        addCssTaskType();
+        setId(CssId.QD_SECTION_ARCHIVED_TASK);
         tasksTable = buildTasksTable(item);
         addBody(tasksTable);
     }

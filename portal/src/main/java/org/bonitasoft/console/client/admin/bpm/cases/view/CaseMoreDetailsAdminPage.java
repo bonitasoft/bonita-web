@@ -37,6 +37,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
@@ -116,7 +117,10 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected void buildAvailableTasks(final CaseItem item) {
         final ItemTable tasksTable = getTaskTable(item);
         preparetasksTable(tasksTable);
-        addBody(new Section(_("Pending tasks"), tasksTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("tasks"));
+        Section availableTasks = new Section(_("Pending tasks"), tasksTable.setView(VIEW_TYPE.VIEW_LIST));
+        availableTasks.addCssTaskType();
+        availableTasks.setId(CssId.MD_SECTION_AVAILABLE_TASK);
+        addBody(availableTasks.addClass("tasks"));
     }
 
     protected ItemTable getTaskTable(final CaseItem item) {
@@ -159,11 +163,13 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected void buildDoneTasks(final CaseItem item) {
         final ItemTable doneTasksTable = getArchivedTaskTable(item);
         prepareArchivedTasksTable(doneTasksTable);
-        final Section section = new Section(_("Done tasks"),
+        final Section archivedTasksSection = new Section(_("Done tasks"),
                 doneTasksTable.setView(VIEW_TYPE.VIEW_LIST));
-        section.addClass("tasks");
-        section.addClass("performed");
-        addBody(section);
+        archivedTasksSection.addClass("tasks");
+        archivedTasksSection.addClass("performed");
+        archivedTasksSection.addCssTaskType();
+        archivedTasksSection.setId(CssId.MD_SECTION_ARCHIVED_TASK);
+        addBody(archivedTasksSection);
     }
 
     @Override

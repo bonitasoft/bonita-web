@@ -29,12 +29,12 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
 import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
-
 
 /**
  * @author Colin PUY
@@ -44,6 +44,7 @@ public class ConfigurationSection extends Section {
 
     public ConfigurationSection(ProcessItem process) {
         super(new JsId("configuration"), _("Configuration"));
+        setId(CssId.QD_SECTION_PROCESS_CONFIGURATION);
         final ContainerStyled<Definition> definitions = new ContainerStyled<Definition>();
         definitions.addFiller(new ResolutionFiller(process));
 
@@ -75,6 +76,7 @@ public class ConfigurationSection extends Section {
 
     /**
      * Overridden in SP
+     * 
      * @param processResolutionErrors
      */
     protected void fillResolutionProblems(ProcessConfigurationStateResolver stateResolver, final ContainerStyled<Definition> target) {

@@ -29,6 +29,7 @@ import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
@@ -44,6 +45,8 @@ public class ArchivedTasksSection extends Section {
 
     public ArchivedTasksSection(String title, CaseItem item, int nbLinesByPage) {
         super(title);
+        setId(CssId.SECTION_ARCHIVED_TASKS);
+        addCssTaskType();
         addClass("tasks");
         ItemTable tasksTable = getTaskTable(item);
         tasksTable.setView(VIEW_TYPE.VIEW_LIST);

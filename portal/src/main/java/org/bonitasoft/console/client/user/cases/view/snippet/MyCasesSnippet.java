@@ -28,6 +28,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
@@ -80,9 +81,10 @@ public class MyCasesSnippet implements SectionSnippet {
                     .addCellFormatter(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID + "_" + CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, new SpanPrepender(_("Started by:")));
         }
 
-
         final Section section = new Section(_("My cases"));
         section.addClass("cases");
+        section.addCssCaseType();
+        section.setId(CssId.QD_SECTION_MY_CASES);
         section.addBody(caseTable.setView(VIEW_TYPE.VIEW_LIST));
 
         return section;
@@ -105,7 +107,7 @@ public class MyCasesSnippet implements SectionSnippet {
 
     /**
      * @param nbLinesByPage
-     *            the nbLinesByPage to set
+     *        the nbLinesByPage to set
      */
     public MyCasesSnippet setNbLinesByPage(final int nbLinesByPage) {
         this.nbLinesByPage = nbLinesByPage;
