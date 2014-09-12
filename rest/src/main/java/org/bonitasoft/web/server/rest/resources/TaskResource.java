@@ -14,12 +14,9 @@
  */
 package org.bonitasoft.web.server.rest.resources;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,13 +24,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
-import org.bonitasoft.engine.bpm.contract.Input;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
+import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.web.server.rest.exception.BonitaWebApplicationException;
 
 @Path("tasks")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -55,19 +54,12 @@ public class TaskResource {
 
     @POST
     @Path("{taskId}/execute")
-    public void executeTask(@PathParam("taskId") final long taskId, @NotNull final Map<String, Object> inputs) throws UserTaskNotFoundException,
+    public void executeTask(@PathParam("taskId") final long taskId, final Map<String, Object> inputs) throws UserTaskNotFoundException,
             FlowNodeExecutionException, ContractViolationException {
-        processAPI.executeUserTask(taskId, convertToInputs(inputs));
-    }
-
-    private List<Input> convertToInputs(final Map<String, Object> map) {
-        final List<Input> inputs = new ArrayList<Input>();
-        if (map != null) {
-            for (final String key : map.keySet()) {
-                inputs.add(new Input(key, map.get(key)));
-            }
+        if (inputs == null) {
+            throw new BonitaWebApplicationException(Status.BAD_REQUEST, new BonitaException("Contract cannot be null"));
         }
-        return inputs;
+        processAPI.executeUserTask(taskId, inputs);
     }
 
 }

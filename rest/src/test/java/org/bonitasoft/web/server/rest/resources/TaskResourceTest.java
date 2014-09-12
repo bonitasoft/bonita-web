@@ -16,24 +16,29 @@ package org.bonitasoft.web.server.rest.resources;
 
 import static java.util.Arrays.asList;
 import static javax.ws.rs.client.Entity.json;
-import static org.assertj.core.api.Assertions.assertThat;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.OK;
 import static org.bonitasoft.web.server.rest.assertions.ResponseAssert.assertThat;
-import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyMapOf;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
+import jersey.repackaged.com.google.common.collect.ImmutableMap;
+import jersey.repackaged.com.google.common.collect.ImmutableMap.Builder;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
-import org.bonitasoft.engine.bpm.contract.Input;
 import org.bonitasoft.engine.bpm.contract.Type;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
@@ -45,11 +50,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 public class TaskResourceTest extends BonitaJerseyTest {
-
-    private static final int HTTP_CODE_200 = 200;
-    private static final int HTTP_CODE_400 = 400;
-    private static final int HTTP_CODE_404 = 404;
-    private static final int HTTP_CODE_500 = 500;
 
     @Mock
     private ProcessAPI processAPI;
@@ -65,6 +65,10 @@ public class TaskResourceTest extends BonitaJerseyTest {
         return json(map);
     }
 
+    private Builder<String, Object> aMap() {
+        return ImmutableMap.<String, Object> builder();
+    }
+
     @Test
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
         ContractDefinitionImpl contract = new ContractDefinitionImpl();
@@ -74,7 +78,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
 
         Response response = target("tasks/2/contract").request().get();
 
-        assertThat(response).hasStatus(HTTP_CODE_200);
+        assertThat(response).hasStatus(OK);
         assertThat(response).hasJsonBodyEqual(readFile("contract.json"));
     }
 
@@ -84,68 +88,62 @@ public class TaskResourceTest extends BonitaJerseyTest {
 
         Response response = target("tasks/2/contract").request().get();
 
-        assertThat(response).hasStatus(HTTP_CODE_404);
+        assertThat(response).hasStatus(NOT_FOUND);
     }
 
     @Test
     public void should_execute_a_task_with_given_inputs() throws Exception {
-        //given
         String payload = readFile("executeTask.json");
+        Map<String, Object> expectedInputs = aMap().put("aBoolean", true).put("aString", "hello world").build();
 
-        List<Input> expectedInputs = new ArrayList<Input>();
-        expectedInputs.add(new Input("aBoolean", true));
-        expectedInputs.add(new Input("aString", "hello world"));
-
-        //when
         target("tasks/2/execute").request().post(Entity.json(payload));
 
-        //then
         verify(processAPI).executeUserTask(2L, expectedInputs);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation"))).when(processAPI).executeUserTask(anyLong(),
-                anyListOf(Input.class));
+        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
+                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
 
         Response response = target("tasks/2/execute").request().post(someJson());
 
-        assertThat(response).hasStatus(HTTP_CODE_400);
+        assertThat(response).hasStatus(BAD_REQUEST);
     }
 
     @Test
     public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
-        doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
+        doThrow(new FlowNodeExecutionException("aMessage"))
+                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
 
         Response response = target("tasks/2/execute").request().post(someJson());
 
-        assertThat(response.getStatus()).isEqualTo(HTTP_CODE_500);
+        assertThat(response).hasStatus(INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    public void should_respond_500_Internal_server_error_when_null_parameters() throws Exception {
-        doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
+    public void should_respond_400_Bad_Request_when_null_parameters() throws Exception {
 
         Response response = target("tasks/2/execute").request().post(null);
 
-        assertThat(response.getStatus()).isEqualTo(HTTP_CODE_500);
+        assertThat(response).hasStatus(BAD_REQUEST);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_not_json() throws Exception {
-        doThrow(new FlowNodeExecutionException("aMessage")).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
 
         Response response = target("tasks/2/execute").request().post(json("not json"));
 
-        assertThat(response.getStatus()).isEqualTo(HTTP_CODE_400);
+        assertThat(response).hasStatus(BAD_REQUEST);
     }
 
     @Test
     public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
-        doThrow(new UserTaskNotFoundException("task not found")).when(processAPI).executeUserTask(anyLong(), anyListOf(Input.class));
+        doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
+            .executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
 
         Response response = target("tasks/2/execute").request().post(someJson());
 
-        assertThat(response.getStatus()).isEqualTo(HTTP_CODE_404);
+        assertThat(response).hasStatus(NOT_FOUND);
     }
 }

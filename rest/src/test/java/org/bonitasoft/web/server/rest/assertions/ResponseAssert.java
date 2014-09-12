@@ -17,6 +17,7 @@
 package org.bonitasoft.web.server.rest.assertions;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.internal.Objects;
@@ -52,5 +53,9 @@ public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
     public ResponseAssert hasStatus(int status) {
         Objects.instance().assertEqual(info, actual.getStatus(), status);
         return this;
+    }
+    
+    public ResponseAssert hasStatus(Status status) {
+        return hasStatus(status.getStatusCode()); 
     }
 }
