@@ -86,11 +86,11 @@ public class FormsResourcesUtils {
      * Retrieve the web resources from the business archive and store them in a local directory
      * 
      * @param session
-     *            the engine API session
+     *        the engine API session
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param processDeployementDate
-     *            the process deployement date
+     *        the process deployement date
      * @throws java.io.IOException
      * @throws org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException
      * @throws org.bonitasoft.engine.session.InvalidSessionException
@@ -146,9 +146,9 @@ public class FormsResourcesUtils {
      * Create a classloader for the process
      *
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param processApplicationsResourcesDir
-     *            the process application resources directory
+     *        the process application resources directory
      * @return a Classloader
      * @throws java.io.IOException
      */
@@ -176,7 +176,7 @@ public class FormsResourcesUtils {
      * Get the URLs of the validators' jar and their dependencies
      *
      * @param processApplicationsResourcesDir
-     *            the process application resources directory
+     *        the process application resources directory
      * @return an array of URL
      * @throws java.io.IOException
      */
@@ -209,23 +209,26 @@ public class FormsResourcesUtils {
      * Retrieve the class loader associated with the process or create it if there is no classloader associated with this process yet
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @return a {@link ClassLoader}, null if the process classloader doesn't exists and couldn't be created
      */
-    public static synchronized ClassLoader getProcessClassLoader(final APISession session, final long processDefinitionID) {
+    public synchronized ClassLoader getProcessClassLoader(final APISession session, final long processDefinitionID) {
 
         ClassLoader processClassLoader = null;
         if (PROCESS_CLASSLOADERS.containsKey(processDefinitionID)) {
             processClassLoader = PROCESS_CLASSLOADERS.get(processDefinitionID);
         } else {
             try {
-                final File processDir = new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder(),
-                        String.valueOf(processDefinitionID));
+                ProcessDefinition processDefinition = bpmEngineAPIUtil.getProcessAPI(session).getProcessDefinition(processDefinitionID);
+
+                String processPath = WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder() + File.separator;
+                final File processDir = new File(processPath, processDefinition.getName() + "--" + processDefinition.getVersion());
                 if (processDir.exists()) {
                     final File[] directories = processDir.listFiles(new FileFilter() {
 
+                        @Override
                         public boolean accept(final File pathname) {
                             return pathname.isDirectory();
                         }
@@ -259,6 +262,15 @@ public class FormsResourcesUtils {
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, message, e);
                 }
+            } catch (ProcessDefinitionNotFoundException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (InvalidSessionException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (BPMEngineException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
             PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
         }
@@ -269,9 +281,9 @@ public class FormsResourcesUtils {
      * Delete the the web resources directory if it exists
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      */
     public static synchronized void removeApplicationFiles(final APISession session, final long processDefinitionID) {
 
@@ -299,7 +311,7 @@ public class FormsResourcesUtils {
      * Get the application resource directory
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processDefinitionID
      * @param processDeployementDate
      * @return
@@ -321,7 +333,7 @@ public class FormsResourcesUtils {
      * Delete a directory and its content
      * 
      * @param directory
-     *            the directory to delete
+     *        the directory to delete
      * @return return true if the directory and its content were deleted successfully, false otherwise
      */
     private static boolean deleteDirectory(final File directory) {

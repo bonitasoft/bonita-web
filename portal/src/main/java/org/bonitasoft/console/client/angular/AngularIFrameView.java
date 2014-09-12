@@ -4,9 +4,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeUri;
-import com.google.gwt.safehtml.shared.UriUtils;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.SimplePanel;
+import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
 /**
@@ -15,14 +17,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 public class AngularIFrameView extends RawView {
 
     private String url;
-
-    public interface Template extends SafeHtmlTemplates {
-
-        @Template("<iframe src='{0}' id='bonitaframe'></iframe>")
-        public SafeHtml iFrame(SafeUri src);
-    }
-
-    private static final Template TEMPLATE = GWT.create(Template.class);
 
     private static final AngularResourceRoot ROOT = GWT.create(AngularResourceRoot.class);
 
@@ -38,10 +32,16 @@ public class AngularIFrameView extends RawView {
 
     @Override
     public void buildView() {
-        HTML frame = new HTML(TEMPLATE.iFrame(UriUtils.fromSafeConstant(ROOT.contextualize(url))));
-        frame.setStyleName("body");
-        addBody(new UiComponent(frame));
-        addClass("page");
+        final SimplePanel panel = new SimplePanel();
+        panel.setStyleName("body");
+        new CheckValidSessionBeforeAction(new Action() {
+            @Override
+            public void execute() {
+                panel.add(new IFrameView(ROOT.contextualize(url)));
+            }
+        }).execute();
+        addBody(new UiComponent(panel));
+        addClass("page page_custompage_");
     }
 
     @Override

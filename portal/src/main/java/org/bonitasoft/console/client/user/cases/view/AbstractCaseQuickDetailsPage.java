@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.user.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -52,6 +52,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
@@ -134,7 +135,11 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
     protected void buildAvailableTasks(final CaseItem item) {
         final ItemTable tasksTable = getTaskTable(item);
         preparetasksTable(tasksTable);
-        addBody(new Section(_("Tasks to do"), tasksTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("tasks"));
+        Section availableTaskSection = new Section(_("Tasks to do"), tasksTable.setView(VIEW_TYPE.VIEW_LIST));
+        availableTaskSection.addClass("tasks");
+        availableTaskSection.addCssTaskType();
+        availableTaskSection.setId(CssId.QD_SECTION_AVAILABLE_TASK);
+        addBody(availableTaskSection);
     }
 
     protected ItemTable getTaskTable(final CaseItem item) {
@@ -224,23 +229,7 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
          */
         public void build(final ItemDefinition itemDefinition, final APIID caseId, final boolean addForm) {
 
-            // // Comments section
-            // final Section section = new Section(_("Comments"));
-            //
-            // // Comments table
-            // final ItemTable commentTable = getCommentsTable(itemDefinition, caseId);
-            // // Comments form
-            // if (addForm) {
-            // final Form commentForm = new Form(new JsId("commentForm"))
-            // .addHiddenEntry(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, caseId.toString())
-            // .addTextEntryWithPlaceholderWithMaxLength(new JsId("content"), _("Discuss :"),
-            // _("Type new comment"), "Type new comment", 200)
-            // .addButton(new JsId("addcomment"), _("Add Comment"), _("Add a comment"), new AddCommentAction(commentTable));
-            // section.addBody(commentForm);
-            // }
-            // prepareCommentsTable(commentTable);
-            // section.addBody(commentTable.setView(VIEW_TYPE.VIEW_LIST)).addClass("commentsSection");
-
+            // Comments section
             addBody(new CommentSectionSnippet(caseId).setNbLinesByPage(3).build());
         }
 

@@ -125,7 +125,7 @@ public class APIServletCall extends ServletCall {
 
         apiName = path[1];
         resourceName = path[2];
-
+        
         // Fixes BS-400. This is ugly.
         I18n.getInstance();
 
