@@ -382,12 +382,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             throw new FormAlreadySubmittedException(e);
         } catch (final NoCredentialsInSessionException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Session timeout");
+                LOGGER.log(Level.INFO, "Invalid Session");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
         } catch (final SessionTimeoutException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.INFO, "Invalid Session");
+                LOGGER.log(Level.FINE, "Session timeout");
             }
             final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor(getThreadLocalRequest());
             SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
@@ -863,7 +863,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             }
             throw new FileTooBigException(e.getMessage(), e.getFileName(), e.getMaxSize());
         } catch (final SessionTimeoutException e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
+            if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "Invalid Session");
             }
             final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor(getThreadLocalRequest());
