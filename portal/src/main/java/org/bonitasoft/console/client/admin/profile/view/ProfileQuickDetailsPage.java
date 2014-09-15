@@ -16,6 +16,7 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.request.ApiSearchResultPager;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
@@ -76,7 +77,9 @@ public class ProfileQuickDetailsPage extends AbstractProfileDetailsPage {
     }
 
     protected Section technicalSection(final ProfileItem item) {
-        return new Section(_("Technical details")).addBody(nbUsersDefinition(item)).addBody(nbGroupDefinition(item)).addBody(nbRolesDefinition(item))
+        Section technicalSection = new Section(_("Technical details"));
+        technicalSection.setId(CssId.QD_SECTION_TECHNICAL_DETAILS);
+        return technicalSection.addBody(nbUsersDefinition(item)).addBody(nbGroupDefinition(item)).addBody(nbRolesDefinition(item))
                 .addBody(nbMembershipsDefinition(item));
     }
 

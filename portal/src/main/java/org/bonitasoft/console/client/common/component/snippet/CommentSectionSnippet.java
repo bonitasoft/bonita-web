@@ -26,6 +26,8 @@ import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
@@ -66,15 +68,17 @@ public class CommentSectionSnippet implements SectionSnippet {
 
     @Override
     public Section build() {
-        final Section section = new Section(_("Comments"));
+        final Section commentSection = new Section(_("Comments"));
+        commentSection.setId(CssId.SECTION_COMMENT);
+        commentSection.addClass(CssClass.SECTION_TYPE_COMMENT);
         archivedCaseDiscovery.isArchived(new ArchiveDiscoveryCallback() {
 
             @Override
             public void isArchived(boolean archived) {
-                buildSection(section, archived);
+                buildSection(commentSection, archived);
             }
         });
-        return section;
+        return commentSection;
     }
 
     public void buildSection(Section section, boolean archived) {
