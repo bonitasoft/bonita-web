@@ -31,6 +31,7 @@ import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.popup.PopupAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
@@ -49,6 +50,8 @@ public class EntityMappingSection extends Section {
 
     public EntityMappingSection(final ProcessItem process, final ConfigurationState state) {
         super(new JsId("Entity mapping"), _("Actor mapping"));
+
+        setId(CssId.MD_SECTION_ENTITY_MAPPING);
 
         final ConfigurationStateText configurationStateText = new ConfigurationStateText(state);
         final ItemTable entityMappingTable = newEntityMappingTable(process);

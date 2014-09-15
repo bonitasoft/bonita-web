@@ -6,6 +6,7 @@ import org.bonitasoft.console.client.admin.bpm.cases.action.EditCaseVariableActi
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.form.generatedForm.EditorFactory;
@@ -17,6 +18,7 @@ public class CaseVariableSection extends Section {
 
     public CaseVariableSection(CaseItem item) {
         super(new JsId("casevariable"), _("Case variables"));
+        setId(CssId.MD_SECTION_CASE_VARIABLES);
         addBody(caseVariableTable(item));
     }
 

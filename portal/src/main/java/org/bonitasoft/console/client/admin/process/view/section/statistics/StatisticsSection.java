@@ -28,13 +28,13 @@ import org.bonitasoft.console.client.admin.process.view.section.statistics.fille
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.OngoingCasesFiller;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Definition;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
-
 
 /**
  * @author Colin PUY
@@ -44,6 +44,7 @@ public class StatisticsSection extends Section {
 
     public StatisticsSection(ProcessItem process) {
         super(new JsId("statistics"), _("Statistics"));
+        setId(CssId.QD_SECTION_PROCESS_STATISTICS);
         addBody(numberOfCasesDefinition(process));
         addBody(failedTasksDefinition(process));
     }
@@ -63,7 +64,7 @@ public class StatisticsSection extends Section {
     }
 
     private Definition numberOfCasesDefinition(ProcessItem process) {
-        return new Definition(_("Number of cases: %nb_cases%", new Arg("nb_cases", "")), "%% / %%", 
+        return new Definition(_("Number of cases: %nb_cases%", new Arg("nb_cases", "")), "%% / %%",
                 nbCasesOngoingLink(process), nbCasesArchivedLink(process));
     }
 
