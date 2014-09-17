@@ -43,6 +43,7 @@ import org.bonitasoft.engine.bpm.contract.Type;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.RuleDefinitionImpl;
+import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.server.rest.utils.BonitaJerseyTest;
@@ -82,7 +83,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
     @Test
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
         ContractDefinitionImpl contract = new ContractDefinitionImpl();
-        contract.addInput(new InputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
+        contract.addSimpleInput(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
         contract.addRule(new RuleDefinitionImpl("aRule", "an expression", "an explanation"));
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
 

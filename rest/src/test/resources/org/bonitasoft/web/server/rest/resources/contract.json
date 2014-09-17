@@ -1,7 +1,8 @@
 {
-	"inputs":[
-		{"name":"anInput","description":"aDescription","type":"TEXT"}
-	],
+	"complexInputs":[],
+    "simpleInputs":[
+        {"description":"aDescription","name":"anInput","type":"TEXT"}
+    ],
 	"rules":[
 		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}
 	]
