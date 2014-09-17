@@ -107,7 +107,7 @@ public class TestProcessFactory {
         processDefinitionBuidler.addActor("Employees", true)
         .addDescription("This a default process")
         .addStartEvent("Start")
-        .addUserTask("Activity 1", "Employees").addContract().addInput(CONTRACT_INPUT_NAME, Type.TEXT, CONTRACT_INPUT_DESCRIPTION)
+        .addUserTask("Activity 1", "Employees").addContract().addSimpleInput(CONTRACT_INPUT_NAME, Type.TEXT, CONTRACT_INPUT_DESCRIPTION)
         .addRule(CONTRACT_RULE_NAME, CONTRACT_RULE_EXPRESSION, CONTRACT_RULE_EXPLANATION, CONTRACT_INPUT_NAME)
         .addEndEvent("Finish");
         return processDefinitionBuidler;
