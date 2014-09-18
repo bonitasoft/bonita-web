@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-17 02:01+0200\n"
-"PO-Revision-Date: 2014-09-16 20:38-0400\n"
+"POT-Creation-Date: 2014-09-18 02:03+0200\n"
+"PO-Revision-Date: 2014-09-17 20:40-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2100,7 +2100,7 @@ msgstr "Asignación de roles"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:130
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorRolePage.java:78
 msgid "Add a role"
-msgstr "Añadir una función"
+msgstr "Añadir un rol"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:195
 msgid "Memberships mapping"
