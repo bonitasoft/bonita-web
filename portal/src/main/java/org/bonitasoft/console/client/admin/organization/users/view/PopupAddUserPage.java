@@ -30,6 +30,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.StringNoS
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text;
 
 /**
  * @author Paul Amar
@@ -57,12 +58,12 @@ public class PopupAddUserPage extends Page {
 
         final Form form = new Form()
                 .addHiddenEntry(UserItem.ATTRIBUTE_ENABLED, "true")
-                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Username"), _("Enter the username for this user"))
+                .addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_USERNAME), definition.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Username"), _("Enter the username for this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
                 .addPasswordEntry(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Confirm password"), _("Confirm the password for this user"))
 
-                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"))
-                .addItemAttributeEntry(definition.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"))
+                .addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_FIRSTNAME), definition.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"), Text.INCREASED_MAX_LENGTH)
+                .addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_LASTNAME), definition.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"), Text.INCREASED_MAX_LENGTH)
 
                 .addValidator(new JsId(UserItem.ATTRIBUTE_USERNAME), new StringNoSpaceValidator())
                 .addValidator(new JsId(UserItem.ATTRIBUTE_PASSWORD), new MandatoryValidator())
