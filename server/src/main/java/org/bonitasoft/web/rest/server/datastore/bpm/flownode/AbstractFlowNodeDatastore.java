@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,6 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -42,7 +41,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE_ITEM extends FlowNodeInstance>
         extends CommonDatastore<CONSOLE_ITEM, ENGINE_ITEM>
@@ -59,7 +58,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
 
     /**
      * Fill a console item using the engine item passed.
-     * 
+     *
      * @param result
      *            The console item to fill
      * @param item
@@ -136,18 +135,11 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         }
     }
 
-    @SuppressWarnings("unchecked")
     protected SearchResult<ENGINE_ITEM> runSearch(final SearchOptionsBuilder builder, final Map<String, String> filters) {
         try {
-            final SearchResult<ENGINE_ITEM> result;
-            if (filters.containsKey(HumanTaskItem.ATTRIBUTE_PROCESS_ID)) {
-                result = (SearchResult<ENGINE_ITEM>) getProcessAPI()
-                        .searchAssignedAndPendingHumanTasks(APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_PROCESS_ID)).toLong(),
-                                builder.done());
-            } else {
-                result = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchFlowNodeInstances(
+            @SuppressWarnings("unchecked")
+            final SearchResult<ENGINE_ITEM> result = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchFlowNodeInstances(
                     builder.done());
-            }
             return result;
         } catch (final Exception e) {
             throw new APIException(e);
@@ -160,20 +152,20 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
         addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
-        // addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
         addFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
 
         return builder;
     }
 
-    public AbstractFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM> setUpdateHelper(DatastoreHasUpdate<FlowNodeItem> updateHelper) {
+    public AbstractFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM> setUpdateHelper(final DatastoreHasUpdate<FlowNodeItem> updateHelper) {
         this.updateHelper = updateHelper;
         return this;
     }
 
     @Override
-    public CONSOLE_ITEM update(APIID id, Map<String, String> attributes) {
+    public CONSOLE_ITEM update(final APIID id, final Map<String, String> attributes) {
         if (updateHelper != null) {
             /*
              * Generics are useless in this class.
