@@ -40,8 +40,8 @@ import jersey.repackaged.com.google.common.collect.ImmutableMap.Builder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.ConstraintDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
-import org.bonitasoft.engine.bpm.contract.impl.RuleDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
@@ -83,7 +83,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
         ContractDefinitionImpl contract = new ContractDefinitionImpl();
         contract.addSimpleInput(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
-        contract.addRule(new RuleDefinitionImpl("aRule", "an expression", "an explanation"));
+        contract.addConstraint(new ConstraintDefinitionImpl("aRule", "an expression", "an explanation"));
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
 
         Response response = target("tasks/2/contract").request().get();
