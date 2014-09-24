@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,9 +41,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Selectable table widget
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public class TableWidget extends Composite implements HasValueChangeHandlers<List<String>>, ValueChangeHandler<List<String>>, ClickHandler {
 
@@ -149,46 +149,48 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
     /**
      * Constructor
-     * 
+     *
      * @param selectedItems
      */
     public TableWidget(final ReducedFormWidget widgetData, final List<String> selectedItems) {
 
         this.widgetData = widgetData;
 
-        this.availableValues = widgetData.getTableAvailableValues();
+        availableValues = widgetData.getTableAvailableValues();
 
-        this.valueColumnIndex = widgetData.getValueColumnIndex();
+        valueColumnIndex = widgetData.getValueColumnIndex();
 
-        this.maxRows = widgetData.getMaxRows();
+        maxRows = widgetData.getMaxRows();
 
-        this.flowPanel = new FlowPanel();
+        flowPanel = new FlowPanel();
 
         createWidget(selectedItems);
 
-        initWidget(this.flowPanel);
+        initWidget(flowPanel);
     }
 
     protected List<List<ReducedFormFieldAvailableValue>> getAvailableValuesList() {
-        if (this.availableValues != null && SelectMode.NONE.equals(this.widgetData.getSelectMode()) && this.maxRows > 0) {
+        if (availableValues != null && SelectMode.NONE.equals(widgetData.getSelectMode()) && maxRows > 0) {
 
-            if (this.currentPageIndex > getLastPageIndex()) {
-                this.currentPageIndex = getLastPageIndex();
+            if (currentPageIndex > getLastPageIndex()) {
+                currentPageIndex = getLastPageIndex();
             }
-            int startIndex = this.currentPageIndex * this.maxRows;
-            return this.availableValues.subList(startIndex, Math.min(startIndex + this.maxRows, this.availableValues.size()));
+            final int startIndex = currentPageIndex * maxRows;
+            return availableValues.subList(startIndex, Math.min(startIndex + maxRows, availableValues.size()));
         } else {
-            return this.availableValues;
+            return availableValues;
         }
     }
 
     protected int getLastPageIndex() {
         int lastPageIndex = 0;
-        if (this.maxRows > 0) {
-            final int nbOfValues = this.availableValues.size();
-            lastPageIndex = nbOfValues / this.maxRows - 1;
-            if (nbOfValues % this.maxRows > 0) {
-                lastPageIndex++;
+        if (maxRows > 0) {
+            final int nbOfValues = availableValues.size();
+            if (nbOfValues > 0) {
+                lastPageIndex = nbOfValues / maxRows - 1;
+                if (nbOfValues % maxRows > 0) {
+                    lastPageIndex++;
+                }
             }
         }
         return lastPageIndex;
@@ -196,7 +198,7 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
     /**
      * get the max column size of availableValues list
-     * 
+     *
      * @return maxColumnNumber
      */
     protected int getMaxColumnNumber() {
@@ -209,10 +211,10 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
                 }
             }
         }
-        if (this.widgetData.hasLeftHeadings()) {
+        if (widgetData.hasLeftHeadings()) {
             maxColumnNumber++;
         }
-        if (this.widgetData.hasRightHeadings()) {
+        if (widgetData.hasRightHeadings()) {
             maxColumnNumber++;
         }
         return maxColumnNumber;
@@ -220,40 +222,40 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
     protected void createWidget(final List<String> selectedItems) {
 
-        this.flexTable = new FlexTable();
-        this.flexTable.setStyleName("bonita_form_table");
-        final String tableStyle = this.widgetData.getTableStyle();
+        flexTable = new FlexTable();
+        flexTable.setStyleName("bonita_form_table");
+        final String tableStyle = widgetData.getTableStyle();
         if (tableStyle != null && tableStyle.length() > 0) {
-            this.flexTable.addStyleName(tableStyle);
+            flexTable.addStyleName(tableStyle);
         }
         int row = 0;
         int column = 0;
-        this.columnCount = 0;
-        final List<String> horizontalHeader = this.widgetData.getHorizontalHeader();
+        columnCount = 0;
+        final List<String> horizontalHeader = widgetData.getHorizontalHeader();
         if (horizontalHeader != null && !horizontalHeader.isEmpty()) {
-            if (this.widgetData.hasTopHeadings()) {
-                this.topHeadings = true;
+            if (widgetData.hasTopHeadings()) {
+                topHeadings = true;
                 final int maxColumNumber = getMaxColumnNumber();
                 for (final String header : horizontalHeader) {
                     if (column >= maxColumNumber) {
                         break;
                     }
-                    this.flexTable.setWidget(row, column, getCellContent(header));
+                    flexTable.setWidget(row, column, getCellContent(header));
                     column++;
                 }
                 row++;
             }
-            if (this.widgetData.hasBottomHeadings()) {
-                this.bottomHeadings = true;
+            if (widgetData.hasBottomHeadings()) {
+                bottomHeadings = true;
             }
         }
-        final List<String> verticalHeader = this.widgetData.getVerticalHeader();
+        final List<String> verticalHeader = widgetData.getVerticalHeader();
         if (verticalHeader != null && !verticalHeader.isEmpty()) {
-            if (this.widgetData.hasLeftHeadings()) {
-                this.leftHeadings = true;
+            if (widgetData.hasLeftHeadings()) {
+                leftHeadings = true;
             }
-            if (this.widgetData.hasRightHeadings()) {
-                this.rightHeadings = true;
+            if (widgetData.hasRightHeadings()) {
+                rightHeadings = true;
             }
         }
         final List<List<ReducedFormFieldAvailableValue>> tableAvailableValues = getAvailableValuesList();
@@ -261,56 +263,56 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
             for (final List<ReducedFormFieldAvailableValue> rowAvailableValues : tableAvailableValues) {
                 column = 0;
                 String header = null;
-                if (this.leftHeadings || this.rightHeadings) {
+                if (leftHeadings || rightHeadings) {
                     int headerIndex = row;
-                    if (this.topHeadings) {
+                    if (topHeadings) {
                         headerIndex--;
                     }
-                    if (this.widgetData.getVerticalHeader().size() > headerIndex) {
-                        header = this.widgetData.getVerticalHeader().get(headerIndex);
+                    if (widgetData.getVerticalHeader().size() > headerIndex) {
+                        header = widgetData.getVerticalHeader().get(headerIndex);
                     }
                 }
-                if (this.leftHeadings) {
-                    this.flexTable.setWidget(row, column, getCellContent(header));
+                if (leftHeadings) {
+                    flexTable.setWidget(row, column, getCellContent(header));
                     column++;
                 }
                 for (final ReducedFormFieldAvailableValue availableValue : rowAvailableValues) {
                     if (availableValue != null) {
-                        this.flexTable.setWidget(row, column, getCellContent(availableValue.getLabel()));
+                        flexTable.setWidget(row, column, getCellContent(availableValue.getLabel()));
                     }
                     column++;
                 }
-                if (this.rightHeadings) {
-                    this.flexTable.setWidget(row, column, getCellContent(header));
+                if (rightHeadings) {
+                    flexTable.setWidget(row, column, getCellContent(header));
                     column++;
                 }
-                if (column > this.columnCount) {
-                    this.columnCount = column;
+                if (column > columnCount) {
+                    columnCount = column;
                 }
                 row++;
             }
         }
-        if (this.bottomHeadings) {
+        if (bottomHeadings) {
             column = 0;
             final int maxColumNumber = getMaxColumnNumber();
-            for (final String header : this.widgetData.getHorizontalHeader()) {
+            for (final String header : widgetData.getHorizontalHeader()) {
                 if (column >= maxColumNumber) {
                     break;
                 }
-                this.flexTable.setWidget(row, column, getCellContent(header));
+                flexTable.setWidget(row, column, getCellContent(header));
                 column++;
             }
             row++;
         }
         handleSelection();
-        addCellsStyle(this.flexTable.getRowCount(), this.columnCount);
+        addCellsStyle(flexTable.getRowCount(), columnCount);
         final FlowPanel tableContainer = new FlowPanel();
         tableContainer.setStyleName("bonita_form_table_container");
-        tableContainer.add(this.flexTable);
-        this.flowPanel.add(tableContainer);
+        tableContainer.add(flexTable);
+        flowPanel.add(tableContainer);
         setValue(selectedItems, false);
 
-        if (SelectMode.NONE.equals(this.widgetData.getSelectMode()) && this.maxRows > 0) {
+        if (SelectMode.NONE.equals(widgetData.getSelectMode()) && maxRows > 0) {
             final FlowPanel paginationPanel = new FlowPanel();
             paginationPanel.setStyleName(TABLE_PAGINATION_CONTAINER_STYLE);
 
@@ -322,8 +324,8 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
                 @Override
                 public void onClick(final ClickEvent event) {
-                    TableWidget.this.currentPageIndex = getLastPageIndex();
-                    TableWidget.this.flowPanel.clear();
+                    currentPageIndex = getLastPageIndex();
+                    flowPanel.clear();
                     createWidget(null);
                 }
             });
@@ -337,24 +339,24 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
                 @Override
                 public void onClick(final ClickEvent event) {
-                    if (TableWidget.this.currentPageIndex < getLastPageIndex()) {
-                        TableWidget.this.currentPageIndex++;
+                    if (currentPageIndex < getLastPageIndex()) {
+                        currentPageIndex++;
                     }
-                    TableWidget.this.flowPanel.clear();
+                    flowPanel.clear();
                     createWidget(null);
                 }
             });
             paginationPanel.add(nextPage);
 
-            if (this.currentPageIndex < getLastPageIndex()) {
+            if (currentPageIndex < getLastPageIndex()) {
                 nextPage.setVisible(true);
                 lastPage.setVisible(true);
             }
 
-            final int firstItem = this.currentPageIndex * this.maxRows + 1;
+            final int firstItem = currentPageIndex * maxRows + 1;
             final int lastItem = firstItem + tableAvailableValues.size() - 1;
             final Label currentPage = new Label(FormsResourceBundle.getMessages().paginationWithinLabel(Integer.toString(firstItem),
-                    Integer.toString(lastItem), Integer.toString(this.availableValues.size())));
+                    Integer.toString(lastItem), Integer.toString(availableValues.size())));
             currentPage.setStyleName(TABLE_PAGINATION_TEXT_STYLE);
             paginationPanel.add(currentPage);
 
@@ -366,10 +368,10 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
                 @Override
                 public void onClick(final ClickEvent event) {
-                    if (TableWidget.this.currentPageIndex > 0) {
-                        TableWidget.this.currentPageIndex--;
+                    if (currentPageIndex > 0) {
+                        currentPageIndex--;
                     }
-                    TableWidget.this.flowPanel.clear();
+                    flowPanel.clear();
                     createWidget(null);
                 }
             });
@@ -383,25 +385,25 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
                 @Override
                 public void onClick(final ClickEvent event) {
-                    TableWidget.this.currentPageIndex = 0;
-                    TableWidget.this.flowPanel.clear();
+                    currentPageIndex = 0;
+                    flowPanel.clear();
                     createWidget(null);
                 }
             });
             paginationPanel.add(firstPage);
 
-            if (this.currentPageIndex > 0) {
+            if (currentPageIndex > 0) {
                 firstPage.setVisible(true);
                 previousPage.setVisible(true);
             }
 
-            this.flowPanel.add(paginationPanel);
+            flowPanel.add(paginationPanel);
         }
     }
 
     protected Widget getCellContent(final String content) {
         final HTML cellContent = new HTML();
-        if (this.widgetData.allowHTMLInField()) {
+        if (widgetData.allowHTMLInField()) {
             cellContent.setHTML(content);
         } else {
             cellContent.setText(content);
@@ -410,46 +412,46 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
     }
 
     protected void handleSelection() {
-        if (!SelectMode.NONE.equals(this.widgetData.getSelectMode()) && !this.widgetData.isReadOnly()) {
-            for (int row = 0; row < this.flexTable.getRowCount(); row++) {
-                if (!(this.topHeadings && row <= 0)
-                        && !(this.bottomHeadings && row >= this.flexTable.getRowCount() - 1)) {
-                    this.flexTable.getRowFormatter().setStyleName(row, SELECTABLE_ROW_DEFAULT_STYLE);
+        if (!SelectMode.NONE.equals(widgetData.getSelectMode()) && !widgetData.isReadOnly()) {
+            for (int row = 0; row < flexTable.getRowCount(); row++) {
+                if (!(topHeadings && row <= 0)
+                        && !(bottomHeadings && row >= flexTable.getRowCount() - 1)) {
+                    flexTable.getRowFormatter().setStyleName(row, SELECTABLE_ROW_DEFAULT_STYLE);
                 }
             }
-            this.flexTable.addClickHandler(this);
+            flexTable.addClickHandler(this);
         }
     }
 
     protected void addSelectedCellStyle(final int row) {
-        this.flexTable.getRowFormatter().addStyleName(row, SELECTED_ROW_DEFAULT_STYLE);
-        if (this.widgetData.getSelectedItemsStyle() != null && this.widgetData.getSelectedItemsStyle().length() > 0) {
-            this.flexTable.getRowFormatter().addStyleName(row, this.widgetData.getSelectedItemsStyle());
+        flexTable.getRowFormatter().addStyleName(row, SELECTED_ROW_DEFAULT_STYLE);
+        if (widgetData.getSelectedItemsStyle() != null && widgetData.getSelectedItemsStyle().length() > 0) {
+            flexTable.getRowFormatter().addStyleName(row, widgetData.getSelectedItemsStyle());
         }
     }
 
     protected void removeSelectedCellStyle(final int row) {
-        this.flexTable.getRowFormatter().removeStyleName(row, SELECTED_ROW_DEFAULT_STYLE);
-        if (this.widgetData.getSelectedItemsStyle() != null && this.widgetData.getSelectedItemsStyle().length() > 0) {
-            this.flexTable.getRowFormatter().removeStyleName(row, this.widgetData.getSelectedItemsStyle());
+        flexTable.getRowFormatter().removeStyleName(row, SELECTED_ROW_DEFAULT_STYLE);
+        if (widgetData.getSelectedItemsStyle() != null && widgetData.getSelectedItemsStyle().length() > 0) {
+            flexTable.getRowFormatter().removeStyleName(row, widgetData.getSelectedItemsStyle());
         }
     }
 
     protected void addCellsStyle(final int rowCount, final int columnCount) {
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {
-                this.flexTable.getFlexCellFormatter().setStyleName(row, column, TABLE_CELL_DEFAULT_STYLE);
-                if (this.widgetData.getCellsStyle() != null && this.widgetData.getCellsStyle().length() > 0) {
-                    this.flexTable.getFlexCellFormatter().addStyleName(row, column, this.widgetData.getCellsStyle());
+                flexTable.getFlexCellFormatter().setStyleName(row, column, TABLE_CELL_DEFAULT_STYLE);
+                if (widgetData.getCellsStyle() != null && widgetData.getCellsStyle().length() > 0) {
+                    flexTable.getFlexCellFormatter().addStyleName(row, column, widgetData.getCellsStyle());
                 }
-                if (column == 0 && this.widgetData.hasLeftHeadings() || column == columnCount - 1 && this.widgetData.hasRightHeadings()) {
-                    if (this.widgetData.getHeadingsStyle() != null && this.widgetData.getHeadingsStyle().length() > 0) {
-                        this.flexTable.getFlexCellFormatter().addStyleName(row, column, this.widgetData.getHeadingsStyle());
+                if (column == 0 && widgetData.hasLeftHeadings() || column == columnCount - 1 && widgetData.hasRightHeadings()) {
+                    if (widgetData.getHeadingsStyle() != null && widgetData.getHeadingsStyle().length() > 0) {
+                        flexTable.getFlexCellFormatter().addStyleName(row, column, widgetData.getHeadingsStyle());
                     }
                 }
-                if (row == 0 && this.widgetData.hasTopHeadings() || row == rowCount - 1 && this.widgetData.hasBottomHeadings()) {
-                    if (this.widgetData.getHeadingsStyle() != null && this.widgetData.getHeadingsStyle().length() > 0) {
-                        this.flexTable.getFlexCellFormatter().addStyleName(row, column, this.widgetData.getHeadingsStyle());
+                if (row == 0 && widgetData.hasTopHeadings() || row == rowCount - 1 && widgetData.hasBottomHeadings()) {
+                    if (widgetData.getHeadingsStyle() != null && widgetData.getHeadingsStyle().length() > 0) {
+                        flexTable.getFlexCellFormatter().addStyleName(row, column, widgetData.getHeadingsStyle());
                     }
                 }
             }
@@ -457,25 +459,25 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
     }
 
     public void setValue(final List<String> selectedItems, final boolean fireEvents) {
-        if (!SelectMode.NONE.equals(this.widgetData.getSelectMode())) {
-            for (int row = 0; row < this.flexTable.getRowCount(); row++) {
+        if (!SelectMode.NONE.equals(widgetData.getSelectMode())) {
+            for (int row = 0; row < flexTable.getRowCount(); row++) {
                 removeSelectedCellStyle(row);
             }
-            this.selectedItemIndexes.clear();
-            if (selectedItems != null && !selectedItems.isEmpty() && this.availableValues != null) {
-                for (final List<ReducedFormFieldAvailableValue> rowAvailableValues : this.availableValues) {
-                    if (rowAvailableValues.size() >= this.valueColumnIndex
-                            && rowAvailableValues.get(this.valueColumnIndex) != null
-                            && selectedItems.contains(rowAvailableValues.get(this.valueColumnIndex).getValue())) {
-                        int rowIndex = this.availableValues.indexOf(rowAvailableValues);
-                        if (this.topHeadings) {
+            selectedItemIndexes.clear();
+            if (selectedItems != null && !selectedItems.isEmpty() && availableValues != null) {
+                for (final List<ReducedFormFieldAvailableValue> rowAvailableValues : availableValues) {
+                    if (rowAvailableValues.size() >= valueColumnIndex
+                            && rowAvailableValues.get(valueColumnIndex) != null
+                            && selectedItems.contains(rowAvailableValues.get(valueColumnIndex).getValue())) {
+                        int rowIndex = availableValues.indexOf(rowAvailableValues);
+                        if (topHeadings) {
                             rowIndex++;
                         }
                         addSelectedCellStyle(rowIndex);
-                        if (SelectMode.MULTIPLE.equals(this.widgetData.getSelectMode())) {
-                            this.selectedItemIndexes.add(Integer.valueOf(rowIndex));
-                        } else if (SelectMode.SINGLE.equals(this.widgetData.getSelectMode())) {
-                            this.selectedItemIndexes.add(0, Integer.valueOf(rowIndex));
+                        if (SelectMode.MULTIPLE.equals(widgetData.getSelectMode())) {
+                            selectedItemIndexes.add(Integer.valueOf(rowIndex));
+                        } else if (SelectMode.SINGLE.equals(widgetData.getSelectMode())) {
+                            selectedItemIndexes.add(0, Integer.valueOf(rowIndex));
                         }
                     }
                 }
@@ -490,13 +492,13 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
 
     public List<String> getValue() {
         final List<String> selectedItems = new ArrayList<String>();
-        for (final Integer selectedItemIndex : this.selectedItemIndexes) {
+        for (final Integer selectedItemIndex : selectedItemIndexes) {
             int selectedValueIndex = selectedItemIndex.intValue();
-            if (this.topHeadings) {
+            if (topHeadings) {
                 selectedValueIndex--;
             }
-            final List<ReducedFormFieldAvailableValue> rowAvailableValues = this.availableValues.get(selectedValueIndex);
-            final ReducedFormFieldAvailableValue availableValue = rowAvailableValues.get(this.valueColumnIndex);
+            final List<ReducedFormFieldAvailableValue> rowAvailableValues = availableValues.get(selectedValueIndex);
+            final ReducedFormFieldAvailableValue availableValue = rowAvailableValues.get(valueColumnIndex);
             if (availableValue != null) {
                 selectedItems.add(availableValue.getValue());
             }
@@ -505,7 +507,7 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
     }
 
     public void setAvailableValues(final List<List<ReducedFormFieldAvailableValue>> availableValues, final boolean fireEvents) {
-        this.flowPanel.clear();
+        flowPanel.clear();
         this.availableValues = availableValues;
         createWidget(null);
         if (fireEvents) {
@@ -520,34 +522,34 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
      */
     @Override
     public void onClick(final ClickEvent clickEvent) {
-        if (!SelectMode.NONE.equals(this.widgetData.getSelectMode()) && !this.widgetData.isReadOnly()) {
-            final Cell clickedCell = this.flexTable.getCellForEvent(clickEvent);
+        if (!SelectMode.NONE.equals(widgetData.getSelectMode()) && !widgetData.isReadOnly()) {
+            final Cell clickedCell = flexTable.getCellForEvent(clickEvent);
             final int rowIndex = clickedCell.getRowIndex();
-            if (!(this.topHeadings && rowIndex <= 0)
-                    && !(this.bottomHeadings && rowIndex >= this.flexTable.getRowCount() - 1)) {
-                if (SelectMode.MULTIPLE.equals(this.widgetData.getSelectMode())) {
-                    if (this.selectedItemIndexes.contains(Integer.valueOf(rowIndex))) {
+            if (!(topHeadings && rowIndex <= 0)
+                    && !(bottomHeadings && rowIndex >= flexTable.getRowCount() - 1)) {
+                if (SelectMode.MULTIPLE.equals(widgetData.getSelectMode())) {
+                    if (selectedItemIndexes.contains(Integer.valueOf(rowIndex))) {
                         removeSelectedCellStyle(rowIndex);
-                        this.selectedItemIndexes.remove(Integer.valueOf(rowIndex));
+                        selectedItemIndexes.remove(Integer.valueOf(rowIndex));
                     } else {
                         addSelectedCellStyle(rowIndex);
-                        this.selectedItemIndexes.add(Integer.valueOf(rowIndex));
+                        selectedItemIndexes.add(Integer.valueOf(rowIndex));
                     }
                 } else {
-                    if (!this.selectedItemIndexes.isEmpty() && this.selectedItemIndexes.get(0).equals(Integer.valueOf(rowIndex))) {
+                    if (!selectedItemIndexes.isEmpty() && selectedItemIndexes.get(0).equals(Integer.valueOf(rowIndex))) {
                         removeSelectedCellStyle(rowIndex);
-                        this.selectedItemIndexes.remove(Integer.valueOf(rowIndex));
+                        selectedItemIndexes.remove(Integer.valueOf(rowIndex));
                     } else {
                         Integer oldSelectedItemIndex = null;
-                        if (!this.selectedItemIndexes.isEmpty()) {
-                            oldSelectedItemIndex = this.selectedItemIndexes.get(0);
+                        if (!selectedItemIndexes.isEmpty()) {
+                            oldSelectedItemIndex = selectedItemIndexes.get(0);
                         }
                         if (oldSelectedItemIndex != null) {
                             removeSelectedCellStyle(oldSelectedItemIndex.intValue());
-                            this.selectedItemIndexes.remove(oldSelectedItemIndex);
+                            selectedItemIndexes.remove(oldSelectedItemIndex);
                         }
                         addSelectedCellStyle(rowIndex);
-                        this.selectedItemIndexes.add(0, Integer.valueOf(rowIndex));
+                        selectedItemIndexes.add(0, Integer.valueOf(rowIndex));
                     }
                 }
                 for (final ValueChangeHandler<List<String>> valueChangeHandler : valueChangeHandlers) {
@@ -568,6 +570,7 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
             this.eventHandler = eventHandler;
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void removeHandler() {
             if (eventHandler instanceof ValueChangeHandler) {
@@ -578,14 +581,14 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
     }
 
     @Override
-    public void onValueChange(ValueChangeEvent<List<String>> event) {
+    public void onValueChange(final ValueChangeEvent<List<String>> event) {
         for (final ValueChangeHandler<List<String>> valueChangeHandler : valueChangeHandlers) {
             valueChangeHandler.onValueChange(event);
         }
     }
 
     @Override
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<List<String>> handler) {
+    public HandlerRegistration addValueChangeHandler(final ValueChangeHandler<List<String>> handler) {
         if (valueChangeHandlers == null) {
             valueChangeHandlers = new ArrayList<ValueChangeHandler<List<String>>>();
         }
