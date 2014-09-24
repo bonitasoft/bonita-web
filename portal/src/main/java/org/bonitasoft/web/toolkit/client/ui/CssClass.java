@@ -41,4 +41,10 @@ public interface CssClass {
     public static final String DISABLED = "disabled";
 
     public static final String BREAK_WORD = "break-word";
+
+    public static final String SECTION_TYPE_TASK = "sectionType_task";
+
+    public static final String SECTION_TYPE_CASE = "sectionType_case";
+
+    public static final String SECTION_TYPE_COMMENT = "sectionType_comment";
 }

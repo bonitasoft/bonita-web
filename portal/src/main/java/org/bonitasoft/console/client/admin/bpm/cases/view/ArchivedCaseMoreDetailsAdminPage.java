@@ -97,9 +97,9 @@ public class ArchivedCaseMoreDetailsAdminPage extends ItemQuickDetailsPage<Archi
 
     @Override
     protected void buildBody(final ArchivedCaseItem item) {
-        final ArchivedTasksSection taskSection = new ArchivedTasksSection(item);
-        taskSection.setNbLinesByPages(10);
-        addBody(taskSection);
+        final ArchivedTasksSection archivedTaskSection = new ArchivedTasksSection(item);
+        archivedTaskSection.setNbLinesByPages(10);
+        addBody(archivedTaskSection);
 
         addBody(new CommentSectionSnippet(item.getSourceObjectId(), true)
                 .build());

@@ -156,7 +156,7 @@ public class LoginBox extends RawView {
 
     private void updateProfileMenu(ProfileMenuItem profileMenuItem, final List<ProfileItem> profiles) {
         if (!profiles.isEmpty()) {
-            ensureProfileId((ProfileItem) profiles.get(0));
+            ensureProfileId(profiles.get(0));
             profileMenuItem.addItems(profiles);
             for (ProfileItem profile : profiles) {
                 if (profile.getId().toString().equals(ClientApplicationURL.getProfileId())) {

@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.bpm.accessor.IActivityAccessor;
 import org.bonitasoft.console.client.common.component.snippet.SectionSnippet;
@@ -17,6 +17,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
@@ -55,7 +56,9 @@ public class ArchivedTaskTechnicalInformationSnippet implements SectionSnippet {
                     executedByArg);
         }
 
-        return new Section(_("Technical details"))
+        Section techinicalDetailsSection = new Section(_("Technical details"));
+        techinicalDetailsSection.setId(CssId.QD_SECTION_TECHNICAL_DETAILS);
+        return techinicalDetailsSection
                 .addBody(new Text(template));
     }
 
