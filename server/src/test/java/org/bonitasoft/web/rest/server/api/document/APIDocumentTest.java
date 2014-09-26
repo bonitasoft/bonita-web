@@ -2,6 +2,7 @@ package org.bonitasoft.web.rest.server.api.document;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Map;
@@ -81,4 +82,5 @@ public class APIDocumentTest  extends APITestWithMock {
 		//Then
 		verify(datastore).search(0, 10, "hello", null, "documentName ASC");
 	}
+	
 }
