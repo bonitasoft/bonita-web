@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
@@ -378,6 +379,47 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
     }
 
     @Test
+    public void should_getDocumentValue_work_with_existing_document_and_no_new_URL() throws Exception {
+
+        final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", null, null, "www.bonitasoft.org");
+
+        final FormFieldValue fieldValue = new FormFieldValue("www.bonitasoft.org", String.class.getName());
+        fieldValue.setDocumentName(doc.getName());
+        fieldValue.setDocument(true);
+        fieldValue.setDocumentId(doc.getId());
+
+        final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
+
+        doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
+
+        final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
+
+        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertFalse(result.hasChanged());
+    }
+
+    @Test
+    public void should_getDocumentValue_work_with_existing_document_and_new_URL() throws Exception {
+
+        final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", null, null, "www.bonitasoft.org");
+
+        final FormFieldValue fieldValue = new FormFieldValue("www.google.com", String.class.getName());
+        fieldValue.setDocumentName(doc.getName());
+        fieldValue.setDocument(true);
+        fieldValue.setDocumentId(doc.getId());
+
+        final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
+
+        doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
+
+        final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
+
+        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertTrue(result.hasChanged());
+        Assert.assertEquals("www.google.com", result.getUrl());
+    }
+
+    @Test
     public void should_getDocumentValue_work_with_existing_document_and_no_new_file() throws Exception {
 
         final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
@@ -396,7 +438,34 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
         final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
 
-        Assert.assertEquals(doc.getContentFileName(), result.getFileName());
+        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertFalse(result.hasChanged());
+    }
+
+    @Test
+    public void should_getDocumentValue_work_with_existing_document_and_new_file() throws Exception {
+
+        final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
+                5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
+
+        final File file = File.createTempFile("testDoc", "txt");
+        file.deleteOnExit();
+        FileUtils.writeStringToFile(file, "new content");
+        final FormFieldValue fieldValue = new FormFieldValue(file.getPath(), File.class.getName());
+        fieldValue.setDocumentName(doc.getName());
+        fieldValue.setDocument(true);
+        fieldValue.setDocumentId(doc.getId());
+        fieldValue.setDisplayedValue(file.getName());
+
+        final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
+
+        doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
+
+        final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
+
+        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertTrue(result.hasChanged());
+        Assert.assertEquals(file.getName(), result.getFileName());
     }
 
     @Override

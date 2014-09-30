@@ -315,7 +315,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 
         if (File.class.getName().equals(fieldValue.getValueType())) {
         	// File widget is selected
-
         	if (uri != null && uri.length() != 0) {
         		// A new file widget content has been set
                 final File theSourceFile = new File(uri);
@@ -345,13 +344,13 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             	// file widget content has not changed
             	documentValue = new DocumentValue(null);
                 //TODO create a document value with unchanged flag instead of retrieving the current value
-//              documentValue.setUnchanged(false);
-//            	documentValue.setDocumentId(fieldValue.getDocumentId());
+                //documentValue.setUnchanged(false);
+                //documentValue.setDocumentId(fieldValue.getDocumentId());
             }
         } else {
         	// Url type file widget is selected
         	if (fieldValue.getDocumentId() != -1) {
-        		// A file was displayed in the widget
+                // A document was displayed in the widget
 	        	final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
 	        	try {
 	        		final Document document = processAPI.getDocument(fieldValue.getDocumentId());
@@ -367,9 +366,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
 	        				} else {
 	        					// file widget content has not changed
 	        	            	documentValue = new DocumentValue(null);
-	//        	                TODO create a document value with unchanged flag instead of retrieving the current value
-	//          	              documentValue.setUnchanged(false);
-	//      	            	documentValue.setDocumentId(fieldValue.getDocumentId());
+                                //TODO create a document value with unchanged flag instead of retrieving the current value
+                                //documentValue.setUnchanged(false);
+                                //documentValue.setDocumentId(fieldValue.getDocumentId());
 	        				}
 	        			}
 	        		} else {
@@ -753,19 +752,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     }
                     if (processInstanceID != -1 && setAttachment) {
                         processAPI.attachDocument(processInstanceID, attachmentName, originalFileName, contentType, fileContent);
-                    } /*
-                       * else {
-                       * final InitialAttachment initialAttachment = new InitialAttachment();
-                       * initialAttachment.setName(attachmentName);
-                       * final Map<String, String> metadata = new HashMap<String, String>();
-                       * metadata.put("content-type", contentType);
-                       * initialAttachment.setFileName(originalFileName);
-                       * initialAttachment.setMetaData(metadata);
-                       * initialAttachment.setContent(fileContent);
-                       * attachments.add(initialAttachment);
-                       * }
-                       */
-
+                    }
                 } else {
                     if (LOGGER.isLoggable(Level.FINE)) {
                         LOGGER.log(Level.FINE, "The file " + fileName + " does not exist. skipping the attachment creation/update.");
