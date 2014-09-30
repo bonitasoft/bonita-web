@@ -394,7 +394,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
         final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
 
-        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertEquals(doc.getId(), result.getDocumentId().longValue());
         Assert.assertFalse(result.hasChanged());
     }
 
@@ -414,7 +414,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
         final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
 
-        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertEquals(doc.getId(), result.getDocumentId().longValue());
         Assert.assertTrue(result.hasChanged());
         Assert.assertEquals("www.google.com", result.getUrl());
     }
@@ -438,7 +438,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
         final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
 
-        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertEquals(doc.getId(), result.getDocumentId().longValue());
         Assert.assertFalse(result.hasChanged());
     }
 
@@ -463,7 +463,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
         final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
 
-        Assert.assertEquals(doc.getId(), result.getDocumentId());
+        Assert.assertEquals(doc.getId(), result.getDocumentId().longValue());
         Assert.assertTrue(result.hasChanged());
         Assert.assertEquals(file.getName(), result.getFileName());
     }
