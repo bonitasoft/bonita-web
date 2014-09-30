@@ -1774,7 +1774,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         if (value != null) {
             if (value instanceof org.bonitasoft.engine.bpm.document.Document) {
             	final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) value;
-            	formFieldValue = convertDocumentToFromFieldValue(document);
+                formFieldValue = convertDocumentToFromFieldValue(document, context);
             } else {
                 documentName = (String) value;
 	            try {
@@ -1784,7 +1784,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 	                    final Serializable evaluationResult = resolveExpression(documentExpression, context);
 	                    final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult;
 	                    if (document != null) {
-	                        formFieldValue = convertDocumentToFromFieldValue(document);
+                            formFieldValue = convertDocumentToFromFieldValue(document, context);
 	                    }
 	                } catch (final FormNotFoundException e) {
 	                    final String message = "Error while trying to retrieve the document " + documentName;
@@ -1812,8 +1812,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     }
 
-	protected FormFieldValue convertDocumentToFromFieldValue(
-			final org.bonitasoft.engine.bpm.document.Document document) {
+    protected FormFieldValue convertDocumentToFromFieldValue(final org.bonitasoft.engine.bpm.document.Document document, final Map<String, Object> context) {
 		FormFieldValue formFieldValue;
 		String documentValue = null;
 		String valueType = null;
@@ -1825,7 +1824,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 		    valueType = String.class.getName();
 		}
 		if (getLogger().isLoggable(Level.FINE)) {
-		    getLogger().log(Level.FINE, "Document " + document.getId() + " retrieved with value: " + documentValue);
+            getLogger().log(Level.FINE, "Document " + document.getId() + " retrieved with value: " + documentValue, context);
 		}
 		formFieldValue = new FormFieldValue(documentValue, valueType);
 		formFieldValue.setDocumentId(document.getId());

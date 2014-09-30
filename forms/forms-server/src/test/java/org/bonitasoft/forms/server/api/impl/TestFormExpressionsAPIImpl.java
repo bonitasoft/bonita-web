@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,7 +19,10 @@ package org.bonitasoft.forms.server.api.impl;
 import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aStringVariable;
 import static org.bonitasoft.test.toolkit.bpm.TestProcessFactory.createProcessWithVariables;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +36,8 @@ import org.bonitasoft.engine.bpm.actor.ActorCriterion;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
+import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
@@ -58,9 +63,9 @@ import org.junit.Test;
 
 /**
  * Unit test for the implementation of the form expressions API
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
@@ -74,8 +79,8 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
     private IFormExpressionsAPI formExpressionsAPI;
 
-    private Map<String, FormFieldValue> createFieldValueForVariable(ProcessVariable variable, String value) {
-        Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
+    private Map<String, FormFieldValue> createFieldValueForVariable(final ProcessVariable variable, final String value) {
+        final Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
         fieldValues.put(variable.getName(), new FormFieldValue(value, variable.getClassName()));
         return fieldValues;
     }
@@ -118,22 +123,22 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
         dependencies.add(new Expression("field_application", "field_application", ExpressionType.TYPE_INPUT.name(), String.class.getName(), null, null));
         expression = new Expression(null, "application + \"-\" + field_application", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(),
                 "GROOVY", dependencies);
-        
-        
+
+
         formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
 
     }
-    
+
     // FIXME
     // Can't understand this test... Why Word-Excel ?
     @Test
     public void evaluate_expression_on_finished_activity_should_TODO() throws Exception {
-        ProcessVariable aVariable = aStringVariable("application", "Word");
-        TestHumanTask executedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
+        final ProcessVariable aVariable = aStringVariable("application", "Word");
+        final TestHumanTask executedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
                 .startCase().getNextHumanTask().assignTo(getInitiator()).execute();
-        Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
+        final Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
 
-        Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), executedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
+        final Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), executedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
 
         assertEquals("Word-Excel", evaluationResult.toString());
     }
@@ -142,12 +147,12 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
     // Can't understand this test... Why Word-Excel ?
     @Test
     public void evaluate_expression_on_activity_should_TODO() throws Exception {
-        ProcessVariable aVariable = aStringVariable("application", "Word");
-        TestHumanTask notExecutedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
+        final ProcessVariable aVariable = aStringVariable("application", "Word");
+        final TestHumanTask notExecutedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
                 .startCase().getNextHumanTask().assignTo(getInitiator());
-        Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
+        final Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
 
-        Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), notExecutedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
+        final Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), notExecutedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
 
         assertEquals("Word-Excel", evaluationResult.toString());
     }
@@ -370,6 +375,28 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
                 dependencies);
         final Serializable result = formExpressionsAPI.evaluateInstanceInitialExpression(getSession(), processInstance.getId(), expression, Locale.ENGLISH, true);
         Assert.assertEquals("Excel", result.toString());
+    }
+
+    @Test
+    public void should_getDocumentValue_work_with_existing_document_and_no_new_file() throws Exception {
+
+        final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
+                5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
+
+        final FormFieldValue fieldValue = new FormFieldValue();
+        fieldValue.setValueType(File.class.getName());
+        fieldValue.setDocumentName(doc.getName());
+        fieldValue.setDocument(true);
+        fieldValue.setDocumentId(doc.getId());
+        fieldValue.setDisplayedValue(doc.getContentFileName());
+
+        final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
+
+        doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
+
+        final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
+
+        Assert.assertEquals(doc.getContentFileName(), result.getFileName());
     }
 
     @Override
