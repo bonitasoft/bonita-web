@@ -314,9 +314,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         final String uri = (String) fieldValue.getValue();
 
         if (File.class.getName().equals(fieldValue.getValueType())) {
-        	// File widget is selected
-        	if (uri != null && uri.length() != 0) {
-        		// A new file widget content has been set
+            // File widget is selected
+            if (uri != null && uri.length() != 0) {
+                // A new file widget content has been set
                 final File theSourceFile = new File(uri);
                 if (theSourceFile.exists()) {
                     final long maxSize = getDocumentMaxSize(session);
@@ -341,51 +341,51 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     }
                 }
             } else if (fieldValue.getDocumentId() != -1 && fieldValue.getDisplayedValue() != null) {
-            	// file widget content has not changed
-            	documentValue = new DocumentValue(null);
+                // file widget content has not changed
+                documentValue = new DocumentValue(null);
                 //TODO create a document value with unchanged flag instead of retrieving the current value
-                //documentValue.setUnchanged(false);
-                //documentValue.setDocumentId(fieldValue.getDocumentId());
+                documentValue.setHasChanged(false);
+                // documentValue.setDocumentId(fieldValue.getDocumentId());
             }
         } else {
-        	// Url type file widget is selected
-        	if (fieldValue.getDocumentId() != -1) {
+            // Url type file widget is selected
+            if (fieldValue.getDocumentId() != -1) {
                 // A document was displayed in the widget
-	        	final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-	        	try {
-	        		final Document document = processAPI.getDocument(fieldValue.getDocumentId());
-	        		if (document != null) {
+                final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+                try {
+                    final Document document = processAPI.getDocument(fieldValue.getDocumentId());
+                    if (document != null) {
 
-	        			if (document.hasContent()) {
-	        				// the document was a file type
-	        				 documentValue = new DocumentValue(uri);
-	        			} else {
-	        				if (!document.getUrl().equals(uri)) {
-	        					// the url has changed
-	        					documentValue = new DocumentValue(uri);
-	        				} else {
-	        					// file widget content has not changed
-	        	            	documentValue = new DocumentValue(null);
+                        if (document.hasContent()) {
+                            // the document was a file type
+                            documentValue = new DocumentValue(uri);
+                        } else {
+                            if (!document.getUrl().equals(uri)) {
+                                // the url has changed
+                                documentValue = new DocumentValue(uri);
+                            } else {
+                                // file widget content has not changed
+                                documentValue = new DocumentValue(null);
                                 //TODO create a document value with unchanged flag instead of retrieving the current value
-                                //documentValue.setUnchanged(false);
-                                //documentValue.setDocumentId(fieldValue.getDocumentId());
-	        				}
-	        			}
-	        		} else {
-	        			if (LOGGER.isLoggable(Level.FINE)) {
-	        				LOGGER.log(Level.FINE, "The document with ID " + fieldValue.getDocumentId() + " is null.");
-	        			}
-	        			documentValue = new DocumentValue(uri);
-	        		}
-	        	} catch (final DocumentNotFoundException e) {
-	        		if (LOGGER.isLoggable(Level.SEVERE)) {
-	        			LOGGER.log(Level.SEVERE, "Error while retrieving the document with ID " + fieldValue.getDocumentId() + ": Document not found.");
-	        		}
-	        	}
-        	} else {
-        		// a new document of type url has been added
-        		documentValue = new DocumentValue(uri);
-        	}
+                                documentValue.setHasChanged(false);
+                                documentValue.setDocumentId(fieldValue.getDocumentId());
+                            }
+                        }
+                    } else {
+                        if (LOGGER.isLoggable(Level.FINE)) {
+                            LOGGER.log(Level.FINE, "The document with ID " + fieldValue.getDocumentId() + " is null.");
+                        }
+                        documentValue = new DocumentValue(uri);
+                    }
+                } catch (final DocumentNotFoundException e) {
+                    if (LOGGER.isLoggable(Level.SEVERE)) {
+                        LOGGER.log(Level.SEVERE, "Error while retrieving the document with ID " + fieldValue.getDocumentId() + ": Document not found.");
+                    }
+                }
+            } else {
+                // a new document of type url has been added
+                documentValue = new DocumentValue(uri);
+            }
         }
         return documentValue;
     }
@@ -475,7 +475,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Serializable evaluateActivityExpression(final APISession session, final long activityInstanceID, final Expression expression,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context)
-            throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
+                    throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
         Serializable result = null;
         if (expression != null) {
             final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context, false);
@@ -551,7 +551,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Serializable evaluateInstanceExpression(final APISession session, final long processInstanceId, final Expression expression,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context)
-            throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException {
+                    throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException {
         Serializable result = null;
         if (expression != null) {
             final Map<String, Serializable> evalContext = generateGroovyContext(session, fieldValues, locale, context, false);
@@ -814,7 +814,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Map<String, Serializable> evaluateActivityInitialExpressions(final APISession session, final long activityInstanceID,
             final List<Expression> expressions, final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context)
-            throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
+                    throws BPMExpressionEvaluationException, InvalidSessionException, BPMEngineException {
 
         final Map<String, Serializable> result = new HashMap<String, Serializable>();
         context.put(IFormExpressionsAPI.USER_LOCALE, locale);
@@ -869,7 +869,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Map<String, Serializable> evaluateActivityExpressions(final APISession session, final long activityInstanceID, final List<Expression> expressions,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue, Map<String, Serializable> context)
-            throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
+                    throws BPMExpressionEvaluationException, InvalidSessionException, FileTooBigException, IOException, BPMEngineException {
 
         final Map<String, Serializable> result = new HashMap<String, Serializable>();
         context.put(IFormExpressionsAPI.USER_LOCALE, locale);
@@ -922,7 +922,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Map<String, Serializable> evaluateInstanceInitialExpressions(final APISession session, final long processInstanceId,
             final List<Expression> expressions, final Locale locale, final boolean isCurrentValue, final Map<String, Serializable> context)
-            throws BPMEngineException, InvalidSessionException, BPMExpressionEvaluationException {
+                    throws BPMEngineException, InvalidSessionException, BPMExpressionEvaluationException {
 
         final Map<String, Serializable> result = new HashMap<String, Serializable>();
         context.put(IFormExpressionsAPI.USER_LOCALE, locale);
@@ -986,7 +986,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     @Override
     public Map<String, Serializable> evaluateInstanceExpressions(final APISession session, final long processInstanceId, final List<Expression> expressions,
             final Map<String, FormFieldValue> fieldValues, final Locale locale, final boolean isCurrentValue, Map<String, Serializable> context)
-            throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException {
+                    throws BPMEngineException, InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException {
 
         final Map<String, Serializable> result = new HashMap<String, Serializable>();
         context.put(IFormExpressionsAPI.USER_LOCALE, locale);
