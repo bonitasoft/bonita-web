@@ -332,6 +332,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                     final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
                     final String contentType = mimetypesFileTypeMap.getContentType(theSourceFile);
                     documentValue = new DocumentValue(fileContent, contentType, originalFileName);
+                    documentValue.setHasChanged(true);
+                    documentValue.setDocumentId(fieldValue.getDocumentId());
+
                     if (deleteDocument) {
                         theSourceFile.delete();
                     }
@@ -343,9 +346,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             } else if (fieldValue.getDocumentId() != -1 && fieldValue.getDisplayedValue() != null) {
                 // file widget content has not changed
                 documentValue = new DocumentValue(null);
-                //TODO create a document value with unchanged flag instead of retrieving the current value
                 documentValue.setHasChanged(false);
-                // documentValue.setDocumentId(fieldValue.getDocumentId());
+                documentValue.setDocumentId(fieldValue.getDocumentId());
             }
         } else {
             // Url type file widget is selected
@@ -363,13 +365,13 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                             if (!document.getUrl().equals(uri)) {
                                 // the url has changed
                                 documentValue = new DocumentValue(uri);
+                                documentValue.setHasChanged(true);
                             } else {
                                 // file widget content has not changed
                                 documentValue = new DocumentValue(null);
-                                //TODO create a document value with unchanged flag instead of retrieving the current value
                                 documentValue.setHasChanged(false);
-                                documentValue.setDocumentId(fieldValue.getDocumentId());
                             }
+                            documentValue.setDocumentId(fieldValue.getDocumentId());
                         }
                     } else {
                         if (LOGGER.isLoggable(Level.FINE)) {
