@@ -319,6 +319,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             // Url type file widget is selected
             documentValue = getURLDocumentValue(session, fieldValue, uri);
         }
+        if (documentValue != null && fieldValue.getDocumentId() != -1) {
+            documentValue.setDocumentId(fieldValue.getDocumentId());
+        }
         return documentValue;
     }
 
@@ -361,7 +364,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             // a new document of type url has been added
             documentValue = new DocumentValue(uri);
         }
-        documentValue.setDocumentId(fieldValue.getDocumentId());
         return documentValue;
     }
 
@@ -370,18 +372,18 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         DocumentValue documentValue = null;
         if (uri != null && uri.length() != 0) {
             // A new file widget content has been set
-            documentValue = getNewFileDocumentValue(session, fieldValue, deleteDocument, documentValue, uri);
+            documentValue = getNewFileDocumentValue(session, fieldValue, deleteDocument, uri);
         } else if (fieldValue.getDocumentId() != -1 && fieldValue.getDisplayedValue() != null) {
             // file widget content has not changed
             documentValue = new DocumentValue(null);
             documentValue.setHasChanged(false);
         }
-        documentValue.setDocumentId(fieldValue.getDocumentId());
         return documentValue;
     }
 
-    protected DocumentValue getNewFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument,
-            DocumentValue documentValue, final String uri) throws FileTooBigException, IOException {
+    protected DocumentValue getNewFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument, final String uri)
+            throws FileTooBigException, IOException {
+        DocumentValue documentValue = null;
         final File theSourceFile = new File(uri);
         if (theSourceFile.exists()) {
             final long maxSize = getDocumentMaxSize(session);
