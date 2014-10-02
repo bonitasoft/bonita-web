@@ -701,17 +701,9 @@ public class ReducedFormWidget implements Serializable, Comparable<ReducedFormWi
     public void setMultiple(final boolean multiple) {
         this.multiple = multiple;
     }
-
-	public void setDocumentList(boolean documentList) {
-		this.documentList = documentList;
-	}
 	
     public boolean isMultiple() {
         return multiple;
-    }
-    
-    public boolean isDocumentList() {
-        return documentList;
     }
 
     public int getValueColumnIndex() {
