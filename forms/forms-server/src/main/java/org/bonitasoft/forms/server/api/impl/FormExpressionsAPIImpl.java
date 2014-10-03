@@ -319,6 +319,7 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             // Url type file widget is selected
             documentValue = getURLDocumentValue(session, fieldValue, uri);
         }
+        //set the document ID if the widget was already displaying a document value
         if (documentValue != null && fieldValue.getDocumentId() != -1) {
             documentValue.setDocumentId(fieldValue.getDocumentId());
         }
@@ -328,43 +329,39 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
     protected DocumentValue getURLDocumentValue(final APISession session, final FormFieldValue fieldValue, final String uri)
             throws BPMEngineException {
         DocumentValue documentValue = null;
+
+        final Document document = getCurrentDocumentValue(session, fieldValue);
+        if (document != null) {
+            if (uri == null && document.getUrl() != null || uri != null && !uri.equals(document.getUrl())) {
+                // the url has changed or the document was a file type
+                documentValue = new DocumentValue(uri);
+                documentValue.setHasChanged(true);
+            } else {
+                // file widget content has not changed
+                documentValue = new DocumentValue(null);
+                documentValue.setHasChanged(false);
+            }
+        } else {
+            documentValue = new DocumentValue(uri);
+            documentValue.setHasChanged(true);
+        }
+        return documentValue;
+    }
+
+    protected Document getCurrentDocumentValue(final APISession session, final FormFieldValue fieldValue) throws BPMEngineException {
+        Document document = null;
         if (fieldValue.getDocumentId() != -1) {
             // A document was displayed in the widget
             final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
             try {
-                final Document document = processAPI.getDocument(fieldValue.getDocumentId());
-                if (document != null) {
-
-                    if (document.hasContent()) {
-                        // the document was a file type
-                        documentValue = new DocumentValue(uri);
-                    } else {
-                        if (!document.getUrl().equals(uri)) {
-                            // the url has changed
-                            documentValue = new DocumentValue(uri);
-                            documentValue.setHasChanged(true);
-                        } else {
-                            // file widget content has not changed
-                            documentValue = new DocumentValue(null);
-                            documentValue.setHasChanged(false);
-                        }
-                    }
-                } else {
-                    if (LOGGER.isLoggable(Level.FINE)) {
-                        LOGGER.log(Level.FINE, "The document with ID " + fieldValue.getDocumentId() + " is null.");
-                    }
-                    documentValue = new DocumentValue(uri);
-                }
+                document = processAPI.getDocument(fieldValue.getDocumentId());
             } catch (final DocumentNotFoundException e) {
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, "Error while retrieving the document with ID " + fieldValue.getDocumentId() + ": Document not found.");
                 }
             }
-        } else {
-            // a new document of type url has been added
-            documentValue = new DocumentValue(uri);
         }
-        return documentValue;
+        return document;
     }
 
     protected DocumentValue getFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument, final String uri)
