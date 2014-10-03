@@ -153,6 +153,10 @@ public class DocumentItem extends Item {
         this.setAttribute(ATTRIBUTE_URL, URL);
     }
 
+    public void setIndex(final String index) {
+        this.setAttribute(ATTRIBUTE_INDEX, index);
+    }
+
     public String getVersion() {
         return getAttributeValue(ATTRIBUTE_VERSION);
     }
@@ -195,6 +199,10 @@ public class DocumentItem extends Item {
 
     public String getURL() {
         return getAttributeValue(ATTRIBUTE_URL);
+    }
+
+    public String getIndex() {
+        return getAttributeValue(ATTRIBUTE_INDEX);
     }
 
     @Override
