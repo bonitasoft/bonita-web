@@ -13,6 +13,10 @@
  **/
 package org.bonitasoft.forms.server.builder.impl;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -37,12 +41,9 @@ import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
 import org.bonitasoft.forms.client.model.TransientData;
 import org.bonitasoft.forms.client.model.WidgetType;
-import org.bonitasoft.forms.server.FormsTestCase;
 import org.bonitasoft.forms.server.accessor.impl.XMLApplicationConfigDefAccessorImpl;
 import org.bonitasoft.forms.server.accessor.impl.XMLApplicationFormDefAccessorImpl;
-import org.bonitasoft.forms.server.builder.IFormBuilder;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,12 +51,10 @@ import org.w3c.dom.Document;
 
 /**
  * Test for the implementation of the form builder
- * 
+ *
  * @author Anthony Birembaut
  */
-public class TestFormBuilderImpl extends FormsTestCase {
-
-    private IFormBuilder formBuilder;
+public class TestFormBuilderImpl {
 
     public final static String GROOVY = "GROOVY";
 
@@ -63,20 +62,16 @@ public class TestFormBuilderImpl extends FormsTestCase {
 
     public final static String TYPE_INPUT = "TYPE_INPUT";
 
-    @Before
-    @Override
-    public void setUp() throws Exception {
-        formBuilder = FormBuilderImpl.getInstance();
-    }
+    private FormBuilderImpl formBuilder = spy(formBuilder = new FormBuilderImpl());
 
-    @After
-    @Override
-    public void tearDown() throws Exception {
-        // The end
+    @Before
+    public void setUp() throws Exception {
+        initMocks(this);
     }
 
     @Test
     public void testGenerateSimpleFormXML() throws Exception {
+        doReturn(new File(System.getProperty("java.io.tmpdir"))).when(formBuilder).getTempFolder();
         formBuilder.createFormDefinition();
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression("addLabel", "process label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
@@ -85,9 +80,8 @@ public class TestFormBuilderImpl extends FormsTestCase {
     }
 
     private File buildComplexFormXML() throws Exception {
+        doReturn(new File(System.getProperty("java.io.tmpdir"))).when(formBuilder).getTempFolder();
         formBuilder.createFormDefinition();
-        // formBuilder.addWelcomePage("resources/application/welcome.html");
-        // formBuilder.addExternalWelcomePage("resources/application/external-welcome.html");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression("addLabel", "process label with accents éèà", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addLayout("/process-template.html");

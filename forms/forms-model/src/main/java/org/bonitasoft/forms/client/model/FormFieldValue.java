@@ -225,14 +225,6 @@ public class FormFieldValue implements Serializable {
     public boolean isDocument() {
         return isDocument;
     }
-    
-	public boolean isDocumentList() {
-		return isDocumentList;
-	}
-	
-	public void setDocumentList(final boolean isDocumentList) {
-		this.isDocumentList = isDocumentList;
-	}
 
     public void setDocument(final boolean isDocument) {
         this.isDocument = isDocument;

@@ -463,11 +463,6 @@ public final class XMLForms {
      * the multi-instantiated element Name
      */
     public static final String MULTI_INSTANTIATED = "multi-instantiated";
-
-    /**
-     * the document-list element Name
-     */
-    public static final String DOCUMENT_LIST = "document-list";
     
     /**
      * the the max instances element Name

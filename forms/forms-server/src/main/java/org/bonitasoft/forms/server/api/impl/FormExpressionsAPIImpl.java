@@ -312,81 +312,97 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
             throws FileTooBigException, IOException, InvalidSessionException, BPMEngineException {
         DocumentValue documentValue = null;
         final String uri = (String) fieldValue.getValue();
-
         if (File.class.getName().equals(fieldValue.getValueType())) {
             // File widget is selected
-            if (uri != null && uri.length() != 0) {
-                // A new file widget content has been set
-                final File theSourceFile = new File(uri);
-                if (theSourceFile.exists()) {
-                    final long maxSize = getDocumentMaxSize(session);
-                    if (theSourceFile.length() > maxSize * 1048576) {
-                        final String errorMessage = "file " + uri + " too big !";
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, errorMessage);
-                        }
-                        throw new FileTooBigException(errorMessage, uri, String.valueOf(maxSize));
-                    }
-                    final byte[] fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
-                    final String originalFileName = fieldValue.getDisplayedValue();
-                    final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
-                    final String contentType = mimetypesFileTypeMap.getContentType(theSourceFile);
-                    documentValue = new DocumentValue(fileContent, contentType, originalFileName);
-                    documentValue.setHasChanged(true);
-                    documentValue.setDocumentId(fieldValue.getDocumentId());
+            documentValue = getFileDocumentValue(session, fieldValue, deleteDocument, uri);
+        } else {
+            // Url type file widget is selected
+            documentValue = getURLDocumentValue(session, fieldValue, uri);
+        }
+        //set the document ID if the widget was already displaying a document value
+        if (documentValue != null && fieldValue.getDocumentId() != -1) {
+            documentValue.setDocumentId(fieldValue.getDocumentId());
+        }
+        return documentValue;
+    }
 
-                    if (deleteDocument) {
-                        theSourceFile.delete();
-                    }
-                } else {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "Error while retrieving the uploaded file " + uri + ": File not found.");
-                    }
-                }
-            } else if (fieldValue.getDocumentId() != -1 && fieldValue.getDisplayedValue() != null) {
+    protected DocumentValue getURLDocumentValue(final APISession session, final FormFieldValue fieldValue, final String uri)
+            throws BPMEngineException {
+        DocumentValue documentValue = null;
+
+        final Document document = getCurrentDocumentValue(session, fieldValue);
+        if (document != null) {
+            if (uri == null && document.getUrl() != null || uri != null && !uri.equals(document.getUrl())) {
+                // the url has changed or the document was a file type
+                documentValue = new DocumentValue(uri);
+                documentValue.setHasChanged(true);
+            } else {
                 // file widget content has not changed
                 documentValue = new DocumentValue(null);
                 documentValue.setHasChanged(false);
-                documentValue.setDocumentId(fieldValue.getDocumentId());
             }
         } else {
-            // Url type file widget is selected
-            if (fieldValue.getDocumentId() != -1) {
-                // A document was displayed in the widget
-                final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-                try {
-                    final Document document = processAPI.getDocument(fieldValue.getDocumentId());
-                    if (document != null) {
+            documentValue = new DocumentValue(uri);
+            documentValue.setHasChanged(true);
+        }
+        return documentValue;
+    }
 
-                        if (document.hasContent()) {
-                            // the document was a file type
-                            documentValue = new DocumentValue(uri);
-                        } else {
-                            if (!document.getUrl().equals(uri)) {
-                                // the url has changed
-                                documentValue = new DocumentValue(uri);
-                                documentValue.setHasChanged(true);
-                            } else {
-                                // file widget content has not changed
-                                documentValue = new DocumentValue(null);
-                                documentValue.setHasChanged(false);
-                            }
-                            documentValue.setDocumentId(fieldValue.getDocumentId());
-                        }
-                    } else {
-                        if (LOGGER.isLoggable(Level.FINE)) {
-                            LOGGER.log(Level.FINE, "The document with ID " + fieldValue.getDocumentId() + " is null.");
-                        }
-                        documentValue = new DocumentValue(uri);
-                    }
-                } catch (final DocumentNotFoundException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "Error while retrieving the document with ID " + fieldValue.getDocumentId() + ": Document not found.");
-                    }
+    protected Document getCurrentDocumentValue(final APISession session, final FormFieldValue fieldValue) throws BPMEngineException {
+        Document document = null;
+        if (fieldValue.getDocumentId() != -1) {
+            // A document was displayed in the widget
+            final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
+            try {
+                document = processAPI.getDocument(fieldValue.getDocumentId());
+            } catch (final DocumentNotFoundException e) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, "Error while retrieving the document with ID " + fieldValue.getDocumentId() + ": Document not found.");
                 }
-            } else {
-                // a new document of type url has been added
-                documentValue = new DocumentValue(uri);
+            }
+        }
+        return document;
+    }
+
+    protected DocumentValue getFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument, final String uri)
+            throws FileTooBigException, IOException {
+        DocumentValue documentValue = null;
+        if (uri != null && uri.length() != 0) {
+            // A new file widget content has been set
+            documentValue = getNewFileDocumentValue(session, fieldValue, deleteDocument, uri);
+        } else if (fieldValue.getDocumentId() != -1 && fieldValue.getDisplayedValue() != null) {
+            // file widget content has not changed
+            documentValue = new DocumentValue(null);
+            documentValue.setHasChanged(false);
+        }
+        return documentValue;
+    }
+
+    protected DocumentValue getNewFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument, final String uri)
+            throws FileTooBigException, IOException {
+        DocumentValue documentValue = null;
+        final File theSourceFile = new File(uri);
+        if (theSourceFile.exists()) {
+            final long maxSize = getDocumentMaxSize(session);
+            if (theSourceFile.length() > maxSize * 1048576) {
+                final String errorMessage = "file " + uri + " too big !";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage);
+                }
+                throw new FileTooBigException(errorMessage, uri, String.valueOf(maxSize));
+            }
+            final byte[] fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
+            final String originalFileName = fieldValue.getDisplayedValue();
+            final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
+            final String contentType = mimetypesFileTypeMap.getContentType(theSourceFile);
+            documentValue = new DocumentValue(fileContent, contentType, originalFileName);
+            documentValue.setHasChanged(true);
+            if (deleteDocument) {
+                theSourceFile.delete();
+            }
+        } else {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Error while retrieving the uploaded file " + uri + ": File not found.");
             }
         }
         return documentValue;
