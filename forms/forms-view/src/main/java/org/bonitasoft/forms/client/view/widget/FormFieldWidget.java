@@ -1244,7 +1244,6 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
             formFieldValue.setDocumentId(attachmentId);
             formFieldValue.setDisplayedValue(displayedValue);
             formFieldValue.setDocument(true);
-            return formFieldValue;
         }
         return formFieldValue;
     }
