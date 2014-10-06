@@ -213,7 +213,7 @@ DatastoreHasUpdate<DocumentItem>, DatastoreHasDelete {
         return documentValue;
     }
 
-    private DocumentValue buildDocumentValueFromUrl(final String urlPath, final int index) {
+    protected DocumentValue buildDocumentValueFromUrl(final String urlPath, final int index) {
 
         final DocumentValue documentValue = new DocumentValue(urlPath);
         if (index != -1) {

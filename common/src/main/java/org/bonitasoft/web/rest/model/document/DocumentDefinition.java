@@ -5,18 +5,17 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.model.document;
 
-import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -24,11 +23,11 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Gai Cuisha
- * 
+ *
  */
 public class DocumentDefinition extends ItemDefinition {
 
-	 /**
+    /**
      * Singleton
      */
     public static final DocumentDefinition get() {
@@ -70,7 +69,8 @@ public class DocumentDefinition extends ItemDefinition {
         createAttribute(DocumentItem.ATTRIBUTE_CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.ATTRIBUTE_URL, ItemAttribute.TYPE.URL);
         createAttribute(DocumentItem.ATTRIBUTE_UPLOAD_PATH, ItemAttribute.TYPE.STRING);
-        
+        createAttribute(DocumentItem.ATTRIBUTE_INDEX, ItemAttribute.TYPE.STRING);
+
         /* Attributes kept here to avoid API break */
         createAttribute(DocumentItem.PROCESSINSTANCE_ID, ItemAttribute.TYPE.STRING);
         createAttribute(DocumentItem.PROCESSINSTANCE_NAME, ItemAttribute.TYPE.STRING);
