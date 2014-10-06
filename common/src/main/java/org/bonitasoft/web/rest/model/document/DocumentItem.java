@@ -157,6 +157,10 @@ public class DocumentItem extends Item {
         this.setAttribute(ATTRIBUTE_INDEX, index);
     }
 
+    public void setIndex(final int index) {
+        this.setAttribute(ATTRIBUTE_INDEX, index);
+    }
+
     public String getVersion() {
         return getAttributeValue(ATTRIBUTE_VERSION);
     }
