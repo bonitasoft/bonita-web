@@ -35,6 +35,7 @@ import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.operation.LeftOperand;
 import org.bonitasoft.forms.client.model.ActionType;
 import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FileWidgetInputType;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormValidator;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -116,8 +117,13 @@ public class TestFormBuilderImpl {
         formBuilder.addLabelExpression("addLabel", "page2 widget2 label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
         formBuilder.addWidget("processpage2widget3", WidgetType.FILEUPLOAD);
         formBuilder.addLabelExpression("addLabel", "page2 widget3 label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), GROOVY);
+        formBuilder.addFileWidgetInputType(FileWidgetInputType.FILE);
         formBuilder.addAttachmentImageBehavior(true);
-        formBuilder.addWidget("processpage2widget4", WidgetType.TABLE);
+        formBuilder.addWidget("processpage2widget4", WidgetType.FILEUPLOAD);
+        formBuilder.addFileWidgetInputType(FileWidgetInputType.URL);
+        formBuilder.addWidget("processpage2widget5", WidgetType.FILEUPLOAD);
+        formBuilder.addFileWidgetInputType(FileWidgetInputType.ALL);
+        formBuilder.addWidget("processpage2widget6", WidgetType.TABLE);
         formBuilder.addCellsStyle("table-cellStyle");
         formBuilder.addHeadingsStyle("table-headings-cellStyle", true, true, false, false);
 
@@ -282,7 +288,12 @@ public class TestFormBuilderImpl {
         Assert.assertNull(validator.getStyle());
         final FormWidget uploadWidget = applicationFormDefAccessor.getPageWidgets("processPage2").get(2);
         Assert.assertTrue(uploadWidget.isDisplayAttachmentImage());
-        final FormWidget tableWidget = applicationFormDefAccessor.getPageWidgets("processPage2").get(3);
+        Assert.assertTrue(FileWidgetInputType.FILE.equals(uploadWidget.getFileWidgetInputType()));
+        final FormWidget uploadWidget2 = applicationFormDefAccessor.getPageWidgets("processPage2").get(3);
+        Assert.assertTrue(FileWidgetInputType.URL.equals(uploadWidget2.getFileWidgetInputType()));
+        final FormWidget uploadWidget3 = applicationFormDefAccessor.getPageWidgets("processPage2").get(4);
+        Assert.assertTrue(FileWidgetInputType.ALL.equals(uploadWidget3.getFileWidgetInputType()));
+        final FormWidget tableWidget = applicationFormDefAccessor.getPageWidgets("processPage2").get(5);
         Assert.assertEquals("table-cellStyle", tableWidget.getCellsStyle());
         Assert.assertEquals("table-headings-cellStyle", tableWidget.getHeadingsStyle());
         Assert.assertTrue(tableWidget.hasLeftHeadings());
