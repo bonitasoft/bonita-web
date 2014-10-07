@@ -1092,9 +1092,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 } else if (String.class.getName().equals(modifier)) {
                     convertedObj = valueAsString;
                 } else {
-                    final String message = "Type " + modifier + " is not handled.";
-                    if (getLogger().isLoggable(Level.WARNING)) {
-                        getLogger().log(Level.WARNING, message, context);
+                    final String message = "Type " + modifier + " is not handled by this method.";
+                    if (getLogger().isLoggable(Level.FINE)) {
+                        getLogger().log(Level.FINE, message, context);
                     }
                 }
             } catch (final IllegalArgumentException e) {
