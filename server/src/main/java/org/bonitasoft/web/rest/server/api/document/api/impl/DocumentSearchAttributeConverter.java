@@ -10,7 +10,7 @@ import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 
 public class DocumentSearchAttributeConverter implements AttributeConverter {
 
-	private final Map<String, String> mapping;
+    private final Map<String, String> mapping;
 
     public DocumentSearchAttributeConverter() {
         mapping = createMapping();
@@ -22,7 +22,8 @@ public class DocumentSearchAttributeConverter implements AttributeConverter {
         mapping.put(DocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, DocumentsSearchDescriptor.DOCUMENT_AUTHOR);
         mapping.put(DocumentItem.ATTRIBUTE_NAME, DocumentsSearchDescriptor.DOCUMENT_NAME);
         mapping.put(DocumentItem.ATTRIBUTE_CREATION_DATE, DocumentsSearchDescriptor.DOCUMENT_CREATIONDATE);
-        mapping.put(DocumentItem.ATTRIBUTE_DESCRIPTION, "documentDescritpion");
+        mapping.put(DocumentItem.ATTRIBUTE_DESCRIPTION, DocumentsSearchDescriptor.DOCUMENT_DESCRIPTION);
+        mapping.put(DocumentItem.ATTRIBUTE_INDEX, DocumentsSearchDescriptor.LIST_INDEX);
         return mapping;
     }
 
