@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -24,12 +25,16 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -42,7 +47,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Séverin Moussel
  */
 public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, ArchivedProcessInstance> implements DatastoreHasGet<ArchivedCaseItem>,
-        DatastoreHasSearch<ArchivedCaseItem> {
+        DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
 
     public ArchivedCaseDatastore(final APISession engineSession) {
         super(engineSession);
@@ -92,7 +97,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     private SearchResult<ArchivedProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {
 
         try {
-            final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getEngineSession());
+            final ProcessAPI processAPI = getProcessApi();
 
             if (filters.containsKey(ArchivedCaseItem.FILTER_USER_ID)) {
                 return processAPI.searchArchivedProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_USER_ID),
@@ -119,12 +124,29 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     @Override
     public ArchivedCaseItem get(final APIID id) {
         try {
-            return convertEngineToConsoleItem(TenantAPIAccessor.getProcessAPI(getEngineSession())
+            return convertEngineToConsoleItem(getProcessApi()
                     .getArchivedProcessInstance(id.toLong()));
             // .getFinalArchivedProcessInstance(id.toLong()));
         } catch (final Exception e) {
             throw new APIException(e);
         }
 
+    }
+
+    @Override
+    public void delete(final List<APIID> ids) {
+        try {
+            final ProcessAPI processAPI = getProcessApi();
+            for (final APIID apiId : ids) {
+                processAPI.deleteArchivedProcessInstance(apiId.toLong());
+            }
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+
+    }
+
+    public ProcessAPI getProcessApi() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return TenantAPIAccessor.getProcessAPI(getEngineSession());
     }
 }
