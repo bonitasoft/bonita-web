@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,8 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,25 +29,9 @@ import java.util.logging.Logger;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
- * @author Ruiheng.Fan
- * 
+ * @author Ruiheng Fan, Anthony Birembaut
  */
 public class TenantProperties {
-
-    /**
-     * Default name of the preferences file
-     */
-    public static final String PROPERTIES_FILENAME = "bonita-web-preferences.properties";
-
-    /**
-     * Indicates that the preferences have been loaded
-     */
-    public static boolean preferencesLoaded = false;
-
-    /**
-     * Instances attribute
-     */
-    private static Map<Long, TenantProperties> INSTANCES = new HashMap<Long, TenantProperties>();
 
     /**
      * Logger
@@ -67,24 +49,12 @@ public class TenantProperties {
     protected File propertiesFile;
 
     /**
-     * @return the {@link SecurityProperties} instance
-     */
-    protected static synchronized TenantProperties getInstance(final long tenantId) {
-        TenantProperties tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null) {
-            tenancyProperties = new TenantProperties(tenantId);
-            INSTANCES.put(tenantId, tenancyProperties);
-        }
-        return tenancyProperties;
-    }
-
-    /**
      * Private contructor to prevent instantiation
-     * 
+     *
      * @throws IOException
      */
-    protected TenantProperties(final long tenantId) {
-        propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), PROPERTIES_FILENAME);
+    protected TenantProperties(final long tenantId, final String propertiesFileName) {
+        propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), propertiesFileName);
         InputStream inputStream = null;
         try {
             if (!propertiesFile.exists()) {
