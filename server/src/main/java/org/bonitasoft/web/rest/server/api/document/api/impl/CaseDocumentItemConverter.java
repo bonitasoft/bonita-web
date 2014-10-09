@@ -1,14 +1,14 @@
 package org.bonitasoft.web.rest.server.api.document.api.impl;
 
 import org.bonitasoft.engine.bpm.document.Document;
-import org.bonitasoft.web.rest.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 
-public class DocumentItemConverter  extends ItemConverter<DocumentItem, Document> {
+public class CaseDocumentItemConverter extends ItemConverter<CaseDocumentItem, Document> {
 
     @Override
-    public DocumentItem convert(final Document engineItem) {
-        final DocumentItem item = new DocumentItem();
+    public CaseDocumentItem convert(final Document engineItem) {
+        final CaseDocumentItem item = new CaseDocumentItem();
         item.setId(String.valueOf(engineItem.getId()));
         item.setCaseId(String.valueOf(engineItem.getProcessInstanceId()));
         item.setName(engineItem.getName());
@@ -24,5 +24,4 @@ public class DocumentItemConverter  extends ItemConverter<DocumentItem, Document
         item.setIndex(engineItem.getIndex());
         return item;
     }
-
 }

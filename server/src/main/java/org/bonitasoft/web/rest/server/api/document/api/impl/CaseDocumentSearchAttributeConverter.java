@@ -4,26 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.document.DocumentsSearchDescriptor;
-import org.bonitasoft.web.rest.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 
-public class DocumentSearchAttributeConverter implements AttributeConverter {
+public class CaseDocumentSearchAttributeConverter implements AttributeConverter {
 
     private final Map<String, String> mapping;
 
-    public DocumentSearchAttributeConverter() {
+    public CaseDocumentSearchAttributeConverter() {
         mapping = createMapping();
     }
 
     private Map<String, String> createMapping() {
         final Map<String, String> mapping = new HashMap<String, String>();
-        mapping.put(DocumentItem.ATTRIBUTE_ID, DocumentItem.ATTRIBUTE_ID);
-        mapping.put(DocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, DocumentsSearchDescriptor.DOCUMENT_AUTHOR);
-        mapping.put(DocumentItem.ATTRIBUTE_NAME, DocumentsSearchDescriptor.DOCUMENT_NAME);
-        mapping.put(DocumentItem.ATTRIBUTE_CREATION_DATE, DocumentsSearchDescriptor.DOCUMENT_CREATIONDATE);
-        mapping.put(DocumentItem.ATTRIBUTE_DESCRIPTION, DocumentsSearchDescriptor.DOCUMENT_DESCRIPTION);
-        mapping.put(DocumentItem.ATTRIBUTE_INDEX, DocumentsSearchDescriptor.LIST_INDEX);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_ID, CaseDocumentItem.ATTRIBUTE_ID);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, DocumentsSearchDescriptor.DOCUMENT_AUTHOR);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_NAME, DocumentsSearchDescriptor.DOCUMENT_NAME);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_CREATION_DATE, DocumentsSearchDescriptor.DOCUMENT_CREATIONDATE);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_DESCRIPTION, DocumentsSearchDescriptor.DOCUMENT_DESCRIPTION);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_INDEX, DocumentsSearchDescriptor.LIST_INDEX);
         return mapping;
     }
 
