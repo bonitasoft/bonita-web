@@ -11,9 +11,9 @@ import org.bonitasoft.web.rest.server.datastore.organization.UserSearchAttribute
 
 public class DocumentFilterCreator implements FilterCreator {
     
-	private DocumentSearchAttributeConverter converter;
+	private CaseDocumentSearchAttributeConverter converter;
 
-    public DocumentFilterCreator(DocumentSearchAttributeConverter converter) {
+    public DocumentFilterCreator(CaseDocumentSearchAttributeConverter converter) {
         this.converter = converter;
     }
 	@Override

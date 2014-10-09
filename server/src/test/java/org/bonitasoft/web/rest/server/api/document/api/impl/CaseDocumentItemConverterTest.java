@@ -7,21 +7,21 @@ import static org.mockito.Mockito.when;
 import java.util.Date;
 
 import org.bonitasoft.engine.bpm.document.Document;
-import org.bonitasoft.web.rest.model.document.DocumentItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DocumentItemConverterTest extends APITestWithMock {
+public class CaseDocumentItemConverterTest extends APITestWithMock {
 
-	@Test
-	public void should_convert_engine_document_into_portal_document() {
-		
+    @Test
+    public void should_convert_engine_document_into_portal_document() {
+
         //Given
-        DocumentItemConverter documentItemConverter = new DocumentItemConverter();
-        Document engineItem = mock(Document.class);
+        final CaseDocumentItemConverter documentItemConverter = new CaseDocumentItemConverter();
+        final Document engineItem = mock(Document.class);
         when(engineItem.getId()).thenReturn(1l);
         when(engineItem.getProcessInstanceId()).thenReturn(1l);
         when(engineItem.getName()).thenReturn("Doc 1");
@@ -32,10 +32,10 @@ public class DocumentItemConverterTest extends APITestWithMock {
         when(engineItem.hasContent()).thenReturn(true);
         when(engineItem.getContentStorageId()).thenReturn("1");
         when(engineItem.getUrl()).thenReturn("http://url.com?test=d");
-        
+
         //When
-        DocumentItem documentItem = documentItemConverter.convert(engineItem);
-        
+        final CaseDocumentItem documentItem = documentItemConverter.convert(engineItem);
+
         //Assert
         assertTrue(documentItem.getId().equals(1l));
         assertTrue(documentItem.getCaseId().equals(1l));
@@ -47,7 +47,7 @@ public class DocumentItemConverterTest extends APITestWithMock {
         assertTrue(documentItem.hasContent());
         assertTrue(documentItem.getStorageId().equals("1"));
         assertTrue(documentItem.getURL().equals("http://url.com?test=d"));
-		
-	}
+
+    }
 
 }
