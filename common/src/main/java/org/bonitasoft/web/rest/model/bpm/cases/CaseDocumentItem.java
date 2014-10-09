@@ -57,7 +57,7 @@ public class CaseDocumentItem extends Item {
 
     public static final String ATTRIBUTE_CREATION_DATE = "creationDate";
 
-    public static final String ATTRIBUTE_HAS_CONTENT = "hasContent";
+    public static final String ATTRIBUTE_HAS_CONTENT = "isInternal";
 
     public static final String ATTRIBUTE_CONTENT_FILENAME = "fileName";
 
