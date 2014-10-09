@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,275 +18,249 @@ package org.bonitasoft.web.rest.server.api.document.api.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.ServletException;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.bpm.document.DocumentAttachmentException;
 import org.bonitasoft.engine.bpm.document.DocumentException;
-import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
-import org.bonitasoft.engine.bpm.document.DocumentValue;
-import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
+import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.RetrieveException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.model.document.ArchivedDocumentItem;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
-import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
-import org.bonitasoft.web.rest.server.datastore.filter.Filters;
-import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
-import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
-import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * Document data store
- *
- * @author Yongtao Guo, Fabio Lombardi
- *
+ * 
+ * @author Yongtao Guo
+ * 
  */
-public class DocumentDatastore extends CommonDatastore<DocumentItem, Document> implements DatastoreHasAdd<DocumentItem>, DatastoreHasGet<DocumentItem>,
-DatastoreHasUpdate<DocumentItem>, DatastoreHasDelete {
+public class DocumentDatastore {
 
-    private static final String CREATE_NEW_DOCUMENT = "AddNewDocument";
+    private final APISession apiSession;
 
-    private static final String CREATE_NEW_VERSION_DOCUMENT = "AddNewVersionDocument";
+    public final static String CREATE_NEW_VERSION_DOCUMENT = "AddNewVersionDocument";
 
-    protected final WebBonitaConstantsUtils constants;
-
-    protected final ProcessAPI processAPI;
-
-    final long maxSizeForTenant;
-
-    final FileTypeMap mimetypesFileTypeMap;
-
-    protected SearchOptionsCreator searchOptionsCreator;
+    public final static String CREATE_NEW_DOCUMENT = "AddNewDocument";
 
     /**
      * Default constructor.
      */
-    public DocumentDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final ProcessAPI processAPI) {
-        super(engineSession);
-        constants = constantsValue;
-        this.processAPI = processAPI;
-        maxSizeForTenant = PropertiesFactory.getConsoleProperties(engineSession.getTenantId()).getMaxSize();
-        mimetypesFileTypeMap = new MimetypesFileTypeMap();
+    public DocumentDatastore(final APISession apiSession) {
+        this.apiSession = apiSession;
     }
 
-    // GET Method
-    @Override
-    public DocumentItem get(final APIID id) {
-        try {
-            final Document documentItem = processAPI.getDocument(id.toLong());
-            return convertEngineToConsoleItem(documentItem);
-        } catch (final Exception e) {
-            throw new APIException(e);
+    public SearchResult<Document> searchDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder) throws InvalidSessionException,
+            BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException, ServletException {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
+                || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)) {
+            return processAPI.searchDocuments(builder.done());
+        } else if (DocumentItem.VALUE_VIEW_TYPE_TEAM_MANAGER.equals(viewType)) {
+            return processAPI.searchDocuments(builder.done());
+        } else if (DocumentItem.VALUE_VIEW_TYPE_PROCESS_OWNER.equals(viewType)) {
+            return processAPI.searchDocumentsSupervisedBy(userId, builder.done());
         }
+        throw new ServletException("Invalid view type.");
     }
 
-    // POST Method
-    @Override
-    public DocumentItem add(final DocumentItem item) {
-
-        long caseId = -1;
-        int index = -1;
-        String documentDescription = "";
-        DocumentValue documentValue = null;
-
-        try {
-            /* Necessary to avoid API break */
-            if (item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID) != null) {
-                caseId = Long.valueOf(item.getAttributeValue(DocumentItem.ATTRIBUTE_CASE_ID));
-            } else if (item.getAttributeValue(DocumentItem.PROCESSINSTANCE_ID) != null) {
-                caseId = Long.valueOf(item.getAttributeValue(DocumentItem.PROCESSINSTANCE_ID));
-            }
-
-        } catch (final NumberFormatException e) {
-            throw new APIException("Error while attaching a new document. Request with bad case id value.");
+    public SearchResult<ArchivedDocument> searchArchivedDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder)
+            throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException,
+            ServletException {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
+                || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)
+                || DocumentItem.VALUE_VIEW_TYPE_TEAM_MANAGER.equals(viewType)) {
+            return processAPI.searchArchivedDocuments(builder.done());
+        } else if (DocumentItem.VALUE_VIEW_TYPE_PROCESS_OWNER.equals(viewType)) {
+            return processAPI.searchArchivedDocumentsSupervisedBy(userId, builder.done());
         }
-        /* ----------------------------- */
-
-        final String documentName = item.getAttributeValue(DocumentItem.ATTRIBUTE_NAME);
-        final String uploadPath = item.getAttributeValue(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
-        final String urlPath = item.getAttributeValue(DocumentItem.ATTRIBUTE_URL);
-
-        if (item.getAttributeValue(DocumentItem.ATTRIBUTE_DESCRIPTION) != null) {
-            documentDescription = item.getAttributeValue(DocumentItem.ATTRIBUTE_DESCRIPTION);
-        }
-
-        if (item.getAttributeValue(DocumentItem.ATTRIBUTE_INDEX) != null) {
-            index = Integer.parseInt(item.getAttributeValue(DocumentItem.ATTRIBUTE_INDEX));
-        }
-
-        try {
-
-            if (caseId != -1 && documentName != null) {
-
-                if (uploadPath != null && !uploadPath.isEmpty()) {
-                    documentValue = buildDocumentValueFromUploadPath(uploadPath, index);
-                } else if (urlPath != null && !urlPath.isEmpty()) {
-                    documentValue = buildDocumentValueFromUrl(urlPath, index);
-                }
-
-                final Document document = processAPI.addDocument(caseId, documentName, documentDescription, documentValue);
-                return convertEngineToConsoleItem(document);
-
-            } else {
-                throw new APIException("Error while attaching a new document. Request with bad param value.");
-            }
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        throw new ServletException("Invalid view type.");
     }
 
-    // PUT Method
-    @Override
-    public DocumentItem update(final APIID id, final Map<String, String> attributes) {
-        final DocumentItem returnedItem = new DocumentItem();
-        DocumentValue documentValue = null;
+    public DocumentItem createDocument(final long processInstanceId, final String documentName, final String documentCreationType, final String path) 
+                throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
-        try {
-            // final Document document = processAPI.getDocument(id.toLong());
-            // final long caseId = document.getProcessInstanceId();
-            // final String documentName = document.getName();
-            final String urlPath;
-            final String documentDescription = null;
-
-            if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(DocumentItem.ATTRIBUTE_URL)) {
-
-                /*
-                 * if (attributes.get(DocumentItem.ATTRIBUTE_DESCRIPTION) != null) {
-                 * documentDescription = attributes.get(DocumentItem.ATTRIBUTE_DESCRIPTION);
-                 * }
-                 */
-
-                if (attributes.containsKey(DocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
-                    urlPath = attributes.get(DocumentItem.ATTRIBUTE_UPLOAD_PATH);
-                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1);
-                } else {
-                    urlPath = attributes.get(DocumentItem.ATTRIBUTE_URL);
-                    documentValue = buildDocumentValueFromUrl(urlPath, -1);
-                }
-
-                final Document document = processAPI.updateDocument(id.toLong(), documentValue);
-                return convertEngineToConsoleItem(document);
-
-            } else {
-                throw new APIException("Error while attaching a new document. Request with bad param value.");
-            }
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    protected DocumentValue buildDocumentValueFromUploadPath(final String uploadPath, final int index) throws DocumentException, IOException {
+        DocumentItem item = new DocumentItem();
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
         String fileName = null;
         String mimeType = null;
         byte[] fileContent = null;
-
-        final File theSourceFile = new File(uploadPath);
+        final File theSourceFile = new File(path);
         if (theSourceFile.exists()) {
-            if (theSourceFile.length() > maxSizeForTenant * 1048576) {
-                final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
+            final long maxSize = PropertiesFactory.getConsoleProperties(this.apiSession.getTenantId()).getMaxSize();
+            if (theSourceFile.length() > maxSize * 1048576) {
+                final String errorMessage = "This document is exceeded " + maxSize + "Mo";
                 throw new DocumentException(errorMessage);
             }
             fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
             if (theSourceFile.isFile()) {
                 fileName = theSourceFile.getName();
+                final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
                 mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
             }
         }
-
-        final DocumentValue documentValue = new DocumentValue(fileContent, mimeType, fileName);
-        if (index != -1) {
-            documentValue.setIndex(index);
+        // Attach a new document to a case
+        if (CREATE_NEW_DOCUMENT.equals(documentCreationType)) {
+            final Document document = processAPI.attachDocument(processInstanceId, documentName, fileName, mimeType, fileContent);
+            item = mapToDocumentItem(document);
+        } else if (CREATE_NEW_VERSION_DOCUMENT.equals(documentCreationType)) {
+            final Document document = processAPI.attachNewDocumentVersion(processInstanceId, documentName, fileName, mimeType, fileContent);
+            item = mapToDocumentItem(document);
         }
-        return documentValue;
+        return item;
     }
 
-    protected DocumentValue buildDocumentValueFromUrl(final String urlPath, final int index) {
+    public DocumentItem createDocumentFromUrl(final long processInstanceId, final String documentName, final String documentCreationType, final String path)
+            throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, ProcessInstanceNotFoundException,
+            DocumentAttachmentException, IOException, RetrieveException, ProcessDefinitionNotFoundException {
 
-        final DocumentValue documentValue = new DocumentValue(urlPath);
-        if (index != -1) {
-            documentValue.setIndex(index);
-        }
-        return documentValue;
-
-    }
-
-    // GET Method for search
-    public ItemSearchResult<DocumentItem> search(final int page, final int resultsByPage,
-            final String search, final Map<String, String> filters, final String orders) {
-        return searchDocument(page, resultsByPage, search, filters, orders);
-    }
-
-    protected ItemSearchResult<DocumentItem> searchDocument(final int page, final int resultsByPage, final String search,
-            final Map<String, String> filters, final String orders) {
-
-        searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
-
-        try {
-            final SearchResult<Document> engineSearchResults = processAPI.searchDocuments(searchOptionsCreator.create());
-            return new ItemSearchResult<DocumentItem>(page, resultsByPage, engineSearchResults.getCount(),
-                    convertEngineToConsoleItem(engineSearchResults.getResult()));
-        } catch (final SearchException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    protected SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
-            final String orders) {
-        final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
-                getDocumentSearchAttributeConverter()), new Filters(filters, new DocumentFilterCreator(getDocumentSearchAttributeConverter())));
-        return searchOptionsCreator;
-    }
-
-    private DocumentSearchAttributeConverter getDocumentSearchAttributeConverter() {
-        return new DocumentSearchAttributeConverter();
-    }
-
-    // DELETE Method
-    @Override
-    public void delete(final List<APIID> ids) {
-        if (ids != null) {
-
-            try {
-                for (final APIID id : ids) {
-                    processAPI.removeDocument(id.toLong());
-                }
-            } catch (final DocumentNotFoundException e) {
-                throw new APIException("Error while deleting a document. Document not found");
-            } catch (final DeletionException e) {
-                throw new APIException(e);
+        DocumentItem item = new DocumentItem();
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        final String fileName = DocumentUtil.getFileNameFromUrl(path);
+        final String mimeType = DocumentUtil.getMimeTypeFromUrl(path);
+        if (fileName != null && mimeType != null) {
+            // Attach a new document to a case
+            if (CREATE_NEW_DOCUMENT.equals(documentCreationType)) {
+                final Document document = processAPI.attachDocument(processInstanceId, documentName, fileName, mimeType, path);
+                item = mapToDocumentItem(document);
+            } else if (CREATE_NEW_VERSION_DOCUMENT.equals(documentCreationType)) {
+                final Document document = processAPI.attachNewDocumentVersion(processInstanceId, documentName, fileName, mimeType, path);
+                item = mapToDocumentItem(document);
             }
-
-        } else {
-            throw new APIException("Error while deleting a document. Document id not specified in the request");
         }
+
+        return item;
     }
 
-    @Override
-    protected DocumentItem convertEngineToConsoleItem(final Document item) {
-        if (item != null) {
-            return new DocumentItemConverter().convert(item);
+    public DocumentItem mapToDocumentItem(final Document document) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
+            UnknownAPITypeException, ProcessDefinitionNotFoundException, RetrieveException {
+
+        if (document == null) {
+            throw new IllegalArgumentException("The document must be not null!");
         }
-        return null;
+        DocumentItem item = new DocumentItem();
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        ProcessInstance processInstance;
+        String caseName = "";
+        String processDisplayName = "";
+        String version = "";
+        try {
+            processInstance = processAPI.getProcessInstance(document.getProcessInstanceId());
+            caseName = processInstance.getName();
+            final ProcessDeploymentInfo processDeploymentInfo = processAPI.getProcessDeploymentInfo(processInstance.getProcessDefinitionId());
+            processDisplayName = processDeploymentInfo.getDisplayName();
+            version = processDeploymentInfo.getVersion();
+        } catch (final ProcessInstanceNotFoundException e) {
+            item = buildDocumentItem(caseName, processDisplayName, version, document);
+            return item;
+        }
+
+        item = buildDocumentItem(caseName, processDisplayName, version, document);
+        return item;
+
     }
 
-    private List<DocumentItem> convertEngineToConsoleItem(final List<Document> result) {
-        if (result != null) {
-            return new DocumentItemConverter().convert(result);
-        }
-        return null;
+    private DocumentItem buildDocumentItem(final String caseName, final String processDisplayName, final String version, final Document document) {
+        final DocumentItem item = new DocumentItem();
+        item.setDocumentId(String.valueOf(document.getId()));
+        item.setCaseId(String.valueOf(document.getProcessInstanceId()));
+        item.setDocumentName(document.getName());
+        item.setDocumentAuthor(document.getAuthor());
+        item.setDocumentFileName(document.getContentFileName());
+        item.setDocumentCreationDate(parseDate(document.getCreationDate()));
+        item.setDocumentMIMEType(document.getContentMimeType());
+        item.setDocumentHasContent(String.valueOf(document.hasContent()));
+        item.setDocumentStorageId(document.getContentStorageId());
+        item.setDocumentURL(document.getUrl());
+        item.setProcessDisplayName(processDisplayName);
+        item.setProcessVersion(version);
+        item.setCaseName(caseName);
+        return item;
     }
+
+    public ArchivedDocumentItem mapToArchivedDocumentItem(final ArchivedDocument document) throws InvalidSessionException, BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException, RetrieveException, ProcessDefinitionNotFoundException {
+
+        if (document == null) {
+            throw new IllegalArgumentException("The document must be not null!");
+        }
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        ArchivedDocumentItem item = new ArchivedDocumentItem();
+        String caseName = "";
+        String processDisplayName = "";
+        String version = "";
+
+        List<ArchivedProcessInstance> archivedCaseList;
+        try {
+            archivedCaseList = processAPI.getArchivedProcessInstances(document.getProcessInstanceId(), 0, 1);
+            final ArchivedProcessInstance processInstance = archivedCaseList.get(0);
+            caseName = processInstance.getName();
+            final ProcessDeploymentInfo processDeploymentInfo = processAPI.getProcessDeploymentInfo(processInstance.getProcessDefinitionId());
+            processDisplayName = processDeploymentInfo.getDisplayName();
+            version = processDeploymentInfo.getVersion();
+        } catch (final NotFoundException e) {
+            item = buildArchivedDocumentItem(caseName, processDisplayName, version, document);
+            return item;
+        }
+
+        item = buildArchivedDocumentItem(caseName, processDisplayName, version, document);
+        return item;
+
+    }
+
+    private ArchivedDocumentItem buildArchivedDocumentItem(final String caseName, final String processDisplayName, final String version,
+            final ArchivedDocument document) {
+        final ArchivedDocumentItem item = new ArchivedDocumentItem();
+        item.setDocumentId(String.valueOf(document.getSourceObjectId()));
+        item.setDocumentSourceObjectId(String.valueOf(document.getSourceObjectId()));
+        item.setCaseId(String.valueOf(document.getProcessInstanceId()));
+        item.setDocumentName(document.getName());
+        item.setDocumentAuthor(document.getDocumentAuthor());
+        item.setDocumentFileName(document.getDocumentContentFileName());
+        item.setDocumentCreationDate(parseDate(document.getDocumentCreationDate()));
+        item.setDocumentMIMEType(document.getDocumentContentMimeType());
+        item.setDocumentHasContent(String.valueOf(document.getDocumentHasContent()));
+        item.setDocumentStorageId(document.getContentStorageId());
+        item.setDocumentURL(document.getDocumentURL());
+        item.setProcessDisplayName(processDisplayName);
+        item.setProcessVersion(version);
+        item.setCaseName(caseName);
+        item.setArchivedDate(parseDate(document.getArchiveDate()));
+        return item;
+    }
+    
+    private String parseDate(final Date date) {
+        String dateStr = null;
+        if (date != null) {
+            final DateFormat time = DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.ENGLISH);
+            final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.ENGLISH);
+            dateStr = time.format(date) + ", " + df.format(date);
+        }
+        return dateStr;
+    }
+
 }

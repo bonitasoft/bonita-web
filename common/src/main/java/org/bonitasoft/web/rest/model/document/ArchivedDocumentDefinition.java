@@ -56,24 +56,27 @@ public class ArchivedDocumentDefinition extends ItemDefinition {
 
     @Override
     protected void defineAttributes() {
-        createAttribute(DocumentItem.ATTRIBUTE_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_VERSION, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_ID, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_VERSION, ItemAttribute.TYPE.STRING);
         createAttribute(ArchivedDocumentItem.SOURCEOBJECT_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_CASE_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_NAME, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_CREATION_DATE, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_HAS_CONTENT, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_CONTENT_FILENAME, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
-        createAttribute(DocumentItem.ATTRIBUTE_URL, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESSINSTANCE_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESS_DISPLAY_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESSINSTANCE_ID, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.PROCESSINSTANCE_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_NAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_AUTHOR, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_CREATIONDATE, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_HAS_CONTENT, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_CONTENT_FILENAME, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_CONTENT_MIMETYPE, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.CONTENT_STORAGE_ID, ItemAttribute.TYPE.STRING);
+        createAttribute(DocumentItem.DOCUMENT_URL, ItemAttribute.TYPE.STRING);
         createAttribute(ArchivedDocumentItem.ARCHIVED_DATE, ItemAttribute.TYPE.STRING);
     }
 
     @Override
     protected void definePrimaryKeys() {
-        setPrimaryKeys(DocumentItem.ATTRIBUTE_ID);
+        setPrimaryKeys(DocumentItem.DOCUMENT_ID);
     }
 
     @Override
