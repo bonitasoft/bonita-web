@@ -17,6 +17,7 @@
         <enable.engine.listener.end>--&gt;</enable.engine.listener.end>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <bonita.home>${bonita.home.test}/bonita</bonita.home>
+        <proxy-portal-js/>
     </properties>
 
     <dependencies>
@@ -105,6 +106,12 @@
             <artifactId>console-common</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -248,6 +255,8 @@
                 <!-- filtered in web.xml -->
                 <enable.engine.listener.start />
                 <enable.engine.listener.end />
+
+                <proxy-portal-js>&lt;rule&gt;&lt;from&gt;^/portal.js/(.*)$&lt;/from&gt;&lt;to type="proxy" qsappend="true"&gt;http://127.0.0.1:9000/bonita/portaljs/$1&lt;/to&gt;&lt;/rule&gt;</proxy-portal-js>
             </properties>
 
             <dependencies>
@@ -261,6 +270,69 @@
 
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy urlRewrite </id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <stripVersion>true</stripVersion>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.tuckey</groupId>
+                                            <artifactId>urlrewritefilter</artifactId>
+                                            <outputDirectory>${basedir}/target/console-server-${project.version}/WEB-INF/lib</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>Jetty Test web.xml set up</id>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>pre-integration-test</phase>
+                                <inherited>false</inherited>
+                                <configuration>
+                                    <target>
+                                        <!-- copy web.xml to another location -->
+                                        <copy todir="${basedir}/target" file="${basedir}/target/console-server-${project.version}/WEB-INF/web.xml"/>
+                                        <!-- add rewrite filter -->
+                                        <replace file="${basedir}/target/web.xml">
+                                            <replacetoken><![CDATA[<!-- Cache Filter Mapping End -->]]></replacetoken>
+                                            <replacevalue><![CDATA[<!-- Cache Filter Mapping End -->
+    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+                                            ]]></replacevalue>
+                                        </replace>
+                                        <!-- put urlrewrite.xml file in WEB-INF -->
+                                        <copy todir="${basedir}/target/console-server-${project.version}/WEB-INF" file="${basedir}/src/test/resources/urlrewrite.xml"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+
                     <!-- Jetty configuration -->
                     <plugin>
                         <groupId>org.mortbay.jetty</groupId>
@@ -280,7 +352,7 @@
                                 </baseResource>
                             </webAppConfig>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
-                            <webXml>${basedir}/target/console-server-${project.version}/WEB-INF/web.xml</webXml>
+                            <webXml>${basedir}/target/web.xml</webXml>
                             <jettyConfig>src/test/webapp/WEB-INF/jetty.xml</jettyConfig>
                             <jettyEnvXml>src/test/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
                             <webAppSourceDirectory>${webappDirectory}</webAppSourceDirectory>

@@ -28,6 +28,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("tasklistingpm", _("Manage tasks of apps that an entity with this profile can supervise as PM."), _("Manage tasks of apps that an entity with this profile can supervise as PM."), _("Tasks")));
         pages.add(new BonitaPageItem("caselistinguser", _("visualize cases"), _("visualize cases"), _("Cases")));
         pages.add(new BonitaPageItem("caselistingadmin", _("manage cases"), _("manage cases"), _("Cases")));
+        pages.add(new BonitaPageItem("ng-caselistingadmin", _("manage cases"), _("manage cases"), _("Cases")));
         pages.add(new BonitaPageItem("caselistingpm", _("Manage cases of apps that an entity with this profile can supervise as PM."), _("Manage cases of apps that an entity with this profile can supervise as PM."), _("Cases")));
         pages.add(new BonitaPageItem("processlistinguser", _("visualize & start apps"), _("visualize & start apps"), _("Apps")));
         pages.add(new BonitaPageItem("processlistingadmin", _("manage apps"), _("manage apps"), _("Apps")));

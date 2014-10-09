@@ -58,6 +58,7 @@ import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -85,6 +86,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.user.client.History;
 
 /**
  * console client page
@@ -93,12 +95,27 @@ import com.google.gwt.core.shared.GWT;
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
+    public static String CASE_LIST_PAGE = "ng-caselistingadmin";
+
+    protected Map<String, String> angularViewsMap = new HashMap<String, String>();
+
+    /**
+     * Default Constructor.
+     */
+    public ConsoleFactoryClient() {
+        angularViewsMap.put(CASE_LIST_PAGE, "/admin/cases/list");
+    }
+
     @Override
     public RawView defineViewTokens(final String token) {
 
-        List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
+        final List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
+
+        if (angularViewsMap.containsKey(token)) {
+            return new AngularIFrameView(token, "#" + angularViewsMap.get(token) + History.getToken());
+        }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
@@ -152,7 +169,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessMoreDetailsAdminPage();
-        /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+            /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
             return new StartProcessOnBehalfPage();*/
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, currentUserAccessRights)) {
             return new UploadProcessPage();
@@ -230,15 +247,15 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new TaskQuickDetailsAdminPage();
         } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskMoreDetailsAdminPage();
-        
-        /* THEME pages
+
+            /* THEME pages
         } else if (ListThemePage.TOKEN.equals(token)) {
             return new ListThemePage();
         } else if (UploadThemePage.TOKEN.equals(token)) {
             return new UploadThemePage();
         } else if (EditThemePage.TOKEN.equals(token)) {
             return new EditThemePage();
-        */
+             */
 
             // Visualize & do tasks
         } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights) ) {
@@ -291,12 +308,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
 
 
-    protected String listAUthorizedTokens(List<String> currentUserAccessRights) {
+    protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
         String result = "";
 
-        Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
+        final Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
 
-        for (Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
+        for (final Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
             result = isUserAuthorized(entry.getValue(), currentUserAccessRights)? result+ entry.getKey() +", " : result;
         }
 
@@ -305,7 +322,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     }
 
     protected Map<String, List<String>> buildApplicationPagesPrivileges() {
-        Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
+        final Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
         pagePrivileges.put(CaseQuickDetailsAdminPage.TOKEN, CaseQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(CaseMoreDetailsAdminPage.TOKEN, CaseMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(ArchivedCaseQuickDetailsAdminPage.TOKEN, ArchivedCaseQuickDetailsAdminPage.PRIVILEGES);
@@ -378,13 +395,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         return pagePrivileges;
     }
 
-    protected boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
+    protected boolean isUserAuthorized(final List<String> privileges, final List<String> accessRights) {
 
-        String sessionId = new String(Session.getParameter("session_id"));
+        final String sessionId = new String(Session.getParameter("session_id"));
 
-        for (String privilege: privileges) {
+        for (final String privilege: privileges) {
 
-            String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
+            final String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 
             if (accessRights.contains(calcSHA1.toUpperCase())) {
                 GWT.log("User is granted access to targeted page thanks to : "+ privilege );
