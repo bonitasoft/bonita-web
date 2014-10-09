@@ -57,13 +57,13 @@ public class CaseDocumentItem extends Item {
 
     public static final String ATTRIBUTE_CREATION_DATE = "creationDate";
 
-    public static final String ATTRIBUTE_HAS_CONTENT = "documentHasContent";
+    public static final String ATTRIBUTE_HAS_CONTENT = "hasContent";
 
     public static final String ATTRIBUTE_CONTENT_FILENAME = "fileName";
 
     public static final String ATTRIBUTE_CONTENT_MIMETYPE = "contentMimetype";
 
-    public static final String ATTRIBUTE_CONTENT_STORAGE_ID = "documentContentStorageId";
+    public static final String ATTRIBUTE_CONTENT_STORAGE_ID = "contentStorageId";
 
     public static final String ATTRIBUTE_UPLOAD_PATH = "file";
 
