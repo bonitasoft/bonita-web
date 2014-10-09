@@ -32,7 +32,6 @@ import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.exception.DeletionException;
-import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
@@ -207,7 +206,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
     }
 
-    // GET Method for search
+    // GET Method for SEARCH
     public ItemSearchResult<CaseDocumentItem> search(final int page, final int resultsByPage,
             final String search, final Map<String, String> filters, final String orders) {
         return searchDocument(page, resultsByPage, search, filters, orders);
@@ -216,13 +215,23 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
     protected ItemSearchResult<CaseDocumentItem> searchDocument(final int page, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
 
-        searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
-
         try {
-            final SearchResult<Document> engineSearchResults = processAPI.searchDocuments(searchOptionsCreator.create());
+            final APIID supervisorAPIID = APIID.makeAPIID(filters.get(CaseDocumentItem.FILTER_SUPERVISOR_ID));
+
+            if (supervisorAPIID != null) {
+                filters.remove(CaseDocumentItem.FILTER_SUPERVISOR_ID);
+            }
+            searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
+
+            final SearchResult<Document> engineSearchResults;
+            if (supervisorAPIID != null) {
+                engineSearchResults = processAPI.searchDocumentsSupervisedBy(supervisorAPIID.toLong(), searchOptionsCreator.create());
+            } else {
+                engineSearchResults = processAPI.searchDocuments(searchOptionsCreator.create());
+            }
             return new ItemSearchResult<CaseDocumentItem>(page, resultsByPage, engineSearchResults.getCount(),
                     convertEngineToConsoleItem(engineSearchResults.getResult()));
-        } catch (final SearchException e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;
