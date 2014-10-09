@@ -66,7 +66,7 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         Assert.assertEquals("File name is different", document.getContentFileName(), caseDocumentItem.getFileName());
         Assert.assertEquals("Author is different", document.getAuthor(), (long) caseDocumentItem.getSubmittedBy().toLong());
         Assert.assertEquals("Mime type is different", document.getContentMimeType(), caseDocumentItem.getMIMEType());
-        Assert.assertEquals("Content storage id is different", document.getContentStorageId(), caseDocumentItem.getUploadPath());
+        Assert.assertEquals("Content storage id is different", document.getContentStorageId(), caseDocumentItem.getStorageId());
         Assert.assertEquals("Creation date is different", document.getCreationDate(),  caseDocumentItem.getCreationDate());
         Assert.assertEquals("Id is different", document.getId(), (long) caseDocumentItem.getId().toLong());
         Assert.assertEquals("Process instance id is different", document.getProcessInstanceId(), (long) caseDocumentItem.getCaseId().toLong());
@@ -144,7 +144,7 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, expectedDocument.getContentFileName());
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, expectedDocument.getContentMimeType());
 
-        attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, File.createTempFile("thisismynewfile", ".doc").getPath());
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, File.createTempFile("thisismynewfile", ".doc").getPath());
 
         apiCaseDocument.update(APIID.makeAPIID(expectedDocument.getId()), attributes);
     }

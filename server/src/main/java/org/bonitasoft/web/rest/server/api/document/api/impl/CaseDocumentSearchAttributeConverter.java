@@ -24,6 +24,8 @@ public class CaseDocumentSearchAttributeConverter implements AttributeConverter 
         mapping.put(CaseDocumentItem.ATTRIBUTE_CREATION_DATE, DocumentsSearchDescriptor.DOCUMENT_CREATIONDATE);
         mapping.put(CaseDocumentItem.ATTRIBUTE_DESCRIPTION, DocumentsSearchDescriptor.DOCUMENT_DESCRIPTION);
         mapping.put(CaseDocumentItem.ATTRIBUTE_INDEX, DocumentsSearchDescriptor.LIST_INDEX);
+        mapping.put(CaseDocumentItem.ATTRIBUTE_CASE_ID, DocumentsSearchDescriptor.PROCESSINSTANCE_ID);
+
         return mapping;
     }
 
