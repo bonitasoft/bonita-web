@@ -1,4 +1,4 @@
-package org.bonitasoft.web.rest.server.api.document.api.impl;
+package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -19,7 +19,7 @@ public class CaseDocumentItemConverterTest extends APITestWithMock {
     @Test
     public void should_convert_engine_document_into_portal_document() {
 
-        //Given
+        // Given
         final CaseDocumentItemConverter documentItemConverter = new CaseDocumentItemConverter();
         final Document engineItem = mock(Document.class);
         when(engineItem.getId()).thenReturn(1l);
@@ -33,10 +33,10 @@ public class CaseDocumentItemConverterTest extends APITestWithMock {
         when(engineItem.getContentStorageId()).thenReturn("1");
         when(engineItem.getUrl()).thenReturn("http://url.com?test=d");
 
-        //When
+        // When
         final CaseDocumentItem documentItem = documentItemConverter.convert(engineItem);
 
-        //Assert
+        // Assert
         assertTrue(documentItem.getId().equals(1l));
         assertTrue(documentItem.getCaseId().equals(1l));
         assertTrue(documentItem.getName().equals("Doc 1"));

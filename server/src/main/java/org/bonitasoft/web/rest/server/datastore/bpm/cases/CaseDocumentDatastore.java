@@ -35,9 +35,6 @@ import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
-import org.bonitasoft.web.rest.server.api.document.api.impl.CaseDocumentItemConverter;
-import org.bonitasoft.web.rest.server.api.document.api.impl.CaseDocumentSearchAttributeConverter;
-import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentFilterCreator;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentUtil;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
@@ -52,7 +49,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
- * @author Paul AMAR
+ * @author Fabio Lombardi
  *
  */
 public class CaseDocumentDatastore extends CommonDatastore<CaseDocumentItem, Document> implements DatastoreHasAdd<CaseDocumentItem>,
@@ -240,7 +237,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
     protected SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
             final String orders) {
         final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
-                getDocumentSearchAttributeConverter()), new Filters(filters, new DocumentFilterCreator(getDocumentSearchAttributeConverter())));
+                getDocumentSearchAttributeConverter()), new Filters(filters, new CaseDocumentFilterCreator(getDocumentSearchAttributeConverter())));
         return searchOptionsCreator;
     }
 
