@@ -15,6 +15,7 @@
 package org.bonitasoft.web.rest.model;
 
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentDefinition;
@@ -125,6 +126,8 @@ public class ModelFactory extends ItemDefinitionFactory {
         } else if (CaseVariableDefinition.TOKEN.equals(token)) {
             return new CaseVariableDefinition();
         } else if (CaseDocumentDefinition.TOKEN.equals(token)) {
+            return new CaseDocumentDefinition();
+        } else if (ArchivedCaseDocumentDefinition.TOKEN.equals(token)) {
             return new CaseDocumentDefinition();
         }
 
