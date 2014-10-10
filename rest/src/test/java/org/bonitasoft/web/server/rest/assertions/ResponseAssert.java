@@ -17,6 +17,7 @@ package org.bonitasoft.web.server.rest.assertions;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import net.javacrumbs.jsonunit.JsonAssert;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.internal.Objects;
 
@@ -35,7 +36,7 @@ public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
 
     public ResponseAssert hasJsonBodyEqual(String json) {
         info.description("Response body is not matching. This might introduce an API break");
-        Objects.instance().assertEqual(info, getJson(actual.readEntity(String.class)), getJson(json));
+        JsonAssert.assertJsonEquals(getJson(actual.readEntity(String.class)), getJson(json));
         return this;
     }
 

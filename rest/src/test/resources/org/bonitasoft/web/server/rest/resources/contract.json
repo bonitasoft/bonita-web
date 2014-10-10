@@ -1,7 +1,7 @@
 {
 	"complexInputs":[],
     "simpleInputs":[
-        {"description":"aDescription","name":"anInput","type":"TEXT"}
+        {"description":"aDescription","name":"anInput","type":"TEXT", "multiple":false}
     ],
 	"constraints":[
 		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}

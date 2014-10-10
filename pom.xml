@@ -234,6 +234,11 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+            <dependency>
+                <groupId>net.javacrumbs.json-unit</groupId>
+                <artifactId>json-unit</artifactId>
+                <version>1.1.6</version>
+            </dependency>
 			<dependency>
 				<groupId>org.powermock</groupId>
 				<artifactId>powermock-api-mockito</artifactId>
@@ -555,7 +560,7 @@
 
 	<profiles>
 		<profile>
-			<activation>
+   			<activation>
 				<property>
 					<name>generateSource</name>
 				</property>
