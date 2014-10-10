@@ -30,6 +30,11 @@ public class ArchivedCaseDocumentItem extends CaseDocumentItem {
 
     public static final String ATTRIBUTE_SOURCE_OBJECT_ID = "sourceObjectId";
 
+    public static final String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
+
+    public static final String FILTER_ARCHIVED_CASE_ID = "archivedCaseId";
+
+
     public ArchivedCaseDocumentItem() {
         super();
     }
@@ -38,7 +43,6 @@ public class ArchivedCaseDocumentItem extends CaseDocumentItem {
         super(item);
     }
 
-    public static final String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
 
     // SETTER
 

@@ -28,11 +28,11 @@ import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
  *
  */
 
-public class ArchviedCaseDocumentFilterCreator implements FilterCreator {
+public class ArchivedCaseDocumentFilterCreator implements FilterCreator {
 
     private final ArchivedCaseDocumentSearchAttributeConverter converter;
 
-    public ArchviedCaseDocumentFilterCreator(final ArchivedCaseDocumentSearchAttributeConverter converter) {
+    public ArchivedCaseDocumentFilterCreator(final ArchivedCaseDocumentSearchAttributeConverter converter) {
         this.converter = converter;
     }
 

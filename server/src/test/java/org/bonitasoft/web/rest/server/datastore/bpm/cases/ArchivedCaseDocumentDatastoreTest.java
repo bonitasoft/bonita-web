@@ -18,6 +18,7 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.ArchivedDocumentNotFoundException;
+import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -157,7 +158,7 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
 
     // -------------DELETE METHOD TESTS ------------------------------------------//
     @Test
-    public void it_should_delete_one_document() throws DocumentNotFoundException, DeletionException {
+    public void it_should_delete_one_document() throws DocumentNotFoundException, DocumentException {
         final List<APIID> docs = new ArrayList<APIID>();
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
 
@@ -165,12 +166,12 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
         documentDatastore.delete(docs);
 
         // Then
-        verify(processAPI).removeDocument(1L);
-        verify(processAPI, times(1)).removeDocument(any(Long.class));
+        verify(processAPI).deleteContentOfArchivedDocument(1L);
+        verify(processAPI, times(1)).deleteContentOfArchivedDocument(any(Long.class));
     }
 
     @Test
-    public void it_should_delete_two_documents() throws DocumentNotFoundException, DeletionException {
+    public void it_should_delete_two_documents() throws DocumentNotFoundException, DocumentException {
         final List<APIID> docs = new ArrayList<APIID>();
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
@@ -179,7 +180,7 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
         documentDatastore.delete(docs);
 
         // Then
-        verify(processAPI, times(2)).removeDocument(1L);
+        verify(processAPI, times(2)).deleteContentOfArchivedDocument(1L);
     }
 
     @Test
@@ -192,19 +193,5 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
 
         // When
         documentDatastore.delete(null);
-    }
-
-    @Test
-    public void it_should_throw_an_exception_when_document_is_not_found() throws DocumentNotFoundException, DeletionException {
-        expectedEx.expect(APIException.class);
-        expectedEx.expectMessage("Error while deleting a document. Document not found");
-        // When
-        when(processAPI.removeDocument(3L)).thenThrow(DocumentNotFoundException.class);
-
-        final List<APIID> docs = new ArrayList<APIID>();
-        docs.add(APIID.makeAPIID(3L));
-
-        // When
-        documentDatastore.delete(docs);
     }
 }

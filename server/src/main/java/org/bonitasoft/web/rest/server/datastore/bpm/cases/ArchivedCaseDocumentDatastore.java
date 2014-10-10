@@ -26,8 +26,8 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
+import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
-import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentItem;
@@ -91,11 +91,19 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
             final Map<String, String> filters, final String orders) {
 
         try {
-            final APIID supervisorAPIID = APIID.makeAPIID(filters.get(CaseDocumentItem.FILTER_SUPERVISOR_ID));
+            final APIID supervisorAPIID = APIID.makeAPIID(filters.get(ArchivedCaseDocumentItem.FILTER_SUPERVISOR_ID));
+            final APIID archivedCaseId = APIID.makeAPIID(filters.get(ArchivedCaseDocumentItem.FILTER_ARCHIVED_CASE_ID));
 
             if (supervisorAPIID != null) {
-                filters.remove(CaseDocumentItem.FILTER_SUPERVISOR_ID);
+                filters.remove(ArchivedCaseDocumentItem.FILTER_SUPERVISOR_ID);
             }
+
+            if (archivedCaseId != null) {
+                filters.remove(ArchivedCaseDocumentItem.FILTER_ARCHIVED_CASE_ID);
+                final Long sourceCaseId = processAPI.getArchivedProcessInstance(archivedCaseId.toLong()).getSourceObjectId();
+                filters.put(ArchivedCaseDocumentItem.ATTRIBUTE_CASE_ID, sourceCaseId.toString());
+            }
+
             searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
 
             final SearchResult<ArchivedDocument> engineSearchResults;
@@ -130,11 +138,11 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
 
             try {
                 for (final APIID id : ids) {
-                    processAPI.removeDocument(id.toLong());
+                    processAPI.deleteContentOfArchivedDocument(id.toLong());
                 }
             } catch (final DocumentNotFoundException e) {
                 throw new APIException("Error while deleting a document. Document not found");
-            } catch (final DeletionException e) {
+            } catch (final DocumentException e) {
                 throw new APIException(e);
             }
 
