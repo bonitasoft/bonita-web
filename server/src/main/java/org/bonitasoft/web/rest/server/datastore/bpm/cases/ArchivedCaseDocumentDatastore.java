@@ -28,6 +28,10 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
+import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentItem;
@@ -100,8 +104,11 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
 
             if (archivedCaseId != null) {
                 filters.remove(ArchivedCaseDocumentItem.FILTER_ARCHIVED_CASE_ID);
-                final Long sourceCaseId = processAPI.getArchivedProcessInstance(archivedCaseId.toLong()).getSourceObjectId();
-                filters.put(ArchivedCaseDocumentItem.ATTRIBUTE_CASE_ID, sourceCaseId.toString());
+                final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(archivedCaseId.toLong());
+                if (archivedProcessInstance != null) {
+                    final Long sourceCaseId = archivedProcessInstance.getSourceObjectId();
+                    filters.put(ArchivedCaseDocumentItem.ATTRIBUTE_CASE_ID, sourceCaseId.toString());
+                }
             }
 
             searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
@@ -114,7 +121,11 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
             }
             return new ItemSearchResult<ArchivedCaseDocumentItem>(page, resultsByPage, engineSearchResults.getCount(),
                     convertEngineToConsoleItem(engineSearchResults.getResult()));
-        } catch (final Exception e) {
+        } catch (final ArchivedProcessInstanceNotFoundException e) {
+            e.printStackTrace();
+        } catch (final UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (final SearchException e) {
             e.printStackTrace();
         }
         return null;
