@@ -37,12 +37,12 @@ public class CaseDocumentDefinition extends ItemDefinition {
     /**
      * token
      */
-    public static final String TOKEN = "document";
+    public static final String TOKEN = "casedocument";
 
     /**
-     * the URL of document
+     * the URL of user resource
      */
-    private static final String API_URL = "../API/bpm/document";
+    private static final String API_URL = "../API/bpm/caseDocument";
 
     @Override
     public String defineToken() {
