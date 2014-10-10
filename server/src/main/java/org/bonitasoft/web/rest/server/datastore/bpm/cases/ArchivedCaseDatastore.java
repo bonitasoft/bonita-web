@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
 
     @Override
     public ItemSearchResult<ArchivedCaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
-                                                     final Map<String, String> filters) {
+            final Map<String, String> filters) {
 
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
@@ -137,9 +138,12 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     public void delete(final List<APIID> ids) {
         try {
             final ProcessAPI processAPI = getProcessApi();
+            final List<Long> toDeleteIds = new ArrayList<Long>();
             for (final APIID apiId : ids) {
-                processAPI.deleteArchivedProcessInstance(apiId.toLong());
+                final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(apiId.toLong());
+                toDeleteIds.add(archivedProcessInstance.getSourceObjectId());
             }
+            processAPI.deleteArchivedProcessInstancesInAllStates(toDeleteIds);
         } catch (final Exception e) {
             throw new APIException(e);
         }

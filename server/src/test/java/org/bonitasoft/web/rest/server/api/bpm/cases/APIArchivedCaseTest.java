@@ -1,5 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.cases;
 
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
@@ -40,12 +42,16 @@ public class APIArchivedCaseTest extends APITestWithMock {
     @Mock
     private ProcessAPI processAPI;
 
+    @Mock
+    private ArchivedProcessInstance archivedProcessInstance;
+
     @Before
     public void initializeMocks() throws Exception {
         initMocks(this);
         apiArchivedCase = spy(new APIArchivedCase());
         doReturn(archivedCaseDatastore).when(apiArchivedCase).defineDefaultDatastore();
         doReturn(processAPI).when(archivedCaseDatastore).getProcessApi();
+        doReturn(archivedProcessInstance).when(processAPI).getArchivedProcessInstance(anyLong());
     }
 
     @Test
