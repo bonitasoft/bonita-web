@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-16 07:03+0200\n"
-"PO-Revision-Date: 2014-10-07 17:31-0400\n"
+"POT-Creation-Date: 2014-10-10 07:02+0200\n"
+"PO-Revision-Date: 2014-10-10 02:32-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -180,30 +180,37 @@ msgid "The only mandatory filter is %name%"
 msgstr "Seul le filtre %name% est obligatoire"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:42
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:42
 msgid "Can't update user. User not found"
 msgstr "Impossible de mettre à jour les données de l'utilisateur. L'utilisateur est introuvable"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:44
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:44
 msgid "Error when updating user"
 msgstr "Erreur lors de l'actualisation des données de l'utilisateur"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:52
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:52
 msgid "Can't create user. User '%userName%' already exists"
 msgstr "Il n'est pas possible de créer cet utilisateur, car '%userName%' est déjà présent"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:55
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:55
 msgid "Error when creating user"
 msgstr "Erreur lors de la création de l'utilisateur"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:63
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:63
 msgid "User not found"
 msgstr "Utilisateur introuvable"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:71
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:71
 msgid "Error when deleting users"
 msgstr "Erreur lors de la désactivation des utilisateurs"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:79
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:79
 msgid "Error when searching users"
 msgstr "Erreur lors de la recherche des utilisateurs"
 
