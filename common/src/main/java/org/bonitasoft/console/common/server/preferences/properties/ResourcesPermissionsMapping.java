@@ -13,6 +13,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.common.server.preferences.properties;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +41,8 @@ public class ResourcesPermissionsMapping extends TenantProperties {
     protected static synchronized ResourcesPermissionsMapping getInstance(final long tenantId) {
         ResourcesPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
-            tenancyProperties = new ResourcesPermissionsMapping(tenantId);
+            final File fileName = getPropertiesFile(tenantId, PROPERTIES_FILENAME);
+            tenancyProperties = new ResourcesPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);
         }
         return tenancyProperties;
@@ -50,8 +53,8 @@ public class ResourcesPermissionsMapping extends TenantProperties {
      *
      * @throws IOException
      */
-    protected ResourcesPermissionsMapping(final long tenantId) {
-        super(tenantId, PROPERTIES_FILENAME);
+    protected ResourcesPermissionsMapping(final File fileName) {
+        super(fileName);
 
     }
 

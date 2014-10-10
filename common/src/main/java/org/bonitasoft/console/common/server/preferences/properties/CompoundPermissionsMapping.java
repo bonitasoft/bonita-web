@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,8 @@ public class CompoundPermissionsMapping extends TenantProperties {
     protected static synchronized CompoundPermissionsMapping getInstance(final long tenantId) {
         CompoundPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
-            tenancyProperties = new CompoundPermissionsMapping(tenantId);
+            final File fileName = getPropertiesFile(tenantId, PROPERTIES_FILENAME);
+            tenancyProperties = new CompoundPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);
         }
         return tenancyProperties;
@@ -50,8 +52,8 @@ public class CompoundPermissionsMapping extends TenantProperties {
      *
      * @throws IOException
      */
-    protected CompoundPermissionsMapping(final long tenantId) {
-        super(tenantId, PROPERTIES_FILENAME);
+    protected CompoundPermissionsMapping(final File fileName) {
+        super(fileName);
 
     }
 

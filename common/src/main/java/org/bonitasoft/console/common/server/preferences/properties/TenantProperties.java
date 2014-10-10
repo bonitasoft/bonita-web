@@ -22,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,8 +55,8 @@ public class TenantProperties {
      *
      * @throws IOException
      */
-    protected TenantProperties(final long tenantId, final String propertiesFileName) {
-        propertiesFile = new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), propertiesFileName);
+    protected TenantProperties(final File propertiesFile) {
+        this.propertiesFile = propertiesFile;
         InputStream inputStream = null;
         try {
             if (!propertiesFile.exists()) {
@@ -79,6 +81,10 @@ public class TenantProperties {
         }
     }
 
+    protected static File getPropertiesFile(final long tenantId, final String propertiesFileName) {
+        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), propertiesFileName);
+    }
+
     protected void initProperties(final File aPropertiesFile) throws IOException {
         // Create the file.
         aPropertiesFile.createNewFile();
@@ -89,13 +95,6 @@ public class TenantProperties {
             return null;
         }
         return properties.getProperty(propertyName);
-    }
-
-    public String getProperty(final String propertyName, final String defaultValue) {
-        if (properties == null) {
-            return defaultValue;
-        }
-        return properties.getProperty(propertyName, defaultValue);
     }
 
     public void removeProperty(final String propertyName) throws IOException {
@@ -145,6 +144,25 @@ public class TenantProperties {
                     }
                 }
             }
+        }
+    }
+
+    public List<String> getPropertyAsList(final String propertyName) {
+        final String propertyAsString = getProperty(propertyName);
+        if (propertyAsString != null) {
+            final List<String> propertiesList = new ArrayList<String>();
+            if (propertyAsString.startsWith("[") && propertyAsString.endsWith("]")) {
+                final String propertyCSV = propertyAsString.substring(1, propertyAsString.length() - 1);
+                final String[] propertyArray = propertyCSV.split(",");
+                for (final String propertyValue : propertyArray) {
+                    propertiesList.add(propertyValue.trim());
+                }
+            } else {
+                propertiesList.add(propertyAsString);
+            }
+            return propertiesList;
+        } else {
+            return null;
         }
     }
 }
