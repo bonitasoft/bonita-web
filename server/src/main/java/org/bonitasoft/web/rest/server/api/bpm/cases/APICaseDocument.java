@@ -41,7 +41,7 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
-        return Definitions.get(DocumentDefinition.TOKEN);
+        return Definitions.get(CaseDocumentDefinition.TOKEN);
     }
 
     @Override
