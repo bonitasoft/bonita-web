@@ -17,6 +17,7 @@
         <enable.engine.listener.end>--&gt;</enable.engine.listener.end>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <bonita.home>${bonita.home.test}/bonita</bonita.home>
+        <restlet-version>2.2.2</restlet-version>
     </properties>
 
     <dependencies>
@@ -106,6 +107,26 @@
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
+        </dependency>
+
+
+        <!-- ******************************************************************* -->
+        <!-- new rest api -->
+        <!-- ******************************************************************* -->
+        <dependency>
+            <groupId>org.restlet.jse</groupId>
+            <artifactId>org.restlet</artifactId>
+            <version>${restlet-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.servlet</artifactId>
+            <version>${restlet-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.restlet.jse</groupId>
+            <artifactId>org.restlet.ext.json</artifactId>
+            <version>${restlet-version}</version>
         </dependency>
     </dependencies>
 
