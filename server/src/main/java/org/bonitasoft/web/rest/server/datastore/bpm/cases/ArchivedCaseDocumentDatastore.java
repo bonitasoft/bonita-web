@@ -122,13 +122,12 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
             return new ItemSearchResult<ArchivedCaseDocumentItem>(page, resultsByPage, engineSearchResults.getCount(),
                     convertEngineToConsoleItem(engineSearchResults.getResult()));
         } catch (final ArchivedProcessInstanceNotFoundException e) {
-            e.printStackTrace();
+            throw new APIException("archivedCaseId not found. Request with bad param value.");
         } catch (final UserNotFoundException e) {
-            e.printStackTrace();
+            throw new APIException("supervisor_id not found. Request with bad param value.");
         } catch (final SearchException e) {
-            e.printStackTrace();
+            throw new APIException("Error while searching.");
         }
-        return null;
     }
 
     protected SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
