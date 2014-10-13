@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -71,15 +71,15 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class BonitaRestAPIFactory extends RestAPIFactory {
-	
+
 	private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
-	
+
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
-    	
+
         if ("identity".equals(apiToken)) {
             if ("user".equals(resourceToken)) {
                 return new APIUser();
@@ -110,7 +110,7 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
             } else if ("session".equals(resourceToken)) {
                 return new APISession();
             }
-            
+
         // FIXME : userXP deprecated    (BS-500)
         //    - replaced by 'portal'
         //    - Do not add any API here
@@ -128,7 +128,7 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProfileMember();
             }
         // --------------------------------------------------------
-            
+
         } else if ("portal".equals(apiToken)) {
         	if ("profile".equals(resourceToken)) {
                 return new APIProfile();
@@ -137,7 +137,7 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
             }
-        	
+
         } else if ("bpm".equals(apiToken)) {
             if ("humanTask".equals(resourceToken)) {
                 return new APIHumanTask();
@@ -199,16 +199,12 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProcessConnectorDependency();
             } else if ("caseVariable".equals(resourceToken)) {
                 return new APICaseVariable();
-            } else if ("document".equals(resourceToken)) {
-                return new APIDocument();
-            } else if ("archiveddocument".equals(resourceToken)) {
-                return new APIArchivedDocument();
             }
         } else if ("platform".equals(apiToken)) {
             if ("platform".equals(resourceToken)) {
                 return new APIPlatform();
             }
-        } 
+        }
         throw new APINotFoundException(apiToken, resourceToken);
     }
 }

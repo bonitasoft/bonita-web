@@ -15,6 +15,7 @@
 package org.bonitasoft.web.toolkit.client.data.api.request;
 
 import org.bonitasoft.web.toolkit.client.UserSessionVariables;
+import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 
 import com.google.gwt.http.client.Request;
@@ -35,7 +36,7 @@ public class HttpRequest {
 
     /**
      * Send a GET HTTP request
-     * 
+     *
      * @param callback
      *            The APICallback to call onSuccess or onError.
      * @param url
@@ -47,7 +48,7 @@ public class HttpRequest {
 
     /**
      * Send a POST HTTP request
-     * 
+     *
      * @param callback
      *            The APICallback to call onSuccess or onError.
      * @param datas
@@ -61,7 +62,7 @@ public class HttpRequest {
 
     /**
      * Send the HTTP request
-     * 
+     *
      * @param method
      *            The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
      * @param callback
@@ -75,7 +76,7 @@ public class HttpRequest {
 
     /**
      * Send the HTTP request with data
-     * 
+     *
      * @param method
      *            The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
      * @param callback
@@ -93,10 +94,13 @@ public class HttpRequest {
         if (contentType != null) {
             builder.setHeader("Content-Type", (contentType != null ? contentType : "text/plain") + ";charset=UTF-8");
         }
-        
+
         if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
-            builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
+            builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));
         }
+
+        builder.setHeader("Current-Page", ViewController.getInstance().getCurrentPageToken());
+
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);
         Request request = null;

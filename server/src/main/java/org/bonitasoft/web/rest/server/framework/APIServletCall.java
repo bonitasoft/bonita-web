@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,6 +79,8 @@ public class APIServletCall extends ServletCall {
 
     private APIID id;
 
+    private static Logger LOGGER = Logger.getLogger(APIServletCall.class.getName());
+
     public APIServletCall(final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);
 
@@ -125,7 +128,9 @@ public class APIServletCall extends ServletCall {
 
         apiName = path[1];
         resourceName = path[2];
-        
+
+        LOGGER.warning("[REST]: " + request.getMethod() + "|" + apiName + "/" + resourceName + "|" + request.getHeader("Current-Page"));
+
         // Fixes BS-400. This is ugly.
         I18n.getInstance();
 
@@ -213,7 +218,7 @@ public class APIServletCall extends ServletCall {
             }
 
             Item.setApplyValidatorMandatoryByDefault(false);
-            IItem item = getJSonStreamAsItem();
+            final IItem item = getJSonStreamAsItem();
             api.runUpdate(id, getAttributesWithDeploysAsJsonString(item));
         } catch (final APIException e) {
             e.setApi(apiName);
@@ -227,12 +232,12 @@ public class APIServletCall extends ServletCall {
      * Get deploys and add them in json representation in map<String, String>
      *
      * Workaround to be able to have included json objects in main object in PUT request
-     * You have to unserialize them to be able to use them in java representation 
+     * You have to unserialize them to be able to use them in java representation
      */
-    private HashMap<String, String> getAttributesWithDeploysAsJsonString(IItem item) {
-        HashMap<String, String> map = new HashMap<String, String>();
+    private HashMap<String, String> getAttributesWithDeploysAsJsonString(final IItem item) {
+        final HashMap<String, String> map = new HashMap<String, String>();
         map.putAll(item.getAttributes());
-        for (Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
+        for (final Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
             map.put(deploy.getKey(), deploy.getValue().toJson());
         }
         return map;
