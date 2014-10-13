@@ -23,7 +23,6 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
@@ -42,7 +41,7 @@ public class OAuthLoginManagerImpl implements LoginManager {
     private static final Logger LOGGER = Logger.getLogger(OAuthLoginManagerImpl.class.getName());
 
     @Override
-    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
+    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
         final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(tenantId, redirectURL);
         final Token requestToken = aConsumer.getRequestToken();
         TokenCacheUtil.addRequestToken(requestToken);
@@ -50,11 +49,11 @@ public class OAuthLoginManagerImpl implements LoginManager {
     }
 
     @Override
-    public void login(final HttpServletRequestAccessor request, Credentials credentials) throws LoginFailedException {
+    public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
         if (request.getOAuthVerifier() == null) {
             throw new LoginFailedException();
         }
-        long tenantId = credentials.getTenantId();
+        final long tenantId = credentials.getTenantId();
 
         String local = DEFAULT_LOCALE;
         if (request.getParameterMap().get("_l") != null
@@ -63,7 +62,6 @@ public class OAuthLoginManagerImpl implements LoginManager {
         }
         final User user = new User(getOAuthUserId(request, tenantId), local);
         final APISession apiSession = getUserLogger().doLogin(credentials);
-        user.setUseCredentialTransmission(useCredentialsTransmission(apiSession));
         SessionUtil.sessionLogin(user, apiSession, request.getHttpSession());
     }
 
@@ -97,10 +95,6 @@ public class OAuthLoginManagerImpl implements LoginManager {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
-    }
-
-    private boolean useCredentialsTransmission(final APISession apiSession) {
-        return PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).useCredentialsTransmission();
     }
 
 }

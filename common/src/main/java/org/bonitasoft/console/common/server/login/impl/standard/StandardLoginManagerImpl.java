@@ -21,7 +21,6 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
@@ -33,10 +32,10 @@ import org.bonitasoft.web.rest.model.user.User;
 public class StandardLoginManagerImpl implements LoginManager {
 
     @Override
-    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
         String context = request.getContextPath();
-        String servletPath = request.getServletPath();
+        final String servletPath = request.getServletPath();
         if (StringUtils.isNotBlank(servletPath) && servletPath.startsWith("/mobile")) {
             context += "/mobile";
         }
@@ -49,24 +48,19 @@ public class StandardLoginManagerImpl implements LoginManager {
     }
 
     @Override
-    public void login(final HttpServletRequestAccessor request, Credentials credentials) throws LoginFailedException {
+    public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
         String local = DEFAULT_LOCALE;
         if (request.getParameterMap().get("_l") != null
                 && request.getParameterMap().get("_l").length >= 0) {
             local = request.getParameterMap().get("_l")[0];
         }
         final User user = new User(request.getUsername(), local);
-        APISession session = getUserLogger().doLogin(credentials);
-        user.setUseCredentialTransmission(useCredentialsTransmission(session));
+        final APISession session = getUserLogger().doLogin(credentials);
         SessionUtil.sessionLogin(user, session, request.getHttpSession());
     }
 
     protected UserLogger getUserLogger() {
         return new UserLogger();
-    }
-
-    protected boolean useCredentialsTransmission(final APISession apiSession) {
-        return PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).useCredentialsTransmission();
     }
 
 }

@@ -29,7 +29,6 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
@@ -57,9 +56,9 @@ public class JAASLoginManagerImpl implements LoginManager {
      * {@inheritDoc}
      */
     @Override
-    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuffer url = new StringBuffer();
-        String context = request.getContextPath();
+        final String context = request.getContextPath();
         url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");
@@ -70,11 +69,11 @@ public class JAASLoginManagerImpl implements LoginManager {
 
     @Override
     public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
-        long tenantId = credentials.getTenantId();
+        final long tenantId = credentials.getTenantId();
         final CallbackHandler handler = createConsoleCallbackHandler(request, String.valueOf(tenantId));
         try {
-            String loginContextName = getLoginContextName(tenantId);
-            LoginContext loginContext = new LoginContext(loginContextName, handler);
+            final String loginContextName = getLoginContextName(tenantId);
+            final LoginContext loginContext = new LoginContext(loginContextName, handler);
             loginContext.login();
             loginContext.logout();
         } catch (final LoginException e) {
@@ -91,11 +90,10 @@ public class JAASLoginManagerImpl implements LoginManager {
         }
         final User user = new User(request.getUsername(), local);
         final APISession apiSession = getUserLogger().doLogin(credentials);
-        user.setUseCredentialTransmission(useCredentialsTransmission(apiSession));
         SessionUtil.sessionLogin(user, apiSession, request.getHttpSession());
     }
 
-    private ConsoleCallbackHandler createConsoleCallbackHandler(final HttpServletRequestAccessor request, String tenantId) {
+    private ConsoleCallbackHandler createConsoleCallbackHandler(final HttpServletRequestAccessor request, final String tenantId) {
         return new ConsoleCallbackHandler(request.getUsername(), request.getPassword(), tenantId);
     }
 
@@ -114,10 +112,6 @@ public class JAASLoginManagerImpl implements LoginManager {
             loginContextName = JAAS_AUTH_LOGIN_CONTEXT;
         }
         return loginContextName;
-    }
-
-    private boolean useCredentialsTransmission(final APISession apiSession) {
-        return PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).useCredentialsTransmission();
     }
 
 }
