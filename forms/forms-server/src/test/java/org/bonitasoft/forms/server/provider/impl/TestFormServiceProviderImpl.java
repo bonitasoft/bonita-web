@@ -27,7 +27,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
@@ -148,7 +147,6 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         final Map<String, Object> urlContext = new HashMap<String, Object>();
         urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
         final User user = new User(getSession().getUserName(), Locale.ENGLISH.toString());
-        user.setUseCredentialTransmission(PropertiesFactory.getSecurityProperties(getSession().getTenantId()).useCredentialsTransmission());
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.USER, user);
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);

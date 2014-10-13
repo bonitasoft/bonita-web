@@ -43,11 +43,6 @@ public class SecurityProperties {
     public static final String SECURITY_DEFAULT_CONFIG_FILE_NAME = "security-config.properties";
 
     /**
-     * property for the credentials transmission mechanism activation
-     */
-    public static final String CREDENTIALS_TRANSMISSION_PROPERTY = "forms.application.credentials.transmission";
-
-    /**
      * property for the robustness of the password
      */
     public static final String PASSWORD_VALIDATOR_CLASSNAME = "security.password.validator";
@@ -270,18 +265,6 @@ public class SecurityProperties {
                 return pathname.isDirectory();
             }
         });
-    }
-
-    /**
-     * @return the credential transmission property
-     */
-    public boolean useCredentialsTransmission() {
-        final String useCredentialsTransmission = defaultProperties.getProperty(CREDENTIALS_TRANSMISSION_PROPERTY);
-        try {
-            return Boolean.parseBoolean(useCredentialsTransmission);
-        } catch (final Exception e) {
-            return false;
-        }
     }
 
     /**

@@ -90,30 +90,22 @@ public class User implements Serializable {
     }
 
     public void setFeatures(final List<String> featureList) {
-        this.availableFeatures = featureList;
+        availableFeatures = featureList;
     }
 
     /**
      * @return the userUUID
      */
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     public String getLocale() {
-        return this.locale;
+        return locale;
     }
 
     public long getTenantId() {
-        return this.tenantId;
-    }
-
-    public void setUseCredentialTransmission(final boolean useCredentialTransmission) {
-        this.useCredentialTransmission = useCredentialTransmission;
-    }
-
-    public boolean useCredentialTransmission() {
-        return this.useCredentialTransmission;
+        return tenantId;
     }
 
     private void setUsername(final String username) {
@@ -129,7 +121,7 @@ public class User implements Serializable {
     }
 
     public boolean isAutoLogin() {
-        return this.isAutoLogin;
+        return isAutoLogin;
     }
 
     public void setAutoLogin(final boolean isAutoLogin) {
@@ -137,7 +129,7 @@ public class User implements Serializable {
     }
 
     public boolean isAnonymous() {
-        return this.isAnonymous;
+        return isAnonymous;
     }
 
     public void setAnonymous(final boolean isAnonymous) {
@@ -149,18 +141,17 @@ public class User implements Serializable {
      */
     public void update(final User userProfile) {
         setLocale(userProfile.getLocale());
-        setUseCredentialTransmission(userProfile.useCredentialTransmission());
         setUsername(userProfile.getUsername());
         setFeatures(userProfile.getFeatures());
     }
 
-    public void addFeature(String feature) {
-        if (this.availableFeatures != null) {
-            this.availableFeatures.add(feature);
+    public void addFeature(final String feature) {
+        if (availableFeatures != null) {
+            availableFeatures.add(feature);
         }
     }
 
     public List<String> getFeatures() {
-        return this.availableFeatures;
+        return availableFeatures;
     }
 }

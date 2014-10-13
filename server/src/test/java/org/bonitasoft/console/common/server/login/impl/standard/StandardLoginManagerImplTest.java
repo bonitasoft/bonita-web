@@ -1,7 +1,8 @@
 package org.bonitasoft.console.common.server.login.impl.standard;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,33 +33,32 @@ public class StandardLoginManagerImplTest {
     @Before
     public void setUp() throws Exception {
         doReturn(userLogger).when(standardLoginManagerImpl).getUserLogger();
-        doReturn(true).when(standardLoginManagerImpl).useCredentialsTransmission(apiSession);
         when(request.getContextPath()).thenReturn("bonita");
     }
 
     @Test
     public void testGetSimpleLoginpageURL() throws Exception {
-        long tenantId = 1;
-        String redirectUrl = "%2Fportal%2Fhomepage";
-        String loginURL = standardLoginManagerImpl.getLoginpageURL(request, tenantId, redirectUrl);
+        final long tenantId = 1;
+        final String redirectUrl = "%2Fportal%2Fhomepage";
+        final String loginURL = standardLoginManagerImpl.getLoginpageURL(request, tenantId, redirectUrl);
         assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
     }
 
     @Test
     public void testGetLoginpageURLFromPortal() throws Exception {
-        long tenantId = 1;
-        String redirectUrl = "%2Fportal%2Fhomepage";
+        final long tenantId = 1;
+        final String redirectUrl = "%2Fportal%2Fhomepage";
         when(request.getServletPath()).thenReturn("/portal/");
-        String loginURL = standardLoginManagerImpl.getLoginpageURL(request, tenantId, redirectUrl);
+        final String loginURL = standardLoginManagerImpl.getLoginpageURL(request, tenantId, redirectUrl);
         assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
     }
 
     @Test
     public void testGetLoginpageURLFromMobile() throws Exception {
-        long tenantId = 1;
-        String redirectUrl = "%2Fmobile%2F";
+        final long tenantId = 1;
+        final String redirectUrl = "%2Fmobile%2F";
         when(request.getServletPath()).thenReturn("/mobile/#login");
-        String loginURL = standardLoginManagerImpl.getLoginpageURL(request, tenantId, redirectUrl);
+        final String loginURL = standardLoginManagerImpl.getLoginpageURL(request, tenantId, redirectUrl);
         assertThat(loginURL).isEqualToIgnoringCase("bonita/mobile/login.jsp?tenant=1&redirectUrl=%2Fmobile%2F");
     }
 
