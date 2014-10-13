@@ -47,11 +47,6 @@ public class User implements Serializable {
     private long tenantId;
 
     /**
-     * Indicates whether the credential transmission mechanism should be used
-     */
-    private boolean useCredentialTransmission;
-
-    /**
      * Indicates whether this user correspond to an auto login account
      */
     private boolean isAutoLogin;
