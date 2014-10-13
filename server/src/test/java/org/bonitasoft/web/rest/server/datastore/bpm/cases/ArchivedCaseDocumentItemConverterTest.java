@@ -33,7 +33,6 @@ public class ArchivedCaseDocumentItemConverterTest extends APITestWithMock {
         when(engineItem.getContentStorageId()).thenReturn("1");
         when(engineItem.getUrl()).thenReturn("http://url.com?test=d");
         when(engineItem.getSourceObjectId()).thenReturn(1l);
-        when(engineItem.getArchiveDate()).thenReturn(new Date());
 
         // When
         final ArchivedCaseDocumentItem documentItem = documentItemConverter.convert(engineItem);
@@ -50,7 +49,6 @@ public class ArchivedCaseDocumentItemConverterTest extends APITestWithMock {
         assertTrue(documentItem.getStorageId().equals("1"));
         assertTrue(documentItem.getURL().equals("http://url.com?test=d"));
         assertTrue(documentItem.getSourceObjectId().equals(1l));
-        assertTrue(documentItem.getCreationDate().equals(engineItem.getArchiveDate()));
 
     }
 
