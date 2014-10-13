@@ -114,6 +114,12 @@
             <version>4.0.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -286,6 +292,11 @@
                                         <artifactItem>
                                             <groupId>org.tuckey</groupId>
                                             <artifactId>urlrewritefilter</artifactId>
+                                            <outputDirectory>${basedir}/target/console-server-${project.version}/WEB-INF/lib</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>commons-httpclient</groupId>
+                                            <artifactId>commons-httpclient</artifactId>
                                             <outputDirectory>${basedir}/target/console-server-${project.version}/WEB-INF/lib</outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
