@@ -1,9 +1,12 @@
 {
-	"complexInputs":[],
-    "simpleInputs":[
-        {"description":"aDescription","name":"anInput","type":"TEXT", "multiple":false}
-    ],
 	"constraints":[
-		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}
+		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[],"constraintType":"CUSTOM"}
+	],
+	"inputs":[
+	{"description":"description","name":"complexInput","multiple":false,"simpleInputs":[
+			{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT"}
+		],"complexInputs":[]}],
+	"simpleInputs":[
+		{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT"}
 	]
 }

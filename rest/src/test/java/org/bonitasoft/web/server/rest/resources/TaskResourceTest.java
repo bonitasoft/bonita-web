@@ -40,6 +40,7 @@ import jersey.repackaged.com.google.common.collect.ImmutableMap.Builder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.ComplexInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ConstraintDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
@@ -60,7 +61,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
     }
 
     private Entity<Map<String, Object>> someJson() {
-        Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = new HashMap<String, Object>();
         map.put("key", "value");
         return json(map);
     }
@@ -72,7 +73,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
                 .put("a_complex_type", aMap()
                         .put("aBoolean", false)
                         .put("aNumber", 2).build())
-                .build();
+                        .build();
     }
 
     private Builder<String, Object> aMap() {
@@ -81,13 +82,20 @@ public class TaskResourceTest extends BonitaJerseyTest {
 
     @Test
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
-        ContractDefinitionImpl contract = new ContractDefinitionImpl();
+        //given
+        final ContractDefinitionImpl contract = new ContractDefinitionImpl();
         contract.addSimpleInput(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
+        final ComplexInputDefinitionImpl complexInputDefinitionImpl = new ComplexInputDefinitionImpl("complexInput", "description");
+        complexInputDefinitionImpl.getSimpleInputs().add(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
+        contract.addComplexInput(complexInputDefinitionImpl);
         contract.addConstraint(new ConstraintDefinitionImpl("aRule", "an expression", "an explanation"));
+
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
 
-        Response response = target("tasks/2/contract").request().get();
+        //when
+        final Response response = target("tasks/2/contract").request().get();
 
+        //then
         assertThat(response).hasStatus(OK);
         assertThat(response).hasJsonBodyEqual(readFile("contract.json"));
     }
@@ -96,14 +104,14 @@ public class TaskResourceTest extends BonitaJerseyTest {
     public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
         when(processAPI.getUserTaskContract(2L)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
 
-        Response response = target("tasks/2/contract").request().get();
+        final Response response = target("tasks/2/contract").request().get();
 
         assertThat(response).hasStatus(NOT_FOUND);
     }
 
     @Test
     public void should_execute_a_task_with_given_inputs() throws Exception {
-        Map<String, Object> expectedComplexInput = aComplexInput();
+        final Map<String, Object> expectedComplexInput = aComplexInput();
 
         target("tasks/2/execute").request().post(Entity.json(expectedComplexInput));
 
@@ -113,9 +121,9 @@ public class TaskResourceTest extends BonitaJerseyTest {
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
-                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
+        .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
 
-        Response response = target("tasks/2/execute").request().post(someJson());
+        final Response response = target("tasks/2/execute").request().post(someJson());
 
         assertThat(response).hasStatus(BAD_REQUEST);
     }
@@ -123,9 +131,9 @@ public class TaskResourceTest extends BonitaJerseyTest {
     @Test
     public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
         doThrow(new FlowNodeExecutionException("aMessage"))
-                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
+        .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
 
-        Response response = target("tasks/2/execute").request().post(someJson());
+        final Response response = target("tasks/2/execute").request().post(someJson());
 
         assertThat(response).hasStatus(INTERNAL_SERVER_ERROR);
     }
@@ -133,7 +141,7 @@ public class TaskResourceTest extends BonitaJerseyTest {
     @Test
     public void should_respond_400_Bad_request_when_trying_to_execute_with_not_json_payload() throws Exception {
 
-        Response response = target("tasks/2/execute").request().post(json("not json"));
+        final Response response = target("tasks/2/execute").request().post(json("not json"));
 
         assertThat(response).hasStatus(BAD_REQUEST);
     }
@@ -141,9 +149,9 @@ public class TaskResourceTest extends BonitaJerseyTest {
     @Test
     public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
         doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
-            .executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
+        .executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
 
-        Response response = target("tasks/2/execute").request().post(someJson());
+        final Response response = target("tasks/2/execute").request().post(someJson());
 
         assertThat(response).hasStatus(NOT_FOUND);
     }
