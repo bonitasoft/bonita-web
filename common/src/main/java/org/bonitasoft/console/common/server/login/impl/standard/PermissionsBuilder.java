@@ -105,15 +105,29 @@ public class PermissionsBuilder {
     }
 
     protected List<String> getCustomProfilePermissions(final CustomPermissionsMapping customPermissionsMapping, final Profile profile) {
-        return customPermissionsMapping.getPropertyAsList("profile|" + profile.getName());
+        return getCustomPermissions(customPermissionsMapping, "profile|", profile.getName());
+    }
+
+    protected List<String> getCustomUserPermissions(final CustomPermissionsMapping customPermissionsMapping) {
+        return getCustomPermissions(customPermissionsMapping, "user|", session.getUserName());
+    }
+
+    protected List<String> getCustomPermissions(final CustomPermissionsMapping customPermissionsMapping, final String prefix, final String identifier) {
+        final List<String> profileSinglePermissions = new ArrayList<String>();
+        final List<String> profilePermissions = customPermissionsMapping.getPropertyAsList(prefix + identifier);
+        for (final String profilePermission : profilePermissions) {
+            final List<String> simplePermissions = getCompoundPermissions(getCompoundPermissionsMapping(), profilePermission);
+            if (!simplePermissions.isEmpty()) {
+                profileSinglePermissions.addAll(simplePermissions);
+            } else {
+                profileSinglePermissions.add(profilePermission);
+            }
+        }
+        return profileSinglePermissions;
     }
 
     protected List<String> getCompoundPermissions(final CompoundPermissionsMapping compoundPermissionsMapping, final String compoundName) {
         return compoundPermissionsMapping.getPropertyAsList(compoundName);
-    }
-
-    protected List<String> getCustomUserPermissions(final CustomPermissionsMapping customPermissionsMapping) {
-        return customPermissionsMapping.getPropertyAsList("user|" + session.getUserName());
     }
 
     protected ProfileAPI getProfileAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
