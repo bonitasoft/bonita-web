@@ -15,6 +15,7 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
@@ -116,7 +117,7 @@ public class PermissionsBuilder {
     }
 
     protected List<Profile> getProfilesForUser(final ProfileAPI profileAPI, final int profilesIndex) {
-        return profileAPI.getProfilesForUser(session.getId(), profilesIndex, MAX_ELEMENTS_RETRIEVED, null);
+        return profileAPI.getProfilesForUser(session.getId(), profilesIndex, MAX_ELEMENTS_RETRIEVED, ProfileCriterion.ID_ASC);
     }
 
     protected List<ProfileEntry> getProfileEntriesForProfile(final ProfileAPI profileAPI, final Profile profile, final int entriesIndex) throws SearchException {
