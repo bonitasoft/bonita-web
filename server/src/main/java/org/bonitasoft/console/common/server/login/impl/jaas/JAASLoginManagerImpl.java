@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,16 +29,17 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
+import org.bonitasoft.console.common.server.login.impl.standard.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 
 /**
- * 
+ *
  * Login manager imlement by JAAS
- * 
+ *
  * @author Vincent Elcrin
- * 
+ *
  */
 public class JAASLoginManagerImpl implements LoginManager {
 
@@ -90,7 +91,8 @@ public class JAASLoginManagerImpl implements LoginManager {
         }
         final User user = new User(request.getUsername(), local);
         final APISession apiSession = getUserLogger().doLogin(credentials);
-        SessionUtil.sessionLogin(user, apiSession, request.getHttpSession());
+        final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(apiSession);
+        SessionUtil.sessionLogin(user, apiSession, permissionsBuilder.getPermissions(), request.getHttpSession());
     }
 
     private ConsoleCallbackHandler createConsoleCallbackHandler(final HttpServletRequestAccessor request, final String tenantId) {

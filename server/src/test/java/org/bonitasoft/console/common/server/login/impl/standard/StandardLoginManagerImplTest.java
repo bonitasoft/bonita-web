@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
-import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,9 +22,6 @@ public class StandardLoginManagerImplTest {
 
     @Mock
     UserLogger userLogger;
-
-    @Mock
-    APISession apiSession;
 
     @Mock
     HttpServletRequest request;

@@ -23,6 +23,7 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
+import org.bonitasoft.console.common.server.login.impl.standard.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
@@ -31,7 +32,7 @@ import org.scribe.model.Token;
 
 /**
  * @author Ruiheng Fan, Chong Zhao
- * 
+ *
  */
 public class OAuthLoginManagerImpl implements LoginManager {
 
@@ -62,7 +63,8 @@ public class OAuthLoginManagerImpl implements LoginManager {
         }
         final User user = new User(getOAuthUserId(request, tenantId), local);
         final APISession apiSession = getUserLogger().doLogin(credentials);
-        SessionUtil.sessionLogin(user, apiSession, request.getHttpSession());
+        final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(apiSession);
+        SessionUtil.sessionLogin(user, apiSession, permissionsBuilder.getPermissions(), request.getHttpSession());
     }
 
     /**

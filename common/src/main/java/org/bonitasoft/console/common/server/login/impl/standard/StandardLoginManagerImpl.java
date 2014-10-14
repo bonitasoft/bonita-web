@@ -27,7 +27,7 @@ import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Chong Zhao
- * 
+ *
  */
 public class StandardLoginManagerImpl implements LoginManager {
 
@@ -56,11 +56,11 @@ public class StandardLoginManagerImpl implements LoginManager {
         }
         final User user = new User(request.getUsername(), local);
         final APISession session = getUserLogger().doLogin(credentials);
-        SessionUtil.sessionLogin(user, session, request.getHttpSession());
+        final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(session);
+        SessionUtil.sessionLogin(user, session, permissionsBuilder.getPermissions(), request.getHttpSession());
     }
 
     protected UserLogger getUserLogger() {
         return new UserLogger();
     }
-
 }
