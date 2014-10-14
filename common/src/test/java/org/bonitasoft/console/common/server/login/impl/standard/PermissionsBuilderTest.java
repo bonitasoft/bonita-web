@@ -58,7 +58,7 @@ public class PermissionsBuilderTest {
 
         final List<String> permissions = permissionsBuilder.getPermissions();
 
-        Assert.assertEquals(0, permissions.size());
+        Assert.assertEquals("No permissions should have been returned", 0, permissions.size());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class PermissionsBuilderTest {
 
         final List<String> permissions = permissionsBuilder.getPermissions();
 
-        Assert.assertEquals(3600, permissions.size());
+        Assert.assertEquals("60 x 60 permissions should have been returned", 3600, permissions.size());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class PermissionsBuilderTest {
 
         final List<String> permissions = permissionsBuilder.getPermissions();
 
-        Assert.assertEquals(3661, permissions.size());
+        Assert.assertEquals("60 x 60 + 60 + 1 permissions should have been returned", permissions.size());
     }
 
     protected List<String> getFakePermissionsList() {
