@@ -2,7 +2,7 @@
 	"constraints":[
 		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[],"constraintType":"CUSTOM"}
 	],
-	"inputs":[
+	"complexInputs":[
 	{"description":"description","name":"complexInput","multiple":false,"simpleInputs":[
 			{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT"}
 		],"complexInputs":[]}],
