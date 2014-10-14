@@ -102,7 +102,7 @@ import org.w3c.dom.Document;
 
 /**
  * Implementation of FormServiceProvider based on Bonita execution engine
- * 
+ *
  * @author QiXiang Zhang, Anthony Birembaut, Haojie Yuan, Vincent Elcrin, Julien Mege, Celine Souchet
  */
 public class FormServiceProviderImpl implements FormServiceProvider {
@@ -1092,9 +1092,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 } else if (String.class.getName().equals(modifier)) {
                     convertedObj = valueAsString;
                 } else {
-                    final String message = "Type " + modifier + " is not handled.";
-                    if (getLogger().isLoggable(Level.WARNING)) {
-                        getLogger().log(Level.WARNING, message, context);
+                    final String message = "Type " + modifier + " is not handled by this method.";
+                    if (getLogger().isLoggable(Level.FINE)) {
+                        getLogger().log(Level.FINE, message, context);
                     }
                 }
             } catch (final IllegalArgumentException e) {
@@ -1672,7 +1672,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             InvalidSessionException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         IApplicationFormDefAccessor formDefAccessor = null;
-        long processDefinitionID = getProcessDefinitionID(context);
+        final long processDefinitionID = getProcessDefinitionID(context);
         final Map<String, Object> urlContext = getUrlContext(context);
         long activityInstanceID = -1;
         if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
@@ -1768,54 +1768,70 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - start", context);
         }
-        String documentValue = null;
-        String valueType = null;
+
+        FormFieldValue formFieldValue = null;
         String documentName = null;
-        long documentId = -1;
         if (value != null) {
-            documentName = (String) value;
-            try {
-                try {
-                    final Expression documentExpression = new Expression(null, documentName, ExpressionType.TYPE_DOCUMENT.name(),
-                            org.bonitasoft.engine.bpm.document.Document.class.getName(), null, null);
-                    final Serializable evaluationResult = resolveExpression(documentExpression, context);
-                    final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult;
-                    if (document != null) {
-                        if (document.hasContent()) {
-                            documentValue = document.getContentFileName();
-                            valueType = File.class.getName();
-                        } else {
-                            documentValue = document.getUrl();
-                            valueType = String.class.getName();
-                        }
-                        documentId = document.getId();
-                        documentName = document.getName();
-                        if (getLogger().isLoggable(Level.FINE)) {
-                            getLogger().log(Level.FINE, "Document " + documentId + " retrieved with value: " + documentValue, context);
-                        }
-                    }
-                } catch (final FormNotFoundException e) {
-                    final String message = "Error while trying to retrieve the document " + documentName;
-                    logSevereWithContext(message, e, context);
-                    throw new IllegalArgumentException(message);
-                }
-            } catch (final ClassCastException e) {
-                final String message = "Error while setting the initial value of a file widget. A Document name is expected as initial value.";
-                logSevereWithContext(message, e, context);
-                throw new IllegalArgumentException(message);
+            if (value instanceof org.bonitasoft.engine.bpm.document.Document) {
+            	final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) value;
+                formFieldValue = convertDocumentToFromFieldValue(document, context);
+            } else {
+                documentName = (String) value;
+	            try {
+	                try {
+	                    final Expression documentExpression = new Expression(null, documentName, ExpressionType.TYPE_DOCUMENT.name(),
+	                            org.bonitasoft.engine.bpm.document.Document.class.getName(), null, null);
+	                    final Serializable evaluationResult = resolveExpression(documentExpression, context);
+	                    final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult;
+	                    if (document != null) {
+                            formFieldValue = convertDocumentToFromFieldValue(document, context);
+	                    }
+	                } catch (final FormNotFoundException e) {
+	                    final String message = "Error while trying to retrieve the document " + documentName;
+	                    logSevereWithContext(message, e, context);
+	                    throw new IllegalArgumentException(message);
+	                }
+	            } catch (final ClassCastException e) {
+	                final String message = "Error while setting the initial value of a file widget. A Document name is expected as initial value.";
+	                logSevereWithContext(message, e, context);
+	                throw new IllegalArgumentException(message);
+	            }
             }
         }
-        final FormFieldValue formFieldValue = new FormFieldValue(documentValue, valueType);
-        formFieldValue.setDocumentId(documentId);
-        formFieldValue.setDocumentName(documentName);
-        formFieldValue.setDocument(true);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - getAttachmentFormFieldValue - end", context);
         }
+        if (formFieldValue == null) {
+            formFieldValue = new FormFieldValue();
+            formFieldValue.setDocumentName(documentName);
+            formFieldValue.setDocumentId(-1);
+            formFieldValue.setDocument(true);
+        }
         return formFieldValue;
 
     }
+
+    protected FormFieldValue convertDocumentToFromFieldValue(final org.bonitasoft.engine.bpm.document.Document document, final Map<String, Object> context) {
+		FormFieldValue formFieldValue;
+		String documentValue = null;
+		String valueType = null;
+		if (document.hasContent()) {
+		    documentValue = document.getContentFileName();
+		    valueType = File.class.getName();
+		} else {
+		    documentValue = document.getUrl();
+		    valueType = String.class.getName();
+		}
+		if (getLogger().isLoggable(Level.FINE)) {
+            getLogger().log(Level.FINE, "Document " + document.getId() + " retrieved with value: " + documentValue, context);
+		}
+		formFieldValue = new FormFieldValue(documentValue, valueType);
+		formFieldValue.setDocumentId(document.getId());
+		formFieldValue.setDocumentName(document.getName());
+		formFieldValue.setDocument(true);
+		return formFieldValue;
+	}
 
     /**
      * {@inheritDoc}
