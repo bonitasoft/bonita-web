@@ -10,6 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Request;
@@ -78,11 +79,11 @@ public class BonitaRestletAPIServlet extends Application {
      */
     @Override
     public synchronized Restlet createInboundRoot() {
-
         final Context context = getContext();
         final Router router = new Router(context);
 
         router.attach("/bpm/taskVariable", TaskVariableResource.class);
+        router.attach("/bpm/timerEventTrigger", TimerEventTriggerResource.class);
         return router;
     }
 
