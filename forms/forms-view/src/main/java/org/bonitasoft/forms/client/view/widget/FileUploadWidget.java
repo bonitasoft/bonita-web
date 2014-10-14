@@ -104,6 +104,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
     protected FileWidgetInputType fileWidgetInputType;
 
+    protected boolean isInitialContentFile;
+
     /**
      * Constructor
      *
@@ -128,7 +130,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         } else {
             fileUploadFormName = fieldId;
         }
-
+        isInitialContentFile = SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType);
         flowPanel = new FlowPanel();
 
         if (FileWidgetInputType.ALL.equals(this.fileWidgetInputType)) {
@@ -138,7 +140,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             availableValues.add(new ReducedFormFieldAvailableValue("URL", URL_DOCUMENT_TYPE));
             availableValues.add(new ReducedFormFieldAvailableValue("File", FILE_DOCUMENT_TYPE));
             final String initialRadioButton;
-            if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
+            if (isInitialContentFile) {
                 initialRadioButton = FILE_DOCUMENT_TYPE;
             } else {
                 initialRadioButton = URL_DOCUMENT_TYPE;
@@ -151,6 +153,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             clearFloatPanel.setStyleName("bonita_clear_float");
             flowPanel.add(clearFloatPanel);
         }
+        checkInputType(fileWidgetInputType);
 
         if (!FileWidgetInputType.URL.equals(fileWidgetInputType)) {
             createFileUploadForm(fileUploadFormName);
@@ -183,7 +186,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             buttonPanel.addStyleName("bonita_upload_button_group");
 
             loadingImage.setVisible(false);
-            if (value != null && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
+            if (value != null && isInitialContentFile) {
                 fileDownloadWidget.setFileName(value);
                 formPanel.setVisible(false);
             } else {
@@ -241,7 +244,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
         if (!FileWidgetInputType.FILE.equals(fileWidgetInputType)) {
             urlTextBox = new TextBox();
-            if (value != null && SupportedFieldTypes.JAVA_STRING_CLASSNAME.equals(valueType)) {
+            if (value != null && !isInitialContentFile) {
                 urlTextBox.setValue(value);
             }
             flowPanel.add(urlTextBox);
@@ -260,6 +263,14 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         initWidget(flowPanel);
     }
 
+    protected void checkInputType(final FileWidgetInputType fileWidgetInputType) {
+        if (FileWidgetInputType.URL.equals(fileWidgetInputType) && isInitialContentFile) {
+            flowPanel.add(new Label(FormsResourceBundle.getErrors().wrongContentOfTypeFileError()));
+        } else if (FileWidgetInputType.FILE.equals(fileWidgetInputType) && !isInitialContentFile) {
+            flowPanel.add(new Label(FormsResourceBundle.getErrors().wrongContentOfTypeURLError()));
+        }
+    }
+
     protected void createFileUploadForm(final String FileUloadName) {
 
         formPanel = new FormPanel();
@@ -276,7 +287,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         fileUpload.addChangeHandler(new ChangeHandler() {
 
             @Override
-            public void onChange(ChangeEvent event) {
+            public void onChange(final ChangeEvent event) {
                 formPanel.submit();
             }
         });
@@ -348,8 +359,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
          * But GWT is converting plain text in html element (pre).
          * Need to do this hack to get real servlet response
          */
-        private String getPlainTextResult(SubmitCompleteEvent event) {
-            Element label = DOM.createLabel();
+        private String getPlainTextResult(final SubmitCompleteEvent event) {
+            final Element label = DOM.createLabel();
             label.setInnerHTML(event.getResults());
             return label.getInnerText();
         }
