@@ -81,7 +81,7 @@ public class PermissionsBuilderTest {
         doReturn(new ArrayList<String>()).when(permissionsBuilder).getCustomUserPermissions(customPermissionsMapping);
         doReturn(new ArrayList<String>()).when(permissionsBuilder).getCustomProfilePermissions(Matchers.same(customPermissionsMapping),
                 Matchers.any(Profile.class));
-        final List<String> permissionsList = getFakePermissionsList();
+        final List<String> permissionsList = getSingleValueFakePermissionsList();
         doReturn(permissionsList).when(permissionsBuilder).getCompoundPermissions(Matchers.same(compoundPermissionsMapping), Matchers.anyString());
 
         final List<String> permissions = permissionsBuilder.getPermissions();
@@ -106,18 +106,39 @@ public class PermissionsBuilderTest {
         doReturn(fillInProfileEntriesList(50, 10)).when(permissionsBuilder).getProfileEntriesForProfile(Matchers.any(ProfileAPI.class),
                 Matchers.any(Profile.class),
                 Matchers.eq(50));
-        doReturn(getFakePermissionsList()).when(permissionsBuilder).getCustomUserPermissions(customPermissionsMapping);
-        doReturn(getFakePermissionsList()).when(permissionsBuilder).getCustomProfilePermissions(Matchers.same(customPermissionsMapping),
+        doReturn(getSingleValueFakePermissionsList()).when(permissionsBuilder).getCustomUserPermissions(customPermissionsMapping);
+        doReturn(getSingleValueFakePermissionsList()).when(permissionsBuilder).getCustomProfilePermissions(Matchers.same(customPermissionsMapping),
                 Matchers.any(Profile.class));
-        doReturn(getFakePermissionsList()).when(permissionsBuilder).getCompoundPermissions(Matchers.same(compoundPermissionsMapping), Matchers.anyString());
+        doReturn(getSingleValueFakePermissionsList()).when(permissionsBuilder).getCompoundPermissions(Matchers.same(compoundPermissionsMapping), Matchers.anyString());
 
         final List<String> permissions = permissionsBuilder.getPermissions();
 
         Assert.assertEquals("60 x 60 + 60 + 1 permissions should have been returned", 3661, permissions.size());
     }
 
-    protected List<String> getFakePermissionsList() {
+    @Test
+    public void should_getCustomPermissions_work_with_compound_permissions() throws Exception {
+
+        doReturn(compoundPermissionsMapping).when(permissionsBuilder).getCompoundPermissionsMapping();
+        doReturn(getSingleValueFakePermissionsList()).when(permissionsBuilder).getCustomPermissionsRaw(Matchers.same(customPermissionsMapping), Matchers.anyString());
+        doReturn(getDoubleValueFakePermissionsList()).when(permissionsBuilder).getCompoundPermissions(Matchers.same(compoundPermissionsMapping),
+                Matchers.anyString());
+
+        final List<String> permissions = permissionsBuilder.getCustomPermissions(customPermissionsMapping, "user|", "myUser");
+
+        Assert.assertEquals("2 permissions should have been returned", 2, permissions.size());
+
+    }
+
+    protected List<String> getSingleValueFakePermissionsList() {
         final List<String> fakePermissionsList = new ArrayList<String>();
+        fakePermissionsList.add(UUID.randomUUID().toString());
+        return fakePermissionsList;
+    }
+
+    protected List<String> getDoubleValueFakePermissionsList() {
+        final List<String> fakePermissionsList = new ArrayList<String>();
+        fakePermissionsList.add(UUID.randomUUID().toString());
         fakePermissionsList.add(UUID.randomUUID().toString());
         return fakePermissionsList;
     }

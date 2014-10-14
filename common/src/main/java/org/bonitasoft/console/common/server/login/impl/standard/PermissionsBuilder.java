@@ -114,7 +114,7 @@ public class PermissionsBuilder {
 
     protected List<String> getCustomPermissions(final CustomPermissionsMapping customPermissionsMapping, final String prefix, final String identifier) {
         final List<String> profileSinglePermissions = new ArrayList<String>();
-        final List<String> profilePermissions = customPermissionsMapping.getPropertyAsList(prefix + identifier);
+        final List<String> profilePermissions = getCustomPermissionsRaw(customPermissionsMapping, prefix + identifier);
         for (final String profilePermission : profilePermissions) {
             final List<String> simplePermissions = getCompoundPermissions(getCompoundPermissionsMapping(), profilePermission);
             if (!simplePermissions.isEmpty()) {
@@ -124,6 +124,10 @@ public class PermissionsBuilder {
             }
         }
         return profileSinglePermissions;
+    }
+
+    protected List<String> getCustomPermissionsRaw(final CustomPermissionsMapping customPermissionsMapping, final String key) {
+        return customPermissionsMapping.getPropertyAsList(key);
     }
 
     protected List<String> getCompoundPermissions(final CompoundPermissionsMapping compoundPermissionsMapping, final String compoundName) {
