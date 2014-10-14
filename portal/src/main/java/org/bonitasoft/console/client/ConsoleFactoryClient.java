@@ -1,6 +1,7 @@
 package org.bonitasoft.console.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +114,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
 
-        if (angularViewsMap.containsKey(token)) {
+        if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), currentUserAccessRights)) {
             return new AngularIFrameView(token, "#" + angularViewsMap.get(token) + History.getToken());
         }
 
