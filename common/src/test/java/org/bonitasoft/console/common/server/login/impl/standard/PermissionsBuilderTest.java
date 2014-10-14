@@ -89,6 +89,33 @@ public class PermissionsBuilderTest {
         Assert.assertEquals(3600, permissions.size());
     }
 
+    @Test
+    public void should_getPermissions_work_with_profile_and_user_permissions() throws Exception {
+
+        doReturn("myUser").when(apiSession).getUserName();
+        doReturn(1l).when(apiSession).getTenantId();
+        doReturn(true).when(permissionsBuilder).isAuthorizationsChecksEnabled();
+        doReturn(customPermissionsMapping).when(permissionsBuilder).getCustomPermissionsMapping();
+        doReturn(compoundPermissionsMapping).when(permissionsBuilder).getCompoundPermissionsMapping();
+        doReturn(profileAPI).when(permissionsBuilder).getProfileAPI();
+        doReturn(fillInProfilesList(0, 50)).when(permissionsBuilder).getProfilesForUser(profileAPI, 0);
+        doReturn(fillInProfilesList(50, 10)).when(permissionsBuilder).getProfilesForUser(profileAPI, 50);
+        doReturn(fillInProfileEntriesList(0, 50)).when(permissionsBuilder).getProfileEntriesForProfile(Matchers.any(ProfileAPI.class),
+                Matchers.any(Profile.class),
+                Matchers.eq(0));
+        doReturn(fillInProfileEntriesList(50, 10)).when(permissionsBuilder).getProfileEntriesForProfile(Matchers.any(ProfileAPI.class),
+                Matchers.any(Profile.class),
+                Matchers.eq(50));
+        doReturn(getFakePermissionsList()).when(permissionsBuilder).getCustomUserPermissions(customPermissionsMapping);
+        doReturn(getFakePermissionsList()).when(permissionsBuilder).getCustomProfilePermissions(Matchers.same(customPermissionsMapping),
+                Matchers.any(Profile.class));
+        doReturn(getFakePermissionsList()).when(permissionsBuilder).getCompoundPermissions(Matchers.same(compoundPermissionsMapping), Matchers.anyString());
+
+        final List<String> permissions = permissionsBuilder.getPermissions();
+
+        Assert.assertEquals(3661, permissions.size());
+    }
+
     protected List<String> getFakePermissionsList() {
         final List<String> fakePermissionsList = new ArrayList<String>();
         fakePermissionsList.add(UUID.randomUUID().toString());
