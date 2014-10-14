@@ -25,7 +25,7 @@ import org.bonitasoft.engine.session.APISession;
 
 public class PermissionsBuilder {
 
-    private static final int MAX_ELEMENTS_RETRIEVED = 200;
+    private static final int MAX_ELEMENTS_RETRIEVED = 50;
 
     private final APISession session;
 
@@ -66,7 +66,7 @@ public class PermissionsBuilder {
         }
         final CompoundPermissionsMapping compoundPermissionsMapping = getCompoundPermissionsMapping();
         for (final String pageToken : pageTokens) {
-            permissions.addAll(compoundPermissionsMapping.getPropertyAsList(pageToken));
+            permissions.addAll(getCompoundPermissions(compoundPermissionsMapping, pageToken));
         }
         return permissions;
     }
@@ -106,6 +106,10 @@ public class PermissionsBuilder {
 
     protected List<String> getCustomProfilePermissions(final CustomPermissionsMapping customPermissionsMapping, final Profile profile) {
         return customPermissionsMapping.getPropertyAsList("profile|" + profile.getName());
+    }
+
+    protected List<String> getCompoundPermissions(final CompoundPermissionsMapping compoundPermissionsMapping, final String compoundName) {
+        return compoundPermissionsMapping.getPropertyAsList(compoundName);
     }
 
     protected List<String> getCustomUserPermissions(final CustomPermissionsMapping customPermissionsMapping) {
