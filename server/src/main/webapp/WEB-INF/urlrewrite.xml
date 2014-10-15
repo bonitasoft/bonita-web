@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN" "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite>
+
+<!--     <rule> -->
+<!--         <from>^/API/system/session(.*)</from> -->
+<!--         <to>/APIv1/system/session$1</to> -->
+<!--     </rule> -->
+    
+    <rule>
+        <from>^/API/(system|userXP|portal|identity|customuserinfo)(.*)</from>
+        <to>/APIv1/$1$2</to>
+    </rule>
+
+</urlrewrite>
