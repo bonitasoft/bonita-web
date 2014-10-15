@@ -82,7 +82,8 @@ abstract public class QueuableRequest {
             if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
                 request.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));
             }
-            request.setHeader("Current-Page", ViewController.getInstance().getCurrentPageToken());
+            String currentPageToken = ViewController.getInstance().getCurrentPageToken();
+            request.setHeader("Current-Page", currentPageToken == null ? "unknown" : currentPageToken);
             request.send();
         } catch (final RequestException e) {
             localCallback.onError(e.getMessage(), null);

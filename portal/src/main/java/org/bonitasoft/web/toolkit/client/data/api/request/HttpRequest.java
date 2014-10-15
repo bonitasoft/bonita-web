@@ -38,9 +38,9 @@ public class HttpRequest {
      * Send a GET HTTP request
      *
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      */
     public void send(final String url, final HttpCallback callback) {
         this.send(RequestBuilder.GET, url, null, null, callback);
@@ -50,11 +50,11 @@ public class HttpRequest {
      * Send a POST HTTP request
      *
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param datas
-     *            The data to send
+     *        The data to send
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      */
     public void send(final String url, final String datas, final HttpCallback callback) {
         this.send(RequestBuilder.POST, url, datas, null, callback);
@@ -64,11 +64,11 @@ public class HttpRequest {
      * Send the HTTP request
      *
      * @param method
-     *            The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
+     *        The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      */
     public void send(final Method method, final String url, final HttpCallback callback) {
         this.send(method, url, null, null, callback);
@@ -78,13 +78,13 @@ public class HttpRequest {
      * Send the HTTP request with data
      *
      * @param method
-     *            The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
+     *        The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      * @param datas
-     *            The data to send
+     *        The data to send
      */
     public void send(final Method method, final String url, final String datas, final String contentType, final HttpCallback callback) {
         final RequestBuilder builder = new RequestBuilder(method, url);
@@ -99,7 +99,8 @@ public class HttpRequest {
             builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));
         }
 
-        builder.setHeader("Current-Page", ViewController.getInstance().getCurrentPageToken());
+        String currentPageToken = ViewController.getInstance().getCurrentPageToken();
+        builder.setHeader("Current-Page", currentPageToken == null ? "unknown" : currentPageToken);
 
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);
