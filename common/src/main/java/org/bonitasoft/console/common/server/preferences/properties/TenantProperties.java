@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -162,7 +163,7 @@ public class TenantProperties {
             }
             return propertiesList;
         } else {
-            return null;
+            return Collections.emptyList();
         }
     }
 }
