@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-13 05:03+0200\n"
-"PO-Revision-Date: 2014-10-13 10:44-0400\n"
+"PO-Revision-Date: 2014-10-14 09:54-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -3090,7 +3090,7 @@ msgstr "Páginas Personalizadas"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
 msgid "Manage applications"
-msgstr "Manage applications"
+msgstr "Administrar aplicaciones"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
 msgid "Applications"
