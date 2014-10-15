@@ -26,6 +26,7 @@ import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Ruiheng.Fan
+ * @author Baptiste Mesta: add tenant id in session
  *
  */
 public class SessionUtil {
@@ -34,6 +35,7 @@ public class SessionUtil {
         session.setAttribute(LoginManager.USERNAME_SESSION_PARAM, user.getUsername());
         session.setAttribute(LoginManager.USER_SESSION_PARAM_KEY, user);
         session.setAttribute(LoginManager.API_SESSION_PARAM_KEY, apiSession);
+        session.setAttribute(LoginManager.TENANT, apiSession.getTenantId());
         session.setAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY, permissions);
     }
 
@@ -42,6 +44,7 @@ public class SessionUtil {
         session.removeAttribute(LoginManager.USERNAME_SESSION_PARAM);
         session.removeAttribute(LoginManager.USER_SESSION_PARAM_KEY);
         session.removeAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
+        session.removeAttribute(LoginManager.TENANT);
         session.invalidate();
     }
 }

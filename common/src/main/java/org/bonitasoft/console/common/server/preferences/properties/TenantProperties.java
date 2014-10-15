@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,6 +99,13 @@ public class TenantProperties {
         return properties.getProperty(propertyName);
     }
 
+    public Set<String> getPropertiesNames() {
+        if (properties == null) {
+            return Collections.emptySet();
+        }
+        return properties.stringPropertyNames();
+    }
+
     public void removeProperty(final String propertyName) throws IOException {
         if (properties != null) {
             properties.remove(propertyName);
@@ -153,7 +161,11 @@ public class TenantProperties {
         if (propertyAsString != null) {
             final List<String> propertiesList = new ArrayList<String>();
             if (propertyAsString.startsWith("[") && propertyAsString.endsWith("]")) {
-                final String propertyCSV = propertyAsString.substring(1, propertyAsString.length() - 1);
+                String propertyCSV = propertyAsString.substring(1, propertyAsString.length() - 1);
+                propertyCSV = propertyCSV.trim();
+                if(propertyCSV.isEmpty()){
+                    return Collections.emptyList();
+                }
                 final String[] propertyArray = propertyCSV.split(",");
                 for (final String propertyValue : propertyArray) {
                     propertiesList.add(propertyValue.trim());

@@ -28,7 +28,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
  * This class represent a service.<br />
  * It must define a public final static String TOKEN.
  * 
- * @author Séverin Moussel
+ * @author Séverin Mousselper
  */
 public abstract class Service {
 

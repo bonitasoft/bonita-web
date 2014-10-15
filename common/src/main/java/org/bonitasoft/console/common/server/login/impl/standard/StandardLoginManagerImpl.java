@@ -15,6 +15,9 @@ package org.bonitasoft.console.common.server.login.impl.standard;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
@@ -56,8 +59,14 @@ public class StandardLoginManagerImpl implements LoginManager {
         }
         final User user = new User(request.getUsername(), local);
         final APISession session = getUserLogger().doLogin(credentials);
-        final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(session);
-        SessionUtil.sessionLogin(user, session, permissionsBuilder.getPermissions(), request.getHttpSession());
+        List<String> permissions;
+        if(session.isTechnicalUser()){
+            permissions = Collections.emptyList();
+        }else{
+            final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(session);
+            permissions = permissionsBuilder.getPermissions();
+        }
+        SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
     }
 
     protected UserLogger getUserLogger() {

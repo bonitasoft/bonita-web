@@ -21,6 +21,7 @@ import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 
 
 public class PermissionsBuilder {
@@ -97,6 +98,7 @@ public class PermissionsBuilder {
             final List<ProfileEntry> profileEntries = getProfileEntriesForProfile(profileAPI, profile, entriesIndex);
             nbOfProfileEntriesRetrieved = profileEntries.size();
             for (final ProfileEntry profileEntry : profileEntries) {
+                if(profileEntry.getType().equals(ProfileEntryItem.VALUE_TYPE.link.name()))
                 pageTokens.add(profileEntry.getPage());
             }
             entriesIndex = entriesIndex + nbOfProfileEntriesRetrieved;
@@ -139,7 +141,7 @@ public class PermissionsBuilder {
     }
 
     protected List<Profile> getProfilesForUser(final ProfileAPI profileAPI, final int profilesIndex) {
-        return profileAPI.getProfilesForUser(session.getId(), profilesIndex, MAX_ELEMENTS_RETRIEVED, ProfileCriterion.ID_ASC);
+        return profileAPI.getProfilesForUser(session.getUserId(), profilesIndex, MAX_ELEMENTS_RETRIEVED, ProfileCriterion.ID_ASC);
     }
 
     protected List<ProfileEntry> getProfileEntriesForProfile(final ProfileAPI profileAPI, final Profile profile, final int entriesIndex) throws SearchException {

@@ -46,8 +46,8 @@ public class ServiceServletCall extends ServletCall {
     }
 
     @Override
-    protected void parseRequest(final HttpServletRequest request) {
-        super.parseRequest(request);
+    protected void parseRequest(final HttpServletRequest request, HttpServletResponse response) {
+        super.parseRequest(request, response);
 
         // Gather all the POST parameters
         final Map<String, String> postParams = JSonItemReader.parseMap(getInputStream());
