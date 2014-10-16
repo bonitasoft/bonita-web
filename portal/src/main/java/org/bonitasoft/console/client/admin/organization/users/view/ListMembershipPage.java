@@ -45,6 +45,8 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableAction;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableActionSet;
 
 /**
+ * popup
+ *
  * @author Séverin Moussel
  */
 public class ListMembershipPage extends PageOnUserItem {

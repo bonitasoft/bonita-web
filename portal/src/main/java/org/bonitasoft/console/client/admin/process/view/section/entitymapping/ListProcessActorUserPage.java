@@ -36,6 +36,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table;
 
 /**
+ *
+ * popup
+ *
  * User List page
  * 
  * @author Julien Mege
