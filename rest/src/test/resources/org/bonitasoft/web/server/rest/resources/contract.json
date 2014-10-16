@@ -3,7 +3,7 @@
 		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[],"constraintType":"CUSTOM"}
 	],
 	"complexInputs":[
-	{"description":"description","name":"complexInput","multiple":false,"simpleInputs":[
+	{"description":"description","name":"complexInput","multiple":true,"simpleInputs":[
 			{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT"}
 		],"complexInputs":[]}],
 	"simpleInputs":[

@@ -85,8 +85,9 @@ public class TaskResourceTest extends BonitaJerseyTest {
         //given
         final ContractDefinitionImpl contract = new ContractDefinitionImpl();
         contract.addSimpleInput(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
-        final ComplexInputDefinitionImpl complexInputDefinitionImpl = new ComplexInputDefinitionImpl("complexInput", "description");
+        final ComplexInputDefinitionImpl complexInputDefinitionImpl = new ComplexInputDefinitionImpl("complexInput", "description", true);
         complexInputDefinitionImpl.getSimpleInputs().add(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
+
         contract.addComplexInput(complexInputDefinitionImpl);
         contract.addConstraint(new ConstraintDefinitionImpl("aRule", "an expression", "an explanation"));
 
