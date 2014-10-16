@@ -222,7 +222,7 @@ public class APIServletCall extends ServletCall {
             ResourcesPermissionsMapping resourcesPermissionsMapping) {
         List<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
         if(resourcePermissions.isEmpty()){
-            resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName,null);
+            resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, null);
         }
         //get the resource permission mapping
         for (String resourcePermission : resourcePermissions) {

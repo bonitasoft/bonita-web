@@ -13,7 +13,9 @@ import org.bonitasoft.console.common.server.preferences.properties.CustomPermiss
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;
+import org.bonitasoft.engine.profile.impl.ProfileEntryImpl;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -157,9 +159,9 @@ public class PermissionsBuilderTest {
     protected List<ProfileEntry> fillInProfileEntriesList(final int startIndex, final int nbOfItems) {
         final List<ProfileEntry> profileEntries = new ArrayList<ProfileEntry>();
         for (int i = startIndex; i < startIndex + nbOfItems; i++) {
-            final ProfileEntry profileEntry = mock(ProfileEntry.class);
-            doReturn("page" + i).when(profileEntry).getPage();
-            profileEntries.add(profileEntry);
+            ProfileEntryImpl page = new ProfileEntryImpl("page"+i);
+            page.setType(ProfileEntryItem.VALUE_TYPE.link.name());
+            profileEntries.add(page);
         }
         return profileEntries;
     }
