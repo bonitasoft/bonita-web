@@ -63,8 +63,8 @@ public class APIServletCallTest {
     @Before
     public void before(){
         doReturn(httpSession).when(request).getSession();
-        doReturn(1l).when(httpSession).getAttribute(LoginManager.TENANT);
         doReturn(apiSession).when(httpSession).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(1l).when(apiSession).getTenantId();
         doReturn(false).when(apiSession).isTechnicalUser();
         doReturn("john").when(apiSession).getUserName();
     }

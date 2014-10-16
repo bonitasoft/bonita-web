@@ -176,9 +176,9 @@ public class APIServletCall extends ServletCall {
         String method = request.getMethod();
         HttpSession session = request.getSession();
         List<String> permissions = (List<String>) session.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
-        Long tenantId = (Long) session.getAttribute(LoginManager.TENANT);
-        boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
         APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        Long tenantId = apiSession.getTenantId();
+        boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
         if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
             return;
         }
