@@ -54,7 +54,6 @@ import org.bonitasoft.console.client.admin.profile.view.AddMembershipToProfileMe
 import org.bonitasoft.console.client.admin.profile.view.AddRoleToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.AddUserToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.DeleteProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
@@ -96,7 +95,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     @Override
     public RawView defineViewTokens(final String token) {
 
-        List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
+        final List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
 
@@ -204,8 +203,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProfileMoreDetailsPage();
         } else if (ProfileQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProfileQuickDetailsPage();
-        } else if (EditProfilePage.TOKEN.equals(token) && isUserAuthorized(EditProfilePage.PRIVILEGES, currentUserAccessRights)) {
-            return new EditProfilePage();
         } else if (AddGroupToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddGroupToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddGroupToProfileMemberPage();
         } else if (AddRoleToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddRoleToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
@@ -291,12 +288,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
 
 
-    protected String listAUthorizedTokens(List<String> currentUserAccessRights) {
+    protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
         String result = "";
 
-        Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
+        final Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
 
-        for (Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
+        for (final Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
             result = isUserAuthorized(entry.getValue(), currentUserAccessRights)? result+ entry.getKey() +", " : result;
         }
 
@@ -305,7 +302,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     }
 
     protected Map<String, List<String>> buildApplicationPagesPrivileges() {
-        Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
+        final Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
         pagePrivileges.put(CaseQuickDetailsAdminPage.TOKEN, CaseQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(CaseMoreDetailsAdminPage.TOKEN, CaseMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(ArchivedCaseQuickDetailsAdminPage.TOKEN, ArchivedCaseQuickDetailsAdminPage.PRIVILEGES);
@@ -346,7 +343,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ProfileListingPage.TOKEN, ProfileListingPage.PRIVILEGES);
         pagePrivileges.put(ProfileMoreDetailsPage.TOKEN, ProfileMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(ProfileQuickDetailsPage.TOKEN, ProfileQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(EditProfilePage.TOKEN, EditProfilePage.PRIVILEGES);
         pagePrivileges.put(AddGroupToProfileMemberPage.TOKEN, AddGroupToProfileMemberPage.PRIVILEGES);
         pagePrivileges.put(AddRoleToProfileMemberPage.TOKEN, AddRoleToProfileMemberPage.PRIVILEGES);
         pagePrivileges.put(AddUserToProfileMemberPage.TOKEN, AddUserToProfileMemberPage.PRIVILEGES);
@@ -378,13 +374,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         return pagePrivileges;
     }
 
-    protected boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
+    protected boolean isUserAuthorized(final List<String> privileges, final List<String> accessRights) {
 
-        String sessionId = new String(Session.getParameter("session_id"));
+        final String sessionId = new String(Session.getParameter("session_id"));
 
-        for (String privilege: privileges) {
+        for (final String privilege: privileges) {
 
-            String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
+            final String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 
             if (accessRights.contains(calcSHA1.toUpperCase())) {
                 GWT.log("User is granted access to targeted page thanks to : "+ privilege );
