@@ -98,8 +98,9 @@ public class PermissionsBuilder {
             final List<ProfileEntry> profileEntries = getProfileEntriesForProfile(profileAPI, profile, entriesIndex);
             nbOfProfileEntriesRetrieved = profileEntries.size();
             for (final ProfileEntry profileEntry : profileEntries) {
-                if(profileEntry.getType().equals(ProfileEntryItem.VALUE_TYPE.link.name()))
-                pageTokens.add(profileEntry.getPage());
+                if (profileEntry.getType().equals(ProfileEntryItem.VALUE_TYPE.link.name())) {
+                    pageTokens.add(profileEntry.getPage());
+                }
             }
             entriesIndex = entriesIndex + nbOfProfileEntriesRetrieved;
         }
