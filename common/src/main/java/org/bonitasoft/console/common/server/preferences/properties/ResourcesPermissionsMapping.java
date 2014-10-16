@@ -16,11 +16,9 @@ package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Anthony Birembaut
@@ -38,8 +36,6 @@ public class ResourcesPermissionsMapping extends TenantProperties {
      * Instances attribute
      */
     private static Map<Long, ResourcesPermissionsMapping> INSTANCES = new HashMap<Long, ResourcesPermissionsMapping>();
-
-    private Map<String, List<String>> resourcePermissionsMapping;
 
     /**
      * @return the {@link SecurityProperties} instance
@@ -61,31 +57,18 @@ public class ResourcesPermissionsMapping extends TenantProperties {
      */
     protected ResourcesPermissionsMapping(final File fileName) {
         super(fileName);
-        resourcePermissionsMapping = new HashMap<String, List<String>>();
-        initPermissionsMapping();
 
     }
 
-    private void initPermissionsMapping() {
-        Set<String> resourceNames = getPropertiesNames();
-        for (String resourceName : resourceNames) {
-            resourcePermissionsMapping.put(resourceName, getPropertyAsList(resourceName));
-        }
-    }
-
-    public List<String> getResourcePermissions(String method, String apiName, String resourceName, String resourceId) {
+    public List<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final String resourceId) {
         String key = method + "|" + apiName + "/" + resourceName;
         if(resourceId != null){
             key +=  "/" + resourceId;
         }
-        List<String> strings = resourcePermissionsMapping.get(key);
-        if (strings == null) {
-            return Collections.emptyList();
-        }
-        return strings;
+        return getPropertyAsList(key);
     }
 
-    public List<String> getResourcePermissions(String method, String apiName, String resourceName) {
+    public List<String> getResourcePermissions(final String method, final String apiName, final String resourceName) {
         return getResourcePermissions(method, apiName, resourceName, null);
     }
 
