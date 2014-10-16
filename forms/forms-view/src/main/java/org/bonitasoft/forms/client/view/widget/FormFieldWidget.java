@@ -60,6 +60,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -187,8 +188,23 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     protected TreeMap<String, String> suggestionsMap;
 
     /**
+     * application template panel (can be null in form only mode)
+     */
+    protected HTMLPanel applicationHTMLPanel;
+
+    /**
+     * current page template panel
+     */
+    protected HTMLPanel pageHTMLPanel;
+
+    /**
+     * Id of the element in which to insert the page
+     */
+    protected String elementId;
+
+    /**
      * Constructor
-     *
+     * 
      * @param widgetData
      *        the widget data object
      * @param contextMap
@@ -196,8 +212,9 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @param mandatoryFieldClasses
      */
     public FormFieldWidget(final ReducedFormWidget widgetData, final Map<String, Object> contextMap, final String mandatoryFieldSymbol,
-            final String mandatoryFieldClasses) {
-        this(widgetData, widgetData.getInitialFieldValue(), contextMap, mandatoryFieldSymbol, mandatoryFieldClasses);
+            final String mandatoryFieldClasses, final HTMLPanel applicationHTMLPanel, final String elementId, final HTMLPanel pageHTMLPanel) {
+        this(widgetData, widgetData.getInitialFieldValue(), contextMap, mandatoryFieldSymbol, mandatoryFieldClasses, applicationHTMLPanel, elementId,
+                pageHTMLPanel);
     }
 
     /**
@@ -211,10 +228,14 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @param mandatoryFieldClasses
      */
     public FormFieldWidget(final ReducedFormWidget widgetData, final FormFieldValue fieldValue, final Map<String, Object> contextMap,
-            final String mandatoryFieldSymbol, final String mandatoryFieldClasses) {
+            final String mandatoryFieldSymbol, final String mandatoryFieldClasses, final HTMLPanel applicationHTMLPanel, final String elementId,
+            final HTMLPanel pageHTMLPanel) {
         if (contextMap.get(URLUtils.FORM_ID) != null) {
             formID = (String) contextMap.get(URLUtils.FORM_ID);
         }
+        this.applicationHTMLPanel = applicationHTMLPanel;
+        this.pageHTMLPanel = pageHTMLPanel;
+        this.elementId = elementId;
         this.contextMap = contextMap;
         this.mandatoryFieldSymbol = mandatoryFieldSymbol;
         this.mandatoryFieldClasses = mandatoryFieldClasses;
@@ -631,9 +652,8 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      * @return a {@link FileUploadWidget}
      */
     protected FileUploadWidget createFileUpload(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
-        final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, widgetData.getId(), widgetData.getFileWidgetInputType(),
-                fieldValue.getValueType(), fieldValue.getDocumentId(), fieldValue.getDocumentName(), getStringValue(fieldValue),
-                widgetData.isDisplayAttachmentImage());
+        final FileUploadWidget fileUploadWidget = new FileUploadWidget(formID, contextMap, widgetData,
+                fieldValue, getStringValue(fieldValue), applicationHTMLPanel, elementId, pageHTMLPanel);
         if (widgetData.isReadOnly()) {
             fileUploadWidget.disable();
         }

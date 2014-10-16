@@ -20,10 +20,13 @@ import java.util.Map;
 
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FileWidgetInputType;
+import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
+import org.bonitasoft.forms.client.model.ReducedFormWidget;
 import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
+import org.bonitasoft.forms.client.view.controller.ErrorPageHandler;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.FormElement;
@@ -43,6 +46,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -119,21 +123,21 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
      * @param hasImagePreview
      * @param isElementOfMultipleWidget
      */
-    public FileUploadWidget(final String formID, final Map<String, Object> contextMap, final String fieldId, final FileWidgetInputType fileWidgetInputType,
-            final String valueType, final long attachmentId, final String attachmentName, final String value, final boolean hasImagePreview) {
+    public FileUploadWidget(final String formID, final Map<String, Object> contextMap, final ReducedFormWidget widgetData, final FormFieldValue fieldValue,
+            final String value, final HTMLPanel applicationHTMLPanel, final String elementId, final HTMLPanel pageHTMLPanel) {
 
-        this.fileWidgetInputType = fileWidgetInputType;
-        this.attachmentId = attachmentId;
-        this.attachmentName = attachmentName;
+        fileWidgetInputType = widgetData.getFileWidgetInputType();
+        attachmentId = fieldValue.getDocumentId();
+        attachmentName = fieldValue.getDocumentName();
         if (attachmentName != null) {
             fileUploadFormName = attachmentName;
         } else {
-            fileUploadFormName = fieldId;
+            fileUploadFormName = widgetData.getId();
         }
-        isInitialContentFile = SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType);
+        isInitialContentFile = SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(fieldValue.getValueType());
         flowPanel = new FlowPanel();
 
-        if (FileWidgetInputType.ALL.equals(this.fileWidgetInputType)) {
+        if (FileWidgetInputType.ALL.equals(fileWidgetInputType)) {
 
             final List<ReducedFormFieldAvailableValue> availableValues = new ArrayList<ReducedFormFieldAvailableValue>();
             // FIXME i18n
@@ -145,7 +149,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             } else {
                 initialRadioButton = URL_DOCUMENT_TYPE;
             }
-            radioButtonGroupWidget = new RadioButtonGroupWidget(fieldId + "_document_type", availableValues, initialRadioButton, "bonita_form_radio_inline",
+            radioButtonGroupWidget = new RadioButtonGroupWidget(widgetData.getId() + "_document_type", availableValues, initialRadioButton,
+                    "bonita_form_radio_inline",
                     false, true);
             radioButtonGroupWidget.addValueChangeHandler(this);
             flowPanel.add(radioButtonGroupWidget);
@@ -153,14 +158,15 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             clearFloatPanel.setStyleName("bonita_clear_float");
             flowPanel.add(clearFloatPanel);
         }
-        checkInputType(fileWidgetInputType);
+
+        checkInputType(fileWidgetInputType, value, formID, contextMap, applicationHTMLPanel, elementId, pageHTMLPanel);
 
         if (!FileWidgetInputType.URL.equals(fileWidgetInputType)) {
             createFileUploadForm(fileUploadFormName);
 
             filePanel = new FlowPanel();
 
-            fileDownloadWidget = new FileDownloadWidget(formID, contextMap, valueType, attachmentId, hasImagePreview);
+            fileDownloadWidget = new FileDownloadWidget(formID, contextMap, fieldValue.getValueType(), attachmentId, widgetData.isDisplayAttachmentImage());
 
             loadingImage = new Image("themeResource?theme=portal&location=images/ajax-loader.gif");
             loadingImage.setTitle(FormsResourceBundle.getMessages().uploadingLabel());
@@ -263,12 +269,20 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         initWidget(flowPanel);
     }
 
-    protected void checkInputType(final FileWidgetInputType fileWidgetInputType) {
-        if (FileWidgetInputType.URL.equals(fileWidgetInputType) && isInitialContentFile) {
-            flowPanel.add(new Label(FormsResourceBundle.getErrors().wrongContentOfTypeFileError()));
-        } else if (FileWidgetInputType.FILE.equals(fileWidgetInputType) && !isInitialContentFile) {
-            flowPanel.add(new Label(FormsResourceBundle.getErrors().wrongContentOfTypeURLError()));
+    protected void checkInputType(final FileWidgetInputType fileWidgetInputType, final String value, final String formID, final Map<String, Object> contextMap,
+            final HTMLPanel applicationHTMLPanel, final String elementId, final HTMLPanel pageHTMLPanel) {
+        if (value != null) {
+            if (FileWidgetInputType.URL.equals(fileWidgetInputType) && isInitialContentFile || FileWidgetInputType.FILE.equals(fileWidgetInputType)
+                    && !isInitialContentFile) {
+                displayError(FormsResourceBundle.getErrors().pageRetrievalError(), formID, contextMap, applicationHTMLPanel, formID, pageHTMLPanel);
+            }
         }
+    }
+
+    protected void displayError(final String errorMessage, final String formID, final Map<String, Object> contextMap, final HTMLPanel applicationHTMLPanel,
+            final String elementId, final HTMLPanel pageHTMLPanel) {
+        RpcFormsServices.getFormsService().getApplicationErrorTemplate(errorMessage, contextMap,
+                new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel, errorMessage, elementId));
     }
 
     protected void createFileUploadForm(final String FileUloadName) {
