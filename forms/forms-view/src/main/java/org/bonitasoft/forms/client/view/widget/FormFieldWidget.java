@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -79,7 +79,7 @@ import com.google.gwt.user.datepicker.client.DateBox.Format;
 
 /**
  * Generic form flow field widget
- * 
+ *
  * @author Anthony Birembaut
  */
 @SuppressWarnings("rawtypes")
@@ -188,7 +188,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Constructor
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param contextMap
@@ -202,7 +202,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Constructor
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -228,7 +228,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Initialize the widget attributes
-     * 
+     *
      * @param widgetData
      * @param fieldValue
      */
@@ -251,7 +251,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link TextBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -277,7 +277,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link TextArea} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -306,7 +306,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link RichTextWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -326,7 +326,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link PasswordTextBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -348,7 +348,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link HTML} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -369,7 +369,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link CheckBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -393,7 +393,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link RadioButtonGroupWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -412,7 +412,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link ListBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -437,7 +437,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a multiple select {@link ListBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -469,7 +469,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link SuggestBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -489,10 +489,10 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
         final MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 
         // this fix the reordering of numbers
-        Comparator<String> numberComparator = new Comparator<String>() {
+        final Comparator<String> numberComparator = new Comparator<String>() {
 
             @Override
-            public int compare(String o1, String o2) {
+            public int compare(final String o1, final String o2) {
 
                 if (stringIsDouble(o1) && stringIsDouble(o2)) {
                     return Double.valueOf(o1).compareTo(Double.valueOf(o2));
@@ -500,7 +500,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
                 return o1.compareTo(o2);
             }
 
-            private boolean stringIsDouble(String str) {
+            private boolean stringIsDouble(final String str) {
                 return str.matches("^(([0-9]*)|(([0-9]*)[\\.,\\,]([0-9]*)))$");
             }
 
@@ -548,7 +548,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link CheckboxGroupWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -568,7 +568,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link DateBox} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -600,7 +600,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link DurationWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -623,7 +623,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link FileUploadWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -642,7 +642,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link FileDownloadWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -656,7 +656,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link ImageWidget} widget
-     * 
+     *
      * @param widgetData
      * @param fieldValue
      *        the widget value
@@ -679,7 +679,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create an {@link TableWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -695,7 +695,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create an {@link EditableGridWidget} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -711,7 +711,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create a {@link Hidden} widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      * @param fieldValue
@@ -724,13 +724,13 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Create the widget
-     * 
+     *
      * @param widgetData
      *        the widget data object
      */
     protected void createWidget(final ReducedFormWidget widgetData, final FormFieldValue fieldValue) {
         // label creation
-        if (widgetData.isMandatory() || (widgetData.getLabel() != null && widgetData.getLabel().length() > 0)) {
+        if (widgetData.isMandatory() || widgetData.getLabel() != null && widgetData.getLabel().length() > 0) {
             labelWidget = new LabelWidget(widgetData, mandatoryFieldSymbol, mandatoryFieldClasses);
             if (ItemPosition.LEFT.equals(widgetData.getLabelPosition())) {
                 addLabel(labelWidget, "bonita_form_label_left");
@@ -942,7 +942,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Get the string display value for a date
-     * 
+     *
      * @param fieldValue
      *        the field value object
      * @return the date as a String
@@ -1010,7 +1010,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Get the string display value for a date
-     * 
+     *
      * @param text
      *        the widget data object
      * @return the date as a String
@@ -1023,7 +1023,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Get the string value of a {@link FormFieldValue}
-     * 
+     *
      * @param fieldValue
      *        the {@link FormFieldValue}
      * @return a String
@@ -1040,7 +1040,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Get the Collection<String> value of a {@link FormFieldValue}
-     * 
+     *
      * @param fieldValue
      *        the {@link FormFieldValue}
      * @return a Collection<String>
@@ -1059,7 +1059,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * add generic features to the field widgets
-     * 
+     *
      * @param fieldWidget
      *        the GWT widget
      * @param widgetData
@@ -1087,7 +1087,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * Insert the generated widget in the panel and set the fieldWidget attribute to keep a reference to it Set the HTML
      * attributes before inserting the generated widget in the panel.
-     * 
+     *
      * @param fieldWidget
      *        the field widget
      * @param widgetData
@@ -1102,7 +1102,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * Retrieve the value of the field under the form of a {@link FormFieldValue} object. This conversion is needed because RPC
      * calls do not support the type 'Object'.
-     * 
+     *
      * @return a {@link FormFieldValue} object
      */
     @SuppressWarnings("unchecked")
@@ -1238,15 +1238,14 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
         } else {
             format = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG).getPattern();
         }
+        final FormFieldValue formFieldValue = new FormFieldValue(value, valueType, format, fieldOutputType);
         if (WidgetType.FILEUPLOAD.equals(widgetType)) {
-            final FormFieldValue formFieldValue = new FormFieldValue(value, valueType, format);
             formFieldValue.setDocumentName(attachmentName);
             formFieldValue.setDocumentId(attachmentId);
             formFieldValue.setDisplayedValue(displayedValue);
             formFieldValue.setDocument(true);
-            return formFieldValue;
         }
-        return new FormFieldValue(value, valueType, format, fieldOutputType);
+        return formFieldValue;
     }
 
     /**
@@ -1258,7 +1257,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Set the value of the widget
-     * 
+     *
      * @param fieldValue
      */
     public void setValue(final FormFieldValue fieldValue) {
@@ -1445,10 +1444,10 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Set the available values of the widget (for list widgets only)
-     * 
+     *
      * @param availableValues
      */
-    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, boolean fireEvents) {
+    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
         switch (widgetType) {
             case RADIOBUTTON_GROUP:
                 final RadioButtonGroupWidget radioButtonGroupWidget = (RadioButtonGroupWidget) fieldWidget;
@@ -1503,10 +1502,10 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * Set the available values of the widget (for table widgets only)
-     * 
+     *
      * @param newTableWidgetAvailableValues
      */
-    public void setTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> newTableWidgetAvailableValues, boolean fireEvents) {
+    public void setTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> newTableWidgetAvailableValues, final boolean fireEvents) {
         if (WidgetType.TABLE.equals(widgetType)) {
             final TableWidget formTableWidget = (TableWidget) fieldWidget;
             formTableWidget.setAvailableValues(newTableWidgetAvailableValues, fireEvents);
@@ -1517,7 +1516,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
 
     /**
      * set the mandatory label
-     * 
+     *
      * @param mandatoryLabel
      */
     public void setMandatoryLabel(final String mandatoryLabel) {
