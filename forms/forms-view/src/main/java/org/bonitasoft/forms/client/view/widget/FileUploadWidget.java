@@ -281,7 +281,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
     protected void displayError(final String errorMessage, final String formID, final Map<String, Object> contextMap, final HTMLPanel applicationHTMLPanel,
             final String elementId, final HTMLPanel pageHTMLPanel) {
-        RpcFormsServices.getFormsService().getApplicationErrorTemplate(formID, contextMap,
+        RpcFormsServices.getFormsService().getApplicationErrorTemplate(errorMessage, contextMap,
                 new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel, errorMessage, elementId));
     }
 
