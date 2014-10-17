@@ -214,9 +214,9 @@ public class APIServletCall extends ServletCall {
     }
 
     boolean staticCheck(String method, String apiName, String resourceName, String resourceId, List<String> permissionsOfUser,
-                        ResourcesPermissionsMapping resourcesPermissionsMapping, String username) {
+            ResourcesPermissionsMapping resourcesPermissionsMapping, String username) {
         List<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
-        if(resourcePermissions.isEmpty()){
+        if (resourcePermissions.isEmpty()) {
             resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, null);
         }
         //get the resource permission mapping
@@ -225,8 +225,8 @@ public class APIServletCall extends ServletCall {
                 return true;
             }
         }
-        LOGGER.log(Level.WARNING, "Unauthorized access to " + apiName + "/" + resourceName + (resourceId != null ? "/" + resourceId : "")
-                + " attempted by " + username  +" required permissions:"+resourcePermissions);
+        LOGGER.log(Level.WARNING, "Unauthorized access to " + method + " " + apiName + "/" + resourceName + (resourceId != null ? "/" + resourceId : "")
+                + " attempted by " + username + " required permissions:" + resourcePermissions);
         return false;
     }
 
