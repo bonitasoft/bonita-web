@@ -145,7 +145,6 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         if (FileWidgetInputType.ALL.equals(fileWidgetInputType)) {
 
             final List<ReducedFormFieldAvailableValue> availableValues = new ArrayList<ReducedFormFieldAvailableValue>();
-            // FIXME i18n
             availableValues.add(new ReducedFormFieldAvailableValue(FormsResourceBundle.getMessages().url(), URL_DOCUMENT_TYPE));
             availableValues.add(new ReducedFormFieldAvailableValue(FormsResourceBundle.getMessages().file(), FILE_DOCUMENT_TYPE));
             final String initialRadioButton;
