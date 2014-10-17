@@ -1,7 +1,7 @@
 package org.bonitasoft.web.rest.server;
 
 
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -19,7 +19,7 @@ public class BonitaRestletAPIServlet extends Application {
         final Context context = getContext();
         final Router router = new Router(context);
 
-        router.attach("/bpm/taskVariable", TaskVariableResource.class);
+        router.attach("/bpm/activityData/{dataname}/{taskid}", ActivityDataResource.class);
         // GET to search timer event triggers:
         router.attach("/bpm/timerEventTrigger", TimerEventTriggerResource.class);
         // PUT to update timer event trigger date:
