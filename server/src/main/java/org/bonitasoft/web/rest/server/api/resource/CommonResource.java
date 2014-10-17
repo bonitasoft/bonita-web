@@ -20,8 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.session.APISession;
@@ -46,7 +48,7 @@ public class CommonResource extends ServerResource {
 
     private APISession sessionSingleton = null;
 
-    protected String toJson(final Object p) {
+    public String toJson(final Object p) {
         return new JSONObject(p).toString();
     }
 
@@ -63,22 +65,23 @@ public class CommonResource extends ServerResource {
      */
     protected APISession getEngineSession() {
         if (sessionSingleton == null) {
-            sessionSingleton = (APISession) ServletUtils.getRequest(getRequest()).getSession().getAttribute("apiSession");
+            final HttpSession session = getHttpSession();
+            sessionSingleton = (APISession) session.getAttribute("apiSession");
         }
         return sessionSingleton;
     }
 
-    protected ProcessAPI getEngineProcessAPI() {
-        try {
-            return TenantAPIAccessor.getProcessAPI(getEngineSession());
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+    public HttpSession getHttpSession() {
+        return getHttpRequest().getSession();
     }
 
-    protected ProfileAPI getEngineProfileAPI() {
+    public HttpServletRequest getHttpRequest() {
+        return ServletUtils.getRequest(getRequest());
+    }
+
+    public ProcessAPI getEngineProcessAPI() {
         try {
-            return TenantAPIAccessor.getProfileAPI(getEngineSession());
+            return TenantAPIAccessor.getProcessAPI(getEngineSession());
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -126,7 +129,7 @@ public class CommonResource extends ServerResource {
         return getParameter(APIServletCall.PARAMETER_SEARCH, false);
     }
 
-    protected Integer getIntegerParameter(final String parameterName, final boolean mandatory) {
+    public Integer getIntegerParameter(final String parameterName, final boolean mandatory) {
         final String parameterValue = getParameter(parameterName, mandatory);
         if (parameterValue != null) {
             return Integer.parseInt(parameterValue);
@@ -149,7 +152,7 @@ public class CommonResource extends ServerResource {
     //        return (T) parameter;
     //    }
 
-    protected String getParameter(final String parameterName, final boolean mandatory) {
+    public String getParameter(final String parameterName, final boolean mandatory) {
         final String parameter = getRequestParameter(parameterName);
         if (mandatory) {
             verifyNotNullParameter(parameter, parameterName);
@@ -158,7 +161,7 @@ public class CommonResource extends ServerResource {
     }
 
     protected String getRequestParameter(final String parameterName) {
-        return ServletUtils.getRequest(getRequest()).getParameter(parameterName);
+        return getHttpRequest().getParameter(parameterName);
     }
 
     protected void verifyNotNullParameter(final Object parameter, final String parameterName) throws APIException {
@@ -176,8 +179,8 @@ public class CommonResource extends ServerResource {
      *        The value to return if the parameter is not defined.
      * @return This method returns the values of a parameter as a list of String.
      */
-    protected List<String> getParameterAsList(final String name, final String defaultValue) {
-        final String[] parameterValues = ServletUtils.getRequest(getRequest()).getParameterValues(name);
+    public List<String> getParameterAsList(final String name, final String defaultValue) {
+        final String[] parameterValues = getHttpRequest().getParameterValues(name);
         if (parameterValues != null && parameterValues.length > 0) {
             return Arrays.asList(parameterValues);
         }

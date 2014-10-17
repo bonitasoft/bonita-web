@@ -69,4 +69,9 @@ public class TimerEventTriggerResource extends CommonResource {
         final Date newDate = getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate);
         return toJson(newDate);
     }
+
+    @Override
+    public String getAttribute(final String attributeName) {
+        return super.getAttribute(attributeName);
+    }
 }
