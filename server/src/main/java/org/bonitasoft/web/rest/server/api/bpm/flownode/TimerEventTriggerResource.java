@@ -1,27 +1,34 @@
+/**
+ * Copyright (C) 2014 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstanceNotFoundException;
-import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.UpdateException;
-import org.bonitasoft.engine.search.SearchOptions;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
-import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.filter.Filters;
-import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
-import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
-import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-import org.restlet.ext.servlet.ServletUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -32,44 +39,29 @@ import org.restlet.resource.Put;
  */
 public class TimerEventTriggerResource extends CommonResource {
 
-    private APISession sessionSingleton = null;
+    private static final String DATE_PARAM_NAME = "date";
 
-    /**
-     * Get the session to access the engine SDK
-     */
-    @Override
-    protected APISession getEngineSession() {
-        if (sessionSingleton == null) {
-            sessionSingleton = (APISession) ServletUtils.getRequest(getRequest()).getSession().getAttribute("apiSession");
-        }
-        return sessionSingleton;
-    }
+    private static final String ID_PARAM_NAME = "id";
 
-    @Get("json")
-    public String searchTimerEventTriggers() {
+    @Get
+    public Representation searchTimerEventTriggers() {
         try {
-            final List<TimerEventTriggerInstance> triggers = searchEngineTimerEventTriggers(getMandatoryParameter(Long.class, "caseId"),
-                    new SearchOptionsCreator(
-                            getSearchPageNumber(),
-                            getSearchPageSize(), getSearchTerm(), new Sorts(""),
-                            new Filters(Collections.<String, String> emptyMap(), new GenericFilterCreator(new EmptyAttributeConverter()))).create());
-            return toJson(triggers);
+            final Long caseId = getLongParameter("caseId", true);
+            final List<TimerEventTriggerInstance> triggers = getEngineProcessAPI().searchTimerEventTriggerInstances(caseId, buildSearchOptions()).getResult();
+            //            System.out.println("List of triggers IDs: " + triggers);
+            return new StringRepresentation(toJsonArray(triggers), MediaType.APPLICATION_JSON);
         } catch (final Exception e) {
+            //            System.out.println("converting exception to APIException");
             throw new APIException(e);
         }
     }
 
-    private List<TimerEventTriggerInstance> searchEngineTimerEventTriggers(final long caseId, final SearchOptions searchOptions) throws SearchException {
-        return getEngineProcessAPI().searchTimerEventTriggerInstances(caseId, searchOptions).getResult();
-    }
-
     @Put("json")
-    public String updateTimerEventTrigger(final String jsonMsg) throws TimerEventTriggerInstanceNotFoundException, UpdateException, ParseException,
-            JSONException {
-        final JSONObject jsonObject = new JSONObject(jsonMsg);
-        final long timerEventTriggerInstanceId = jsonObject.getLong("ID");
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        final Date executionDate = sdf.parse(jsonObject.getString("date"));
+    public String updateTimerEventTrigger(final String jsonMsg) throws TimerEventTriggerInstanceNotFoundException, JSONException, ParseException,
+            UpdateException {
+        final JSONObject jsonObject = new JSONObject(jsonMsg.toString());
+        final long timerEventTriggerInstanceId = Long.parseLong(getAttribute(ID_PARAM_NAME));
+        final Date executionDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(jsonObject.getString(DATE_PARAM_NAME));
         final Date newDate = getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate);
         return toJson(newDate);
     }

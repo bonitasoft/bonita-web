@@ -3,16 +3,6 @@
 
 <urlrewrite>
 
-    <!-- <rule> -->
-    <!-- <from>^/API/system/session(.*)</from> -->
-    <!-- <to>/APIv1/system/session$1</to> -->
-    <!-- </rule> -->
-
-<!--     <rule>
-        <from>^/API/(system|userXP|portal|identity|customuserinfo)(.*)</from>
-        <to>/APIv1/$1$2</to>
-    </rule> -->
-
     <rule>
         <from>^/API/bpm/activity(.*)</from>
         <to>/APIv1/bpm/activity$1</to>
@@ -209,4 +199,5 @@
         <from>^/API/userXP/profileMember(.*)</from>
         <to>/APIv1/userXP/profileMember$1</to>
     </rule>
+
 </urlrewrite>
