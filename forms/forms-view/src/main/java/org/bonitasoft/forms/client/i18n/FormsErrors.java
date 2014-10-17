@@ -76,4 +76,8 @@ public interface FormsErrors extends Messages {
     String formAlreadySubmittedOrCancelledError();
 
     String formUrlParameterIsMandatoryError();
+
+    String wrongContentOfTypeFileError();
+
+    String wrongContentOfTypeURLError();
 }
