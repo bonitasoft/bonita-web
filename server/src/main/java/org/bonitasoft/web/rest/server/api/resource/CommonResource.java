@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
@@ -37,6 +38,11 @@ import org.restlet.resource.ServerResource;
  * @author Emmanuel Duchastenier
  */
 public class CommonResource extends ServerResource {
+
+    /**
+     * Json format for dates
+     */
+    protected static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private APISession sessionSingleton = null;
 
@@ -128,7 +134,7 @@ public class CommonResource extends ServerResource {
         return null;
     }
 
-    protected Long getLongParameter(final String parameterName, final boolean mandatory) {
+    public Long getLongParameter(final String parameterName, final boolean mandatory) {
         final String parameterValue = getParameter(parameterName, mandatory);
         if (parameterValue != null) {
             return Long.parseLong(parameterValue);
@@ -183,8 +189,19 @@ public class CommonResource extends ServerResource {
         return null;
     }
 
-    protected SearchOptions buildSearchOptions() {
+    public SearchOptions buildSearchOptions() {
         return new SearchOptionsCreator(getSearchPageNumber(), getSearchPageSize(), getSearchTerm(), new Sorts(
                 getSearchOrder()), new Filters(getSearchFilters())).create();
     }
+
+    @Override
+    protected void doCatch(final Throwable throwable) {
+        final Throwable t = throwable.getCause() != null ? throwable.getCause() : throwable;
+        // Don't need to log the wrapping exception, the cause itself is more interesting:
+        super.doCatch(t);
+
+        getLogger().log(Level.SEVERE, "*** problem on " + getClass().getName() + " rest resource: " + t.getMessage());
+        getResponse().setStatus(getStatus(), "Cannot execute REST resource " + getClass().getName() + " rest resource: " + t.getMessage());
+    }
+
 }

@@ -20,7 +20,9 @@ public class BonitaRestletAPIServlet extends Application {
         final Router router = new Router(context);
 
         router.attach("/bpm/taskVariable", TaskVariableResource.class);
+        // GET to search timer event triggers:
         router.attach("/bpm/timerEventTrigger", TimerEventTriggerResource.class);
+        // PUT to update timer event trigger date:
         router.attach("/bpm/timerEventTrigger/{id}", TimerEventTriggerResource.class);
 
         return router;
