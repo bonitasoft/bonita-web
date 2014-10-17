@@ -99,9 +99,6 @@ public class HttpRequest {
             builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));
         }
 
-        String currentPageToken = ViewController.getInstance().getCurrentPageToken();
-        builder.setHeader("Current-Page", currentPageToken == null ? "unknown" : currentPageToken);
-
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);
         Request request = null;

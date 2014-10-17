@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.framework;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,8 +159,6 @@ public class APIServletCall extends ServletCall {
 
         parsePath(request);
 
-        LOGGER.warning("[REST]: " + request.getMethod() + "|" + apiName + "/" + resourceName + "|" + request.getHeader("Current-Page"));
-
         // Fixes BS-400. This is ugly.
         I18n.getInstance();
 
@@ -182,13 +179,11 @@ public class APIServletCall extends ServletCall {
         if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
             return;
         }
-
         ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
         String resourceId = id != null ? id.getPart(0) : null;
-        boolean isAuthorized = staticCheck(method, apiName, resourceName, resourceId, permissions, resourcesPermissionsMapping);
+        boolean isAuthorized = staticCheck(method, apiName, resourceName, resourceId, permissions, resourcesPermissionsMapping, apiSession.getUserName());
+
         if (!isAuthorized) {
-            LOGGER.log(Level.WARNING, "Unauthorized access to " + apiName + "/" + resourceName + (resourceId != null ? "/" + resourceId : "")
-                    + " attempted by " + apiSession.getUserName());
             throw new APIForbiddenException("Forbidden");
         }
     }
@@ -219,7 +214,7 @@ public class APIServletCall extends ServletCall {
     }
 
     boolean staticCheck(String method, String apiName, String resourceName, String resourceId, List<String> permissionsOfUser,
-            ResourcesPermissionsMapping resourcesPermissionsMapping) {
+                        ResourcesPermissionsMapping resourcesPermissionsMapping, String username) {
         List<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
         if(resourcePermissions.isEmpty()){
             resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, null);
@@ -230,7 +225,8 @@ public class APIServletCall extends ServletCall {
                 return true;
             }
         }
-        LOGGER.log(Level.WARNING, "Unauthorized access to " + apiName + "/" + resourceName + (resourceId != null ? "/" + resourceId : "") + " required permissions:"+resourcePermissions+" permissions of the user: "+permissionsOfUser);
+        LOGGER.log(Level.WARNING, "Unauthorized access to " + apiName + "/" + resourceName + (resourceId != null ? "/" + resourceId : "")
+                + " attempted by " + username  +" required permissions:"+resourcePermissions);
         return false;
     }
 
