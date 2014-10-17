@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-16 07:01+0200\n"
+"POT-Creation-Date: 2014-10-17 07:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,7 +203,6 @@ msgstr ""
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseVariableSection.java:34
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedTasksSection.java:67
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileListingPage.java:105
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/EditProfilePage.java:80
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:33
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:100
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/EditGroupForm.java:44
@@ -976,7 +975,6 @@ msgstr ""
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:183
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/ArchivedTasksSection.java:69
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileListingPage.java:106
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/EditProfilePage.java:81
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/EditRoleForm.java:35
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/EditGroupForm.java:48
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:190
@@ -1153,10 +1151,6 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/EditProfilePage.java:59
-msgid "%% Edit profile"
-msgstr ""
-
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddGroupToProfileMemberPage.java:82
 msgid "Add a group to profile %%"
 msgstr ""
@@ -1168,14 +1162,14 @@ msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddGroupToProfileMemberPage.java:107
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddMembershipToProfileMemberPage.java:102
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:97
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:100
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddRoleToProfileMemberPage.java:108
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:98
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:100
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AddMembershipPage.java:102
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:149
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectMembershipForActorPage.java:99
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectGroupForActorPage.java:97
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:97
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:99
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectUserForActorPage.java:83
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:72
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:259
@@ -1188,7 +1182,7 @@ msgid "Add selected group(s) to this profile"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddGroupToProfileMemberPage.java:108
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:98
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:101
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddRoleToProfileMemberPage.java:109
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:73
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:75
@@ -1199,7 +1193,7 @@ msgid "Cancel"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddGroupToProfileMemberPage.java:108
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:98
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:101
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddRoleToProfileMemberPage.java:109
 msgid "Close without saving"
 msgstr ""
@@ -1252,7 +1246,7 @@ msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/ProfileMoreDetailsPage.java:125
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:118
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:81
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:84
 msgid "Add a user"
 msgstr ""
 
@@ -1291,7 +1285,7 @@ msgid "Add a membership to profile %%"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddMembershipToProfileMemberPage.java:86
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:115
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:117
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AddMembershipPage.java:86
 msgid "Group"
 msgstr ""
@@ -1302,7 +1296,7 @@ msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddMembershipToProfileMemberPage.java:94
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserQuickDetailsPage.java:113
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:114
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:116
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/AddMembershipPage.java:94
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/RoleListingPage.java:103
 msgid "Role"
@@ -1317,24 +1311,24 @@ msgstr ""
 msgid "Add this membership"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:76
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:79
 msgid "Add a user to profile %%"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:94
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:97
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:96
 msgid "Avatar"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:95
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:98
 msgid "Firstname"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:96
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:99
 msgid "Lastname"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:97
+#: portal/src/main/java/org/bonitasoft/console/client/admin/profile/view/AddUserToProfileMemberPage.java:100
 msgid "Add selected user(s) to this profile"
 msgstr ""
 
@@ -1447,7 +1441,7 @@ msgstr ""
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/PopupAddUserPage.java:71
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserListingAdminPage.java:74
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/AddRolePage.java:57
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/AddGroupPage.java:57
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/AddGroupPage.java:60
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:77
 msgid "Create"
 msgstr ""
@@ -1456,15 +1450,15 @@ msgstr ""
 msgid "Create this user"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:76
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:78
 msgid "List memberships of %user%"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:99
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:101
 msgid "Add new memberships for %user%"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:127
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:129
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:160
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:122
@@ -1475,19 +1469,19 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:127
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:129
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeleteMembershipPage.java:74
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UserMoreDetailsAdminPage.java:160
 msgid "Delete this membership"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:139
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:140
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:141
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:142
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/ListMembershipPage.java:143
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorRolePage.java:79
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMembershipPage.java:64
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorGroupPage.java:80
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:82
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:85
 msgid "Close"
 msgstr ""
 
@@ -1500,7 +1494,7 @@ msgid "Select an avatar for this user"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:106
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:72
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:74
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/UpdateGroupPage.java:68
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/form/ItemForm.java:265
 msgid "Save"
@@ -1794,11 +1788,11 @@ msgstr ""
 msgid "Enter the description of this role"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:60
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:62
 msgid "Update a role"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:72
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/role/UpdateRolePage.java:74
 msgid "Update this role"
 msgstr ""
 
@@ -1824,12 +1818,12 @@ msgstr ""
 msgid "Create this role"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/AddGroupPage.java:47
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/AddGroupPage.java:50
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/GroupListingAdminPage.java:109
 msgid "Create a group"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/AddGroupPage.java:57
+#: portal/src/main/java/org/bonitasoft/console/client/admin/organization/group/AddGroupPage.java:60
 msgid "Create this group"
 msgstr ""
 
@@ -2149,15 +2143,15 @@ msgstr ""
 msgid "Membership (%nb_membership%)"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:56
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorUserPage.java:59
 msgid "Edit users of actor %actor_name%"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:102
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:104
 msgid "Add this role to %actor_name%"
 msgstr ""
 
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:107
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/SelectRoleForActorPage.java:109
 msgid "Add a role to %actor_name%"
 msgstr ""
 
