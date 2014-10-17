@@ -69,7 +69,6 @@ import org.bonitasoft.console.client.user.cases.view.CaseQuickDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.console.client.user.task.view.ArchivedHumanTaskQuickDetailsPage;
 import org.bonitasoft.console.client.user.task.view.HumanTaskQuickDetailsPage;
-import org.bonitasoft.console.client.user.task.view.ProcessMoreDetailsPage;
 import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
