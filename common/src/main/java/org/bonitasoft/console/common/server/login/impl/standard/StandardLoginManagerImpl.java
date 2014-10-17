@@ -13,10 +13,10 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.standard;
 
-import javax.servlet.http.HttpServletRequest;
-
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
@@ -24,6 +24,7 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
@@ -60,13 +61,17 @@ public class StandardLoginManagerImpl implements LoginManager {
         final User user = new User(request.getUsername(), local);
         final APISession session = getUserLogger().doLogin(credentials);
         List<String> permissions;
-        if(session.isTechnicalUser()){
+        if (session.isTechnicalUser()) {
             permissions = Collections.emptyList();
-        }else{
-            final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(session);
+        } else {
+            final PermissionsBuilder permissionsBuilder = getPermissionsBuilder(session);
             permissions = permissionsBuilder.getPermissions();
         }
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
+    }
+
+    protected PermissionsBuilder getPermissionsBuilder(final APISession session) {
+        return new PermissionsBuilder(session);
     }
 
     protected UserLogger getUserLogger() {

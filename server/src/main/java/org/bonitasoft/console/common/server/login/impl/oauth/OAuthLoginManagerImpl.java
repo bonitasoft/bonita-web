@@ -23,7 +23,7 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
-import org.bonitasoft.console.common.server.login.impl.standard.PermissionsBuilder;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
@@ -63,7 +63,7 @@ public class OAuthLoginManagerImpl implements LoginManager {
         }
         final User user = new User(getOAuthUserId(request, tenantId), local);
         final APISession apiSession = getUserLogger().doLogin(credentials);
-        final PermissionsBuilder permissionsBuilder = new PermissionsBuilder(apiSession);
+        final PermissionsBuilder permissionsBuilder = getPermissionsBuilder(apiSession);
         SessionUtil.sessionLogin(user, apiSession, permissionsBuilder.getPermissions(), request.getHttpSession());
     }
 
@@ -72,6 +72,10 @@ public class OAuthLoginManagerImpl implements LoginManager {
      */
     protected UserLogger getUserLogger() {
         return new UserLogger();
+    }
+
+    protected PermissionsBuilder getPermissionsBuilder(final APISession session) {
+        return new PermissionsBuilder(session);
     }
 
     private String getOAuthUserId(final HttpServletRequestAccessor request, final long tenantId)

@@ -1,4 +1,4 @@
-package org.bonitasoft.console.common.server.login.impl.standard;
+package org.bonitasoft.console.common.server.utils;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;

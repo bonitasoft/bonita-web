@@ -1,4 +1,4 @@
-package org.bonitasoft.console.common.server.login.impl.standard;
+package org.bonitasoft.console.common.server.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class PermissionsBuilder {
 
     private static final int MAX_ELEMENTS_RETRIEVED = 50;
 
-    private final APISession session;
+    protected final APISession session;
 
     public PermissionsBuilder(final APISession session) {
         this.session = session;
@@ -90,7 +90,8 @@ public class PermissionsBuilder {
         return pageTokens;
     }
 
-    protected List<String> getProfilePages(final ProfileAPI profileAPI, final Profile profile) throws SearchException {
+    protected List<String> getProfilePages(final ProfileAPI profileAPI, final Profile profile) throws SearchException, BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException {
         final List<String> pageTokens = new ArrayList<String>();
         int entriesIndex = 0;
         int nbOfProfileEntriesRetrieved = MAX_ELEMENTS_RETRIEVED;
