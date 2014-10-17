@@ -256,8 +256,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessListingPage();
         } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessQuickDetailsPage();
-        } else if (ProcessMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
-            return new ProcessMoreDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(StartProcessFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new StartProcessFormPage();
 
@@ -360,7 +358,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(PerformTaskPage.TOKEN, PerformTaskPage.PRIVILEGES);
         pagePrivileges.put(ProcessListingPage.TOKEN, ProcessListingPage.PRIVILEGES);
         pagePrivileges.put(ProcessQuickDetailsPage.TOKEN, ProcessQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ProcessMoreDetailsPage.TOKEN, ProcessMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(StartProcessFormPage.TOKEN, StartProcessFormPage.PRIVILEGES);
         pagePrivileges.put(CaseListingPage.TOKEN, CaseListingPage.PRIVILEGES);
         pagePrivileges.put(CaseQuickDetailsPage.TOKEN, CaseQuickDetailsPage.PRIVILEGES);
