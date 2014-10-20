@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -171,7 +172,7 @@ public class APIServletCallTest {
         List<String> permissions = initSpy(apiServletCallSpy);
         doReturn(true).when(apiServletCallSpy).isApiAuthorizationsCheckEnabled(1l);
         doReturn(true).when(apiServletCallSpy).staticCheck(anyString(), anyString(), anyString(), anyString(), anyList(),
-                any(ResourcesPermissionsMapping.class), username);
+                any(ResourcesPermissionsMapping.class), eq(username));
         //when
         apiServletCallSpy.checkPermissions(request);
 
@@ -186,7 +187,7 @@ public class APIServletCallTest {
         List<String> permissions = initSpy(apiServletCallSpy);
         doReturn(true).when(apiServletCallSpy).isApiAuthorizationsCheckEnabled(1l);
         doReturn(true).when(apiServletCallSpy).staticCheck(anyString(), anyString(), anyString(), anyString(), anyList(),
-                any(ResourcesPermissionsMapping.class), username);
+                any(ResourcesPermissionsMapping.class), eq(username));
         //when
         apiServletCallSpy.checkPermissions(request);
 
