@@ -74,7 +74,7 @@ public class OAuthLoginManagerImpl implements LoginManager {
         return new UserLogger();
     }
 
-    protected PermissionsBuilder getPermissionsBuilder(final APISession session) {
+    protected PermissionsBuilder getPermissionsBuilder(final APISession session) throws LoginFailedException {
         return new PermissionsBuilder(session);
     }
 

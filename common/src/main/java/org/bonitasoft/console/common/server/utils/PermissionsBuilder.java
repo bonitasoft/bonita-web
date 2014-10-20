@@ -1,7 +1,8 @@
 package org.bonitasoft.console.common.server.utils;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
@@ -10,10 +11,7 @@ import org.bonitasoft.console.common.server.preferences.properties.PropertiesFac
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.profile.ProfileEntry;
@@ -23,76 +21,90 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 
-
 public class PermissionsBuilder {
 
     private static final int MAX_ELEMENTS_RETRIEVED = 50;
 
     protected final APISession session;
+    private final ProfileAPI profileAPI;
+    private CustomPermissionsMapping customPermissionsMapping;
+    private CompoundPermissionsMapping compoundPermissionsMapping;
+    private boolean apiAuthorizationsCheckEnabled;
 
-    public PermissionsBuilder(final APISession session) {
+    public PermissionsBuilder(final APISession session) throws LoginFailedException {
         this.session = session;
+        try {
+            profileAPI = TenantAPIAccessor.getProfileAPI(session);
+        } catch (BonitaException e) {
+            throw new LoginFailedException(e);
+
+        }
+        apiAuthorizationsCheckEnabled = PropertiesFactory.getSecurityProperties(session.getTenantId()).isAPIAuthorizationsCheckEnabled();
+        customPermissionsMapping = PropertiesFactory.getCustomPermissionsMapping(session.getTenantId());
+        compoundPermissionsMapping = PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
     }
 
-    public List<String> getPermissions() throws LoginFailedException {
+    public PermissionsBuilder(APISession session, ProfileAPI profileAPI, CustomPermissionsMapping customPermissionsMapping,
+            CompoundPermissionsMapping compoundPermissionsMapping, boolean apiAuthorizationsCheckEnabled) {
+        this.session = session;
+        this.profileAPI = profileAPI;
+        this.customPermissionsMapping = customPermissionsMapping;
+        this.compoundPermissionsMapping = compoundPermissionsMapping;
+        this.apiAuthorizationsCheckEnabled = apiAuthorizationsCheckEnabled;
+    }
 
-        final List<String> permissions = new ArrayList<String>();
-        if (isAuthorizationsChecksEnabled()) {
-            final CustomPermissionsMapping customPermissionsMapping = getCustomPermissionsMapping();
-            permissions.addAll(getProfilesPermissions(customPermissionsMapping));
-            permissions.addAll(getCustomUserPermissions(customPermissionsMapping));
+    public Set<String> getPermissions() throws LoginFailedException {
+        final HashSet<String> permissions = new HashSet<String>();
+        if (apiAuthorizationsCheckEnabled) {
+            addProfilesPermissions(permissions);
+            addCustomUserPermissions(permissions);
         }
         return permissions;
     }
 
-    protected boolean isAuthorizationsChecksEnabled() {
-        return PropertiesFactory.getSecurityProperties(session.getTenantId()).isAPIAuthorizationsCheckEnabled();
-    }
-
-    protected CustomPermissionsMapping getCustomPermissionsMapping() {
-        return PropertiesFactory.getCustomPermissionsMapping(session.getTenantId());
-    }
-
-    protected CompoundPermissionsMapping getCompoundPermissionsMapping() {
-        return PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
-    }
-
-    protected List<String> getProfilesPermissions(final CustomPermissionsMapping customPermissionsMapping) throws LoginFailedException {
-        final List<String> permissions = new ArrayList<String>();
-        final List<String> pageTokens;
+    void addProfilesPermissions(Set<String> permissions) throws LoginFailedException {
+        final Set<String> pageTokens;
         try {
-            pageTokens = getAllPagesForUser(customPermissionsMapping, permissions);
-        } catch (final BonitaException e) {
+            pageTokens = getAllPagesForUser(permissions);
+        } catch (final SearchException e) {
             throw new LoginFailedException(e);
         }
-        final CompoundPermissionsMapping compoundPermissionsMapping = getCompoundPermissionsMapping();
         for (final String pageToken : pageTokens) {
-            permissions.addAll(getCompoundPermissions(compoundPermissionsMapping, pageToken));
+            permissions.addAll(getCompoundPermissions(pageToken));
         }
-        return permissions;
     }
 
-    protected List<String> getAllPagesForUser(final CustomPermissionsMapping customPermissionsMapping, final List<String> permissions)
-            throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException {
-        final List<String> pageTokens = new ArrayList<String>();
-        final ProfileAPI profileAPI = getProfileAPI();
+    /**
+     * return the page names the user can access and add custom permissions of the profile in the permissions set
+     *
+     * @param permissions
+     *        the set to complete
+     * @return
+     *         the page names the user can access
+     * @throws SearchException
+     */
+    Set<String> getAllPagesForUser(final Set<String> permissions) throws SearchException {
+        final Set<String> pageTokens = new HashSet<String>();
+        final ProfileAPI profileAPI = this.profileAPI;
         int profilesIndex = 0;
         int nbOfProfilesRetrieved = MAX_ELEMENTS_RETRIEVED;
         while (nbOfProfilesRetrieved == MAX_ELEMENTS_RETRIEVED) {
             final List<Profile> profiles = getProfilesForUser(profileAPI, profilesIndex);
             nbOfProfilesRetrieved = profiles.size();
             for (final Profile profile : profiles) {
-                pageTokens.addAll(getProfilePages(profileAPI, profile));
-                permissions.addAll(getCustomProfilePermissions(customPermissionsMapping, profile));
+                addPageAndCustomPermissionsOfProfile(permissions, pageTokens, profileAPI, profile);
             }
             profilesIndex = profilesIndex + nbOfProfilesRetrieved;
         }
         return pageTokens;
     }
 
-    protected List<String> getProfilePages(final ProfileAPI profileAPI, final Profile profile) throws SearchException, BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException {
-        final List<String> pageTokens = new ArrayList<String>();
+    void addPageAndCustomPermissionsOfProfile(Set<String> permissions, Set<String> pageTokens, ProfileAPI profileAPI, Profile profile) throws SearchException {
+        addPagesOfProfile(profileAPI, profile, pageTokens);
+        addCustomProfilePermissions(permissions, profile);
+    }
+
+    void addPagesOfProfile(final ProfileAPI profileAPI, final Profile profile, Set<String> pageTokens) throws SearchException {
         int entriesIndex = 0;
         int nbOfProfileEntriesRetrieved = MAX_ELEMENTS_RETRIEVED;
         while (nbOfProfileEntriesRetrieved == MAX_ELEMENTS_RETRIEVED) {
@@ -105,41 +117,36 @@ public class PermissionsBuilder {
             }
             entriesIndex = entriesIndex + nbOfProfileEntriesRetrieved;
         }
-        return pageTokens;
     }
 
-    protected List<String> getCustomProfilePermissions(final CustomPermissionsMapping customPermissionsMapping, final Profile profile) {
-        return getCustomPermissions(customPermissionsMapping, "profile|", profile.getName());
+    void addCustomProfilePermissions(Set<String> permissions, Profile profile) {
+        permissions.addAll(getCustomPermissions("profile", profile.getName()));
     }
 
-    protected List<String> getCustomUserPermissions(final CustomPermissionsMapping customPermissionsMapping) {
-        return getCustomPermissions(customPermissionsMapping, "user|", session.getUserName());
+    void addCustomUserPermissions(Set<String> permissions) {
+        permissions.addAll(getCustomPermissions("user", session.getUserName()));
     }
 
-    protected List<String> getCustomPermissions(final CustomPermissionsMapping customPermissionsMapping, final String prefix, final String identifier) {
-        final List<String> profileSinglePermissions = new ArrayList<String>();
-        final List<String> profilePermissions = getCustomPermissionsRaw(customPermissionsMapping, prefix + identifier);
-        for (final String profilePermission : profilePermissions) {
-            final List<String> simplePermissions = getCompoundPermissions(getCompoundPermissionsMapping(), profilePermission);
+    Set<String> getCustomPermissions(final String type, final String identifier) {
+        final Set<String> profileSinglePermissions = new HashSet<String>();
+        final List<String> customPermissionsForEntity = getCustomPermissionsRaw(type + "|" + identifier);
+        for (final String customPermissionForEntity : customPermissionsForEntity) {
+            final List<String> simplePermissions = getCompoundPermissions(customPermissionForEntity);
             if (!simplePermissions.isEmpty()) {
                 profileSinglePermissions.addAll(simplePermissions);
             } else {
-                profileSinglePermissions.add(profilePermission);
+                profileSinglePermissions.add(customPermissionForEntity);
             }
         }
         return profileSinglePermissions;
     }
 
-    protected List<String> getCustomPermissionsRaw(final CustomPermissionsMapping customPermissionsMapping, final String key) {
+    private List<String> getCustomPermissionsRaw(final String key) {
         return customPermissionsMapping.getPropertyAsList(key);
     }
 
-    protected List<String> getCompoundPermissions(final CompoundPermissionsMapping compoundPermissionsMapping, final String compoundName) {
+    private List<String> getCompoundPermissions(final String compoundName) {
         return compoundPermissionsMapping.getPropertyAsList(compoundName);
-    }
-
-    protected ProfileAPI getProfileAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        return TenantAPIAccessor.getProfileAPI(session);
     }
 
     protected List<Profile> getProfilesForUser(final ProfileAPI profileAPI, final int profilesIndex) {
@@ -150,7 +157,6 @@ public class PermissionsBuilder {
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(entriesIndex, MAX_ELEMENTS_RETRIEVED);
         searchOptionsBuilder.filter(ProfileEntrySearchDescriptor.PROFILE_ID, profile.getId());
         final SearchResult<ProfileEntry> profileEntriesResult = profileAPI.searchProfileEntries(searchOptionsBuilder.done());
-        final List<ProfileEntry> profileEntries = profileEntriesResult.getResult();
-        return profileEntries;
+        return profileEntriesResult.getResult();
     }
 }

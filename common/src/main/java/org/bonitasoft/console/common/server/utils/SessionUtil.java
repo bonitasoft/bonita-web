@@ -17,6 +17,7 @@
 package org.bonitasoft.console.common.server.utils;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -31,7 +32,7 @@ import org.bonitasoft.web.rest.model.user.User;
  */
 public class SessionUtil {
 
-    public static void sessionLogin(final User user, final APISession apiSession, final List<String> permissions, final HttpSession session) {
+    public static void sessionLogin(final User user, final APISession apiSession, final Set<String> permissions, final HttpSession session) {
         session.setAttribute(LoginManager.USERNAME_SESSION_PARAM, user.getUsername());
         session.setAttribute(LoginManager.USER_SESSION_PARAM_KEY, user);
         session.setAttribute(LoginManager.API_SESSION_PARAM_KEY, apiSession);

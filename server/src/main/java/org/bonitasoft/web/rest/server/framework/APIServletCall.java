@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -172,7 +173,7 @@ public class APIServletCall extends ServletCall {
     void checkPermissions(HttpServletRequest request) throws APIForbiddenException {
         String method = request.getMethod();
         HttpSession session = request.getSession();
-        List<String> permissions = (List<String>) session.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
+        Set<String> permissions = (Set<String>) session.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
         APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         Long tenantId = apiSession.getTenantId();
         boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
@@ -213,7 +214,7 @@ public class APIServletCall extends ServletCall {
         }
     }
 
-    boolean staticCheck(String method, String apiName, String resourceName, String resourceId, List<String> permissionsOfUser,
+    boolean staticCheck(String method, String apiName, String resourceName, String resourceId, Set<String> permissionsOfUser,
             ResourcesPermissionsMapping resourcesPermissionsMapping, String username) {
         List<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
         if (resourcePermissions.isEmpty()) {
