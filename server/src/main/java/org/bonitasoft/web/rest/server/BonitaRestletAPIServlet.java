@@ -18,12 +18,13 @@ public class BonitaRestletAPIServlet extends Application {
 
         final Context context = getContext();
         final Router router = new Router(context);
-
-        router.attach("/bpm/activityData/{dataname}/{taskid}", ActivityDataResource.class);
+        // GET an activityData:
+        router.attach("/bpm/activityData/{" + ActivityDataResource.ACTIVITYDATA_DATA_NAME + "}/{" + ActivityDataResource.ACTIVITYDATA_ACTIVITY_ID + "}",
+                ActivityDataResource.class);
         // GET to search timer event triggers:
         router.attach("/bpm/timerEventTrigger", TimerEventTriggerResource.class);
         // PUT to update timer event trigger date:
-        router.attach("/bpm/timerEventTrigger/{id}", TimerEventTriggerResource.class);
+        router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", TimerEventTriggerResource.class);
 
         return router;
     }

@@ -37,9 +37,9 @@ import org.restlet.resource.Put;
  */
 public class TimerEventTriggerResource extends CommonResource {
 
-    static final String DATE_PARAM_NAME = "date";
+    private static final String DATE_PARAM_NAME = "date";
 
-    static final String ID_PARAM_NAME = "id";
+    public static final String ID_PARAM_NAME = "id";
 
     @Get
     public Representation searchTimerEventTriggers() {
