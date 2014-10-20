@@ -18,7 +18,6 @@
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <bonita.home>${bonita.home.test}/bonita</bonita.home>
         <restlet-version>2.2.2</restlet-version>
-        <urlrewrite.version>4.0.3</urlrewrite.version>
     </properties>
 
     <dependencies>
