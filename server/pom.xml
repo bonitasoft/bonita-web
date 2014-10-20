@@ -18,7 +18,6 @@
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <bonita.home>${bonita.home.test}/bonita</bonita.home>
         <restlet-version>2.2.2</restlet-version>
-        <urlrewrite.version>4.0.3</urlrewrite.version>
     </properties>
 
     <dependencies>
@@ -127,11 +126,6 @@
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>${restlet-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.restlet.jse</groupId>
-            <artifactId>org.restlet.ext.json</artifactId>
             <version>${restlet-version}</version>
         </dependency>
     </dependencies>
