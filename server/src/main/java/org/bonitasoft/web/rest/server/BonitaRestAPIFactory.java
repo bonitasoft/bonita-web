@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.server;
 import java.util.logging.Logger;
 
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCase;
+import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCaseDocument;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedComment;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICase;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APICaseDocument;
@@ -191,6 +192,8 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProcessResolutionProblem();
             } else if ("caseDocument".equals(resourceToken)) {
                 return new APICaseDocument();
+            } else if ("archivedCaseDocument".equals(resourceToken)) {
+                return new APIArchivedCaseDocument();
             } else if ("connectorInstance".equals(resourceToken)) {
                 return new APIConnectorInstance();
             } else if ("archivedConnectorInstance".equals(resourceToken)) {

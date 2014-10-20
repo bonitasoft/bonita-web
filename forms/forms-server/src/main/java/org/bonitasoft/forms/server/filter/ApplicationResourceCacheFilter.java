@@ -51,6 +51,14 @@ public class ApplicationResourceCacheFilter implements Filter {
 	 */
 	public static final String RESOURCE_PATH_PARAM = "location";
 
+	private static final String FILE_EXT_SEPARATOR	= ".";
+	private static final String FILE_EXT_CSS	= "css";
+	private static final String FILE_EXT_PNG	= "png";
+	private static final String FILE_EXT_GIF	= "gif";
+	private static final String FILE_EXT_JPG	= "jpg";
+	private static final String FILE_EXT_JS		= "js";
+
+
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.filterConfig = filterConfig;
 		expiresMap.clear();
@@ -74,21 +82,16 @@ public class ApplicationResourceCacheFilter implements Filter {
 
 		String ext = null;
 		final String location = req.getParameter(RESOURCE_PATH_PARAM);
-		if (location.lastIndexOf(".css") != -1) {
-			int dot = location.lastIndexOf(".css");
-			ext = location.substring(dot + 1, dot + 4);
-		} else if (location.lastIndexOf(".png") != -1) {
-			int dot = location.lastIndexOf(".png");
-			ext = location.substring(dot + 1, dot + 4);
-		} else if (location.lastIndexOf(".gif") != -1) {
-			int dot = location.lastIndexOf(".gif");
-			ext = location.substring(dot + 1, dot + 4);
-		} else if (location.lastIndexOf(".jpg") != -1) {
-			int dot = location.lastIndexOf(".jpg");
-			ext = location.substring(dot + 1, dot + 4);
-		} else if (location.lastIndexOf(".js") != -1) {
-			int dot = location.lastIndexOf(".js");
-			ext = location.substring(dot + 1, dot + 3);
+		if (location.endsWith(FILE_EXT_SEPARATOR + FILE_EXT_CSS)) {
+			ext = FILE_EXT_CSS;
+		} else if (location.endsWith(FILE_EXT_SEPARATOR + FILE_EXT_PNG)) {
+			ext = FILE_EXT_PNG;
+		} else if (location.endsWith(FILE_EXT_SEPARATOR + FILE_EXT_GIF)) {
+			ext = FILE_EXT_GIF;
+		} else if (location.endsWith(FILE_EXT_SEPARATOR + FILE_EXT_JPG)) {
+			ext = FILE_EXT_JPG;
+		} else if (location.endsWith(FILE_EXT_SEPARATOR + FILE_EXT_JS)) {
+			ext = FILE_EXT_JS;
 		}
 
 		setResponseHeader(res, ext);
