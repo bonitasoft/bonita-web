@@ -95,12 +95,31 @@ public class SimplePropertiesTest {
         final Set<String> permissions = new HashSet<String>();
         permissions.add("Case Visualization");
         permissions.add("Task Visualization");
-        final String string = permissions.toString();
         try {
             tenantProperties.setPropertyAsList("customPage1", permissions);
 
             final String compoundValue = tenantProperties.getProperty("customPage1");
             Assert.assertEquals("[Case Visualization, Task Visualization]", compoundValue);
+        } finally {
+            tenantProperties.removeProperty("customPage1");
+        }
+        Assert.assertNull(tenantProperties.getProperty("customPage1"));
+    }
+
+    @Test
+    public void should_setPropertyAsList_add_the_right_compound_permissions_with_an_empty_list() throws Exception {
+
+        final File compoundPermissionMappingWorkFile = File.createTempFile("compound-permissions-mapping", ".properties");
+        compoundPermissionMappingWorkFile.deleteOnExit();
+        FileUtils.copyFile(COMPOUND_PERMISSIONS_MAPPING_FILE, compoundPermissionMappingWorkFile);
+
+        final SimpleProperties tenantProperties = new SimpleProperties(compoundPermissionMappingWorkFile);
+        final Set<String> permissions = new HashSet<String>();
+        try {
+            tenantProperties.setPropertyAsList("customPage1", permissions);
+
+            final String compoundValue = tenantProperties.getProperty("customPage1");
+            Assert.assertEquals("[]", compoundValue);
         } finally {
             tenantProperties.removeProperty("customPage1");
         }
