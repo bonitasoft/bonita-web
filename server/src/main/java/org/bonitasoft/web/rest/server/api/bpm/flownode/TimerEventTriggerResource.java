@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +22,8 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.json.JSONObject;
-import org.restlet.data.MediaType;
-import org.restlet.representation.Representation;
-import org.restlet.representation.StringRepresentation;
+import org.restlet.Server;
+import org.restlet.data.Protocol;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -37,17 +34,19 @@ import org.restlet.resource.Put;
  */
 public class TimerEventTriggerResource extends CommonResource {
 
-    private static final String DATE_PARAM_NAME = "date";
-
     public static final String ID_PARAM_NAME = "id";
 
-    @Get
-    public Representation searchTimerEventTriggers() {
+    public static void main(final String[] args) throws Exception {
+        new Server(Protocol.HTTP, 8080, TimerEventTriggerResource.class).start();
+    }
+
+    @Get("json")
+    public List<TimerEventTriggerInstance> searchTimerEventTriggers() {
         try {
             final Long caseId = getLongParameter("caseId", true);
             final List<TimerEventTriggerInstance> triggers = runEngineSearch(caseId, buildSearchOptions());
             //            System.out.println("List of triggers IDs: " + triggers);
-            return new StringRepresentation(toJsonArray(triggers), MediaType.APPLICATION_JSON);
+            return triggers;
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -58,20 +57,20 @@ public class TimerEventTriggerResource extends CommonResource {
     }
 
     @Put("json")
-    public String updateTimerEventTrigger(final String jsonMsg) throws Exception {
-        final JSONObject jsonObject = new JSONObject(jsonMsg.toString());
+    public Long updateTimerEventTrigger(final TimerEventTrigger trigger) throws Exception {
+        System.out.println("json input: " + trigger);
         final String triggerId = getAttribute(ID_PARAM_NAME);
         if (triggerId == null) {
             throw new APIException("Attribute '" + ID_PARAM_NAME + "' is mandatory");
         }
         final long timerEventTriggerInstanceId = Long.parseLong(triggerId);
-        final Date executionDate = new SimpleDateFormat(JSON_DATE_FORMAT).parse(jsonObject.getString(DATE_PARAM_NAME));
-        final Date newDate = getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate);
-        return toJson(newDate);
+        final Date executionDate = new Date(trigger.getExecutionDate());
+        return getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate).getTime();
     }
 
     @Override
     public String getAttribute(final String attributeName) {
         return super.getAttribute(attributeName);
     }
+
 }

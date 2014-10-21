@@ -13,7 +13,6 @@
  **/
 package org.bonitasoft.web.rest.server.api.resource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,6 @@ import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.json.JSONObject;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.resource.ServerResource;
 
@@ -44,21 +42,9 @@ public class CommonResource extends ServerResource {
     /**
      * Json format for dates
      */
-    protected static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    //    protected static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private APISession sessionSingleton = null;
-
-    public String toJson(final Object p) {
-        return new JSONObject(p).toString();
-    }
-
-    protected <T> String toJsonArray(final List<T> list) {
-        final List<JSONObject> jsonObj = new ArrayList<JSONObject>(list.size());
-        for (final T object : list) {
-            jsonObj.add(new JSONObject(object));
-        }
-        return jsonObj.toString();
-    }
 
     /**
      * Get the tenant session to access the engine APIs
@@ -88,7 +74,7 @@ public class CommonResource extends ServerResource {
     }
 
     protected Map<String, String> getSearchFilters() {
-        return parseFilters(getParameterAsList(APIServletCall.PARAMETER_FILTER, null));
+        return parseFilters(getParameterAsList(APIServletCall.PARAMETER_FILTER));
     }
 
     /**
@@ -145,13 +131,6 @@ public class CommonResource extends ServerResource {
         return null;
     }
 
-    //    @SuppressWarnings("unchecked")
-    //    protected <T> T getMandatoryParameter(final Class<T> parameterType, final String parameterName) {
-    //        final String parameter = getParameter(parameterName);
-    //        verifyNotNullParameter(parameter, parameterName);
-    //        return (T) parameter;
-    //    }
-
     public String getParameter(final String parameterName, final boolean mandatory) {
         final String parameter = getRequestParameter(parameterName);
         if (mandatory) {
@@ -175,20 +154,13 @@ public class CommonResource extends ServerResource {
      *
      * @param name
      *        The name of the parameter (case sensitive).
-     * @param defaultValue
-     *        The value to return if the parameter is not defined.
      * @return This method returns the values of a parameter as a list of String.
      */
-    public List<String> getParameterAsList(final String name, final String defaultValue) {
+    public List<String> getParameterAsList(final String name) {
         final String[] parameterValues = getHttpRequest().getParameterValues(name);
         if (parameterValues != null && parameterValues.length > 0) {
             return Arrays.asList(parameterValues);
         }
-        //        if (defaultValue != null) {
-        //            final List<String> results = new ArrayList<String>();
-        //            results.add(defaultValue);
-        //            return results;
-        //        }
         return null;
     }
 

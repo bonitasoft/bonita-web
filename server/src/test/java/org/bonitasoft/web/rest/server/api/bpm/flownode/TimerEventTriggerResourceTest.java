@@ -59,11 +59,11 @@ public class TimerEventTriggerResourceTest {
         final TimerEventTriggerResource spy = spy(new TimerEventTriggerResource());
         doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
 
-        spy.updateTimerEventTrigger("{}");
+        spy.updateTimerEventTrigger(null);
     }
 
     @Test
-    public void updateTimerEventTriggersShouldReturnStatusCode200() throws Exception {
+    public void updateTimerEventTriggersShouldReturnStatusEngineReturnedDate() throws Exception {
         final TimerEventTriggerResource restResource = spy(new TimerEventTriggerResource());
 
         doReturn(mock(HttpServletRequest.class)).when(restResource).getHttpRequest();
@@ -74,15 +74,16 @@ public class TimerEventTriggerResourceTest {
         doReturn(0).when(restResource).getIntegerParameter(anyString(), anyBoolean());
         doReturn(0L).when(restResource).getLongParameter(anyString(), anyBoolean());
         doReturn("").when(restResource).getParameter(anyString(), anyBoolean());
-        doReturn(Collections.emptyList()).when(restResource).getParameterAsList(anyString(), anyString());
+        doReturn(Collections.emptyList()).when(restResource).getParameterAsList(anyString());
 
         final long timerEventTriggerId = 1L;
         doReturn("" + timerEventTriggerId).when(restResource).getAttribute(TimerEventTriggerResource.ID_PARAM_NAME);
         final ProcessAPI processAPI = mock(ProcessAPI.class);
         doReturn(processAPI).when(restResource).getEngineProcessAPI();
         final Date date = new Date();
+        final TimerEventTrigger timerEventTrigger = new TimerEventTrigger();
+        timerEventTrigger.setExecutionDate(date.getTime());
         doReturn(date).when(processAPI).updateExecutionDateOfTimerEventTriggerInstance(eq(timerEventTriggerId), any(Date.class));
-        assertThat(restResource.updateTimerEventTrigger("{date: '2018-03-20 21:00:00'}")).isEqualTo(
-                restResource.toJson(date));
+        assertThat(restResource.updateTimerEventTrigger(timerEventTrigger)).isEqualTo(date.getTime());
     }
 }
