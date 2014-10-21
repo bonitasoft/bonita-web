@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Baptiste Mesta
  * @author Fabio Lombardi
  */
-public class ResourcesPermissionsMapping extends TenantProperties {
+public class ResourcesPermissionsMapping extends SimpleProperties {
 
     /**
      * Default name of the preferences file
@@ -43,7 +43,7 @@ public class ResourcesPermissionsMapping extends TenantProperties {
     protected static synchronized ResourcesPermissionsMapping getInstance(final long tenantId) {
         ResourcesPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
-            final File fileName = getPropertiesFile(tenantId, PROPERTIES_FILENAME);
+            final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new ResourcesPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);
         }

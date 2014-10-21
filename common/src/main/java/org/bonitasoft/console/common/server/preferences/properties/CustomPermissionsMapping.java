@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Anthony Birembaut
  */
-public class CustomPermissionsMapping extends TenantProperties {
+public class CustomPermissionsMapping extends SimpleProperties {
 
     /**
      * Default name of the preferences file
@@ -40,7 +40,7 @@ public class CustomPermissionsMapping extends TenantProperties {
     protected static synchronized CustomPermissionsMapping getInstance(final long tenantId) {
         CustomPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
-            final File fileName = getPropertiesFile(tenantId, PROPERTIES_FILENAME);
+            final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new CustomPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);
         }

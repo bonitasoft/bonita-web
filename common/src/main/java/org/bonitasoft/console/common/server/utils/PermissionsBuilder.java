@@ -27,15 +27,15 @@ public class PermissionsBuilder {
 
     protected final APISession session;
     private final ProfileAPI profileAPI;
-    private CustomPermissionsMapping customPermissionsMapping;
-    private CompoundPermissionsMapping compoundPermissionsMapping;
-    private boolean apiAuthorizationsCheckEnabled;
+    private final CustomPermissionsMapping customPermissionsMapping;
+    private final CompoundPermissionsMapping compoundPermissionsMapping;
+    private final boolean apiAuthorizationsCheckEnabled;
 
     public PermissionsBuilder(final APISession session) throws LoginFailedException {
         this.session = session;
         try {
             profileAPI = TenantAPIAccessor.getProfileAPI(session);
-        } catch (BonitaException e) {
+        } catch (final BonitaException e) {
             throw new LoginFailedException(e);
 
         }
@@ -44,8 +44,8 @@ public class PermissionsBuilder {
         compoundPermissionsMapping = PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
     }
 
-    public PermissionsBuilder(APISession session, ProfileAPI profileAPI, CustomPermissionsMapping customPermissionsMapping,
-            CompoundPermissionsMapping compoundPermissionsMapping, boolean apiAuthorizationsCheckEnabled) {
+    PermissionsBuilder(final APISession session, final ProfileAPI profileAPI, final CustomPermissionsMapping customPermissionsMapping,
+            final CompoundPermissionsMapping compoundPermissionsMapping, final boolean apiAuthorizationsCheckEnabled) {
         this.session = session;
         this.profileAPI = profileAPI;
         this.customPermissionsMapping = customPermissionsMapping;
@@ -62,7 +62,7 @@ public class PermissionsBuilder {
         return permissions;
     }
 
-    void addProfilesPermissions(Set<String> permissions) throws LoginFailedException {
+    void addProfilesPermissions(final Set<String> permissions) throws LoginFailedException {
         final Set<String> pageTokens;
         try {
             pageTokens = getAllPagesForUser(permissions);
@@ -99,12 +99,12 @@ public class PermissionsBuilder {
         return pageTokens;
     }
 
-    void addPageAndCustomPermissionsOfProfile(Set<String> permissions, Set<String> pageTokens, ProfileAPI profileAPI, Profile profile) throws SearchException {
+    void addPageAndCustomPermissionsOfProfile(final Set<String> permissions, final Set<String> pageTokens, final ProfileAPI profileAPI, final Profile profile) throws SearchException {
         addPagesOfProfile(profileAPI, profile, pageTokens);
         addCustomProfilePermissions(permissions, profile);
     }
 
-    void addPagesOfProfile(final ProfileAPI profileAPI, final Profile profile, Set<String> pageTokens) throws SearchException {
+    void addPagesOfProfile(final ProfileAPI profileAPI, final Profile profile, final Set<String> pageTokens) throws SearchException {
         int entriesIndex = 0;
         int nbOfProfileEntriesRetrieved = MAX_ELEMENTS_RETRIEVED;
         while (nbOfProfileEntriesRetrieved == MAX_ELEMENTS_RETRIEVED) {
@@ -119,11 +119,11 @@ public class PermissionsBuilder {
         }
     }
 
-    void addCustomProfilePermissions(Set<String> permissions, Profile profile) {
+    void addCustomProfilePermissions(final Set<String> permissions, final Profile profile) {
         permissions.addAll(getCustomPermissions("profile", profile.getName()));
     }
 
-    void addCustomUserPermissions(Set<String> permissions) {
+    void addCustomUserPermissions(final Set<String> permissions) {
         permissions.addAll(getCustomPermissions("user", session.getUserName()));
     }
 

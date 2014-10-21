@@ -1,7 +1,9 @@
 package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -10,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TenantPropertiesTest {
+public class SimplePropertiesTest {
 
     private static final File COMPOUND_PERMISSIONS_MAPPING_FILE = new File("src/test/resources/compound-permissions-mapping.properties");
     private static final File RESOURCES_PERMISSIONS_MAPPING_FILE = new File("src/test/resources/resources-permissions-mapping.properties");
@@ -19,7 +21,7 @@ public class TenantPropertiesTest {
     @Test
     public void should_getProperty_return_the_right_compound_permissions() throws Exception {
 
-        final TenantProperties tenantProperties = new TenantProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
+        final SimpleProperties tenantProperties = new SimpleProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
 
         final String compoundValue = tenantProperties.getProperty("taskListingPage");
         Assert.assertEquals("[TaskVisualization, CaseVisualization]", compoundValue);
@@ -28,7 +30,7 @@ public class TenantPropertiesTest {
     @Test
     public void should_getProperty_return_the_right_resource_permissions() throws Exception {
 
-        final TenantProperties tenantProperties = new TenantProperties(RESOURCES_PERMISSIONS_MAPPING_FILE);
+        final SimpleProperties tenantProperties = new SimpleProperties(RESOURCES_PERMISSIONS_MAPPING_FILE);
 
         final String resourcesValue = tenantProperties.getProperty("GET|bpm/identity");
         Assert.assertEquals("[UserVisualization, groupVisualization]", resourcesValue);
@@ -37,7 +39,7 @@ public class TenantPropertiesTest {
     @Test
     public void should_getProperty_return_the_right_custom_permissions() throws Exception {
 
-        final TenantProperties tenantProperties = new TenantProperties(CUSTOM_PERMISSIONS_MAPPING_FILE);
+        final SimpleProperties tenantProperties = new SimpleProperties(CUSTOM_PERMISSIONS_MAPPING_FILE);
 
         final String customValue = tenantProperties.getProperty("profile|User");
         Assert.assertEquals("[ManageLooknFeel, ManageProfiles]", customValue);
@@ -50,7 +52,7 @@ public class TenantPropertiesTest {
         compoundPermissionMappingWorkFile.deleteOnExit();
         FileUtils.copyFile(COMPOUND_PERMISSIONS_MAPPING_FILE, compoundPermissionMappingWorkFile);
 
-        final TenantProperties tenantProperties = new TenantProperties(compoundPermissionMappingWorkFile);
+        final SimpleProperties tenantProperties = new SimpleProperties(compoundPermissionMappingWorkFile);
 
         try {
             tenantProperties.setProperty("caseListingPage", "[CaseVisualization]");
@@ -66,7 +68,7 @@ public class TenantPropertiesTest {
     @Test
     public void should_getProperty_return_the_right_permissions_list() throws Exception {
 
-        final TenantProperties tenantProperties = new TenantProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
+        final SimpleProperties tenantProperties = new SimpleProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
 
         final List<String> compoundPermissionsList = tenantProperties.getPropertyAsList("taskListingPage");
         Assert.assertTrue(compoundPermissionsList.contains("TaskVisualization"));
@@ -76,9 +78,33 @@ public class TenantPropertiesTest {
     @Test
     public void should_getProperty_return_the_right_permissions_list_with_single_value() throws Exception {
 
-        final TenantProperties tenantProperties = new TenantProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
+        final SimpleProperties tenantProperties = new SimpleProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
 
         final List<String> compoundPermissionsList = tenantProperties.getPropertyAsList("processListingPage");
         Assert.assertTrue(compoundPermissionsList.contains("processVisualization"));
+    }
+
+    @Test
+    public void should_setPropertyAsList_add_the_right_compound_permissions() throws Exception {
+
+        final File compoundPermissionMappingWorkFile = File.createTempFile("compound-permissions-mapping", ".properties");
+        compoundPermissionMappingWorkFile.deleteOnExit();
+        FileUtils.copyFile(COMPOUND_PERMISSIONS_MAPPING_FILE, compoundPermissionMappingWorkFile);
+
+        final SimpleProperties tenantProperties = new SimpleProperties(compoundPermissionMappingWorkFile);
+        final Set<String> permissions = new HashSet<String>();
+        permissions.add("Case Visualization");
+        permissions.add("Task Visualization");
+        final String string = permissions.toString();
+        try {
+            tenantProperties.setPropertyAsList("customPage1", permissions);
+
+            final String compoundValue = tenantProperties.getProperty("customPage1");
+            Assert.assertEquals("[Case Visualization, Task Visualization]", compoundValue);
+        } finally {
+            tenantProperties.removeProperty("customPage1");
+        }
+        Assert.assertNull(tenantProperties.getProperty("customPage1"));
+
     }
 }

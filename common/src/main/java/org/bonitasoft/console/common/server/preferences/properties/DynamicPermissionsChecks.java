@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Anthony Birembaut
  */
-public class DynamicPermissionsChecks extends TenantProperties {
+public class DynamicPermissionsChecks extends SimpleProperties {
 
     /**
      * Default name of the preferences file
@@ -40,7 +40,7 @@ public class DynamicPermissionsChecks extends TenantProperties {
     protected static synchronized DynamicPermissionsChecks getInstance(final long tenantId) {
         DynamicPermissionsChecks tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
-            final File fileName = getPropertiesFile(tenantId, PROPERTIES_FILENAME);
+            final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new DynamicPermissionsChecks(fileName);
             INSTANCES.put(tenantId, tenancyProperties);
         }

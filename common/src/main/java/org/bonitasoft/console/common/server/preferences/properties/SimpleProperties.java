@@ -35,12 +35,12 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 /**
  * @author Ruiheng Fan, Anthony Birembaut
  */
-public class TenantProperties {
+public class SimpleProperties {
 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(TenantProperties.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SimpleProperties.class.getName());
 
     /**
      * The loaded properties
@@ -57,7 +57,7 @@ public class TenantProperties {
      *
      * @throws IOException
      */
-    protected TenantProperties(final File propertiesFile) {
+    public SimpleProperties(final File propertiesFile) {
         this.propertiesFile = propertiesFile;
         InputStream inputStream = null;
         try {
@@ -83,7 +83,7 @@ public class TenantProperties {
         }
     }
 
-    protected static File getPropertiesFile(final long tenantId, final String propertiesFileName) {
+    protected static File getTenantPropertiesFile(final long tenantId, final String propertiesFileName) {
         return new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), propertiesFileName);
     }
 
@@ -177,5 +177,9 @@ public class TenantProperties {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public void setPropertyAsList(final String property, final Set<String> permissions) throws IOException {
+        setProperty(property, permissions.toString());
     }
 }
