@@ -1,0 +1,41 @@
+.btn {
+  position: relative;
+  color: @color3;
+  padding: 0 10px;
+  min-width: 90px;
+  border: 1px solid @buttonBorderColor;
+  text-transform: uppercase;
+  font-family: @skinFont;
+  text-shadow: none;
+  font-size: .9em;
+  border-radius: 3px;
+  height: 25px;
+  line-height: 25px !important;
+  text-decoration: none;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  white-space: nowrap;
+  user-select: none;
+  background: @button-linear-gradient;
+  box-shadow: 2px 2px @button-shadowBlur @button-shadowColor;
+  /*overflow: hidden;*/
+
+  &.btn-success {
+    color: @btnColor1TxtColor;
+    border-color: @buttonSuccessBorderColor;
+    background: @button-success-linear-gradient;
+  }
+}
+
+.btn-toolbar {
+  margin-bottom: 20px;
+}
+
+.btn-group .btn {min-width: 30px}
+[class*="btn-action-"] {
+  margin-top: -5px;
+  background-color: transparent;
+  border: 0;
+  line-height: 2em
+}
