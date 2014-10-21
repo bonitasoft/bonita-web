@@ -250,7 +250,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
      */
     public FormWidget(final String id, final int maxLength, final int maxHeight, final WidgetType type, final String style, final String labelStyle,
             final String inputStyle, final ItemPosition labelPosition, final boolean mandatory) {
-        this.reducedFormWidget = new ReducedFormWidget(id, maxLength, maxHeight, type, style, labelStyle, inputStyle, labelPosition, mandatory);
+        reducedFormWidget = new ReducedFormWidget(id, maxLength, maxHeight, type, style, labelStyle, inputStyle, labelPosition, mandatory);
     }
 
     /**
@@ -259,14 +259,14 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
      */
     public FormWidget() {
         super();
-        this.reducedFormWidget = new ReducedFormWidget();
+        reducedFormWidget = new ReducedFormWidget();
     }
 
     /**
      * @return the filePaths
      */
     public String getFilePaths() {
-        return this.filePaths;
+        return filePaths;
     }
 
     /**
@@ -280,57 +280,57 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public String getTitle() {
-        return this.reducedFormWidget.getTitle();
+        return reducedFormWidget.getTitle();
     }
 
     public void setTitle(final String title) {
         if (title != null) {
-            this.reducedFormWidget.setTitle(title);
+            reducedFormWidget.setTitle(title);
         }
     }
 
     public String getId() {
-        return this.reducedFormWidget.getId();
+        return reducedFormWidget.getId();
     }
 
     public void setId(final String id) {
-        this.reducedFormWidget.setId(id);
+        reducedFormWidget.setId(id);
     }
 
     public int getMaxLength() {
-        return this.reducedFormWidget.getMaxLength();
+        return reducedFormWidget.getMaxLength();
     }
 
     public void setMaxLength(final int maxLength) {
-        this.reducedFormWidget.setMaxLength(maxLength);
+        reducedFormWidget.setMaxLength(maxLength);
     }
 
     public int getMaxHeight() {
-        return this.reducedFormWidget.getMaxHeight();
+        return reducedFormWidget.getMaxHeight();
     }
 
     public void setMaxHeight(final int maxHeight) {
-        this.reducedFormWidget.setMaxHeight(maxHeight);
+        reducedFormWidget.setMaxHeight(maxHeight);
     }
 
     public WidgetType getType() {
-        return this.reducedFormWidget.getType();
+        return reducedFormWidget.getType();
     }
 
     public void setType(final WidgetType type) {
-        this.reducedFormWidget.setType(type);
+        reducedFormWidget.setType(type);
     }
 
     public String getStyle() {
-        return this.reducedFormWidget.getStyle();
+        return reducedFormWidget.getStyle();
     }
 
     public void setStyle(final String style) {
-        this.reducedFormWidget.setStyle(style);
+        reducedFormWidget.setStyle(style);
     }
 
     public Expression getInitialValueExpression() {
-        return this.initialValueExpression;
+        return initialValueExpression;
     }
 
     public void setInitialValueExpression(final Expression initialValueExpression) {
@@ -338,7 +338,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<List<Expression>> getInitialValueExpressionArray() {
-        return this.initialValueExpressionArray;
+        return initialValueExpressionArray;
     }
 
     public void setInitialValueExpressionArray(final List<List<Expression>> initialValueExpressionArray) {
@@ -346,7 +346,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<FormValidator> getValidators() {
-        return this.validators;
+        return validators;
     }
 
     public void setValidators(final List<FormValidator> validators) {
@@ -357,45 +357,45 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
                 reducedValidators.add(formValidator.getReducedFormValidator());
             }
         }
-        this.reducedFormWidget.setValidators(reducedValidators);
+        reducedFormWidget.setValidators(reducedValidators);
     }
 
     public String getLabel() {
-        return this.reducedFormWidget.getLabel();
+        return reducedFormWidget.getLabel();
     }
 
     public void setLabel(final String label) {
         if (label != null) {
-            this.reducedFormWidget.setLabel(label);
+            reducedFormWidget.setLabel(label);
         }
     }
 
     public String getLabelStyle() {
-        return this.reducedFormWidget.getLabelStyle();
+        return reducedFormWidget.getLabelStyle();
     }
 
     public void setLabelStyle(final String labelStyle) {
-        this.reducedFormWidget.setLabelStyle(labelStyle);
+        reducedFormWidget.setLabelStyle(labelStyle);
     }
 
     public String getInputStyle() {
-        return this.reducedFormWidget.getInputStyle();
+        return reducedFormWidget.getInputStyle();
     }
 
     public void setInputStyle(final String inputStyle) {
-        this.reducedFormWidget.setInputStyle(inputStyle);
+        reducedFormWidget.setInputStyle(inputStyle);
     }
 
     public ItemPosition getLabelPosition() {
-        return this.reducedFormWidget.getLabelPosition();
+        return reducedFormWidget.getLabelPosition();
     }
 
     public void setLabelPosition(final ItemPosition labelPosition) {
-        this.reducedFormWidget.setLabelPosition(labelPosition);
+        reducedFormWidget.setLabelPosition(labelPosition);
     }
 
     public List<FormFieldAvailableValue> getAvailableValues() {
-        return this.availableValues;
+        return availableValues;
     }
 
     public void setAvailableValues(final List<FormFieldAvailableValue> availableValues) {
@@ -404,55 +404,55 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
         for (final FormFieldAvailableValue formFieldAvailableValue : availableValues) {
             reducedFormFieldAvailableValues.add(formFieldAvailableValue.getReducedFieldAvailableValue());
         }
-        this.reducedFormWidget.setAvailableValues(reducedFormFieldAvailableValues);
+        reducedFormWidget.setAvailableValues(reducedFormFieldAvailableValues);
     }
 
     public void setReducedAvailableValues(final List<ReducedFormFieldAvailableValue> reducedFormFieldAvailableValues) {
-        this.reducedFormWidget.setAvailableValues(reducedFormFieldAvailableValues);
+        reducedFormWidget.setAvailableValues(reducedFormFieldAvailableValues);
     }
 
     public boolean isMandatory() {
-        return this.reducedFormWidget.isMandatory();
+        return reducedFormWidget.isMandatory();
     }
 
     public void setMandatory(final boolean mandatory) {
-        this.reducedFormWidget.setMandatory(mandatory);
+        reducedFormWidget.setMandatory(mandatory);
     }
 
     public FormFieldValue getInitialFieldValue() {
-        return this.reducedFormWidget.getInitialFieldValue();
+        return reducedFormWidget.getInitialFieldValue();
     }
 
     public void setInitialFieldValue(final FormFieldValue initialFieldValue) {
-        this.reducedFormWidget.setInitialFieldValue(initialFieldValue);
+        reducedFormWidget.setInitialFieldValue(initialFieldValue);
     }
 
     public String getDisplayFormat() {
-        return this.reducedFormWidget.getDisplayFormat();
+        return reducedFormWidget.getDisplayFormat();
     }
 
     public void setDisplayFormat(final String displayFormat) {
-        this.reducedFormWidget.setDisplayFormat(displayFormat);
+        reducedFormWidget.setDisplayFormat(displayFormat);
     }
 
     public boolean isViewPageWidget() {
-        return this.reducedFormWidget.isViewPageWidget();
+        return reducedFormWidget.isViewPageWidget();
     }
 
     public void setViewPageWidget(final boolean viewPageWidget) {
-        this.reducedFormWidget.setViewPageWidget(viewPageWidget);
+        reducedFormWidget.setViewPageWidget(viewPageWidget);
     }
 
     public String getItemsStyle() {
-        return this.reducedFormWidget.getItemsStyle();
+        return reducedFormWidget.getItemsStyle();
     }
 
     public void setItemsStyle(final String itemsStyle) {
-        this.reducedFormWidget.setItemsStyle(itemsStyle);
+        reducedFormWidget.setItemsStyle(itemsStyle);
     }
 
     public Expression getAvailableValuesExpression() {
-        return this.availableValuesExpression;
+        return availableValuesExpression;
     }
 
     public void setAvailableValuesExpression(final Expression availableValuesExpression) {
@@ -460,231 +460,231 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public boolean isLabelButton() {
-        return this.reducedFormWidget.isLabelButton();
+        return reducedFormWidget.isLabelButton();
     }
 
     public void setLabelButton(final boolean labelButton) {
-        this.reducedFormWidget.setLabelButton(labelButton);
+        reducedFormWidget.setLabelButton(labelButton);
     }
 
     public boolean allowHTMLInLabel() {
-        return this.reducedFormWidget.allowHTMLInLabel();
+        return reducedFormWidget.allowHTMLInLabel();
     }
 
     public void setAllowHTMLInLabel(final boolean allowHTMLInLabel) {
-        this.reducedFormWidget.setAllowHTMLInLabel(allowHTMLInLabel);
+        reducedFormWidget.setAllowHTMLInLabel(allowHTMLInLabel);
     }
 
     public boolean allowHTMLInField() {
-        return this.reducedFormWidget.allowHTMLInField();
+        return reducedFormWidget.allowHTMLInField();
     }
 
     public void setAllowHTMLInField(final boolean allowHTMLInField) {
-        this.reducedFormWidget.setAllowHTMLInField(allowHTMLInField);
+        reducedFormWidget.setAllowHTMLInField(allowHTMLInField);
     }
 
     public String getImageStyle() {
-        return this.reducedFormWidget.getImageStyle();
+        return reducedFormWidget.getImageStyle();
     }
 
     public void setImageStyle(final String imageStyle) {
-        this.reducedFormWidget.setImageStyle(imageStyle);
+        reducedFormWidget.setImageStyle(imageStyle);
     }
 
     public String getHeadingsStyle() {
-        return this.reducedFormWidget.getHeadingsStyle();
+        return reducedFormWidget.getHeadingsStyle();
     }
 
     public void setHeadingsStyle(final String headingsStyle) {
-        this.reducedFormWidget.setHeadingsStyle(headingsStyle);
+        reducedFormWidget.setHeadingsStyle(headingsStyle);
     }
 
     public boolean hasLeftHeadings() {
-        return this.reducedFormWidget.hasLeftHeadings();
+        return reducedFormWidget.hasLeftHeadings();
     }
 
     public void setLeftHeadings(final boolean leftHeadings) {
-        this.reducedFormWidget.setLeftHeadings(leftHeadings);
+        reducedFormWidget.setLeftHeadings(leftHeadings);
     }
 
     public boolean hasTopHeadings() {
-        return this.reducedFormWidget.hasTopHeadings();
+        return reducedFormWidget.hasTopHeadings();
     }
 
     public void setTopHeadings(final boolean topHeadings) {
-        this.reducedFormWidget.setTopHeadings(topHeadings);
+        reducedFormWidget.setTopHeadings(topHeadings);
     }
 
     public boolean hasRightHeadings() {
-        return this.reducedFormWidget.hasRightHeadings();
+        return reducedFormWidget.hasRightHeadings();
     }
 
     public void setRightHeadings(final boolean rightHeadings) {
-        this.reducedFormWidget.setRightHeadings(rightHeadings);
+        reducedFormWidget.setRightHeadings(rightHeadings);
     }
 
     public boolean hasBottomHeadings() {
-        return this.reducedFormWidget.hasBottomHeadings();
+        return reducedFormWidget.hasBottomHeadings();
     }
 
     public void setBottomHeadings(final boolean bottomHeadings) {
-        this.reducedFormWidget.setBottomHeadings(bottomHeadings);
+        reducedFormWidget.setBottomHeadings(bottomHeadings);
     }
 
     public String getTableStyle() {
-        return this.reducedFormWidget.getTableStyle();
+        return reducedFormWidget.getTableStyle();
     }
 
     public void setTableStyle(final String tableStyle) {
-        this.reducedFormWidget.setTableStyle(tableStyle);
+        reducedFormWidget.setTableStyle(tableStyle);
     }
 
     public String getCellsStyle() {
-        return this.reducedFormWidget.getCellsStyle();
+        return reducedFormWidget.getCellsStyle();
     }
 
     public void setCellsStyle(final String cellsStyle) {
-        this.reducedFormWidget.setCellsStyle(cellsStyle);
+        reducedFormWidget.setCellsStyle(cellsStyle);
     }
 
     public void setReadOnly(final boolean readOnly) {
-        this.reducedFormWidget.setReadOnly(readOnly);
+        reducedFormWidget.setReadOnly(readOnly);
     }
 
     public boolean isReadOnly() {
-        return this.reducedFormWidget.isReadOnly();
+        return reducedFormWidget.isReadOnly();
     }
 
     public void setMultiple(final boolean multiple) {
-        this.reducedFormWidget.setMultiple(multiple);
+        reducedFormWidget.setMultiple(multiple);
     }
-
+	
     public boolean isMultiple() {
-        return this.reducedFormWidget.isMultiple();
+        return reducedFormWidget.isMultiple();
     }
 
     public int getValueColumnIndex() {
-        return this.reducedFormWidget.getValueColumnIndex();
+        return reducedFormWidget.getValueColumnIndex();
     }
 
     public void setValueColumnIndex(final int valueColumnIndex) {
-        this.reducedFormWidget.setValueColumnIndex(valueColumnIndex);
+        reducedFormWidget.setValueColumnIndex(valueColumnIndex);
     }
 
     public int getMaxInstances() {
-        return this.reducedFormWidget.getMaxInstances();
+        return reducedFormWidget.getMaxInstances();
     }
 
     public void setMaxInstances(final int maxInstances) {
-        this.reducedFormWidget.setMaxInstances(maxInstances);
+        reducedFormWidget.setMaxInstances(maxInstances);
     }
 
     public int getMinInstances() {
-        return this.reducedFormWidget.getMinInstances();
+        return reducedFormWidget.getMinInstances();
     }
 
     public void setMinInstances(final int minInstances) {
-        this.reducedFormWidget.setMinInstances(minInstances);
+        reducedFormWidget.setMinInstances(minInstances);
     }
 
     public String getIteratorName() {
-        return this.reducedFormWidget.getIteratorName();
+        return reducedFormWidget.getIteratorName();
     }
 
     public void setIteratorName(final String iteratorName) {
-        this.reducedFormWidget.setIteratorName(iteratorName);
+        reducedFormWidget.setIteratorName(iteratorName);
     }
 
     public void setDisplayAttachmentImage(final boolean displayAttachmentImage) {
-        this.reducedFormWidget.setDisplayAttachmentImage(displayAttachmentImage);
+        reducedFormWidget.setDisplayAttachmentImage(displayAttachmentImage);
     }
 
     public boolean isDisplayAttachmentImage() {
-        return this.reducedFormWidget.isDisplayAttachmentImage();
+        return reducedFormWidget.isDisplayAttachmentImage();
     }
 
     public boolean isDisplayCondition() {
-        return this.reducedFormWidget.isDisplayCondition();
+        return reducedFormWidget.isDisplayCondition();
     }
 
     public void setDisplayCondition(final boolean displayCondition) {
-        this.reducedFormWidget.setDisplayCondition(displayCondition);
+        reducedFormWidget.setDisplayCondition(displayCondition);
     }
 
     public String getAddItemLabel() {
-        return this.reducedFormWidget.getAddItemLabel();
+        return reducedFormWidget.getAddItemLabel();
     }
 
     public void setAddItemLabel(final String addItemLabel) {
-        this.reducedFormWidget.setAddItemLabel(addItemLabel);
+        reducedFormWidget.setAddItemLabel(addItemLabel);
     }
 
     public String getAddItemTitle() {
-        return this.reducedFormWidget.getAddItemTitle();
+        return reducedFormWidget.getAddItemTitle();
     }
 
     public void setAddItemTitle(final String addItemTitle) {
-        this.reducedFormWidget.setAddItemTitle(addItemTitle);
+        reducedFormWidget.setAddItemTitle(addItemTitle);
     }
 
     public String getAddItemLabelStyle() {
-        return this.reducedFormWidget.getAddItemLabelStyle();
+        return reducedFormWidget.getAddItemLabelStyle();
     }
 
     public void setAddItemLabelStyle(final String addItemLabelStyle) {
-        this.reducedFormWidget.setAddItemLabelStyle(addItemLabelStyle);
+        reducedFormWidget.setAddItemLabelStyle(addItemLabelStyle);
     }
 
     public String getRemoveItemLabel() {
-        return this.reducedFormWidget.getRemoveItemLabel();
+        return reducedFormWidget.getRemoveItemLabel();
     }
 
     public void setRemoveItemLabel(final String removeItemLabel) {
-        this.reducedFormWidget.setRemoveItemLabel(removeItemLabel);
+        reducedFormWidget.setRemoveItemLabel(removeItemLabel);
     }
 
     public String getRemoveItemTitle() {
-        return this.reducedFormWidget.getRemoveItemTitle();
+        return reducedFormWidget.getRemoveItemTitle();
     }
 
     public void setRemoveItemTitle(final String removeItemTitle) {
-        this.reducedFormWidget.setRemoveItemTitle(removeItemTitle);
+        reducedFormWidget.setRemoveItemTitle(removeItemTitle);
     }
 
     public String getRemoveItemLabelStyle() {
-        return this.reducedFormWidget.getRemoveItemLabelStyle();
+        return reducedFormWidget.getRemoveItemLabelStyle();
     }
 
     public void setRemoveItemLabelStyle(final String removeItemLabelStyle) {
-        this.reducedFormWidget.setRemoveItemLabelStyle(removeItemLabelStyle);
+        reducedFormWidget.setRemoveItemLabelStyle(removeItemLabelStyle);
     }
 
     public WidgetPosition getWidgetPositionInGroup() {
-        return this.reducedFormWidget.getWidgetPositionInGroup();
+        return reducedFormWidget.getWidgetPositionInGroup();
     }
 
     public void setWidgetPositionInGroup(final WidgetPosition widgetPositionInGroup) {
-        this.reducedFormWidget.setWidgetPositionInGroup(widgetPositionInGroup);
+        reducedFormWidget.setWidgetPositionInGroup(widgetPositionInGroup);
     }
 
     public Map<Integer, String> getRowsStyles() {
-        return this.reducedFormWidget.getRowsStyles();
+        return reducedFormWidget.getRowsStyles();
     }
 
     public void setRowsStyles(final Map<Integer, String> rowsStyles) {
-        this.reducedFormWidget.setRowsStyles(rowsStyles);
+        reducedFormWidget.setRowsStyles(rowsStyles);
     }
 
     public Map<Integer, String> getColumnsStyles() {
-        return this.reducedFormWidget.getColumnsStyles();
+        return reducedFormWidget.getColumnsStyles();
     }
 
     public void setColumnsStyles(final Map<Integer, String> columnsStyles) {
-        this.reducedFormWidget.setColumnsStyles(columnsStyles);
+        reducedFormWidget.setColumnsStyles(columnsStyles);
     }
 
     public List<List<FormFieldAvailableValue>> getTableAvailableValues() {
-        return this.tableAvailableValues;
+        return tableAvailableValues;
     }
 
     public void setTableAvailableValues(final List<List<FormFieldAvailableValue>> tableAvailableValues) {
@@ -697,15 +697,15 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
             }
             reducedTableAvailableValues.add(reducedAvailableValuesRow);
         }
-        this.reducedFormWidget.setTableAvailableValues(reducedTableAvailableValues);
+        reducedFormWidget.setTableAvailableValues(reducedTableAvailableValues);
     }
 
     public void setReducedTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> reducedTableAvailableValues) {
-        this.reducedFormWidget.setTableAvailableValues(reducedTableAvailableValues);
+        reducedFormWidget.setTableAvailableValues(reducedTableAvailableValues);
     }
 
     public Expression getHorizontalHeaderExpression() {
-        return this.horizontalHeaderExpression;
+        return horizontalHeaderExpression;
     }
 
     public void setHorizontalHeaderExpression(final Expression horizontalHeaderExpression) {
@@ -713,7 +713,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<Expression> getHorizontalHeaderExpressionList() {
-        return this.horizontalHeaderExpressionList;
+        return horizontalHeaderExpressionList;
     }
 
     public void setHorizontalHeaderExpressionList(final List<Expression> horizontalHeaderExpressionList) {
@@ -721,15 +721,15 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<String> getHorizontalHeader() {
-        return this.reducedFormWidget.getHorizontalHeader();
+        return reducedFormWidget.getHorizontalHeader();
     }
 
     public void setHorizontalHeader(final List<String> horizontalHeader) {
-        this.reducedFormWidget.setHorizontalHeader(horizontalHeader);
+        reducedFormWidget.setHorizontalHeader(horizontalHeader);
     }
 
     public Expression getVerticalHeaderExpression() {
-        return this.verticalHeaderExpression;
+        return verticalHeaderExpression;
     }
 
     public void setVerticalHeaderExpression(final Expression verticalHeaderExpression) {
@@ -737,7 +737,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<Expression> getVerticalHeaderExpressionList() {
-        return this.verticalHeaderExpressionList;
+        return verticalHeaderExpressionList;
     }
 
     public void setVerticalHeaderExpressionList(final List<Expression> verticalHeaderExpressionList) {
@@ -745,47 +745,47 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<String> getVerticalHeader() {
-        return this.reducedFormWidget.getVerticalHeader();
+        return reducedFormWidget.getVerticalHeader();
     }
 
     public void setVerticalHeader(final List<String> verticalHeader) {
-        this.reducedFormWidget.setVerticalHeader(verticalHeader);
+        reducedFormWidget.setVerticalHeader(verticalHeader);
     }
 
     public SelectMode getSelectMode() {
-        return this.reducedFormWidget.getSelectMode();
+        return reducedFormWidget.getSelectMode();
     }
 
     public void setSelectMode(final SelectMode selectMode) {
-        this.reducedFormWidget.setSelectMode(selectMode);
+        reducedFormWidget.setSelectMode(selectMode);
     }
 
     public String getSelectedItemsStyle() {
-        return this.reducedFormWidget.getSelectedItemsStyle();
+        return reducedFormWidget.getSelectedItemsStyle();
     }
 
     public void setSelectedItemsStyle(final String selectedItemsStyle) {
-        this.reducedFormWidget.setSelectedItemsStyle(selectedItemsStyle);
+        reducedFormWidget.setSelectedItemsStyle(selectedItemsStyle);
     }
 
     public int getMaxRows() {
-        return this.reducedFormWidget.getMaxRows();
+        return reducedFormWidget.getMaxRows();
     }
 
     public void setMaxRows(final int maxRows) {
-        this.reducedFormWidget.setMaxRows(maxRows);
+        reducedFormWidget.setMaxRows(maxRows);
     }
 
     public int getMinRows() {
-        return this.reducedFormWidget.getMinRows();
+        return reducedFormWidget.getMinRows();
     }
 
     public void setMinRows(final int minRows) {
-        this.reducedFormWidget.setMinRows(minRows);
+        reducedFormWidget.setMinRows(minRows);
     }
 
     public Expression getMaxColumnsExpression() {
-        return this.maxColumnsExpression;
+        return maxColumnsExpression;
     }
 
     public void setMaxColumnsExpression(final Expression maxColumnsExpression) {
@@ -793,7 +793,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getMinColumnsExpression() {
-        return this.minColumnsExpression;
+        return minColumnsExpression;
     }
 
     public void setMinColumnsExpression(final Expression minColumnsExpression) {
@@ -801,30 +801,30 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public boolean isVariableRowNumber() {
-        return this.reducedFormWidget.isVariableRowNumber();
+        return reducedFormWidget.isVariableRowNumber();
     }
 
     public void setVariableRowNumber(final boolean isVariableRowNumber) {
-        this.reducedFormWidget.setVariableRowNumber(isVariableRowNumber);
+        reducedFormWidget.setVariableRowNumber(isVariableRowNumber);
     }
 
     public boolean isVariableColumnNumber() {
-        return this.reducedFormWidget.isVariableColumnNumber();
+        return reducedFormWidget.isVariableColumnNumber();
     }
 
     public void setVariableColumnNumber(final boolean isVariableColumnNumber) {
-        this.reducedFormWidget.setVariableColumnNumber(isVariableColumnNumber);
+        reducedFormWidget.setVariableColumnNumber(isVariableColumnNumber);
     }
 
     public void setHtmlAttributes(final Map<String, String> htmlAttributes) {
-        this.reducedFormWidget.setHtmlAttributes(htmlAttributes);
+        reducedFormWidget.setHtmlAttributes(htmlAttributes);
     }
 
     public Map<String, String> getHtmlAttributes() {
-        if (this.reducedFormWidget.getHtmlAttributes() == null) {
-            this.reducedFormWidget.setHtmlAttributes(new HashMap<String, String>());
+        if (reducedFormWidget.getHtmlAttributes() == null) {
+            reducedFormWidget.setHtmlAttributes(new HashMap<String, String>());
         }
-        return this.reducedFormWidget.getHtmlAttributes();
+        return reducedFormWidget.getHtmlAttributes();
     }
 
     public void setChildWidgets(final List<FormWidget> childWidgets) {
@@ -833,40 +833,40 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
         for (final FormWidget formWidget : childWidgets) {
             reducedChildWidgets.add(formWidget.getReducedFormWidget());
         }
-        this.reducedFormWidget.setChildWidgets(reducedChildWidgets);
+        reducedFormWidget.setChildWidgets(reducedChildWidgets);
     }
 
     public List<FormWidget> getChildWidgets() {
-        if (this.childWidgets == null) {
-            this.childWidgets = new ArrayList<FormWidget>();
+        if (childWidgets == null) {
+            childWidgets = new ArrayList<FormWidget>();
         }
-        return this.childWidgets;
+        return childWidgets;
     }
 
     public Set<String> getDependsOnWidgets() {
-        if (this.reducedFormWidget.getDependsOnWidgets() == null) {
-            this.reducedFormWidget.setDependsOnWidgets(new HashSet<String>());
+        if (reducedFormWidget.getDependsOnWidgets() == null) {
+            reducedFormWidget.setDependsOnWidgets(new HashSet<String>());
         }
-        return this.reducedFormWidget.getDependsOnWidgets();
+        return reducedFormWidget.getDependsOnWidgets();
     }
 
     public void setDependsOnWidgets(final Set<String> dependsOnWidgets) {
-        this.reducedFormWidget.setDependsOnWidgets(dependsOnWidgets);
+        reducedFormWidget.setDependsOnWidgets(dependsOnWidgets);
     }
 
     public Set<String> getIsUpdatedByWidgets() {
-        if (this.reducedFormWidget.getIsUpdatedByWidgets() == null) {
-            this.reducedFormWidget.setIsUpdatedByWidgets(new HashSet<String>());
+        if (reducedFormWidget.getIsUpdatedByWidgets() == null) {
+            reducedFormWidget.setIsUpdatedByWidgets(new HashSet<String>());
         }
-        return this.reducedFormWidget.getIsUpdatedByWidgets();
+        return reducedFormWidget.getIsUpdatedByWidgets();
     }
 
     public void setIsUpdatedByWidgets(final Set<String> isUpdatedByWidgets) {
-        this.reducedFormWidget.setIsUpdatedByWidgets(isUpdatedByWidgets);
+        reducedFormWidget.setIsUpdatedByWidgets(isUpdatedByWidgets);
     }
 
     public Expression getDisplayBeforeEventExpression() {
-        return this.displayBeforeEventExpression;
+        return displayBeforeEventExpression;
     }
 
     public void setDisplayBeforeEventExpression(final Expression displayBeforeEventExpression) {
@@ -874,7 +874,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getDisplayAfterEventExpression() {
-        return this.displayAfterEventExpression;
+        return displayAfterEventExpression;
     }
 
     public void setDisplayAfterEventExpression(final Expression displayAfterEventExpression) {
@@ -882,7 +882,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<FormFieldAvailableValue> getAvailableValuesAfterEvent() {
-        return this.availableValuesAfterEvent;
+        return availableValuesAfterEvent;
     }
 
     public void setAvailableValuesAfterEvent(final List<FormFieldAvailableValue> availableValuesAfterEvent) {
@@ -891,11 +891,11 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
         for (final FormFieldAvailableValue formFieldAvailableValue : availableValuesAfterEvent) {
             reducedAvailableValuesAfterEvent.add(formFieldAvailableValue.getReducedFieldAvailableValue());
         }
-        this.reducedFormWidget.setAvailableValuesAfterEvent(reducedAvailableValuesAfterEvent);
+        reducedFormWidget.setAvailableValuesAfterEvent(reducedAvailableValuesAfterEvent);
     }
 
     public Expression getAvailableValuesAfterEventExpression() {
-        return this.availableValuesAfterEventExpression;
+        return availableValuesAfterEventExpression;
     }
 
     public void setAvailableValuesAfterEventExpression(final Expression availableValuesAfterEventExpression) {
@@ -903,7 +903,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<List<FormFieldAvailableValue>> getTableAvailableValuesAfterEvent() {
-        return this.tableAvailableValuesAfterEvent;
+        return tableAvailableValuesAfterEvent;
     }
 
     public void setTableAvailableValuesAfterEvent(final List<List<FormFieldAvailableValue>> tableAvailableValuesAfterEvent) {
@@ -916,11 +916,11 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
             }
             reducedAvailableValues.add(reducedAvailableValuesRow);
         }
-        this.reducedFormWidget.setTableAvailableValuesAfterEvent(reducedAvailableValues);
+        reducedFormWidget.setTableAvailableValuesAfterEvent(reducedAvailableValues);
     }
 
     public Expression getValueAfterEventExpression() {
-        return this.valueAfterEventExpression;
+        return valueAfterEventExpression;
     }
 
     public void setValueAfterEventExpression(final Expression valueAfterEventExpression) {
@@ -928,7 +928,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<Connector> getInitialValueConnectors() {
-        return this.initialValueConnectors;
+        return initialValueConnectors;
     }
 
     public void setInitialValueConnectors(final List<Connector> initialValueConnectors) {
@@ -936,7 +936,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<Connector> getAvailableValuesConnectors() {
-        return this.availableValuesConnectors;
+        return availableValuesConnectors;
     }
 
     public void setAvailableValuesConnectors(final List<Connector> availableValuesConnectors) {
@@ -944,7 +944,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<Connector> getAvailableValuesAfterEventConnectors() {
-        return this.availableValuesAfterEventConnectors;
+        return availableValuesAfterEventConnectors;
     }
 
     public void setAvailableValuesAfterEventConnectors(final List<Connector> availableValuesAfterEventConnectors) {
@@ -952,7 +952,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public List<Connector> getValueAfterEventConnectors() {
-        return this.valueAfterEventConnectors;
+        return valueAfterEventConnectors;
     }
 
     public void setValueAfterEventConnectors(final List<Connector> valueAfterEventConnectors) {
@@ -960,74 +960,74 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public int getMaxItems() {
-        return this.reducedFormWidget.getMaxItems();
+        return reducedFormWidget.getMaxItems();
     }
 
     public void setMaxItems(final int maxItems) {
-        this.reducedFormWidget.setMaxItems(maxItems);
+        reducedFormWidget.setMaxItems(maxItems);
     }
 
     public int getMaxColumns() {
-        return this.reducedFormWidget.getMaxColumns();
+        return reducedFormWidget.getMaxColumns();
     }
 
     public void setMaxColumns(final int maxColumns) {
-        this.reducedFormWidget.setMaxColumns(maxColumns);
+        reducedFormWidget.setMaxColumns(maxColumns);
     }
 
     public int getMinColumns() {
-        return this.reducedFormWidget.getMinColumns();
+        return reducedFormWidget.getMinColumns();
     }
 
     public void setMinColumns(final int minColumns) {
-        this.reducedFormWidget.setMinColumns(minColumns);
+        reducedFormWidget.setMinColumns(minColumns);
     }
 
     public boolean isDisplayBeforeEvent() {
-        return this.reducedFormWidget.isDisplayBeforeEvent();
+        return reducedFormWidget.isDisplayBeforeEvent();
     }
 
     public void setDisplayBeforeEvent(final boolean displayBeforeEvent) {
-        this.reducedFormWidget.setDisplayBeforeEvent(displayBeforeEvent);
+        reducedFormWidget.setDisplayBeforeEvent(displayBeforeEvent);
     }
 
     public boolean isDisplayAfterEvent() {
-        return this.reducedFormWidget.isDisplayAfterEvent();
+        return reducedFormWidget.isDisplayAfterEvent();
     }
 
     public void setDisplayAfterEvent(final boolean displayAfterEvent) {
-        this.reducedFormWidget.setDisplayAfterEvent(displayAfterEvent);
+        reducedFormWidget.setDisplayAfterEvent(displayAfterEvent);
     }
 
     public int getDelayMillis() {
-        return this.reducedFormWidget.getDelayMillis();
+        return reducedFormWidget.getDelayMillis();
     }
 
     public void setDelayMillis(final int delayMillis) {
-        this.reducedFormWidget.setDelayMillis(delayMillis);
+        reducedFormWidget.setDelayMillis(delayMillis);
     }
 
     public FormSubtitle getSubtitle() {
-        return this.subtitle;
+        return subtitle;
     }
 
     public void setSubtitle(final FormSubtitle subtitle) {
         this.subtitle = subtitle;
-        this.reducedFormWidget.setSubTitle(subtitle.getReducedFormSubTitle());
+        reducedFormWidget.setSubTitle(subtitle.getReducedFormSubTitle());
     }
 
     public void setPopupTooltip(final String popupToolTip) {
         if (popupToolTip != null) {
-            this.reducedFormWidget.setPopupTooltip(popupToolTip);
+            reducedFormWidget.setPopupTooltip(popupToolTip);
         }
     }
 
     public String getPopupTooltip() {
-        return this.reducedFormWidget.getPopupTooltip();
+        return reducedFormWidget.getPopupTooltip();
     }
 
     public Expression getLabelExpression() {
-        return this.labelExpression;
+        return labelExpression;
     }
 
     public void setLabelExpression(final Expression labelExpression) {
@@ -1035,7 +1035,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getTitleExpression() {
-        return this.titleExpression;
+        return titleExpression;
     }
 
     public void setTitleExpression(final Expression titleExpression) {
@@ -1043,7 +1043,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getPopupTooltipExpression() {
-        return this.popupTooltipExpression;
+        return popupTooltipExpression;
     }
 
     public void setPopupTooltipExpression(final Expression popupTooltipExpression) {
@@ -1051,7 +1051,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getMaxInstancesExpression() {
-        return this.maxInstancesExpression;
+        return maxInstancesExpression;
     }
 
     public void setMaxInstancesExpression(final Expression maxInstancesExpression) {
@@ -1059,7 +1059,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getMinInstancesExpression() {
-        return this.minInstancesExpression;
+        return minInstancesExpression;
     }
 
     public void setMinInstancesExpression(final Expression minInstancesExpression) {
@@ -1067,7 +1067,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getDisplayConditionExpression() {
-        return this.displayConditionExpression;
+        return displayConditionExpression;
     }
 
     public void setDisplayConditionExpression(final Expression displayConditionExpression) {
@@ -1075,7 +1075,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getValueColumnIndexExpression() {
-        return this.valueColumnIndexExpression;
+        return valueColumnIndexExpression;
     }
 
     public void setValueColumnIndexExpression(final Expression valueColumnIndexExpression) {
@@ -1083,7 +1083,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getMaxRowsExpression() {
-        return this.maxRowsExpression;
+        return maxRowsExpression;
     }
 
     public void setMaxRowsExpression(final Expression maxRowsExpression) {
@@ -1091,7 +1091,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getMinRowsExpression() {
-        return this.minRowsExpression;
+        return minRowsExpression;
     }
 
     public void setMinRowsExpression(final Expression minRowsExpression) {
@@ -1099,15 +1099,15 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public String getValidatorsCacheId() {
-        return this.reducedFormWidget.getValidatorsCacheId();
+        return reducedFormWidget.getValidatorsCacheId();
     }
 
     public void setValidatorsCacheId(final String validatorsCacheId) {
-        this.reducedFormWidget.setValidatorsCacheId(validatorsCacheId);
+        reducedFormWidget.setValidatorsCacheId(validatorsCacheId);
     }
 
     public ReducedFormWidget getReducedFormWidget() {
-        return this.reducedFormWidget;
+        return reducedFormWidget;
     }
 
     public void setReducedFormWidget(final ReducedFormWidget reducedFormWidget) {
@@ -1115,7 +1115,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getAddItemLabelExpression() {
-        return this.addItemLabelExpression;
+        return addItemLabelExpression;
     }
 
     public void setAddItemLabelExpression(final Expression addItemLabelExpression) {
@@ -1123,7 +1123,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getAddItemTitleExpression() {
-        return this.addItemTitleExpression;
+        return addItemTitleExpression;
     }
 
     public void setAddItemTitleExpression(final Expression addItemTitleExpression) {
@@ -1131,7 +1131,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getRemoveItemLabelExpression() {
-        return this.removeItemLabelExpression;
+        return removeItemLabelExpression;
     }
 
     public void setRemoveItemLabelExpression(final Expression removeItemLabelExpression) {
@@ -1139,7 +1139,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public Expression getRemoveItemTitleExpression() {
-        return this.removeItemTitleExpression;
+        return removeItemTitleExpression;
     }
 
     public void setRemoveItemTitleExpression(final Expression removeItemTitleExpression) {
@@ -1147,43 +1147,43 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     public boolean hasDynamicValue() {
-        return this.reducedFormWidget.hasDynamicValue();
+        return reducedFormWidget.hasDynamicValue();
     }
 
     public void setHasDynamicValue(final boolean hasDynamicValue) {
-        this.reducedFormWidget.setHasDynamicValue(hasDynamicValue);
+        reducedFormWidget.setHasDynamicValue(hasDynamicValue);
     }
 
     public boolean hasAvailableValuesAfterEvent() {
-        return this.reducedFormWidget.hasAvailableValuesAfterEvent();
+        return reducedFormWidget.hasAvailableValuesAfterEvent();
     }
 
     public void setHasAvailableValuesAfterEvent(final boolean hasAvailableValuesAfterEvent) {
-        this.reducedFormWidget.setHasAvailableValuesAfterEvent(hasAvailableValuesAfterEvent);
+        reducedFormWidget.setHasAvailableValuesAfterEvent(hasAvailableValuesAfterEvent);
     }
 
     public String getFormWidgetCacheId() {
-        return this.reducedFormWidget.getFormWidgetCacheId();
+        return reducedFormWidget.getFormWidgetCacheId();
     }
 
     public void setFormWidgetCacheId(final String formWidgetCacheId) {
-        this.reducedFormWidget.setFormWidgetCacheId(formWidgetCacheId);
+        reducedFormWidget.setFormWidgetCacheId(formWidgetCacheId);
     }
 
     public FileWidgetInputType getFileWidgetInputType() {
-        return this.reducedFormWidget.getFileWidgetInputType();
+        return reducedFormWidget.getFileWidgetInputType();
     }
 
     public void setFileWidgetInputType(final FileWidgetInputType fileInputType) {
-        this.reducedFormWidget.setFileWidgetInputType(fileInputType);
+        reducedFormWidget.setFileWidgetInputType(fileInputType);
     }
 
     public String getFieldOutputType() {
-        return this.reducedFormWidget.getFieldOutputType();
+        return reducedFormWidget.getFieldOutputType();
     }
 
     public void setFieldOutputType(final String fieldOutputType) {
-        this.reducedFormWidget.setFieldOutputType(fieldOutputType);
+        reducedFormWidget.setFieldOutputType(fieldOutputType);
     }
 
     /**
@@ -1193,7 +1193,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
      */
     @Override
     public int compareTo(final FormWidget otherFormWidget) {
-        return this.reducedFormWidget.getId().toLowerCase().compareTo(otherFormWidget.getId().toLowerCase());
+        return reducedFormWidget.getId().toLowerCase().compareTo(otherFormWidget.getId().toLowerCase());
     }
 
 }
