@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 BonitaSoft S.A.
+ * Copyright (C) 2013 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@ import java.util.Map;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentDefinition;
-import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
-import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDocumentDatastore;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDocumentDatastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -37,26 +37,16 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Fabio Lombardi
  *
  */
-public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
+public class APIArchivedCaseDocument extends ConsoleAPI<ArchivedCaseDocumentItem> {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
-        return Definitions.get(CaseDocumentDefinition.TOKEN);
+        return Definitions.get(ArchivedCaseDocumentDefinition.TOKEN);
     }
 
     @Override
-    public CaseDocumentItem get(final APIID id) {
-        return getCaseDocumentDatastore().get(id);
-    }
-
-    @Override
-    public CaseDocumentItem add(final CaseDocumentItem item) {
-        return getCaseDocumentDatastore().add(item);
-    }
-
-    @Override
-    public CaseDocumentItem update(final APIID id, final Map<String, String> attributes) {
-        return getCaseDocumentDatastore().update(id, attributes);
+    public ArchivedCaseDocumentItem get(final APIID id) {
+        return getArchivedCaseDocumentDatastore().get(id);
     }
 
     @Override
@@ -65,9 +55,9 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
     }
 
     @Override
-    protected void fillDeploys(final CaseDocumentItem item, final List<String> deploys) {
-        addDeployer(getDeployerFactory().createUserDeployer(CaseDocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID));
-        addDeployer(getDeployerFactory().createUserDeployer(CaseDocumentItem.ATTRIBUTE_AUTHOR));
+    protected void fillDeploys(final ArchivedCaseDocumentItem item, final List<String> deploys) {
+        addDeployer(getDeployerFactory().createUserDeployer(ArchivedCaseDocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID));
+        addDeployer(getDeployerFactory().createUserDeployer(ArchivedCaseDocumentItem.ATTRIBUTE_AUTHOR));
         super.fillDeploys(item, deploys);
     }
 
@@ -76,24 +66,24 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
     }
 
     @Override
-    protected void fillCounters(final CaseDocumentItem item, final List<String> counters) {
+    protected void fillCounters(final ArchivedCaseDocumentItem item, final List<String> counters) {
     }
 
     @Override
-    public ItemSearchResult<CaseDocumentItem> search(final int page, final int resultsByPage, final String search, final String orders,
+    public ItemSearchResult<ArchivedCaseDocumentItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final ItemSearchResult<CaseDocumentItem> results = getCaseDocumentDatastore().search(page, resultsByPage, search, filters, orders);
+        final ItemSearchResult<ArchivedCaseDocumentItem> results = getArchivedCaseDocumentDatastore().search(page, resultsByPage, search, filters, orders);
 
         return results;
     }
 
     @Override
     public void delete(final List<APIID> ids) {
-        getCaseDocumentDatastore().delete(ids);
+        getArchivedCaseDocumentDatastore().delete(ids);
     }
 
-    protected CaseDocumentDatastore getCaseDocumentDatastore() {
+    protected ArchivedCaseDocumentDatastore getArchivedCaseDocumentDatastore() {
         ProcessAPI processAPI;
         try {
             processAPI = TenantAPIAccessor.getProcessAPI(getEngineSession());
@@ -102,6 +92,6 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
         }
         final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
 
-        return new CaseDocumentDatastore(getEngineSession(), constants, processAPI);
+        return new ArchivedCaseDocumentDatastore(getEngineSession(), constants, processAPI);
     }
 }

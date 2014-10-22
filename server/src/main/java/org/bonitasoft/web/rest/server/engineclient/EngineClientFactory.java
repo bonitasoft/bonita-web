@@ -22,9 +22,9 @@ package org.bonitasoft.web.rest.server.engineclient;
  */
 public class EngineClientFactory {
 
-    private EngineAPIAccessor apiAccessor;
+    private final EngineAPIAccessor apiAccessor;
 
-    public EngineClientFactory(EngineAPIAccessor apiAccessor) {
+    public EngineClientFactory(final EngineAPIAccessor apiAccessor) {
         this.apiAccessor = apiAccessor;
     }
 
