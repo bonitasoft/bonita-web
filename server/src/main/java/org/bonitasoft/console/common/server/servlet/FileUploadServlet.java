@@ -45,7 +45,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
 
-    protected String uploadDirectoryPath = null;
+    private String uploadDirectoryPath = null;
 
     protected static final String RESPONSE_SEPARATOR = ":";
 
@@ -82,8 +82,12 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected abstract void defineUploadDirectoryPath(final HttpServletRequest request);
 
-    public void setUploadDirectoryPath(final String uploadDirectoryPath) {
+    protected void setUploadDirectoryPath(final String uploadDirectoryPath) {
         this.uploadDirectoryPath = uploadDirectoryPath;
+    }
+
+    protected String getUploadDirectoryPath() {
+        return uploadDirectoryPath;
     }
 
     @Override
