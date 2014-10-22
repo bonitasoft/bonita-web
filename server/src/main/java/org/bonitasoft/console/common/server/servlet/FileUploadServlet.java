@@ -41,23 +41,23 @@ public abstract class FileUploadServlet extends HttpServlet {
     /**
      * UID
      */
-    private static final long serialVersionUID = -948661031179067420L;
+    protected static final long serialVersionUID = -948661031179067420L;
 
-    private static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
 
-    private String uploadDirectoryPath = null;
+    protected String uploadDirectoryPath = null;
 
-    private static final String RESPONSE_SEPARATOR = ":";
+    protected static final String RESPONSE_SEPARATOR = ":";
 
-    private static final String SUPPORTED_EXTENSIONS_PARAM = "SupportedExtensions";
+    protected static final String SUPPORTED_EXTENSIONS_PARAM = "SupportedExtensions";
 
-    private static final String SUPPORTED_EXTENSIONS_SEPARATOR = ",";
+    protected static final String SUPPORTED_EXTENSIONS_SEPARATOR = ",";
 
-    private static final String RETURN_FULL_SERVER_PATH_PARAM = "ReturnFullPath";
+    protected static final String RETURN_FULL_SERVER_PATH_PARAM = "ReturnFullPath";
 
-    private static final String RETURN_ORIGINAL_FILENAME_PARAM = "ReturnOriginalFilename";
+    protected static final String RETURN_ORIGINAL_FILENAME_PARAM = "ReturnOriginalFilename";
 
-    private String[] supportedExtensionsList = new String[0];
+    protected String[] supportedExtensionsList = new String[0];
 
     protected boolean returnFullPathInResponse = true;
 
@@ -121,39 +121,18 @@ public abstract class FileUploadServlet extends HttpServlet {
                 }
 
                 // Make unique file name
-                String extension = "";
-                int slashPos = fileName.lastIndexOf("/");
-                if (slashPos == -1) {
-                    slashPos = fileName.lastIndexOf("\\");
-                }
-                final int dotPos = fileName.lastIndexOf('.');
-                if (dotPos > slashPos && dotPos > -1) {
-                    extension = fileName.substring(dotPos);
-                }
-                final File uploadedFile = File.createTempFile("tmp_", extension, targetDirectory);
-                uploadedFile.deleteOnExit();
+                final File uploadedFile = makeUniqueFilename(targetDirectory, fileName);
 
                 // Upload file
                 item.write(uploadedFile);
-
-                // Response
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "File uploaded : " + uploadedFile.getPath());
                 }
 
-                String responseString;
-                if (returnFullPathInResponse) {
-                    responseString = uploadedFile.getPath();
-                } else {
-                    responseString = uploadedFile.getName();
-                }
-                if (alsoReturnOriginalFilename) {
-                    responseString = responseString + RESPONSE_SEPARATOR + fileName;
-                }
+                // Response
+                final String responseString = generateResponseString(request, fileName, uploadedFile);
                 responsePW.print(responseString);
                 responsePW.flush();
-
-                // TODO add break
             }
         } catch (final Exception e) {
             final String theErrorMessage = "Exception while uploading file.";
@@ -164,18 +143,42 @@ public abstract class FileUploadServlet extends HttpServlet {
         }
     }
 
-    /**
-     * @param response
-     * @param responsePW
-     */
-    private void outputMediaTypeError(final HttpServletResponse response, final PrintWriter responsePW) {
+    protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) {
+        String responseString;
+        if (returnFullPathInResponse) {
+            responseString = uploadedFile.getPath();
+        } else {
+            responseString = uploadedFile.getName();
+        }
+        if (alsoReturnOriginalFilename) {
+            responseString = responseString + RESPONSE_SEPARATOR + fileName;
+        }
+        return responseString;
+    }
+
+    protected File makeUniqueFilename(final File targetDirectory, final String fileName) throws IOException {
+        String extension = "";
+        int slashPos = fileName.lastIndexOf("/");
+        if (slashPos == -1) {
+            slashPos = fileName.lastIndexOf("\\");
+        }
+        final int dotPos = fileName.lastIndexOf('.');
+        if (dotPos > slashPos && dotPos > -1) {
+            extension = fileName.substring(dotPos);
+        }
+        final File uploadedFile = File.createTempFile("tmp_", extension, targetDirectory);
+        uploadedFile.deleteOnExit();
+        return uploadedFile;
+    }
+
+    protected void outputMediaTypeError(final HttpServletResponse response, final PrintWriter responsePW) {
         response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
         responsePW.print("Exstention not supported.");
         responsePW.flush();
         return;
     }
 
-    private boolean isSupportedExtention(final String fileName) {
+    protected boolean isSupportedExtention(final String fileName) {
         if (fileName == null) {
             return false;
         }

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,7 +27,7 @@ import org.bonitasoft.engine.io.IOUtil;
 
 /**
  * Utility class extracting zip file
- * 
+ *
  * @author Zhiheng Yang
  */
 public class UnzipUtil {
@@ -41,7 +41,7 @@ public class UnzipUtil {
 
     /**
      * Unzip a zip file from InputStream
-     * 
+     *
      * @param InputStream
      *            of SourceFile
      * @param targetPath
@@ -55,21 +55,21 @@ public class UnzipUtil {
 
     /**
      * Unzip a zip file from InputStream
-     * 
+     *
      * @param File
      *            of SourceFile
      * @param targetPath
      * @throws IOException
      * @throws FileNotFoundException
      */
-    public static synchronized void unzip(final File zipFile, final String unzipReportPath) throws FileNotFoundException, IOException {
+    public static synchronized void unzip(final File zipFile, final String targetPath) throws FileNotFoundException, IOException {
         final FileInputStream zipFileInputStream = new FileInputStream(zipFile);
-        unzip(zipFileInputStream, unzipReportPath);
+        unzip(zipFileInputStream, targetPath);
     }
 
-    public static synchronized void unzip(final File zipFile, final String unzipReportPath, final boolean deleteFileAfterZip) throws FileNotFoundException,
+    public static synchronized void unzip(final File zipFile, final String targetPath, final boolean deleteFileAfterZip) throws FileNotFoundException,
             IOException {
-        unzip(zipFile, unzipReportPath);
+        unzip(zipFile, targetPath);
         if (deleteFileAfterZip) {
             zipFile.delete();
         }
@@ -77,8 +77,9 @@ public class UnzipUtil {
 
     public static synchronized String getZipNameWithoutExtention(final File zipFile) {
         String zipName = zipFile.getName();
-        if (zipName.indexOf("") > 0)
+        if (zipName.indexOf("") > 0) {
             zipName = zipName.substring(0, zipName.lastIndexOf(""));
+        }
 
         return zipName;
     }
