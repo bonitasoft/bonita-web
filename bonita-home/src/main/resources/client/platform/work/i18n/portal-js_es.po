@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bonita-portal-js\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: 2014-10-09 20:43-0400\n"
+"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: Spanish\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+
+msgid "Columns"
+msgstr "Columnas"
+
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
+
+msgid "Filters"
+msgstr "Filtros"
+
+msgid "All versions"
+msgstr "Todas las versiones"
+
+msgid "All apps"
+msgstr "Todas las aplicaciones"
+
+
