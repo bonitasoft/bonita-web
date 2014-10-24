@@ -39,6 +39,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
 import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.utils.RestRequestParser;
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeLeaf;
@@ -121,18 +122,6 @@ public class APIServletCall extends ServletCall {
         return id;
     }
 
-    public void setApiName(String apiName) {
-        this.apiName = apiName;
-    }
-
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    public void setId(APIID id) {
-        this.id = id;
-    }
-
     /**
      * Read the inputStream and parse it as an IItem compatible with the called API.
      */
@@ -170,65 +159,11 @@ public class APIServletCall extends ServletCall {
 
     }
 
-    void checkPermissions(HttpServletRequest request) throws APIForbiddenException {
-        String method = request.getMethod();
-        HttpSession session = request.getSession();
-        Set<String> permissions = (Set<String>) session.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
-        APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
-        Long tenantId = apiSession.getTenantId();
-        boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
-        if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
-            return;
-        }
-        ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
-        String resourceId = id != null ? id.getPart(0) : null;
-        boolean isAuthorized = staticCheck(method, apiName, resourceName, resourceId, permissions, resourcesPermissionsMapping, apiSession.getUserName());
-
-        if (!isAuthorized) {
-            throw new APIForbiddenException("Forbidden");
-        }
-    }
-
-    boolean isApiAuthorizationsCheckEnabled(Long tenantId) {
-        return PropertiesFactory.getSecurityProperties(tenantId).isAPIAuthorizationsCheckEnabled();
-    }
-
-    ResourcesPermissionsMapping getResourcesPermissionsMapping(long tenantId) {
-        return PropertiesFactory.getResourcesPermissionsMapping(tenantId);
-    }
-
     void parsePath(HttpServletRequest request) {
-        final String[] path = request.getPathInfo().split("/");
-        // Read API tokens
-        if (path.length < 3) {
-            throw new APIMalformedUrlException("Missing API or resource name [" + request.getRequestURL() + "]");
-        }
-        apiName = path[1];
-        resourceName = path[2];
-        // Read id (if defined)
-        if (path.length > 3) {
-            final List<String> pathList = Arrays.asList(path);
-            id = APIID.makeAPIID(pathList.subList(3, pathList.size()));
-        } else {
-            id = null;
-        }
-    }
-
-    boolean staticCheck(String method, String apiName, String resourceName, String resourceId, Set<String> permissionsOfUser,
-            ResourcesPermissionsMapping resourcesPermissionsMapping, String username) {
-        List<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
-        if (resourcePermissions.isEmpty()) {
-            resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, null);
-        }
-        //get the resource permission mapping
-        for (String resourcePermission : resourcePermissions) {
-            if (permissionsOfUser.contains(resourcePermission)) {
-                return true;
-            }
-        }
-        LOGGER.log(Level.WARNING, "Unauthorized access to " + method + " " + apiName + "/" + resourceName + (resourceId != null ? "/" + resourceId : "")
-                + " attempted by " + username + " required permissions:" + resourcePermissions);
-        return false;
+        RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
+        id = restRequestParser.getId();
+        apiName = restRequestParser.getApiName();
+        resourceName = restRequestParser.getResourceName();
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,7 +176,6 @@ public class APIServletCall extends ServletCall {
     @Override
     public final void doGet() {
         try {
-            checkPermissions(getRequest());
             // GET one
             if (id != null) {
                 output(api.runGet(id, getParameterAsList(PARAMETER_DEPLOY), getParameterAsList(PARAMETER_COUNTER)));
@@ -273,7 +207,6 @@ public class APIServletCall extends ServletCall {
     @Override
     public final void doPost() {
         try {
-            checkPermissions(getRequest());
             final IItem jSonStreamAsItem = getJSonStreamAsItem();
             final IItem outputItem = api.runAdd(jSonStreamAsItem);
 
@@ -292,7 +225,6 @@ public class APIServletCall extends ServletCall {
     @Override
     public final void doPut() {
         try {
-            checkPermissions(getRequest());
             if (id == null) {
                 throw new APIMissingIdException(getRequestURL());
             }
@@ -334,7 +266,6 @@ public class APIServletCall extends ServletCall {
     @Override
     public final void doDelete() {
         try {
-            checkPermissions(getRequest());
             final List<APIID> ids = new ArrayList<APIID>();
 
             // Using ids in json input stream
