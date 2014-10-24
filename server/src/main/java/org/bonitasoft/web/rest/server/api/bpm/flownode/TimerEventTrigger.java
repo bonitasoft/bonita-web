@@ -15,9 +15,16 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 public class TimerEventTrigger {
 
-    private final Long executionDate;
+    private Long executionDate = null;
+
+    public TimerEventTrigger() {
+    }
 
     public TimerEventTrigger(final long executionDate) {
+        this.executionDate = executionDate;
+    }
+
+    public void setExecutionDate(final Long executionDate) {
         this.executionDate = executionDate;
     }
 

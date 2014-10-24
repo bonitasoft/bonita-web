@@ -81,7 +81,8 @@ public class TimerEventTriggerResourceTest {
         final ProcessAPI processAPI = mock(ProcessAPI.class);
         doReturn(processAPI).when(restResource).getEngineProcessAPI();
         final Date date = new Date();
-        final TimerEventTrigger timerEventTrigger = new TimerEventTrigger(date.getTime());
+        final TimerEventTrigger timerEventTrigger = new TimerEventTrigger();
+        timerEventTrigger.setExecutionDate(date.getTime());
         doReturn(date).when(processAPI).updateExecutionDateOfTimerEventTriggerInstance(eq(timerEventTriggerId), any(Date.class));
         assertThat(restResource.updateTimerEventTrigger(timerEventTrigger).getExecutionDate()).isEqualTo(timerEventTrigger.getExecutionDate());
     }
