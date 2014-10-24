@@ -147,7 +147,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         }
     }
 
-    protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws ServletException {
+    protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
         String responseString;
         if (returnFullPathInResponse) {
             responseString = uploadedFile.getPath();
