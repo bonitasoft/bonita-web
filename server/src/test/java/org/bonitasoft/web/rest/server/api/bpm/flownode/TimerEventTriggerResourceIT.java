@@ -51,8 +51,7 @@ public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
     public void updateTimerEventTriggersShouldThrowExceptionIfTimerNotFound() throws Exception {
         doReturn("1").when(restResource).getAttribute(TimerEventTriggerResource.ID_PARAM_NAME);
 
-        final TimerEventTrigger trigger = new TimerEventTrigger();
-        trigger.setExecutionDate(System.currentTimeMillis());
+        final TimerEventTrigger trigger = new TimerEventTrigger(System.currentTimeMillis());
         restResource.updateTimerEventTrigger(trigger);
     }
 
@@ -64,8 +63,7 @@ public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
         doReturn(processAPI).when(restResource).getEngineProcessAPI();
         final Date date = new Date();
         doReturn(date).when(processAPI).updateExecutionDateOfTimerEventTriggerInstance(eq(timerEventTriggerId), any(Date.class));
-        final TimerEventTrigger trigger = new TimerEventTrigger();
-        trigger.setExecutionDate(System.currentTimeMillis());
-        assertThat(restResource.updateTimerEventTrigger(trigger)).isEqualTo(date.getTime());
+        final TimerEventTrigger trigger = new TimerEventTrigger(System.currentTimeMillis());
+        assertThat(restResource.updateTimerEventTrigger(trigger).getExecutionDate()).isEqualTo(date.getTime());
     }
 }

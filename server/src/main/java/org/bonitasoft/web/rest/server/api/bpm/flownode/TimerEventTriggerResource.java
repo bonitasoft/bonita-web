@@ -22,8 +22,6 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.restlet.Server;
-import org.restlet.data.Protocol;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -35,10 +33,6 @@ import org.restlet.resource.Put;
 public class TimerEventTriggerResource extends CommonResource {
 
     public static final String ID_PARAM_NAME = "id";
-
-    public static void main(final String[] args) throws Exception {
-        new Server(Protocol.HTTP, 8080, TimerEventTriggerResource.class).start();
-    }
 
     @Get("json")
     public List<TimerEventTriggerInstance> searchTimerEventTriggers() {
@@ -57,7 +51,7 @@ public class TimerEventTriggerResource extends CommonResource {
     }
 
     @Put("json")
-    public Long updateTimerEventTrigger(final TimerEventTrigger trigger) throws Exception {
+    public TimerEventTrigger updateTimerEventTrigger(final TimerEventTrigger trigger) throws Exception {
         System.out.println("json input: " + trigger);
         final String triggerId = getAttribute(ID_PARAM_NAME);
         if (triggerId == null) {
@@ -65,7 +59,18 @@ public class TimerEventTriggerResource extends CommonResource {
         }
         final long timerEventTriggerInstanceId = Long.parseLong(triggerId);
         final Date executionDate = new Date(trigger.getExecutionDate());
-        return getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate).getTime();
+        return createTimerEventTrigger(getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate)
+                .getTime());
+    }
+
+    /**
+     * Builds the TimerEventTrigger to return to the REST call.
+     *
+     * @param executionDate the execution date for this TimerEventTrigger.
+     * @return the new constructed object.
+     */
+    private TimerEventTrigger createTimerEventTrigger(final long executionDate) {
+        return new TimerEventTrigger(executionDate);
     }
 
     @Override
