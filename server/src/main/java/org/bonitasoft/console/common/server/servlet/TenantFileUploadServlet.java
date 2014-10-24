@@ -34,15 +34,13 @@ public class TenantFileUploadServlet extends FileUploadServlet {
 
     @Override
     protected void defineUploadDirectoryPath(final HttpServletRequest request) {
-        final long tenantId = getTenantID(request);
+        final long tenantId = getAPISession(request).getTenantId();
         setUploadDirectoryPath(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder().getPath());
     }
 
-    protected long getTenantID(final HttpServletRequest request) {
+    protected APISession getAPISession(final HttpServletRequest request) {
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute("apiSession");
-        final long tenantId = apiSession.getTenantId();
-        return tenantId;
+        return (APISession) session.getAttribute("apiSession");
     }
 
 

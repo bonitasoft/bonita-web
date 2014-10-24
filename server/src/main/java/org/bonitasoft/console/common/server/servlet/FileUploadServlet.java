@@ -92,12 +92,10 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         defineUploadDirectoryPath(request);
         response.setContentType("text/plain;charset=UTF-8");
-        final PrintWriter responsePW = response.getWriter();
         try {
-
             if (!ServletFileUpload.isMultipartContent(request)) {
                 return;
             }
@@ -106,6 +104,8 @@ public abstract class FileUploadServlet extends HttpServlet {
             if (!targetDirectory.exists()) {
                 targetDirectory.mkdirs();
             }
+
+            final PrintWriter responsePW = response.getWriter();
 
             final FileItemFactory fileItemFactory = new DiskFileItemFactory();
             final ServletFileUpload serviceFileUpload = new ServletFileUpload(fileItemFactory);
@@ -147,7 +147,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         }
     }
 
-    protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) {
+    protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws ServletException {
         String responseString;
         if (returnFullPathInResponse) {
             responseString = uploadedFile.getPath();
