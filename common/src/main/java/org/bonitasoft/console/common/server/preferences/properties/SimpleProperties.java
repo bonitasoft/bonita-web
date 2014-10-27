@@ -166,7 +166,7 @@ public class SimpleProperties {
 
     public List<String> getPropertyAsList(final String propertyName) {
         final String propertyAsString = getProperty(propertyName);
-        return stringToList(propertyAsString);
+        return stringToList(propertyAsString.trim());
     }
 
     protected List<String> stringToList(final String propertyValueAsString) {
