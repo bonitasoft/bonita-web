@@ -32,7 +32,7 @@
 
 	body
 	{
-		background-image:url('<%=getServletContext().getContextPath()%>/images/error-lines-pattern.gif');
+		background-image:url('<%=getServletConfig().getServletContext().getContextPath()%>/images/error-lines-pattern.gif');
 		background-repeat:repeat;
 	}
 	p#message
@@ -76,7 +76,7 @@
 
 	<div class="wrap">
 		<div>
-			<img src="<%=getServletContext().getContextPath()%>/images/error-red-circle.png">
+			<img src="<%=getServletConfig().getServletContext().getContextPath()%>/images/error-red-circle.png">
 			<p id="statuscode">404</div>
 			<p id="message">Not found</p>
 			<p id="error">Oops. Error.</p>			
