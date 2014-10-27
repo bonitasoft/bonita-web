@@ -83,7 +83,8 @@ public class SimpleProperties {
         }
     }
 
-    public SimpleProperties() {
+    public SimpleProperties(final Properties properties) {
+        this.properties = properties;
     }
 
     protected static File getTenantPropertiesFile(final long tenantId, final String propertiesFileName) {
@@ -112,21 +113,23 @@ public class SimpleProperties {
     public void removeProperty(final String propertyName) throws IOException {
         if (properties != null) {
             properties.remove(propertyName);
-            OutputStream outputStream = null;
-            try {
-                outputStream = new FileOutputStream(propertiesFile);
-                properties.store(outputStream, null);
-            } catch (final IOException e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
-                }
-            } finally {
-                if (outputStream != null) {
-                    try {
-                        outputStream.close();
-                    } catch (final IOException e) {
-                        if (LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
+            if (propertiesFile != null) {
+                OutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream(propertiesFile);
+                    properties.store(outputStream, null);
+                } catch (final IOException e) {
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
+                    }
+                } finally {
+                    if (outputStream != null) {
+                        try {
+                            outputStream.close();
+                        } catch (final IOException e) {
+                            if (LOGGER.isLoggable(Level.WARNING)) {
+                                LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
+                            }
                         }
                     }
                 }
@@ -137,21 +140,23 @@ public class SimpleProperties {
     public void setProperty(final String propertyName, final String propertyValue) throws IOException {
         if (properties != null) {
             properties.setProperty(propertyName, propertyValue);
-            OutputStream outputStream = null;
-            try {
-                outputStream = new FileOutputStream(propertiesFile);
-                properties.store(outputStream, null);
-            } catch (final IOException e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
-                }
-            } finally {
-                if (outputStream != null) {
-                    try {
-                        outputStream.close();
-                    } catch (final IOException e) {
-                        if (LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
+            if (propertiesFile != null) {
+                OutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream(propertiesFile);
+                    properties.store(outputStream, null);
+                } catch (final IOException e) {
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
+                    }
+                } finally {
+                    if (outputStream != null) {
+                        try {
+                            outputStream.close();
+                        } catch (final IOException e) {
+                            if (LOGGER.isLoggable(Level.WARNING)) {
+                                LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
+                            }
                         }
                     }
                 }
@@ -164,7 +169,7 @@ public class SimpleProperties {
         return stringToList(propertyAsString);
     }
 
-    public List<String> stringToList(final String propertyValueAsString) {
+    protected List<String> stringToList(final String propertyValueAsString) {
         if (propertyValueAsString != null) {
             final List<String> propertiesList = new ArrayList<String>();
             if (propertyValueAsString.startsWith("[") && propertyValueAsString.endsWith("]")) {
