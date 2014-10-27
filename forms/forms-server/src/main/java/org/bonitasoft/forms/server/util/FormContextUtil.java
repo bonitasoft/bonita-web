@@ -116,9 +116,7 @@ public class FormContextUtil {
 
     /**
      * Retrieve the API session from the context
-     * 
-     * @param context
-     *            the map of context
+     *
      * @return the engine API session
      */
     public APISession getAPISessionFromContext() {
@@ -161,7 +159,7 @@ public class FormContextUtil {
             int formIdDelimiterPos = formName.lastIndexOf(FormServiceProviderUtil.FORM_ID_SEPARATOR);
             String taskDelimiter = "--";
             int taskDelimiterPos = formName.lastIndexOf(taskDelimiter) + taskDelimiter.length();
-            if (formName != null && formIdDelimiterPos != -1 && taskDelimiterPos != -1) {
+            if (formIdDelimiterPos != -1 && taskDelimiterPos != -1) {
                 return formName.substring(taskDelimiterPos, formIdDelimiterPos);
             }
         }
