@@ -166,14 +166,15 @@ public class SimpleProperties {
 
     public List<String> getPropertyAsList(final String propertyName) {
         final String propertyAsString = getProperty(propertyName);
-        return stringToList(propertyAsString.trim());
+        return stringToList(propertyAsString);
     }
 
     protected List<String> stringToList(final String propertyValueAsString) {
         if (propertyValueAsString != null) {
             final List<String> propertiesList = new ArrayList<String>();
-            if (propertyValueAsString.startsWith("[") && propertyValueAsString.endsWith("]")) {
-                String propertyCSV = propertyValueAsString.substring(1, propertyValueAsString.length() - 1);
+            final String propertyValueAsStringTrimmed = propertyValueAsString.trim();
+            if (propertyValueAsStringTrimmed.startsWith("[") && propertyValueAsStringTrimmed.endsWith("]")) {
+                String propertyCSV = propertyValueAsStringTrimmed.substring(1, propertyValueAsStringTrimmed.length() - 1);
                 propertyCSV = propertyCSV.trim();
                 if(propertyCSV.isEmpty()){
                     return Collections.emptyList();
