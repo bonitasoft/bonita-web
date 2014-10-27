@@ -83,6 +83,9 @@ public class SimpleProperties {
         }
     }
 
+    public SimpleProperties() {
+    }
+
     protected static File getTenantPropertiesFile(final long tenantId, final String propertiesFileName) {
         return new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), propertiesFileName);
     }
@@ -158,10 +161,14 @@ public class SimpleProperties {
 
     public List<String> getPropertyAsList(final String propertyName) {
         final String propertyAsString = getProperty(propertyName);
-        if (propertyAsString != null) {
+        return stringToList(propertyAsString);
+    }
+
+    public List<String> stringToList(final String propertyValueAsString) {
+        if (propertyValueAsString != null) {
             final List<String> propertiesList = new ArrayList<String>();
-            if (propertyAsString.startsWith("[") && propertyAsString.endsWith("]")) {
-                String propertyCSV = propertyAsString.substring(1, propertyAsString.length() - 1);
+            if (propertyValueAsString.startsWith("[") && propertyValueAsString.endsWith("]")) {
+                String propertyCSV = propertyValueAsString.substring(1, propertyValueAsString.length() - 1);
                 propertyCSV = propertyCSV.trim();
                 if(propertyCSV.isEmpty()){
                     return Collections.emptyList();
@@ -171,7 +178,7 @@ public class SimpleProperties {
                     propertiesList.add(propertyValue.trim());
                 }
             } else {
-                propertiesList.add(propertyAsString);
+                propertiesList.add(propertyValueAsString);
             }
             return propertiesList;
         } else {
