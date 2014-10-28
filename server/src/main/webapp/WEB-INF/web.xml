@@ -240,12 +240,12 @@
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BonitaRestletAPIServlet</servlet-name>
+        <servlet-name>RestletServlet</servlet-name>
         <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
             <!-- Application class name -->
             <param-name>org.restlet.application</param-name>
-            <param-value>org.bonitasoft.web.rest.server.BonitaRestletAPIServlet</param-value>
+            <param-value>org.bonitasoft.web.rest.server.BonitaRestletApplication</param-value>
         </init-param>
     </servlet>
     <servlet>
@@ -441,7 +441,7 @@
         <url-pattern>/platformlogoutservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BonitaRestletAPIServlet</servlet-name>
+        <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/API/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
