@@ -61,11 +61,16 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
     }
 
     public List<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final String resourceId) {
+        String key = buildResourceKey(method, apiName, resourceName, resourceId);
+        return getPropertyAsList(key);
+    }
+
+    protected String buildResourceKey(final String method, final String apiName, final String resourceName, final String resourceId) {
         String key = method + "|" + apiName + "/" + resourceName;
         if(resourceId != null){
             key +=  "/" + resourceId;
         }
-        return getPropertyAsList(key);
+        return key;
     }
 
     public List<String> getResourcePermissions(final String method, final String apiName, final String resourceName) {

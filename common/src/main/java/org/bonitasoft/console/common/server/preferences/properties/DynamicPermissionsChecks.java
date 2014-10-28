@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Anthony Birembaut
  */
-public class DynamicPermissionsChecks extends SimpleProperties {
+public class DynamicPermissionsChecks extends ResourcesPermissionsMapping {
 
     /**
      * Default name of the preferences file
@@ -55,6 +55,15 @@ public class DynamicPermissionsChecks extends SimpleProperties {
     protected DynamicPermissionsChecks(final File fileName) {
         super(fileName);
 
+    }
+
+    public String getResourceScript(final String method, final String apiName, final String resourceName, final String resourceId) {
+        final String key = buildResourceKey(method, apiName, resourceName, resourceId);
+        return getProperty(key);
+    }
+
+    public String getResourceScript(final String method, final String apiName, final String resourceName) {
+        return getResourceScript(method, apiName, resourceName, null);
     }
 
 }

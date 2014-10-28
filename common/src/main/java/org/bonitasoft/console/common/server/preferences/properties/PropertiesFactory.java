@@ -34,6 +34,10 @@ public class PropertiesFactory {
         return CustomPermissionsMapping.getInstance(tenantId);
     }
 
+    public static DynamicPermissionsChecks getDynamicPermissionsChecks(final long tenantId) {
+        return DynamicPermissionsChecks.getInstance(tenantId);
+    }
+
     public static SecurityProperties getSecurityProperties(final long tenantId) {
         return SecurityProperties.getInstance(tenantId);
     }
