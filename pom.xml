@@ -9,13 +9,13 @@
 
 	<modules>
         <module>looknfeel</module>
+        <module>security-scripts</module>
 		<module>bonita-home</module>
         <module>test-toolkit</module>
 		<module>common</module>
 		<module>forms</module>
         <module>server</module>
         <module>portal</module>
-        <module>security-scripts</module>
 	</modules>
 
 	<scm>
