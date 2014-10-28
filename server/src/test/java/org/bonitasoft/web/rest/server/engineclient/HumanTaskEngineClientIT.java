@@ -31,7 +31,7 @@ import org.junit.Test;
  * @author Colin PUY
  * 
  */
-public class HumanTaskEngineClientIntegrationTest extends AbstractConsoleTest {
+public class HumanTaskEngineClientIT extends AbstractConsoleTest {
 
     private HumanTaskEngineClient humanTaskEngineClient;
     

@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author ROHART Bastien
  * 
  */
-public class ArchivedCaseDatastoreIntegrationTest extends AbstractConsoleTest {
+public class ArchivedCaseDatastoreIntegrationIT extends AbstractConsoleTest {
 
     private ArchivedCaseDatastore archivedCaseDatastore;
 

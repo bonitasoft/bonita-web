@@ -54,7 +54,7 @@ import org.junit.Test;
  * @author Colin PUY
  * 
  */
-public class APIActorIntegrationTest extends AbstractConsoleTest {
+public class APIActorIntegrationIT extends AbstractConsoleTest {
 
     private APIActor apiActor;
 

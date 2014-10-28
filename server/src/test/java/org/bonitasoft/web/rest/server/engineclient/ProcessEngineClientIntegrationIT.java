@@ -36,7 +36,7 @@ import org.junit.Test;
  * @author Colin PUY
  * 
  */
-public class ProcessEngineClientIntegrationTest extends AbstractConsoleTest {
+public class ProcessEngineClientIntegrationIT extends AbstractConsoleTest {
 
     private ProcessEngineClient processEngineClient;
 

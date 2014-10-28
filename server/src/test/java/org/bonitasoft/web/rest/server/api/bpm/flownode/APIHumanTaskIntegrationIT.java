@@ -22,7 +22,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
+public class APIHumanTaskIntegrationIT extends AbstractConsoleTest {
 
     public APIHumanTask apiHumanTask;
 

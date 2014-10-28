@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Nicolas Tith
  */
-public class APICategoryIntegrationTest extends AbstractConsoleTest {
+public class APICategoryIntegrationIT extends AbstractConsoleTest {
 
     private APICategory api;
 

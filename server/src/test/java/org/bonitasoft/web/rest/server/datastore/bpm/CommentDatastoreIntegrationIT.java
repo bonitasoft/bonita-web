@@ -31,7 +31,7 @@ import org.bonitasoft.web.rest.server.datastore.bpm.cases.CommentDatastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Test;
 
-public class CommentDatastoreIntegrationTest extends AbstractConsoleTest {
+public class CommentDatastoreIntegrationIT extends AbstractConsoleTest {
 
     private CommentDatastore commentDatastore;
 

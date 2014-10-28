@@ -28,7 +28,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * @author Alexis Hassler
  */
-public class APIProcessTest extends AbstractConsoleTest {
+public class APIProcessIT extends AbstractConsoleTest {
 
     private APIProcess apiProcess;
 

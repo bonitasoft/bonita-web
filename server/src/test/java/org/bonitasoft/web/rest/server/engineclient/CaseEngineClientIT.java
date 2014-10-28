@@ -29,7 +29,7 @@ import org.junit.Test;
  * @author Colin PUY
  * 
  */
-public class CaseEngineClientIntegrationTest extends AbstractConsoleTest {
+public class CaseEngineClientIT extends AbstractConsoleTest {
 
     private CaseEngineClient caseEngineClient;
     
