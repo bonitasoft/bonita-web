@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
@@ -11,40 +11,35 @@
  * GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+ **/
 
 package org.bonitasoft.web.rest.security
 
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
+import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.session.APISession
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-
-@RunWith(MockitoJUnitRunner.class)
-public class RuleTest {
-
-    @Mock
-    def APISession apiSession
-    @Mock
-    def APICallContext apiCallContext
-    @Mock
-    def APIAccessor apiAccessor
-    @Mock
-    def Logger logger
+/**
+ *
+ * Let the user access only himself
+ *
+ * @author Baptiste Mesta
+ */
+class UserPermissionRule implements PermissionRule {
 
 
-
-    @Test
-    public void testCheck() throws Exception {
-        Rule rule = new Rule()
-        boolean check = rule.check(apiSession, apiCallContext, apiAccessor, logger)
-        assertThat(check).isTrue()
+    @Override
+    boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
+        APISession session = apiSession;
+        long currentUserId = session.getUserId();
+        if (apiCallContext.getResourceId() != null) {
+            def resourceId = Long.valueOf(apiCallContext.getResourceId())
+            if (resourceId.equals(currentUserId)) {
+                return true
+            }
+        }
+        return false;
     }
 }
