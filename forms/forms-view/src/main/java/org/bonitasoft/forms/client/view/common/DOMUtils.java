@@ -494,12 +494,15 @@ public class DOMUtils {
     /**
      * Indicates to the parent farme that a form was submitted (and the response was successful)
      *
-     * @param submitButtonId
+     * @param message
      * @return true if the page is in a frame
      */
-    native public void notifyParentFrame(String submitButtonId)
+    native public void notifyParentFrame(String message, boolean isError)
     /*-{
-        $wnd.top.postMessage(submitButtonId, '*');
+        if(isError) {
+            message = "error:" + message;
+        }
+        $wnd.top.postMessage(message, '*');
     }-*/;
 
     /**

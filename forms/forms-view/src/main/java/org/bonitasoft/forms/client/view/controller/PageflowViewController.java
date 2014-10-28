@@ -330,10 +330,12 @@ public class PageflowViewController {
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
             if (domUtils.isPageInFrame()) {
-                domUtils.notifyParentFrame(null);
+                domUtils.notifyParentFrame(null, false);
             }
-            urlContext.putAll(newContext);
-            redirectToConfirmationPage(getConfirmationPageHandler());
+            if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                urlContext.putAll(newContext);
+                redirectToConfirmationPage(getConfirmationPageHandler());
+            }
         }
 
         /**
@@ -357,14 +359,31 @@ public class PageflowViewController {
                 throw caught;
             } catch (final IllegalActivityTypeException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskFormSkippedError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, elementId));
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame(errorMessage, true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
+                            elementId));
+                }
             } catch (final FormAlreadySubmittedException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, elementId));
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame(errorMessage, true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
+                            elementId));
+                }
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskExecutionError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame(errorMessage, true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
                         new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, t, elementId));
+                }
             }
         }
     }

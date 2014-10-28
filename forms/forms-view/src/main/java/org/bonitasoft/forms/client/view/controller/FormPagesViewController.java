@@ -1253,11 +1253,13 @@ public class FormPagesViewController {
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
             if (domUtils.isPageInFrame()) {
-                domUtils.notifyParentFrame(getSubmitButtonID());
+                domUtils.notifyParentFrame(getSubmitButtonID(), false);
             }
-            urlContext.clear();
-            urlContext.putAll(newContext);
-            redirectToConfirmationPage();
+            if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                urlContext.clear();
+                urlContext.putAll(newContext);
+                redirectToConfirmationPage();
+            }
         }
 
         @Override
@@ -1266,20 +1268,37 @@ public class FormPagesViewController {
                 throw caught;
             } catch (final FormAlreadySubmittedException e) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame(errorMessage, true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
                         errorMessage, elementId));
+                }
             } catch (final FileTooBigException e) {
                 final String fileName = e.getFileName();
                 final String maxSize = e.getMaxSize();
+                String errorMessage;
                 if (fileName != null) {
-                    Window.alert(FormsResourceBundle.getErrors().fileTooBigErrorWithNameSize(fileName, maxSize));
+                    errorMessage = FormsResourceBundle.getErrors().fileTooBigErrorWithNameSize(fileName, maxSize);
                 } else {
-                    Window.alert(FormsResourceBundle.getErrors().fileTooBigErrorWithSize(maxSize));
+                    errorMessage = FormsResourceBundle.getErrors().fileTooBigErrorWithSize(maxSize);
+                }
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame(errorMessage, true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    Window.alert(errorMessage);
                 }
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formSubmissionError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame(errorMessage, true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
                         errorMessage, elementId));
+                }
             }
 
             enableButtons(true);
