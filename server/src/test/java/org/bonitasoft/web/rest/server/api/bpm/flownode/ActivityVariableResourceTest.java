@@ -32,7 +32,7 @@ public class ActivityVariableResourceTest {
     }
 
     @Test(expected = APIException.class)
-    public void should_do_get_with_nothing_thows_an_api_exception() throws DataNotFoundException {
+    public void shouldDoGetWithNothingThowsAnApiException() throws DataNotFoundException {
         //when
         activityVariableResource.getTaskVariable();
     }

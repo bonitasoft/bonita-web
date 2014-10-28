@@ -54,19 +54,9 @@ public class APIArchivedCaseTest extends APITestWithMock {
         doReturn(archivedProcessInstance).when(processAPI).getArchivedProcessInstance(anyLong());
     }
 
-    @Test
-    public void delete_should_delete_item() throws Exception {
-        //given
-
-        //when
-        apiArchivedCase.delete(Arrays.asList(APIID.makeAPIID(1L)));
-
-        //then
-        verify(archivedCaseDatastore).delete(Arrays.asList(APIID.makeAPIID(1L)));
-    }
 
     @Test
-    public void delete_should_delete_several_item() throws Exception {
+    public void deleteShouldDeleteSeveralItem() throws Exception {
         //given
         final List<APIID> idList = Arrays.asList(APIID.makeAPIID(1L), APIID.makeAPIID(2L), APIID.makeAPIID(3L));
         //when

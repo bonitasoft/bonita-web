@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -119,9 +120,7 @@ public class CommonResourceTest {
     @Test
     public void parseFilterShouldBuildExpectedMap() throws Exception {
         // given:
-        final List<String> filters = new ArrayList<String>(2);
-        filters.add("toto=17");
-        filters.add("titi='EN_ECHEC'");
+        final List<String> filters = Arrays.asList("toto=17", "titi='EN_ECHEC'");
 
         // when:
         final Map<String, String> parseFilters = new CommonResource().parseFilters(filters);
