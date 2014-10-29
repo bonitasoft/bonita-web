@@ -105,7 +105,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         final String resourceId = id != null ? id.getPart(0) : null;
 
         boolean authorized = staticCheck(method, apiName, resourceName, resourceId, permissions, resourcesPermissionsMapping, apiSession.getUserName());
-        if (authorized) {
+        if (!authorized) {
             final DynamicPermissionsChecks dynamicPermissionsChecks = getDynamicPermissionsChecks(tenantId);
             final String requestBody = getRequestBody(request);
             authorized = dynamicCheck(method, apiName, resourceName, resourceId, apiSession, dynamicPermissionsChecks, request.getQueryString(), requestBody);
