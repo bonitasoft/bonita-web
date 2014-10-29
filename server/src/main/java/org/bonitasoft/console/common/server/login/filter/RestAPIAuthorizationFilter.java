@@ -180,7 +180,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
                 throw new ServletException(e);
             }
         }
-        return true;
+        return false;
     }
 
     protected boolean checkWithScript(final String method, final String apiName, final String resourceName, final String resourceId,
