@@ -52,7 +52,7 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
         IOUtils.copy(super.getInputStream(), readBytes);
     }
 
-    public class CachedServletInputStream extends ServletInputStream {
+    class CachedServletInputStream extends ServletInputStream {
 
         private final ByteArrayInputStream input;
 
@@ -68,6 +68,12 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
         @Override
         public int read(final byte[] b) throws IOException {
             return input.read(b);
+        }
+
+        @Override
+        public int read(final byte[] b, final int off, final int len) throws IOException {
+            // TODO Auto-generated method stub
+            return input.read(b, off, len);
         }
     }
 }
