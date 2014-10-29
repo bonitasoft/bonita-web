@@ -1,13 +1,18 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -20,7 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class ActivityVariableResourceTest {
 
     @Mock
-    ProcessAPI processAPI;
+    private ProcessAPI processAPI;
 
     private ActivityVariableResource activityVariableResource;
 
@@ -31,35 +36,37 @@ public class ActivityVariableResourceTest {
         doReturn(processAPI).when(activityVariableResource).getEngineProcessAPI();
     }
 
-    @Test(expected = APIException.class)
-    public void should_do_get_with_nothing_thows_an_api_exception() throws DataNotFoundException {
-        //when
-        activityVariableResource.getTaskVariable();
-    }
+    @Test
+    public void should_thow_an_api_exception_when_getActivityDataInstance_failed() throws DataNotFoundException {
+        // Given
+        doReturn("").when(activityVariableResource).getAttribute(ActivityVariableResource.ACTIVITYDATA_DATA_NAME);
+        doReturn("1").when(activityVariableResource).getAttribute(ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID);
+        doThrow(new DataNotFoundException(new Exception("plop"))).when(processAPI).getActivityDataInstance(anyString(), anyLong());
 
-    @Test(expected = APIException.class)
-    public void should_throw_exception_if_attribute_is_not_found() throws Exception {
-        // given:
-        doReturn(null).when(activityVariableResource).getAttribute(anyString());
-
-        // when:
-        activityVariableResource.getTaskVariable();
+        try {
+            // When
+            activityVariableResource.getTaskVariable();
+        } catch (final APIException e) {
+            // Then
+            assertTrue("The root cause must be a DataNotFoundException, and not : " + e.getCause().getClass(), e.getCause() instanceof DataNotFoundException);
+        }
     }
 
     @Test
-    public void should_do_get_call_getAttribute() throws DataNotFoundException {
-        //given
+    public void should_return_data_instance() throws DataNotFoundException {
+        // Given
         doReturn("").when(activityVariableResource).getAttribute(ActivityVariableResource.ACTIVITYDATA_DATA_NAME);
         doReturn("1").when(activityVariableResource).getAttribute(ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID);
-        doReturn(null).when(processAPI).getActivityDataInstance(anyString(), anyLong());
+        final DataInstance dataInstance = mock(DataInstance.class);
+        doReturn(dataInstance).when(processAPI).getActivityDataInstance(anyString(), anyLong());
 
-        //when
-        activityVariableResource.getTaskVariable();
+        // When
+        final DataInstance result = activityVariableResource.getTaskVariable();
 
-        //then
+        // Then
+        assertEquals("Should return the result of the Engine API.", dataInstance, result);
         verify(activityVariableResource).getAttribute(ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID);
         verify(activityVariableResource).getAttribute(ActivityVariableResource.ACTIVITYDATA_DATA_NAME);
-
     }
 
 }
