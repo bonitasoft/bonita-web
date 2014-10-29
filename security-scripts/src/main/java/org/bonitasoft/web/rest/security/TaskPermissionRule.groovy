@@ -39,6 +39,7 @@ import org.bonitasoft.engine.session.APISession
  * activity
  * task
  * flowNode
+ * manualTask
  *
  * Archived:
  * archivedTask
@@ -46,6 +47,7 @@ import org.bonitasoft.engine.session.APISession
  * archivedUserTask
  * archivedActivity
  * archivedFlowNode
+ * archivedManualTask
  *
  *
  *

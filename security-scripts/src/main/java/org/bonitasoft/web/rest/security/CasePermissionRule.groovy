@@ -18,6 +18,7 @@ package org.bonitasoft.web.rest.security
 import org.bonitasoft.engine.api.*
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.identity.UserSearchDescriptor
 import org.bonitasoft.engine.search.SearchOptionsBuilder
@@ -64,9 +65,19 @@ class CasePermissionRule implements PermissionRule {
         def filters = apiCallContext.getFilters()
         if (apiCallContext.getResourceId() != null) {
             def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
-            def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
-            logger.debug("RuleCase : allowed because get on process that user is involved in")
-            return isInvolved
+            if(apiCallContext.getResourceName().startsWith("archived")){
+                //no way to check that the we were involved in an archived case, can just show started by
+                try{
+                    return processAPI.getArchivedProcessInstance(processInstanceId).getStartedBy() == currentUserId
+                }catch(ArchivedProcessInstanceNotFoundException e){
+                    logger.debug("archived process not found, "+e.getMessage())
+                    return false
+                }
+            }else{
+                def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+                logger.debug("RuleCase : allowed because get on process that user is involved in")
+                return isInvolved
+            }
         } else {
             def stringUserId = String.valueOf(currentUserId)
             if (stringUserId.equals(filters.get("started_by")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))) {

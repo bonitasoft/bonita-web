@@ -21,6 +21,8 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
 import org.bonitasoft.engine.search.impl.SearchResultImpl
@@ -33,9 +35,9 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 import static org.assertj.core.api.Assertions.assertThat
-import static org.mockito.Matchers.eq
 import static org.mockito.Matchers.any
-import static org.mockito.Mockito.doReturn
+import static org.mockito.Matchers.eq
+import static org.mockito.Mockito.*
 
 @RunWith(MockitoJUnitRunner.class)
 public class CasePermissionRuleTest {
@@ -141,12 +143,44 @@ public class CasePermissionRuleTest {
         assertThat(isAuthorized).isFalse();
     }
 
+
+    @Test
+    public void should_check_verify_resourceId_archived_isInvolved_on_GET() {
+        //given
+        havingArchivedResourceId()
+        def instance = mock(ArchivedProcessInstance.class)
+        doReturn(currentUserId).when(instance).getStartedBy()
+        doReturn(instance).when(processAPI).getArchivedProcessInstance(45l);
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_check_verify_resourceId_archived_not_isInvolved_on_GET() {
+        //given
+        havingArchivedResourceId()
+        doThrow(new ArchivedProcessInstanceNotFoundException(new Exception())).when(processAPI).getArchivedProcessInstance(45l);
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isFalse();
+    }
+
     def havingResourceId(boolean isInvolvedIn) {
         doReturn(currentUserId).when(apiSession).getUserId()
         doReturn("GET").when(apiCallContext).getMethod()
+        doReturn("case").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
         doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
+    }
 
+    def havingArchivedResourceId() {
+        doReturn(currentUserId).when(apiSession).getUserId()
+        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn("archivedCase").when(apiCallContext).getResourceName()
+        doReturn("45").when(apiCallContext).getResourceId()
     }
 
     @Test
