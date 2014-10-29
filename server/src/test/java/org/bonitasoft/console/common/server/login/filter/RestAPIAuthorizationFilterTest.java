@@ -288,6 +288,13 @@ public class RestAPIAuthorizationFilterTest {
     }
 
     @Test
+    public void should_dynamicCheck_return_false_on_resource_with_no_script() throws Exception {
+        final boolean isAuthorized = restAPIAuthorizationFilter.dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
     public void test_staticCheck_unauthorized_on_resource_with_id_even_if_permission_in_general_is_there() throws Exception {
         final Set<String> userPermissions = new HashSet<String>(Arrays.asList("MyPermission", "AnOtherPermission"));
         returnPermissionFor("GET", "bpm", "case", null, Arrays.asList("CasePermission", "AnOtherPermission"));
