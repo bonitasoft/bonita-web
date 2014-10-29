@@ -14,18 +14,15 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
@@ -114,12 +111,14 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     protected String getRequestBody(final HttpServletRequest request) throws ServletException {
-        try {
-            final ServletInputStream inputStream = request.getInputStream();
-            return IOUtils.toString(inputStream, request.getCharacterEncoding());
-        } catch (final IOException e) {
-            throw new ServletException(e);
-        }
+        //FIXME need to use a MultiReadHttpServletRequest wrapper in order to be able to get the inputstream twice (in the filter and in the API servlet)
+        //        try {
+        //            final ServletInputStream inputStream = request.getInputStream();
+        //            return IOUtils.toString(inputStream, request.getCharacterEncoding());
+        //        } catch (final IOException e) {
+        //            throw new ServletException(e);
+        //        }
+        return "";
     }
 
     protected boolean isApiAuthorizationsCheckEnabled(final Long tenantId) {
