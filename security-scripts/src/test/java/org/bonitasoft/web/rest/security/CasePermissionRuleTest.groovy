@@ -157,7 +157,7 @@ public class CasePermissionRuleTest {
                 "processDefinitionId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBody()
+        ''')).when(apiCallContext).getBodyAsJSON()
         doReturn(new SearchResultImpl<User>(1, [user])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(154l), any(SearchOptions.class));
 
         //when
@@ -175,7 +175,7 @@ public class CasePermissionRuleTest {
                 "processDefinitionId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBody()
+        ''')).when(apiCallContext).getBodyAsJSON()
         doReturn(new SearchResultImpl<User>(0, [])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(154l), any(SearchOptions.class));
 
         //when
@@ -192,7 +192,7 @@ public class CasePermissionRuleTest {
                 "unknown":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBody()
+        ''')).when(apiCallContext).getBodyAsJSON()
         doReturn(new SearchResultImpl<User>(1, [user])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(154l), any(SearchOptions.class));
 
         //when
