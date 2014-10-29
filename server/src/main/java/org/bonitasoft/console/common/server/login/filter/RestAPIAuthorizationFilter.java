@@ -105,7 +105,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         final String resourceId = id != null ? id.getPart(0) : null;
 
         boolean authorized = staticCheck(method, apiName, resourceName, resourceId, permissions, resourcesPermissionsMapping, apiSession.getUserName());
-        if (authorized) {
+        if (!authorized) {
             final DynamicPermissionsChecks dynamicPermissionsChecks = getDynamicPermissionsChecks(tenantId);
             final String requestBody = getRequestBody(request);
             authorized = dynamicCheck(method, apiName, resourceName, resourceId, apiSession, dynamicPermissionsChecks, request.getQueryString(), requestBody);
@@ -114,16 +114,9 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     protected String getRequestBody(final HttpServletRequest request) throws ServletException {
-        ServletInputStream inputStream = null;
         try {
-            try {
-                inputStream = request.getInputStream();
-                return IOUtils.toString(inputStream, request.getCharacterEncoding());
-            } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            }
+            final ServletInputStream inputStream = request.getInputStream();
+            return IOUtils.toString(inputStream, request.getCharacterEncoding());
         } catch (final IOException e) {
             throw new ServletException(e);
         }
