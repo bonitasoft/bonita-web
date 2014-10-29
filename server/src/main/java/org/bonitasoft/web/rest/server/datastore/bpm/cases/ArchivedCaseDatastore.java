@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -76,10 +74,8 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     @Override
     public ItemSearchResult<ArchivedCaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-
         addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
         addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
@@ -96,7 +92,6 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     }
 
     private SearchResult<ArchivedProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {
-
         try {
             final ProcessAPI processAPI = getProcessApi();
 
@@ -119,7 +114,6 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         } catch (final Exception e) {
             throw new APIException(e);
         }
-
     }
 
     @Override
@@ -131,7 +125,6 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         } catch (final Exception e) {
             throw new APIException(e);
         }
-
     }
 
     @Override
@@ -147,7 +140,6 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         } catch (final Exception e) {
             throw new APIException(e);
         }
-
     }
 
     public ProcessAPI getProcessApi() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {

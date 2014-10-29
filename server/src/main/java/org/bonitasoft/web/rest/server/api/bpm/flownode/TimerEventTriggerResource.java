@@ -72,9 +72,4 @@ public class TimerEventTriggerResource extends CommonResource {
         return new TimerEventTrigger(executionDate);
     }
 
-    @Override
-    public String getAttribute(final String attributeName) {
-        return super.getAttribute(attributeName);
-    }
-
 }
