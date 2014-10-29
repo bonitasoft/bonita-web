@@ -24,9 +24,14 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.impl.APISessionImpl;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class TimerEventTriggerResourceTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void searchTimerEventTriggersShouldCallEngine() throws Exception {
@@ -45,7 +50,7 @@ public class TimerEventTriggerResourceTest {
     }
 
     @Test(expected = APIException.class)
-    public void searchTimerEventTriggersShouldThrowExceptionIfParameterNotFound() throws Exception {
+    public void searchTimerEventTriggersShouldThrowExceptionIfParameterNotFound() {
         // given:
         final TimerEventTriggerResource spy = spy(new TimerEventTriggerResource());
         doReturn(null).when(spy).getParameter(anyString(), anyBoolean());
@@ -54,11 +59,15 @@ public class TimerEventTriggerResourceTest {
         spy.searchTimerEventTriggers();
     }
 
-    @Test(expected = APIException.class)
-    public void updateShouldHandleNullID() throws Exception {
+    @Test
+    public void updateTimerEventTrigger_should_throw_api_expection_when_trigger_id_is_null() throws Exception {
+        // Given
+        exception.expect(APIException.class);
+        exception.expectMessage("Attribute 'id' is mandatory");
         final TimerEventTriggerResource spy = spy(new TimerEventTriggerResource());
         doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
 
+        // When
         spy.updateTimerEventTrigger(null);
     }
 
