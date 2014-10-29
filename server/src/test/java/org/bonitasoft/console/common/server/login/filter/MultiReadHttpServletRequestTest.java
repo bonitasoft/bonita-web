@@ -36,6 +36,9 @@ public class MultiReadHttpServletRequestTest {
 
             final InputStream inputStream = multiReadHttpServletRequest.getInputStream();
             Assert.assertEquals("body content", IOUtils.toString(inputStream));
+
+            final InputStream inputStream2 = multiReadHttpServletRequest.getInputStream();
+            Assert.assertEquals("body content", IOUtils.toString(inputStream2));
         } finally {
             if (stringInputStream != null) {
                 stringInputStream.close();
