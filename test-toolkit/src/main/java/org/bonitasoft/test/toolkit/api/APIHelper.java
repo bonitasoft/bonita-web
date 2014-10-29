@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.bonitasoft.test.toolkit.api;
 
@@ -42,8 +42,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Helper class to make API calls (eg REST API calls).
- * 
+ *
  * @author truc
+ * @author Celine Souchet
  */
 @SuppressWarnings("unchecked")
 public class APIHelper {
@@ -85,31 +86,31 @@ public class APIHelper {
 
     /**
      * Constructor.
-     * 
+     *
      * @param pTenantId
      * @param pSiteUrl
      * @param pUserName
      * @param pPassword
      */
     public APIHelper(final long pTenantId, final String pSiteUrl, final String pUserName, final String pPassword) {
-        this.logger = LoggerFactory.getLogger(APIHelper.class);
-        this.logger.info("Login on tenant [{}] with user [{}]", pTenantId, pUserName);
+        logger = LoggerFactory.getLogger(APIHelper.class);
+        logger.info("Login on tenant [{}] with user [{}]", pTenantId, pUserName);
 
         RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
-        this.executor = new ApacheHttpClient4Executor();
+        executor = new ApacheHttpClient4Executor();
         setSiteUrl(pSiteUrl);
-        this.client = ProxyFactory.create(BonitaAPIClient.class, pSiteUrl, this.executor);
+        client = ProxyFactory.create(BonitaAPIClient.class, pSiteUrl, executor);
 
-        final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword, Boolean.FALSE.toString());
+        final ClientResponse<String> res = client.login(String.valueOf(pTenantId), pUserName, pPassword, Boolean.FALSE.toString());
         consumeResponse(res);
 
-        this.jsonParser = new JSONParser();
-        this.xmlReader = new SAXReader();
+        jsonParser = new JSONParser();
+        xmlReader = new SAXReader();
     }
 
     /**
      * Constructor (using default tenant id).
-     * 
+     *
      * @param siteUrl
      * @param pUserName
      * @param pPassword
@@ -120,7 +121,7 @@ public class APIHelper {
 
     /**
      * Constructor using technical user credentials.
-     * 
+     *
      * @param siteUrl
      */
     public APIHelper(final String siteUrl) {
@@ -129,7 +130,7 @@ public class APIHelper {
 
     /**
      * Constructor using technical user credentials.
-     * 
+     *
      * @param siteUrl
      */
     public APIHelper(final String siteUrl, final long pTenantId) {
@@ -138,13 +139,13 @@ public class APIHelper {
 
     /**
      * Clean and set site URL.
-     * 
+     *
      * @param pSiteUrl
      */
     private final void setSiteUrl(final String pSiteUrl) {
-        this.siteUrl = pSiteUrl;
-        if (!this.siteUrl.endsWith("/")) {
-            this.siteUrl = this.siteUrl + "/";
+        siteUrl = pSiteUrl;
+        if (!siteUrl.endsWith("/")) {
+            siteUrl = siteUrl + "/";
         }
     }
 
@@ -152,30 +153,30 @@ public class APIHelper {
      * @return
      */
     public final BonitaAPIClient getClient() {
-        return this.client;
+        return client;
     }
 
     /**
      * Get all users.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray getAllUsers() {
         System.out.println("[INFO] APIHelper => getAllUsers()");
-        final ClientResponse<String> res = this.client.getUsers(0, SEARCH_COUNT);
+        final ClientResponse<String> res = client.getUsers(0, SEARCH_COUNT);
         final String entity = consumeResponse(res).getEntity();
         JSONArray users = new JSONArray();
         try {
-            users = (JSONArray) this.jsonParser.parse(entity);
+            users = (JSONArray) jsonParser.parse(entity);
         } catch (final ParseException e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return users;
     }
 
     /**
      * Get all groups.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray getAllGroups() {
@@ -185,7 +186,7 @@ public class APIHelper {
 
     /**
      * Get all roles.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray getAllRoles() {
@@ -195,7 +196,7 @@ public class APIHelper {
 
     /**
      * Get all profiles.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray getAllProfiles() {
@@ -205,56 +206,56 @@ public class APIHelper {
 
     /**
      * Make a search.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray search(final String searchURL, final int pParam, final int cParam, final String oParam, final String fParam,
             final String dParam, final String nParam) {
-        final ClientResponse<String> res = this.client.search(searchURL, pParam, cParam, oParam, fParam, dParam, nParam);
+        final ClientResponse<String> res = client.search(searchURL, pParam, cParam, oParam, fParam, dParam, nParam);
         final String entity = consumeResponse(res).getEntity();
         JSONArray items = new JSONArray();
         try {
-            items = (JSONArray) this.jsonParser.parse(entity);
+            items = (JSONArray) jsonParser.parse(entity);
         } catch (final ParseException e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return items;
     }
 
     /**
      * Make a search and return response.
-     * 
+     *
      * @return JSONArray
      */
     public final APIResponse searchResponse(final String searchURL, final int pParam, final int cParam, final String oParam, final String fParam,
             final String dParam, final String nParam) {
-        final ClientResponse<String> res = this.client.search(searchURL, pParam, cParam, oParam, fParam, dParam, nParam);
+        final ClientResponse<String> res = client.search(searchURL, pParam, cParam, oParam, fParam, dParam, nParam);
         return consumeResponse(res);
     }
 
     /**
      * Get all processes.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray getAllProcesses() {
         System.out.println("[INFO] APIHelper => getAllProcesses()");
         final String filterExpression = null; // "VIEW=ADMINISTRATOR";
         final String order = "deploymentDate DESC";
-        final ClientResponse<String> res = this.client.getProcesses(order, filterExpression);
+        final ClientResponse<String> res = client.getProcesses(order, filterExpression);
         final String entity = consumeResponse(res).getEntity();
         JSONArray processes = new JSONArray();
         try {
-            processes = (JSONArray) this.jsonParser.parse(entity);
+            processes = (JSONArray) jsonParser.parse(entity);
         } catch (final ParseException e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return processes;
     }
 
     /**
      * Find user and return its id.
-     * 
+     *
      * @param pUsername
      * @return
      * @throws Exception
@@ -267,7 +268,7 @@ public class APIHelper {
 
     /**
      * Find user and return the response as JSON object.
-     * 
+     *
      * @param pUsername
      * @return
      * @throws Exception
@@ -287,7 +288,7 @@ public class APIHelper {
 
     /**
      * Find actor and return its id.
-     * 
+     *
      * @param pActorName
      * @param pProcessId
      * @return
@@ -308,7 +309,7 @@ public class APIHelper {
 
     /**
      * Find group and return its id.
-     * 
+     *
      * @param pGroupName
      * @return
      * @throws Exception
@@ -328,7 +329,7 @@ public class APIHelper {
 
     /**
      * Find role and return its id.
-     * 
+     *
      * @param pRoleName
      * @return
      * @throws Exception
@@ -348,7 +349,7 @@ public class APIHelper {
 
     /**
      * Find profile and return its id.
-     * 
+     *
      * @param pProfileName
      * @return
      * @throws Exception
@@ -368,7 +369,7 @@ public class APIHelper {
 
     /**
      * Find processes and return all matching ids.
-     * 
+     *
      * @param pProcessName
      * @return
      */
@@ -387,11 +388,11 @@ public class APIHelper {
 
     /**
      * Find processes and return all matching ids.
-     * 
+     *
      * @param pProcessName
-     *            null to get all processes
+     *        null to get all processes
      * @param pVersion
-     *            null to get all versions of pProcessName
+     *        null to get all versions of pProcessName
      * @return
      */
     public final List<String> getProcessIds(final String pProcessName, final String pVersion) {
@@ -416,7 +417,7 @@ public class APIHelper {
 
     /**
      * Get process id by process name (first found).
-     * 
+     *
      * @param pProcessName
      * @param pVersion
      * @return
@@ -429,7 +430,7 @@ public class APIHelper {
 
     /**
      * Get process id by process name and display name (first found).
-     * 
+     *
      * @param pProcessName
      * @param pDisplayName
      * @param pVersion
@@ -456,7 +457,7 @@ public class APIHelper {
 
     /**
      * Delete a user.
-     * 
+     *
      * @param pUsername
      */
     public final APIResponse deleteUser(final String pUsername) {
@@ -466,12 +467,12 @@ public class APIHelper {
         try {
             id = getUserId(pUsername);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (id != null) {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
-            final ClientResponse<String> res = this.client.deleteUsers(idsToDelete.toJSONString());
+            final ClientResponse<String> res = client.deleteUsers(idsToDelete.toJSONString());
             apiResponse = consumeResponse(res);
         }
         return apiResponse;
@@ -479,7 +480,7 @@ public class APIHelper {
 
     /**
      * Delete a group.
-     * 
+     *
      * @param pGroupName
      */
     public final void deleteGroup(final String pGroupName) {
@@ -488,19 +489,19 @@ public class APIHelper {
         try {
             id = getGroupId(pGroupName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (id != null) {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
-            final ClientResponse<String> res = this.client.deleteGroups(idsToDelete.toJSONString());
+            final ClientResponse<String> res = client.deleteGroups(idsToDelete.toJSONString());
             consumeResponse(res);
         }
     }
 
     /**
      * Delete a role.
-     * 
+     *
      * @param pRoleName
      */
     public final void deleteRole(final String pRoleName) {
@@ -509,19 +510,19 @@ public class APIHelper {
         try {
             id = getRoleId(pRoleName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (id != null) {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
-            final ClientResponse<String> res = this.client.deleteRoles(idsToDelete.toJSONString());
+            final ClientResponse<String> res = client.deleteRoles(idsToDelete.toJSONString());
             consumeResponse(res);
         }
     }
 
     /**
      * Delete a profile.
-     * 
+     *
      * @param pProfileName
      */
     public final void deleteProfile(final String pProfileName) {
@@ -530,19 +531,19 @@ public class APIHelper {
         try {
             id = getProfileId(pProfileName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (id != null) {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(id);
-            final ClientResponse<String> res = this.client.deleteProfiles(idsToDelete.toJSONString());
+            final ClientResponse<String> res = client.deleteProfiles(idsToDelete.toJSONString());
             consumeResponse(res);
         }
     }
 
     /**
      * Delete all processes with the same name (all versions).
-     * 
+     *
      * @param pProcessName
      */
     public final APIResponse deleteAllProcesses(final String pProcessName) {
@@ -551,7 +552,7 @@ public class APIHelper {
 
     /**
      * Delete all processes given name and version.
-     * 
+     *
      * @param pProcessName
      */
     public final APIResponse deleteAllProcesses(final String pProcessName, final String pVersion) {
@@ -562,25 +563,25 @@ public class APIHelper {
             setProcessStateById(id, ProcessActivationState.DISABLED);
             idsToDelete.add(id);
         }
-        final ClientResponse<String> res = this.client.deleteProcesses(idsToDelete.toJSONString());
+        final ClientResponse<String> res = client.deleteProcesses(idsToDelete.toJSONString());
         return consumeResponse(res);
     }
 
     /**
      * Create a user.
-     * 
+     *
      * @param pCreateUser
      * @return response as String
      */
     public final APIResponse createUser(final CreateUser pCreateUser) {
         System.out.println("[INFO] APIHelper => createUser (" + pCreateUser.toString() + ")");
-        final ClientResponse<String> res = this.client.createUser(pCreateUser.toJSONObject().toJSONString());
+        final ClientResponse<String> res = client.createUser(pCreateUser.toJSONObject().toJSONString());
         return consumeResponse(res);
     }
 
     /**
      * Set manager for a user.
-     * 
+     *
      * @param pUserId
      * @param pManagerId
      * @return
@@ -588,14 +589,14 @@ public class APIHelper {
     public final String setUserManager(final String pUserId, final String pManagerId) {
         System.out.println("[INFO]setUserManager( " + pUserId + " , " + pManagerId.toString() + ")");
         final SetUserManager setUserManager = new SetUserManager(pUserId, pManagerId);
-        final ClientResponse<String> res = this.client.setUserManager(pUserId, setUserManager.toJSONObject().toJSONString());
+        final ClientResponse<String> res = client.setUserManager(pUserId, setUserManager.toJSONObject().toJSONString());
         final String entity = consumeResponse(res).getEntity();
         return entity;
     }
 
     /**
      * Get member id from member name.
-     * 
+     *
      * @param pMemberyType
      * @param pMemberName
      * @return
@@ -617,14 +618,14 @@ public class APIHelper {
                     break;
             }
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         return memberId;
     }
 
     /**
      * Add member to profile.
-     * 
+     *
      * @param pProfileName
      * @param pMemberType
      * @param pMemberName
@@ -638,11 +639,11 @@ public class APIHelper {
             profileId = getProfileId(pProfileName);
             memberId = getMemberId(pMemberType, pMemberName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (profileId != null && memberId != null) {
             final AddToProfile addToProfile = new AddToProfile(profileId, pMemberType, memberId);
-            final ClientResponse<String> res = this.client.addToProfile(addToProfile.toJSONObject().toJSONString());
+            final ClientResponse<String> res = client.addToProfile(addToProfile.toJSONObject().toJSONString());
             apiResponse = consumeResponse(res);
         }
         return apiResponse;
@@ -650,7 +651,7 @@ public class APIHelper {
 
     /**
      * Add membership (role in group) to profile.
-     * 
+     *
      * @param pProfileName
      * @param pRoleName
      * @param pGroupName
@@ -666,13 +667,13 @@ public class APIHelper {
             roleId = getRoleId(pRoleName);
             groupId = getGroupId(pGroupName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (profileId != null && roleId != null && groupId != null) {
             final AddToProfile addToProfile = new AddToProfile(profileId, MemberType.ROLE, roleId);
             addToProfile.setMemberType(MemberType.GROUP);
             addToProfile.setMemberId(groupId);
-            final ClientResponse<String> res = this.client.addToProfile(addToProfile.toJSONObject().toJSONString());
+            final ClientResponse<String> res = client.addToProfile(addToProfile.toJSONObject().toJSONString());
             apiResponse = consumeResponse(res);
         }
         return apiResponse;
@@ -680,42 +681,42 @@ public class APIHelper {
 
     /**
      * Install a process given an uploaded process bar.
-     * 
+     *
      * @param pFileupload
      * @return
      */
     public final APIResponse installProcess(final String pFileupload) {
         final InstallProcess installProcess = new InstallProcess(pFileupload);
-        final ClientResponse<String> res = this.client.installProcess(installProcess.toJSONObject().toJSONString());
+        final ClientResponse<String> res = client.installProcess(installProcess.toJSONObject().toJSONString());
         return consumeResponse(res);
     }
 
     /**
      * Import an organization given an uploaded orgnization XML.
-     * 
+     *
      * @param pOrganizationDataUpload
      * @return
      */
     public final APIResponse importOrganization(final String pOrganizationDataUpload) {
         System.out.println("[INFO] APIHelper => importOrganization (" + pOrganizationDataUpload + ")");
         final ImportOrganization importOrganization = new ImportOrganization(pOrganizationDataUpload);
-        final ClientResponse<String> res = this.client.importOrganization(importOrganization.toJSONObject().toJSONString());
+        final ClientResponse<String> res = client.importOrganization(importOrganization.toJSONObject().toJSONString());
         return consumeResponse(res);
     }
 
     /**
      * Export organization.
-     * 
+     *
      * @return
      */
     public final Document exportOrganization() {
         System.out.println("[INFO] APIHelper => exportOrganization()");
         Document result = null;
-        final ClientResponse<String> res = this.client.exportOrganization();
+        final ClientResponse<String> res = client.exportOrganization();
         final String entity = consumeResponse(res).getEntity();
         System.out.println("[INFO] APIHelper => exportOrganization() - Entity: [" + entity + "]");
         try {
-            result = this.xmlReader.read(new StringReader(entity));
+            result = xmlReader.read(new StringReader(entity));
         } catch (final DocumentException de) {
             throw new Error(de);
         }
@@ -724,7 +725,7 @@ public class APIHelper {
 
     /**
      * Update a process state (all processes with given name any version).
-     * 
+     *
      * @param pProcessName
      * @param pState
      * @return
@@ -741,7 +742,7 @@ public class APIHelper {
 
     /**
      * Update a process state given its id.
-     * 
+     *
      * @param pProcessName
      * @param pState
      * @return
@@ -750,13 +751,13 @@ public class APIHelper {
 
         System.out.println("[INFO]setProcessStateById( " + pProcessId + " , " + pState.toString() + ")");
         final SetProcessState setProcessState = new SetProcessState(pProcessId, pState);
-        final ClientResponse<String> res = this.client.setProcessState(pProcessId, setProcessState.toJSONObject().toJSONString());
+        final ClientResponse<String> res = client.setProcessState(pProcessId, setProcessState.toJSONObject().toJSONString());
         return consumeResponse(res);
     }
 
     /**
      * Set display name of a process.
-     * 
+     *
      * @param pProcessId
      * @param pDisplayName
      * @return
@@ -764,32 +765,32 @@ public class APIHelper {
     public final String setProcessDisplayName(final String pProcessId, final String pDisplayName) {
         System.out.println("[INFO]setProcessDisplayName( " + pProcessId + " , " + pDisplayName.toString() + ")");
         final SetProcessDisplayName setProcessDisplayName = new SetProcessDisplayName(pProcessId, pDisplayName);
-        final ClientResponse<String> res = this.client.setProcessDisplayName(pProcessId, setProcessDisplayName.toJSONObject().toJSONString());
+        final ClientResponse<String> res = client.setProcessDisplayName(pProcessId, setProcessDisplayName.toJSONObject().toJSONString());
         final String entity = consumeResponse(res).getEntity();
         return entity;
     }
 
     /**
      * Get all processes.
-     * 
+     *
      * @return JSONArray
      */
     public final JSONArray getAllActors(final String pProcessId) {
         System.out.println("[INFO]getAllActors( " + pProcessId + ")");
-        final ClientResponse<String> res = this.client.getActors(0, SEARCH_COUNT, "name ASC", "process_id=" + pProcessId);
+        final ClientResponse<String> res = client.getActors(0, SEARCH_COUNT, "name ASC", "process_id=" + pProcessId);
         final String entity = consumeResponse(res).getEntity();
         JSONArray actors = new JSONArray();
         try {
-            actors = (JSONArray) this.jsonParser.parse(entity);
+            actors = (JSONArray) jsonParser.parse(entity);
         } catch (final ParseException e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return actors;
     }
 
     /**
      * Get members of a process actor.
-     * 
+     *
      * @param pActorId
      * @param pMemberType
      * @return
@@ -799,20 +800,20 @@ public class APIHelper {
         final List<String> filterExpressions = new ArrayList<String>();
         filterExpressions.add("actor_id=" + pActorId);
         filterExpressions.add("MEMBER_TYPE=" + pMemberType.toString());
-        final ClientResponse<String> res = this.client.getActorMembers(0, SEARCH_COUNT, "name ASC", filterExpressions);
+        final ClientResponse<String> res = client.getActorMembers(0, SEARCH_COUNT, "name ASC", filterExpressions);
         final String entity = consumeResponse(res).getEntity();
         JSONArray actorMembers = new JSONArray();
         try {
-            actorMembers = (JSONArray) this.jsonParser.parse(entity);
+            actorMembers = (JSONArray) jsonParser.parse(entity);
         } catch (final ParseException e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return actorMembers;
     }
 
     /**
      * Get the id of a process actor member.
-     * 
+     *
      * @param pActorId
      * @param pMemberType
      * @param pMemberName
@@ -834,7 +835,7 @@ public class APIHelper {
 
     /**
      * Delete a member mapped to a process actor.
-     * 
+     *
      * @param pProcessId
      * @param pActorName
      * @param pMemberType
@@ -848,19 +849,19 @@ public class APIHelper {
             final String actorId = getActorId(pProcessId, pActorName);
             actorMemberId = getActorMemberId(actorId, pMemberType, pMemberName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (actorMemberId != null) {
             final JSONArray idsToDelete = new JSONArray();
             idsToDelete.add(actorMemberId);
-            final ClientResponse<String> res = this.client.deleteActorMembers(idsToDelete.toJSONString());
+            final ClientResponse<String> res = client.deleteActorMembers(idsToDelete.toJSONString());
             consumeResponse(res);
         }
     }
 
     /**
      * Map user to actor.
-     * 
+     *
      * @param pProfileName
      * @param pMemberyType
      * @param pMemberName
@@ -875,11 +876,11 @@ public class APIHelper {
             userId = getUserId(pUserName);
             actorId = getActorId(pProcessId, pActorName);
         } catch (final Exception e) {
-            this.logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
         }
         if (userId != null && actorId != null) {
             final MapToActor actMapping = new MapToActor(actorId, pMemberyType, userId);
-            final ClientResponse<String> res = this.client.mapToActor(actMapping.toJSONObject().toJSONString());
+            final ClientResponse<String> res = client.mapToActor(actMapping.toJSONObject().toJSONString());
             entity = consumeResponse(res).getEntity();
         }
         return entity;
@@ -887,48 +888,48 @@ public class APIHelper {
 
     /**
      * Create group.
-     * 
+     *
      * @param pCreateGroup
      * @return
      */
     public final String createGroup(final CreateGroup pCreateGroup) {
         System.out.println("[INFO]createGroup( " + pCreateGroup.toString());
-        final ClientResponse<String> res = this.client.createGroup(pCreateGroup.toJSONObject().toString());
+        final ClientResponse<String> res = client.createGroup(pCreateGroup.toJSONObject().toString());
         return consumeResponse(res).getEntity();
     }
 
     /**
      * Create role.
-     * 
+     *
      * @param pCreateRole
      * @return
      */
     public final String createRole(final CreateRole pCreateRole) {
         System.out.println("[INFO]createRole( " + pCreateRole.toString());
-        final ClientResponse<String> res = this.client.createRole(pCreateRole.toJSONObject().toString());
+        final ClientResponse<String> res = client.createRole(pCreateRole.toJSONObject().toString());
         return consumeResponse(res).getEntity();
     }
 
     /**
      * Create profile.
-     * 
+     *
      * @param pCreateProfile
      * @return
      */
     public final String createProfile(final CreateProfile pCreateProfile) {
-        final ClientResponse<String> res = this.client.createProfile(pCreateProfile.toJSONObject().toString());
+        final ClientResponse<String> res = client.createProfile(pCreateProfile.toJSONObject().toString());
         return consumeResponse(res).getEntity();
     }
 
     /**
      * Get i18n translation.
-     * 
+     *
      * @param pLanguageCode
-     *            in [de, en, es, fr, it, pt_BR]
+     *        in [de, en, es, fr, it, pt_BR]
      * @return Map<String, String> (key, value) pairs map
      */
     public final Map<String, String> getI18nTranslation(final String pLanguageCode) {
-        this.logger.info("Loading i18n translation for language [{}]", pLanguageCode);
+        logger.info("Loading i18n translation for language [{}]", pLanguageCode);
         final JSONArray jsonArray = search(BonitaAPIClient.TRANSLATION_API_PATH, 0, SEARCH_COUNT, null, "locale=" + pLanguageCode, null, null);
         final Map<String, String> map = new HashMap<String, String>();
         JSONObject jo;
@@ -945,7 +946,7 @@ public class APIHelper {
 
     /**
      * Consume a client response (logging and connection release).
-     * 
+     *
      * @param pResponse
      * @return APIResponse object
      */
@@ -964,14 +965,14 @@ public class APIHelper {
             loggerArgs[1] = String.valueOf(status);
             loggerArgs[2] = HttpStatus.getStatusText(status);
             apiResponse = new APIResponse(entity, status);
-            this.logger.debug("Response {}", entity);
+            logger.debug("Response {}", entity);
             if (isSuccessStatusCode(status)) {
-                this.logger.info("[{}] - {} {} ({}:{})", loggerArgs);
+                logger.info("[{}] - {} {} ({}:{})", loggerArgs);
             } else {
-                this.logger.error("[{}] - {} {} ({}:{})", loggerArgs);
+                logger.error("[{}] - {} {} ({}:{})", loggerArgs);
             }
         } catch (final Exception e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         } finally {
             if (pResponse != null) {
                 pResponse.releaseConnection();
@@ -982,7 +983,7 @@ public class APIHelper {
 
     /**
      * Consume a client response (logging and connection release).
-     * 
+     *
      * @param pResponse
      * @return APIResponse object
      */
@@ -1002,15 +1003,15 @@ public class APIHelper {
             loggerArgs[1] = String.valueOf(status);
             loggerArgs[2] = HttpStatus.getStatusText(status);
             apiResponse = new APIResponse(entity, status);
-            this.logger.debug("Response {}", entity);
+            logger.debug("Response {}", entity);
             final String logPattern = "[{}] - {} {} ({}:{})";
             if (isSuccessStatusCode(status)) {
-                this.logger.info(logPattern, loggerArgs);
+                logger.info(logPattern, loggerArgs);
             } else {
-                this.logger.error(logPattern, loggerArgs);
+                logger.error(logPattern, loggerArgs);
             }
         } catch (final Exception e) {
-            this.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         } finally {
             if (pResponse != null) {
                 pResponse.releaseConnection();
@@ -1021,7 +1022,7 @@ public class APIHelper {
 
     /**
      * Whether status code is successful (>= 200 && < 400).
-     * 
+     *
      * @param pStatusCode
      * @return
      */
@@ -1038,65 +1039,72 @@ public class APIHelper {
     /**
      * Send HTTP GET to a given resource given the resource path including query params.
      * Can be used for generice search for example.
-     * 
+     *
      * @param pResourcePathWithQueryParams
-     *            eg. "API/system/i18ntranslation?p=0&c=0&f=locale%3den"
+     *        eg. "API/system/i18ntranslation?p=0&c=0&f=locale%3den"
      * @return {@link APIResponse}
      * @throws Exception
      */
     public final APIResponse httpGet(final String pResourcePathWithQueryParams) throws Exception {
-        final String uriTemplate = this.siteUrl + pResourcePathWithQueryParams;
-        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
+        final String uriTemplate = buildUriTemplate(pResourcePathWithQueryParams);
+        final ClientRequest request = new ClientRequest(uriTemplate, executor);
         final ClientResponse<String> response = request.get();
         return consumeResponse(response);
     }
 
     /**
      * Send HTTP POST to a given resource with body.
-     * 
+     *
      * @param pResourcePath
      * @param pRequestBody
      * @return
      * @throws Exception
      */
     public final APIResponse httpPost(final String pResourcePath, final Object pRequestBody) throws Exception {
-        final String uriTemplate = this.siteUrl + pResourcePath;
-        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
-        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        final String uriTemplate = buildUriTemplate(pResourcePath);
+        final ClientRequest request = buildClientRequestWithBody(pRequestBody, uriTemplate);
         final ClientResponse<String> response = request.post();
         return consumeResponse(response);
     }
 
     /**
      * Send HTTP PUT to a given resource with body.
-     * 
+     *
      * @param pResourcePath
      * @param pRequestBody
      * @return
      * @throws Exception
      */
     public final APIResponse httpPut(final String pResourcePath, final Object pRequestBody) throws Exception {
-        final String uriTemplate = this.siteUrl + pResourcePath;
-        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
-        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        final String uriTemplate = buildUriTemplate(pResourcePath);
+        final ClientRequest request = buildClientRequestWithBody(pRequestBody, uriTemplate);
         final ClientResponse<String> response = request.put();
         return consumeResponse(response);
     }
 
     /**
      * Send HTTP DELETE to a given resource given the resource path including query params.
-     * 
+     *
      * @param pResourcePath
      * @param pRequestBody
      * @return
      * @throws Exception
      */
     public final APIResponse httpDelete(final String pResourcePath, final Object pRequestBody) throws Exception {
-        final String uriTemplate = this.siteUrl + pResourcePath;
-        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
-        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        final String uriTemplate = buildUriTemplate(pResourcePath);
+        final ClientRequest request = buildClientRequestWithBody(pRequestBody, uriTemplate);
         final ClientResponse<String> response = request.delete();
         return consumeResponse(response);
+    }
+
+    private String buildUriTemplate(final String pResourcePath) {
+        return siteUrl + pResourcePath;
+    }
+
+    private ClientRequest buildClientRequestWithBody(final Object pRequestBody, final String uriTemplate) {
+        final ClientRequest request = new ClientRequest(uriTemplate, executor);
+        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        return request;
     }
 
 }

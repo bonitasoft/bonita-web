@@ -15,7 +15,6 @@ import java.util.List;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.ServerAPIException;
@@ -79,10 +78,8 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_delete_archive_case_call_right_engine_method() throws DeletionException, ArchivedProcessInstanceNotFoundException,
-            ProcessInstanceNotFoundException {
+    public void should_delete_archive_case_call_right_engine_method() throws DeletionException, ArchivedProcessInstanceNotFoundException {
         //given
-
         final List<APIID> idList = Arrays.asList(APIID.makeAPIID(archivedProcessInstanceId1), APIID.makeAPIID(archivedProcessInstanceId2),
                 APIID.makeAPIID(archivedProcessInstanceId3));
 
@@ -100,8 +97,7 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_delete_all_archived_cases_when_one_id_is_given() throws DeletionException, ProcessInstanceNotFoundException,
-            ArchivedProcessInstanceNotFoundException {
+    public void should_delete_all_archived_cases_when_one_id_is_given() throws DeletionException, ArchivedProcessInstanceNotFoundException {
         //given
         final List<APIID> idList = Arrays.asList(APIID.makeAPIID(archivedProcessInstanceId1));
 
@@ -124,7 +120,5 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
         datastore.delete(idList);
 
     }
-
-
 
 }

@@ -9,7 +9,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 
@@ -43,7 +42,7 @@ public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void searchTimerEventTriggersShouldReturnStatusCode200() throws IOException {
+    public void searchTimerEventTriggersShouldReturnStatusCode200() {
         assertThat(restResource.searchTimerEventTriggers().toString()).isEqualTo("[]");
     }
 
