@@ -71,7 +71,6 @@ public class ModelFactory extends ItemDefinitionFactory {
 
     @Override
     public ItemDefinition<?> defineItemDefinitions(final String token) {
-
         // organization
         if (UserDefinition.TOKEN.equals(token)) {
             return new UserDefinition();

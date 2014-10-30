@@ -1,16 +1,14 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2011, 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -72,145 +70,176 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Séverin Moussel
- *
+ * @author Celine Souchet
  */
 public class BonitaRestAPIFactory extends RestAPIFactory {
 
-	private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
+    private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
 
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
-
         if ("identity".equals(apiToken)) {
-            if ("user".equals(resourceToken)) {
-                return new APIUser();
-            } else if ("role".equals(resourceToken)) {
-                return new APIRole();
-            } else if ("group".equals(resourceToken)) {
-                return new APIGroup();
-            } else if ("membership".equals(resourceToken)) {
-                return new APIMembership();
-            } else if ("professionalcontactdata".equals(resourceToken)) {
-                return new APIProfessionalContactData();
-            } else if ("personalcontactdata".equals(resourceToken)) {
-                return new APIPersonalContactData();
-            }
-        } else if("customuserinfo".equals(apiToken)) {
-            if("definition".equals(resourceToken)) {
-                return new APICustomUserInfoDefinition(new CustomUserInfoEngineClientCreator());
-            } else if("user".equals(resourceToken)) {
-                return new APICustomUserInfoUser(new CustomUserInfoEngineClientCreator());
-            } else if("value".equals(resourceToken)) {
-                return new APICustomUserInfoValue(new CustomUserInfoEngineClientCreator());
-            }
+            return getIdentityAPI(apiToken, resourceToken);
+        } else if ("customuserinfo".equals(apiToken)) {
+            return getCustomerUserInfoAPI(apiToken, resourceToken);
         } else if ("system".equals(apiToken)) {
-            if ("i18nlocale".equals(resourceToken)) {
-                return new APII18nLocale();
-            } else if ("i18ntranslation".equals(resourceToken)) {
-                return new APII18nTranslation();
-            } else if ("session".equals(resourceToken)) {
-                return new APISession();
-            }
-
-        // FIXME : userXP deprecated    (BS-500)
-        //    - replaced by 'portal'
-        //    - Do not add any API here
-        //    - userXP section must be deleted in 6.4.0 version
-        //    - duplication not removed because userXp must stay like this
+            return getSystemAPI(apiToken, resourceToken);
         } else if ("userXP".equals(apiToken)) {
-            if ("profile".equals(resourceToken)) {
-            	LOGGER.warning("Deprecated API path, please use /API/portal/profile instead");
-                return new APIProfile();
-            } else if ("profileEntry".equals(resourceToken)) {
-            	LOGGER.warning("Deprecated API path, please use /API/portal/profileEntry instead");
-                return new APIProfileEntry();
-            } else if ("profileMember".equals(resourceToken)) {
-            	LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
-                return new APIProfileMember();
-            }
-        // --------------------------------------------------------
-
+            // FIXME : userXP deprecated    (BS-500)
+            //    - replaced by 'portal'
+            //    - Do not add any API here
+            //    - userXP section must be deleted in 6.4.0 version
+            //    - duplication not removed because userXp must stay like this
+            getUserXPAPI(apiToken, resourceToken);
+            // --------------------------------------------------------
         } else if ("portal".equals(apiToken)) {
-        	if ("profile".equals(resourceToken)) {
-                return new APIProfile();
-            } else if ("profileEntry".equals(resourceToken)) {
-                return new APIProfileEntry();
-            } else if ("profileMember".equals(resourceToken)) {
-                return new APIProfileMember();
-            }
-
+            return getPortalAPI(apiToken, resourceToken);
         } else if ("bpm".equals(apiToken)) {
-            if ("humanTask".equals(resourceToken)) {
-                return new APIHumanTask();
-            } else if ("userTask".equals(resourceToken)) {
-                return new APIUserTask();
-            } else if ("archivedHumanTask".equals(resourceToken)) {
-                return new APIArchivedHumanTask();
-            } else if ("archivedUserTask".equals(resourceToken)) {
-                return new APIArchivedUserTask();
-            } else if ("process".equals(resourceToken)) {
-                return new APIProcess();
-            } else if ("category".equals(resourceToken)) {
-                return new APICategory();
-            } else if ("processCategory".equals(resourceToken)) {
-                return new APIProcessCategory();
-            } else if ("processConnector".equals(resourceToken)) {
-                return new APIProcessConnector();
-            } else if ("case".equals(resourceToken)) {
-                return new APICase();
-            } else if ("archivedCase".equals(resourceToken)) {
-                return new APIArchivedCase();
-            } else if ("comment".equals(resourceToken)) {
-                return new APIComment();
-            } else if ("archivedComment".equals(resourceToken)) {
-                return new APIArchivedComment();
-            } else if ("document".equals(resourceToken)) {
-                return new APIDocument();
-            } else if ("archiveddocument".equals(resourceToken)) {
-                return new APIArchivedDocument();
-            } else if ("actor".equals(resourceToken)) {
-                return new APIActor();
-            } else if ("actorMember".equals(resourceToken)) {
-                return new APIActorMember();
-            } else if ("delegation".equals(resourceToken)) {
-                return new APIActorMember();
-            } else if ("hiddenUserTask".equals(resourceToken)) {
-                return new APIHiddenUserTask();
-            } else if ("activity".equals(resourceToken)) {
-                return new APIActivity();
-            } else if ("archivedActivity".equals(resourceToken)) {
-                return new APIArchivedActivity();
-            } else if ("task".equals(resourceToken)) {
-                return new APITask();
-            } else if ("archivedTask".equals(resourceToken)) {
-                return new APIArchivedTask();
-            } else if ("flowNode".equals(resourceToken)) {
-                return new APIFlowNode();
-            } else if ("archivedFlowNode".equals(resourceToken)) {
-                return new APIArchivedFlowNode();
-            } else if ("processResolutionProblem".equals(resourceToken)) {
-                return new APIProcessResolutionProblem();
-            } else if ("caseDocument".equals(resourceToken)) {
-                return new APICaseDocument();
-            } else if ("archivedCaseDocument".equals(resourceToken)) {
-                return new APIArchivedCaseDocument();
-            } else if ("connectorInstance".equals(resourceToken)) {
-                return new APIConnectorInstance();
-            } else if ("archivedConnectorInstance".equals(resourceToken)) {
-                return new APIArchivedConnectorInstance();
-            } else if ("processConnectorDependency".equals(resourceToken)) {
-                return new APIProcessConnectorDependency();
-            } else if ("caseVariable".equals(resourceToken)) {
-                return new APICaseVariable();
-            } else if ("document".equals(resourceToken)) {
-                return new APIDocument();
-            } else if ("archiveddocument".equals(resourceToken)) {
-                return new APIArchivedDocument();
-            }
+            return getBpmAPI(apiToken, resourceToken);
         } else if ("platform".equals(apiToken)) {
-            if ("platform".equals(resourceToken)) {
-                return new APIPlatform();
-            }
+            return getPlatformAPI(apiToken, resourceToken);
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getIdentityAPI(final String apiToken, final String resourceToken) {
+        if ("user".equals(resourceToken)) {
+            return new APIUser();
+        } else if ("role".equals(resourceToken)) {
+            return new APIRole();
+        } else if ("group".equals(resourceToken)) {
+            return new APIGroup();
+        } else if ("membership".equals(resourceToken)) {
+            return new APIMembership();
+        } else if ("professionalcontactdata".equals(resourceToken)) {
+            return new APIProfessionalContactData();
+        } else if ("personalcontactdata".equals(resourceToken)) {
+            return new APIPersonalContactData();
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getCustomerUserInfoAPI(final String apiToken, final String resourceToken) {
+        if ("definition".equals(resourceToken)) {
+            return new APICustomUserInfoDefinition(new CustomUserInfoEngineClientCreator());
+        } else if ("user".equals(resourceToken)) {
+            return new APICustomUserInfoUser(new CustomUserInfoEngineClientCreator());
+        } else if ("value".equals(resourceToken)) {
+            return new APICustomUserInfoValue(new CustomUserInfoEngineClientCreator());
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getSystemAPI(final String apiToken, final String resourceToken) {
+        if ("i18nlocale".equals(resourceToken)) {
+            return new APII18nLocale();
+        } else if ("i18ntranslation".equals(resourceToken)) {
+            return new APII18nTranslation();
+        } else if ("session".equals(resourceToken)) {
+            return new APISession();
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getUserXPAPI(final String apiToken, final String resourceToken) {
+        if ("profile".equals(resourceToken)) {
+            LOGGER.warning("Deprecated API path, please use /API/portal/profile instead");
+            return new APIProfile();
+        } else if ("profileEntry".equals(resourceToken)) {
+            LOGGER.warning("Deprecated API path, please use /API/portal/profileEntry instead");
+            return new APIProfileEntry();
+        } else if ("profileMember".equals(resourceToken)) {
+            LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
+            return new APIProfileMember();
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getPortalAPI(final String apiToken, final String resourceToken) {
+        if ("profile".equals(resourceToken)) {
+            return new APIProfile();
+        } else if ("profileEntry".equals(resourceToken)) {
+            return new APIProfileEntry();
+        } else if ("profileMember".equals(resourceToken)) {
+            return new APIProfileMember();
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getBpmAPI(final String apiToken, final String resourceToken) {
+        if ("humanTask".equals(resourceToken)) {
+            return new APIHumanTask();
+        } else if ("userTask".equals(resourceToken)) {
+            return new APIUserTask();
+        } else if ("archivedHumanTask".equals(resourceToken)) {
+            return new APIArchivedHumanTask();
+        } else if ("archivedUserTask".equals(resourceToken)) {
+            return new APIArchivedUserTask();
+        } else if ("process".equals(resourceToken)) {
+            return new APIProcess();
+        } else if ("category".equals(resourceToken)) {
+            return new APICategory();
+        } else if ("processCategory".equals(resourceToken)) {
+            return new APIProcessCategory();
+        } else if ("processConnector".equals(resourceToken)) {
+            return new APIProcessConnector();
+        } else if ("case".equals(resourceToken)) {
+            return new APICase();
+        } else if ("archivedCase".equals(resourceToken)) {
+            return new APIArchivedCase();
+        } else if ("comment".equals(resourceToken)) {
+            return new APIComment();
+        } else if ("archivedComment".equals(resourceToken)) {
+            return new APIArchivedComment();
+        } else if ("document".equals(resourceToken)) {
+            return new APIDocument();
+        } else if ("archiveddocument".equals(resourceToken)) {
+            return new APIArchivedDocument();
+        } else if ("actor".equals(resourceToken)) {
+            return new APIActor();
+        } else if ("actorMember".equals(resourceToken)) {
+            return new APIActorMember();
+        } else if ("delegation".equals(resourceToken)) {
+            return new APIActorMember();
+        } else if ("hiddenUserTask".equals(resourceToken)) {
+            return new APIHiddenUserTask();
+        } else if ("activity".equals(resourceToken)) {
+            return new APIActivity();
+        } else if ("archivedActivity".equals(resourceToken)) {
+            return new APIArchivedActivity();
+        } else if ("task".equals(resourceToken)) {
+            return new APITask();
+        } else if ("archivedTask".equals(resourceToken)) {
+            return new APIArchivedTask();
+        } else if ("flowNode".equals(resourceToken)) {
+            return new APIFlowNode();
+        } else if ("archivedFlowNode".equals(resourceToken)) {
+            return new APIArchivedFlowNode();
+        } else if ("processResolutionProblem".equals(resourceToken)) {
+            return new APIProcessResolutionProblem();
+        } else if ("caseDocument".equals(resourceToken)) {
+            return new APICaseDocument();
+        } else if ("archivedCaseDocument".equals(resourceToken)) {
+            return new APIArchivedCaseDocument();
+        } else if ("connectorInstance".equals(resourceToken)) {
+            return new APIConnectorInstance();
+        } else if ("archivedConnectorInstance".equals(resourceToken)) {
+            return new APIArchivedConnectorInstance();
+        } else if ("processConnectorDependency".equals(resourceToken)) {
+            return new APIProcessConnectorDependency();
+        } else if ("caseVariable".equals(resourceToken)) {
+            return new APICaseVariable();
+        } else if ("document".equals(resourceToken)) {
+            return new APIDocument();
+        } else if ("archiveddocument".equals(resourceToken)) {
+            return new APIArchivedDocument();
+        }
+        throw new APINotFoundException(apiToken, resourceToken);
+    }
+
+    private API<? extends IItem> getPlatformAPI(final String apiToken, final String resourceToken) {
+        if ("platform".equals(resourceToken)) {
+            return new APIPlatform();
         }
         throw new APINotFoundException(apiToken, resourceToken);
     }
