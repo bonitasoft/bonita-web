@@ -23,6 +23,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceCriterion;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.datastore.SearchFilterProcessor;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
@@ -41,6 +42,12 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  */
 public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>, APIHasAdd<CaseItem>, APIHasSearch<CaseItem>, APIHasDelete {
 
+    final SearchFilterProcessor searchFilterProcessor;
+
+    public APICase() {
+        searchFilterProcessor = new SearchFilterProcessor();
+    }
+
     @Override
     protected ItemDefinition defineItemDefinition() {
         return Definitions.get(CaseDefinition.TOKEN);
@@ -48,12 +55,12 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
 
     @Override
     public CaseItem add(final CaseItem caseItem) {
-        return new CaseDatastore(getEngineSession()).add(caseItem);
+        return new CaseDatastore(getEngineSession(), searchFilterProcessor).add(caseItem);
     }
 
     @Override
     public CaseItem get(final APIID id) {
-        return new CaseDatastore(getEngineSession()).get(id);
+        return new CaseDatastore(getEngineSession(), searchFilterProcessor).get(id);
     }
 
     @Override
@@ -66,7 +73,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
                     + CaseItem.FILTER_SUPERVISOR_ID);
         }
 
-        return new CaseDatastore(getEngineSession()).search(page, resultsByPage, search, orders, filters);
+        return new CaseDatastore(getEngineSession(), searchFilterProcessor).search(page, resultsByPage, search, orders, filters);
     }
 
     @Override
@@ -97,7 +104,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
 
     @Override
     public void delete(final List<APIID> ids) {
-        new CaseDatastore(getEngineSession()).delete(ids);
+        new CaseDatastore(getEngineSession(), searchFilterProcessor).delete(ids);
     }
 
     @Override
