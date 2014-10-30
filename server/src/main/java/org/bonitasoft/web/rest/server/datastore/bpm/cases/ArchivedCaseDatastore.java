@@ -21,14 +21,15 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -138,11 +139,27 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         }
     }
 
-    private List<Long> getSourceObjectIdOfArchivedProcessInstancesToDelete(final List<APIID> ids, final ProcessAPI processAPI)
-            throws ArchivedProcessInstanceNotFoundException {
+    private List<Long> getSourceObjectIdOfArchivedProcessInstancesToDelete(final List<APIID> ids, final ProcessAPI processAPI) throws SearchException {
+        if (!ids.isEmpty()) {
+            final SearchOptions searchOptionsBuilder = buildSearchOptionsToFilterOnId(ids);
+            final List<ArchivedProcessInstance> result = processAPI.searchArchivedProcessInstances(searchOptionsBuilder).getResult();
+            return getSourceObjectIds(result);
+        }
+        return new ArrayList<Long>();
+    }
+
+    SearchOptions buildSearchOptionsToFilterOnId(final List<APIID> ids) {
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, ids.size());
+        searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.ID, ids.get(0).toLong());
+        for (int i = 1; i < ids.size(); i++) {
+            searchOptionsBuilder.or().filter(ArchivedProcessInstancesSearchDescriptor.ID, ids.get(i).toLong());
+        }
+        return searchOptionsBuilder.done();
+    }
+
+    private List<Long> getSourceObjectIds(final List<ArchivedProcessInstance> result) {
         final List<Long> toDeleteIds = new ArrayList<Long>();
-        for (final APIID apiId : ids) {
-            final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(apiId.toLong());
+        for (final ArchivedProcessInstance archivedProcessInstance : result) {
             toDeleteIds.add(archivedProcessInstance.getSourceObjectId());
         }
         return toDeleteIds;

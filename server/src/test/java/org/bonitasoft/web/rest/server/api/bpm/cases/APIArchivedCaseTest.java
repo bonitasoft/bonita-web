@@ -20,12 +20,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Nicolas TITH
- *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class APIArchivedCaseTest extends APITestWithMock {
@@ -36,7 +34,7 @@ public class APIArchivedCaseTest extends APITestWithMock {
     @Mock
     private APISession apiSession;
 
-    @Spy
+    @Mock
     private final ArchivedCaseDatastore archivedCaseDatastore = new ArchivedCaseDatastore(apiSession);
 
     @Mock
@@ -75,6 +73,5 @@ public class APIArchivedCaseTest extends APITestWithMock {
         //then
         verify(archivedCaseDatastore).delete(idList);
     }
-
 
 }
