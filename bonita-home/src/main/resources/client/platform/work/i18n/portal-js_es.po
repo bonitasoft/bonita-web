@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bonita-portal-js\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-10-09 20:43-0400\n"
+"PO-Revision-Date: 2014-10-29 21:50-0400\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -15,18 +15,17 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columnas"
+msgstr "Columns"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
+msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
 
 msgid "Filters"
 msgstr "Filtros"
 
 msgid "All versions"
-msgstr "Todas las versiones"
+msgstr "All versions"
 
 msgid "All apps"
-msgstr "Todas las aplicaciones"
-
+msgstr "All apps"
 
