@@ -183,7 +183,7 @@ public class FormBuilderImpl implements IFormBuilder {
     @Override
     public File done() throws IOException, InvalidFormDefinitionException {
 
-        final File formsDefinitionFile = File.createTempFile("forms", ".xml", WebBonitaConstantsUtils.getInstance().getTempFolder());
+        final File formsDefinitionFile = File.createTempFile("forms", ".xml", getTempFolder());
         formsDefinitionFile.deleteOnExit();
 
         document.appendChild(rootElement);
@@ -215,6 +215,10 @@ public class FormBuilderImpl implements IFormBuilder {
             throw new InvalidFormDefinitionException("Error while generating the forms definition file.", e);
         }
         return formsDefinitionFile;
+    }
+
+    protected File getTempFolder() {
+        return WebBonitaConstantsUtils.getInstance().getTempFolder();
     }
 
     void validateAgainstFormsXSD(final byte[] xmlContent) throws InvalidFormDefinitionException {

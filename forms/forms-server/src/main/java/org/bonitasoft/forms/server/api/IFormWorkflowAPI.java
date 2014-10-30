@@ -30,7 +30,6 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundExcept
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotEnabledException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.CreationException;
@@ -69,7 +68,7 @@ public interface IFormWorkflowAPI {
      * @throws ProcessDefinitionNotFoundException
      */
     long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, RetrieveException,
-            BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
+    BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
 
     /**
      * Retrieve any task id of the user todolist. If the process UUID is valid, the task belong to the process otherwise any task from the user todolist can be
@@ -85,7 +84,7 @@ public interface IFormWorkflowAPI {
      * @throws ProcessInstanceNotFoundException
      */
     long getAnyTodoListTaskForProcessDefinition(APISession session, long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException,
-            InvalidSessionException, UserNotFoundException, RetrieveException, ProcessInstanceNotFoundException;
+    InvalidSessionException, UserNotFoundException, RetrieveException, ProcessInstanceNotFoundException;
 
     /**
      * Retrieve any task id of the user todolist. If the process instance UUID is valid, the task belong to the process instance otherwise any task from the
@@ -102,7 +101,7 @@ public interface IFormWorkflowAPI {
      * @throws InvalidSessionException
      */
     long getAnyTodoListTaskForProcessInstance(APISession session, long processInstanceID) throws BPMEngineException, ProcessInstanceNotFoundException,
-            UserNotFoundException, RetrieveException, InvalidSessionException;
+    UserNotFoundException, RetrieveException, InvalidSessionException;
 
     /**
      * Retrieve the deployment date of a process definition
@@ -115,7 +114,7 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Date getProcessDefinitionDate(APISession session, long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException,
-            InvalidSessionException, RetrieveException;
+    InvalidSessionException, RetrieveException;
 
     /**
      * Retrieve the migration date of a process definition
@@ -128,7 +127,7 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     Date getMigrationDate(APISession session, long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException,
-            InvalidSessionException, RetrieveException;
+    InvalidSessionException, RetrieveException;
 
     /**
      * Retrieve a field initial value
@@ -186,7 +185,7 @@ public interface IFormWorkflowAPI {
      * @throws BPMExpressionEvaluationException
      */
     Serializable getProcessFieldValue(APISession session, long processDefinitionID, Expression expression, Locale locale) throws BPMEngineException,
-            InvalidSessionException, BPMExpressionEvaluationException;
+    InvalidSessionException, BPMExpressionEvaluationException;
 
     /**
      * Retrieve a field initial value
@@ -459,7 +458,7 @@ public interface IFormWorkflowAPI {
      * @throws ActivityInstanceNotFoundException
      */
     Map<String, String> getActivityAttributes(APISession session, long activityInstanceID, Locale locale) throws ActivityInstanceNotFoundException,
-            BPMEngineException, InvalidSessionException, ActivityInstanceNotFoundException, RetrieveException;
+    BPMEngineException, InvalidSessionException, ActivityInstanceNotFoundException, RetrieveException;
 
     /**
      * Return the activity edition state
@@ -474,7 +473,7 @@ public interface IFormWorkflowAPI {
      * @throws InvalidSessionException
      */
     ActivityEditState getTaskEditState(APISession session, long activityInstanceID) throws BPMEngineException, ActivityInstanceNotFoundException,
-            RetrieveException, InvalidSessionException;
+    RetrieveException, InvalidSessionException;
 
     /**
      * Execute a task
@@ -503,15 +502,14 @@ public interface IFormWorkflowAPI {
      * @return the process instance ID
      * @throws ProcessDefinitionNotFoundException
      * @throws BPMEngineException
-     * @throws ProcessDefinitionNotEnabledException
      * @throws CreationException
      * @throws ExecutionException
      * @throws ProcessActivationException
      * @throws UserNotFoundException
      */
     long startInstance(APISession session, long userID, long processDefinitionID) throws ProcessDefinitionNotFoundException, BPMEngineException,
-            InvalidSessionException, RetrieveException, ProcessDefinitionNotEnabledException, RetrieveException, CreationException, ProcessActivationException,
-            ExecutionException, UserNotFoundException;
+    InvalidSessionException, RetrieveException, RetrieveException, CreationException, ProcessActivationException,
+    ExecutionException, UserNotFoundException;
 
     /**
      * Check if a user can see a process instance
@@ -557,7 +555,7 @@ public interface IFormWorkflowAPI {
      */
     Map<String, Serializable> getActivityFieldsValues(APISession session, long activityInstanceID, List<Expression> expressions,
             Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue, Map<String, Serializable> transientDataContext)
-            throws InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException, BPMEngineException;
+                    throws InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Retrieve some fields initial value
@@ -651,7 +649,7 @@ public interface IFormWorkflowAPI {
      */
     Map<String, Serializable> getInstanceFieldsValues(APISession session, long processInstanceID, List<Expression> expressions,
             Map<String, FormFieldValue> fieldValues, Locale locale, boolean isCurrentValue, Map<String, Serializable> transientDataContext)
-            throws InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException, BPMEngineException;
+                    throws InvalidSessionException, FileTooBigException, IOException, BPMExpressionEvaluationException, BPMEngineException;
 
     /**
      * Retrieve some fields initial value
@@ -820,7 +818,7 @@ public interface IFormWorkflowAPI {
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     long getProcessInstanceIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
-            ActivityInstanceNotFoundException;
+    ActivityInstanceNotFoundException;
 
     /**
      * Retrieve the process definition ID from an activity instance ID
@@ -835,7 +833,7 @@ public interface IFormWorkflowAPI {
      * @throws InvalidSessionException
      */
     long getProcessDefinitionIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
-            ActivityInstanceNotFoundException;
+    ActivityInstanceNotFoundException;
 
     /**
      * Retrieve the process definition ID from a process instance ID
@@ -851,7 +849,7 @@ public interface IFormWorkflowAPI {
      * @throws ArchivedProcessInstanceNotFoundException
      */
     long getProcessDefinitionIDFromProcessInstanceID(APISession session, long processInstanceID) throws BPMEngineException, InvalidSessionException,
-            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException;
+    ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException;
 
     /**
      * Retrieve the process ID for a given process definition UUID
@@ -865,7 +863,7 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     long getProcessDefinitionIDFromUUID(APISession session, String processDefinitionUUIDStr) throws BPMEngineException, InvalidSessionException,
-            ProcessDefinitionNotFoundException;
+    ProcessDefinitionNotFoundException;
 
     /**
      * Retrieve an activity definition UUID for a given activity instance
@@ -883,7 +881,7 @@ public interface IFormWorkflowAPI {
      * @throws ProcessDefinitionReadException
      */
     String getActivityDefinitionUUIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
-            ActivityInstanceNotFoundException, RetrieveException, ProcessDefinitionNotFoundException;
+    ActivityInstanceNotFoundException, RetrieveException, ProcessDefinitionNotFoundException;
 
     /**
      * Check if a process is enabled
@@ -899,7 +897,7 @@ public interface IFormWorkflowAPI {
      * @throws ProcessDefinitionNotFoundException
      */
     boolean isProcessEnabled(APISession session, long processDefinitionID) throws InvalidSessionException, BPMEngineException,
-            ProcessDefinitionNotFoundException, RetrieveException;
+    ProcessDefinitionNotFoundException, RetrieveException;
 
     /**
      * Retrieve the task name of an activity
@@ -913,7 +911,7 @@ public interface IFormWorkflowAPI {
      * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     String getActivityName(APISession session, long activityInstanceID) throws InvalidSessionException, BPMEngineException, ActivityInstanceNotFoundException,
-            RetrieveException;
+    RetrieveException;
 
     /**
      * Assign a task to the user of whom belong the session
@@ -944,7 +942,7 @@ public interface IFormWorkflowAPI {
 
     /**
      * Indicate if the user is admin or process owner for the current process
-     * 
+     *
      * @param session
      * @param processInstanceID
      * @return
@@ -956,6 +954,6 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      */
     boolean isUserAdminOrProcessOwner(APISession session, long processInstanceID) throws UserNotFoundException, InvalidSessionException,
-            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException;
+    ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException;
 
 }
