@@ -28,27 +28,7 @@ public class ThemeStructureException extends Exception {
      */
     private static final long serialVersionUID = -3640738202948646312L;
 
-    private ThemeStructureState state;
-
-    protected ThemeStructureException() {
+    public ThemeStructureException() {
         super();
-        // mandatory for serialization.
     }
-
-    /**
-     * Default constructor.
-     * 
-     * @param ThemeStructureState
-     */
-    public ThemeStructureException(final ThemeStructureState state) {
-        this.state = state;
-    }
-
-    /**
-     * @return the state
-     */
-    public ThemeStructureState getThemeStructureState() {
-        return this.state;
-    }
-
 }

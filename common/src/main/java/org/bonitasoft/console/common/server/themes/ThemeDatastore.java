@@ -42,11 +42,9 @@ public class ThemeDatastore {
      * @throws FileNotFoundException
      * 
      */
-    public void updateCurrentThemeFromEngine() throws FileNotFoundException, IOException {
-
+    public void updateCurrentThemeFromEngine() throws IOException {
         final Theme theme = themeApi.getCurrentTheme(ThemeType.PORTAL);
         themeManager.applyAlreadyCompiledTheme(theme.getContent(), theme.getCssContent());
-
     }
 
 }
