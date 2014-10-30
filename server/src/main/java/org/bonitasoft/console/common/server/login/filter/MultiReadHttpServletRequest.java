@@ -44,7 +44,11 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
 
     @Override
     public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(getInputStream()));
+        String enc = getCharacterEncoding();
+        if (enc == null) {
+            enc = "UTF-8";
+        }
+        return new BufferedReader(new InputStreamReader(getInputStream(), enc));
     }
 
     private void readInputStream() throws IOException {
@@ -73,6 +77,12 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
         @Override
         public int read(final byte[] b, final int off, final int len) throws IOException {
             return input.read(b, off, len);
+        }
+
+        @Override
+        public void close() throws IOException {
+            input.close();
+            super.close();
         }
     }
 }
