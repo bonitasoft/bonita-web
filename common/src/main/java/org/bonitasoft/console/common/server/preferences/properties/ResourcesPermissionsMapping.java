@@ -15,10 +15,9 @@
 package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Anthony Birembaut
@@ -35,12 +34,12 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
     /**
      * Instances attribute
      */
-    private static Map<Long, ResourcesPermissionsMapping> INSTANCES = new HashMap<Long, ResourcesPermissionsMapping>();
+    private static Map<Long, ResourcesPermissionsMapping> INSTANCES = new ConcurrentHashMap<Long, ResourcesPermissionsMapping>();
 
     /**
-     * @return the {@link SecurityProperties} instance
+     * @return the {@link ResourcesPermissionsMapping} instance
      */
-    protected static synchronized ResourcesPermissionsMapping getInstance(final long tenantId) {
+    protected static ResourcesPermissionsMapping getInstance(final long tenantId) {
         ResourcesPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
@@ -50,19 +49,13 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
         return tenancyProperties;
     }
 
-    /**
-     * Private contructor to prevent instantiation
-     *
-     * @throws IOException
-     */
-    protected ResourcesPermissionsMapping(final File fileName) {
+    ResourcesPermissionsMapping(final File fileName) {
         super(fileName);
-
     }
 
-    public List<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final String resourceId) {
-        String key = buildResourceKey(method, apiName, resourceName, resourceId);
-        return getPropertyAsList(key);
+    public Set<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final String resourceId) {
+        final String key = buildResourceKey(method, apiName, resourceName, resourceId);
+        return getPropertyAsSet(key);
     }
 
     protected String buildResourceKey(final String method, final String apiName, final String resourceName, final String resourceId) {
@@ -73,7 +66,7 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
         return key;
     }
 
-    public List<String> getResourcePermissions(final String method, final String apiName, final String resourceName) {
+    public Set<String> getResourcePermissions(final String method, final String apiName, final String resourceName) {
         return getResourcePermissions(method, apiName, resourceName, null);
     }
 

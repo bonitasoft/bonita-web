@@ -28,7 +28,7 @@ public class StandardLoginManagerImplTest {
 
     @Before
     public void setUp() throws Exception {
-        doReturn(userLogger).when(standardLoginManagerImpl).getUserLogger();
+        doReturn(userLogger).when(standardLoginManagerImpl).createUserLogger();
         when(request.getContextPath()).thenReturn("bonita");
     }
 

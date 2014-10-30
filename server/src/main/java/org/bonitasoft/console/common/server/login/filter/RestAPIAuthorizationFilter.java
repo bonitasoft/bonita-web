@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -144,7 +143,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected boolean staticCheck(final String method, final String apiName, final String resourceName, final String resourceId,
             final Set<String> permissionsOfUser,
             final ResourcesPermissionsMapping resourcesPermissionsMapping, final String username) {
-        List<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
+        Set<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceId);
         if (resourcePermissions.isEmpty()) {
             resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName);
         }

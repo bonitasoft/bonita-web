@@ -15,9 +15,8 @@
 package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Anthony Birembaut
@@ -32,12 +31,12 @@ public class DynamicPermissionsChecks extends ResourcesPermissionsMapping {
     /**
      * Instances attribute
      */
-    private static Map<Long, DynamicPermissionsChecks> INSTANCES = new HashMap<Long, DynamicPermissionsChecks>();
+    private static Map<Long, DynamicPermissionsChecks> INSTANCES = new ConcurrentHashMap<Long, DynamicPermissionsChecks>();
 
     /**
-     * @return the {@link SecurityProperties} instance
+     * @return the {@link DynamicPermissionsChecks} instance
      */
-    protected static synchronized DynamicPermissionsChecks getInstance(final long tenantId) {
+    protected static DynamicPermissionsChecks getInstance(final long tenantId) {
         DynamicPermissionsChecks tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
@@ -47,14 +46,8 @@ public class DynamicPermissionsChecks extends ResourcesPermissionsMapping {
         return tenancyProperties;
     }
 
-    /**
-     * Private contructor to prevent instantiation
-     *
-     * @throws IOException
-     */
-    protected DynamicPermissionsChecks(final File fileName) {
+    DynamicPermissionsChecks(final File fileName) {
         super(fileName);
-
     }
 
     public String getResourceScript(final String method, final String apiName, final String resourceName, final String resourceId) {

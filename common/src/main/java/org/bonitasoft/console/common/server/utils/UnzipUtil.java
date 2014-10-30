@@ -21,7 +21,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 import org.bonitasoft.engine.io.IOUtil;
 
@@ -31,11 +30,6 @@ import org.bonitasoft.engine.io.IOUtil;
  * @author Zhiheng Yang
  */
 public class UnzipUtil {
-
-    /**
-     * Logger
-     */
-    private static final Logger LOGGER = Logger.getLogger(UnzipUtil.class.getName());
 
     static final int BUFFER = 2048;
 
@@ -77,8 +71,8 @@ public class UnzipUtil {
 
     public static synchronized String getZipNameWithoutExtention(final File zipFile) {
         String zipName = zipFile.getName();
-        if (zipName.indexOf("") > 0) {
-            zipName = zipName.substring(0, zipName.lastIndexOf(""));
+        if (zipName.indexOf(".") > 0) {
+            zipName = zipName.substring(0, zipName.lastIndexOf("."));
         }
 
         return zipName;

@@ -22,9 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -110,53 +109,37 @@ public class SimpleProperties {
         return properties.stringPropertyNames();
     }
 
-    public void removeProperty(final String propertyName) throws IOException {
+    public void removeProperty(final String propertyName) {
         if (properties != null) {
             properties.remove(propertyName);
-            if (propertiesFile != null) {
-                OutputStream outputStream = null;
-                try {
-                    outputStream = new FileOutputStream(propertiesFile);
-                    properties.store(outputStream, null);
-                } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
-                    }
-                } finally {
-                    if (outputStream != null) {
-                        try {
-                            outputStream.close();
-                        } catch (final IOException e) {
-                            if (LOGGER.isLoggable(Level.WARNING)) {
-                                LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
-                            }
-                        }
-                    }
-                }
-            }
+            persistProperties();
         }
     }
 
-    public void setProperty(final String propertyName, final String propertyValue) throws IOException {
+    public void setProperty(final String propertyName, final String propertyValue) {
         if (properties != null) {
             properties.setProperty(propertyName, propertyValue);
-            if (propertiesFile != null) {
-                OutputStream outputStream = null;
-                try {
-                    outputStream = new FileOutputStream(propertiesFile);
-                    properties.store(outputStream, null);
-                } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
-                    }
-                } finally {
-                    if (outputStream != null) {
-                        try {
-                            outputStream.close();
-                        } catch (final IOException e) {
-                            if (LOGGER.isLoggable(Level.WARNING)) {
-                                LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
-                            }
+            persistProperties();
+        }
+    }
+
+    protected void persistProperties() {
+        if (propertiesFile != null) {
+            OutputStream outputStream = null;
+            try {
+                outputStream = new FileOutputStream(propertiesFile);
+                properties.store(outputStream, null);
+            } catch (final IOException e) {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Bonita web preferences file " + propertiesFile.getPath() + " could not be loaded.", e);
+                }
+            } finally {
+                if (outputStream != null) {
+                    try {
+                        outputStream.close();
+                    } catch (final IOException e) {
+                        if (LOGGER.isLoggable(Level.WARNING)) {
+                            LOGGER.log(Level.WARNING, "Bonita web preferences file stream " + propertiesFile.getPath() + " could not be closed.", e);
                         }
                     }
                 }
@@ -164,35 +147,35 @@ public class SimpleProperties {
         }
     }
 
-    public List<String> getPropertyAsList(final String propertyName) {
+    public Set<String> getPropertyAsSet(final String propertyName) {
         final String propertyAsString = getProperty(propertyName);
-        return stringToList(propertyAsString);
+        return stringToSet(propertyAsString);
     }
 
-    protected List<String> stringToList(final String propertyValueAsString) {
+    protected Set<String> stringToSet(final String propertyValueAsString) {
         if (propertyValueAsString != null) {
-            final List<String> propertiesList = new ArrayList<String>();
+            final Set<String> propertiesSet = new HashSet<String>();
             final String propertyValueAsStringTrimmed = propertyValueAsString.trim();
             if (propertyValueAsStringTrimmed.startsWith("[") && propertyValueAsStringTrimmed.endsWith("]")) {
                 String propertyCSV = propertyValueAsStringTrimmed.substring(1, propertyValueAsStringTrimmed.length() - 1);
                 propertyCSV = propertyCSV.trim();
                 if(propertyCSV.isEmpty()){
-                    return Collections.emptyList();
+                    return Collections.emptySet();
                 }
                 final String[] propertyArray = propertyCSV.split(",");
                 for (final String propertyValue : propertyArray) {
-                    propertiesList.add(propertyValue.trim());
+                    propertiesSet.add(propertyValue.trim());
                 }
             } else {
-                propertiesList.add(propertyValueAsString);
+                propertiesSet.add(propertyValueAsString);
             }
-            return propertiesList;
+            return propertiesSet;
         } else {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
 
-    public void setPropertyAsList(final String property, final Set<String> permissions) throws IOException {
+    public void setPropertyAsSet(final String property, final Set<String> permissions) throws IOException {
         setProperty(property, permissions.toString());
     }
 }

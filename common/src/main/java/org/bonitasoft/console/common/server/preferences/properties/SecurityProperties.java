@@ -21,9 +21,9 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,7 +80,7 @@ public class SecurityProperties {
     /**
      * Instances attribute
      */
-    private static Map<String, SecurityProperties> INSTANCES = new HashMap<String, SecurityProperties>();
+    private static Map<String, SecurityProperties> INSTANCES = new ConcurrentHashMap<String, SecurityProperties>();
 
     /**
      * default properties
@@ -111,7 +111,7 @@ public class SecurityProperties {
     /**
      * @return the {@link SecurityProperties} instance
      */
-    public static synchronized SecurityProperties getInstance(final long tenantId) {
+    public static SecurityProperties getInstance(final long tenantId) {
         final String instanceKey = generateInstanceKey(tenantId, TENANT_SCOPE_CONFIG_ID);
         SecurityProperties securityProperties = INSTANCES.get(instanceKey);
         if (securityProperties == null) {
@@ -126,7 +126,7 @@ public class SecurityProperties {
      * @param id
      * @return the {@link SecurityProperties} instance
      */
-    public static synchronized SecurityProperties getInstance(final long tenantID, final ProcessIdentifier id) {
+    public static SecurityProperties getInstance(final long tenantID, final ProcessIdentifier id) {
         final String instanceKey = generateInstanceKey(tenantID, id.getIdentifier());
         SecurityProperties securityProperties = INSTANCES.get(instanceKey);
         if (securityProperties == null) {
@@ -140,7 +140,7 @@ public class SecurityProperties {
      * @param tenantID
      * @param processDefinitionId
      */
-    public static synchronized void cleanProcessConfig(final long tenantID, final ProcessIdentifier processDefinitionId) {
+    public static void cleanProcessConfig(final long tenantID, final ProcessIdentifier processDefinitionId) {
         final String instanceKey = generateInstanceKey(tenantID, processDefinitionId.getIdentifier());
         INSTANCES.remove(instanceKey);
     }
@@ -156,10 +156,7 @@ public class SecurityProperties {
         return processDefinitionId + INSTANCES_MAP_SEPERATOR + tenantId;
     }
 
-    /**
-     * Private contructor to prevent instantiation
-     */
-    protected SecurityProperties(final WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
+    SecurityProperties(final WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
         InputStream inputStream = null;
         try {
             if (isValidProcessDefinition(processDefinitionId)) {
@@ -298,10 +295,7 @@ public class SecurityProperties {
      */
     public boolean isAPIAuthorizationsCheckEnabled() {
         final String res = defaultProperties.getProperty(API_AUTHORIZATIONS_CHECK);
-        if (res != null && res.equals("true")) {
-            return true;
-        }
-        return false;
+        return res != null && res.equals("true");
     }
 
     /**
@@ -309,10 +303,7 @@ public class SecurityProperties {
      */
     public boolean isCSRFProtectionEnabled() {
         final String res = defaultProperties.getProperty(CSRF_PROTECTION);
-        if (res != null && res.equals("true")) {
-            return true;
-        }
-        return false;
+        return res != null && res.equals("true");
     }
 
     /**

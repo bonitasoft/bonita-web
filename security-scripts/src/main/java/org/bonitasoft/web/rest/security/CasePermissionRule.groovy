@@ -35,9 +35,9 @@ class CasePermissionRule implements PermissionRule {
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
-        if (apiCallContext.getMethod().equals("GET")) {
+        if ("GET".equals(apiCallContext.getMethod())) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        } else if (apiCallContext.getMethod().equals("POST")) {
+        } else if ("POST".equals(apiCallContext.getMethod())) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
     }

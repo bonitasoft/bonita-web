@@ -330,9 +330,9 @@ public class RestAPIAuthorizationFilterTest {
 
     private void returnPermissionFor(final String method, final String apiName, final String resourceName, final String resourceId, final List<String> toBeReturned) {
         if (resourceId != null) {
-            doReturn(toBeReturned).when(resourcesPermissionsMapping).getResourcePermissions(method, apiName, resourceName, resourceId);
+            doReturn(new HashSet<String>(toBeReturned)).when(resourcesPermissionsMapping).getResourcePermissions(method, apiName, resourceName, resourceId);
         } else {
-            doReturn(toBeReturned).when(resourcesPermissionsMapping).getResourcePermissions(method, apiName, resourceName);
+            doReturn(new HashSet<String>(toBeReturned)).when(resourcesPermissionsMapping).getResourcePermissions(method, apiName, resourceName);
         }
     }
 

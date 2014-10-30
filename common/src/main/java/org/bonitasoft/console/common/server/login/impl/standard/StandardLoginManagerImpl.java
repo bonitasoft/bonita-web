@@ -13,7 +13,6 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.standard;
 
-import java.util.Collections;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +24,8 @@ import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 
@@ -59,22 +58,17 @@ public class StandardLoginManagerImpl implements LoginManager {
             local = request.getParameterMap().get("_l")[0];
         }
         final User user = new User(request.getUsername(), local);
-        final APISession session = getUserLogger().doLogin(credentials);
-        Set<String> permissions;
-        if (session.isTechnicalUser()) {
-            permissions = Collections.emptySet();
-        } else {
-            final PermissionsBuilder permissionsBuilder = getPermissionsBuilder(session);
-            permissions = permissionsBuilder.getPermissions();
-        }
+        final APISession session = createUserLogger().doLogin(credentials);
+        final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(session);
+        final Set<String> permissions = permissionsBuilder.getPermissions();
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
     }
 
-    protected PermissionsBuilder getPermissionsBuilder(final APISession session) throws LoginFailedException {
-        return new PermissionsBuilder(session);
+    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
+        return PermissionsBuilderAccessor.createPermissionBuilder(session);
     }
 
-    protected UserLogger getUserLogger() {
+    protected UserLogger createUserLogger() {
         return new UserLogger();
     }
 }

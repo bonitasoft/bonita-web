@@ -20,8 +20,7 @@ package org.bonitasoft.console.common.server.preferences.properties;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.api.Assertions;
@@ -32,33 +31,34 @@ public class ResourcesPermissionsMappingTest {
     @Test
     public void testGetResourcePermission() throws Exception {
         //given
-        String fileContent =  "GET|bpm/process [Process visualization, Process categories, Process actor mapping visualization, Connector visualization]\n" +
+        final String fileContent =  "GET|bpm/process [Process visualization, Process categories, Process actor mapping visualization, Connector visualization]\n" +
                 "POST|bpm/process [Process Deploy]\n" +
                 "POST|bpm/process/6 [Custom permission]\n" +
                 "PUT|bpm/process []";
-        ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(fileContent);
+        final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(fileContent);
 
         //when
-        List<String> getPermissions = resourcesPermissionsMapping.getResourcePermissions("GET", "bpm", "process");
-        List<String> postPermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process");
-        List<String> postOnSinglePermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process", "6");
-        List<String> putPermissions = resourcesPermissionsMapping.getResourcePermissions("PUT", "bpm", "process");
-        List<String> unknown = resourcesPermissionsMapping.getResourcePermissions("unknown", "unknown", "unknown", "unknown");
+        final Set<String> getPermissions = resourcesPermissionsMapping.getResourcePermissions("GET", "bpm", "process");
+        final Set<String> postPermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process");
+        final Set<String> postOnSinglePermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process", "6");
+        final Set<String> putPermissions = resourcesPermissionsMapping.getResourcePermissions("PUT", "bpm", "process");
+        final Set<String> unknown = resourcesPermissionsMapping.getResourcePermissions("unknown", "unknown", "unknown", "unknown");
 
         //then
-        Assertions.assertThat(getPermissions).isEqualTo(Arrays.asList("Process visualization","Process categories","Process actor mapping visualization","Connector visualization"));
-        Assertions.assertThat(postPermission).isEqualTo(Arrays.asList("Process Deploy"));
-        Assertions.assertThat(postOnSinglePermission).isEqualTo(Arrays.asList("Custom permission"));
+        Assertions.assertThat(getPermissions).containsOnly("Process visualization", "Process categories", "Process actor mapping visualization",
+                "Connector visualization");
+        Assertions.assertThat(postPermission).containsOnly("Process Deploy");
+        Assertions.assertThat(postOnSinglePermission).containsOnly("Custom permission");
         Assertions.assertThat(putPermissions).isEmpty();
         Assertions.assertThat(unknown).isEmpty();
 
 
     }
 
-    public static ResourcesPermissionsMapping getResourcesPermissionsMapping(String fileContent) throws IOException {
-        File resourceMappingFile = File.createTempFile("resourceMapping", ".tmp");
+    public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final String fileContent) throws IOException {
+        final File resourceMappingFile = File.createTempFile("resourceMapping", ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(resourceMappingFile));
-        ResourcesPermissionsMapping resourcesPermissionsMapping = new ResourcesPermissionsMapping(resourceMappingFile);
+        final ResourcesPermissionsMapping resourcesPermissionsMapping = new ResourcesPermissionsMapping(resourceMappingFile);
         resourceMappingFile.delete();
         return resourcesPermissionsMapping;
     }

@@ -15,9 +15,8 @@
 package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Anthony Birembaut
@@ -32,12 +31,12 @@ public class CompoundPermissionsMapping extends SimpleProperties {
     /**
      * Instances attribute
      */
-    private static Map<Long, CompoundPermissionsMapping> INSTANCES = new HashMap<Long, CompoundPermissionsMapping>();
+    private static Map<Long, CompoundPermissionsMapping> INSTANCES = new ConcurrentHashMap<Long, CompoundPermissionsMapping>();
 
     /**
-     * @return the {@link SecurityProperties} instance
+     * @return the {@link CompoundPermissionsMapping} instance
      */
-    protected static synchronized CompoundPermissionsMapping getInstance(final long tenantId) {
+    protected static CompoundPermissionsMapping getInstance(final long tenantId) {
         CompoundPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
         if (tenancyProperties == null) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
@@ -47,14 +46,8 @@ public class CompoundPermissionsMapping extends SimpleProperties {
         return tenancyProperties;
     }
 
-    /**
-     * Private contructor to prevent instantiation
-     *
-     * @throws IOException
-     */
-    protected CompoundPermissionsMapping(final File fileName) {
+    CompoundPermissionsMapping(final File fileName) {
         super(fileName);
-
     }
 
 }
