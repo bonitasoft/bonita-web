@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2011, 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,11 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
@@ -44,6 +46,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
+ * @author Celine Souchet
  */
 public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, ArchivedProcessInstance> implements DatastoreHasGet<ArchivedCaseItem>,
         DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
@@ -54,9 +57,7 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
 
     @Override
     protected ArchivedCaseItem convertEngineToConsoleItem(final ArchivedProcessInstance item) {
-
         final ArchivedCaseItem result = new ArchivedCaseItem();
-
         result.setId(item.getId());
         result.setLastUpdateDate(item.getLastUpdate());
         result.setState(item.getState());
@@ -74,53 +75,52 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     @Override
     public ItemSearchResult<ArchivedCaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        // Build search
-        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
-        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
-
-        // Run search depending on filters passed
-        final SearchResult<ArchivedProcessInstance> searchResult = runSearch(filters, builder);
-
-        // Convert to ConsoleItems
-        return new ItemSearchResult<ArchivedCaseItem>(
-                page,
-                resultsByPage,
-                searchResult.getCount(),
-                convertEngineToConsoleItemsList(searchResult.getResult()));
-    }
-
-    private SearchResult<ArchivedProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {
         try {
-            final ProcessAPI processAPI = getProcessApi();
+            // Build search
+            final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
+            addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+            addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
+            addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
 
-            if (filters.containsKey(ArchivedCaseItem.FILTER_USER_ID)) {
-                return processAPI.searchArchivedProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_USER_ID),
-                        builder.done());
-            }
+            // Run search depending on filters passed
+            final SearchResult<ArchivedProcessInstance> searchResult = runSearch(filters, builder);
 
-            if (filters.containsKey(ArchivedCaseItem.FILTER_SUPERVISOR_ID)) {
-                return processAPI
-                        .searchArchivedProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_SUPERVISOR_ID), builder.done());
-            }
-
-            if (filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
-                builder.filter(ArchivedProcessInstancesSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
-                return processAPI.searchArchivedProcessInstancesInAllStates(builder.done());
-            }
-
-            return processAPI.searchArchivedProcessInstances(builder.done());
+            // Convert to ConsoleItems
+            return new ItemSearchResult<ArchivedCaseItem>(
+                    page,
+                    resultsByPage,
+                    searchResult.getCount(),
+                    convertEngineToConsoleItemsList(searchResult.getResult()));
         } catch (final Exception e) {
             throw new APIException(e);
         }
     }
 
+    private SearchResult<ArchivedProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) throws BonitaException {
+        final ProcessAPI processAPI = getProcessApi();
+
+        if (filters.containsKey(ArchivedCaseItem.FILTER_USER_ID)) {
+            return processAPI.searchArchivedProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_USER_ID),
+                    builder.done());
+        }
+
+        if (filters.containsKey(ArchivedCaseItem.FILTER_SUPERVISOR_ID)) {
+            return processAPI
+                    .searchArchivedProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, ArchivedCaseItem.FILTER_SUPERVISOR_ID), builder.done());
+        }
+
+        if (filters.containsKey(CaseItem.FILTER_CALLER) && "any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
+            builder.filter(ArchivedProcessInstancesSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
+            return processAPI.searchArchivedProcessInstancesInAllStates(builder.done());
+        }
+
+        return processAPI.searchArchivedProcessInstances(builder.done());
+    }
+
     @Override
     public ArchivedCaseItem get(final APIID id) {
         try {
-            return convertEngineToConsoleItem(getProcessApi()
-                    .getArchivedProcessInstance(id.toLong()));
+            return convertEngineToConsoleItem(getProcessApi().getArchivedProcessInstance(id.toLong()));
             // .getFinalArchivedProcessInstance(id.toLong()));
         } catch (final Exception e) {
             throw new APIException(e);
@@ -131,15 +131,21 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
     public void delete(final List<APIID> ids) {
         try {
             final ProcessAPI processAPI = getProcessApi();
-            final List<Long> toDeleteIds = new ArrayList<Long>();
-            for (final APIID apiId : ids) {
-                final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(apiId.toLong());
-                toDeleteIds.add(archivedProcessInstance.getSourceObjectId());
-            }
+            final List<Long> toDeleteIds = getSourceObjectIdOfArchivedProcessInstancesToDelete(ids, processAPI);
             processAPI.deleteArchivedProcessInstancesInAllStates(toDeleteIds);
         } catch (final Exception e) {
             throw new APIException(e);
         }
+    }
+
+    private List<Long> getSourceObjectIdOfArchivedProcessInstancesToDelete(final List<APIID> ids, final ProcessAPI processAPI)
+            throws ArchivedProcessInstanceNotFoundException {
+        final List<Long> toDeleteIds = new ArrayList<Long>();
+        for (final APIID apiId : ids) {
+            final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(apiId.toLong());
+            toDeleteIds.add(archivedProcessInstance.getSourceObjectId());
+        }
+        return toDeleteIds;
     }
 
     public ProcessAPI getProcessApi() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
