@@ -59,7 +59,7 @@ public class MultiReadHttpServletRequestTest {
             final BufferedReader bufferedReader = multiReadHttpServletRequest.getReader();
             Assert.assertEquals("body content", IOUtils.toString(bufferedReader));
 
-            final InputStream bufferedReader2 = multiReadHttpServletRequest.getInputStream();
+            final BufferedReader bufferedReader2 = multiReadHttpServletRequest.getReader();
             Assert.assertEquals("body content", IOUtils.toString(bufferedReader2));
         } finally {
             if (fakeInputStream != null) {
