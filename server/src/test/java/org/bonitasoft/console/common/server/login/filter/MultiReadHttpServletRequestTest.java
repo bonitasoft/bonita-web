@@ -23,9 +23,6 @@ public class MultiReadHttpServletRequestTest {
     @Mock
     HttpServletRequest request;
 
-    @Mock
-    ServletInputStream servletInputStream;
-
     @Test
     public void should_getInputStream_work_when_called_twice() throws Exception {
 
