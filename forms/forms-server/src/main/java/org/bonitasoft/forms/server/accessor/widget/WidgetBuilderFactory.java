@@ -16,9 +16,6 @@
  */
 package org.bonitasoft.forms.server.accessor.widget;
 
-import java.util.Date;
-
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.widget.impl.EngineWidgetBuilderImpl;
 import org.bonitasoft.forms.server.accessor.widget.impl.XMLWidgetBuilderImpl;
 
@@ -28,10 +25,10 @@ import org.bonitasoft.forms.server.accessor.widget.impl.XMLWidgetBuilderImpl;
  */
 public class WidgetBuilderFactory {
 
-    public static IXMLWidgetBuilder getXMLWidgetBuilder(final APISession session, final long processDefinitionUUID, final String locale, final Date processDeployementDate) {
+    public static IXMLWidgetBuilder getXMLWidgetBuilder() {
         return XMLWidgetBuilderImpl.getInstance();
     }
-    
+
     /**
      * @return
      */

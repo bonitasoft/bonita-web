@@ -35,14 +35,20 @@ import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.bar.BarResource;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
+import org.bonitasoft.engine.bpm.document.DocumentsSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
+import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.expression.ExpressionBuilder;
 import org.bonitasoft.engine.expression.ExpressionType;
+import org.bonitasoft.engine.search.SearchFilterOperation;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormWidget;
@@ -225,16 +231,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
     public void testGetAttributesToInsert() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-
-            @Override
-            protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
-                        null).size() >= 1;
-            }
-        }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
-                .get(0).getId();
+        final long activityInstanceId = getFirstPendingTask();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
         urlContext.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
         final Map<String, Object> context = new HashMap<String, Object>();
@@ -249,16 +246,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
     public void testSkipForm() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-
-            @Override
-            protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
-                        null).size() >= 1;
-            }
-        }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
-                .get(0).getId();
+        final long activityInstanceId = getFirstPendingTask();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
@@ -273,16 +261,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
     public void testGetApplicationFormDefinitionFromXML() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-
-            @Override
-            protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
-                        null).size() >= 1;
-            }
-        }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
-                .get(0).getId();
+        final long activityInstanceId = getFirstPendingTask();
         final String formId = "firstProcess--1.0--Request$entry";
         urlContext.put(FormServiceProviderUtil.FORM_ID, formId);
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
@@ -306,16 +285,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
     @Test
     public void testGetApplicationFormDefinitionFromEngine() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-
-            @Override
-            protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
-                        null).size() >= 1;
-            }
-        }.waitUntil());
-        long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0)
-                .getId();
+        long activityInstanceId = getFirstPendingTask();
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
@@ -361,16 +331,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
     public void testGetAttachmentFormFieldValue() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-
-            @Override
-            protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
-                        null).size() >= 1;
-            }
-        }.waitUntil());
-        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
-                .get(0).getId();
+        final long activityInstanceId = getFirstPendingTask();
         urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
@@ -384,13 +345,67 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
         final FormFieldValue fileFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc2", context);
         Assert.assertEquals("the value type for a File document should be a File", File.class.getName(), fileFieldValue.getValueType());
         Assert.assertEquals("the filename is not right", "filename.txt", fileFieldValue.getValue());
-        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+        Assert.assertNotSame(0, fileFieldValue.getDocumentId());
     }
 
     @Test
     public void testGetArchivedAttachmentFormFieldValue() throws Exception {
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
         final Map<String, Object> urlContext = new HashMap<String, Object>();
+        terminateProcessInstance();
+        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
+        urlContext.put(FormServiceProviderUtil.RECAP_FORM_TYPE, Boolean.TRUE.toString());
+        final Map<String, Object> context = new HashMap<String, Object>();
+        context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
+        context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
+        context.put(FormServiceProviderUtil.API_SESSION, getSession());
+        final FormFieldValue urlFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc1", context);
+        Assert.assertEquals("the value type for a URL document should be a String", String.class.getName(), urlFieldValue.getValueType());
+        Assert.assertEquals("the URL is not right", "www.bonitasoft.org", urlFieldValue.getValue());
+        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+
+        final FormFieldValue fileFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc2", context);
+        Assert.assertEquals("the value type for a File document should be a File", File.class.getName(), fileFieldValue.getValueType());
+        Assert.assertEquals("the filename is not right", "filename.txt", fileFieldValue.getValue());
+        Assert.assertNotSame(0, fileFieldValue.getDocumentId());
+    }
+
+    @Test
+    public void testGetAttachmentFormFieldValueFromDocument() throws Exception {
+        final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(getSession().getTenantId());
+        final Map<String, Object> urlContext = new HashMap<String, Object>();
+        final long activityInstanceId = getFirstPendingTask();
+        urlContext.put(FormServiceProviderUtil.TASK_UUID, activityInstanceId);
+        final Map<String, Object> context = new HashMap<String, Object>();
+        context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
+        context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
+        context.put(FormServiceProviderUtil.API_SESSION, getSession());
+
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 2);
+        final List<SearchFilter> filters = new ArrayList<SearchFilter>();
+        filters.add(new SearchFilter(DocumentsSearchDescriptor.PROCESSINSTANCE_ID, SearchFilterOperation.EQUALS, processInstanceId));
+        searchOptionsBuilder.setFilters(filters);
+        final SearchResult<org.bonitasoft.engine.bpm.document.Document> result = processAPI.searchDocuments(searchOptionsBuilder.done());
+        final List<org.bonitasoft.engine.bpm.document.Document> documents = result.getResult();
+        Assert.assertEquals(2, documents.size());
+        for (final org.bonitasoft.engine.bpm.document.Document document : documents) {
+            if (document.getName().equals("doc1")) {
+                final FormFieldValue urlFieldValue = formServiceProvider.getAttachmentFormFieldValue(document, context);
+                Assert.assertEquals("the value type for a URL document should be a String", String.class.getName(), urlFieldValue.getValueType());
+                Assert.assertEquals("the URL is not right", "www.bonitasoft.org", urlFieldValue.getValue());
+                Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+            } else if (document.getName().equals("doc2")) {
+                final FormFieldValue fileFieldValue = formServiceProvider.getAttachmentFormFieldValue(document, context);
+                Assert.assertEquals("the value type for a File document should be a File", File.class.getName(), fileFieldValue.getValueType());
+                Assert.assertEquals("the filename is not right", "filename.txt", fileFieldValue.getValue());
+                Assert.assertNotSame(0, fileFieldValue.getDocumentId());
+            } else {
+                Assert.fail("shouldn't happen.");
+            }
+        }
+    }
+
+    protected void terminateProcessInstance() throws Exception, UpdateException, FlowNodeExecutionException {
         Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
 
             @Override
@@ -420,21 +435,20 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
                 return processAPI.searchArchivedProcessInstances(builder.done()).getCount() == 1;
             }
         }.waitUntil());
-        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
-        urlContext.put(FormServiceProviderUtil.RECAP_FORM_TYPE, Boolean.TRUE.toString());
-        final Map<String, Object> context = new HashMap<String, Object>();
-        context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
-        context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
-        context.put(FormServiceProviderUtil.API_SESSION, getSession());
-        final FormFieldValue urlFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc1", context);
-        Assert.assertEquals("the value type for a URL document should be a String", String.class.getName(), urlFieldValue.getValueType());
-        Assert.assertEquals("the URL is not right", "www.bonitasoft.org", urlFieldValue.getValue());
-        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+    }
 
-        final FormFieldValue fileFieldValue = formServiceProvider.getAttachmentFormFieldValue("doc2", context);
-        Assert.assertEquals("the value type for a File document should be a File", File.class.getName(), fileFieldValue.getValueType());
-        Assert.assertEquals("the filename is not right", "filename.txt", fileFieldValue.getValue());
-        Assert.assertNotSame(0, urlFieldValue.getDocumentId());
+    protected long getFirstPendingTask() throws Exception {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                        null).size() >= 1;
+            }
+        }.waitUntil());
+        final long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
+                .get(0).getId();
+        return activityInstanceId;
     }
 
 }
