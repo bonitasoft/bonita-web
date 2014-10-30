@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>forms-parent</artifactId>
 		<groupId>org.bonitasoft.forms</groupId>
-		<version>6.3.8</version>
+		<version>6.3.8-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>forms-server</artifactId>
