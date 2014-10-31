@@ -13,21 +13,48 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+/**
+ * Represent the instance of the {@link TimerEventTriggerDefinition} (only for the type {@link TimerType#DATE} and {@link TimerType#DURATION})
+ * 
+ * @author Celine Souchet
+ */
 public class TimerEventTrigger {
 
     private Long executionDate = null;
 
+    /**
+     * Default Constructor.
+     */
     public TimerEventTrigger() {
     }
 
+    /**
+     * The Constructor with the new value for the date of the execution of the trigger.
+     *
+     * @param executionDate
+     *        The new date of the execution of the trigger
+     */
     public TimerEventTrigger(final long executionDate) {
         this.executionDate = executionDate;
     }
 
+    /**
+     * Set the date of the execution of the trigger in milliseconds since January 1, 1970, 00:00:00 GMT.
+     *
+     * @param executionDate
+     *        The new date of the execution of the trigger
+     */
     public void setExecutionDate(final Long executionDate) {
         this.executionDate = executionDate;
     }
 
+    /**
+     * Return the date of the execution of the trigger.
+     *
+     * @return Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for the date of the execution of the trigger.
+     * @since 6.4.0
+     * @see java.util.Date#getTime()
+     */
     public Long getExecutionDate() {
         return executionDate;
     }

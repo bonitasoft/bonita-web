@@ -154,7 +154,7 @@ public class CommonResource extends ServerResource {
      *
      * @param name
      *        The name of the parameter (case sensitive).
-     * @return This method returns the values of a parameter as a list of String.
+     * @return The values of a parameter as a list of String, or <code>null</code> if the parameter doesn't exist.
      */
     public List<String> getParameterAsList(final String name) {
         final String[] parameterValues = getHttpRequest().getParameterValues(name);
