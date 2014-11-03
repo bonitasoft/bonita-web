@@ -22,6 +22,10 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 
 public class PermissionsBuilder {
 
+    public static final String PROFILE_TYPE_AUTHORIZATION_PREFIX = "profile";
+
+    public static final String USER_TYPE_AUTHORIZATION_PREFIX = "user";
+
     protected static final int MAX_ELEMENTS_RETRIEVED = 200;
 
     protected final APISession session;
@@ -96,7 +100,7 @@ public class PermissionsBuilder {
     }
 
     void addProfilesPermissions(final Set<String> permissions, final Profile profile) {
-        permissions.add("profile|" + profile.getName());
+        permissions.add(PROFILE_TYPE_AUTHORIZATION_PREFIX + "|" + profile.getName());
     }
 
     void addPagesOfProfile(final Profile profile, final Set<String> pageTokens) throws SearchException {
@@ -115,11 +119,11 @@ public class PermissionsBuilder {
     }
 
     void addCustomProfilePermissions(final Set<String> permissions, final Profile profile) {
-        permissions.addAll(getCustomPermissions("profile", profile.getName()));
+        permissions.addAll(getCustomPermissions(PROFILE_TYPE_AUTHORIZATION_PREFIX, profile.getName()));
     }
 
     void addCustomUserPermissions(final Set<String> permissions) {
-        permissions.addAll(getCustomPermissions("user", session.getUserName()));
+        permissions.addAll(getCustomPermissions(USER_TYPE_AUTHORIZATION_PREFIX, session.getUserName()));
     }
 
     Set<String> getCustomPermissions(final String type, final String identifier) {

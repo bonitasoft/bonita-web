@@ -31,6 +31,7 @@ import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.engine.api.PermissionAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.permission.APICallContext;
@@ -52,11 +53,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
-    private static final String SCRIPT_TYPE_AUTHORIZATION_PREFIX = "check";
-
-    private static final String PROFILE_TYPE_AUTHORIZATION_PREFIX = "profile";
-
-    private static final String USER_TYPE_AUTHORIZATION_PREFIX = "user";
+    public static final String SCRIPT_TYPE_AUTHORIZATION_PREFIX = "check";
 
     private static final String PLATFORM_API_URI = "API/platform/";
 
@@ -187,7 +184,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected boolean dynamicCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final Set<String> resourceAuthorizations,
             final APISession apiSession) throws ServletException {
         checkResourceAuthorizationsSyntax(resourceAuthorizations);
-        if (resourceAuthorizations.contains(USER_TYPE_AUTHORIZATION_PREFIX + "|" + apiSession.getUserName())) {
+        if (resourceAuthorizations.contains(PermissionsBuilder.USER_TYPE_AUTHORIZATION_PREFIX + "|" + apiSession.getUserName())) {
             return true;
         }
         final Set<String> profileAuthorizations = getResourceProfileAuthorizations(resourceAuthorizations);
@@ -223,8 +220,8 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected boolean checkResourceAuthorizationsSyntax(final Set<String> resourceAuthorizations) {
         boolean valid = true;
         for (final String resourceAuthorization : resourceAuthorizations) {
-            if (!resourceAuthorization.matches("(" + USER_TYPE_AUTHORIZATION_PREFIX + "|" + PROFILE_TYPE_AUTHORIZATION_PREFIX + "|"
-                    + SCRIPT_TYPE_AUTHORIZATION_PREFIX + ")\\|.+")) {
+            if (!resourceAuthorization.matches("(" + PermissionsBuilder.USER_TYPE_AUTHORIZATION_PREFIX + "|"
+                    + PermissionsBuilder.PROFILE_TYPE_AUTHORIZATION_PREFIX + "|" + SCRIPT_TYPE_AUTHORIZATION_PREFIX + ")\\|.+")) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, "Error while getting dynamic authoriations. Unknown syntax: " + resourceAuthorization
                             + " defined in dynamic-permissions-checks.properties");
@@ -248,7 +245,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected Set<String> getResourceProfileAuthorizations(final Set<String> resourcePermissions) {
         final Set<String> profileAuthorizations = new HashSet<String>();
         for (final String athorizedItem : resourcePermissions) {
-            if (athorizedItem.startsWith(PROFILE_TYPE_AUTHORIZATION_PREFIX + "|")) {
+            if (athorizedItem.startsWith(PermissionsBuilder.PROFILE_TYPE_AUTHORIZATION_PREFIX + "|")) {
                 profileAuthorizations.add(athorizedItem);
             }
         }
