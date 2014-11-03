@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,6 +28,7 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.datastore.SearchFilterProcessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
@@ -46,10 +45,13 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Séverin Moussel
  */
 public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> implements DatastoreHasGet<CaseItem>, DatastoreHasSearch<CaseItem>,
-DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
+        DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
 
-    public CaseDatastore(final APISession engineSession) {
+    private final SearchFilterProcessor searchFilterProcessor;
+
+    public CaseDatastore(final APISession engineSession, final SearchFilterProcessor searchFilterProcessor) {
         super(engineSession);
+        this.searchFilterProcessor = searchFilterProcessor;
     }
 
     @Override
@@ -64,22 +66,13 @@ DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
          * By default we add a caller filter of -1 to avoid having sub processes.
          * If caller is forced to any then we don't need to add the filter.
          */
-        if(!filters.containsKey(CaseItem.FILTER_CALLER)) {
+        if (!filters.containsKey(CaseItem.FILTER_CALLER)) {
             filters.put(CaseItem.FILTER_CALLER, "-1");
-        } else if ("any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))){
+        } else if ("any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
             filters.remove(CaseItem.FILTER_CALLER);
         }
 
-        // Build search
-        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-
-        addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_PROCESS_NAME, ProcessInstanceSearchDescriptor.NAME);
-        addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
-
-        if(filters.containsKey(CaseItem.FILTER_CALLER)) {
-            builder.filter(ProcessInstanceSearchDescriptor.CALLER_ID, MapUtil.getValueAsLong(filters, CaseItem.FILTER_CALLER));
-        }
+        final SearchOptionsBuilder builder = buildSearchOptions(page, resultsByPage, search, orders, filters);
 
         // Run search depending on filters passed
         final SearchResult<ProcessInstance> searchResult = runSearch(filters, builder);
@@ -90,6 +83,25 @@ DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
                 resultsByPage,
                 searchResult.getCount(),
                 convertEngineToConsoleItemsList(searchResult.getResult()));
+    }
+
+    protected SearchOptionsBuilder buildSearchOptions(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters) {
+        // Build search
+        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
+
+        searchFilterProcessor.addFilter(filters, builder, CaseItem.ATTRIBUTE_START_DATE, ProcessInstanceSearchDescriptor.START_DATE);
+        searchFilterProcessor.addFilter(filters, builder, CaseItem.ATTRIBUTE_END_DATE, ProcessInstanceSearchDescriptor.END_DATE);
+        searchFilterProcessor.addFilter(filters, builder, CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, ProcessInstanceSearchDescriptor.LAST_UPDATE);
+
+        addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_PROCESS_NAME, ProcessInstanceSearchDescriptor.NAME);
+        addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
+
+        if (filters.containsKey(CaseItem.FILTER_CALLER)) {
+            builder.filter(ProcessInstanceSearchDescriptor.CALLER_ID, MapUtil.getValueAsLong(filters, CaseItem.FILTER_CALLER));
+        }
+        return builder;
     }
 
     protected SearchResult<ProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {

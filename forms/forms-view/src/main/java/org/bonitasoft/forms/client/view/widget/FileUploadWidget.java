@@ -104,6 +104,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
     protected FileWidgetInputType fileWidgetInputType;
 
+    protected boolean isInitialContentFile;
+
     /**
      * Constructor
      *
@@ -128,17 +130,25 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         } else {
             fileUploadFormName = fieldId;
         }
+        isInitialContentFile = SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType);
 
         flowPanel = new FlowPanel();
 
-        if (FileWidgetInputType.ALL.equals(this.fileWidgetInputType)) {
+        if (isValidInputType(fileWidgetInputType, value)) {
+            buildView(formID, contextMap, fieldId, valueType, value, hasImagePreview);
+        }
+        initWidget(flowPanel);
+    }
+
+    protected void buildView(final String formID, final Map<String, Object> contextMap, final String fieldId, final String valueType, final String value,
+            final boolean hasImagePreview) {
+        if (FileWidgetInputType.ALL.equals(fileWidgetInputType)) {
 
             final List<ReducedFormFieldAvailableValue> availableValues = new ArrayList<ReducedFormFieldAvailableValue>();
-            // FIXME i18n
-            availableValues.add(new ReducedFormFieldAvailableValue("URL", URL_DOCUMENT_TYPE));
-            availableValues.add(new ReducedFormFieldAvailableValue("File", FILE_DOCUMENT_TYPE));
+            availableValues.add(new ReducedFormFieldAvailableValue(FormsResourceBundle.getMessages().url(), URL_DOCUMENT_TYPE));
+            availableValues.add(new ReducedFormFieldAvailableValue(FormsResourceBundle.getMessages().file(), FILE_DOCUMENT_TYPE));
             final String initialRadioButton;
-            if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
+            if (isInitialContentFile) {
                 initialRadioButton = FILE_DOCUMENT_TYPE;
             } else {
                 initialRadioButton = URL_DOCUMENT_TYPE;
@@ -183,7 +193,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
             buttonPanel.addStyleName("bonita_upload_button_group");
 
             loadingImage.setVisible(false);
-            if (value != null && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
+            if (value != null && isInitialContentFile) {
                 fileDownloadWidget.setFileName(value);
                 formPanel.setVisible(false);
             } else {
@@ -241,7 +251,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
 
         if (!FileWidgetInputType.FILE.equals(fileWidgetInputType)) {
             urlTextBox = new TextBox();
-            if (value != null && SupportedFieldTypes.JAVA_STRING_CLASSNAME.equals(valueType)) {
+            if (value != null && !isInitialContentFile) {
                 urlTextBox.setValue(value);
             }
             flowPanel.add(urlTextBox);
@@ -256,8 +266,25 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
                 urlTextBox.setVisible(true);
             }
         }
+    }
 
-        initWidget(flowPanel);
+    protected boolean isValidInputType(final FileWidgetInputType fileWidgetInputType, final String value) {
+        if (value != null) {
+            if (FileWidgetInputType.URL.equals(fileWidgetInputType) && isInitialContentFile) {
+                displayErrorMessage(FormsResourceBundle.getErrors().wrongContentOfTypeFileError());
+                return false;
+            } else if (FileWidgetInputType.FILE.equals(fileWidgetInputType) && !isInitialContentFile) {
+                displayErrorMessage(FormsResourceBundle.getErrors().wrongContentOfTypeURLError());
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected void displayErrorMessage(final String message) {
+        final Label errorMessage = new Label(message);
+        errorMessage.addStyleName("callout-danger callout");
+        flowPanel.add(errorMessage);
     }
 
     protected void createFileUploadForm(final String FileUloadName) {
@@ -276,7 +303,7 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
         fileUpload.addChangeHandler(new ChangeHandler() {
 
             @Override
-            public void onChange(ChangeEvent event) {
+            public void onChange(final ChangeEvent event) {
                 formPanel.submit();
             }
         });
@@ -348,8 +375,8 @@ public class FileUploadWidget extends Composite implements ValueChangeHandler<Bo
          * But GWT is converting plain text in html element (pre).
          * Need to do this hack to get real servlet response
          */
-        private String getPlainTextResult(SubmitCompleteEvent event) {
-            Element label = DOM.createLabel();
+        private String getPlainTextResult(final SubmitCompleteEvent event) {
+            final Element label = DOM.createLabel();
             label.setInnerHTML(event.getResults());
             return label.getInnerText();
         }

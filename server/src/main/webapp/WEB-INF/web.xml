@@ -125,6 +125,8 @@
         <url-pattern>/portal/homepage</url-pattern>
         <url-pattern>/portal/formsService</url-pattern>
         <url-pattern>/portal/formsDocumentDownload</url-pattern>
+        <url-pattern>/portal/downloadDocument</url-pattern>
+        <url-pattern>/portal/documentDownload</url-pattern>
         <url-pattern>/portal/runreport</url-pattern>
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/login.jsp</url-pattern>
@@ -301,8 +303,12 @@
 
     <!-- download -->
     <servlet>
+        <servlet-name>deprecatedDocumentDownloadServlet</servlet-name>
+        <servlet-class>org.bonitasoft.forms.server.DocumentDownloadServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>documentDownload</servlet-name>
-        <servlet-class>org.bonitasoft.console.common.server.servlet.DocumentDownloadServlet</servlet-class>
+        <servlet-class>org.bonitasoft.forms.server.DocumentDownloadServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>formsDocumentDownload</servlet-name>
@@ -382,6 +388,10 @@
     <servlet-mapping>
         <servlet-name>attachmentImage</servlet-name>
         <url-pattern>/portal/attachmentImage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deprecatedDocumentDownloadServlet</servlet-name>
+        <url-pattern>/portal/downloadDocument</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>documentDownload</servlet-name>
