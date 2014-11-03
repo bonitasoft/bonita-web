@@ -33,18 +33,17 @@ import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.restlet.data.CharacterSet;
 import org.restlet.ext.servlet.ServletUtils;
+import org.restlet.representation.Representation;
+import org.restlet.representation.Variant;
+import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 /**
  * @author Emmanuel Duchastenier
  */
 public class CommonResource extends ServerResource {
-
-    /**
-     * Json format for dates
-     */
-    //    protected static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private APISession sessionSingleton = null;
 
@@ -182,6 +181,13 @@ public class CommonResource extends ServerResource {
     }
 
     @Override
+    protected Representation doHandle(final Variant variant) throws ResourceException {
+        // Used to ensure output is correctly encoded:
+        variant.setCharacterSet(CharacterSet.UTF_8);
+        return super.doHandle(variant);
+    }
+
+    @Override
     public String getAttribute(final String name) {
         final String attribute = super.getAttribute(name);
         try {
@@ -190,6 +196,5 @@ public class CommonResource extends ServerResource {
             return attribute;
         }
     }
-
 
 }
