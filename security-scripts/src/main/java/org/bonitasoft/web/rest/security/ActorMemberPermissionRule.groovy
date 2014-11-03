@@ -16,6 +16,8 @@
 
 
 
+
+
 package org.bonitasoft.web.rest.security
 
 import org.bonitasoft.engine.api.APIAccessor
@@ -26,51 +28,43 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let a user access only document on cases that he is involved in
+ * Let a user add an actorMember only if he is process owner
  *
  * <ul>
- *     <li>bpm/document</li>
- *     <li>bpm/archivedDocument</li>
- *     <li>bpm/caseDocument</li>
+ *     <li>bpm/actorMember</li>
+ *     <li>bpm/delegation</li>
  * </ul>
  *
  *
  *
  * @author Baptiste Mesta
  */
-class DocumentPermissionRule implements PermissionRule {
+class ActorMemberPermissionRule implements PermissionRule {
 
 
-    public static final String PROCESS_INSTANCE_ID = "processInstanceId"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
-        if ("GET".equals(apiCallContext.getMethod())) {
-            return checkGetMethod(apiCallContext, apiAccessor, currentUserId)
-        } else if ("POST".equals(apiCallContext.getMethod())) {
+        if ("POST".equals(apiCallContext.getMethod())) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
+        }else if("DELETE".equals(apiCallContext.getMethod())){
+            //TODO unable to find an actor member!
+            return false
         }
-        return false
+        //it's ok to read
+        return true
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSON()
-        def processInstanceId = body.optLong(PROCESS_INSTANCE_ID)
-        if (processInstanceId <= 0) {
+        def actorId = body.optLong("actor_id")
+        if (actorId <= 0) {
             return false;
         }
         def processAPI = apiAccessor.getProcessAPI()
-        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
-    }
-
-    private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
-        def filters = apiCallContext.getFilters()
-        def processAPI = apiAccessor.getProcessAPI()
-        if(filters.containsKey(PROCESS_INSTANCE_ID)){
-            return processAPI.isInvolvedInProcessInstance(currentUserId, Long.valueOf(filters.get(PROCESS_INSTANCE_ID)))
-        }
-        //TODO author id?
-        return false;
+        def actor = processAPI.getActor(actorId)
+        def processDefinitionId = actor.getProcessDefinitionId()
+        return processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)
     }
 }
