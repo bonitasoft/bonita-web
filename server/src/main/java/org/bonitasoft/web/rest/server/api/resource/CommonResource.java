@@ -191,10 +191,12 @@ public class CommonResource extends ServerResource {
     public String getAttribute(final String name) {
         final String attribute = super.getAttribute(name);
         try {
-            return URLDecoder.decode(attribute, "UTF-8");
+            if (attribute != null) {
+                return URLDecoder.decode(attribute, "UTF-8");
+            }
         } catch (final UnsupportedEncodingException e) {
-            return attribute;
         }
+        return attribute;
     }
 
 }
