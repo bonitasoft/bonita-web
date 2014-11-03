@@ -687,3 +687,16 @@ a.bonita_download_link:hover {
 .dateBoxPopup .datePickerDay{
 	text-align: right;
 }
+
+/* ------------------------------------------------------------------------- */
+/* Error messages
+/* ------------------------------------------------------------------------- */
+.callout {
+    padding: 20px;
+    border-left: 3px solid #EEE;
+    color: #333;
+}
+.callout-danger {
+    background-color: #FCF2F2;
+    border-color: #DFB5B4;
+}
