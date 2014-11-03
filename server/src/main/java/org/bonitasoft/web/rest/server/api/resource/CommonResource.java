@@ -13,6 +13,8 @@
  **/
 package org.bonitasoft.web.rest.server.api.resource;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -178,5 +180,16 @@ public class CommonResource extends ServerResource {
         getLogger().log(Level.SEVERE, "*** problem on " + getClass().getName() + " rest resource: " + t.getMessage());
         getResponse().setStatus(getStatus(), "Cannot execute REST resource " + getClass().getName() + " rest resource: " + t.getMessage());
     }
+
+    @Override
+    public String getAttribute(final String name) {
+        final String attribute = super.getAttribute(name);
+        try {
+            return URLDecoder.decode(attribute, "UTF-8");
+        } catch (final UnsupportedEncodingException e) {
+            return attribute;
+        }
+    }
+
 
 }
