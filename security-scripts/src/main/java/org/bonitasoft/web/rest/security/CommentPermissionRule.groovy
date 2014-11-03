@@ -24,47 +24,43 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let the user do get only on processes he deployed or that he supervised
+ * Let a user access only comments on cases that he is involved in
  *
- *
- * can be added to
  * <ul>
- *     <li>bpm/process</li>
+ *     <li>bpm/comment</li>
+ *     <li>bpm/archivedComment</li>
  * </ul>
  *
  *
  *
  * @author Baptiste Mesta
  */
-class ProcessPermissionRule implements PermissionRule {
+class CommentPermissionRule implements PermissionRule {
 
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
         if ("GET".equals(apiCallContext.getMethod())) {
-            return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
+            return checkGetMethod(apiCallContext, currentUserId)
+        } else if ("POST".equals(apiCallContext.getMethod())) {
+            return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
-        return false
     }
 
-
-    private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def processAPI = apiAccessor.getProcessAPI()
-        def filters = apiCallContext.getFilters()
-        if (apiCallContext.getResourceId() != null) {
-            def processId = Long.valueOf(apiCallContext.getResourceId())
-            def processDefinition = processAPI.getProcessDeploymentInfo(processId);
-            def deployedByUser = processDefinition.getDeployedBy() == currentUserId
-            logger.debug("deployed by the current user? " + deployedByUser)
-            return deployedByUser
-        } else {
-            def stringUserId = String.valueOf(currentUserId)
-            if (stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("supervisor_id")) || stringUserId.equals(filters.get("user_id"))) {
-                logger.debug("allowed because searching filters contains user id")
-                return true
-            }
+    private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+        def body = apiCallContext.getBodyAsJSON()
+        def processInstanceId = body.optLong("processInstanceId")
+        if (processInstanceId <= 0) {
+            return false;
         }
-        return false;
+        def processAPI = apiAccessor.getProcessAPI()
+        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+    }
+
+    private boolean checkGetMethod(APICallContext apiCallContext, long currentUserId) {
+        def filters = apiCallContext.getFilters()
+        def stringUserId = String.valueOf(currentUserId)
+        return stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))
     }
 }

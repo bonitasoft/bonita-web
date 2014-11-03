@@ -23,7 +23,14 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let the user access only himself
+ * Let the user access and modify only himself
+ *
+ * can be added to
+ * <ul>
+ *     <li>identity/user</li>
+ *     <li>identity/professionalcontactdata</li>
+ *     <li>identity/personalcontactdata</li>
+ * </ul>
  *
  * @author Baptiste Mesta
  */

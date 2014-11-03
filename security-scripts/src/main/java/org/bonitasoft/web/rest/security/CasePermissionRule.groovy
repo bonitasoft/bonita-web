@@ -27,6 +27,16 @@ import org.bonitasoft.engine.session.APISession
 import org.json.JSONObject
 
 /**
+ *
+ * Let a user access only cases that he is involved in and start cases that he can start
+ *
+ * <ul>
+ *     <li>bpm/case</li>
+ *     <li>bpm/archivedCase</li>
+ * </ul>
+ *
+ *
+ *
  * @author Baptiste Mesta
  */
 class CasePermissionRule implements PermissionRule {

@@ -30,25 +30,26 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Secure
+ * Let a user access only tasks that are assigned or pending to him
  *
  *
- * humanTask
- * userTask
- * hiddenUserTask
- * activity
- * task
- * flowNode
- * manualTask
- *
- * Archived:
- * archivedTask
- * archivedHumanTask
- * archivedUserTask
- * archivedActivity
- * archivedFlowNode
- * archivedManualTask
- *
+ * can be added to
+ * <ul>
+ *     <li>bpm/humanTask</li>
+ *     <li>bpm/userTask</li>
+ *     <li>bpm/archivedHumanTask</li>
+ *     <li>bpm/archivedUserTask</li>
+ *     <li>bpm/hiddenUserTask</li>
+ *     <li>bpm/activity</li>
+ *     <li>bpm/archivedActivity</li>
+ *     <li>bpm/task</li>
+ *     <li>bpm/archivedTask</li>
+ *     <li>bpm/flowNode</li>
+ *     <li>bpm/archivedFlowNode</li>
+ *     <li>bpm/manualTask</li>
+ *     <li>bpm/archivedManualTask</li>
+ *     <li>bpm/archivedTask</li>
+ * </ul>
  *
  *
  * @author Baptiste Mesta
