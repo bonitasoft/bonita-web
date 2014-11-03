@@ -17,8 +17,8 @@ msgstr ""
 msgid "Columns"
 msgstr "Columns"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filters"
@@ -28,5 +28,23 @@ msgstr "All versions"
 
 msgid "All apps"
 msgstr "All apps"
+
+msgid "All states"
+msgstr "All states"
+
+msgid "started"
+msgstr "started"
+
+msgid "failed"
+msgstr "failed"
+
+msgid "Confirm delete?"
+msgstr "Confirm delete?"
+
+msgid "This case will be definitively deleted."
+msgstr "This case will be definitively deleted."
+
+msgid "These cases will be definitively deleted."
+msgstr "These cases will be definitively deleted."
 
 
