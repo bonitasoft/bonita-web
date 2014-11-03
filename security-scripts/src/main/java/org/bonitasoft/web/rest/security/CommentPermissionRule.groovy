@@ -46,6 +46,7 @@ class CommentPermissionRule implements PermissionRule {
         } else if ("POST".equals(apiCallContext.getMethod())) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
+        return false
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
