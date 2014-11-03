@@ -157,7 +157,7 @@ public class PermissionsBuilderTest {
         permissionsBuilder.addPageAndCustomPermissionsOfProfile(permissions, pages, profile);
 
         verify(permissionsBuilder).addPagesOfProfile(profile, pages);
-        assertThat(permissions).containsOnly("Perm1", "Perm2");
+        assertThat(permissions).containsOnly("Perm1", "Perm2", "profile|profileName");
     }
 
     @Test

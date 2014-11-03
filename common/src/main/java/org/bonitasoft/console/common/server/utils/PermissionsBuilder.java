@@ -92,6 +92,11 @@ public class PermissionsBuilder {
     void addPageAndCustomPermissionsOfProfile(final Set<String> permissions, final Set<String> pageTokens, final Profile profile) throws SearchException {
         addPagesOfProfile(profile, pageTokens);
         addCustomProfilePermissions(permissions, profile);
+        addProfilesPermissions(permissions, profile);
+    }
+
+    void addProfilesPermissions(final Set<String> permissions, final Profile profile) {
+        permissions.add("profile|" + profile.getName());
     }
 
     void addPagesOfProfile(final Profile profile, final Set<String> pageTokens) throws SearchException {

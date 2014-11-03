@@ -94,35 +94,44 @@ public class RestAPIAuthorizationFilterTest {
     }
 
     @Test
-    public void should_checkPermissions_call_static_check_if_secu_is_enabled() throws Exception {
+    public void should_checkPermissions_call_dynamic_check_if_secu_is_enabled() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).staticCheck(anyString(), anyString(), anyString(), anyString(), anySetOf(String.class),
-                any(ResourcesPermissionsMapping.class), eq(username));
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
+        doReturn(dynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).dynamicCheck(any(APICallContext.class),
+                anySetOf(String.class), anySetOf(String.class), any(APISession.class));
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy).staticCheck("GET", "bpm", "case", null, permissions, resourcesPermissionsMapping, username);
+        verify(restAPIAuthorizationFilterSpy).dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions, dynamicAuthorizations,
+                apiSession);
+        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck(new APICallContext("GET", "bpm", "case", null), permissions, resourcesPermissionsMapping,
+                username);
     }
 
     @Test
-    public void should_checkPermissions_call_dynamic_check_if_secu_is_enabled_and_static_check_does_not_authorize() throws Exception {
+    public void should_checkPermissions_call_static_check_if_secu_is_enabled_and_no_dynamic_permissions_are_defined() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
-        initSpy(restAPIAuthorizationFilterSpy);
+        final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
-        doReturn(false).when(restAPIAuthorizationFilterSpy).staticCheck(anyString(), anyString(), anyString(), anyString(), anySetOf(String.class),
+        final Set<String> emptyDynamicAuthorizations = new HashSet<String>();
+        doReturn(emptyDynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).staticCheck(any(APICallContext.class), anySetOf(String.class),
                 any(ResourcesPermissionsMapping.class), eq(username));
-        doReturn(true).when(restAPIAuthorizationFilterSpy).dynamicCheck(anyString(), anyString(), anyString(), anyString(), any(APISession.class),
-                any(DynamicPermissionsChecks.class), anyString(), anyString());
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy).dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        verify(restAPIAuthorizationFilterSpy).staticCheck(new APICallContext("GET", "bpm", "case", null), permissions, resourcesPermissionsMapping, username);
+        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions,
+                emptyDynamicAuthorizations, apiSession);
     }
 
     @Test
@@ -131,17 +140,22 @@ public class RestAPIAuthorizationFilterTest {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).staticCheck(anyString(), anyString(), anyString(), anyString(), anySetOf(String.class),
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
+        doReturn(dynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).dynamicCheck(any(APICallContext.class),
+                anySetOf(String.class), anySetOf(String.class), any(APISession.class));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).staticCheck(any(APICallContext.class), anySetOf(String.class),
                 any(ResourcesPermissionsMapping.class), eq(username));
-        doReturn(true).when(restAPIAuthorizationFilterSpy).dynamicCheck(anyString(), anyString(), anyString(), anyString(), any(APISession.class),
-                any(DynamicPermissionsChecks.class), anyString(), anyString());
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck("GET", "bpm", "case", null, permissions, resourcesPermissionsMapping, username);
-        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck(new APICallContext("GET", "bpm", "case", null), permissions, resourcesPermissionsMapping,
+                username);
+        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions,
+                dynamicAuthorizations, apiSession);
     }
 
     @Test
@@ -149,22 +163,30 @@ public class RestAPIAuthorizationFilterTest {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
         doReturn(false).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
+        doReturn(dynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck("GET", "bpm", "case", null, permissions, resourcesPermissionsMapping, username);
-        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck(new APICallContext("GET", "bpm", "case", null), permissions, resourcesPermissionsMapping,
+                username);
+        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions,
+                dynamicAuthorizations, apiSession);
     }
 
     @Test
     public void should_checkPermissions_return_true_if_static_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
-        final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).staticCheck("GET", "bpm", "case", null, permissions, resourcesPermissionsMapping, username);
+        initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        doReturn(new HashSet<String>()).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).staticCheck(any(APICallContext.class), anySetOf(String.class),
+                any(ResourcesPermissionsMapping.class), anyString());
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
@@ -174,12 +196,14 @@ public class RestAPIAuthorizationFilterTest {
     }
 
     @Test
-    public void should_checkPermissions_return_false_if_satic_and_dynamic_not_authorized() throws Exception {
+    public void should_checkPermissions_return_false_if_static_not_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
-        final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
-        doReturn(false).when(restAPIAuthorizationFilterSpy).staticCheck("GET", "bpm", "case", null, permissions, resourcesPermissionsMapping, username);
-        doReturn(false).when(restAPIAuthorizationFilterSpy).dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        doReturn(new HashSet<String>()).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(false).when(restAPIAuthorizationFilterSpy).staticCheck(any(APICallContext.class), anySetOf(String.class),
+                any(ResourcesPermissionsMapping.class), anyString());
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
@@ -189,18 +213,39 @@ public class RestAPIAuthorizationFilterTest {
     }
 
     @Test
-    public void should_checkPermissions_return_true_if_satic_not_authorized_and_dynamic_authorized() throws Exception {
+    public void should_checkPermissions_return_true_if_dynamic_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
-        final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
-        doReturn(false).when(restAPIAuthorizationFilterSpy).staticCheck("GET", "bpm", "case", null, permissions, resourcesPermissionsMapping, username);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
+        doReturn(dynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).dynamicCheck(any(APICallContext.class),
+                anySetOf(String.class), anySetOf(String.class), any(APISession.class));
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
 
         //then
         assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_checkPermissions_return_false_if_dynamic_not_authorized() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        initSpy(restAPIAuthorizationFilterSpy);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
+        doReturn(dynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDynamicAuthorizations(anyString(), anyString(),
+                anyString(), anyString(), any(DynamicPermissionsChecks.class));
+        doReturn(false).when(restAPIAuthorizationFilterSpy).dynamicCheck(any(APICallContext.class),
+                anySetOf(String.class), anySetOf(String.class), any(APISession.class));
+
+        //when
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
+
+        //then
+        assertThat(isAuthorized).isFalse();
     }
 
     @Test
@@ -221,7 +266,8 @@ public class RestAPIAuthorizationFilterTest {
         final Set<String> userPermissions = new HashSet<String>(Arrays.asList("MyPermission", "AnOtherPermission"));
         returnPermissionFor("GET", "bpm", "case", null, Arrays.asList("CasePermission", "AnOtherPermission"));
 
-        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck("GET", "bpm", "case", null, userPermissions, resourcesPermissionsMapping, username);
+        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck(new APICallContext("GET", "bpm", "case", null), userPermissions,
+                resourcesPermissionsMapping, username);
 
         assertThat(isAuthorized).isTrue();
 
@@ -232,64 +278,110 @@ public class RestAPIAuthorizationFilterTest {
         final Set<String> userPermissions = new HashSet<String>(Arrays.asList("MyPermission", "AnOtherPermission"));
         returnPermissionFor("GET", "bpm", "case", null, Arrays.asList("CasePermission", "SecondPermission"));
 
-        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck("GET", "bpm", "case", null, userPermissions, resourcesPermissionsMapping, username);
+        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck(new APICallContext("GET", "bpm", "case", null), userPermissions,
+                resourcesPermissionsMapping, username);
 
         assertThat(isAuthorized).isFalse();
     }
 
     @Test
-    public void test_dynamicCheck_authorized() throws Exception {
-        doReturn("className").when(dynamicPermissionsChecks).getResourceScript("GET", "bpm", "case");
+    public void test_dynamicCheck_authorized_with_script() throws Exception {
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
-        doReturn(true).when(restAPIAuthorizationFilterSpy).checkWithScript("GET", "bpm", "case", null, apiSession, "className", apiCallContext);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).checkWithScript(apiSession, "className", apiCallContext);
 
-        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), new HashSet<String>(),
+                dynamicAuthorizations, apiSession);
 
         assertThat(isAuthorized).isTrue();
     }
 
     @Test
-    public void test_dynamicCheck_unauthorized() throws Exception {
-        doReturn("className").when(dynamicPermissionsChecks).getResourceScript("GET", "bpm", "case");
+    public void test_dynamicCheck_authorized_with_profile() throws Exception {
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("profile|admin", "check|className"));
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
-        doReturn(false).when(restAPIAuthorizationFilterSpy).checkWithScript("GET", "bpm", "case", null, apiSession, "className", apiCallContext);
 
-        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""),
+                new HashSet<String>(Arrays.asList("profile|admin")),
+                dynamicAuthorizations, apiSession);
+
+        assertThat(isAuthorized).isTrue();
+        verify(restAPIAuthorizationFilterSpy, times(0)).checkWithScript(apiSession, "className", apiCallContext);
+    }
+
+    @Test
+    public void test_dynamicCheck_authorized_with_user() throws Exception {
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("user|" + apiSession.getUserName(), "check|className"));
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
+
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""),
+                new HashSet<String>(Arrays.asList("user|" + apiSession.getUserName())),
+                dynamicAuthorizations, apiSession);
+
+        assertThat(isAuthorized).isTrue();
+        verify(restAPIAuthorizationFilterSpy, times(0)).checkWithScript(apiSession, "className", apiCallContext);
+    }
+
+    @Test
+    public void test_dynamicCheck_unauthorized_with_script() throws Exception {
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
+        doReturn(false).when(restAPIAuthorizationFilterSpy).checkWithScript(apiSession, "className", apiCallContext);
+
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), new HashSet<String>(),
+                dynamicAuthorizations, apiSession);
 
         assertThat(isAuthorized).isFalse();
     }
 
     @Test
     public void should_dynamicCheck_return_false_if_the_script_execution_fails() throws Exception {
-        doReturn("className").when(dynamicPermissionsChecks).getResourceScript("GET", "bpm", "case");
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
-        doThrow(ExecutionException.class).when(restAPIAuthorizationFilterSpy).checkWithScript("GET", "bpm", "case", null, apiSession, "className",
-                apiCallContext);
+        doThrow(ExecutionException.class).when(restAPIAuthorizationFilterSpy).checkWithScript(apiSession, "className", apiCallContext);
 
-        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), new HashSet<String>(),
+                dynamicAuthorizations, apiSession);
 
         assertThat(isAuthorized).isFalse();
     }
 
     @Test
     public void should_dynamicCheck_return_false_if_the_script_is_not_found() throws Exception {
-        doReturn("className").when(dynamicPermissionsChecks).getResourceScript("GET", "bpm", "case");
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("check|className"));
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
-        doThrow(NotFoundException.class).when(restAPIAuthorizationFilterSpy).checkWithScript("GET", "bpm", "case", null, apiSession, "className",
-                apiCallContext);
+        doThrow(NotFoundException.class).when(restAPIAuthorizationFilterSpy).checkWithScript(apiSession, "className", apiCallContext);
 
-        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), new HashSet<String>(),
+                dynamicAuthorizations, apiSession);
+
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_dynamicCheck_return_false_if_the_script_syntax_is_invalid() throws Exception {
+        final Set<String> dynamicAuthorizations = new HashSet<String>(Arrays.asList("anyText"));
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        final APICallContext apiCallContext = new APICallContext("GET", "bpm", "case", null, "", "");
+        doThrow(NotFoundException.class).when(restAPIAuthorizationFilterSpy).checkWithScript(apiSession, "className", apiCallContext);
+
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), new HashSet<String>(),
+                dynamicAuthorizations, apiSession);
 
         assertThat(isAuthorized).isFalse();
     }
 
     @Test
     public void should_dynamicCheck_return_false_on_resource_with_no_script() throws Exception {
-        final boolean isAuthorized = restAPIAuthorizationFilter.dynamicCheck("GET", "bpm", "case", null, apiSession, dynamicPermissionsChecks, "", "");
+        final boolean isAuthorized = restAPIAuthorizationFilter.dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), new HashSet<String>(),
+                new HashSet<String>(),
+                apiSession);
 
         assertThat(isAuthorized).isFalse();
     }
@@ -300,7 +392,8 @@ public class RestAPIAuthorizationFilterTest {
         returnPermissionFor("GET", "bpm", "case", null, Arrays.asList("CasePermission", "AnOtherPermission"));
         returnPermissionFor("GET", "bpm", "case", "12", Arrays.asList("CasePermission", "SecondPermission"));
 
-        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck("GET", "bpm", "case", "12", userPermissions, resourcesPermissionsMapping, username);
+        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck(new APICallContext("GET", "bpm", "case", "12"), userPermissions,
+                resourcesPermissionsMapping, username);
 
         assertThat(isAuthorized).isFalse();
 
@@ -311,7 +404,8 @@ public class RestAPIAuthorizationFilterTest {
         final Set<String> userPermissions = new HashSet<String>(Arrays.asList("MyPermission", "AnOtherPermission"));
         returnPermissionFor("GET", "bpm", "case", "12", Arrays.asList("CasePermission", "MyPermission"));
 
-        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck("GET", "bpm", "case", "12", userPermissions, resourcesPermissionsMapping, username);
+        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck(new APICallContext("GET", "bpm", "case", "12"), userPermissions,
+                resourcesPermissionsMapping, username);
 
         assertThat(isAuthorized).isTrue();
 
@@ -322,7 +416,8 @@ public class RestAPIAuthorizationFilterTest {
         final Set<String> userPermissions = new HashSet<String>(Arrays.asList("MyPermission", "AnOtherPermission"));
         returnPermissionFor("GET", "bpm", "case", null, Arrays.asList("CasePermission", "MyPermission"));
 
-        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck("GET", "bpm", "case", "12", userPermissions, resourcesPermissionsMapping, username);
+        final boolean isAuthorized = restAPIAuthorizationFilter.staticCheck(new APICallContext("GET", "bpm", "case", "12"), userPermissions,
+                resourcesPermissionsMapping, username);
 
         assertThat(isAuthorized).isTrue();
 
@@ -402,5 +497,26 @@ public class RestAPIAuthorizationFilterTest {
         //when
         restAPIAuthorizationFilter.checkValidCondition(request, response);
 
+    }
+
+    @Test
+    public void checkResourceAuthorizationsSyntax_should_return_false_if_syntax_is_invalid() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        final Set<String> resourceAuthorizations = new HashSet<String>();
+        resourceAuthorizations.add("any string");
+
+        final boolean isValid = restAPIAuthorizationFilterSpy.checkResourceAuthorizationsSyntax(resourceAuthorizations);
+
+        assertThat(isValid).isFalse();
+    }
+
+    @Test
+    public void checkResourceAuthorizationsSyntax_should_return_true_if_syntax_is_valid() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        final Set<String> resourceAuthorizations = new HashSet<String>(Arrays.asList("user|any.username", "profile|any.profile", "check|className"));
+
+        final boolean isValid = restAPIAuthorizationFilterSpy.checkResourceAuthorizationsSyntax(resourceAuthorizations);
+
+        assertThat(isValid).isTrue();
     }
 }

@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
