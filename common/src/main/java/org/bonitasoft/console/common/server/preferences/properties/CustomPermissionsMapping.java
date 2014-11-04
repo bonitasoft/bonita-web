@@ -38,7 +38,7 @@ public class CustomPermissionsMapping extends SimpleProperties {
      */
     protected static CustomPermissionsMapping getInstance(final long tenantId) {
         CustomPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null) {
+        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new CustomPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);

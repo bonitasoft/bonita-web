@@ -58,6 +58,11 @@ public class SecurityProperties {
     public static final String API_AUTHORIZATIONS_CHECK = "security.rest.api.authorizations.check.enabled";
 
     /**
+     * Custom page debug mode
+     */
+    public static final String API_AUTHORIZATIONS_CHECK_DEBUG = "security.rest.api.authorizations.check.debug";
+
+    /**
      * property for the auto login mechanism activation
      */
     public static final String AUTO_LOGIN_PROPERTY = "forms.application.login.auto";
@@ -296,6 +301,14 @@ public class SecurityProperties {
     public boolean isAPIAuthorizationsCheckEnabled() {
         final String res = defaultProperties.getProperty(API_AUTHORIZATIONS_CHECK);
         return res != null && res.equals("true");
+    }
+
+    /**
+     * @return the value allow permission properties file debug
+     */
+    public boolean isAPIAuthorizationsCheckInDebugMode() {
+        final String debugMode = defaultProperties.getProperty(API_AUTHORIZATIONS_CHECK_DEBUG);
+        return Boolean.parseBoolean(debugMode);
     }
 
     /**

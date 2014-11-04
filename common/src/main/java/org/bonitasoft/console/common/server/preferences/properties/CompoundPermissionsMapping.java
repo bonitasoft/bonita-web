@@ -38,7 +38,7 @@ public class CompoundPermissionsMapping extends SimpleProperties {
      */
     protected static CompoundPermissionsMapping getInstance(final long tenantId) {
         CompoundPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null) {
+        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new CompoundPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);

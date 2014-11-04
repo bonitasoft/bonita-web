@@ -41,7 +41,7 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
      */
     protected static ResourcesPermissionsMapping getInstance(final long tenantId) {
         ResourcesPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null) {
+        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new ResourcesPermissionsMapping(fileName);
             INSTANCES.put(tenantId, tenancyProperties);

@@ -38,7 +38,7 @@ public class DynamicPermissionsChecks extends ResourcesPermissionsMapping {
      */
     protected static DynamicPermissionsChecks getInstance(final long tenantId) {
         DynamicPermissionsChecks tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null) {
+        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
             final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
             tenancyProperties = new DynamicPermissionsChecks(fileName);
             INSTANCES.put(tenantId, tenancyProperties);
