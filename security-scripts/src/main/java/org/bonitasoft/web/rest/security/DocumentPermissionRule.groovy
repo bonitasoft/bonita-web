@@ -70,7 +70,7 @@ class DocumentPermissionRule implements PermissionRule {
         if(filters.containsKey(PROCESS_INSTANCE_ID)){
             return processAPI.isInvolvedInProcessInstance(currentUserId, Long.valueOf(filters.get(PROCESS_INSTANCE_ID)))
         }
-        //TODO author id?
+        //TODO author id + when resource id is here get the document to check if you are involved in the process
         return false;
     }
 }
