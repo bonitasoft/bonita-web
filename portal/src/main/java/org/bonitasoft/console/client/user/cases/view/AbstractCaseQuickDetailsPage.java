@@ -75,7 +75,7 @@ abstract class AbstractCaseQuickDetailsPage<T extends CaseItem> extends ItemQuic
     @Override
     protected void defineTitle(final CaseItem item) {
         setTitle(_("Case id") + ": " + item.getId() + " - App: "
-                + item.getDeploy(CaseItem.ATTRIBUTE_PROCESS_ID).getAttributeValue(ProcessItem.ATTRIBUTE_DISPLAY_NAME));
+                + item.getItemDeploy(CaseItem.ATTRIBUTE_PROCESS_ID).getAttributeValue(ProcessItem.ATTRIBUTE_DISPLAY_NAME));
     }
 
     @Override

@@ -106,7 +106,7 @@ public class ReportItem extends Item implements ItemHasUniqueId, ItemHasIcon, It
     }
 
     public UserItem getInstalledBy() {
-        return (UserItem) getDeploy(ATTRIBUTE_INSTALLED_BY);
+        return (UserItem) getItemDeploy(ATTRIBUTE_INSTALLED_BY);
     }
     
     public boolean isProvided() {

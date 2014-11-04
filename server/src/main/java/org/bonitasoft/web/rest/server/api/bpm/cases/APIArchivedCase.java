@@ -69,19 +69,19 @@ public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements API
     @Override
     protected void fillDeploys(final ArchivedCaseItem item, final List<String> deploys) {
         if (isDeployable(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, deploys, item)) {
-            item.setDeploy(
+            item.setItemDeploy(
                     ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID,
                     getUserDatastore().get(item.getStartedByUserId()));
         }
 
         if (isDeployable(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
-            item.setDeploy(
+            item.setItemDeploy(
                     ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
                     getUserDatastore().get(item.getStartedBySubstituteUserId()));
         }
 
         if (isDeployable(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, deploys, item)) {
-            item.setDeploy(
+            item.setItemDeploy(
                     ArchivedCaseItem.ATTRIBUTE_PROCESS_ID,
                     getProcessDatastore().get(item.getProcessId()));
         }

@@ -78,7 +78,7 @@ public class ActorMemberItem extends AbstractMemberItem implements ItemHasUnique
     // Deploys
 
     public ActorItem getActor() {
-        return new ActorItem(getDeploy(ATTRIBUTE_ACTOR_ID));
+        return new ActorItem(getItemDeploy(ATTRIBUTE_ACTOR_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

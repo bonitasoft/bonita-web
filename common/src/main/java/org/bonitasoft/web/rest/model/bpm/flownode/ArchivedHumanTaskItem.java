@@ -179,12 +179,12 @@ public class ArchivedHumanTaskItem extends ArchivedTaskItem implements IHumanTas
 
     @Override
     public UserItem getAssignedUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_ASSIGNED_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_ASSIGNED_USER_ID));
     }
 
     @Override
     public final ActorItem getActor() {
-        return new ActorItem(getDeploy(ATTRIBUTE_ACTOR_ID));
+        return new ActorItem(getItemDeploy(ATTRIBUTE_ACTOR_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

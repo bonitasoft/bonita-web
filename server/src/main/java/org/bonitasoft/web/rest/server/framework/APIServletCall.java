@@ -232,7 +232,7 @@ public class APIServletCall extends ServletCall {
     private HashMap<String, String> getAttributesWithDeploysAsJsonString(IItem item) {
         HashMap<String, String> map = new HashMap<String, String>();
         map.putAll(item.getAttributes());
-        for (Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
+        for (Entry<String, IItem> deploy : item.getItemDeploys().entrySet()) {
             map.put(deploy.getKey(), deploy.getValue().toJson());
         }
         return map;

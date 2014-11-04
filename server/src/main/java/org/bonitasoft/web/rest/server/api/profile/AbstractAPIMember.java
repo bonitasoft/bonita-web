@@ -102,13 +102,13 @@ public abstract class AbstractAPIMember<T extends AbstractMemberItem> extends Co
     @Override
     protected void fillDeploys(final T item, final List<String> deploys) {
         if (isDeployable(ATTRIBUTE_USER_ID, deploys, item)) {
-            item.setDeploy(ATTRIBUTE_USER_ID, new UserDatastore(getEngineSession()).get(item.getUserId()));
+            item.setItemDeploy(ATTRIBUTE_USER_ID, new UserDatastore(getEngineSession()).get(item.getUserId()));
         }
         if (isDeployable(ATTRIBUTE_ROLE_ID, deploys, item)) {
-            item.setDeploy(ATTRIBUTE_ROLE_ID, new RoleDatastore(getEngineSession()).get(item.getRoleId()));
+            item.setItemDeploy(ATTRIBUTE_ROLE_ID, new RoleDatastore(getEngineSession()).get(item.getRoleId()));
         }
         if (isDeployable(ATTRIBUTE_GROUP_ID, deploys, item)) {
-            item.setDeploy(ATTRIBUTE_GROUP_ID, new GroupDatastore(getEngineSession()).get(item.getGroupId()));
+            item.setItemDeploy(ATTRIBUTE_GROUP_ID, new GroupDatastore(getEngineSession()).get(item.getGroupId()));
         }
     }
 

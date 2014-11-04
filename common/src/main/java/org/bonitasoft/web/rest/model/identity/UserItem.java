@@ -271,20 +271,20 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
     public static final String DEPLOY_PERSONNAL_DATA = "personnal_data";
 
     public ProfessionalContactDataItem getProfessionalData() {
-        return new ProfessionalContactDataItem(getDeploy(DEPLOY_PROFESSIONAL_DATA));
+        return new ProfessionalContactDataItem(getItemDeploy(DEPLOY_PROFESSIONAL_DATA));
     }
 
     public PersonalContactDataItem getPersonnalData() {
-        return new PersonalContactDataItem(getDeploy(DEPLOY_PERSONNAL_DATA));
+        return new PersonalContactDataItem(getItemDeploy(DEPLOY_PERSONNAL_DATA));
     }
 
     public UserItem getManager() {
-        return new UserItem(getDeploy(ATTRIBUTE_MANAGER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_MANAGER_ID));
     }
 
     @Override
     public UserItem getCreatedByUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

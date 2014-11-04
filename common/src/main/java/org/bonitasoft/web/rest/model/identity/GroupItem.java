@@ -90,7 +90,7 @@ public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId,
 
     @Override
     public UserItem getCreatedByUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
     }
 
     @Override

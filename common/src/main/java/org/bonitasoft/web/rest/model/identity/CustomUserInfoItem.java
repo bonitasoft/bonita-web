@@ -47,7 +47,7 @@ public class CustomUserInfoItem extends Item {
 
     public void setDefinition(CustomUserInfoDefinitionItem definition) {
         setDefinition(definition.getId());
-        setDeploy(ATTRIBUTE_DEFINITION_ID, definition);
+        setItemDeploy(ATTRIBUTE_DEFINITION_ID, definition);
     }
 
     public void setValue(String value) {
@@ -59,7 +59,7 @@ public class CustomUserInfoItem extends Item {
     }
 
     public CustomUserInfoDefinitionItem getDefinition() {
-        return (CustomUserInfoDefinitionItem) getDeploy(ATTRIBUTE_DEFINITION_ID);
+        return (CustomUserInfoDefinitionItem) getItemDeploy(ATTRIBUTE_DEFINITION_ID);
     }
 
     public String getValue() {

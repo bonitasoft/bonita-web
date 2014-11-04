@@ -100,7 +100,7 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
     }
     
     public UserItem getCreatedByUser() {
-        return (UserItem) getDeploy(ATTRIBUTE_CREATED_BY_USER_ID);
+        return (UserItem) getItemDeploy(ATTRIBUTE_CREATED_BY_USER_ID);
     }
 
     public void setUpdatedByUserId(String id) {
@@ -124,7 +124,7 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
     }
     
     public UserItem getUpdatedByUser() {
-        return (UserItem) getDeploy(ATTRIBUTE_UPDATED_BY_USER_ID);
+        return (UserItem) getItemDeploy(ATTRIBUTE_UPDATED_BY_USER_ID);
     }
 
     public void setIsDefault(final Boolean isDefault) {

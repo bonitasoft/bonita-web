@@ -66,7 +66,7 @@ public class ProfileMemberItem extends AbstractMemberItem implements ItemHasUniq
     // Deploys
 
     public ProfileItem getProfile() {
-        return new ProfileItem(getDeploy(ATTRIBUTE_PROFILE_ID));
+        return new ProfileItem(getItemDeploy(ATTRIBUTE_PROFILE_ID));
     }
 
     @Override

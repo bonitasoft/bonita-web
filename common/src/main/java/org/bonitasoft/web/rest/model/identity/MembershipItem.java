@@ -65,19 +65,19 @@ public class MembershipItem extends Item {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public UserItem getUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_USER_ID));
     }
 
     public RoleItem getRole() {
-        return new RoleItem(getDeploy(ATTRIBUTE_ROLE_ID));
+        return new RoleItem(getItemDeploy(ATTRIBUTE_ROLE_ID));
     }
 
     public GroupItem getGroup() {
-        return new GroupItem(getDeploy(ATTRIBUTE_GROUP_ID));
+        return new GroupItem(getItemDeploy(ATTRIBUTE_GROUP_ID));
     }
 
     public UserItem getAssignedByUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_ASSIGNED_BY_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_ASSIGNED_BY_USER_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -79,7 +79,7 @@ public class APIProcessConnectorDependency extends ConsoleAPI<ProcessConnectorDe
     @Override
     protected void fillDeploys(final ProcessConnectorDependencyItem item, final List<String> deploys) {
         if (isDeployable(ATTRIBUTE_PROCESS_ID, deploys, item)) {
-            item.setDeploy(ATTRIBUTE_PROCESS_ID, new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
+            item.setItemDeploy(ATTRIBUTE_PROCESS_ID, new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
         }
     }
 

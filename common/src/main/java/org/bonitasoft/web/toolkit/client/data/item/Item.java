@@ -57,7 +57,9 @@ public abstract class Item implements IItem {
 
     private final Map<String, String> attributes = new HashMap<String, String>();
 
-    private final Map<String, IItem> deploys = new HashMap<String, IItem>();
+    private final Map<String, IItem> itemDeploys = new HashMap<String, IItem>();
+
+    private final Map<String, List<? extends IItem>> itemsDeploys = new HashMap<String, List<? extends IItem>>();
 
     // private final Map<String, Long> counters = new HashMap<String, Long>();
 
@@ -67,7 +69,7 @@ public abstract class Item implements IItem {
     }
 
     @Override
-    public final APIID getId() {
+    public APIID getId() {
         APIID apiid = null;
         final ItemDefinition<?> itemDefinition = getItemDefinition();
 
@@ -118,7 +120,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyOutputModifiersByDefault
-     *            the applyOutputModifiersByDefault to set
+     *        the applyOutputModifiersByDefault to set
      */
     public final static void setApplyOutputModifiersByDefault(final boolean applyOutputModifiersByDefault) {
         Item.applyOutputModifiersByDefault = applyOutputModifiersByDefault;
@@ -126,7 +128,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyInputModifiersByDefault
-     *            the applyInputModifiersByDefault to set
+     *        the applyInputModifiersByDefault to set
      */
     public final static void setApplyInputModifiersByDefault(final boolean applyInputModifiersByDefault) {
         Item.applyInputModifiersByDefault = applyInputModifiersByDefault;
@@ -134,7 +136,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyValidatorsByDefault
-     *            the applyValidatorsByDefault to set
+     *        the applyValidatorsByDefault to set
      */
     public final static void setApplyValidatorsByDefault(final boolean applyValidatorsByDefault) {
         Item.applyValidatorsByDefault = applyValidatorsByDefault;
@@ -142,7 +144,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyValidatorMandatoryByDefault
-     *            the applyValidatorMandatoryByDefault to set
+     *        the applyValidatorMandatoryByDefault to set
      */
     public final static void setApplyValidatorMandatoryByDefault(final boolean applyValidatorMandatoryByDefault) {
         Item.applyValidatorMandatoryByDefault = applyValidatorMandatoryByDefault;
@@ -150,7 +152,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyOutputModifiers
-     *            the applyOutputModifiers to set
+     *        the applyOutputModifiers to set
      */
     @Override
     public final void setApplyOutputModifiers(final boolean applyOutputModifiers) {
@@ -159,7 +161,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyInputModifiers
-     *            the applyInputModifiers to set
+     *        the applyInputModifiers to set
      */
     @Override
     public final void setApplyInputModifiers(final boolean applyInputModifiers) {
@@ -168,7 +170,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyValidators
-     *            the applyValidators to set
+     *        the applyValidators to set
      */
     @Override
     public final void setApplyValidators(final boolean applyValidators) {
@@ -177,7 +179,7 @@ public abstract class Item implements IItem {
 
     /**
      * @param applyValidatorMandatory
-     *            the applyValidatorMandatory to set
+     *        the applyValidatorMandatory to set
      */
     @Override
     public final void setApplyValidatorMandatory(final boolean applyValidatorMandatory) {
@@ -194,9 +196,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final String value) {
@@ -204,7 +206,7 @@ public abstract class Item implements IItem {
                 name,
                 value,
                 applyInputModifiers == null ? applyInputModifiersByDefault : applyInputModifiers,
-                        applyValidators == null ? applyValidatorsByDefault : applyValidators);
+                applyValidators == null ? applyValidatorsByDefault : applyValidators);
     }
 
     @Override
@@ -218,9 +220,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final Date value) {
@@ -233,9 +235,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final APIID value) {
@@ -252,9 +254,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final String value, final boolean applyModifiers, final boolean applyValidators) {
@@ -277,9 +279,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final Object value, final boolean applyModifiers, final boolean applyValidators) {
@@ -297,9 +299,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final APIID value, final boolean applyModifiers, final boolean applyValidators) {
@@ -316,9 +318,9 @@ public abstract class Item implements IItem {
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
      *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     @Override
     public final void setAttribute(final String name, final Date value, final boolean applyModifiers, final boolean applyValidators) {
@@ -329,33 +331,46 @@ public abstract class Item implements IItem {
      * Set a deployed version of an attribute
      *
      * @param attributeName
-     *            The name of the attribute to deploy
+     *        The name of the attribute to deploy
      * @param item
-     *            The deployed version of the attribute
+     *        The deployed version of the attribute
      */
     @Override
-    public final void setDeploy(final String attributeName, final IItem item) {
-        deploys.put(attributeName, item);
+    public void setItemDeploy(final String attributeName, final IItem item) {
+        itemDeploys.put(attributeName, item);
+    }
+
+    /**
+     * Set a deployed version of an attribute
+     *
+     * @param attributeName
+     *        The name of the attribute to deploy
+     * @param items
+     *        The deployed version of the attribute
+     */
+    @Override
+    public void setItemsDeploy(final String attributeName, final List<? extends IItem> items) {
+        itemsDeploys.put(attributeName, items);
     }
 
     /**
      * Remove a deployed version of an attribute
      *
      * @param attributeName
-     *            The name of the attribute deploy to remove
+     *        The name of the attribute deploy to remove
      */
     @Override
-    public final void removeDeploy(final String attributeName) {
-        deploys.remove(attributeName);
+    public final void removeItemDeploy(final String attributeName) {
+        itemDeploys.remove(attributeName);
     }
 
     /**
      * Set a counter value.
      *
      * @param counterName
-     *            The name of the counter to set
+     *        The name of the counter to set
      * @param value
-     *            The value of the counter
+     *        The value of the counter
      */
     // public final void setCounterValue(final String counterName, final Long value) {
     // this.counters.put(counterName, value);
@@ -379,7 +394,7 @@ public abstract class Item implements IItem {
      * Indicate if the attribute exists even if its value is NULL or empty.
      *
      * @param name
-     *            The name of the attribute to check.
+     *        The name of the attribute to check.
      * @return This method returns TRUE if the attribute exists, otherwise FALSE.
      */
     @Override
@@ -391,9 +406,9 @@ public abstract class Item implements IItem {
      * Get the value of an attribute
      *
      * @param attributeName
-     *            The name of the attribute
+     *        The name of the attribute
      * @param applyModifiers
-     *            Indicate whether or not the output modifiers defined for this resource need to be apply.
+     *        Indicate whether or not the output modifiers defined for this resource need to be apply.
      * @return This function returns the value of the attribute or the defaultValue set.
      */
     @Override
@@ -404,16 +419,16 @@ public abstract class Item implements IItem {
 
         // Read a deployed attribute
         if (splittedAttribute.length == 2) {
-            final IItem deploy = getDeploy(splittedAttribute[0]);
+            final IItem deploy = getItemDeploy(splittedAttribute[0]);
 
             return deploy.getAttributeValue(splittedAttribute[1]);
 
         }
 
         // Read an id from a deployed attribute
-        else if (deploys.containsKey(attributeName)) {
+        else if (itemDeploys.containsKey(attributeName)) {
 
-            final IItem deploy = getDeploy(attributeName);
+            final IItem deploy = getItemDeploy(attributeName);
 
             if (deploy == null) {
                 return null;
@@ -451,11 +466,11 @@ public abstract class Item implements IItem {
      * Get the value of an attribute
      *
      * @param attributeName
-     *            The name of the attribute
+     *        The name of the attribute
      * @return This function returns the value of the attribute or NULL if not set.
      */
     @Override
-    public final String getAttributeValue(final String attributeName) {
+    public String getAttributeValue(final String attributeName) {
         return this.getAttributeValue(attributeName, applyOutputModifiers == null ? applyOutputModifiersByDefault : applyOutputModifiers);
     }
 
@@ -463,7 +478,7 @@ public abstract class Item implements IItem {
      * Get the value of an attribute
      *
      * @param itemAttribute
-     *            The attribute
+     *        The attribute
      * @return This function returns the value of the attribute or NULL if not set.
      */
     @Override
@@ -475,9 +490,9 @@ public abstract class Item implements IItem {
      * Get the value of an attribute
      *
      * @param itemAttribute
-     *            The name of the attribute
+     *        The name of the attribute
      * @param applyModifiers
-     *            Indicate whether or not the output modifiers defined for this resource need to be apply.
+     *        Indicate whether or not the output modifiers defined for this resource need to be apply.
      * @return This function returns the value of the attribute or the defaultValue set.
      */
     @Override
@@ -569,19 +584,33 @@ public abstract class Item implements IItem {
      * Get a deployed version of an attribute
      *
      * @param attributeName
-     *            The name of the attribute to deploy
+     *        The name of the attribute to deploy
      * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
      */
     @Override
-    public final IItem getDeploy(final String attributeName) {
+    public final IItem getItemDeploy(final String attributeName) {
         // TODO If not deployed, automatically call the API to deploy.
 
-        return deploys.get(attributeName);
+        return itemDeploys.get(attributeName);
     }
 
     @Override
-    public Map<String, IItem> getDeploys() {
-        return deploys;
+    public Map<String, IItem> getItemDeploys() {
+        return itemDeploys;
+    }
+
+    /**
+     * Get a deployed version of an attribute
+     *
+     * @param attributeName
+     *        The name of the attribute to deploy
+     * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
+     */
+    @Override
+    public final List<? extends IItem> getItemsDeploy(final String attributeName) {
+        // TODO If not deployed, automatically call the API to deploy.
+
+        return itemsDeploys.get(attributeName);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -613,7 +642,7 @@ public abstract class Item implements IItem {
         setAttributes(
                 attributes,
                 applyInputModifiers == null ? applyInputModifiersByDefault : applyInputModifiers,
-                        applyValidators == null ? applyValidatorsByDefault : applyValidators);
+                applyValidators == null ? applyValidatorsByDefault : applyValidators);
     }
 
     /**
@@ -645,7 +674,7 @@ public abstract class Item implements IItem {
             sb.append("\r\n");
         }
 
-        for (final Entry<String, IItem> entry : deploys.entrySet()) {
+        for (final Entry<String, IItem> entry : itemDeploys.entrySet()) {
             sb.append(entry.getKey()).append(" : ").append(entry.getValue());
             sb.append("\r\n");
         }
@@ -659,12 +688,12 @@ public abstract class Item implements IItem {
 
         boolean first = true;
         for (final String attribute : getAttributeNames()) {
-            if (deploys.containsKey(attribute)) {
+            if (itemDeploys.containsKey(attribute)) {
                 json.append(!first ? "," : "").append(JSonSerializer.quote(attribute)).append(":")
-                .append(JSonSerializer.serialize(deploys.get(attribute)));
+                        .append(JSonSerializer.serialize(itemDeploys.get(attribute)));
             } else {
                 json.append(!first ? "," : "").append(JSonSerializer.quote(attribute)).append(":")
-                .append(JSonSerializer.quote(this.getAttributeValue(attribute)));
+                        .append(JSonSerializer.quote(this.getAttributeValue(attribute)));
             }
             first = false;
         }
@@ -688,7 +717,8 @@ public abstract class Item implements IItem {
         result = prime * result + (applyValidatorMandatory == null ? 0 : applyValidatorMandatory.hashCode());
         result = prime * result + (applyValidators == null ? 0 : applyValidators.hashCode());
         result = prime * result + (attributes == null ? 0 : attributes.hashCode());
-        result = prime * result + (deploys == null ? 0 : deploys.hashCode());
+        result = prime * result + (itemDeploys == null ? 0 : itemDeploys.hashCode());
+        result = prime * result + (itemsDeploys == null ? 0 : itemsDeploys.hashCode());
         return result;
     }
 
@@ -739,11 +769,18 @@ public abstract class Item implements IItem {
         } else if (!attributes.equals(other.attributes)) {
             return false;
         }
-        if (deploys == null) {
-            if (other.deploys != null) {
+        if (itemDeploys == null) {
+            if (other.itemDeploys != null) {
                 return false;
             }
-        } else if (!deploys.equals(other.deploys)) {
+        } else if (!itemDeploys.equals(other.itemDeploys)) {
+            return false;
+        }
+        if (itemsDeploys == null) {
+            if (other.itemsDeploys != null) {
+                return false;
+            }
+        } else if (!itemsDeploys.equals(other.itemsDeploys)) {
             return false;
         }
         return true;

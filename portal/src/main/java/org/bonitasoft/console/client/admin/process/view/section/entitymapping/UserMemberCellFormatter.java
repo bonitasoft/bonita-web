@@ -45,7 +45,7 @@ public class UserMemberCellFormatter extends ItemTableCellFormatter {
     }
     
     private UserItem getUser() {
-        return (UserItem) ((ActorMemberItem) item).getDeploy(ActorMemberItem.ATTRIBUTE_USER_ID);
+        return (UserItem) ((ActorMemberItem) item).getItemDeploy(ActorMemberItem.ATTRIBUTE_USER_ID);
     }
     
     private String getText() {

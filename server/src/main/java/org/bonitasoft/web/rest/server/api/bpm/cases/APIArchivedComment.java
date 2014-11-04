@@ -73,10 +73,10 @@ public class APIArchivedComment extends ConsoleAPI<ArchivedCommentItem> implemen
     @Override
     protected void fillDeploys(final ArchivedCommentItem item, final List<String> deploys) {
         if (isDeployable(ArchivedCommentItem.ATTRIBUTE_USER_ID, deploys, item)) {
-            item.setDeploy(ArchivedCommentItem.ATTRIBUTE_USER_ID,
+            item.setItemDeploy(ArchivedCommentItem.ATTRIBUTE_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getUserId()));
         } else {
-            item.setDeploy(CommentItem.ATTRIBUTE_USER_ID, getSystemUser());
+            item.setItemDeploy(CommentItem.ATTRIBUTE_USER_ID, getSystemUser());
         }
 
         // TODO: Deploy process instance

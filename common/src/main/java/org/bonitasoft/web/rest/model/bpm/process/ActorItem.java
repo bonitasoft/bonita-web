@@ -141,7 +141,7 @@ public class ActorItem extends Item implements ItemHasUniqueId, ItemHasDualName 
     // Deploys
 
     public ProcessItem getProcess() {
-        return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
+        return new ProcessItem(getItemDeploy(ATTRIBUTE_PROCESS_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
