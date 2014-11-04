@@ -187,19 +187,19 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public ProfileEntryItem getParentEntry() {
-        return (ProfileEntryItem) ProfileEntryDefinition.get().createItem(getDeploy(ATTRIBUTE_PARENT_ID));
+        return (ProfileEntryItem) ProfileEntryDefinition.get().createItem(getItemDeploy(ATTRIBUTE_PARENT_ID));
     }
 
     public ProfileItem getProfile() {
-        return (ProfileItem) ProfileDefinition.get().createItem(getDeploy(ATTRIBUTE_PROFILE_ID));
+        return (ProfileItem) ProfileDefinition.get().createItem(getItemDeploy(ATTRIBUTE_PROFILE_ID));
     }
 
     public BonitaPageItem getBonitaPage() {
-        return new BonitaPageItem(getDeploy(ATTRIBUTE_PAGE));
+        return new BonitaPageItem(getItemDeploy(ATTRIBUTE_PAGE));
     }
 
     public PageItem getCustomPage() {
-        return new PageItem(getDeploy(ATTRIBUTE_PAGE));
+        return new PageItem(getItemDeploy(ATTRIBUTE_PAGE));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

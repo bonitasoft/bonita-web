@@ -167,7 +167,7 @@ public class PageItem extends Item implements ItemHasUniqueId {
     }
 
     public UserItem getCreatedByUser() {
-        return (UserItem) getDeploy(ATTRIBUTE_CREATED_BY_USER_ID);
+        return (UserItem) getItemDeploy(ATTRIBUTE_CREATED_BY_USER_ID);
     }
 
     public APIID getUpdatedByUserId() {
@@ -175,6 +175,6 @@ public class PageItem extends Item implements ItemHasUniqueId {
     }
 
     public UserItem getUpdatedByUser() {
-        return (UserItem) getDeploy(ATTRIBUTE_UPDATED_BY_USER_ID);
+        return (UserItem) getItemDeploy(ATTRIBUTE_UPDATED_BY_USER_ID);
     }
 }

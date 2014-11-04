@@ -99,7 +99,7 @@ public class CategoryItem extends Item implements ItemHasUniqueId, ItemHasDualNa
 
     @Override
     public UserItem getCreatedByUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_CREATED_BY_USER_ID));
     }
 
     @Override

@@ -46,7 +46,7 @@ public class BonitaPageDeployer implements Deployer {
     @Override
     public void deployIn(IItem item) {
         if (isDeployable(attribute, item)) {
-            item.setDeploy(attribute, getBonitaPage(getBonitaPageId(item)));
+            item.setItemDeploy(attribute, getBonitaPage(getBonitaPageId(item)));
         }
     }
 

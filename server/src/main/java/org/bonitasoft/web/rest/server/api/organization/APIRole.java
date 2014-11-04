@@ -43,7 +43,7 @@ public class APIRole extends ConsoleAPI<RoleItem> implements
     @Override
     protected void fillDeploys(final RoleItem item, final List<String> deploys) {
         if (isDeployable(RoleItem.ATTRIBUTE_CREATED_BY_USER_ID, deploys, item)) {
-            item.setDeploy(RoleItem.ATTRIBUTE_CREATED_BY_USER_ID, new UserDatastore(getEngineSession()).get(item.getCreatedByUserId()));
+            item.setItemDeploy(RoleItem.ATTRIBUTE_CREATED_BY_USER_ID, new UserDatastore(getEngineSession()).get(item.getCreatedByUserId()));
         }
     }
 

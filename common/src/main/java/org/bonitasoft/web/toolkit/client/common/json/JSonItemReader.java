@@ -215,7 +215,7 @@ public class JSonItemReader {
                 item.setAttribute(entry.getKey(), ((TreeLeaf<String>) entry.getValue()).getValue());
             // json object
             } else if (entry.getValue() instanceof TreeIndexed<?>) {
-                item.setDeploy(
+                item.setItemDeploy(
                         entry.getKey(),
                         parseItem(
                                 (TreeIndexed<String>) entry.getValue(),

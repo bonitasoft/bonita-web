@@ -55,7 +55,7 @@ public class DeployedAttributeReader extends AbstractAttributeReader implements 
      */
     @Override
     protected String _read(final IItem item) {
-        final IItem deployedItem = item.getDeploy(this.attributeToDeploy);
+        final IItem deployedItem = item.getItemDeploy(this.attributeToDeploy);
         if (deployedItem == null) {
             return null;
         }

@@ -72,7 +72,7 @@ public class APIActorMember extends AbstractAPIMember<ActorMemberItem> {
     @Override
     protected void fillDeploys(final ActorMemberItem item, final List<String> deploys) {
         if (isDeployable(ActorMemberItem.ATTRIBUTE_ACTOR_ID, deploys, item)) {
-            item.setDeploy(ActorMemberItem.ATTRIBUTE_ACTOR_ID, new ActorDatastore(getEngineSession()).get(item.getActorId()));
+            item.setItemDeploy(ActorMemberItem.ATTRIBUTE_ACTOR_ID, new ActorDatastore(getEngineSession()).get(item.getActorId()));
         }
 
         super.fillDeploys(item, deploys);

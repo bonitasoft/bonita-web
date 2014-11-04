@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2011, 2014 BonitaSoft S.A.
  * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,8 +14,11 @@
  */
 package org.bonitasoft.web.rest.model.bpm.cases;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -29,21 +32,13 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  * process instance item
  *
  * @author Haojie Yuan
+ * @author Celine Souchet
  */
 public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniqueId {
 
     public static final String ATTRIBUTE_VARIABLES = "variables";
 
-    public CaseItem() {
-        super();
-    }
-
-    public CaseItem(final IItem item) {
-        super(item);
-    }
-
     public static final String ATTRIBUTE_STATE = "state";
-
 
     public static final String ATTRIBUTE_PROCESS_ID = "processDefinitionId";
 
@@ -58,6 +53,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public static final String ATTRIBUTE_START_DATE = "start";
 
     public static final String ATTRIBUTE_END_DATE = "end_date";
+
+    public static final String ATTRIBUTE_FAILED_FLOW_NODES = "failed_flow_nodes";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -98,6 +95,16 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String FILTER_CALLER = "caller";
 
+    private List<FlowNodeItem> flowNodeItems = null;
+
+    public CaseItem() {
+        super();
+    }
+
+    public CaseItem(final IItem item) {
+        super(item);
+    }
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GETTERS AND SETTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,16 +112,29 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     // DEPLOYS
 
     public UserItem getStartedByUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_STARTED_BY_USER_ID));
     }
 
-
     public UserItem getStartedBySubstituteUser() {
-        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
+        return new UserItem(getItemDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
     }
 
     public ProcessItem getProcess() {
-        return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
+        return new ProcessItem(getItemDeploy(ATTRIBUTE_PROCESS_ID));
+    }
+
+    public List<FlowNodeItem> getFailedFlowNodes() {
+        if (flowNodeItems == null) {
+            final List<? extends IItem> items = getItemsDeploy(ATTRIBUTE_FAILED_FLOW_NODES);
+
+            flowNodeItems = new ArrayList<FlowNodeItem>(items.size());
+            for (final IItem item : items) {
+                if (item instanceof FlowNodeItem) {
+                    flowNodeItems.add((FlowNodeItem) item);
+                }
+            }
+        }
+        return flowNodeItems;
     }
 
     // GETTERS
@@ -179,9 +199,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     }
 
     /**
-     *
      * @param date
-     *            Must be SQL formated date
+     *        Must be SQL formated date
      */
     public void setStartDate(final String date) {
         setAttribute(ATTRIBUTE_START_DATE, date);

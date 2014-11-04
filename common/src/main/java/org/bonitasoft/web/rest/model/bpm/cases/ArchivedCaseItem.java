@@ -22,7 +22,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * Archived process instance item
- * 
+ *
  * @author Séverin Moussel
  */
 public class ArchivedCaseItem extends CaseItem {

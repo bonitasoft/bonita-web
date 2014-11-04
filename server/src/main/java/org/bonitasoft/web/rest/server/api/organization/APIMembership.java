@@ -68,19 +68,19 @@ public class APIMembership extends ConsoleAPI<MembershipItem> implements
     @Override
     protected void fillDeploys(final MembershipItem item, final List<String> deploys) {
         if (isDeployable(MembershipItem.ATTRIBUTE_USER_ID, deploys, item)) {
-            item.setDeploy(MembershipItem.ATTRIBUTE_USER_ID, new UserDatastore(getEngineSession()).get(item.getUserId()));
+            item.setItemDeploy(MembershipItem.ATTRIBUTE_USER_ID, new UserDatastore(getEngineSession()).get(item.getUserId()));
         }
 
         if (isDeployable(MembershipItem.ATTRIBUTE_ROLE_ID, deploys, item)) {
-            item.setDeploy(MembershipItem.ATTRIBUTE_ROLE_ID, new RoleDatastore(getEngineSession()).get(item.getRoleId()));
+            item.setItemDeploy(MembershipItem.ATTRIBUTE_ROLE_ID, new RoleDatastore(getEngineSession()).get(item.getRoleId()));
         }
 
         if (isDeployable(MembershipItem.ATTRIBUTE_GROUP_ID, deploys, item)) {
-            item.setDeploy(MembershipItem.ATTRIBUTE_GROUP_ID, new GroupDatastore(getEngineSession()).get(item.getGroupId()));
+            item.setItemDeploy(MembershipItem.ATTRIBUTE_GROUP_ID, new GroupDatastore(getEngineSession()).get(item.getGroupId()));
         }
 
         if (isDeployable(MembershipItem.ATTRIBUTE_ASSIGNED_BY_USER_ID, deploys, item)) {
-            item.setDeploy(MembershipItem.ATTRIBUTE_ASSIGNED_BY_USER_ID, new UserDatastore(getEngineSession()).get(item.getAssignedByUserId()));
+            item.setItemDeploy(MembershipItem.ATTRIBUTE_ASSIGNED_BY_USER_ID, new UserDatastore(getEngineSession()).get(item.getAssignedByUserId()));
         }
     }
 

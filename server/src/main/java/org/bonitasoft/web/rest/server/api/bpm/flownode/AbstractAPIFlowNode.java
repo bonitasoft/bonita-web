@@ -120,12 +120,12 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
     protected void fillDeploys(final ITEM item, final List<String> deploys) {
         /** TODO Refactor to an oriented object (cf. WEB-1637 ) */
         if (isDeployable(FlowNodeItem.ATTRIBUTE_PROCESS_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_PROCESS_ID,
+            item.setItemDeploy(FlowNodeItem.ATTRIBUTE_PROCESS_ID,
                     new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
+            item.setItemDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
                     new CaseDatastore(getEngineSession(), searchFilterProcessor).get(item.getCaseId()));
         }
 
@@ -136,27 +136,27 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
                 rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             }
             if (rootContainerCase != null) {
-                item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, new ProcessDatastore(getEngineSession()).get(rootContainerCase.getProcessId()));
+                item.setItemDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, new ProcessDatastore(getEngineSession()).get(rootContainerCase.getProcessId()));
             }
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
+            item.setItemDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getExecutedByUserId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID,
+            item.setItemDeploy(FlowNodeItem.ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getExecutedBySubstituteUserId()));
         }
 
         if (isDeployable(HumanTaskItem.ATTRIBUTE_ACTOR_ID, deploys, item)) {
-            item.setDeploy(HumanTaskItem.ATTRIBUTE_ACTOR_ID,
+            item.setItemDeploy(HumanTaskItem.ATTRIBUTE_ACTOR_ID,
                     new ActorDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ACTOR_ID)));
         }
 
         if (isDeployable(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, deploys, item)) {
-            item.setDeploy(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID,
+            item.setItemDeploy(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)));
         }
 
