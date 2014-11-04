@@ -109,6 +109,14 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         try {
             final ProcessAPI processAPI = getProcessAPI();
 
+            if (filters.containsKey(CaseItem.FILTER_STATE) && filters.get(CaseItem.FILTER_STATE) != null) {
+                if ("started".equals(filters.get(CaseItem.FILTER_STATE))) {
+                    return processAPI.searchOpenProcessInstances(builder.done());
+                } else if ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE))) {
+                    return processAPI.searchFailedProcessInstances(builder.done());
+                }
+            }
+
             builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
 
             if (filters.containsKey(CaseItem.FILTER_USER_ID)) {
@@ -125,7 +133,7 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         }
     }
 
-    protected ProcessAPI getProcessAPI() throws Exception {
+    public ProcessAPI getProcessAPI() throws Exception {
         return TenantAPIAccessor.getProcessAPI(getEngineSession());
     }
 
