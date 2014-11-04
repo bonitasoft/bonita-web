@@ -55,9 +55,9 @@ public abstract class AbstractAuthorizationFilter implements Filter {
         final String requestURL = httpRequest.getRequestURI();
 
         if (sessionIsNotNeeded(requestURL, excludePatterns)) {
-            chain.doFilter(request, response);
+            chain.doFilter(httpRequest, httpResponse);
         } else if (checkValidCondition(httpRequest, httpResponse)) {
-            chain.doFilter(request, response);
+            chain.doFilter(httpRequest, httpResponse);
         }
     }
 

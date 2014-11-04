@@ -244,9 +244,9 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected Set<String> getResourceProfileAuthorizations(final Set<String> resourcePermissions) {
         final Set<String> profileAuthorizations = new HashSet<String>();
-        for (final String athorizedItem : resourcePermissions) {
-            if (athorizedItem.startsWith(PermissionsBuilder.PROFILE_TYPE_AUTHORIZATION_PREFIX + "|")) {
-                profileAuthorizations.add(athorizedItem);
+        for (final String authorizedItem : resourcePermissions) {
+            if (authorizedItem.startsWith(PermissionsBuilder.PROFILE_TYPE_AUTHORIZATION_PREFIX + "|")) {
+                profileAuthorizations.add(authorizedItem);
             }
         }
         return profileAuthorizations;
