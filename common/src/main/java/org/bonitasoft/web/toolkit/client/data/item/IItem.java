@@ -153,17 +153,7 @@ public interface IItem extends JsonSerializable {
      * @param item
      *        The deployed version of the attribute
      */
-    public abstract void setItemDeploy(final String attributeName, final IItem item);
-
-    /**
-     * Set a deployed version of an attribute
-     *
-     * @param attributeName
-     *        The name of the attribute to deploy
-     * @param items
-     *        The deployed version of the attribute
-     */
-    public abstract void setItemsDeploy(String attributeName, List<? extends IItem> items);
+    public abstract void setDeploy(final String attributeName, final IItem item);
 
     /**
      * Remove a deployed version of an attribute
@@ -171,7 +161,7 @@ public interface IItem extends JsonSerializable {
      * @param attributeName
      *        The name of the attribute deploy to remove
      */
-    public abstract void removeItemDeploy(final String attributeName);
+    public abstract void removeDeploy(final String attributeName);
 
     /**
      * Indicate if there are no attribute defined.
@@ -256,16 +246,7 @@ public interface IItem extends JsonSerializable {
      *        The name of the attribute to deploy
      * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
      */
-    public abstract IItem getItemDeploy(final String attributeName);
-
-    /**
-     * Get a deployed version of an attribute
-     *
-     * @param attributeName
-     *        The name of the attribute to deploy
-     * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
-     */
-    public abstract List<? extends IItem> getItemsDeploy(String attributeName);
+    public abstract IItem getDeploy(final String attributeName);
 
     public abstract ArrayList<String> getAttributeNames();
 
@@ -285,6 +266,6 @@ public interface IItem extends JsonSerializable {
     @Override
     public abstract String toString();
 
-    Map<String, IItem> getItemDeploys();
+    Map<String, IItem> getDeploys();
 
 }

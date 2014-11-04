@@ -207,7 +207,7 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
 
     @Override
     public final UserItem getExecutedByUser() {
-        return new UserItem(getItemDeploy(ATTRIBUTE_EXECUTED_BY_USER_ID));
+        return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_USER_ID));
     }
     
     @Override
@@ -232,22 +232,22 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
 
     @Override
     public UserItem getExecutedBySubstituteUser() {
-        return new UserItem(getItemDeploy(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID));
+        return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID));
     }
 
     @Override
     public final ProcessItem getProcess() {
-        return new ProcessItem(getItemDeploy(ATTRIBUTE_PROCESS_ID));
+        return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
     }
 
     @Override
     public final CaseItem getCase() {
-        return new CaseItem(getItemDeploy(ATTRIBUTE_CASE_ID));
+        return new CaseItem(getDeploy(ATTRIBUTE_CASE_ID));
     }
 
     @Override
     public final ProcessItem getRootContainerProcess() {
-    	return new ProcessItem(getItemDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
+    	return new ProcessItem(getDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
     }
     
     @Override

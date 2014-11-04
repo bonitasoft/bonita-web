@@ -38,7 +38,7 @@ public class CaseItemTest {
         final List<FlowNodeItem> flowNodes = Arrays.asList(flowNodeItem);
         final List<? extends IItem> items = Arrays.asList(flowNodeItem, new CaseItem());
         final CaseItem caseItem = new CaseItem();
-        caseItem.setItemsDeploy(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES, items);
+        caseItem.setItemsDeploy(CaseItem.COUNTER_FAILED_FLOW_NODES, items);
 
         // When
         final List<FlowNodeItem> result = caseItem.getFailedFlowNodes();
@@ -55,7 +55,7 @@ public class CaseItemTest {
         // Given
         final List<? extends IItem> items = Arrays.asList(new FlowNodeItem());
         final CaseItem caseItem = new CaseItem();
-        caseItem.setItemsDeploy(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES, items);
+        caseItem.setItemsDeploy(CaseItem.COUNTER_FAILED_FLOW_NODES, items);
         caseItem.getFailedFlowNodes();
 
         // When

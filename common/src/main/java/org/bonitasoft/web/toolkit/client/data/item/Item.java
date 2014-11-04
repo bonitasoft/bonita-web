@@ -57,9 +57,7 @@ public abstract class Item implements IItem {
 
     private final Map<String, String> attributes = new HashMap<String, String>();
 
-    private final Map<String, IItem> itemDeploys = new HashMap<String, IItem>();
-
-    private final Map<String, List<? extends IItem>> itemsDeploys = new HashMap<String, List<? extends IItem>>();
+    private final Map<String, IItem> deploys = new HashMap<String, IItem>();
 
     // private final Map<String, Long> counters = new HashMap<String, Long>();
 
@@ -201,7 +199,7 @@ public abstract class Item implements IItem {
      *        The value of the Item.
      */
     @Override
-    public final void setAttribute(final String name, final String value) {
+    public void setAttribute(final String name, final String value) {
         setAttribute(
                 name,
                 value,
@@ -210,7 +208,7 @@ public abstract class Item implements IItem {
     }
 
     @Override
-    public final void setAttribute(final String name, final Object value) {
+    public void setAttribute(final String name, final Object value) {
         this.setAttribute(name, value != null ? value.toString() : null);
     }
 
@@ -336,21 +334,8 @@ public abstract class Item implements IItem {
      *        The deployed version of the attribute
      */
     @Override
-    public void setItemDeploy(final String attributeName, final IItem item) {
-        itemDeploys.put(attributeName, item);
-    }
-
-    /**
-     * Set a deployed version of an attribute
-     *
-     * @param attributeName
-     *        The name of the attribute to deploy
-     * @param items
-     *        The deployed version of the attribute
-     */
-    @Override
-    public void setItemsDeploy(final String attributeName, final List<? extends IItem> items) {
-        itemsDeploys.put(attributeName, items);
+    public void setDeploy(final String attributeName, final IItem item) {
+        deploys.put(attributeName, item);
     }
 
     /**
@@ -360,8 +345,8 @@ public abstract class Item implements IItem {
      *        The name of the attribute deploy to remove
      */
     @Override
-    public final void removeItemDeploy(final String attributeName) {
-        itemDeploys.remove(attributeName);
+    public final void removeDeploy(final String attributeName) {
+        deploys.remove(attributeName);
     }
 
     /**
@@ -419,16 +404,16 @@ public abstract class Item implements IItem {
 
         // Read a deployed attribute
         if (splittedAttribute.length == 2) {
-            final IItem deploy = getItemDeploy(splittedAttribute[0]);
+            final IItem deploy = getDeploy(splittedAttribute[0]);
 
             return deploy.getAttributeValue(splittedAttribute[1]);
 
         }
 
         // Read an id from a deployed attribute
-        else if (itemDeploys.containsKey(attributeName)) {
+        else if (deploys.containsKey(attributeName)) {
 
-            final IItem deploy = getItemDeploy(attributeName);
+            final IItem deploy = getDeploy(attributeName);
 
             if (deploy == null) {
                 return null;
@@ -588,29 +573,15 @@ public abstract class Item implements IItem {
      * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
      */
     @Override
-    public final IItem getItemDeploy(final String attributeName) {
+    public final IItem getDeploy(final String attributeName) {
         // TODO If not deployed, automatically call the API to deploy.
 
-        return itemDeploys.get(attributeName);
+        return deploys.get(attributeName);
     }
 
     @Override
-    public Map<String, IItem> getItemDeploys() {
-        return itemDeploys;
-    }
-
-    /**
-     * Get a deployed version of an attribute
-     *
-     * @param attributeName
-     *        The name of the attribute to deploy
-     * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
-     */
-    @Override
-    public final List<? extends IItem> getItemsDeploy(final String attributeName) {
-        // TODO If not deployed, automatically call the API to deploy.
-
-        return itemsDeploys.get(attributeName);
+    public Map<String, IItem> getDeploys() {
+        return deploys;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -674,7 +645,7 @@ public abstract class Item implements IItem {
             sb.append("\r\n");
         }
 
-        for (final Entry<String, IItem> entry : itemDeploys.entrySet()) {
+        for (final Entry<String, IItem> entry : deploys.entrySet()) {
             sb.append(entry.getKey()).append(" : ").append(entry.getValue());
             sb.append("\r\n");
         }
@@ -688,9 +659,9 @@ public abstract class Item implements IItem {
 
         boolean first = true;
         for (final String attribute : getAttributeNames()) {
-            if (itemDeploys.containsKey(attribute)) {
+            if (deploys.containsKey(attribute)) {
                 json.append(!first ? "," : "").append(JSonSerializer.quote(attribute)).append(":")
-                        .append(JSonSerializer.serialize(itemDeploys.get(attribute)));
+                        .append(JSonSerializer.serialize(deploys.get(attribute)));
             } else {
                 json.append(!first ? "," : "").append(JSonSerializer.quote(attribute)).append(":")
                         .append(JSonSerializer.quote(this.getAttributeValue(attribute)));
@@ -717,8 +688,7 @@ public abstract class Item implements IItem {
         result = prime * result + (applyValidatorMandatory == null ? 0 : applyValidatorMandatory.hashCode());
         result = prime * result + (applyValidators == null ? 0 : applyValidators.hashCode());
         result = prime * result + (attributes == null ? 0 : attributes.hashCode());
-        result = prime * result + (itemDeploys == null ? 0 : itemDeploys.hashCode());
-        result = prime * result + (itemsDeploys == null ? 0 : itemsDeploys.hashCode());
+        result = prime * result + (deploys == null ? 0 : deploys.hashCode());
         return result;
     }
 
@@ -769,18 +739,11 @@ public abstract class Item implements IItem {
         } else if (!attributes.equals(other.attributes)) {
             return false;
         }
-        if (itemDeploys == null) {
-            if (other.itemDeploys != null) {
+        if (deploys == null) {
+            if (other.deploys != null) {
                 return false;
             }
-        } else if (!itemDeploys.equals(other.itemDeploys)) {
-            return false;
-        }
-        if (itemsDeploys == null) {
-            if (other.itemsDeploys != null) {
-                return false;
-            }
-        } else if (!itemsDeploys.equals(other.itemsDeploys)) {
+        } else if (!deploys.equals(other.deploys)) {
             return false;
         }
         return true;

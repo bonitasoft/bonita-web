@@ -45,7 +45,7 @@ public class UserDeployer implements Deployer {
     @Override
     public void deployIn(IItem item) {
         if (isDeployable(attribute, item)) {
-            item.setItemDeploy(attribute, getUser(getUserId(item)));
+            item.setDeploy(attribute, getUser(getUserId(item)));
         }
     }
 

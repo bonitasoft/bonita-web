@@ -119,15 +119,15 @@ public abstract class AbstractMemberItem extends Item {
     // Deploys
 
     public UserItem getUser() {
-        return new UserItem(getItemDeploy(ATTRIBUTE_USER_ID));
+        return new UserItem(getDeploy(ATTRIBUTE_USER_ID));
     }
 
     public RoleItem getRole() {
-        return new RoleItem(getItemDeploy(ATTRIBUTE_ROLE_ID));
+        return new RoleItem(getDeploy(ATTRIBUTE_ROLE_ID));
     }
 
     public GroupItem getGroup() {
-        return new GroupItem(getItemDeploy(ATTRIBUTE_GROUP_ID));
+        return new GroupItem(getDeploy(ATTRIBUTE_GROUP_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

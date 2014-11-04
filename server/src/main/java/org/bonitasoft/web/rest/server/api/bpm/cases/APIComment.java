@@ -78,10 +78,10 @@ public class APIComment extends ConsoleAPI<CommentItem> implements APIHasAdd<Com
     @Override
     protected void fillDeploys(final CommentItem item, final List<String> deploys) {
         if (isDeployable(CommentItem.ATTRIBUTE_USER_ID, deploys, item)) {
-            item.setItemDeploy(CommentItem.ATTRIBUTE_USER_ID,
+            item.setDeploy(CommentItem.ATTRIBUTE_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getUserId()));
         } else {
-            item.setItemDeploy(CommentItem.ATTRIBUTE_USER_ID, getSystemUser());
+            item.setDeploy(CommentItem.ATTRIBUTE_USER_ID, getSystemUser());
         }
 
         // FIXME Deploy process instance

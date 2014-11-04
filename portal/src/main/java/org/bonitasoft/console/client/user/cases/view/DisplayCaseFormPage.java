@@ -113,7 +113,7 @@ public class DisplayCaseFormPage extends Page {
     }
 
     public static final Map<String, String> getItemParams(final CaseItem item) {
-        if (item.getItemDeploy(CaseItem.ATTRIBUTE_PROCESS_ID) == null) {
+        if (item.getDeploy(CaseItem.ATTRIBUTE_PROCESS_ID) == null) {
             throw new RuntimeException(CaseItem.ATTRIBUTE_PROCESS_ID + " attribute need to be deployed");
         }
         final Map<String, String> processParams = new HashMap<String, String>();

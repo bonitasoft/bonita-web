@@ -79,11 +79,11 @@ public class ProcessCategoryItem extends Item {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public final ProcessItem getProcess() {
-        return new ProcessItem(getItemDeploy(ATTRIBUTE_PROCESS_ID));
+        return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
     }
 
     public final CategoryItem getCategory() {
-        return new CategoryItem(getItemDeploy(ATTRIBUTE_CATEGORY_ID));
+        return new CategoryItem(getDeploy(ATTRIBUTE_CATEGORY_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -84,7 +84,7 @@ public class APIActor extends ConsoleAPI<ActorItem> implements
     @Override
     protected void fillDeploys(final ActorItem item, final List<String> deploys) {
         if (isDeployable(ATTRIBUTE_PROCESS_ID, deploys, item)) {
-            item.setItemDeploy(ATTRIBUTE_PROCESS_ID, new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
+            item.setDeploy(ATTRIBUTE_PROCESS_ID, new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
         }
     }
 

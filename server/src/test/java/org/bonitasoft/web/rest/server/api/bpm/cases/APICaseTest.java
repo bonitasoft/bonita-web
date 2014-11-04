@@ -16,13 +16,13 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -248,7 +248,7 @@ public class APICaseTest {
         apiCase.fillDeploys(item, deploys);
 
         // Then
-        verify(item).setItemDeploy(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, userItem);
+        verify(item).setDeploy(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, userItem);
     }
 
     /**
@@ -265,7 +265,7 @@ public class APICaseTest {
         apiCase.fillDeploys(item, deploys);
 
         // Then
-        verify(item, never()).setItemDeploy(anyString(), any(Item.class));
+        verify(item, never()).setDeploy(anyString(), any(Item.class));
     }
 
     /**
@@ -289,7 +289,7 @@ public class APICaseTest {
         apiCase.fillDeploys(item, deploys);
 
         // Then
-        verify(item).setItemDeploy(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userItem);
+        verify(item).setDeploy(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, userItem);
     }
 
     /**
@@ -306,7 +306,7 @@ public class APICaseTest {
         apiCase.fillDeploys(item, deploys);
 
         // Then
-        verify(item, never()).setItemDeploy(anyString(), any(Item.class));
+        verify(item, never()).setDeploy(anyString(), any(Item.class));
     }
 
     /**
@@ -330,7 +330,7 @@ public class APICaseTest {
         apiCase.fillDeploys(item, deploys);
 
         // Then
-        verify(item).setItemDeploy(CaseItem.ATTRIBUTE_PROCESS_ID, processItem);
+        verify(item).setDeploy(CaseItem.ATTRIBUTE_PROCESS_ID, processItem);
     }
 
     /**
@@ -347,56 +347,7 @@ public class APICaseTest {
         apiCase.fillDeploys(item, deploys);
 
         // Then
-        verify(item, never()).setItemDeploy(anyString(), any(Item.class));
-    }
-
-    /**
-     * Test method for
-     * {@link org.bonitasoft.web.rest.server.api.bpm.cases.APICase#fillDeploys(org.bonitasoft.web.rest.model.bpm.cases.CaseItem, java.util.List)}.
-     */
-    @Test
-    public final void fillDeploys_should_fill_failed_flow_nodes_when_deploy_of_failed_flow_nodes_is_active() {
-        // Given
-        final APIID id = APIID.makeAPIID(78L);
-        final CaseItem item = mock(CaseItem.class);
-        doReturn(id).when(item).getId();
-        doReturn(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES).when(item).getAttributeValue(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES);
-
-        final List<String> deploys = Arrays.asList(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES);
-
-        final Map<String, String> filters = new HashMap<String, String>();
-        filters.put(FlowNodeItem.ATTRIBUTE_STATE, FlowNodeItem.VALUE_STATE_FAILED);
-        filters.put(FlowNodeItem.ATTRIBUTE_PROCESS_ID, String.valueOf(id.toLong()));
-        final String orders = FlowNodeItem.ATTRIBUTE_NAME;
-        final long numberOfFailedFlowNodes = 2L;
-        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, orders, filters);
-        final List<FlowNodeItem> failedFlownodes = Arrays.asList(new FlowNodeItem(), new FlowNodeItem());
-        final ItemSearchResult<FlowNodeItem> searchResult = new ItemSearchResult<FlowNodeItem>(0, (int) numberOfFailedFlowNodes, numberOfFailedFlowNodes,
-                failedFlownodes);
-        doReturn(searchResult).when(flowNodeDatastore).search(0, (int) numberOfFailedFlowNodes, null, orders, filters);
-
-        // When
-        apiCase.fillDeploys(item, deploys);
-
-        // Then
-        verify(item).setItemsDeploy(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES, failedFlownodes);
-    }
-
-    /**
-     * Test method for
-     * {@link org.bonitasoft.web.rest.server.api.bpm.cases.APICase#fillDeploys(org.bonitasoft.web.rest.model.bpm.cases.CaseItem, java.util.List)}.
-     */
-    @Test
-    public final void fillDeploys_should_do_nothing_when_deploy_of_failed_flow_nodes_is_not_active() {
-        // Given
-        final CaseItem item = mock(CaseItem.class);
-        final List<String> deploys = new ArrayList<String>();
-
-        // When
-        apiCase.fillDeploys(item, deploys);
-
-        // Then
-        verify(item, never()).setItemDeploy(anyString(), any(Item.class));
+        verify(item, never()).setDeploy(anyString(), any(Item.class));
     }
 
     /**
@@ -404,7 +355,34 @@ public class APICaseTest {
      * {@link org.bonitasoft.web.rest.server.api.bpm.cases.APICase#fillCounters(org.bonitasoft.web.rest.model.bpm.cases.CaseItem, java.util.List)}.
      */
     @Test
-    public final void fillCounters_should_do_nothing() {
+    public final void fillCounters_should_fill_number_of_failed_flow_nodes_when_counter_of_failed_flow_nodes_is_active() {
+        // Given
+        final APIID id = APIID.makeAPIID(78L);
+        final CaseItem item = mock(CaseItem.class);
+        doReturn(id).when(item).getId();
+
+        final List<String> counters = Arrays.asList(CaseItem.COUNTER_FAILED_FLOW_NODES);
+
+        final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(FlowNodeItem.ATTRIBUTE_STATE, FlowNodeItem.VALUE_STATE_FAILED);
+        filters.put(FlowNodeItem.ATTRIBUTE_PROCESS_ID, String.valueOf(id.toLong()));
+        final String orders = FlowNodeItem.ATTRIBUTE_NAME;
+        final long numberOfFailedFlowNodes = 2L;
+        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, orders, filters);
+
+        // When
+        apiCase.fillCounters(item, counters);
+
+        // Then
+        verify(item).setAttribute(CaseItem.COUNTER_FAILED_FLOW_NODES, numberOfFailedFlowNodes);
+    }
+
+    /**
+     * Test method for
+     * {@link org.bonitasoft.web.rest.server.api.bpm.cases.APICase#fillCounters(org.bonitasoft.web.rest.model.bpm.cases.CaseItem, java.util.List)}.
+     */
+    @Test
+    public final void fillCounters_should_do_nothing_when_counter_of_failed_flow_nodes_is_not_active() {
         // Given
         final CaseItem item = mock(CaseItem.class);
         final List<String> counters = new ArrayList<String>();
@@ -413,11 +391,7 @@ public class APICaseTest {
         apiCase.fillCounters(item, counters);
 
         // Then
-        verifyZeroInteractions(item);
-        verifyZeroInteractions(caseDatastore);
-        verifyZeroInteractions(flowNodeDatastore);
-        verifyZeroInteractions(processDatastore);
-        verifyZeroInteractions(userDatastore);
+        verify(item, never()).setAttribute(anyString(), anyLong());
     }
 
 }

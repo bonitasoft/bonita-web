@@ -199,7 +199,7 @@ public class CaseDocumentItem extends Item {
     }
 
     public UserItem getSubmittedByUser() {
-        return (UserItem) getItemDeploy(ATTRIBUTE_SUBMITTED_BY_USER_ID);
+        return (UserItem) getDeploy(ATTRIBUTE_SUBMITTED_BY_USER_ID);
     }
 
     /* Methods kept here to avoid API break */
@@ -209,6 +209,6 @@ public class CaseDocumentItem extends Item {
     }
 
     public UserItem getAuthorByUser() {
-        return (UserItem) getItemDeploy(ATTRIBUTE_AUTHOR);
+        return (UserItem) getDeploy(ATTRIBUTE_AUTHOR);
     }
 }

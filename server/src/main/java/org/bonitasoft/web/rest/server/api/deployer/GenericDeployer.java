@@ -44,7 +44,7 @@ public class GenericDeployer<I extends IItem> implements Deployer {
     @Override
     public void deployIn(IItem item) {
         if (isDeployable(attribute, item)) {
-            item.setItemDeploy(attribute, getItem(getItemId(item)));
+            item.setDeploy(attribute, getItem(getItemId(item)));
         }
     }
 

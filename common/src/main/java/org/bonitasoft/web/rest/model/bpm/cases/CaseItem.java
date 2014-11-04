@@ -14,11 +14,8 @@
  */
 package org.bonitasoft.web.rest.model.bpm.cases;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -54,7 +51,7 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String ATTRIBUTE_END_DATE = "end_date";
 
-    public static final String ATTRIBUTE_FAILED_FLOW_NODES = "failed_flow_nodes";
+    public static final String COUNTER_FAILED_FLOW_NODES = "failedFlowNodes";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -97,7 +94,6 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String FILTER_STATE = "state";
 
-    private List<FlowNodeItem> flowNodeItems = null;
 
     public CaseItem() {
         super();
@@ -114,29 +110,15 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     // DEPLOYS
 
     public UserItem getStartedByUser() {
-        return new UserItem(getItemDeploy(ATTRIBUTE_STARTED_BY_USER_ID));
+        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_USER_ID));
     }
 
     public UserItem getStartedBySubstituteUser() {
-        return new UserItem(getItemDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
+        return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
     }
 
     public ProcessItem getProcess() {
-        return new ProcessItem(getItemDeploy(ATTRIBUTE_PROCESS_ID));
-    }
-
-    public List<FlowNodeItem> getFailedFlowNodes() {
-        if (flowNodeItems == null) {
-            final List<? extends IItem> items = getItemsDeploy(ATTRIBUTE_FAILED_FLOW_NODES);
-
-            flowNodeItems = new ArrayList<FlowNodeItem>(items.size());
-            for (final IItem item : items) {
-                if (item instanceof FlowNodeItem) {
-                    flowNodeItems.add((FlowNodeItem) item);
-                }
-            }
-        }
-        return flowNodeItems;
+        return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
     }
 
     // GETTERS

@@ -168,11 +168,11 @@ public class CommentItem extends Item implements ItemHasUniqueId {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public UserItem getUser() {
-        return new UserItem(getItemDeploy(ATTRIBUTE_USER_ID));
+        return new UserItem(getDeploy(ATTRIBUTE_USER_ID));
     }
 
     public TaskItem getProcessInstance() {
-        return new TaskItem(getItemDeploy(ATTRIBUTE_PROCESS_INSTANCE_ID));
+        return new TaskItem(getDeploy(ATTRIBUTE_PROCESS_INSTANCE_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

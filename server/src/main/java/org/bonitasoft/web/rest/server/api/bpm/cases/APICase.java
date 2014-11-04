@@ -87,12 +87,11 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
         fillStartedBy(item, deploys);
         fillStartedBySubstitute(item, deploys);
         fillProcess(item, deploys);
-        fillFailedFlowNodes(item, deploys);
     }
 
     private void fillStartedBy(final CaseItem item, final List<String> deploys) {
         if (isDeployable(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, deploys, item)) {
-            item.setItemDeploy(
+            item.setDeploy(
                     CaseItem.ATTRIBUTE_STARTED_BY_USER_ID,
                     getUserDatastore().get(item.getStartedByUserId()));
         }
@@ -100,7 +99,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
 
     private void fillStartedBySubstitute(final CaseItem item, final List<String> deploys) {
         if (isDeployable(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, deploys, item)) {
-            item.setItemDeploy(
+            item.setDeploy(
                     CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID,
                     getUserDatastore().get(item.getStartedBySubstituteUserId()));
         }
@@ -108,23 +107,20 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
 
     private void fillProcess(final CaseItem item, final List<String> deploys) {
         if (isDeployable(CaseItem.ATTRIBUTE_PROCESS_ID, deploys, item)) {
-            item.setItemDeploy(
+            item.setDeploy(
                     CaseItem.ATTRIBUTE_PROCESS_ID,
                     getProcessDatastore().get(item.getProcessId()));
         }
     }
 
-    private void fillFailedFlowNodes(final CaseItem item, final List<String> deploys) {
-        if (isDeployable(CaseItem.ATTRIBUTE_FAILED_FLOW_NODES, deploys, item)) {
+    private void fillNumberOfFailedFlowNodes(final CaseItem item, final List<String> counters) {
+        if (counters.contains(CaseItem.COUNTER_FAILED_FLOW_NODES)) {
             final FlowNodeDatastore flowNodeDatastore = getFlowNodeDatastore();
             final Map<String, String> filters = new HashMap<String, String>();
             filters.put(FlowNodeItem.ATTRIBUTE_STATE, FlowNodeItem.VALUE_STATE_FAILED);
             filters.put(FlowNodeItem.ATTRIBUTE_PROCESS_ID, String.valueOf(item.getId().toLong()));
             final String orders = FlowNodeItem.ATTRIBUTE_NAME;
-            final int resultsByPage = (int) flowNodeDatastore.count(null, orders, filters);
-            item.setItemsDeploy(
-                    CaseItem.ATTRIBUTE_FAILED_FLOW_NODES,
-                    flowNodeDatastore.search(0, resultsByPage, null, orders, filters).getResults());
+            item.setAttribute(CaseItem.COUNTER_FAILED_FLOW_NODES, flowNodeDatastore.count(null, orders, filters));
         }
     }
 
@@ -135,6 +131,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
 
     @Override
     protected void fillCounters(final CaseItem item, final List<String> counters) {
+        fillNumberOfFailedFlowNodes(item, counters);
     }
 
     UserDatastore getUserDatastore() {

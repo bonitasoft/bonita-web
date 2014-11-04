@@ -103,7 +103,7 @@ public class ProcessConnectorDependencyItem extends Item {
     // Deploys
 
     public ProcessItem getProcess() {
-        return new ProcessItem(getItemDeploy(ATTRIBUTE_PROCESS_ID));
+        return new ProcessItem(getDeploy(ATTRIBUTE_PROCESS_ID));
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

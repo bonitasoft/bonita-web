@@ -55,13 +55,13 @@ public class DeployedUserReader extends UserAttributeReader implements HasDeploy
      */
     private UserItem getUserItem(final IItem item, final String attributeToRead) {
         final String userId = item.getAttributeValue(attributeToRead);
-        if (item.getItemDeploy(attributeToRead) == null) {
+        if (item.getDeploy(attributeToRead) == null) {
             if ("".equals(userId) && !"".equals(getDefaultValue())) {
                 return createDefaultValueUser();
             }
             return createSystemUser();
         } else {
-            return new UserItem(item.getItemDeploy(attributeToRead));
+            return new UserItem(item.getDeploy(attributeToRead));
         }
     }
 

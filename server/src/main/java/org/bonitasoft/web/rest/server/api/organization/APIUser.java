@@ -196,17 +196,17 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
     @Override
     protected void fillDeploys(final UserItem item, final List<String> deploys) {
         if (isDeployable(UserItem.ATTRIBUTE_MANAGER_ID, deploys, item)) {
-            item.setItemDeploy(UserItem.ATTRIBUTE_MANAGER_ID,
+            item.setDeploy(UserItem.ATTRIBUTE_MANAGER_ID,
                     new UserDatastore(getEngineSession()).get(item.getManagerId()));
         }
 
         if (isDeployable(UserItem.ATTRIBUTE_CREATED_BY_USER_ID, deploys, item)) {
-            item.setItemDeploy(UserItem.ATTRIBUTE_CREATED_BY_USER_ID,
+            item.setDeploy(UserItem.ATTRIBUTE_CREATED_BY_USER_ID,
                     new UserDatastore(getEngineSession()).get(item.getCreatedByUserId()));
         }
 
         if (deploys.contains(UserItem.DEPLOY_PERSONNAL_DATA)) {
-            item.setItemDeploy(UserItem.DEPLOY_PERSONNAL_DATA,
+            item.setDeploy(UserItem.DEPLOY_PERSONNAL_DATA,
                     new PersonalContactDataDatastore(getEngineSession()).get(item.getId()));
 
             // not a real deploy. force attribute to fix json conversion (Item#toJson)
@@ -214,7 +214,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
         }
 
         if (deploys.contains(UserItem.DEPLOY_PROFESSIONAL_DATA)) {
-            item.setItemDeploy(UserItem.DEPLOY_PROFESSIONAL_DATA,
+            item.setDeploy(UserItem.DEPLOY_PROFESSIONAL_DATA,
                     new ProfessionalContactDataDatastore(getEngineSession()).get(item.getId()));
 
             // not a real deploy. force attribute to fix json conversion (Item#toJson)
