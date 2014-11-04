@@ -68,7 +68,7 @@ public class RestAPIAuthorizationFilterTest {
     @Mock
     private HttpSession httpSession;
 
-    private final RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter();
+    private final RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter(false);
 
     private final String username = "john";
 
