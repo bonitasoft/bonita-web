@@ -58,7 +58,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     private static final String PLATFORM_API_URI = "API/platform/";
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
-    private boolean reload;
+    private Boolean reload;
 
 
     public RestAPIAuthorizationFilter(boolean reload) {
@@ -66,7 +66,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     public RestAPIAuthorizationFilter() {
-        reload = PropertiesFactory.getSecurityProperties().isAPIAuthorizationsCheckInDebugMode();
+        this.reload = null;//will be check every time
     }
 
     @Override
@@ -266,7 +266,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,
             ExecutionException, NotFoundException {
         final PermissionAPI permissionAPI = TenantAPIAccessor.getPermissionAPI(apiSession);
-        final boolean authorized = permissionAPI.checkAPICallWithScript(resourceClassname, apiCallContext, reload);
+        final boolean authorized = permissionAPI.checkAPICallWithScript(resourceClassname, apiCallContext, shouldReload(apiSession));
         if (!authorized) {
             if (LOGGER.isLoggable(Level.FINEST)) {
                 LOGGER.log(
@@ -277,5 +277,9 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             }
         }
         return authorized;
+    }
+
+    private boolean shouldReload(APISession apiSession) {
+        return reload == null ? PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).isAPIAuthorizationsCheckInDebugMode():reload;
     }
 }

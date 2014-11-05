@@ -20,6 +20,9 @@ import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor
+import org.bonitasoft.engine.search.Order
+import org.bonitasoft.engine.search.SearchOptionsBuilder
 import org.bonitasoft.engine.session.APISession
 
 /**
@@ -56,8 +59,16 @@ class ProcessPermissionRule implements PermissionRule {
             def processId = Long.valueOf(apiCallContext.getResourceId())
             def processDefinition = processAPI.getProcessDeploymentInfo(processId);
             def deployedByUser = processDefinition.getDeployedBy() == currentUserId
-            logger.debug("deployed by the current user? " + deployedByUser)
-            return deployedByUser
+            if(deployedByUser){
+                logger.debug("deployed by the current user")
+                return true;
+            }
+            def canStart = processAPI.searchProcessDeploymentInfosCanBeStartedBy(currentUserId, new SearchOptionsBuilder(0, 1).filter(ProcessDeploymentInfoSearchDescriptor.PROCESS_ID, processDefinition.getId()).done())
+            if(canStart.getCount()==1){
+                logger.debug("can start process, so can get")
+                return true
+            }
+            return false
         } else {
             def stringUserId = String.valueOf(currentUserId)
             if (stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("supervisor_id")) || stringUserId.equals(filters.get("user_id"))) {
