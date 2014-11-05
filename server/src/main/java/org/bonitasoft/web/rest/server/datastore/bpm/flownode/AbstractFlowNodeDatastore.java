@@ -147,10 +147,10 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
     protected SearchOptionsBuilder makeSearchOptionBuilder(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
-        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
-        addFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
+        addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
         return builder;
     }
 

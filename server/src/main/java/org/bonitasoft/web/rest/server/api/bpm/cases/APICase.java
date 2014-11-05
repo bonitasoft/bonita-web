@@ -23,7 +23,6 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
-import org.bonitasoft.web.rest.server.datastore.SearchFilterProcessor;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
@@ -43,12 +42,6 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Celine Souchet
  */
 public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>, APIHasAdd<CaseItem>, APIHasSearch<CaseItem>, APIHasDelete {
-
-    final SearchFilterProcessor searchFilterProcessor;
-
-    public APICase() {
-        searchFilterProcessor = new SearchFilterProcessor();
-    }
 
     @Override
     protected ItemDefinition defineItemDefinition() {
@@ -158,7 +151,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
     }
 
     CaseDatastore getCaseDatastore() {
-        return new CaseDatastore(getEngineSession(), searchFilterProcessor);
+        return new CaseDatastore(getEngineSession());
     }
 
 }

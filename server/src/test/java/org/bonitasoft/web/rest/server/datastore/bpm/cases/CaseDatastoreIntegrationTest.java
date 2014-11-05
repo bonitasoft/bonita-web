@@ -10,13 +10,11 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.rest.server.datastore.SearchFilterProcessor;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Test;
 
 /**
  * @author ROHART Bastien
- *
  */
 public class CaseDatastoreIntegrationTest extends AbstractConsoleTest {
 
@@ -24,7 +22,7 @@ public class CaseDatastoreIntegrationTest extends AbstractConsoleTest {
 
     @Override
     public void consoleTestSetUp() throws Exception {
-        caseDatastore = new CaseDatastore(getInitiator().getSession(), new SearchFilterProcessor());
+        caseDatastore = new CaseDatastore(getInitiator().getSession());
     }
 
     @Override
@@ -33,7 +31,7 @@ public class CaseDatastoreIntegrationTest extends AbstractConsoleTest {
     }
 
     @Test
-    public void twoPoolsWithOneWithACallActivityCaseTest() throws Exception {
+    public void twoPoolsWithOneWithACallActivityCaseTest() {
         final TestProcess process2 = TestProcessFactory.getDefaultHumanTaskProcess();
 
         // start process1 case via call activity

@@ -80,9 +80,9 @@ public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, Arc
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
-        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
-        addFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
+        addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
+        addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
 
         // Run search depending on filters passed
         final SearchResult<ArchivedProcessInstance> searchResult = runSearch(filters, builder);
