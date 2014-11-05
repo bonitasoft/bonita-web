@@ -69,6 +69,9 @@ class TaskPermissionRule implements PermissionRule {
             } else if (hasFilter(currentUserId, filters, "assigned_id") || hasFilter(currentUserId, filters, "user_id") || hasFilter(currentUserId, filters, "hidden_user_id")) {
                 logger.debug("FilterOnUser or FilterOnAssignUser")
                 return true
+            } else if (filters.containsKey("parentTaskId")) {
+                def long parentTaskId = Long.valueOf(filters.get("parentTaskId"))
+                return isHumanTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
             }
         } else if ("PUT".equals(apiCallContext.getMethod()) && apiCallContext.getResourceId() != null) {
             def humanTaskId = Long.valueOf(apiCallContext.getResourceId())
@@ -95,23 +98,28 @@ class TaskPermissionRule implements PermissionRule {
                 return false
             }
         } else {
-            try {
-                def instance = processAPI.getHumanTaskInstance(flowNodeId)
-                if (instance.assigneeId > 0) {
-                    return instance.assigneeId == currentUserId;
-                } else {
-                    final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
-                    builder.filter(UserSearchDescriptor.USER_NAME, username);
-                    def searchResult = processAPI.searchUsersWhoCanExecutePendingHumanTask(flowNodeId, builder.done())
-                    def isTaskPendingForUser = searchResult.getCount() == 1l
-                    logger.debug("The task is pending for user? " + isTaskPendingForUser)
-                    return isTaskPendingForUser
-                }
-
-            } catch (ActivityInstanceNotFoundException e) {
-                logger.debug("The task is not found or is not human, " + e.getMessage())
-                return false
-            }
+            return isHumanTaskAccessible(processAPI, flowNodeId, currentUserId, username, logger)
         }
+    }
+
+    private boolean isHumanTaskAccessible(ProcessAPI processAPI, long flowNodeId, long currentUserId, String username, Logger logger) {
+        def isAccessible = false
+        try {
+            def instance = processAPI.getHumanTaskInstance(flowNodeId)
+            if (instance.assigneeId > 0) {
+                isAccessible = instance.assigneeId == currentUserId;
+            } else {
+                final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
+                builder.filter(UserSearchDescriptor.USER_NAME, username);
+                def searchResult = processAPI.searchUsersWhoCanExecutePendingHumanTask(flowNodeId, builder.done())
+                def isTaskPendingForUser = searchResult.getCount() == 1l
+                logger.debug("The task is pending for user? " + isTaskPendingForUser)
+                isAccessible = isTaskPendingForUser
+            }
+
+        } catch (ActivityInstanceNotFoundException e) {
+            logger.debug("The task is not found or is not human, " + e.getMessage())
+        }
+        isAccessible
     }
 }

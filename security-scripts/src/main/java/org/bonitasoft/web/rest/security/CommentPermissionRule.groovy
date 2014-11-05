@@ -42,7 +42,7 @@ class CommentPermissionRule implements PermissionRule {
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
         if ("GET".equals(apiCallContext.getMethod())) {
-            return checkGetMethod(apiCallContext, currentUserId)
+            return checkGetMethod(apiCallContext, apiAccessor, currentUserId)
         } else if ("POST".equals(apiCallContext.getMethod())) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
@@ -59,9 +59,16 @@ class CommentPermissionRule implements PermissionRule {
         return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
     }
 
-    private boolean checkGetMethod(APICallContext apiCallContext, long currentUserId) {
+    private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
         def filters = apiCallContext.getFilters()
         def stringUserId = String.valueOf(currentUserId)
-        return stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))
+        if(stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))){
+            return true
+        }
+        if(filters.containsKey("processInstanceId")){
+            def processInstanceId = Long.valueOf(filters.get("processInstanceId"))
+            return apiAccessor.getProcessAPI().isInvolvedInProcessInstance(currentUserId,processInstanceId)
+        }
+
     }
 }
