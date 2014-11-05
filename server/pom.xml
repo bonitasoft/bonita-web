@@ -17,7 +17,7 @@
         <enable.engine.listener.end>--&gt;</enable.engine.listener.end>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <bonita.home>${bonita.home.test}/bonita</bonita.home>
-        <proxy-portal-js/>
+        <restlet-version>2.2.2</restlet-version>
     </properties>
 
     <dependencies>
@@ -27,14 +27,14 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!--forms-->
+        <!--forms -->
         <dependency>
             <groupId>org.bonitasoft.forms</groupId>
             <artifactId>forms-server</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!--Engine-->
+        <!--Engine -->
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-server</artifactId>
@@ -45,7 +45,7 @@
             <artifactId>bonita-client</artifactId>
         </dependency>
 
-        <!--Vendors-->
+        <!--Vendors -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -68,7 +68,7 @@
             <artifactId>jettison</artifactId>
         </dependency>
 
-        <!--Test-->
+        <!--Test -->
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
             <artifactId>test-toolkit</artifactId>
@@ -121,17 +121,74 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-         <groupId>ch.qos.logback</groupId>
-         <artifactId>logback-core</artifactId>
-         <version>1.1.1</version>
-         <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-         <groupId>ch.qos.logback</groupId>
-         <artifactId>logback-classic</artifactId>
-         <version>1.1.1</version>
-         <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>${urlrewrite.version}</version>
+        </dependency>
+
+        <!-- ******************************************************************* -->
+        <!-- new rest api -->
+        <!-- ******************************************************************* -->
+        <dependency>
+            <groupId>org.restlet.jse</groupId>
+            <artifactId>org.restlet</artifactId>
+            <version>${restlet-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.servlet</artifactId>
+            <version>${restlet-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.restlet.jee</groupId>
+                    <artifactId>org.restlet</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.restlet.jse</groupId>
+            <artifactId>org.restlet.ext.jackson</artifactId>
+            <version>${restlet-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.restlet.jse</groupId>
+                    <artifactId>org.restlet</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -258,7 +315,8 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <copy file="${project.basedir}/src/test/resources/loginManager-config.properties" tofile="${project.build.directory}/bonita-home/bonita/client/platform/conf/loginManager-config.properties" overwrite="true" />
+                                <copy file="${project.basedir}/src/test/resources/loginManager-config.properties" tofile="${project.build.directory}/bonita-home/bonita/client/platform/conf/loginManager-config.properties"
+                                    overwrite="true" />
                             </tasks>
                         </configuration>
                     </execution>
@@ -274,7 +332,8 @@
                 <enable.engine.listener.start />
                 <enable.engine.listener.end />
 
-                <proxy-portal-js>&lt;rule&gt;&lt;from&gt;^/portal.js/(.*)$&lt;/from&gt;&lt;to type="proxy" qsappend="true"&gt;http://127.0.0.1:9000/bonita/portaljs/$1&lt;/to&gt;&lt;/rule&gt;</proxy-portal-js>
+                <proxy-portal-js>&lt;rule&gt;&lt;from&gt;^/portal.js/(.*)$&lt;/from&gt;&lt;to type="proxy"
+                    qsappend="true"&gt;http://127.0.0.1:9000/bonita/portaljs/$1&lt;/to&gt;&lt;/rule&gt;</proxy-portal-js>
             </properties>
 
             <dependencies>
@@ -330,7 +389,7 @@
                                 <configuration>
                                     <target>
                                         <!-- copy web.xml to another location -->
-                                        <copy todir="${basedir}/target" file="${basedir}/target/console-server-${project.version}/WEB-INF/web.xml"/>
+                                        <copy todir="${basedir}/target" file="${basedir}/target/console-server-${project.version}/WEB-INF/web.xml" />
                                         <!-- add rewrite filter -->
                                         <replace file="${basedir}/target/web.xml">
                                             <replacetoken><![CDATA[<!-- Cache Filter Mapping End -->]]></replacetoken>
@@ -348,7 +407,7 @@
                                             ]]></replacevalue>
                                         </replace>
                                         <!-- put urlrewrite.xml file in WEB-INF -->
-                                        <copy todir="${basedir}/target/console-server-${project.version}/WEB-INF" file="${basedir}/src/test/resources/urlrewrite.xml"/>
+                                        <copy todir="${basedir}/target/console-server-${project.version}/WEB-INF" file="${basedir}/src/test/resources/urlrewrite.xml" />
                                     </target>
                                 </configuration>
                             </execution>
@@ -387,12 +446,12 @@
                                 <version>1.0.1</version>
                                 <scope>runtime</scope>
                             </dependency>
-                             <dependency>
-					            <groupId>org.slf4j</groupId>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
                                 <artifactId>slf4j-api</artifactId>
                                 <version>${slf4j.version}</version>
                                 <scope>runtime</scope>
-					        </dependency>
+                            </dependency>
 
                             <!-- DATASOURCE JNDI -->
                             <dependency>

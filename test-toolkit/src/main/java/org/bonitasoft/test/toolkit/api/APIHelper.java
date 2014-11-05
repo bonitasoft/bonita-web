@@ -1083,4 +1083,20 @@ public class APIHelper {
         return consumeResponse(response);
     }
 
+    /**
+     * Send HTTP DELETE to a given resource given the resource path including query params.
+     * 
+     * @param pResourcePath
+     * @param pRequestBody
+     * @return
+     * @throws Exception
+     */
+    public final APIResponse httpDelete(final String pResourcePath, final Object pRequestBody) throws Exception {
+        final String uriTemplate = this.siteUrl + pResourcePath;
+        final ClientRequest request = new ClientRequest(uriTemplate, this.executor);
+        request.body(MediaType.APPLICATION_JSON_TYPE, pRequestBody.toString());
+        final ClientResponse<String> response = request.delete();
+        return consumeResponse(response);
+    }
+
 }
