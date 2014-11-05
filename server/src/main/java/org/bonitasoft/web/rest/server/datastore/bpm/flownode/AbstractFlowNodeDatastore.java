@@ -96,19 +96,6 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         return search(0, 0, search, orders, filters).getTotal();
     }
 
-    public long countActiveFlowNodes(final Map<String, String> filters) {
-        final SearchOptionsBuilder builder = makeSearchOptionBuilder(0, 0, null, null, filters);
-        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "aborted");
-        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "cancelled");
-        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "error");
-        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "completed");
-        try {
-            return getProcessAPI().searchFlowNodeInstances(builder.done()).getCount();
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
     @Override
     public CONSOLE_ITEM get(final APIID id) {
         try {
@@ -151,6 +138,9 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
         addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "aborted");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "cancelled");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "completed");
         return builder;
     }
 
