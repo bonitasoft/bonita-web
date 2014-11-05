@@ -88,6 +88,8 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         addLongFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
         addCallerFilterToSearchBuilderIfNecessary(filters, builder);
         builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
+        builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.CANCELLED.getId());
+        builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.ABORTED.getId());
         return builder;
     }
 
