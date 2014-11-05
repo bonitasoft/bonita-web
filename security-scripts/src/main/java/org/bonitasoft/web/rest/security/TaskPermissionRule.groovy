@@ -64,8 +64,7 @@ class TaskPermissionRule implements PermissionRule {
         def filters = apiCallContext.getFilters()
         if ("GET".equals(apiCallContext.getMethod())) {
             if (apiCallContext.getResourceId() != null) {
-                def humanTaskId = Long.valueOf(apiCallContext.getResourceId())
-                return isTaskAccessibleByUser(processAPI, apiCallContext, logger, humanTaskId, currentUserId, userName)
+                return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
             } else if (hasFilter(currentUserId, filters, "assigned_id") || hasFilter(currentUserId, filters, "user_id") || hasFilter(currentUserId, filters, "hidden_user_id")) {
                 logger.debug("FilterOnUser or FilterOnAssignUser")
                 return true
@@ -74,8 +73,13 @@ class TaskPermissionRule implements PermissionRule {
                 return isHumanTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
             }
         } else if ("PUT".equals(apiCallContext.getMethod()) && apiCallContext.getResourceId() != null) {
-            def humanTaskId = Long.valueOf(apiCallContext.getResourceId())
-            return isTaskAccessibleByUser(processAPI, apiCallContext, logger, humanTaskId, currentUserId, userName)
+            return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
+        } else if ("POST".equals(apiCallContext.getMethod()) && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
+            def bodyAsJSON = apiCallContext.getBodyAsJSON()
+            return currentUserId.equals(bodyAsJSON.getLong("user_id")) && isHumanTaskAccessible(processAPI, bodyAsJSON.getLong("task_id"), currentUserId, userName, logger)
+        } else if ("DELETE".equals(apiCallContext.getMethod()) && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
+            def ids = apiCallContext.getCompoundResourceId()
+            return currentUserId.equals(Long.valueOf(ids.get(0))) && isHumanTaskAccessible(processAPI, Long.valueOf(ids.get(1)), currentUserId, userName, logger)
         }
         return false
     }
@@ -84,12 +88,12 @@ class TaskPermissionRule implements PermissionRule {
         return String.valueOf(currentUserId).equals(filters.get(assigned_id))
     }
 
-    protected boolean isTaskAccessibleByUser(ProcessAPI processAPI, APICallContext apiCallContext, Logger logger, long flowNodeId, long currentUserId, String username) {
+    protected boolean isTaskAccessibleByUser(ProcessAPI processAPI, APICallContext apiCallContext, Logger logger, long currentUserId, String username) {
         if ("hiddenUserTask".equals(apiCallContext.getResourceName())) {
-            return processAPI.isTaskHidden(currentUserId, flowNodeId)
+            return true
         } else if (apiCallContext.getResourceName().startsWith("archived")) {
             try{
-                def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(flowNodeId)
+                def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(Long.valueOf(apiCallContext.getResourceId()))
                 if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance) {
                     return currentUserId == archivedFlowNodeInstance.getAssigneeId()
                 }
@@ -98,7 +102,7 @@ class TaskPermissionRule implements PermissionRule {
                 return false
             }
         } else {
-            return isHumanTaskAccessible(processAPI, flowNodeId, currentUserId, username, logger)
+            return isHumanTaskAccessible(processAPI, Long.valueOf(apiCallContext.getResourceId()), currentUserId, username, logger)
         }
     }
 
