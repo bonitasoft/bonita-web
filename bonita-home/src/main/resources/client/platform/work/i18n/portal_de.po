@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-27 22:01+0100\n"
-"PO-Revision-Date: 2014-11-03 20:36-0500\n"
+"POT-Creation-Date: 2014-11-05 22:05+0100\n"
+"PO-Revision-Date: 2014-11-05 17:34-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2969,6 +2969,7 @@ msgid "The Process manager can supervise designated apps, and manage cases and t
 msgstr "Der Prozessmanager kann bestimmte Apps überwachen und Fälle und Aufgaben dieser Apps verwalten."
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
 msgid "Apps management"
 msgstr "App-Verwaltung"
 
@@ -3042,6 +3043,7 @@ msgid "user privilege settings"
 msgstr "Einstellungen der Benutzerrechte"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
 msgid "Monitoring"
 msgstr "Monitoring"
 

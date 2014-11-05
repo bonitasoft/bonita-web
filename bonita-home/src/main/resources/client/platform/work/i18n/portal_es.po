@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-27 22:01+0100\n"
-"PO-Revision-Date: 2014-11-03 20:41-0500\n"
+"POT-Creation-Date: 2014-11-05 22:05+0100\n"
+"PO-Revision-Date: 2014-11-05 17:38-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -539,7 +539,7 @@ msgstr "Tipo"
 #: portal/src/main/java/org/bonitasoft/console/client/common/system/view/PopupAboutPage.java:41
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:37
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/connector/ConnectorSection.java:58
 msgid "Class name"
@@ -601,7 +601,7 @@ msgstr "Editar la membresía del actor %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:52
 msgid "Actor mapping"
-msgstr "mapa de actores"
+msgstr "Mapeo de actores"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:63
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
@@ -745,7 +745,7 @@ msgstr "Eliminar esta aplicación"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
 msgid "Enable"
-msgstr "Activado"
+msgstr "Activar"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
 msgid "Enable this app"
@@ -1868,7 +1868,7 @@ msgstr "Introduzca el país de este usuario"
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:139
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:179
 msgid "Enter the zip code of this user"
-msgstr "Ingrese el código postal de este usuario"
+msgstr "Indique el código postal de este usuario"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:143
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:183
@@ -1913,7 +1913,7 @@ msgstr "Responsable"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/UpdateUserPage.java:212
 msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
+msgstr "Seleccione el responsable de este usuario"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:46
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/page/MessagePage.java:123
@@ -2009,7 +2009,7 @@ msgstr "%firstname% %lastname%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/MemberAttributeReader.java:41
 msgid "%rolename%"
-msgstr "%nombre de actor%"
+msgstr "%rolename%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/data/item/attribute/reader/MemberAttributeReader.java:43
 msgid "%groupname%"
@@ -2969,6 +2969,7 @@ msgid "The Process manager can supervise designated apps, and manage cases and t
 msgstr "El Gestor de Procesos puede supervisar las apps designadas y administrar los casos y tareas de dichas aplicaciones."
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
 msgid "Apps management"
 msgstr "Gestión de aplicaciones"
 
@@ -3042,6 +3043,7 @@ msgid "user privilege settings"
 msgstr "Configuración de privilegios de usuario"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
 msgid "Monitoring"
 msgstr "Monitorización"
 
