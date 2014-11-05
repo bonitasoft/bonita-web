@@ -93,12 +93,38 @@ import com.google.gwt.core.shared.GWT;
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
+    public static String CASE_LIST_PAGE = "ng-caselistingadmin";
+
+    protected Map<String, String> angularViewsMap = new HashMap<String, String>();
+
+    protected AngularIFrameView currentAngularIFrameView;
+
+    /**
+     * Default Constructor.
+     */
+    public ConsoleFactoryClient() {
+        angularViewsMap.put(CASE_LIST_PAGE, "/admin/cases/list");
+    }
+
     @Override
     public RawView defineViewTokens(final String token) {
 
         List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
+
+        if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), currentUserAccessRights)) {
+            if (currentAngularIFrameView == null) {
+                currentAngularIFrameView = new AngularIFrameView(token, "#" + angularViewsMap.get(token), History.getToken());
+            } else {
+                if (!token.equals(currentAngularIFrameView.getToken())) {
+                    currentAngularIFrameView.setUrl("#" + angularViewsMap.get(token) + History.getToken());
+                }
+            }
+            return currentAngularIFrameView;
+        } else {
+            currentAngularIFrameView = null;
+        }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
             return new ItemNotFoundPopup();
@@ -112,9 +138,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new CaseQuickDetailsAdminPage();
         } else if (CaseMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new CaseMoreDetailsAdminPage();
-        } else if (ArchivedCaseQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ArchivedCaseQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (ArchivedCaseQuickDetailsAdminPage.TOKEN.equals(token)
+                && isUserAuthorized(ArchivedCaseQuickDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ArchivedCaseQuickDetailsAdminPage();
-        } else if (ArchivedCaseMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ArchivedCaseMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (ArchivedCaseMoreDetailsAdminPage.TOKEN.equals(token)
+                && isUserAuthorized(ArchivedCaseMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ArchivedCaseMoreDetailsAdminPage();
             // } else if (ListGroupPage.TOKEN.equals(token)) {
             // return new ListGroupPage();
@@ -152,11 +180,14 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessMoreDetailsAdminPage();
-        /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
-            return new StartProcessOnBehalfPage();*/
+            /*
+             * } else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+             * return new StartProcessOnBehalfPage();
+             */
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, currentUserAccessRights)) {
             return new UploadProcessPage();
-        } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token) && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
+                && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, currentUserAccessRights)) {
             return new CreateCategoryAndAddToProcessPage();
         } else if (AddProcessCategoryPage.TOKEN.equals(token) && isUserAuthorized(AddProcessCategoryPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddProcessCategoryPage();
@@ -178,7 +209,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new SelectRoleForActorPage();
 
             // Manage Roles pages
-        } else if (RoleListingPage.TOKEN.equals(token) && isUserAuthorized(RoleListingPage.PRIVILEGES, currentUserAccessRights) ) {
+        } else if (RoleListingPage.TOKEN.equals(token) && isUserAuthorized(RoleListingPage.PRIVILEGES, currentUserAccessRights)) {
             return new RoleListingPage();
         } else if (RoleQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(RoleQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new RoleQuickDetailsPage();
@@ -212,7 +243,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new AddRoleToProfileMemberPage();
         } else if (AddUserToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddUserToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddUserToProfileMemberPage();
-        } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token)
+                && isUserAuthorized(AddMembershipToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddMembershipToProfileMemberPage();
         } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(DeleteProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new DeleteProfileMemberPage();
@@ -230,26 +262,29 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new TaskQuickDetailsAdminPage();
         } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskMoreDetailsAdminPage();
-        
-        /* THEME pages
-        } else if (ListThemePage.TOKEN.equals(token)) {
-            return new ListThemePage();
-        } else if (UploadThemePage.TOKEN.equals(token)) {
-            return new UploadThemePage();
-        } else if (EditThemePage.TOKEN.equals(token)) {
-            return new EditThemePage();
+
+            /*
+             * THEME pages
+             * } else if (ListThemePage.TOKEN.equals(token)) {
+             * return new ListThemePage();
+             * } else if (UploadThemePage.TOKEN.equals(token)) {
+             * return new UploadThemePage();
+             * } else if (EditThemePage.TOKEN.equals(token)) {
+             * return new EditThemePage();
         */
 
             // Visualize & do tasks
-        } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights) ) {
+        } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights)) {
             return new TasksListingPage();
         } else if (HumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new HumanTaskQuickDetailsPage();
         } else if (HumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new HumanTaskMoreDetailsPage();
-        } else if (ArchivedHumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedHumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (ArchivedHumanTaskQuickDetailsPage.TOKEN.equals(token)
+                && isUserAuthorized(ArchivedHumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ArchivedHumanTaskQuickDetailsPage();
-        } else if (ArchivedHumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedHumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (ArchivedHumanTaskMoreDetailsPage.TOKEN.equals(token)
+                && isUserAuthorized(ArchivedHumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ArchivedHumanTaskMoreDetailsPage();
         } else if (PerformTaskPage.TOKEN.equals(token) && isUserAuthorized(PerformTaskPage.PRIVILEGES, currentUserAccessRights)) {
             return new PerformTaskPage();
@@ -297,7 +332,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
 
         for (Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
-            result = isUserAuthorized(entry.getValue(), currentUserAccessRights)? result+ entry.getKey() +", " : result;
+            result = isUserAuthorized(entry.getValue(), currentUserAccessRights) ? result + entry.getKey() + ", " : result;
         }
 
         return result;
@@ -382,12 +417,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         String sessionId = new String(Session.getParameter("session_id"));
 
-        for (String privilege: privileges) {
+        for (final String privilege : privileges) {
 
             String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 
             if (accessRights.contains(calcSHA1.toUpperCase())) {
-                GWT.log("User is granted access to targeted page thanks to : "+ privilege );
+                GWT.log("User is granted access to targeted page thanks to : " + privilege);
                 return true;
             }
 

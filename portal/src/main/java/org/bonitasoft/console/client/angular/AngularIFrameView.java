@@ -1,26 +1,48 @@
 package org.bonitasoft.console.client.angular;
 
+import static com.google.gwt.query.client.GQuery.*;
+
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
+import org.bonitasoft.web.toolkit.client.SelfRenderingView;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author Vincent Elcrin
+ * @author Julien Reboul
  */
-public class AngularIFrameView extends RawView {
+public class AngularIFrameView extends RawView implements SelfRenderingView {
 
     private final String url;
 
+    private boolean displayed = false;
+
     private static final AngularResourceRoot ROOT = GWT.create(AngularResourceRoot.class);
 
-    public AngularIFrameView(final String token, final String url) {
+    public AngularIFrameView(final String token, final String url, final String tokens) {
         setToken(token);
-        this.url = url;
+        this.url = appendTabFromTokensToUrl(tokens, url);
+    }
+
+    /**
+     * @param tokens
+     */
+    protected static String appendTabFromTokensToUrl(final String tokens, final String url) {
+        if (tokens != null) {
+            final MatchResult tabMatcher = RegExp.compile("(^|[&\\?#])_tab=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
+            if (tabMatcher != null && tabMatcher.getGroupCount() > 0) {
+                return url + "/" + tabMatcher.getGroup(2);
+            }
+        }
+        return url;
     }
 
     @Override
@@ -44,5 +66,33 @@ public class AngularIFrameView extends RawView {
 
     @Override
     protected void refreshAll() {
+    }
+
+    /**
+     * @param url
+     *            Iframe url to set
+     */
+    public void setUrl(final String url) {
+        this.url = url;
+        setToken(token);
+    }
+
+    /**
+     * @return the token
+     */
+    @Override
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * @see org.bonitasoft.web.toolkit.client.SelfRenderingView#render(com.google.gwt.user.client.Element)
+     */
+    @Override
+    public void render(final Element rootElement) {
+        if (!displayed) {
+            $(rootElement).empty();
+            displayed = true;
+        }
     }
 }
