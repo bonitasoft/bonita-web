@@ -24,11 +24,11 @@ import static org.mockito.Mockito.doReturn
 import static org.mockito.Mockito.mock
 
 import org.bonitasoft.engine.api.APIAccessor
-import org.bonitasoft.engine.api.IdentityAPI
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.flownode.FlowNodeInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
 import org.junit.Before
@@ -38,7 +38,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProcessResolutionProblemPermissionRuleTest {
+public class ConnectorInstancePermissionRuleTest {
 
     @Mock
     def APISession apiSession
@@ -48,11 +48,11 @@ public class ProcessResolutionProblemPermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new ProcessResolutionProblemPermissionRule()
+    def PermissionRule rule = new ConnectorInstancePermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
-    def IdentityAPI identityAPI
+    def FlowNodeInstance flownodeInstance
     @Mock
     def User user
     def long currentUserId = 16l
@@ -60,37 +60,38 @@ public class ProcessResolutionProblemPermissionRuleTest {
     @Before
     public void before() {
         doReturn(processAPI).when(apiAccessor).getProcessAPI()
-        doReturn(identityAPI).when(apiAccessor).getIdentityAPI()
-        doReturn(user).when(identityAPI).getUser(currentUserId)
         doReturn(currentUserId).when(apiSession).getUserId()
     }
 
     @Test
     public void should_check_verify_get_is_true_when_process_owner() {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
-                    "process_id":"1"
+                    "containerId":"2"
                 ]
                 ).when(apiCallContext).getFilters()
-        doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
+        doReturn(flownodeInstance).when(processAPI).getFlowNodeInstance(2l)
+        doReturn(1l).when(flownodeInstance).getProcessDefinitionId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId)
 
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
         assertThat(isAuthorized).isTrue();
-
     }
 
     @Test
     public void should_check_verify_get_is_false_when_not_process_owner() {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
-                    "process_id":"1"
+                    "containerId":"2"
                 ]
                 ).when(apiCallContext).getFilters()
-        doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
+        doReturn(flownodeInstance).when(processAPI).getFlowNodeInstance(2l)
+        doReturn(1l).when(flownodeInstance).getProcessDefinitionId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId)
 
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
@@ -100,7 +101,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
 
     @Test
     public void should_check_verify_get_is_false_when_no_process_id() {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
                     "other":"sample"

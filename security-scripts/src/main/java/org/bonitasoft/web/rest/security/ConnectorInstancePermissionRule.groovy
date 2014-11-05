@@ -28,43 +28,40 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let a user add an actorMember only if he is process owner
+ * Let a user see process configuration only if he is process owner
  *
  * <ul>
- *     <li>bpm/actorMember</li>
- *     <li>bpm/delegation</li>
+ *     <li>bpm/connectorInstance</li>
  * </ul>
  *
  *
  *
- * @author Baptiste Mesta
+ * @author Anthony Birembaut
  */
-class ActorMemberPermissionRule implements PermissionRule {
+class ConnectorInstancePermissionRule implements PermissionRule {
 
-
+    public static final String CONTAINER_ID = "containerId"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
-        long currentUserId = apiSession.getUserId();
-        if (apiCallContext.isPOST()) {
-            return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        }else if(apiCallContext.isDELETE()){
-            //TODO unable to find an actor member with the API!
+        long currentUserId = apiSession.getUserId()
+        if (apiCallContext.isGET()) {
+            return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
+        } else if (apiCallContext.isPUT()) {
+            //TODO unable to find a connector instance with the API!
             return false
         }
-        //it's ok to read
         return true
     }
 
-    private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSON()
-        def actorId = body.optLong("actor_id")
-        if (actorId <= 0) {
-            return false;
+    private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+        def filters = apiCallContext.getFilters()
+        if(filters.containsKey(CONTAINER_ID)){
+            def processAPI = apiAccessor.getProcessAPI()
+            def flowNodeInstance = processAPI.getFlowNodeInstance(Long.valueOf(filters.get(CONTAINER_ID)))
+            def processID = flowNodeInstance.getProcessDefinitionId()
+            return processAPI.isUserProcessSupervisor(processID,currentUserId)
         }
-        def processAPI = apiAccessor.getProcessAPI()
-        def actor = processAPI.getActor(actorId)
-        def processDefinitionId = actor.getProcessDefinitionId()
-        return processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)
+        return false
     }
 }

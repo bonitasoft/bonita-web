@@ -28,24 +28,29 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let a user see process resolution problem only if he is process owner
+ * Let a user see process configuration only if he is process owner
  *
  * <ul>
  *     <li>bpm/processResolutionProblem</li>
+ *     <li>bpm/processConnector</li>
+ *     <li>bpm/processConnectorDependency</li>
+ *     <li>bpm/processParameter</li>
+ *     <li>bpm/processSupervisor</li>
+ *     <li>bpm/actor</li>
  * </ul>
  *
  *
  *
  * @author Anthony Birembaut
  */
-class ProcessResolutionProblemPermissionRule implements PermissionRule {
+class ProcessConfigurationPermissionRule implements PermissionRule {
 
     public static final String PROCESS_ID = "process_id"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId()
-        if ("GET".equals(apiCallContext.getMethod())) {
+        if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
         return true
