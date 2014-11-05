@@ -114,11 +114,11 @@ public class CommonResource extends ServerResource {
     }
 
     protected int getSearchPageNumber() {
-        return getIntegerParameter(APIServletCall.PARAMETER_PAGE, false);
+        return getIntegerParameter(APIServletCall.PARAMETER_PAGE, true);
     }
 
     protected int getSearchPageSize() {
-        return getIntegerParameter(APIServletCall.PARAMETER_LIMIT, false);
+        return getIntegerParameter(APIServletCall.PARAMETER_LIMIT, true);
     }
 
     protected String getSearchTerm() {
@@ -150,7 +150,7 @@ public class CommonResource extends ServerResource {
     }
 
     protected String getRequestParameter(final String parameterName) {
-        return getHttpRequest().getParameter(parameterName);
+        return getQueryValue(parameterName);
     }
 
     protected void verifyNotNullParameter(final Object parameter, final String parameterName) throws APIException {
@@ -164,12 +164,15 @@ public class CommonResource extends ServerResource {
      *
      * @param name
      *        The name of the parameter (case sensitive).
-     * @return This method returns the values of a parameter as a list of String.
+     * @return The values of a parameter as a list of String, or <code>null</code> if the parameter doesn't exist.
      */
     public List<String> getParameterAsList(final String name) {
-        final String[] parameterValues = getHttpRequest().getParameterValues(name);
-        if (parameterValues != null && parameterValues.length > 0) {
-            return Arrays.asList(parameterValues);
+        final String values = getQuery().getValues(name);
+        if (values != null) {
+            final String[] parameterValues = values.split(",");
+            if (parameterValues != null && parameterValues.length > 0) {
+                return Arrays.asList(parameterValues);
+            }
         }
         return null;
     }
