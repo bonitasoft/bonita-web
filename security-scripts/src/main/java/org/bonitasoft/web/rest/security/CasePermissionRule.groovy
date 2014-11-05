@@ -19,6 +19,7 @@ import org.bonitasoft.engine.api.*
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
+import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.identity.UserSearchDescriptor
 import org.bonitasoft.engine.search.SearchOptionsBuilder
@@ -74,28 +75,41 @@ class CasePermissionRule implements PermissionRule {
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def processAPI = apiAccessor.getProcessAPI()
         def filters = apiCallContext.getFilters()
-        if (apiCallContext.getResourceId() != null) {
-            def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
-            if (apiCallContext.getResourceName().startsWith("archived")) {
-                //no way to check that the we were involved in an archived case, can just show started by
-                try {
-                    def archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceId)
-                    return archivedProcessInstance.getStartedBy() == currentUserId || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
-                } catch (ArchivedProcessInstanceNotFoundException e) {
-                    logger.debug("archived process not found, " + e.getMessage())
-                    return false
+        try {
+            if (apiCallContext.getResourceId() != null) {
+                def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
+                if (apiCallContext.getResourceName().startsWith("archived")) {
+                    //no way to check that the we were involved in an archived case, can just show started by
+                    try {
+                        def archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceId)
+                        return archivedProcessInstance.getStartedBy() == currentUserId || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
+                    } catch (ArchivedProcessInstanceNotFoundException e) {
+                        logger.debug("archived process not found, " + e.getMessage())
+                        return false
+                    }
+                } else {
+                    def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+                    logger.debug("RuleCase : allowed because get on process that user is involved in")
+                    return isInvolved || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
                 }
             } else {
-                def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
-                logger.debug("RuleCase : allowed because get on process that user is involved in")
-                return isInvolved || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
+                def stringUserId = String.valueOf(currentUserId)
+                if (stringUserId.equals(filters.get("started_by")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))) {
+                    logger.debug("RuleCase : allowed because searching filters contains user id")
+                    return true
+                }
+                if (filters.containsKey("processDefinitionId")) {
+                    return processAPI.isUserProcessSupervisor(Long.valueOf(filters.get("processDefinitionId")), currentUserId)
+                }
+                if("archivedCase".equals(apiCallContext.getResourceName()) && filters.containsKey("sourceObjectId")){
+                    def sourceCase = Long.valueOf(filters.get("sourceObjectId"))
+                    def processInstance = processAPI.getFinalArchivedProcessInstance(sourceCase)
+                    return processAPI.isUserProcessSupervisor(processInstance.getProcessDefinitionId(),currentUserId)
+                }
             }
-        } else {
-            def stringUserId = String.valueOf(currentUserId)
-            if (stringUserId.equals(filters.get("started_by")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))) {
-                logger.debug("RuleCase : allowed because searching filters contains user id")
-                return true
-            }
+        } catch (NotFoundException e) {
+            //not found, allow user to have the 404
+            return true
         }
         return false;
     }

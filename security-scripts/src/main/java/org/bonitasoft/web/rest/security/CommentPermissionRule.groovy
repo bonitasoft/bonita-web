@@ -18,8 +18,10 @@ package org.bonitasoft.web.rest.security
 
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
+import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.session.APISession
 
 /**
@@ -56,7 +58,7 @@ class CommentPermissionRule implements PermissionRule {
             return false;
         }
         def processAPI = apiAccessor.getProcessAPI()
-        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
+        return isInvolved(processAPI, currentUserId, processInstanceId) || isSupervisor(processAPI, processInstanceId, currentUserId)
     }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
@@ -69,8 +71,31 @@ class CommentPermissionRule implements PermissionRule {
             def processInstanceId = Long.valueOf(filters.get("processInstanceId"))
 
             def processAPI = apiAccessor.getProcessAPI()
-            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
+            return isInvolved(processAPI, currentUserId, processInstanceId) || isSupervisor(processAPI, processInstanceId, currentUserId)
         }
         return false
+    }
+
+    private boolean isInvolved(ProcessAPI processAPI, long currentUserId, long processInstanceId) {
+        try{
+            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+        }catch(NotFoundException e){
+            //will check archived version with is supervisor
+            return false
+        }
+    }
+
+    private boolean isSupervisor(ProcessAPI processAPI, long processInstanceId, long currentUserId) {
+        def processDefinitionId
+        try {
+            processDefinitionId = processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId()
+        } catch (NotFoundException e) {
+            try {
+                processDefinitionId = processAPI.getFinalArchivedProcessInstance(processInstanceId).getProcessDefinitionId()
+            } catch (NotFoundException e1) {
+                return true
+            }
+        }
+        return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
     }
 }

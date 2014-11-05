@@ -48,9 +48,16 @@ class CaseVariablePermissionRule implements PermissionRule {
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
         def resourceId = apiCallContext.getResourceId()
+        def processAPI = apiAccessor.getProcessAPI()
         if ((apiCallContext.isPUT() || apiCallContext.isGET()) && resourceId != null) {
-            def processAPI = apiAccessor.getProcessAPI()
             def processInstance = processAPI.getProcessInstance(Long.valueOf(resourceId))
+            return processAPI.isUserProcessSupervisor(processInstance.getProcessDefinitionId(),currentUserId)
+        }
+
+        def filters = apiCallContext.getFilters()
+        if(apiCallContext.isGET() && filters.containsKey("case_id")){
+            def caseId = Long.valueOf(filters.get("case_id"))
+            def processInstance = processAPI.getProcessInstance(caseId)
             return processAPI.isUserProcessSupervisor(processInstance.getProcessDefinitionId(),currentUserId)
         }
         return false

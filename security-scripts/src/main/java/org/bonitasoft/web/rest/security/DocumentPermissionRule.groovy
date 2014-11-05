@@ -42,6 +42,7 @@ class DocumentPermissionRule implements PermissionRule {
 
 
     public static final String PROCESS_INSTANCE_ID = "processInstanceId"
+    public static final String CASE_ID = "caseId"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
@@ -67,8 +68,13 @@ class DocumentPermissionRule implements PermissionRule {
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
         def filters = apiCallContext.getFilters()
         def processAPI = apiAccessor.getProcessAPI()
-        if(filters.containsKey(PROCESS_INSTANCE_ID)){
-            return processAPI.isInvolvedInProcessInstance(currentUserId, Long.valueOf(filters.get(PROCESS_INSTANCE_ID)))
+        def processInstanceIdAsString = filters.get(PROCESS_INSTANCE_ID)
+        if(processInstanceIdAsString== null){
+            processInstanceIdAsString = filters.get(CASE_ID)
+        }
+        if(processInstanceIdAsString != null){
+            def processInstanceId = Long.valueOf(processInstanceIdAsString)
+            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(),currentUserId)
         }
         //TODO author id + when resource id is here get the document to check if you are involved in the process
         return false;

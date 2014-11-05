@@ -68,6 +68,11 @@ class ProcessPermissionRule implements PermissionRule {
                 logger.debug("can start process, so can get")
                 return true
             }
+            def isSupervisor = processAPI.isUserProcessSupervisor(processId, currentUserId)
+            if(isSupervisor){
+                logger.debug("is supervisor of the process")
+                return true
+            }
             return false
         } else {
             def stringUserId = String.valueOf(currentUserId)
