@@ -122,7 +122,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             return true;
         }
         final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
-        final String resourceId = id != null ? id.getPart(0) : null;
+        final String resourceId = id != null ? id.toString() : null;
 
         final DynamicPermissionsChecks dynamicPermissionsChecks = getDynamicPermissionsChecks(tenantId);
 

@@ -63,7 +63,7 @@ class ProcessPermissionRule implements PermissionRule {
                 logger.debug("deployed by the current user")
                 return true;
             }
-            def canStart = processAPI.searchProcessDeploymentInfosCanBeStartedBy(currentUserId, new SearchOptionsBuilder(0, 1).filter(ProcessDeploymentInfoSearchDescriptor.PROCESS_ID, processDefinition.getId()).done())
+            def canStart = processAPI.searchProcessDeploymentInfosCanBeStartedBy(currentUserId, new SearchOptionsBuilder(0, 1).filter(ProcessDeploymentInfoSearchDescriptor.PROCESS_ID, processDefinition.getProcessId()).done())
             if(canStart.getCount()==1){
                 logger.debug("can start process, so can get")
                 return true
