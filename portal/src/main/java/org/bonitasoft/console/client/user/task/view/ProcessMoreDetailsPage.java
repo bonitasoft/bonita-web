@@ -66,13 +66,13 @@ public class ProcessMoreDetailsPage extends ProcessQuickDetailsPage implements P
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ProcessItem item) {
         final LinkedList<ItemDetailsMetadata> metadatas = super.defineMetadatas(item);
 
-        metadatas.add(new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_VERSION, _("Version"), _("The version of the app")));
-        metadatas.add(new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_DEPLOYMENT_DATE, _("Installed on"), _("The date when this app was installed")));
+        metadatas.add(new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_VERSION, _("Version"), _("The version of the process")));
+        metadatas.add(new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_DEPLOYMENT_DATE, _("Installed on"), _("The date when this process was installed")));
         metadatas.add(new ItemDetailsMetadata(
                 new DeployedUserReader(ProcessItem.ATTRIBUTE_DEPLOYED_BY_USER_ID),
                 _("Installed by"),
-                _("The user who has installed this app")));
-        metadatas.add(new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated on"), _("The date when the app was updated")));
+                _("The user who has installed this process")));
+        metadatas.add(new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated on"), _("The date when the process was updated")));
 
         return metadatas;
     }
