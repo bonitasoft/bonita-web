@@ -366,9 +366,8 @@ public class APICaseTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(FlowNodeItem.ATTRIBUTE_STATE, FlowNodeItem.VALUE_STATE_FAILED);
         filters.put(FlowNodeItem.ATTRIBUTE_PROCESS_ID, String.valueOf(id.toLong()));
-        final String orders = FlowNodeItem.ATTRIBUTE_NAME;
         final long numberOfFailedFlowNodes = 2L;
-        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, orders, filters);
+        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, null, filters);
 
         // When
         apiCase.fillCounters(item, counters);
@@ -392,6 +391,31 @@ public class APICaseTest {
 
         // Then
         verify(item, never()).setAttribute(anyString(), anyLong());
+    }
+
+    /**
+     * Test method for
+     * {@link org.bonitasoft.web.rest.server.api.bpm.cases.APICase#fillCounters(org.bonitasoft.web.rest.model.bpm.cases.CaseItem, java.util.List)}.
+     */
+    @Test
+    public void fillNumberOfActiveFlowNodesIfActiveCounterExists() throws Exception {
+        // Given
+        final APIID id = APIID.makeAPIID(78L);
+        final CaseItem item = mock(CaseItem.class);
+        doReturn(id).when(item).getId();
+
+        final List<String> counters = Arrays.asList(CaseItem.COUNTER_ACTIVE_FLOW_NODES);
+
+        final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(FlowNodeItem.ATTRIBUTE_PROCESS_ID, String.valueOf(id.toLong()));
+        final long numberOfFailedFlowNodes = 2L;
+        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).countActiveFlowNodes(filters);
+
+        // When
+        apiCase.fillCounters(item, counters);
+
+        // Then
+        verify(item).setAttribute(CaseItem.COUNTER_ACTIVE_FLOW_NODES, numberOfFailedFlowNodes);
     }
 
 }

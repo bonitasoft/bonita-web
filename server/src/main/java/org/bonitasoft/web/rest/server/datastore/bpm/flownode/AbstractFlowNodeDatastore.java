@@ -96,6 +96,15 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         return search(0, 0, search, orders, filters).getTotal();
     }
 
+    public long countActiveFlowNodes(final Map<String, String> filters) {
+        final SearchOptionsBuilder builder = makeSearchOptionBuilder(0, 0, null, null, filters);
+        try {
+            return getProcessAPI().searchFlowNodeInstances(builder.done()).getCount();
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
     @Override
     public CONSOLE_ITEM get(final APIID id) {
         try {
