@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.web.toolkit.client;
 
-import static com.google.gwt.query.client.GQuery.$;
+import static com.google.gwt.query.client.GQuery.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,7 +30,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Refreshable;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.CustomPanel;
-import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.DeleteItemPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
@@ -210,10 +209,12 @@ public class ViewController {
         final CustomPanel widget = view.toWidget();
 
         final Element widgetElement = widget.getElement();
-        if (!(view instanceof PageOnItem<?>)) {
-            $(rootElement).empty();
-        } else {
+        if (view instanceof SelfRenderingView) {
+            ((SelfRenderingView) view).render(rootElement);
+        } else if (view instanceof PageOnItem<?>) {
             $(widgetElement).hide();
+        } else {
+            $(rootElement).empty();
         }
         rootElement.appendChild(widgetElement);
 
