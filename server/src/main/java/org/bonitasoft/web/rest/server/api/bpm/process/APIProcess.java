@@ -16,10 +16,13 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -144,9 +147,24 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
 
     @Override
     protected void fillCounters(final ProcessItem item, final List<String> counters) {
+        fillNumberOfFailedCasesIfFailedCounterExists(item, counters);
+        fillNumberOfOpenCasesIfOpenCounterExists(item, counters);
+    }
+
+    private void fillNumberOfFailedCasesIfFailedCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_FAILED_CASES)) {
-            item.setAttribute(ProcessItem.COUNTER_FAILED_CASES,
-                    getCaseDatastore().count(null, null, Collections.singletonMap(ProcessItem.COUNTER_FAILED_CASES, item.getId().toString())));
+            final Map<String, String> filters = new HashMap<String, String>();
+            filters.put(ProcessItem.ATTRIBUTE_ID, item.getId().toString());
+            filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.toString());
+            item.setAttribute(ProcessItem.COUNTER_FAILED_CASES, getCaseDatastore().count(null, null, filters));
+        }
+    }
+
+    private void fillNumberOfOpenCasesIfOpenCounterExists(final ProcessItem item, final List<String> counters) {
+        if (counters.contains(ProcessItem.COUNTER_OPEN_CASES)) {
+            // Open is all states without the terminal states
+            item.setAttribute(ProcessItem.COUNTER_OPEN_CASES,
+                    getCaseDatastore().count(null, null, Collections.singletonMap(ProcessItem.ATTRIBUTE_ID, item.getId().toString())));
         }
     }
 

@@ -73,6 +73,8 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
         addCallerFilterToSearchBuilderIfNecessary(filters, builder);
         builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
+        builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.CANCELLED.getId());
+        builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.ABORTED.getId());
 
         // Run search depending on filters passed
         final SearchResult<ProcessInstance> searchResult = searchProcessInstances(filters, builder.done());
