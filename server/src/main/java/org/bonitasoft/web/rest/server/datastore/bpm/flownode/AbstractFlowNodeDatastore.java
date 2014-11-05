@@ -98,6 +98,10 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
 
     public long countActiveFlowNodes(final Map<String, String> filters) {
         final SearchOptionsBuilder builder = makeSearchOptionBuilder(0, 0, null, null, filters);
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "aborted");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "cancelled");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "error");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "completed");
         try {
             return getProcessAPI().searchFlowNodeInstances(builder.done()).getCount();
         } catch (final Exception e) {
