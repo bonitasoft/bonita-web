@@ -41,9 +41,9 @@ class CommentPermissionRule implements PermissionRule {
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
-        if ("GET".equals(apiCallContext.getMethod())) {
+        if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId)
-        } else if ("POST".equals(apiCallContext.getMethod())) {
+        } else if (apiCallContext.isPOST()) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
         return false
@@ -56,19 +56,21 @@ class CommentPermissionRule implements PermissionRule {
             return false;
         }
         def processAPI = apiAccessor.getProcessAPI()
-        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
     }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
         def filters = apiCallContext.getFilters()
         def stringUserId = String.valueOf(currentUserId)
-        if(stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))){
+        if (stringUserId.equals(filters.get("team_manager_id")) || stringUserId.equals(filters.get("user_id")) || stringUserId.equals(filters.get("supervisor_id"))) {
             return true
         }
-        if(filters.containsKey("processInstanceId")){
+        if (filters.containsKey("processInstanceId")) {
             def processInstanceId = Long.valueOf(filters.get("processInstanceId"))
-            return apiAccessor.getProcessAPI().isInvolvedInProcessInstance(currentUserId,processInstanceId)
-        }
 
+            def processAPI = apiAccessor.getProcessAPI()
+            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
+        }
+        return false
     }
 }

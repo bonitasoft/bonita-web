@@ -46,9 +46,9 @@ class ActorMemberPermissionRule implements PermissionRule {
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
-        if ("POST".equals(apiCallContext.getMethod())) {
+        if (apiCallContext.isPOST()) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        }else if("DELETE".equals(apiCallContext.getMethod())){
+        }else if(apiCallContext.isDELETE()){
             //TODO unable to find an actor member!
             return false
         }

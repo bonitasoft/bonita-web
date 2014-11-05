@@ -23,6 +23,7 @@ import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
+import org.bonitasoft.engine.bpm.process.ProcessInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
 import org.bonitasoft.engine.search.impl.SearchResultImpl
@@ -50,7 +51,7 @@ public class CasePermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new CasePermissionRule()
+    def CasePermissionRule rule = new CasePermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
@@ -79,7 +80,7 @@ public class CasePermissionRuleTest {
     }
 
     def havingFilters(Map filters) {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(filters).when(apiCallContext).getFilters()
     }
 
@@ -137,12 +138,32 @@ public class CasePermissionRuleTest {
     public void should_check_verify_resourceId_not_isInvolved_on_GET() {
         //given
         havingResourceId(false)
+
+        def processInstance = mock(ProcessInstance.class)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
+        doReturn(processInstance).when(processAPI).getProcessInstance(45l)
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
         assertThat(isAuthorized).isFalse();
     }
 
+
+    @Test
+    public void should_check_verify_resourceId_not_isInvolved_on_GET_but_supervisor() {
+        //given
+        havingResourceId(false)
+
+        def processInstance = mock(ProcessInstance.class)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
+        doReturn(processInstance).when(processAPI).getProcessInstance(45l)
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
 
     @Test
     public void should_check_verify_resourceId_archived_isInvolved_on_GET() {
@@ -170,7 +191,7 @@ public class CasePermissionRuleTest {
 
     def havingResourceId(boolean isInvolvedIn) {
         doReturn(currentUserId).when(apiSession).getUserId()
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn("case").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
         doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
@@ -178,14 +199,14 @@ public class CasePermissionRuleTest {
 
     def havingArchivedResourceId() {
         doReturn(currentUserId).when(apiSession).getUserId()
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn("archivedCase").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
     }
 
     @Test
     public void should_check_verify_can_start_on_post_is_true() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "processDefinitionId":"154",
@@ -203,7 +224,7 @@ public class CasePermissionRuleTest {
 
     @Test
     public void should_check_verify_can_start_on_post_is_false() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "processDefinitionId":"154",
@@ -220,7 +241,7 @@ public class CasePermissionRuleTest {
 
     @Test
     public void should_check_verify_can_start_on_post_with_bad_body_is_false() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "unknown":"154",

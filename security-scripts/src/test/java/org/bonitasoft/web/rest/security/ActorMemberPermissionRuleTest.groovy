@@ -69,7 +69,7 @@ public class ActorMemberPermissionRuleTest {
 
     @Test
     public void should_check_verify_post_is_true_when_process_owner() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "actor_id":"547",
@@ -91,7 +91,7 @@ public class ActorMemberPermissionRuleTest {
 
     @Test
     public void should_check_verify_post_is_false_when_process_owner() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "actor_id":"547",
@@ -113,7 +113,7 @@ public class ActorMemberPermissionRuleTest {
 
     @Test
     public void should_check_verify_post_is_false_when_no_actor_id() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "processDefinitionId":"154",
@@ -134,7 +134,7 @@ public class ActorMemberPermissionRuleTest {
 
     @Test
     public void should_check_return_false_on_delete() {
-        doReturn("DELETE").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isDELETE()
 
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
@@ -145,7 +145,7 @@ public class ActorMemberPermissionRuleTest {
 
     @Test
     public void should_check_return_true_on_get() {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
 
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)

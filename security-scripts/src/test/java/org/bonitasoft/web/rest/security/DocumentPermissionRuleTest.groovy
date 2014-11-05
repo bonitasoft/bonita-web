@@ -75,7 +75,7 @@ public class DocumentPermissionRuleTest {
     }
 
     def havingFilters(Map filters) {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(filters).when(apiCallContext).getFilters()
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
     }
@@ -105,7 +105,7 @@ public class DocumentPermissionRuleTest {
 
     @Test
     public void should_check_verify_can_start_on_post_is_true() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "processInstanceId":"154",
@@ -124,7 +124,7 @@ public class DocumentPermissionRuleTest {
 
     @Test
     public void should_check_verify_can_start_on_post_is_false() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "processInstanceId":"154",
@@ -141,7 +141,7 @@ public class DocumentPermissionRuleTest {
 
     @Test
     public void should_check_verify_can_start_on_post_with_bad_body_is_false() {
-        doReturn("POST").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
                 "unknown":"154",

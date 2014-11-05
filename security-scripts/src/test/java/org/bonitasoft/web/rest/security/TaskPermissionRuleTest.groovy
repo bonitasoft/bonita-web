@@ -68,7 +68,7 @@ public class TaskPermissionRuleTest {
 
 
     def havingFilters(Map filters) {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(filters).when(apiCallContext).getFilters()
     }
 
@@ -240,7 +240,7 @@ public class TaskPermissionRuleTest {
     @Test
     public void should_PUT_on_assigned_human_task_is_ok() {
         //given
-        doReturn("PUT").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPUT()
         doReturn("458").when(apiCallContext).getResourceId()
         doReturn("humanTask").when(apiCallContext).getResourceName()
         def instance = mock(UserTaskInstance.class)
@@ -255,7 +255,7 @@ public class TaskPermissionRuleTest {
 
 
     def havingResource(String resourceName) {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn("458").when(apiCallContext).getResourceId()
         doReturn(resourceName).when(apiCallContext).getResourceName()
     }

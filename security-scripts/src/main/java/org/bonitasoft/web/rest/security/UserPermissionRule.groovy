@@ -47,6 +47,14 @@ class UserPermissionRule implements PermissionRule {
                 return true
             }
         }
+        //search by task id for the do for
+        def filters = apiCallContext.getFilters()
+        if(apiCallContext.isGET() && filters.containsKey("task_id")){
+            def taskId = Long.valueOf(filters.get("task_id"))
+            def processAPI = apiAccessor.getProcessAPI()
+            def flowNodeInstance = processAPI.getFlowNodeInstance(taskId)
+            return processAPI.isUserProcessSupervisor(flowNodeInstance.getProcessDefinitionId(),currentUserId)
+        }
         return false;
     }
 }

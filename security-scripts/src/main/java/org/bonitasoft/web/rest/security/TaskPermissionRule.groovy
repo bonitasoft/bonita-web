@@ -62,22 +62,22 @@ class TaskPermissionRule implements PermissionRule {
         def userName = apiSession.getUserName()
         def processAPI = apiAccessor.getProcessAPI();
         def filters = apiCallContext.getFilters()
-        if ("GET".equals(apiCallContext.getMethod())) {
+        if (apiCallContext.isGET()) {
             if (apiCallContext.getResourceId() != null) {
                 return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
-            } else if (hasFilter(currentUserId, filters, "assigned_id") || hasFilter(currentUserId, filters, "user_id") || hasFilter(currentUserId, filters, "hidden_user_id")) {
+            } else if (hasFilter(currentUserId, filters, "assigned_id") || hasFilter(currentUserId, filters, "user_id") || hasFilter(currentUserId, filters, "hidden_user_id") || hasFilter(currentUserId, filters, "supervisor_id")) {
                 logger.debug("FilterOnUser or FilterOnAssignUser")
                 return true
             } else if (filters.containsKey("parentTaskId")) {
                 def long parentTaskId = Long.valueOf(filters.get("parentTaskId"))
                 return isHumanTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
             }
-        } else if ("PUT".equals(apiCallContext.getMethod()) && apiCallContext.getResourceId() != null) {
+        } else if (apiCallContext.isPUT() && apiCallContext.getResourceId() != null) {
             return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
-        } else if ("POST".equals(apiCallContext.getMethod()) && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
+        } else if (apiCallContext.isPOST() && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
             def bodyAsJSON = apiCallContext.getBodyAsJSON()
             return currentUserId.equals(bodyAsJSON.getLong("user_id")) && isHumanTaskAccessible(processAPI, bodyAsJSON.getLong("task_id"), currentUserId, userName, logger)
-        } else if ("DELETE".equals(apiCallContext.getMethod()) && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
+        } else if (apiCallContext.isDELETE() && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
             def ids = apiCallContext.getCompoundResourceId()
             return currentUserId.equals(Long.valueOf(ids.get(0))) && isHumanTaskAccessible(processAPI, Long.valueOf(ids.get(1)), currentUserId, userName, logger)
         }
@@ -94,9 +94,11 @@ class TaskPermissionRule implements PermissionRule {
         } else if (apiCallContext.getResourceName().startsWith("archived")) {
             try{
                 def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(Long.valueOf(apiCallContext.getResourceId()))
-                if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance) {
-                    return currentUserId == archivedFlowNodeInstance.getAssigneeId()
+                if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance && currentUserId == archivedFlowNodeInstance.getAssigneeId()) {
+                    return true
                 }
+                def processDefinitionId = archivedFlowNodeInstance.getProcessDefinitionId()
+                return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
             }catch(ArchivedFlowNodeInstanceNotFoundException e){
                 logger.debug("flow node does not exists")
                 return false
@@ -111,19 +113,24 @@ class TaskPermissionRule implements PermissionRule {
         try {
             def instance = processAPI.getHumanTaskInstance(flowNodeId)
             if (instance.assigneeId > 0) {
-                isAccessible = instance.assigneeId == currentUserId;
+                if(instance.assigneeId == currentUserId){
+                    return true
+                }
             } else {
                 final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
                 builder.filter(UserSearchDescriptor.USER_NAME, username);
                 def searchResult = processAPI.searchUsersWhoCanExecutePendingHumanTask(flowNodeId, builder.done())
-                def isTaskPendingForUser = searchResult.getCount() == 1l
-                logger.debug("The task is pending for user? " + isTaskPendingForUser)
-                isAccessible = isTaskPendingForUser
+                if(searchResult.getCount() == 1l){
+                    logger.debug("The task is pending for user")
+                    return true
+                }
             }
+            def processDefinitionId = instance.getProcessDefinitionId()
+            return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
 
         } catch (ActivityInstanceNotFoundException e) {
             logger.debug("The task is not found or is not human, " + e.getMessage())
         }
-        isAccessible
+        return false
     }
 }

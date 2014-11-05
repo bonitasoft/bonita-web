@@ -72,7 +72,7 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_false_on_delete() {
-        doReturn("DELETE").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isDELETE()
 
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
@@ -83,7 +83,7 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_true_on_get() {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn("158").when(apiCallContext).getResourceId()
 
         def instance = mock(ProcessInstance.class)
@@ -99,7 +99,7 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_false_on_get_if_not_process_owner() {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn("158").when(apiCallContext).getResourceId()
 
         def instance = mock(ProcessInstance.class)
@@ -115,7 +115,7 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_true_on_put() {
-        doReturn("PUT").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isPUT()
         doReturn("158").when(apiCallContext).getResourceId()
 
         def instance = mock(ProcessInstance.class)

@@ -45,9 +45,9 @@ class CasePermissionRule implements PermissionRule {
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
-        if ("GET".equals(apiCallContext.getMethod())) {
+        if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        } else if ("POST".equals(apiCallContext.getMethod())) {
+        } else if (apiCallContext.isPOST()) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
         return false
@@ -76,18 +76,19 @@ class CasePermissionRule implements PermissionRule {
         def filters = apiCallContext.getFilters()
         if (apiCallContext.getResourceId() != null) {
             def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
-            if(apiCallContext.getResourceName().startsWith("archived")){
+            if (apiCallContext.getResourceName().startsWith("archived")) {
                 //no way to check that the we were involved in an archived case, can just show started by
-                try{
-                    return processAPI.getArchivedProcessInstance(processInstanceId).getStartedBy() == currentUserId
-                }catch(ArchivedProcessInstanceNotFoundException e){
-                    logger.debug("archived process not found, "+e.getMessage())
+                try {
+                    def archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceId)
+                    return archivedProcessInstance.getStartedBy() == currentUserId || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
+                } catch (ArchivedProcessInstanceNotFoundException e) {
+                    logger.debug("archived process not found, " + e.getMessage())
                     return false
                 }
-            }else{
+            } else {
                 def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
                 logger.debug("RuleCase : allowed because get on process that user is involved in")
-                return isInvolved
+                return isInvolved || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
             }
         } else {
             def stringUserId = String.valueOf(currentUserId)

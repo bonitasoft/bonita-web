@@ -46,9 +46,9 @@ class DocumentPermissionRule implements PermissionRule {
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
-        if ("GET".equals(apiCallContext.getMethod())) {
+        if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId)
-        } else if ("POST".equals(apiCallContext.getMethod())) {
+        } else if (apiCallContext.isPOST()) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
         return false

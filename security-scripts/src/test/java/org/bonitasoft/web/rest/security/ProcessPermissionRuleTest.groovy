@@ -130,7 +130,7 @@ public class ProcessPermissionRuleTest {
     }
 
     def havingFilters(Map filters) {
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn(filters).when(apiCallContext).getFilters()
     }
 
@@ -158,7 +158,7 @@ public class ProcessPermissionRuleTest {
 
     def havingResourceId(long deployedBy) {
         doReturn(currentUserId).when(apiSession).getUserId()
-        doReturn("GET").when(apiCallContext).getMethod()
+        doReturn(true).when(apiCallContext).isGET()
         doReturn("process").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
 
