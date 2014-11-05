@@ -16,6 +16,6 @@ btm2.tlog
 
 *.orig
 *.tmp
-/forms/
 /common/
+/forms/
 /looknfeel/
