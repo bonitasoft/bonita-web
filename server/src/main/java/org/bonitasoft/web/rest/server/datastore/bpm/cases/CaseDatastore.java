@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2011, 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -45,6 +46,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
+ * @author Celine Souchet
  */
 public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> implements DatastoreHasGet<CaseItem>, DatastoreHasSearch<CaseItem>,
         DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
@@ -58,31 +60,22 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         return new CaseItemConverter().convert(item);
     }
 
+    public long count(final String search, final String orders, final Map<String, String> filters) {
+        return search(0, 0, search, orders, filters).getTotal();
+    }
+
     @Override
     public ItemSearchResult<CaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        /*
-         * By default we add a caller filter of -1 to avoid having sub processes.
-         * If caller is forced to any then we don't need to add the filter.
-         */
-        if (!filters.containsKey(CaseItem.FILTER_CALLER)) {
-            filters.put(CaseItem.FILTER_CALLER, "-1");
-        } else if ("any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
-            filters.remove(CaseItem.FILTER_CALLER);
-        }
-
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-
         addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addFilterToSearchBuilder(filters, builder, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
-
-        if (filters.containsKey(CaseItem.FILTER_CALLER)) {
-            builder.filter(ProcessInstanceSearchDescriptor.CALLER_ID, MapUtil.getValueAsLong(filters, CaseItem.FILTER_CALLER));
-        }
+        addCallerFilterToSearchBuilderIfNecessary(filters, builder);
+        builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
 
         // Run search depending on filters passed
-        final SearchResult<ProcessInstance> searchResult = runSearch(filters, builder);
+        final SearchResult<ProcessInstance> searchResult = searchProcessInstances(filters, builder.done());
 
         // Convert to ConsoleItems
         return new ItemSearchResult<CaseItem>(
@@ -92,30 +85,34 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
                 convertEngineToConsoleItemsList(searchResult.getResult()));
     }
 
-    private SearchResult<ProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {
+    void addCallerFilterToSearchBuilderIfNecessary(final Map<String, String> filters, final SearchOptionsBuilder builder) {
+        /*
+         * By default we add a caller filter of -1 to avoid having sub processes.
+         * If caller is forced to any then we don't need to add the filter.
+         */
+        if (!filters.containsKey(CaseItem.FILTER_CALLER)) {
+            builder.filter(ProcessInstanceSearchDescriptor.CALLER_ID, -1);
+        } else if (!"any".equalsIgnoreCase(filters.get(CaseItem.FILTER_CALLER))) {
+            builder.filter(ProcessInstanceSearchDescriptor.CALLER_ID, MapUtil.getValueAsLong(filters, CaseItem.FILTER_CALLER));
+        }
+    }
 
+    private SearchResult<ProcessInstance> searchProcessInstances(final Map<String, String> filters, final SearchOptions searchOptions) {
         try {
             final ProcessAPI processAPI = getProcessAPI();
 
-            if (filters.containsKey(CaseItem.FILTER_STATE) && filters.get(CaseItem.FILTER_STATE) != null) {
-                if ("started".equals(filters.get(CaseItem.FILTER_STATE))) {
-                    return processAPI.searchOpenProcessInstances(builder.done());
-                } else if ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE))) {
-                    return processAPI.searchFailedProcessInstances(builder.done());
-                }
-            }
-
-            builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.COMPLETED.getId());
-
             if (filters.containsKey(CaseItem.FILTER_USER_ID)) {
-                return processAPI.searchOpenProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, CaseItem.FILTER_USER_ID), builder.done());
+                return processAPI.searchOpenProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, CaseItem.FILTER_USER_ID), searchOptions);
             }
-
             if (filters.containsKey(CaseItem.FILTER_SUPERVISOR_ID)) {
-                return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), builder.done());
+                return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), searchOptions);
+            }
+            if (filters.containsKey(CaseItem.FILTER_STATE)
+                    && ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE)))) {
+                return processAPI.searchFailedProcessInstances(searchOptions);
             }
 
-            return processAPI.searchProcessInstances(builder.done());
+            return processAPI.searchProcessInstances(searchOptions);
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -124,14 +121,12 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
     @Override
     public CaseItem get(final APIID id) {
         try {
-            return convertEngineToConsoleItem(getProcessAPI()
-                    .getProcessInstance(id.toLong()));
+            return convertEngineToConsoleItem(getProcessAPI().getProcessInstance(id.toLong()));
         } catch (final ProcessInstanceNotFoundException e) {
             return null;
         } catch (final Exception e) {
             throw new APIException(e);
         }
-
     }
 
     @Override
