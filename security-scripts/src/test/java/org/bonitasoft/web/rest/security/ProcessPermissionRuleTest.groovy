@@ -22,17 +22,24 @@ import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor
 import org.bonitasoft.engine.identity.User
+import org.bonitasoft.engine.search.SearchOptions
+import org.bonitasoft.engine.search.SearchOptionsBuilder
+import org.bonitasoft.engine.search.impl.SearchResultImpl
 import org.bonitasoft.engine.session.APISession
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
 
 import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Matchers.eq
 import static org.mockito.Mockito.doReturn
 import static org.mockito.Mockito.mock
+import static org.mockito.Mockito.when
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessPermissionRuleTest {
@@ -45,7 +52,7 @@ public class ProcessPermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new ProcessPermissionRule()
+    def ProcessPermissionRule rule = new ProcessPermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
@@ -142,6 +149,7 @@ public class ProcessPermissionRuleTest {
     public void should_check_verify_resourceId_not_isInvolved_on_GET() {
         //given
         havingResourceId(15)
+        doReturn(new SearchResultImpl(0,[])).when(processAPI).searchProcessDeploymentInfosCanBeStartedBy(eq(currentUserId), Mockito.any(SearchOptions.class))
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
