@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +29,6 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Julien Mege
- * 
  */
 public abstract class CommonDatastore<C extends IItem, E extends Serializable> extends Datastore {
 
@@ -39,9 +36,9 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
 
     /**
      * Default Constructor.
-     * 
+     *
      * @param engineSession
-     *            The session that will allow to access the engine SDK
+     *        The session that will allow to access the engine SDK
      */
     public CommonDatastore(final APISession engineSession) {
         this.engineSession = engineSession;
@@ -64,10 +61,39 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
      * @param filterName
      * @param engineAttributeName
      */
-    protected void addFilterToSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder, final String filterName,
+    protected void addStringFilterToSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder, final String filterName,
             final String engineAttributeName) {
-        if (filters.containsKey(filterName)) {
-            builder.filter(engineAttributeName, filters.get(filterName));
+        if (filters != null && filters.containsKey(filterName)) {
+            final String filterValue = filters.get(filterName);
+            if (filterValue != null) {
+                if (filterValue.startsWith(">")) {
+                    builder.greaterThan(engineAttributeName, getFilterValueWithoutFirstCharacter(filterValue));
+                } else if (filterValue.startsWith("<")) {
+                    builder.lessThan(engineAttributeName, getFilterValueWithoutFirstCharacter(filterValue));
+                } else {
+                    builder.filter(engineAttributeName, filterValue);
+                }
+            }
+        }
+    }
+
+    private String getFilterValueWithoutFirstCharacter(final String filterValue) {
+        return filterValue.substring(1).trim();
+    }
+
+    protected void addLongFilterToSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder, final String filterName,
+            final String engineAttributeName) {
+        if (filters != null && filters.containsKey(filterName)) {
+            final String filterValue = filters.get(filterName);
+            if (filterValue != null) {
+                if (filterValue.startsWith(">")) {
+                    builder.greaterThan(engineAttributeName, Long.valueOf(getFilterValueWithoutFirstCharacter(filterValue)));
+                } else if (filterValue.startsWith("<")) {
+                    builder.lessThan(engineAttributeName, Long.valueOf(getFilterValueWithoutFirstCharacter(filterValue)));
+                } else {
+                    builder.filter(engineAttributeName, Long.valueOf(filterValue));
+                }
+            }
         }
     }
 
@@ -96,7 +122,6 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
             consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
         }
         return consoleSearchResults;
-
     }
 
 }

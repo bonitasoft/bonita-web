@@ -25,8 +25,10 @@ import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
+import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -36,11 +38,15 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 /**
  * @author Séverin Moussel
  */
-public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements APIHasGet<ArchivedCaseItem>, APIHasSearch<ArchivedCaseItem> {
+public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements APIHasGet<ArchivedCaseItem>, APIHasSearch<ArchivedCaseItem>, APIHasDelete {
 
     @Override
     public ItemDefinition defineItemDefinition() {
         return Definitions.get(ArchivedCaseDefinition.TOKEN);
+    }
+    @Override
+    protected Datastore defineDefaultDatastore() {
+        return new ArchivedCaseDatastore(getEngineSession());
     }
 
     @Override

@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +29,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.GenericDeployer;
-import org.bonitasoft.web.rest.server.datastore.SearchFilterProcessor;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeDatastore;
@@ -60,12 +57,6 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         APIHasUpdate<ITEM>,
         APIHasGet<ITEM>,
         APIHasSearch<ITEM> {
-
-    final SearchFilterProcessor searchFilterProcessor;
-
-    public AbstractAPIFlowNode() {
-        searchFilterProcessor = new SearchFilterProcessor();
-    }
 
     @Override
     protected FlowNodeDefinition defineItemDefinition() {
@@ -126,11 +117,11 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item)) {
             item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
-                    new CaseDatastore(getEngineSession(), searchFilterProcessor).get(item.getCaseId()));
+                    new CaseDatastore(getEngineSession()).get(item.getCaseId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
-            CaseItem rootContainerCase = new CaseDatastore(getEngineSession(), searchFilterProcessor).get(item
+            CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item
                     .getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             if (rootContainerCase == null) {
                 rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
