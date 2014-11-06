@@ -41,14 +41,16 @@ import org.bonitasoft.engine.session.APISession
  */
 class ActorMemberPermissionRule implements PermissionRule {
 
-
+    public static final String ACTOR_ID = "actor_id"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
         if (apiCallContext.isPOST()) {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        }else if(apiCallContext.isDELETE()){
+        } else if (apiCallContext.isGET()) {
+            return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
+        } else if(apiCallContext.isDELETE()) {
             //TODO unable to find an actor member with the API!
             return false
         }
@@ -58,13 +60,24 @@ class ActorMemberPermissionRule implements PermissionRule {
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSON()
-        def actorId = body.optLong("actor_id")
+        def actorId = body.optLong(ACTOR_ID)
         if (actorId <= 0) {
-            return false;
+            return true
         }
         def processAPI = apiAccessor.getProcessAPI()
         def actor = processAPI.getActor(actorId)
         def processDefinitionId = actor.getProcessDefinitionId()
         return processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)
+    }
+
+    private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+        def filters = apiCallContext.getFilters()
+        if(filters.containsKey(ACTOR_ID)){
+            def processAPI = apiAccessor.getProcessAPI()
+            def actor = processAPI.getActor(Long.parseLong(filters.get(ACTOR_ID)))
+            def processDefinitionId = actor.getProcessDefinitionId()
+            return processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)
+        }
+        return true
     }
 }

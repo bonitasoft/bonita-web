@@ -32,7 +32,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProcessResolutionProblemPermissionRuleTest {
+public class ProcessConnectorDependencyPermissionRuleTest {
 
     @Mock
     def APISession apiSession
@@ -42,7 +42,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new ProcessResolutionProblemPermissionRule()
+    def PermissionRule rule = new ProcessConnectorDependencyPermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
@@ -60,7 +60,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
         doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
-                    "process_id":"1"
+                    "connector_process_id":"1"
                 ]
                 ).when(apiCallContext).getFilters()
         doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
@@ -77,7 +77,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
         doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
-                    "process_id":"1"
+                    "connector_process_id":"1"
                 ]
                 ).when(apiCallContext).getFilters()
         doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId);

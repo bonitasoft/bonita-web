@@ -15,6 +15,7 @@
 package org.bonitasoft.web.rest.security
 
 import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Matchers.any
 import static org.mockito.Mockito.doReturn
 import static org.mockito.Mockito.mock
 
@@ -32,7 +33,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProcessResolutionProblemPermissionRuleTest {
+public class ProcessConfigurationPermissionRuleTest {
 
     @Mock
     def APISession apiSession
@@ -42,7 +43,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new ProcessResolutionProblemPermissionRule()
+    def PermissionRule rule = new ProcessConfigurationPermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
@@ -56,7 +57,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
     }
 
     @Test
-    public void should_check_verify_get_is_true_when_process_owner() {
+    public void should_check_verify_get_multiple_is_true_when_process_owner() {
         doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
@@ -73,7 +74,7 @@ public class ProcessResolutionProblemPermissionRuleTest {
     }
 
     @Test
-    public void should_check_verify_get_is_false_when_not_process_owner() {
+    public void should_check_verify_get_multiple_is_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isGET()
         doReturn(
                 [
@@ -86,6 +87,55 @@ public class ProcessResolutionProblemPermissionRuleTest {
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
         assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_check_verify_get_is_true_when_process_owner() {
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn(["1", "connectorName", "1.0"]).when(apiCallContext).getCompoundResourceId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+
+    }
+
+    @Test
+    public void should_check_verify_get_is_false_when_not_process_owner() {
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn(["1", "connectorName", "1.0"]).when(apiCallContext).getCompoundResourceId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_check_verify_put_when_not_process_owner() {
+        doReturn(true).when(apiCallContext).isPUT()
+        doReturn(["1", "connectorName", "1.0"]).when(apiCallContext).getCompoundResourceId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_check_verify_put_when_process_owner() {
+        doReturn(true).when(apiCallContext).isPUT()
+        doReturn(["1", "connectorName", "1.0"]).when(apiCallContext).getCompoundResourceId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId);
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
     }
 
     @Test

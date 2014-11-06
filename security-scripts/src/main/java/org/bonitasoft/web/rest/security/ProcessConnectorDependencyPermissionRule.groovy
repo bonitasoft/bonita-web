@@ -22,19 +22,19 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let a user see process resolution problem only if he is process owner
+ * Let a user see process connector dependency problem only if he is process owner
  *
  * <ul>
- *     <li>bpm/processResolutionProblem</li>
+ *     <li>bpm/processConnectorDependency</li>
  * </ul>
  *
  *
  *
  * @author Anthony Birembaut
  */
-class ProcessResolutionProblemPermissionRule implements PermissionRule {
+class ProcessConnectorDependencyPermissionRule implements PermissionRule {
 
-    public static final String PROCESS_ID = "process_id"
+    public static final String PROCESS_ID = "connector_process_id"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {

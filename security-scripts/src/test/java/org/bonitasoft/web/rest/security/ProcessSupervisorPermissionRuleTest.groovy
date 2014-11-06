@@ -12,14 +12,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  **/
-
-
-
-
-
 package org.bonitasoft.web.rest.security
 
 import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Matchers.any
 import static org.mockito.Mockito.doReturn
 import static org.mockito.Mockito.mock
 
@@ -29,7 +25,6 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
-import org.bonitasoft.engine.bpm.actor.ActorInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
 import org.json.JSONObject
@@ -40,7 +35,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.class)
-public class ActorMemberPermissionRuleTest {
+public class ProcessSupervisorPermissionRuleTest {
 
     @Mock
     def APISession apiSession
@@ -50,7 +45,7 @@ public class ActorMemberPermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new ActorMemberPermissionRule()
+    def PermissionRule rule = new ProcessSupervisorPermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
@@ -62,7 +57,6 @@ public class ActorMemberPermissionRuleTest {
     @Before
     public void before() {
         doReturn(processAPI).when(apiAccessor).getProcessAPI()
-        doReturn(identityAPI).when(apiAccessor).getIdentityAPI()
         doReturn(user).when(identityAPI).getUser(currentUserId)
         doReturn(currentUserId).when(apiSession).getUserId()
     }
@@ -72,13 +66,10 @@ public class ActorMemberPermissionRuleTest {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
-                "actor_id":"547",
+                "process_id":"154",
                 "other":"sample"
             }
         ''')).when(apiCallContext).getBodyAsJSON()
-        def actor = mock(ActorInstance.class)
-        doReturn(154l).when(actor).getProcessDefinitionId()
-        doReturn(actor).when(processAPI).getActor(547l);
         doReturn(true).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
 
@@ -93,14 +84,10 @@ public class ActorMemberPermissionRuleTest {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
-                "actor_id":"547",
+                "process_id":"154",
                 "other":"sample"
             }
         ''')).when(apiCallContext).getBodyAsJSON()
-
-        def actor = mock(ActorInstance.class)
-        doReturn(154l).when(actor).getProcessDefinitionId()
-        doReturn(actor).when(processAPI).getActor(547l);
         doReturn(false).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
 
@@ -114,12 +101,9 @@ public class ActorMemberPermissionRuleTest {
     public void should_check_verify_get_is_true_when_process_owner() {
         doReturn(true).when(apiCallContext).isGET()
         doReturn([
-            "actor_id":"547",
+            "process_id":"154",
             "other":"sample"
         ]).when(apiCallContext).getFilters()
-        def actor = mock(ActorInstance.class)
-        doReturn(154l).when(actor).getProcessDefinitionId()
-        doReturn(actor).when(processAPI).getActor(547l);
         doReturn(true).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
 
@@ -134,12 +118,9 @@ public class ActorMemberPermissionRuleTest {
     public void should_check_verify_get_is_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isGET()
         doReturn([
-            "actor_id":"547",
+            "process_id":"154",
             "other":"sample"
         ]).when(apiCallContext).getFilters()
-        def actor = mock(ActorInstance.class)
-        doReturn(154l).when(actor).getProcessDefinitionId()
-        doReturn(actor).when(processAPI).getActor(547l);
         doReturn(false).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
 
@@ -150,13 +131,38 @@ public class ActorMemberPermissionRuleTest {
     }
 
     @Test
-    public void should_check_return_false_on_delete() {
+    public void should_check_verify_delete_return_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isDELETE()
+        doReturn([
+            "154",
+            "1",
+            "2",
+            "3"
+        ]).when(apiCallContext).getCompoundResourceId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
         assertThat(isAuthorized).isFalse();
+
+    }
+
+    @Test
+    public void should_check_verify_delete_return_true_when_process_owner() {
+        doReturn(true).when(apiCallContext).isDELETE()
+        doReturn([
+            "154",
+            "1",
+            "2",
+            "3"
+        ]).when(apiCallContext).getCompoundResourceId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
 
     }
 }

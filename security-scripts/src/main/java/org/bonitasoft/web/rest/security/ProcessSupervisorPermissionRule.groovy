@@ -22,35 +22,59 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let a user see process resolution problem only if he is process owner
+ * Let a user view and add process su only if he is process owner
  *
  * <ul>
- *     <li>bpm/processResolutionProblem</li>
+ *     <li>bpm/processSupervisor</li>
  * </ul>
  *
  *
  *
  * @author Anthony Birembaut
  */
-class ProcessResolutionProblemPermissionRule implements PermissionRule {
+class ProcessSupervisorPermissionRule implements PermissionRule {
 
     public static final String PROCESS_ID = "process_id"
 
     @Override
     public boolean check(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
-        long currentUserId = apiSession.getUserId()
-        if (apiCallContext.isGET()) {
+        long currentUserId = apiSession.getUserId();
+        if (apiCallContext.isPOST()) {
+            return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
+        } else if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
+        } else if(apiCallContext.isDELETE()) {
+            return checkDeleteMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
+        //it's ok to read
         return true
+    }
+
+    private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+        def body = apiCallContext.getBodyAsJSON()
+        def processId = body.optLong(PROCESS_ID)
+        if (processId <= 0) {
+            return true
+        }
+        def processAPI = apiAccessor.getProcessAPI()
+        return processAPI.isUserProcessSupervisor(processId,currentUserId)
     }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def filters = apiCallContext.getFilters()
-        if(filters.containsKey(PROCESS_ID)){
+        if (filters.containsKey(PROCESS_ID)) {
             def processAPI = apiAccessor.getProcessAPI()
-            return processAPI.isUserProcessSupervisor(Long.valueOf(filters.get(PROCESS_ID)),currentUserId)
+            return processAPI.isUserProcessSupervisor(Long.parseLong(filters.get(PROCESS_ID)),currentUserId)
         }
-        return false
+        return true
+    }
+
+    private boolean checkDeleteMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+        def resourceIds = apiCallContext.getCompoundResourceId()
+        if (!resourceIds.isEmpty()) {
+            def processAPI = apiAccessor.getProcessAPI()
+            return processAPI.isUserProcessSupervisor(Long.parseLong(resourceIds.get(0)),currentUserId)
+        }
+        return true
     }
 }
