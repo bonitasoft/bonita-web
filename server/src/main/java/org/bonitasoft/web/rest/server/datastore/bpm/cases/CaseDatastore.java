@@ -23,9 +23,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
@@ -67,13 +65,13 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
     @Override
     public ItemSearchResult<CaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        final SearchOptionsBuilder builder = buildSearchOptions(page, resultsByPage, search, orders, filters);
-
-        // Run search depending on filters passed
-        final SearchResult<ProcessInstance> searchResult = searchProcessInstances(filters, builder.done());
-
-        // Convert to ConsoleItems
-        return convertEngineToConsoleSearch(page, resultsByPage, searchResult);
+        try {
+            final SearchOptionsBuilder builder = buildSearchOptions(page, resultsByPage, search, orders, filters);
+            final SearchResult<ProcessInstance> searchResult = searchProcessInstances(filters, builder.done());
+            return convertEngineToConsoleSearch(page, resultsByPage, searchResult);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
     }
 
     protected SearchOptionsBuilder buildSearchOptions(final int page, final int resultsByPage, final String search, final String orders,
@@ -105,25 +103,21 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         }
     }
 
-    private SearchResult<ProcessInstance> searchProcessInstances(final Map<String, String> filters, final SearchOptions searchOptions) {
-        try {
-            final ProcessAPI processAPI = getProcessAPI();
+    private SearchResult<ProcessInstance> searchProcessInstances(final Map<String, String> filters, final SearchOptions searchOptions) throws BonitaException {
+        final ProcessAPI processAPI = getProcessAPI();
 
-            if (filters.containsKey(CaseItem.FILTER_USER_ID)) {
-                return processAPI.searchOpenProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, CaseItem.FILTER_USER_ID), searchOptions);
-            }
-            if (filters.containsKey(CaseItem.FILTER_SUPERVISOR_ID)) {
-                return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), searchOptions);
-            }
-            if (filters.containsKey(CaseItem.FILTER_STATE)
-                    && ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE)))) {
-                return processAPI.searchFailedProcessInstances(searchOptions);
-            }
-
-            return processAPI.searchProcessInstances(searchOptions);
-        } catch (final Exception e) {
-            throw new APIException(e);
+        if (filters.containsKey(CaseItem.FILTER_USER_ID)) {
+            return processAPI.searchOpenProcessInstancesInvolvingUser(MapUtil.getValueAsLong(filters, CaseItem.FILTER_USER_ID), searchOptions);
         }
+        if (filters.containsKey(CaseItem.FILTER_SUPERVISOR_ID)) {
+            return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), searchOptions);
+        }
+        if (filters.containsKey(CaseItem.FILTER_STATE)
+                && ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE)))) {
+            return processAPI.searchFailedProcessInstances(searchOptions);
+        }
+
+        return processAPI.searchProcessInstances(searchOptions);
     }
 
     @Override
@@ -155,7 +149,7 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         return new CaseSarter(caseItem, factory.createCaseEngineClient(), factory.createProcessEngineClient()).start();
     }
 
-    public ProcessAPI getProcessAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+    public ProcessAPI getProcessAPI() throws BonitaException {
         return TenantAPIAccessor.getProcessAPI(getEngineSession());
     }
 
