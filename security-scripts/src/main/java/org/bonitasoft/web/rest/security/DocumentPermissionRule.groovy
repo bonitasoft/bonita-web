@@ -57,9 +57,13 @@ class DocumentPermissionRule implements PermissionRule {
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSON()
-        def processInstanceId = body.optLong(PROCESS_INSTANCE_ID)
+        def string = body.optString((PROCESS_INSTANCE_ID))
+        if(string == null || string.isEmpty()){
+            return true;
+        }
+        def processInstanceId = Long.valueOf(string)
         if (processInstanceId <= 0) {
-            return false;
+            return true;
         }
         def processAPI = apiAccessor.getProcessAPI()
         return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)

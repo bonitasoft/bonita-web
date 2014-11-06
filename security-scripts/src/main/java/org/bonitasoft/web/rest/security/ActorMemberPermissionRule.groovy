@@ -64,7 +64,7 @@ class ActorMemberPermissionRule implements PermissionRule {
         def body = apiCallContext.getBodyAsJSONArray()
         for (int i = 0 ; i < body.length(); i++){
             def object = body.getJSONObject(i)
-            def actorId = object.optLong(ACTOR_ID)
+            def actorId = Long.valueOf(object.optString((ACTOR_ID)))
             if (actorId <= 0) {
                 continue
             }
