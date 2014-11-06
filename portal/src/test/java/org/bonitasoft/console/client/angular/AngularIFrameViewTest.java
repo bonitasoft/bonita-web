@@ -34,18 +34,19 @@ public class AngularIFrameViewTest {
 
     @Test
     public void appendTabFromTokensToUrlWithArchivedTabTokenShouldBeAppendToUrl() throws Exception {
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("_tab=archived", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("&_tab=archived", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("_tab=archived&", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("_tab=archived&test=faux", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("test=faux&_tab=archived", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("test=vrai&_tab=archived&test=faux", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("aaa", "aaa_tab=archived", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("bbb", "&bbb_tab=archived", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("ccc", "ccc_tab=archived&", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("ddd", "ddd_tab=archived&test=faux", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("eee", "test=faux&eee_tab=archived", "/admin/cases/list"));
         assertEquals("/admin/cases/list/archived",
-                AngularIFrameView.appendTabFromTokensToUrl("&_tab=archived&_tab=archived&_tab=archived&", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("?_tab=archived", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("?test&_tab=archived#", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("#?test&_tab=archived", "/admin/cases/list"));
-        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("test=vrai//&_tab=archived", "/admin/cases/list"));
+                AngularIFrameView.appendTabFromTokensToUrl("fff", "test=vrai&fff_tab=archived&test=faux", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived",
+                AngularIFrameView.appendTabFromTokensToUrl("ggg", "&ggg_tab=archived&aaa_tab=archived&ggg_tab=archived&", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("aa", "?aa_tab=archived", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("bb", "?test&bb_tab=archived#", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("cc", "#?test&cc_tab=archived", "/admin/cases/list"));
+        assertEquals("/admin/cases/list/archived", AngularIFrameView.appendTabFromTokensToUrl("dd", "test=vrai//&dd_tab=archived", "/admin/cases/list"));
     }
 
 }

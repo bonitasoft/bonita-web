@@ -29,15 +29,15 @@ public class AngularIFrameView extends RawView implements SelfRenderingView {
 
     public AngularIFrameView(final String token, final String url, final String tokens) {
         setToken(token);
-        this.url = appendTabFromTokensToUrl(tokens, url);
+        this.url = appendTabFromTokensToUrl(token, tokens, url) + tokens;
     }
 
     /**
      * @param tokens
      */
-    protected static String appendTabFromTokensToUrl(final String tokens, final String url) {
+    protected static String appendTabFromTokensToUrl(final String pageToken, final String tokens, final String url) {
         if (tokens != null) {
-            final MatchResult tabMatcher = RegExp.compile("(^|[&\\?#])_tab=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
+            final MatchResult tabMatcher = RegExp.compile("(^|[&\\?#])" + pageToken + "_tab=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
             if (tabMatcher != null && tabMatcher.getGroupCount() > 0) {
                 return url + "/" + tabMatcher.getGroup(2);
             }
