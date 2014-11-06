@@ -33,3 +33,70 @@ msgid "All apps"
 msgstr ""
 
 
+# processMonitoring
+
+msgid "Open cases"
+msgstr ""
+
+msgid  "Monitor open cases"
+msgstr ""
+
+msgid  "Healthy cases"
+msgstr ""
+
+msgid  "Failed cases"
+msgstr ""
+
+msgid  "Filter on process"
+msgstr ""
+
+msgid  "Refresh"
+msgstr ""
+
+msgid  "Process"
+msgstr ""
+
+msgid  "Version"
+msgstr ""
+
+msgid  "Failed"
+msgstr ""
+
+msgid  "State"
+msgstr ""
+
+msgid  "Actions"
+msgstr ""
+
+msgid  "Wait ..."
+msgstr ""
+
+msgid  "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
+msgstr ""
+
+msgid  "No data"
+msgstr ""
+
+msgid  "Error!"
+msgstr ""
+
+msgid  "Filter on failed cases"
+msgstr ""
+
+msgid  "Filter on healthy cases"
+msgstr ""
+
+msgid  "Show all cases"
+msgstr ""
+
+msgid  "Never"
+msgstr ""
+
+msgid  "30 s."
+msgstr ""
+
+msgid  "10 min."
+msgstr ""
+
+msgid  "Technical error."
+msgstr ""
