@@ -24,6 +24,7 @@ import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
+import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceNotFoundException
 import org.bonitasoft.engine.bpm.flownode.UserTaskInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
@@ -177,7 +178,7 @@ public class TaskPermissionRuleTest {
         havingResource("humanTask")
         def instance = mock(UserTaskInstance.class)
         doReturn(currentUserId).when(instance).getAssigneeId()
-        doReturn(instance).when(processAPI).getHumanTaskInstance(458)
+        doReturn(instance).when(processAPI).getFlowNodeInstance(458)
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -190,7 +191,7 @@ public class TaskPermissionRuleTest {
         havingResource("humanTask")
         def instance = mock(UserTaskInstance.class)
         doReturn(59l).when(instance).getAssigneeId()
-        doReturn(instance).when(processAPI).getHumanTaskInstance(458)
+        doReturn(instance).when(processAPI).getFlowNodeInstance(458)
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -201,7 +202,7 @@ public class TaskPermissionRuleTest {
     public void should_get_on_an_unexisting_flow_node() {
         //given
         havingResource("humanTask")
-        doThrow(new ActivityInstanceNotFoundException(new Exception())).when(processAPI).getHumanTaskInstance(458)
+        doThrow(new FlowNodeInstanceNotFoundException(new Exception())).when(processAPI).getFlowNodeInstance(458)
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -215,7 +216,7 @@ public class TaskPermissionRuleTest {
         havingResource("humanTask")
         def instance = mock(UserTaskInstance.class)
         doReturn(-1l).when(instance).getAssigneeId()
-        doReturn(instance).when(processAPI).getHumanTaskInstance(458)
+        doReturn(instance).when(processAPI).getFlowNodeInstance(458)
         doReturn(new SearchResultImpl(1,[])).when(processAPI).searchUsersWhoCanExecutePendingHumanTask(eq(458l), any(SearchOptions.class))
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
@@ -229,7 +230,7 @@ public class TaskPermissionRuleTest {
         havingResource("humanTask")
         def instance = mock(UserTaskInstance.class)
         doReturn(-1l).when(instance).getAssigneeId()
-        doReturn(instance).when(processAPI).getHumanTaskInstance(458)
+        doReturn(instance).when(processAPI).getFlowNodeInstance(458)
         doReturn(new SearchResultImpl(0,[])).when(processAPI).searchUsersWhoCanExecutePendingHumanTask(eq(458l), any(SearchOptions.class))
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
@@ -245,7 +246,7 @@ public class TaskPermissionRuleTest {
         doReturn("humanTask").when(apiCallContext).getResourceName()
         def instance = mock(UserTaskInstance.class)
         doReturn(currentUserId).when(instance).getAssigneeId()
-        doReturn(instance).when(processAPI).getHumanTaskInstance(458)
+        doReturn(instance).when(processAPI).getFlowNodeInstance(458)
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
