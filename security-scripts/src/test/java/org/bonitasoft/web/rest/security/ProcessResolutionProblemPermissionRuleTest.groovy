@@ -37,7 +37,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProcessConfigurationPermissionRuleTest {
+public class ProcessResolutionProblemPermissionRuleTest {
 
     @Mock
     def APISession apiSession
@@ -47,7 +47,7 @@ public class ProcessConfigurationPermissionRuleTest {
     def APIAccessor apiAccessor
     @Mock
     def Logger logger
-    def PermissionRule rule = new ProcessConfigurationPermissionRule()
+    def PermissionRule rule = new ProcessResolutionProblemPermissionRule()
     @Mock
     def ProcessAPI processAPI
     @Mock
