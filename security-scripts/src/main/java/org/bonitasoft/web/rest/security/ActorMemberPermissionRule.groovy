@@ -25,6 +25,8 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.session.APISession
+import org.json.JSONArray
+import org.json.JSONObject
 
 /**
  *
@@ -59,15 +61,21 @@ class ActorMemberPermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSON()
-        def actorId = body.optLong(ACTOR_ID)
-        if (actorId <= 0) {
-            return true
+        def body = apiCallContext.getBodyAsJSONArray()
+        for (int i = 0 ; i < body.length(); i++){
+            def object = body.getJSONObject(i)
+            def actorId = object.optLong(ACTOR_ID)
+            if (actorId <= 0) {
+                continue
+            }
+            def processAPI = apiAccessor.getProcessAPI()
+            def actor = processAPI.getActor(actorId)
+            def processDefinitionId = actor.getProcessDefinitionId()
+            if(!processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)){
+                return false
+            }
         }
-        def processAPI = apiAccessor.getProcessAPI()
-        def actor = processAPI.getActor(actorId)
-        def processDefinitionId = actor.getProcessDefinitionId()
-        return processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)
+        return true
     }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {

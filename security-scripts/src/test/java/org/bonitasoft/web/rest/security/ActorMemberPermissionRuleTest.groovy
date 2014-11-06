@@ -19,10 +19,6 @@
 
 package org.bonitasoft.web.rest.security
 
-import static org.assertj.core.api.Assertions.assertThat
-import static org.mockito.Mockito.doReturn
-import static org.mockito.Mockito.mock
-
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.IdentityAPI
 import org.bonitasoft.engine.api.Logger
@@ -32,12 +28,16 @@ import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.actor.ActorInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONObject
+import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
+
+import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Mockito.doReturn
+import static org.mockito.Mockito.mock
 
 @RunWith(MockitoJUnitRunner.class)
 public class ActorMemberPermissionRuleTest {
@@ -70,12 +70,12 @@ public class ActorMemberPermissionRuleTest {
     @Test
     public void should_check_verify_post_is_true_when_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
-            {
+        doReturn(new JSONArray('''
+            [{
                 "actor_id":"547",
                 "other":"sample"
-            }
-        ''')).when(apiCallContext).getBodyAsJSON()
+            }]
+        ''')).when(apiCallContext).getBodyAsJSONArray()
         def actor = mock(ActorInstance.class)
         doReturn(154l).when(actor).getProcessDefinitionId()
         doReturn(actor).when(processAPI).getActor(547l);
@@ -91,12 +91,12 @@ public class ActorMemberPermissionRuleTest {
     @Test
     public void should_check_verify_post_is_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
-            {
+        doReturn(new JSONArray('''
+            [{
                 "actor_id":"547",
                 "other":"sample"
-            }
-        ''')).when(apiCallContext).getBodyAsJSON()
+            }]
+        ''')).when(apiCallContext).getBodyAsJSONArray()
 
         def actor = mock(ActorInstance.class)
         doReturn(154l).when(actor).getProcessDefinitionId()

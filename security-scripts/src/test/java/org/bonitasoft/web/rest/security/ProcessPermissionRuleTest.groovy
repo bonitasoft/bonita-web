@@ -91,6 +91,30 @@ public class ProcessPermissionRuleTest {
     }
 
     @Test
+    public void should_check_verify_resourceid_on_PUT_when_is_supervisor() {
+        //given
+        doReturn(true).when(apiCallContext).isPUT()
+        doReturn("56").when(apiCallContext).getResourceId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(56l,currentUserId)
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_check_verify_resourceid_on_PUT_when_is_not_supervisor() {
+        //given
+        doReturn(true).when(apiCallContext).isPUT()
+        doReturn("56").when(apiCallContext).getResourceId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(56l,currentUserId)
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
     public void should_check_verify_filters_on_GET_with_diff_supervisor_id() {
         //given
         havingFilters([supervisor_id: "15"])

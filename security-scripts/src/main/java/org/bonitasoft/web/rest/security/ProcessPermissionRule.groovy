@@ -48,6 +48,9 @@ class ProcessPermissionRule implements PermissionRule {
         if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
+        if (apiCallContext.isPUT()) {
+            return checkPutMethod(apiCallContext, apiAccessor, currentUserId, logger)
+        }
         return false
     }
 
@@ -80,6 +83,19 @@ class ProcessPermissionRule implements PermissionRule {
                 logger.debug("allowed because searching filters contains user id")
                 return true
             }
+        }
+        return false;
+    }
+    private boolean checkPutMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+        def processAPI = apiAccessor.getProcessAPI()
+        if (apiCallContext.getResourceId() != null) {
+            def processId = Long.valueOf(apiCallContext.getResourceId())
+            def isSupervisor = processAPI.isUserProcessSupervisor(processId, currentUserId)
+            if(isSupervisor){
+                logger.debug("is supervisor of the process")
+                return true
+            }
+            return false
         }
         return false;
     }
