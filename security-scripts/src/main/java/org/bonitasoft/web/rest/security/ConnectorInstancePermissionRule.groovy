@@ -24,6 +24,10 @@ import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceSearchDescriptor
+import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceNotFoundException
+import org.bonitasoft.engine.exception.SearchException
+import org.bonitasoft.engine.search.SearchOptionsBuilder
 import org.bonitasoft.engine.session.APISession
 
 /**
@@ -32,6 +36,7 @@ import org.bonitasoft.engine.session.APISession
  *
  * <ul>
  *     <li>bpm/connectorInstance</li>
+ *     <li>bpm/archivedConnectorInstance</li>
  * </ul>
  *
  *
@@ -58,8 +63,32 @@ class ConnectorInstancePermissionRule implements PermissionRule {
         def filters = apiCallContext.getFilters()
         if(filters.containsKey(CONTAINER_ID)){
             def processAPI = apiAccessor.getProcessAPI()
-            def flowNodeInstance = processAPI.getFlowNodeInstance(Long.valueOf(filters.get(CONTAINER_ID)))
-            def processID = flowNodeInstance.getProcessDefinitionId()
+            def processID
+            if (apiCallContext.getResourceName().startsWith("archived")) {
+                try {
+                    def searchOptions = new SearchOptionsBuilder(0, 1)
+                    searchOptions.filter(ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID, Long.valueOf(filters.get(CONTAINER_ID)))
+                    def searchResult = processAPI.searchArchivedFlowNodeInstances(searchOptions.done())
+                    def archivedFlowNodeInstances = searchResult.getResult()
+                    if (archivedFlowNodeInstances.isEmpty()) {
+                        logger.debug("archived flow node does not exists")
+                        return true
+                    } else {
+                        processID = archivedFlowNodeInstances.get(0).getProcessDefinitionId()
+                    }
+                } catch(SearchException e) {
+                    logger.debug("error while retrieving the archived flow node")
+                    return true
+                }
+            } else {
+                try{
+                    def flowNodeInstance = processAPI.getFlowNodeInstance(Long.valueOf(filters.get(CONTAINER_ID)))
+                    processID = flowNodeInstance.getProcessDefinitionId()
+                } catch(FlowNodeInstanceNotFoundException e) {
+                    logger.debug("flow node does not exists")
+                    return true
+                }
+            }
             return processAPI.isUserProcessSupervisor(processID,currentUserId)
         }
         return false

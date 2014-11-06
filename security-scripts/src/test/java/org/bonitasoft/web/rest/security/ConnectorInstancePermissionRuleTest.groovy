@@ -20,6 +20,7 @@
 package org.bonitasoft.web.rest.security
 
 import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Matchers.any
 import static org.mockito.Mockito.doReturn
 import static org.mockito.Mockito.mock
 
@@ -28,8 +29,11 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstance
 import org.bonitasoft.engine.identity.User
+import org.bonitasoft.engine.search.SearchOptions
+import org.bonitasoft.engine.search.SearchResult
 import org.bonitasoft.engine.session.APISession
 import org.junit.Before
 import org.junit.Test
@@ -54,6 +58,10 @@ public class ConnectorInstancePermissionRuleTest {
     @Mock
     def FlowNodeInstance flownodeInstance
     @Mock
+    def SearchResult<ArchivedFlowNodeInstance> archivedFlowNodeInstanceSearchResult
+    @Mock
+    def ArchivedFlowNodeInstance archivedFlowNodeInstance
+    @Mock
     def User user
     def long currentUserId = 16l
 
@@ -71,6 +79,7 @@ public class ConnectorInstancePermissionRuleTest {
                     "containerId":"2"
                 ]
                 ).when(apiCallContext).getFilters()
+        doReturn("connectorInstance").when(apiCallContext).getResourceName()
         doReturn(flownodeInstance).when(processAPI).getFlowNodeInstance(2l)
         doReturn(1l).when(flownodeInstance).getProcessDefinitionId()
         doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId)
@@ -89,8 +98,49 @@ public class ConnectorInstancePermissionRuleTest {
                     "containerId":"2"
                 ]
                 ).when(apiCallContext).getFilters()
+        doReturn("connectorInstance").when(apiCallContext).getResourceName()
         doReturn(flownodeInstance).when(processAPI).getFlowNodeInstance(2l)
         doReturn(1l).when(flownodeInstance).getProcessDefinitionId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId)
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_check_verify_get_for_archived_is_true_when_process_owner() {
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn(
+                [
+                    "containerId":"2"
+                ]
+                ).when(apiCallContext).getFilters()
+        doReturn("archivedConnectorInstance").when(apiCallContext).getResourceName()
+        doReturn(archivedFlowNodeInstanceSearchResult).when(processAPI).searchArchivedFlowNodeInstances(any(SearchOptions.class))
+        doReturn([archivedFlowNodeInstance]).when(archivedFlowNodeInstanceSearchResult).getResult()
+        doReturn(1l).when(archivedFlowNodeInstance).getProcessDefinitionId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1l, currentUserId)
+
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_check_verify_get_for_archived_is_false_when_not_process_owner() {
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn(
+                [
+                    "containerId":"2"
+                ]
+                ).when(apiCallContext).getFilters()
+        doReturn("archivedConnectorInstance").when(apiCallContext).getResourceName()
+        doReturn(archivedFlowNodeInstanceSearchResult).when(processAPI).searchArchivedFlowNodeInstances(any(SearchOptions.class))
+        doReturn([archivedFlowNodeInstance]).when(archivedFlowNodeInstanceSearchResult).getResult()
+        doReturn(1l).when(archivedFlowNodeInstance).getProcessDefinitionId()
         doReturn(false).when(processAPI).isUserProcessSupervisor(1l, currentUserId)
 
         //when
