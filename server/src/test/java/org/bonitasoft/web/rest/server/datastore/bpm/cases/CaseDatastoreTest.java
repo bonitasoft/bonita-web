@@ -239,7 +239,7 @@ public class CaseDatastoreTest {
      * Test method for {@link org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore#search(int, int, String, String, Map).
      */
     @Test
-    public final void search_should_throw_an_exception_when_search_process_instances_failed_filter_on_user() throws SearchException {
+    public final void search_should_throw_an_exception_when_search_open_process_instances_involving_user_filter_on_user() throws SearchException {
         // Given
         final int page = 0;
         final int resultsByPage = 1;
@@ -268,7 +268,7 @@ public class CaseDatastoreTest {
      * Test method for {@link org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore#search(int, int, String, String, Map).
      */
     @Test
-    public final void search_should_search_open_process_instances_involving_user_and_convert_them_to_CaseItem_when_filter_on_supervisor()
+    public final void search_should_search_open_process_instances_supervised_by_and_convert_them_to_CaseItem_when_filter_on_supervisor()
             throws SearchException {
         // Given
         final int page = 0;
@@ -300,7 +300,7 @@ public class CaseDatastoreTest {
      * Test method for {@link org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore#search(int, int, String, String, Map).
      */
     @Test
-    public final void search_should_throw_an_exception_when_search_process_instances_failed_filter_on_supervisor() throws SearchException {
+    public final void search_should_throw_an_exception_when_search_open_process_instances_supervised_by_filter_on_supervisor() throws SearchException {
         // Given
         final int page = 0;
         final int resultsByPage = 1;
