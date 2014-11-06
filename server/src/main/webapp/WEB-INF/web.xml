@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="console-war" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="console-war" version="2.5">
     <display-name>Bonita</display-name>
 
-    <!--  Error pages -->
+    <!-- Error pages -->
     <error-page>
         <error-code>500</error-code>
         <location>/error-pages/500.jsp</location>
@@ -120,6 +118,21 @@
         <filter-class>org.bonitasoft.forms.server.filter.BPMURLSupportFilter</filter-class>
     </filter>
 
+    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>slf4j</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/API/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
         <url-pattern>/portal/homepage</url-pattern>
@@ -145,14 +158,17 @@
     <filter-mapping>
         <filter-name>TokenValidatorFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
+        <url-pattern>/APIToolkit/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
+        <url-pattern>/APIToolkit/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>TokenGeneratorFilter</filter-name>
         <url-pattern>/API/system/session/*</url-pattern>
+        <url-pattern>/APIToolkit/system/session/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>InternalSSOFilter</filter-name>
@@ -223,12 +239,19 @@
     <listener>
         <listener-class>org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
     </listener>
-
     <servlet>
         <servlet-name>BonitaRestAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>RestletServlet</servlet-name>
+        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+        <init-param>
+            <!-- Application class name -->
+            <param-name>org.restlet.application</param-name>
+            <param-value>org.bonitasoft.web.rest.server.BonitaRestletApplication</param-value>
+        </init-param>
+    </servlet>
     <servlet>
         <servlet-name>ConsoleServiceServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.server.ConsoleServiceServlet</servlet-class>
@@ -422,8 +445,12 @@
         <url-pattern>/platformlogoutservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BonitaRestAPIServlet</servlet-name>
+        <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/API/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BonitaRestAPIServlet</servlet-name>
+        <url-pattern>/APIToolkit/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ConsoleServiceServlet</servlet-name>
