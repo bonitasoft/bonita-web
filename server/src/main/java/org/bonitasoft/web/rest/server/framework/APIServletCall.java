@@ -61,19 +61,19 @@ import org.bonitasoft.web.toolkit.server.ServletCall;
  */
 public class APIServletCall extends ServletCall {
 
-    private static final String PARAMETER_COUNTER = "n";
+    public static final String PARAMETER_COUNTER = "n";
 
-    private static final String PARAMETER_DEPLOY = "d";
+    public static final String PARAMETER_DEPLOY = "d";
 
-    private static final String PARAMETER_FILTER = "f";
+    public static final String PARAMETER_FILTER = "f";
 
-    private static final String PARAMETER_SEARCH = "s";
+    public static final String PARAMETER_SEARCH = "s";
 
-    private static final String PARAMETER_ORDER = "o";
+    public static final String PARAMETER_ORDER = "o";
 
-    private static final String PARAMETER_LIMIT = "c";
+    public static final String PARAMETER_LIMIT = "c";
 
-    private static final String PARAMETER_PAGE = "p";
+    public static final String PARAMETER_PAGE = "p";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // REQUEST PARSING
@@ -157,7 +157,7 @@ public class APIServletCall extends ServletCall {
 
         super.parseRequest(request, response);
 
-    }
+        }
 
     void parsePath(HttpServletRequest request) {
         RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
@@ -249,7 +249,7 @@ public class APIServletCall extends ServletCall {
     /**
      * Get deploys and add them in json representation in map<String, String>
      * Workaround to be able to have included json objects in main object in PUT request
-     * You have to unserialize them to be able to use them in java representation
+     * You have to unserialize them to be able to use them in java representation 
      */
     private HashMap<String, String> getAttributesWithDeploysAsJsonString(final IItem item) {
         final HashMap<String, String> map = new HashMap<String, String>();
