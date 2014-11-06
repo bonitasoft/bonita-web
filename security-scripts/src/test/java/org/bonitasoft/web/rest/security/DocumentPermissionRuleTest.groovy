@@ -23,6 +23,7 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.process.ProcessInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
 import org.json.JSONObject
@@ -34,6 +35,7 @@ import org.mockito.runners.MockitoJUnitRunner
 
 import static org.assertj.core.api.Assertions.assertThat
 import static org.mockito.Mockito.doReturn
+import static org.mockito.Mockito.mock
 
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentPermissionRuleTest {
@@ -65,13 +67,31 @@ public class DocumentPermissionRuleTest {
     }
 
     @Test
-    public void should_check_verify_filters_on_GET_with_user_not_involved() {
+    public void should_check_verify_filters_on_GET_with_user_not_involved_nor_supervisor() {
         //given
         havingFilters([processInstanceId: "46"])
+        def processInstance = mock(ProcessInstance.class)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
+        doReturn(processInstance).when(processAPI).getProcessInstance(46l)
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
         assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_check_verify_filters_on_GET_with_user_not_involved_but_supervisor() {
+        //given
+        havingFilters([processInstanceId: "46"])
+        def processInstance = mock(ProcessInstance.class)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
+        doReturn(processInstance).when(processAPI).getProcessInstance(46l)
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        //when
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
     }
 
     def havingFilters(Map filters) {

@@ -167,7 +167,7 @@ public class TaskPermissionRuleTest {
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
-        assertThat(isAuthorized).isFalse();
+        assertThat(isAuthorized).isTrue();
     }
 
 
@@ -205,7 +205,7 @@ public class TaskPermissionRuleTest {
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
-        assertThat(isAuthorized).isFalse();
+        assertThat(isAuthorized).isTrue();
     }
 
 
