@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-10-09 20:34-0400\n"
+"PO-Revision-Date: 2014-11-06 17:34-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgid "Columns"
 msgstr "Colonnes"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Résultats: {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{total}}"
+msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
 
 msgid "Filters"
 msgstr "Filtres"
@@ -27,6 +27,71 @@ msgid "All versions"
 msgstr "Toutes les versions"
 
 msgid "All apps"
-msgstr "Toutes les apps"
+msgstr "Tous les processus"
 
+msgid "Open cases"
+msgstr "Open cases"
+
+msgid "Monitor open cases"
+msgstr "Monitor open cases"
+
+msgid "Healthy cases"
+msgstr "Healthy cases"
+
+msgid "Failed cases"
+msgstr "Failed cases"
+
+msgid "Filter on process"
+msgstr "Filter on process"
+
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+msgid "Process"
+msgstr "Processus"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Failed"
+msgstr "En échec"
+
+msgid "State"
+msgstr "Etat"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Wait ..."
+msgstr "Wait ..."
+
+msgid "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
+msgstr "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
+
+msgid "No data"
+msgstr "Pas de donnée disponible"
+
+msgid "Error!"
+msgstr "Erreur!"
+
+msgid "Filter on failed cases"
+msgstr "Filter on failed cases"
+
+msgid "Filter on healthy cases"
+msgstr "Filter on healthy cases"
+
+msgid "Show all cases"
+msgstr "Show all cases"
+
+msgid "Never"
+msgstr "Never"
+
+msgid "30 s."
+msgstr "30 s."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "Technical error."
+msgstr "Technical error."
 
