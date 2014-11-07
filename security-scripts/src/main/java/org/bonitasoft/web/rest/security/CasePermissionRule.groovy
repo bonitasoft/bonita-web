@@ -15,17 +15,18 @@
 
 package org.bonitasoft.web.rest.security
 
-import org.bonitasoft.engine.api.*
+import org.bonitasoft.engine.api.APIAccessor
+import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor
 import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.identity.UserSearchDescriptor
 import org.bonitasoft.engine.search.SearchOptionsBuilder
 import org.bonitasoft.engine.search.SearchResult
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONObject
 
 /**
  *
@@ -86,8 +87,12 @@ class CasePermissionRule implements PermissionRule {
                 if (apiCallContext.getResourceName().startsWith("archived")) {
                     //no way to check that the we were involved in an archived case, can just show started by
                     try {
+
+                        final SearchOptionsBuilder opts = new SearchOptionsBuilder(0, 1);
+                        opts.filter(ArchivedProcessInstancesSearchDescriptor.ID, processInstanceId);
+                        def result = processAPI.searchArchivedProcessInstancesInvolvingUser(currentUserId, opts.done())
                         def archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceId)
-                        return archivedProcessInstance.getStartedBy() == currentUserId || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
+                        return result.getCount() == 1 || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
                     } catch (ArchivedProcessInstanceNotFoundException e) {
                         logger.debug("archived process not found, " + e.getMessage())
                         return false

@@ -172,6 +172,7 @@ public class CasePermissionRuleTest {
         def instance = mock(ArchivedProcessInstance.class)
         doReturn(currentUserId).when(instance).getStartedBy()
         doReturn(instance).when(processAPI).getArchivedProcessInstance(45l);
+        doReturn(new SearchResultImpl(1,[])).when(processAPI).searchArchivedProcessInstancesInvolvingUser(eq(currentUserId), any(SearchOptions.class))
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then

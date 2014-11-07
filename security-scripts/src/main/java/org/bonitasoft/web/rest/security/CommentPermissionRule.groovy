@@ -21,7 +21,9 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor
 import org.bonitasoft.engine.exception.NotFoundException
+import org.bonitasoft.engine.search.SearchOptionsBuilder
 import org.bonitasoft.engine.session.APISession
 
 /**
@@ -85,8 +87,11 @@ class CommentPermissionRule implements PermissionRule {
         try{
             return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
         }catch(NotFoundException e){
-            //will check archived version with is supervisor
-            return false
+            //check for archived
+            final SearchOptionsBuilder opts = new SearchOptionsBuilder(0, 1);
+            opts.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+            def result = processAPI.searchArchivedProcessInstancesInvolvingUser(currentUserId, opts.done())
+            return result.getCount() == 1
         }
     }
 
