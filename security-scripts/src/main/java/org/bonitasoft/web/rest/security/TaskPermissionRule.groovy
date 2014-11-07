@@ -64,37 +64,62 @@ class TaskPermissionRule implements PermissionRule {
         def filters = apiCallContext.getFilters()
         try {
             if (apiCallContext.isGET()) {
-                if (apiCallContext.getResourceId() != null) {
-                    return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
-                } else if (hasFilter(currentUserId, filters, "assigned_id") || hasFilter(currentUserId, filters, "user_id") || hasFilter(currentUserId, filters, "hidden_user_id") || hasFilter(currentUserId, filters, "supervisor_id")) {
-                    logger.debug("FilterOnUser or FilterOnAssignUser")
-                    return true
-                } else if (filters.containsKey("parentTaskId")) {
-                    def long parentTaskId = Long.valueOf(filters.get("parentTaskId"))
-                    try {
-                        return isTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
-                    } catch (NotFoundException e) {
-                        return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId)
-                    }
-                } else if (filters.containsKey("processId")) {
-                    def long processId = Long.valueOf(filters.get("processId"))
-                    return processAPI.isUserProcessSupervisor(processId, currentUserId)
-                } else if (filters.containsKey("caseId")) {
-                    def long caseId = Long.valueOf(filters.get("caseId"))
-                    return processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(caseId).getProcessDefinitionId(), currentUserId)
-                }
+                return checkGetMethod(apiCallContext, processAPI, logger, currentUserId, userName, filters)
             } else if (apiCallContext.isPUT() && apiCallContext.getResourceId() != null) {
                 return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
-            } else if (apiCallContext.isPOST() && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
-                def bodyAsJSON = apiCallContext.getBodyAsJSON()
-                return currentUserId.equals(bodyAsJSON.getLong("user_id")) && isTaskAccessible(processAPI, bodyAsJSON.getLong("task_id"), currentUserId, userName, logger)
-            } else if (apiCallContext.isDELETE() && "hiddenUserTask".equals(apiCallContext.getResourceName())) {
-                def ids = apiCallContext.getCompoundResourceId()
-                return currentUserId.equals(Long.valueOf(ids.get(0))) && isTaskAccessible(processAPI, Long.valueOf(ids.get(1)), currentUserId, userName, logger)
+            } else if (apiCallContext.isPOST()) {
+                return checkPostMethod(apiCallContext, currentUserId, processAPI, userName, logger)
+            } else if (apiCallContext.isDELETE()) {
+                if ("hiddenUserTask".equals(apiCallContext.getResourceName())) {
+                    def ids = apiCallContext.getCompoundResourceId()
+                    return currentUserId.equals(Long.valueOf(ids.get(0))) && isTaskAccessible(processAPI, Long.valueOf(ids.get(1)), currentUserId, userName, logger)
+                }
             }
         } catch (NotFoundException e) {
             logger.debug("flow node not found: is allowed")
             return true
+        }
+        return true
+    }
+
+    private boolean checkGetMethod(APICallContext apiCallContext, ProcessAPI processAPI, Logger logger, long currentUserId, String userName, Map<String, String> filters) {
+        if (apiCallContext.getResourceId() != null) {
+            return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
+        } else if (hasFilter(currentUserId, filters, "assigned_id") || hasFilter(currentUserId, filters, "user_id") || hasFilter(currentUserId, filters, "hidden_user_id") || hasFilter(currentUserId, filters, "supervisor_id")) {
+            logger.debug("FilterOnUser or FilterOnAssignUser")
+            return true
+        } else if (filters.containsKey("parentTaskId")) {
+            def long parentTaskId = Long.valueOf(filters.get("parentTaskId"))
+            try {
+                return isTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
+            } catch (NotFoundException e) {
+                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId)
+            }
+        } else if (filters.containsKey("processId")) {
+            def long processId = Long.valueOf(filters.get("processId"))
+            return processAPI.isUserProcessSupervisor(processId, currentUserId)
+        } else if (filters.containsKey("caseId")) {
+            def long caseId = Long.valueOf(filters.get("caseId"))
+            return processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(caseId).getProcessDefinitionId(), currentUserId)
+        } else {
+            return false
+        }
+    }
+
+    private boolean checkPostMethod(APICallContext apiCallContext, long currentUserId, ProcessAPI processAPI, String userName, Logger logger) {
+        if ("hiddenUserTask".equals(apiCallContext.getResourceName())) {
+            def bodyAsJSON = apiCallContext.getBodyAsJSON()
+            return currentUserId.equals(bodyAsJSON.getLong("user_id")) && isTaskAccessible(processAPI, bodyAsJSON.getLong("task_id"), currentUserId, userName, logger)
+        } else if ("manualTask".equals(apiCallContext.getResourceName())) {
+            def bodyAsJSON = apiCallContext.getBodyAsJSON()
+
+            def string = bodyAsJSON.optString("parentTaskId")
+            if(string == null || string.isEmpty()){
+                return true
+            }
+            def parentTaskId = Long.valueOf(string)
+            def flowNodeInstance = processAPI.getFlowNodeInstance(parentTaskId)
+            return flowNodeInstance instanceof HumanTaskInstance && flowNodeInstance.getAssigneeId()
         }
         return false
     }
@@ -123,9 +148,8 @@ class TaskPermissionRule implements PermissionRule {
     }
 
     private boolean isTaskAccessible(ProcessAPI processAPI, long flowNodeId, long currentUserId, String username, Logger logger) throws NotFoundException {
-        def isAccessible = false
         def instance = processAPI.getFlowNodeInstance(flowNodeId)
-        if(instance instanceof HumanTaskInstance){
+        if (instance instanceof HumanTaskInstance) {
             if (instance.assigneeId > 0) {
                 if (instance.assigneeId == currentUserId) {
                     return true
