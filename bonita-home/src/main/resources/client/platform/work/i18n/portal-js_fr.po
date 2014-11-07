@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-06 17:34-0500\n"
+"PO-Revision-Date: 2014-11-07 10:03-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgid "Columns"
 msgstr "Colonnes"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Résultats: {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtres"
@@ -30,7 +30,7 @@ msgid "All apps"
 msgstr "Tous les processus"
 
 msgid "Open cases"
-msgstr "Open cases"
+msgstr "Cas ouverts"
 
 msgid "Monitor open cases"
 msgstr "Monitor open cases"
@@ -39,10 +39,10 @@ msgid "Healthy cases"
 msgstr "Healthy cases"
 
 msgid "Failed cases"
-msgstr "Failed cases"
+msgstr "Cas en échec"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtrer sur les processus"
 
 msgid "Refresh"
 msgstr "Rafraîchir"
@@ -63,10 +63,10 @@ msgid "Actions"
 msgstr "Actions"
 
 msgid "Wait ..."
-msgstr "Wait ..."
+msgstr "Patienter..."
 
 msgid "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
-msgstr "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
+msgstr "{{startIndexOfPage}} - {{endIndexOfPage}} de {{total}}"
 
 msgid "No data"
 msgstr "Pas de donnée disponible"
@@ -75,16 +75,16 @@ msgid "Error!"
 msgstr "Erreur!"
 
 msgid "Filter on failed cases"
-msgstr "Filter on failed cases"
+msgstr "Filtrer sur des cas en échec"
 
 msgid "Filter on healthy cases"
 msgstr "Filter on healthy cases"
 
 msgid "Show all cases"
-msgstr "Show all cases"
+msgstr "Voir tous les cas"
 
 msgid "Never"
-msgstr "Never"
+msgstr "Jamais"
 
 msgid "30 s."
 msgstr "30 s."
@@ -93,5 +93,5 @@ msgid "10 min."
 msgstr "10 min."
 
 msgid "Technical error."
-msgstr "Technical error."
+msgstr "Erreur technique."
 
