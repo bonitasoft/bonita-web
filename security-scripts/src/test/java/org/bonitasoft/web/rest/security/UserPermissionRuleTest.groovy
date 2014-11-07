@@ -15,6 +15,9 @@
 
 package org.bonitasoft.web.rest.security
 
+import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Mockito.doReturn
+
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
@@ -24,9 +27,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
-
-import static org.assertj.core.api.Assertions.assertThat
-import static org.mockito.Mockito.doReturn
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserPermissionRuleTest {
@@ -61,12 +61,34 @@ public class UserPermissionRuleTest {
     }
 
     @Test
-    public void checkOnResourceWithNoResource() throws Exception {
+    public void checkOnResourceWithDeployOnPersonnalData() throws Exception {
         doReturn(15l).when(apiSession).getUserId()
-        doReturn(null).when(apiCallContext).getResourceId()
+        doReturn("16").when(apiCallContext).getResourceId()
+        doReturn("?d=personnal_data&otherParam=2").when(apiCallContext).getQueryString()
 
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
 
         assertThat(isAuthorized).isFalse()
+    }
+
+    @Test
+    public void checkOnResourceWithDeployOnProfessionalData() throws Exception {
+        doReturn(15l).when(apiSession).getUserId()
+        doReturn("16").when(apiCallContext).getResourceId()
+        doReturn("?d=professional_data&otherParam=2").when(apiCallContext).getQueryString()
+
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+
+        assertThat(isAuthorized).isFalse()
+    }
+
+    @Test
+    public void checkOnResourceWithNoResource() throws Exception {
+        doReturn(15l).when(apiSession).getUserId()
+        doReturn("?otherParam=2").when(apiCallContext).getQueryString()
+
+        def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
+
+        assertThat(isAuthorized).isTrue()
     }
 }

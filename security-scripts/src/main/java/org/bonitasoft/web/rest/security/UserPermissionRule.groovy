@@ -46,10 +46,13 @@ class UserPermissionRule implements PermissionRule {
             if (resourceId.equals(currentUserId)) {
                 return true
             }
-        }
-        //search by task id for the do for
-        def filters = apiCallContext.getFilters()
-        if (apiCallContext.isGET()) {
+            return false
+        } else {
+            if (apiCallContext.getQueryString().contains("d=professional_data") || apiCallContext.getQueryString().contains("d=personnal_data")) {
+                return false
+            }
+            def filters = apiCallContext.getFilters()
+            //search by task id for the do for
             if (filters.containsKey("task_id")) {
                 def taskId = Long.valueOf(filters.get("task_id"))
                 def processAPI = apiAccessor.getProcessAPI()
@@ -62,6 +65,6 @@ class UserPermissionRule implements PermissionRule {
                 return processAPI.isUserProcessSupervisor(processId, currentUserId)
             }
         }
-        return false;
+        return true
     }
 }
