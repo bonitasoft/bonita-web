@@ -30,3 +30,81 @@ msgid "All apps"
 msgstr "All apps"
 
 
+
+# processMonitoring
+
+msgid  "Monitor open cases"
+msgstr "Monitor open cases"
+
+msgid "Open cases"
+msgstr "Open cases"
+
+msgid  "Healthy cases"
+msgstr "Healthy cases"
+
+msgid  "Failed cases"
+msgstr "Failed cases"
+
+msgid  "Filter on process"
+msgstr "Filter on process"
+
+msgid  "Process list"
+msgstr "Process list"
+
+msgid  "Refresh"
+msgstr "Refresh"
+
+msgid  "Process name"
+msgstr "Process name"
+
+msgid  "Version"
+msgstr "Version"
+
+msgid  "Failed"
+msgstr "Failed"
+
+msgid  "State"
+msgstr "State"
+
+msgid  "Actions"
+msgstr "Actions"
+
+msgid  "Wait ..."
+msgstr "Wait ..."
+
+# Pagination label: "1 - 10 of 300"
+msgid  "of"
+msgstr "of"
+
+msgid  "No data"
+msgstr "No data"
+
+msgid  "Error!"
+msgstr "Error!"
+
+msgid  "Started"
+msgstr "Started"
+
+msgid  "All"
+msgstr "All"
+
+msgid  "Never"
+msgstr "Never"
+
+msgid  "30 s."
+msgstr "30 s."
+
+msgid  "1 min."
+msgstr "1 min."
+
+msgid  "10 min."
+msgstr "10 min."
+
+msgid  "Technical error."
+msgstr "Technical error."
+
+msgid  "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
+msgid  "Process activation state"
+msgstr "Process activation state"
