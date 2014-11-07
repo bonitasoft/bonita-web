@@ -20,7 +20,6 @@ package org.bonitasoft.console.common.server.login.filter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -71,7 +70,6 @@ public class AlreadyLoggedInRuleTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        doReturn(true).when(rule).useCredentialsTransmission(any(APISession.class));
         doReturn(httpSession).when(request).getHttpSession();
         doReturn(httpServletRequest).when(request).asHttpServletRequest();
     }
@@ -82,7 +80,7 @@ public class AlreadyLoggedInRuleTest {
         // ensure we won't recreate user session
         doReturn("").when(httpSession).getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
 
-        boolean authorization = rule.doAuthorize(request, tenantAccessor);
+        final boolean authorization = rule.doAuthorize(request, tenantAccessor);
 
         assertThat(authorization, is(true));
     }
@@ -91,7 +89,7 @@ public class AlreadyLoggedInRuleTest {
     public void testIfRuleDoesntAuthorizeNullSession() throws Exception {
         doReturn(null).when(request).getApiSession();
 
-        boolean authorization = rule.doAuthorize(request, tenantAccessor);
+        final boolean authorization = rule.doAuthorize(request, tenantAccessor);
 
         assertFalse(authorization);
     }
@@ -113,17 +111,17 @@ public class AlreadyLoggedInRuleTest {
 
     class UserMatcher extends  ArgumentMatcher<User> {
 
-        private String username;
-        private String local;
+        private final String username;
+        private final String local;
 
-        UserMatcher(String username, String local) {
+        UserMatcher(final String username, final String local) {
             this.username = username;
             this.local = local;
         }
 
         @Override
-        public boolean matches(Object arg) {
-            User user = (User) arg;
+        public boolean matches(final Object arg) {
+            final User user = (User) arg;
             return username.equals(user.getUsername())
                     && local.equals(user.getLocale().toString());
         }
