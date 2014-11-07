@@ -116,17 +116,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
 
-        if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), currentUserAccessRights)) {
-            if (currentAngularIFrameView == null) {
-                currentAngularIFrameView = new AngularIFrameView(token, "#" + angularViewsMap.get(token), History.getToken());
-            } else {
-                if (!token.equals(currentAngularIFrameView.getToken())) {
-                    currentAngularIFrameView.setUrl("#" + angularViewsMap.get(token) + History.getToken());
-                }
-            }
+        currentAngularIFrameView = manageAngularIFrameView(token, currentUserAccessRights);
+        if (currentAngularIFrameView != null) {
             return currentAngularIFrameView;
-        } else {
-            currentAngularIFrameView = null;
         }
 
         if (ItemNotFoundPopup.TOKEN.equals(token)) {
@@ -327,7 +319,20 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         }
     }
 
-
+    protected AngularIFrameView manageAngularIFrameView(final String token, final List<String> currentUserAccessRights) {
+        if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), currentUserAccessRights)) {
+            if (currentAngularIFrameView == null) {
+                currentAngularIFrameView = new AngularIFrameView(token, "#" + angularViewsMap.get(token), History.getToken());
+            } else {
+                if (!token.equals(currentAngularIFrameView.getToken())) {
+                    currentAngularIFrameView.setUrl("#" + angularViewsMap.get(token) + History.getToken());
+                }
+            }
+            return currentAngularIFrameView;
+        } else {
+            return null;
+        }
+    }
 
     protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
         String result = "";
