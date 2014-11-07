@@ -240,7 +240,7 @@ public class CasePermissionRuleTest {
     }
 
     @Test
-    public void should_check_verify_can_start_on_post_with_bad_body_is_false() {
+    public void should_check_verify_can_start_on_post_with_bad_body_is_true() {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn(new JSONObject('''
             {
@@ -253,7 +253,7 @@ public class CasePermissionRuleTest {
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
-        assertThat(isAuthorized).isFalse();
+        assertThat(isAuthorized).isTrue();
 
     }
 

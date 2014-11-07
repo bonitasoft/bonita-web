@@ -53,9 +53,14 @@ class CommentPermissionRule implements PermissionRule {
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSON()
-        def processInstanceId = body.optLong("processInstanceId")
+
+        def string = body.optString("processInstanceId")
+        if(string == null || string.isEmpty()){
+            return true;
+        }
+        def processInstanceId = Long.valueOf(string)
         if (processInstanceId <= 0) {
-            return false;
+            return true;
         }
         def processAPI = apiAccessor.getProcessAPI()
         return isInvolved(processAPI, currentUserId, processInstanceId) || isSupervisor(processAPI, processInstanceId, currentUserId)

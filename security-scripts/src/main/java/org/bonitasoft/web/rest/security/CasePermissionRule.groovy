@@ -56,9 +56,14 @@ class CasePermissionRule implements PermissionRule {
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSON()
-        def processDefinitionId = body.optLong("processDefinitionId")
+
+        def string = body.optString("processDefinitionId")
+        if(string == null || string.isEmpty()){
+            return true;
+        }
+        def processDefinitionId = Long.valueOf(string)
         if (processDefinitionId <= 0) {
-            return false;
+            return true;
         }
         def processAPI = apiAccessor.getProcessAPI()
         def identityAPI = apiAccessor.getIdentityAPI()
