@@ -1,6 +1,6 @@
 package org.bonitasoft.console.client.angular;
 
-import static com.google.gwt.query.client.GQuery.*;
+import static com.google.gwt.query.client.GQuery.$;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.SelfRenderingView;
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class AngularIFrameView extends RawView implements SelfRenderingView {
 
-    private final String url;
+    private String url;
 
     private boolean displayed = false;
 
@@ -29,17 +29,15 @@ public class AngularIFrameView extends RawView implements SelfRenderingView {
 
     public AngularIFrameView(final String token, final String url, final String tokens) {
         setToken(token);
-        this.url = appendTabFromTokensToUrl(tokens, url);
+        this.url = appendParamFromTokensToUrl(token + "_tab", tokens, url);
+        this.url = appendParamFromTokensToUrl(token + "_id", tokens, url);
     }
 
-    /**
-     * @param tokens
-     */
-    protected static String appendTabFromTokensToUrl(final String tokens, final String url) {
+    protected static String appendParamFromTokensToUrl(final String param, final String tokens, final String url) {
         if (tokens != null) {
-            final MatchResult tabMatcher = RegExp.compile("(^|[&\\?#])_tab=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
-            if (tabMatcher != null && tabMatcher.getGroupCount() > 0) {
-                return url + "/" + tabMatcher.getGroup(2);
+            final MatchResult paramMatcher = RegExp.compile("(^|[&\\?#])" + param + "=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
+            if (paramMatcher != null && paramMatcher.getGroupCount() > 0) {
+                return url + "/" + paramMatcher.getGroup(2);
             }
         }
         return url;

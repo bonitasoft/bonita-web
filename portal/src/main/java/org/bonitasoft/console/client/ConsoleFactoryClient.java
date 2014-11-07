@@ -1,6 +1,7 @@
 package org.bonitasoft.console.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -85,6 +87,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.user.client.History;
 
 /**
  * console client page
@@ -109,7 +112,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     @Override
     public RawView defineViewTokens(final String token) {
 
-        List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
+        final List<String> currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
 
         GWT.log("Current log user as access to :" + listAUthorizedTokens(AvailableTokens.tokens));
 
@@ -271,7 +274,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
              * return new UploadThemePage();
              * } else if (EditThemePage.TOKEN.equals(token)) {
              * return new EditThemePage();
-        */
+             */
 
             // Visualize & do tasks
         } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights)) {
@@ -326,12 +329,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
 
 
-    protected String listAUthorizedTokens(List<String> currentUserAccessRights) {
+    protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
         String result = "";
 
-        Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
+        final Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
 
-        for (Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
+        for (final Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
             result = isUserAuthorized(entry.getValue(), currentUserAccessRights) ? result + entry.getKey() + ", " : result;
         }
 
@@ -340,7 +343,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     }
 
     protected Map<String, List<String>> buildApplicationPagesPrivileges() {
-        Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
+        final Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
         pagePrivileges.put(CaseQuickDetailsAdminPage.TOKEN, CaseQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(CaseMoreDetailsAdminPage.TOKEN, CaseMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(ArchivedCaseQuickDetailsAdminPage.TOKEN, ArchivedCaseQuickDetailsAdminPage.PRIVILEGES);
@@ -413,13 +416,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         return pagePrivileges;
     }
 
-    protected boolean isUserAuthorized(final List<String> privileges, List<String> accessRights) {
+    protected boolean isUserAuthorized(final List<String> privileges, final List<String> accessRights) {
 
-        String sessionId = new String(Session.getParameter("session_id"));
+        final String sessionId = new String(Session.getParameter("session_id"));
 
         for (final String privilege : privileges) {
 
-            String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
+            final String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 
             if (accessRights.contains(calcSHA1.toUpperCase())) {
                 GWT.log("User is granted access to targeted page thanks to : " + privilege);
