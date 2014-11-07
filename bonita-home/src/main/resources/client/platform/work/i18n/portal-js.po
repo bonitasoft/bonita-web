@@ -104,3 +104,9 @@ msgstr ""
 
 msgid  "Technical error."
 msgstr ""
+
+msgid  "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr ""
+
+msgid  "Process activation state"
+msgstr ""
