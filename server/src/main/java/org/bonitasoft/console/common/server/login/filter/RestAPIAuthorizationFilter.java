@@ -58,15 +58,15 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     private static final String PLATFORM_API_URI = "API/platform/";
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
-    private Boolean reload;
+    private final Boolean reload;
 
 
-    public RestAPIAuthorizationFilter(boolean reload) {
+    public RestAPIAuthorizationFilter(final boolean reload) {
         this.reload = reload;
     }
 
     public RestAPIAuthorizationFilter() {
-        this.reload = null;//will be check every time
+        reload = null;//will be check every time
     }
 
     @Override
@@ -79,28 +79,38 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected boolean checkValidCondition(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
         try {
             if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
-                final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
-                if (platformSession != null) {
-                    return true;
-                } else {
-                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                }
+                return platformAPIsCheck(httpRequest, httpResponse);
             } else {
-                final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
-                if (apiSession == null) {
-                    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                } else if (!checkPermissions(httpRequest)) {
-                    httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                } else {
-                    return true;
-                }
+                return tenantAPIsCheck(httpRequest, httpResponse);
             }
-            return false;
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
             throw new ServletException(e);
+        }
+    }
+
+    protected boolean tenantAPIsCheck(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
+        final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        if (apiSession == null) {
+            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        } else if (!checkPermissions(httpRequest)) {
+            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    protected boolean platformAPIsCheck(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) {
+        final PlatformSession platformSession = (PlatformSession) httpRequest.getSession().getAttribute(PLATFORM_SESSION_PARAM_KEY);
+        if (platformSession != null) {
+            return true;
+        } else {
+            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
         }
     }
 
@@ -194,19 +204,19 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected boolean dynamicCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final Set<String> resourceAuthorizations,
             final APISession apiSession) throws ServletException {
         checkResourceAuthorizationsSyntax(resourceAuthorizations);
-        if (resourceAuthorizations.contains(PermissionsBuilder.USER_TYPE_AUTHORIZATION_PREFIX + "|" + apiSession.getUserName())) {
+        if (checkDynamicPermissionsWithUsername(resourceAuthorizations, apiSession)
+                || checkDynamicPermissionsWithProfiles(resourceAuthorizations, userPermissions)) {
             return true;
         }
-        final Set<String> profileAuthorizations = getResourceProfileAuthorizations(resourceAuthorizations);
-        for (final String profileAuthorization : profileAuthorizations) {
-            if (userPermissions.contains(profileAuthorization)) {
-                return true;
-            }
-        }
+        return checkDynamicPermissionsWithScript(apiCallContext, resourceAuthorizations, apiSession);
+    }
+
+    protected boolean checkDynamicPermissionsWithScript(final APICallContext apiCallContext, final Set<String> resourceAuthorizations,
+            final APISession apiSession) throws ServletException {
         final String resourceClassname = getResourceClassname(resourceAuthorizations);
         if (resourceClassname != null) {
             try {
-                return checkWithScript(apiSession, resourceClassname, apiCallContext);
+                return executeScript(apiSession, resourceClassname, apiCallContext);
             } catch (final NotFoundException e) {
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, "Unable to find the dynamic permissions script: " + resourceClassname, e);
@@ -225,6 +235,20 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             }
         }
         return false;
+    }
+
+    protected boolean checkDynamicPermissionsWithProfiles(final Set<String> resourceAuthorizations, final Set<String> userPermissions) {
+        final Set<String> profileAuthorizations = getResourceProfileAuthorizations(resourceAuthorizations);
+        for (final String profileAuthorization : profileAuthorizations) {
+            if (userPermissions.contains(profileAuthorization)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean checkDynamicPermissionsWithUsername(final Set<String> resourceAuthorizations, final APISession apiSession) {
+        return resourceAuthorizations.contains(PermissionsBuilder.USER_TYPE_AUTHORIZATION_PREFIX + "|" + apiSession.getUserName());
     }
 
     protected boolean checkResourceAuthorizationsSyntax(final Set<String> resourceAuthorizations) {
@@ -262,7 +286,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         return profileAuthorizations;
     }
 
-    protected boolean checkWithScript(final APISession apiSession, final String resourceClassname, final APICallContext apiCallContext)
+    protected boolean executeScript(final APISession apiSession, final String resourceClassname, final APICallContext apiCallContext)
             throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,
             ExecutionException, NotFoundException {
         final PermissionAPI permissionAPI = TenantAPIAccessor.getPermissionAPI(apiSession);
@@ -279,7 +303,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         return authorized;
     }
 
-    private boolean shouldReload(APISession apiSession) {
+    private boolean shouldReload(final APISession apiSession) {
         return reload == null ? PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).isAPIAuthorizationsCheckInDebugMode():reload;
     }
 }
