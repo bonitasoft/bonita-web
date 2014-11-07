@@ -208,33 +208,33 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
                 || checkDynamicPermissionsWithProfiles(resourceAuthorizations, userPermissions)) {
             return true;
         }
-        return checkDynamicPermissionsWithScript(apiCallContext, resourceAuthorizations, apiSession);
-    }
-
-    protected boolean checkDynamicPermissionsWithScript(final APICallContext apiCallContext, final Set<String> resourceAuthorizations,
-            final APISession apiSession) throws ServletException {
         final String resourceClassname = getResourceClassname(resourceAuthorizations);
         if (resourceClassname != null) {
-            try {
-                return executeScript(apiSession, resourceClassname, apiCallContext);
-            } catch (final NotFoundException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Unable to find the dynamic permissions script: " + resourceClassname, e);
-                }
-                return false;
-            } catch (final ExecutionException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Unable to execute the dynamic permissions script: " + resourceClassname, e);
-                }
-                return false;
-            } catch (final BonitaException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Unable to retrieve the permissions API", e);
-                }
-                throw new ServletException(e);
-            }
+            return checkDynamicPermissionsWithScript(apiCallContext, resourceClassname, apiSession);
         }
         return false;
+    }
+
+    protected boolean checkDynamicPermissionsWithScript(final APICallContext apiCallContext, final String resourceClassname,
+            final APISession apiSession) throws ServletException {
+        try {
+            return executeScript(apiSession, resourceClassname, apiCallContext);
+        } catch (final NotFoundException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unable to find the dynamic permissions script: " + resourceClassname, e);
+            }
+            return false;
+        } catch (final ExecutionException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unable to execute the dynamic permissions script: " + resourceClassname, e);
+            }
+            return false;
+        } catch (final BonitaException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unable to retrieve the permissions API", e);
+            }
+            throw new ServletException(e);
+        }
     }
 
     protected boolean checkDynamicPermissionsWithProfiles(final Set<String> resourceAuthorizations, final Set<String> userPermissions) {
