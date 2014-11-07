@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-05 20:32-0500\n"
+"PO-Revision-Date: 2014-11-06 20:35-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -15,35 +15,35 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Colonnes"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "Résultats: {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtres"
 
 msgid "All versions"
-msgstr "All versions"
+msgstr "Toutes les versions"
 
 msgid "All apps"
-msgstr "All apps"
+msgstr "Tous les processus"
 
 msgid "All states"
-msgstr ""
+msgstr "All states"
 
 msgid "started"
-msgstr ""
+msgstr "started"
 
 msgid "failed"
-msgstr ""
+msgstr "failed"
 
 msgid "Confirm delete?"
-msgstr ""
+msgstr "Confirm delete?"
 
 msgid "This case will be definitively deleted."
-msgstr ""
+msgstr "This case will be definitively deleted."
 
 msgid "These cases will be definitively deleted."
-msgstr ""
+msgstr "These cases will be definitively deleted."
 
