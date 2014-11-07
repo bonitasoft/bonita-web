@@ -35,10 +35,10 @@ msgstr ""
 
 # processMonitoring
 
-msgid "Open cases"
+msgid  "Monitor open cases"
 msgstr ""
 
-msgid  "Monitor open cases"
+msgid "Open cases"
 msgstr ""
 
 msgid  "Healthy cases"
@@ -50,10 +50,13 @@ msgstr ""
 msgid  "Filter on process"
 msgstr ""
 
+msgid  "Process list"
+msgstr ""
+
 msgid  "Refresh"
 msgstr ""
 
-msgid  "Process"
+msgid  "Process name"
 msgstr ""
 
 msgid  "Version"
@@ -71,7 +74,8 @@ msgstr ""
 msgid  "Wait ..."
 msgstr ""
 
-msgid  "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
+# Pagination label: "1 - 10 of 300"
+msgid  "of"
 msgstr ""
 
 msgid  "No data"
@@ -80,19 +84,19 @@ msgstr ""
 msgid  "Error!"
 msgstr ""
 
-msgid  "Filter on failed cases"
+msgid  "Started"
 msgstr ""
 
-msgid  "Filter on healthy cases"
-msgstr ""
-
-msgid  "Show all cases"
+msgid  "All"
 msgstr ""
 
 msgid  "Never"
 msgstr ""
 
 msgid  "30 s."
+msgstr ""
+
+msgid  "1 min."
 msgstr ""
 
 msgid  "10 min."
