@@ -24,56 +24,60 @@ import com.google.gwt.i18n.client.Messages;
  *
  */
 public interface FormsErrors extends Messages {
-    
+
     String confirmationTempateError();
-    
+
     String errorTempateError();
-    
+
     String credentialsSessionError();
-    
+
     String pageRetrievalError();
-    
+
     String pageIndexError(int index);
-    
+
     String fieldValidationError();
-    
+
     String pageValidationError();
-    
+
     String formSubmissionError();
-    
+
     String nextTaskRetrievalError();
-    
+
     String pageListRetrievalError();
-    
+
     String processInstantiationError();
-    
+
     String anyTaskRetrievalError();
-    
+
     String processConfigRetrievalError();
-    
+
     String applicationConfigRetrievalError();
-       
+
     String taskExecutionError();
-       
+
     String taskRetrievalError();
-    
+
     String nextSubprocessURLRetrievalError();
-    
+
     String fileTooBigError();
-    
+
     String fileTooBigErrorWithSize(String maxSize);
-    
+
     String fileTooBigErrorWithName(String fileName);
-    
+
     String fileTooBigErrorWithNameSize(String fileName, String maxSize);
-    
+
     String taskFormSkippedError();
 
     String nothingToDisplay();
 
     String formAlreadySubmittedError();
-    
+
     String formAlreadySubmittedOrCancelledError();
 
     String formUrlParameterIsMandatoryError();
+
+    String wrongContentOfTypeFileError();
+
+    String wrongContentOfTypeURLError();
 }
