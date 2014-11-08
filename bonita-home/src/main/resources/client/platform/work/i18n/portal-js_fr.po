@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-07 10:03-0500\n"
+"PO-Revision-Date: 2014-11-08 08:45-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgid "Columns"
 msgstr "Colonnes"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Résultats: {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtres"
@@ -29,11 +29,11 @@ msgstr "Toutes les versions"
 msgid "All apps"
 msgstr "Tous les processus"
 
-msgid "Open cases"
-msgstr "Cas ouverts"
-
 msgid "Monitor open cases"
-msgstr "Monitor open cases"
+msgstr "Monitorer les cas démarrés"
+
+msgid "Open cases"
+msgstr "Cas démarrés"
 
 msgid "Healthy cases"
 msgstr "Healthy cases"
@@ -42,13 +42,16 @@ msgid "Failed cases"
 msgstr "Cas en échec"
 
 msgid "Filter on process"
-msgstr "Filtrer sur les processus"
+msgstr "Filtre de processus"
+
+msgid "Process list"
+msgstr "Liste des processus"
 
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-msgid "Process"
-msgstr "Processus"
+msgid "Process name"
+msgstr "Nom du processus"
 
 msgid "Version"
 msgstr "Version"
@@ -63,10 +66,11 @@ msgid "Actions"
 msgstr "Actions"
 
 msgid "Wait ..."
-msgstr "Patienter..."
+msgstr "Patientez ..."
 
-msgid "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
-msgstr "{{startIndexOfPage}} - {{endIndexOfPage}} de {{total}}"
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "de"
 
 msgid "No data"
 msgstr "Pas de donnée disponible"
@@ -74,24 +78,30 @@ msgstr "Pas de donnée disponible"
 msgid "Error!"
 msgstr "Erreur!"
 
-msgid "Filter on failed cases"
-msgstr "Filtrer sur des cas en échec"
+msgid "Started"
+msgstr "Démarré"
 
-msgid "Filter on healthy cases"
-msgstr "Filter on healthy cases"
-
-msgid "Show all cases"
-msgstr "Voir tous les cas"
+msgid "All"
+msgstr "Tous"
 
 msgid "Never"
 msgstr "Jamais"
 
 msgid "30 s."
-msgstr "30 s."
+msgstr "30 sec."
+
+msgid "1 min."
+msgstr "1 min."
 
 msgid "10 min."
 msgstr "10 min."
 
 msgid "Technical error."
 msgstr "Erreur technique."
+
+msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "Résultats : {{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+
+msgid "Process activation state"
+msgstr "État d'activation du processus"
 

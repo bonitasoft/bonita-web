@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-06 17:41-0500\n"
+"PO-Revision-Date: 2014-11-08 08:54-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -29,11 +29,11 @@ msgstr "All versions"
 msgid "All apps"
 msgstr "All apps"
 
-msgid "Open cases"
-msgstr "Open cases"
-
 msgid "Monitor open cases"
 msgstr "Monitor open cases"
+
+msgid "Open cases"
+msgstr "Open cases"
 
 msgid "Healthy cases"
 msgstr "Healthy cases"
@@ -44,11 +44,14 @@ msgstr "Failed cases"
 msgid "Filter on process"
 msgstr "Filter on process"
 
+msgid "Process list"
+msgstr "Process list"
+
 msgid "Refresh"
 msgstr "Refrescar"
 
-msgid "Process"
-msgstr "Proceso"
+msgid "Process name"
+msgstr "Process name"
 
 msgid "Version"
 msgstr "Versión"
@@ -65,8 +68,9 @@ msgstr "acciones"
 msgid "Wait ..."
 msgstr "Wait ..."
 
-msgid "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
-msgstr "{{startIndexOfPage}} - {{endIndexOfPage}} of {{total}}"
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "de"
 
 msgid "No data"
 msgstr "No hay datos"
@@ -74,14 +78,11 @@ msgstr "No hay datos"
 msgid "Error!"
 msgstr "¡Error!"
 
-msgid "Filter on failed cases"
-msgstr "Filter on failed cases"
+msgid "Started"
+msgstr "Empezado"
 
-msgid "Filter on healthy cases"
-msgstr "Filter on healthy cases"
-
-msgid "Show all cases"
-msgstr "Show all cases"
+msgid "All"
+msgstr "Todos"
 
 msgid "Never"
 msgstr "Never"
@@ -89,9 +90,18 @@ msgstr "Never"
 msgid "30 s."
 msgstr "30 s."
 
+msgid "1 min."
+msgstr "1 min."
+
 msgid "10 min."
 msgstr "10 min."
 
 msgid "Technical error."
 msgstr "Technical error."
+
+msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
+msgid "Process activation state"
+msgstr "Process activation state"
 
