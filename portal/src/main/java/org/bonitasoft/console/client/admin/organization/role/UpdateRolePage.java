@@ -32,6 +32,8 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
 
 /**
+ * popup
+ *
  * @author Colin PUY
  * 
  */
