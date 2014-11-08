@@ -55,7 +55,6 @@ import org.bonitasoft.console.client.admin.profile.view.AddMembershipToProfileMe
 import org.bonitasoft.console.client.admin.profile.view.AddRoleToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.AddUserToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.DeleteProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
@@ -72,7 +71,6 @@ import org.bonitasoft.console.client.user.cases.view.CaseQuickDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.console.client.user.task.view.ArchivedHumanTaskQuickDetailsPage;
 import org.bonitasoft.console.client.user.task.view.HumanTaskQuickDetailsPage;
-import org.bonitasoft.console.client.user.task.view.ProcessMoreDetailsPage;
 import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
@@ -175,14 +173,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessMoreDetailsAdminPage();
-            /*
-             * } else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
-             * return new StartProcessOnBehalfPage();
-             */
+        /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+            return new StartProcessOnBehalfPage();*/
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, currentUserAccessRights)) {
             return new UploadProcessPage();
-        } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
-                && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token) && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, currentUserAccessRights)) {
             return new CreateCategoryAndAddToProcessPage();
         } else if (AddProcessCategoryPage.TOKEN.equals(token) && isUserAuthorized(AddProcessCategoryPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddProcessCategoryPage();
@@ -230,16 +225,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProfileMoreDetailsPage();
         } else if (ProfileQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProfileQuickDetailsPage();
-        } else if (EditProfilePage.TOKEN.equals(token) && isUserAuthorized(EditProfilePage.PRIVILEGES, currentUserAccessRights)) {
-            return new EditProfilePage();
         } else if (AddGroupToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddGroupToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddGroupToProfileMemberPage();
         } else if (AddRoleToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddRoleToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddRoleToProfileMemberPage();
         } else if (AddUserToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddUserToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddUserToProfileMemberPage();
-        } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token)
-                && isUserAuthorized(AddMembershipToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (AddMembershipToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddMembershipToProfileMemberPage();
         } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(DeleteProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new DeleteProfileMemberPage();
@@ -257,16 +249,15 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new TaskQuickDetailsAdminPage();
         } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, currentUserAccessRights)) {
             return new TaskMoreDetailsAdminPage();
-
-            /*
-             * THEME pages
-             * } else if (ListThemePage.TOKEN.equals(token)) {
-             * return new ListThemePage();
-             * } else if (UploadThemePage.TOKEN.equals(token)) {
-             * return new UploadThemePage();
-             * } else if (EditThemePage.TOKEN.equals(token)) {
-             * return new EditThemePage();
-             */
+        
+        /* THEME pages
+        } else if (ListThemePage.TOKEN.equals(token)) {
+            return new ListThemePage();
+        } else if (UploadThemePage.TOKEN.equals(token)) {
+            return new UploadThemePage();
+        } else if (EditThemePage.TOKEN.equals(token)) {
+            return new EditThemePage();
+        */
 
             // Visualize & do tasks
         } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, currentUserAccessRights)) {
@@ -275,11 +266,9 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new HumanTaskQuickDetailsPage();
         } else if (HumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new HumanTaskMoreDetailsPage();
-        } else if (ArchivedHumanTaskQuickDetailsPage.TOKEN.equals(token)
-                && isUserAuthorized(ArchivedHumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (ArchivedHumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedHumanTaskQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ArchivedHumanTaskQuickDetailsPage();
-        } else if (ArchivedHumanTaskMoreDetailsPage.TOKEN.equals(token)
-                && isUserAuthorized(ArchivedHumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
+        } else if (ArchivedHumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedHumanTaskMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ArchivedHumanTaskMoreDetailsPage();
         } else if (PerformTaskPage.TOKEN.equals(token) && isUserAuthorized(PerformTaskPage.PRIVILEGES, currentUserAccessRights)) {
             return new PerformTaskPage();
@@ -289,8 +278,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessListingPage();
         } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessQuickDetailsPage();
-        } else if (ProcessMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
-            return new ProcessMoreDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(StartProcessFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new StartProcessFormPage();
 
@@ -389,7 +376,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ProfileListingPage.TOKEN, ProfileListingPage.PRIVILEGES);
         pagePrivileges.put(ProfileMoreDetailsPage.TOKEN, ProfileMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(ProfileQuickDetailsPage.TOKEN, ProfileQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(EditProfilePage.TOKEN, EditProfilePage.PRIVILEGES);
         pagePrivileges.put(AddGroupToProfileMemberPage.TOKEN, AddGroupToProfileMemberPage.PRIVILEGES);
         pagePrivileges.put(AddRoleToProfileMemberPage.TOKEN, AddRoleToProfileMemberPage.PRIVILEGES);
         pagePrivileges.put(AddUserToProfileMemberPage.TOKEN, AddUserToProfileMemberPage.PRIVILEGES);
@@ -407,7 +393,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(PerformTaskPage.TOKEN, PerformTaskPage.PRIVILEGES);
         pagePrivileges.put(ProcessListingPage.TOKEN, ProcessListingPage.PRIVILEGES);
         pagePrivileges.put(ProcessQuickDetailsPage.TOKEN, ProcessQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ProcessMoreDetailsPage.TOKEN, ProcessMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(StartProcessFormPage.TOKEN, StartProcessFormPage.PRIVILEGES);
         pagePrivileges.put(CaseListingPage.TOKEN, CaseListingPage.PRIVILEGES);
         pagePrivileges.put(CaseQuickDetailsPage.TOKEN, CaseQuickDetailsPage.PRIVILEGES);
@@ -425,7 +410,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         final String sessionId = new String(Session.getParameter("session_id"));
 
-        for (final String privilege : privileges) {
+        for (final String privilege: privileges) {
 
             final String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 

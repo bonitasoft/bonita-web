@@ -63,19 +63,16 @@ public class PlatformTenantConfigProperties {
     /**
      * Platform properties instance
      */
-    private static PlatformTenantConfigProperties instance = new PlatformTenantConfigProperties();
+    private static volatile PlatformTenantConfigProperties instance = new PlatformTenantConfigProperties();
 
     /**
      * @return the PlatformProperties instance
      */
-    protected static synchronized PlatformTenantConfigProperties getInstance() {
+    protected static PlatformTenantConfigProperties getInstance() {
         return instance;
     }
 
-    /**
-     * Private contructor to prevent instantiation
-     */
-    private PlatformTenantConfigProperties() {
+    PlatformTenantConfigProperties() {
         propertiesFile = new File(WebBonitaConstantsUtils.getInstance().getConfFolder(), PROPERTIES_FILENAME);
         InputStream inputStream = null;
         try {

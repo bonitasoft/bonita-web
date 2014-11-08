@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,17 +29,18 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 
 /**
- * 
+ *
  * Login manager imlement by JAAS
- * 
+ *
  * @author Vincent Elcrin
- * 
+ *
  */
 public class JAASLoginManagerImpl implements LoginManager {
 
@@ -57,9 +58,9 @@ public class JAASLoginManagerImpl implements LoginManager {
      * {@inheritDoc}
      */
     @Override
-    public String getLoginpageURL(HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuffer url = new StringBuffer();
-        String context = request.getContextPath();
+        final String context = request.getContextPath();
         url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
             url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");
@@ -70,11 +71,11 @@ public class JAASLoginManagerImpl implements LoginManager {
 
     @Override
     public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
-        long tenantId = credentials.getTenantId();
+        final long tenantId = credentials.getTenantId();
         final CallbackHandler handler = createConsoleCallbackHandler(request, String.valueOf(tenantId));
         try {
-            String loginContextName = getLoginContextName(tenantId);
-            LoginContext loginContext = new LoginContext(loginContextName, handler);
+            final String loginContextName = getLoginContextName(tenantId);
+            final LoginContext loginContext = new LoginContext(loginContextName, handler);
             loginContext.login();
             loginContext.logout();
         } catch (final LoginException e) {
@@ -90,20 +91,24 @@ public class JAASLoginManagerImpl implements LoginManager {
             local = request.getParameterMap().get("_l")[0];
         }
         final User user = new User(request.getUsername(), local);
-        final APISession apiSession = getUserLogger().doLogin(credentials);
-        user.setUseCredentialTransmission(useCredentialsTransmission(apiSession));
-        SessionUtil.sessionLogin(user, apiSession, request.getHttpSession());
+        final APISession apiSession = createUserLogger().doLogin(credentials);
+        final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(apiSession);
+        SessionUtil.sessionLogin(user, apiSession, permissionsBuilder.getPermissions(), request.getHttpSession());
     }
 
-    private ConsoleCallbackHandler createConsoleCallbackHandler(final HttpServletRequestAccessor request, String tenantId) {
+    private ConsoleCallbackHandler createConsoleCallbackHandler(final HttpServletRequestAccessor request, final String tenantId) {
         return new ConsoleCallbackHandler(request.getUsername(), request.getPassword(), tenantId);
     }
 
     /**
      * Overridden in SP
      */
-    protected UserLogger getUserLogger() {
+    protected UserLogger createUserLogger() {
         return new UserLogger();
+    }
+
+    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
+        return PermissionsBuilderAccessor.createPermissionBuilder(session);
     }
 
     private String getLoginContextName(final long tenantId) {
@@ -114,10 +119,6 @@ public class JAASLoginManagerImpl implements LoginManager {
             loginContextName = JAAS_AUTH_LOGIN_CONTEXT;
         }
         return loginContextName;
-    }
-
-    private boolean useCredentialsTransmission(final APISession apiSession) {
-        return PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).useCredentialsTransmission();
     }
 
 }
