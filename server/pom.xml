@@ -189,6 +189,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
                 <executions>
                     <execution>
                         <id>provide-jar</id>
@@ -336,7 +337,7 @@
                                 <version>${slf4j.version}</version>
                                 <scope>runtime</scope>
 					        </dependency>
-
+					        
                             <!-- DATASOURCE JNDI -->
                             <dependency>
                                 <groupId>commons-dbcp</groupId>
@@ -384,7 +385,7 @@
                             </dependency>
                         </dependencies>
                     </plugin>
-
+                    
                     <!-- Themes needs to be on the classes path -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
