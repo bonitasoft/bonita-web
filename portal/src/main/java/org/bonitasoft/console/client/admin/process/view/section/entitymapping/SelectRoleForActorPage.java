@@ -37,6 +37,8 @@ import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 
 /**
+ * popup
+ *
  * @author Julien Mege
  * 
  */

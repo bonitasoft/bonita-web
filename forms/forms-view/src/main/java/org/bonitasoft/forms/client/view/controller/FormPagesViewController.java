@@ -66,9 +66,7 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -1278,34 +1276,6 @@ public class FormPagesViewController {
             }
 
             enableButtons(true);
-        }
-    }
-
-    protected class GetTokenAsyncCallback implements AsyncCallback<String> {
-
-        protected String url;
-
-        public GetTokenAsyncCallback(final String url) {
-            this.url = url;
-        }
-
-        @Override
-        public void onSuccess(final String temporaryToken) {
-            url += "&" + URLUtils.USER_CREDENTIALS_PARAM + "=" + temporaryToken;
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowAssign(url);
-            }
-        }
-
-        @Override
-        public void onFailure(final Throwable t) {
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowAssign(url);
-            }
         }
     }
 
