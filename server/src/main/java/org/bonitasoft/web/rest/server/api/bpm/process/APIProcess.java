@@ -154,7 +154,7 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
     private void fillNumberOfFailedCasesIfFailedCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_FAILED_CASES)) {
             final Map<String, String> filters = new HashMap<String, String>();
-            filters.put(ProcessItem.ATTRIBUTE_ID, item.getId().toString());
+            filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
             filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.toString());
             item.setAttribute(ProcessItem.COUNTER_FAILED_CASES, getCaseDatastore().count(null, null, filters));
         }
@@ -164,7 +164,7 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
         if (counters.contains(ProcessItem.COUNTER_OPEN_CASES)) {
             // Open is all states without the terminal states
             item.setAttribute(ProcessItem.COUNTER_OPEN_CASES,
-                    getCaseDatastore().count(null, null, Collections.singletonMap(ProcessItem.ATTRIBUTE_ID, item.getId().toString())));
+                    getCaseDatastore().count(null, null, Collections.singletonMap(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString())));
         }
     }
 

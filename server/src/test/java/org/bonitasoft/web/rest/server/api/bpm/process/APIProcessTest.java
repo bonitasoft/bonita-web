@@ -143,7 +143,7 @@ public class APIProcessTest {
 
         final long numberOfFailedCases = 2L;
         final Map<String, String> filters = new HashMap<String, String>();
-        filters.put(ProcessItem.ATTRIBUTE_ID, item.getId().toString());
+        filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
         filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.toString());
         doReturn(numberOfFailedCases).when(caseDatastore).count(null, null, filters);
 
@@ -184,7 +184,7 @@ public class APIProcessTest {
 
         final long numberOfOpenCases = 2L;
         doReturn(numberOfOpenCases).when(caseDatastore)
-                .count(null, null, Collections.singletonMap(ProcessItem.ATTRIBUTE_ID, id.toString()));
+                .count(null, null, Collections.singletonMap(CaseItem.ATTRIBUTE_PROCESS_ID, id.toString()));
 
         // When
         apiProcess.fillCounters(item, counters);
