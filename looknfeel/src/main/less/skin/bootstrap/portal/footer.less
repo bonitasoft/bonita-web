@@ -9,7 +9,7 @@
   color: @footer-fontColor;
   display: block; // could be a variable
   line-height: 11px;
-  .fontSize(@footer-fontSize);
+  font-size: percentage(@footer-fontSize / @skinFontSize);
   padding: 12px 0;
   text-align: center;
 }
