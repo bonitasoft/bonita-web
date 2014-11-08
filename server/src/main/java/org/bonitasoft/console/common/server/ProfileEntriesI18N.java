@@ -49,7 +49,7 @@ public class ProfileEntriesI18N {
 
     protected static final String ORGANIZATION = _("Organization");
 
-    protected static final String PROCESS_MANAGEMENT = _("Processe management");
+    protected static final String PROCESS_MANAGEMENT = _("Process management");
 
     protected static final String CONFIGURATION = _("Configuration");
 

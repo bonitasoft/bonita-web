@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013 BonitaSoft S.A.
+ * Copyright (C) 2012 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,24 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client;
+package org.bonitasoft.web.toolkit.client.eventbus.events;
 
-import com.google.gwt.user.client.Element;
+import com.google.gwt.event.shared.EventHandler;
 
 /**
- * allows to know if the class implementing this interface can manage its rendering itself
- *
- * @author Julien Reboul
+ * @author Vincent Elcrin
  *
  */
-public interface SelfRenderingView {
+public interface MenuClickHandler extends EventHandler {
 
-    /**
-     * render the view content
-     *
-     * @param rootElement
-     *            the root Element to render into
-     */
-    void render(Element rootElement);
-
+    public abstract void onMenuClick(MenuClickEvent menuClickEvent);
 }

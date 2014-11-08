@@ -1,47 +1,42 @@
 package org.bonitasoft.console.client.angular;
 
-import static com.google.gwt.query.client.GQuery.$;
-
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
-import org.bonitasoft.web.toolkit.client.SelfRenderingView;
+import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
+import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickEvent;
+import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickHandler;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
-import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author Vincent Elcrin
  * @author Julien Reboul
  */
-public class AngularIFrameView extends RawView implements SelfRenderingView {
+public class AngularIFrameView extends RawView {
 
-    private String url;
+    private final IFrameView iframe = new IFrameView();
 
-    private boolean displayed = false;
+    public AngularIFrameView() {
+        MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
 
-    private static final AngularResourceRoot ROOT = GWT.create(AngularResourceRoot.class);
+            @Override
+            public void onMenuClick(final MenuClickEvent menuClickEvent) {
+                // remove angular parameters from url
+                final AngularParameterCleaner angularParameterCleaner = new AngularParameterCleaner(menuClickEvent.getToken(), getHash());
 
-    public AngularIFrameView(final String token, final String url, final String tokens) {
-        setToken(token);
-        this.url = appendParamFromTokensToUrl(token + "_tab", tokens, url);
-        this.url = appendParamFromTokensToUrl(token + "_id", tokens, url);
-    }
-
-    protected static String appendParamFromTokensToUrl(final String param, final String tokens, final String url) {
-        if (tokens != null) {
-            final MatchResult paramMatcher = RegExp.compile("(^|[&\\?#])" + param + "=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
-            if (paramMatcher != null && paramMatcher.getGroupCount() > 0) {
-                return url + "/" + paramMatcher.getGroup(2);
+                updateHash(angularParameterCleaner.getHashWithoutAngularParameters());
             }
-        }
-        return url;
+        });
     }
+
+    public native String getHash() /*-{
+        return $wnd.location.hash;
+    }-*/;
+
+    public native void updateHash(String hash) /*-{
+        $wnd.location.hash = hash;
+    }-*/;
 
     @Override
     public String defineToken() {
@@ -52,12 +47,7 @@ public class AngularIFrameView extends RawView implements SelfRenderingView {
     public void buildView() {
         final SimplePanel panel = new SimplePanel();
         panel.setStyleName("body");
-        new CheckValidSessionBeforeAction(new Action() {
-            @Override
-            public void execute() {
-                panel.add(new IFrameView(ROOT.contextualize(url)));
-            }
-        }).execute();
+        panel.add(iframe);
         addBody(new UiComponent(panel));
         addClass("page page_custompage_");
     }
@@ -70,9 +60,12 @@ public class AngularIFrameView extends RawView implements SelfRenderingView {
      * @param url
      *            Iframe url to set
      */
-    public void setUrl(final String url) {
-        this.url = url;
+    public void setUrl(final String url, final String token, final String queryString) {
         setToken(token);
+        iframe.setUrl(new AngularUrlBuilder(url)
+        .appendQueryStringParameter(token + "_id", getHash())
+        .appendQueryStringParameter(token + "_tab", getHash())
+        .build());
     }
 
     /**
@@ -83,14 +76,4 @@ public class AngularIFrameView extends RawView implements SelfRenderingView {
         return token;
     }
 
-    /**
-     * @see org.bonitasoft.web.toolkit.client.SelfRenderingView#render(com.google.gwt.user.client.Element)
-     */
-    @Override
-    public void render(final Element rootElement) {
-        if (!displayed) {
-            $(rootElement).empty();
-            displayed = true;
-        }
-    }
 }
