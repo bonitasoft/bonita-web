@@ -52,7 +52,6 @@ public class TimerEventTriggerResource extends CommonResource {
 
     @Put("json")
     public TimerEventTrigger updateTimerEventTrigger(final TimerEventTrigger trigger) throws Exception {
-        System.out.println("json input: " + trigger);
         final String triggerId = getAttribute(ID_PARAM_NAME);
         if (triggerId == null) {
             throw new APIException("Attribute '" + ID_PARAM_NAME + "' is mandatory");
