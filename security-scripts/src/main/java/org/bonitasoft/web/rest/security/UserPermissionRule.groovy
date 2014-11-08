@@ -19,6 +19,7 @@ import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.session.APISession
 
 /**
@@ -56,8 +57,12 @@ class UserPermissionRule implements PermissionRule {
             if (filters.containsKey("task_id")) {
                 def taskId = Long.valueOf(filters.get("task_id"))
                 def processAPI = apiAccessor.getProcessAPI()
-                def flowNodeInstance = processAPI.getFlowNodeInstance(taskId)
-                return processAPI.isUserProcessSupervisor(flowNodeInstance.getProcessDefinitionId(), currentUserId)
+                try {
+                    def flowNodeInstance = processAPI.getFlowNodeInstance(taskId)
+                    return processAPI.isUserProcessSupervisor(flowNodeInstance.getProcessDefinitionId(), currentUserId)
+                } catch (NotFoundException e) {
+                    return true
+                }
             }
             if (filters.containsKey("process_id")) {
                 def processId = Long.valueOf(filters.get("process_id"))
