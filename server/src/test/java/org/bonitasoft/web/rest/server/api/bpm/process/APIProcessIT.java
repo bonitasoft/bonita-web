@@ -144,7 +144,7 @@ public class APIProcessTest {
         final long numberOfFailedCases = 2L;
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
-        filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.toString());
+        filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
         doReturn(numberOfFailedCases).when(caseDatastore).count(null, null, filters);
 
         // When
