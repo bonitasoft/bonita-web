@@ -42,29 +42,13 @@ import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 /**
  * @author Séverin Moussel
+ * @author Baptiste Mesta
+ * @author Fabio Lombardi
  * 
  */
 public abstract class ServletCall {
 
     private String inputStream = null;
-
-    // /**
-    // * @param parameter
-    // * @return
-    // */
-    // private List<ItemSearchOrder> parseOrders(final String parameter) {
-    // if (this.parameters == null) {
-    // return null;
-    // }
-    // final String[] split = parameter.split("\\s*,\\s*");
-    // final List<ItemSearchOrder> results = new ArrayList<ItemSearchOrder>();
-    // for (int i = 0; i < split.length; i++) {
-    // final String[] orderSplit = split[i].split("\\s");
-    // results.add(new ItemSearchOrder(orderSplit[0], orderSplit.length == 1 || orderSplit[1].equalsIgnoreCase("asc")));
-    // }
-    //
-    // return results;
-    // }
 
     /**
      * The parameters of the URL.<br />
@@ -95,7 +79,15 @@ public abstract class ServletCall {
         this.request = request;
         this.response = response;
 
-        parseRequest(request);
+        parseRequest(request, response);
+    }
+
+    /**
+     * Constructor for tests
+     */
+    public ServletCall(){
+        this.request = null;
+        this.response = null;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,17 +356,26 @@ public abstract class ServletCall {
      * <li>item id (if defined)</li>
      * <li>parameters</li>
      * </ul>
-     * 
+     *
      * @param request
+     * @param response
      */
     @SuppressWarnings("unchecked")
-    protected void parseRequest(final HttpServletRequest request) {
+    protected void parseRequest(final HttpServletRequest request, HttpServletResponse response) {
         // Create a new HashMap and copy all the elements in the new one
         parameters.putAll(this.request.getParameterMap());
     }
 
     public String getLocale() {
         return LocaleUtils.getUserLocale(request);
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public HttpServletResponse getResponse() {
+        return response;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

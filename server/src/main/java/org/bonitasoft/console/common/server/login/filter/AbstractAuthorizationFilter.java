@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class AbstractAuthorizationFilter implements Filter {
 
-    
+
     /**
      * Logger
      */
@@ -49,23 +49,33 @@ public abstract class AbstractAuthorizationFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        final HttpServletRequest httpRequest = (HttpServletRequest) request;
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+        final HttpServletRequest httpRequest = getRequest(request);
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         final String requestURL = httpRequest.getRequestURI();
-        
+
         if (sessionIsNotNeeded(requestURL, excludePatterns)) {
-            chain.doFilter(request, response);
+            chain.doFilter(httpRequest, httpResponse);
         } else if (checkValidCondition(httpRequest, httpResponse)) {
-            chain.doFilter(request, response);    
+            chain.doFilter(httpRequest, httpResponse);
         }
+    }
+
+    /**
+     * Override this to be able to wrap the servlet (this is useful if the filter needs to read the body for example)
+     * 
+     * @param request the servlet request
+     * @return the HttpServletRequest
+     */
+    protected HttpServletRequest getRequest(final ServletRequest request) {
+        return (HttpServletRequest) request;
     }
 
     @Override
     public void destroy() {
-        
+
     }
-    
+
     protected boolean sessionIsNotNeeded(final String requestURL, final String excludePatterns) {
         boolean isMatched = false;
         if (excludePatterns != null) {
@@ -79,6 +89,6 @@ public abstract class AbstractAuthorizationFilter implements Filter {
         }
         return isMatched;
     }
-    
+
     abstract boolean checkValidCondition(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException;
 }

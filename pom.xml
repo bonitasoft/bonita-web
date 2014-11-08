@@ -9,6 +9,7 @@
 
 	<modules>
         <module>looknfeel</module>
+        <module>security-scripts</module>
 		<module>bonita-home</module>
         <module>test-toolkit</module>
 		<module>common</module>
@@ -96,6 +97,12 @@
 			</dependency>
 
 			<!-- MISCELLANEOUS -->
+			<!-- groovy version should be sync with version used by bonita-server -->
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>1.8.6</version>
+			</dependency>
 			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
