@@ -202,10 +202,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProcessConnectorDependency();
             } else if ("caseVariable".equals(resourceToken)) {
                 return new APICaseVariable();
-            } else if ("document".equals(resourceToken)) {
-                return new APIDocument();
-            } else if ("archiveddocument".equals(resourceToken)) {
-                return new APIArchivedDocument();
             }
         } else if ("platform".equals(apiToken)) {
             if ("platform".equals(resourceToken)) {

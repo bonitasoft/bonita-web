@@ -55,7 +55,6 @@ import org.bonitasoft.console.client.admin.profile.view.AddMembershipToProfileMe
 import org.bonitasoft.console.client.admin.profile.view.AddRoleToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.AddUserToProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.DeleteProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.EditProfilePage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
@@ -72,7 +71,6 @@ import org.bonitasoft.console.client.user.cases.view.CaseQuickDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.console.client.user.task.view.ArchivedHumanTaskQuickDetailsPage;
 import org.bonitasoft.console.client.user.task.view.HumanTaskQuickDetailsPage;
-import org.bonitasoft.console.client.user.task.view.ProcessMoreDetailsPage;
 import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.console.client.user.task.view.more.ArchivedHumanTaskMoreDetailsPage;
@@ -238,8 +236,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProfileMoreDetailsPage();
         } else if (ProfileQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProfileQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProfileQuickDetailsPage();
-        } else if (EditProfilePage.TOKEN.equals(token) && isUserAuthorized(EditProfilePage.PRIVILEGES, currentUserAccessRights)) {
-            return new EditProfilePage();
         } else if (AddGroupToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddGroupToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
             return new AddGroupToProfileMemberPage();
         } else if (AddRoleToProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(AddRoleToProfileMemberPage.PRIVILEGES, currentUserAccessRights)) {
@@ -297,8 +293,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessListingPage();
         } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsPage.PRIVILEGES, currentUserAccessRights)) {
             return new ProcessQuickDetailsPage();
-        } else if (ProcessMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsPage.PRIVILEGES, currentUserAccessRights)) {
-            return new ProcessMoreDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(StartProcessFormPage.PRIVILEGES, currentUserAccessRights)) {
             return new StartProcessFormPage();
 
@@ -384,7 +378,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ProfileListingPage.TOKEN, ProfileListingPage.PRIVILEGES);
         pagePrivileges.put(ProfileMoreDetailsPage.TOKEN, ProfileMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(ProfileQuickDetailsPage.TOKEN, ProfileQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(EditProfilePage.TOKEN, EditProfilePage.PRIVILEGES);
         pagePrivileges.put(AddGroupToProfileMemberPage.TOKEN, AddGroupToProfileMemberPage.PRIVILEGES);
         pagePrivileges.put(AddRoleToProfileMemberPage.TOKEN, AddRoleToProfileMemberPage.PRIVILEGES);
         pagePrivileges.put(AddUserToProfileMemberPage.TOKEN, AddUserToProfileMemberPage.PRIVILEGES);
@@ -402,7 +395,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(PerformTaskPage.TOKEN, PerformTaskPage.PRIVILEGES);
         pagePrivileges.put(ProcessListingPage.TOKEN, ProcessListingPage.PRIVILEGES);
         pagePrivileges.put(ProcessQuickDetailsPage.TOKEN, ProcessQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ProcessMoreDetailsPage.TOKEN, ProcessMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(StartProcessFormPage.TOKEN, StartProcessFormPage.PRIVILEGES);
         pagePrivileges.put(CaseListingPage.TOKEN, CaseListingPage.PRIVILEGES);
         pagePrivileges.put(CaseQuickDetailsPage.TOKEN, CaseQuickDetailsPage.PRIVILEGES);

@@ -50,7 +50,6 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -205,16 +204,16 @@ public class PageflowViewController {
                 if (processUUIDStr != null) {
                     final String autoInstantiate = (String) urlContext.get(URLUtils.AUTO_INSTANTIATE);
                     // retrieve the already started cookie value
-                    String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
-                    ArrayList<String> processIdArray = new ArrayList<String>();
+                    final String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
+                    final ArrayList<String> processIdArray = new ArrayList<String>();
                     boolean processIdIsInCookie = false;
                     // build the new array to set in the cookie after consuming
                     if (processIdArrayAsString != null) {
-                        JSONValue jsonValue = JSONParser.parseStrict(processIdArrayAsString);
-                        JSONArray jsonArray = jsonValue.isArray();
+                        final JSONValue jsonValue = JSONParser.parseStrict(processIdArrayAsString);
+                        final JSONArray jsonArray = jsonValue.isArray();
                         if (jsonArray != null) {
                             for (int i = 0; i < jsonArray.size(); i++) {
-                                String cookieValue = jsonArray.get(i).isString().stringValue();
+                                final String cookieValue = jsonArray.get(i).isString().stringValue();
                                 if (!processUUIDStr.equals(cookieValue)) {
                                     processIdArray.add(cookieValue);
                                 } else {
@@ -363,39 +362,6 @@ public class PageflowViewController {
                 final String errorMessage = FormsResourceBundle.getErrors().taskExecutionError();
                 formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
                         new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, t, elementId));
-            }
-        }
-    }
-
-    protected class GetTokenAsyncCallback implements AsyncCallback<String> {
-
-        protected String applicationURL;
-
-        protected Map<String, Object> urlContext;
-
-        public GetTokenAsyncCallback(final String applicationURL, final Map<String, Object> urlContext) {
-            this.applicationURL = applicationURL;
-            this.urlContext = urlContext;
-        }
-
-        @Override
-        public void onSuccess(final String temporaryToken) {
-            urlContext.put(URLUtils.USER_CREDENTIALS_PARAM, temporaryToken);
-            final String url = urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowRedirect(url);
-            }
-        }
-
-        @Override
-        public void onFailure(final Throwable t) {
-            final String url = urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowRedirect(url);
             }
         }
     }

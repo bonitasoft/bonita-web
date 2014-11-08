@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.Label;
 
 /**
  * View controller of the form module
- * 
+ *
  * @author Anthony Birembaut
  */
 public class FormApplicationViewController {
@@ -169,7 +169,7 @@ public class FormApplicationViewController {
 
     /**
      * Constructor.
-     * 
+     *
      * @param formId
      * @param urlContext
      * @param user
@@ -184,7 +184,7 @@ public class FormApplicationViewController {
 
     /**
      * create the view for the process template and the form page template
-     * 
+     *
      * @param formContainerId
      *            id of the element in which the form has to be placed (if null the form will be insterted at the
      *            end of the body)
@@ -204,7 +204,7 @@ public class FormApplicationViewController {
 
     /**
      * create the view for the form page in the specified node
-     * 
+     *
      * @param formContainerId
      *            id of the element in which the form has to be placed (if null the form will be insterted at the
      *            end of the body)
@@ -216,7 +216,7 @@ public class FormApplicationViewController {
 
     /**
      * create the view for the form page in the specified node
-     * 
+     *
      * @param formContainerId
      *            id of the element in which the form has to be placed (if null the form will be insterted at the
      *            end of the body)
@@ -243,7 +243,7 @@ public class FormApplicationViewController {
 
         /**
          * Constructor
-         * 
+         *
          * @param includeProcessTemplate
          */
         public ApplicationConfigHandler(final boolean includeProcessTemplate) {
@@ -410,19 +410,15 @@ public class FormApplicationViewController {
 
     private ClickHandler goToPortalHandler(final ReducedApplicationConfig applicationConfig) {
         return new ClickHandler() {
-            
+
             @Override
             public void onClick(final ClickEvent event) {
-                
+
                 String userXPURL = applicationConfig.getUserXPURL();
                 if (userXPURL == null) {
                     userXPURL = DEFAULT_USER_XP_URL;
                 }
-                if (user.useCredentialTransmission()) {
-                    formsServiceAsync.generateTemporaryToken(new GenerateTemporaryTokenHandler(userXPURL));
-                } else {
-                    urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
-                }
+                urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
             }
         };
     }
@@ -455,7 +451,7 @@ public class FormApplicationViewController {
 
         /**
          * Constructor
-         * 
+         *
          * @param userXPURL
          */
         public GenerateTemporaryTokenHandler(final String userXPURL) {
