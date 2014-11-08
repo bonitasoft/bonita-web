@@ -113,7 +113,7 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
             return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), searchOptions);
         }
         if (filters.containsKey(CaseItem.FILTER_STATE)
-                && ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE)))) {
+                && ("failed".equalsIgnoreCase(filters.get(CaseItem.FILTER_STATE)) || "error".equalsIgnoreCase(filters.get(CaseItem.FILTER_STATE)))) {
             return processAPI.searchFailedProcessInstances(searchOptions);
         }
 
