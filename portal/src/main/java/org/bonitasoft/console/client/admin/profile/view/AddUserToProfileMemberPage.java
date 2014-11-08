@@ -42,7 +42,10 @@ import org.bonitasoft.web.toolkit.client.ui.component.table.Table;
 
 /**
  * User List page
- * 
+ *
+ * Used as popup
+ *
+ *
  * @author Yongtao Guo
  */
 public class AddUserToProfileMemberPage extends Page {
