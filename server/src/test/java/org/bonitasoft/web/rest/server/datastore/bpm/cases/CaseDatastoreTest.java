@@ -33,6 +33,7 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -146,6 +147,15 @@ public class CaseDatastoreTest {
     @Test
     public final void search_should_search_failed_process_instances_and_convert_them_to_CaseItem_when_filter_on_error_state() throws SearchException {
         search_should_search_failed_process_instances_and_convert_them_to_CaseItem_when_filter_on_state("error");
+    }
+
+    /**
+     * Test method for {@link org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore#search(int, int, String, String, Map).
+     */
+    @Test
+    public final void search_should_search_failed_process_instances_and_convert_them_to_CaseItem_when_filter_on_error_of_ProcessInstanceState_state()
+            throws SearchException {
+        search_should_search_failed_process_instances_and_convert_them_to_CaseItem_when_filter_on_state(ProcessInstanceState.ERROR.name());
     }
 
     /**

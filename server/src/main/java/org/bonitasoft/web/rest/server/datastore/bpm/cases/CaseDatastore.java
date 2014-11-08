@@ -76,15 +76,8 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
         builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.CANCELLED.getId());
         builder.differentFrom(ProcessInstanceSearchDescriptor.STATE_ID, ProcessInstanceState.ABORTED.getId());
 
-        // Run search depending on filters passed
         final SearchResult<ProcessInstance> searchResult = searchProcessInstances(filters, builder.done());
-
-        // Convert to ConsoleItems
-        return new ItemSearchResult<CaseItem>(
-                page,
-                resultsByPage,
-                searchResult.getCount(),
-                convertEngineToConsoleItemsList(searchResult.getResult()));
+        return convertEngineToConsoleSearch(page, resultsByPage, searchResult);
     }
 
     void addCallerFilterToSearchBuilderIfNecessary(final Map<String, String> filters, final SearchOptionsBuilder builder) {
@@ -110,7 +103,7 @@ public class CaseDatastore extends CommonDatastore<CaseItem, ProcessInstance> im
                 return processAPI.searchOpenProcessInstancesSupervisedBy(MapUtil.getValueAsLong(filters, CaseItem.FILTER_SUPERVISOR_ID), searchOptions);
             }
             if (filters.containsKey(CaseItem.FILTER_STATE)
-                    && ("failed".equals(filters.get(CaseItem.FILTER_STATE)) || "error".equals(filters.get(CaseItem.FILTER_STATE)))) {
+                    && ("failed".equalsIgnoreCase(filters.get(CaseItem.FILTER_STATE)) || "error".equalsIgnoreCase(filters.get(CaseItem.FILTER_STATE)))) {
                 return processAPI.searchFailedProcessInstances(searchOptions);
             }
 

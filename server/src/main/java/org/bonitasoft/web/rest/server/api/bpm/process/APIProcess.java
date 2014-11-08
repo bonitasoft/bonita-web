@@ -155,7 +155,7 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
         if (counters.contains(ProcessItem.COUNTER_FAILED_CASES)) {
             final Map<String, String> filters = new HashMap<String, String>();
             filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
-            filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.toString());
+            filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
             item.setAttribute(ProcessItem.COUNTER_FAILED_CASES, getCaseDatastore().count(null, null, filters));
         }
     }
