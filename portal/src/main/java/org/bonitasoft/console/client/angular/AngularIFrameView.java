@@ -15,6 +15,14 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class AngularIFrameView extends RawView {
 
+    public static final String CASE_LISTING_ADMIN_TOKEN = "caselistingadmin";
+
+    public static final String CASE_LISTING_ADMIN_ARCHIVED_TAB = "archived";
+
+    public static final String CASE_LISTING_ADMIN_TAB_TOKEN = "_tab";
+
+    public static final String CASE_LISTING_ADMIN_PROCESS_ID_TOKEN = "_processId";
+
     private final IFrameView iframe = new IFrameView();
 
     public AngularIFrameView() {
@@ -62,10 +70,25 @@ public class AngularIFrameView extends RawView {
      */
     public void setUrl(final String url, final String token, final String queryString) {
         setToken(token);
-        iframe.setUrl(new AngularUrlBuilder(url)
+        iframe.setUrl(buildAngularUrl(url, token, queryString));
+    }
+
+    /**
+     * build angular Url
+     *
+     * @param url
+     *            the angular base path
+     * @param token
+     *            the current page token
+     * @param queryString
+     *            the URL query to set
+     * @return the angular url to access for the given token
+     */
+    protected String buildAngularUrl(final String url, final String token, final String queryString) {
+        return new AngularUrlBuilder(url)
         .appendQueryStringParameter(token + "_id", getHash())
         .appendQueryStringParameter(token + "_tab", getHash())
-        .build());
+        .build() + queryString;
     }
 
     /**

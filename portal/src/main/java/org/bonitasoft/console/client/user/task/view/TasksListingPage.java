@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.formatter.OverdueDateCellFormatter;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
@@ -67,7 +67,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         PRIVILEGES.add(TasksListingPage.TOKEN);
         PRIVILEGES.add(TaskListingAdminPage.TOKEN); // FIX ME: we should create a humantaskmoredetails admin page so ill never need this
         PRIVILEGES.add(CaseListingPage.TOKEN);
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
@@ -117,7 +117,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemTable availableItemTable() {
-        ItemTable table = buildItemTableColumns();
+        final ItemTable table = buildItemTableColumns();
         table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
         table.addAction(newRefreshButton(table));
         table.addGroupedAction(newAssignToMeButton());
@@ -131,7 +131,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemTable unasignedItemTable() {
-        ItemTable table = buildItemTableColumns();
+        final ItemTable table = buildItemTableColumns();
         table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
         table.addAction(newRefreshButton(table));
         table.addGroupedAction(newAssignToMeButton());
@@ -144,7 +144,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
 
     private ItemTable assignedItemTable() {
-        ItemTable table = buildItemTableColumns();
+        final ItemTable table = buildItemTableColumns();
         table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
         table.addAction(newRefreshButton(table));
         table.addGroupedAction(newUnasignButton());
@@ -164,15 +164,15 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
 
     private ItemTable buildItemTableColumns() {
         return new ItemTable(Definitions.get(HumanTaskDefinition.TOKEN))
-                .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
-                .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"), true, true)
-                .addColumn(
-                        new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
-                .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
-                .setOrder(HumanTaskItem.ATTRIBUTE_PRIORITY, false);
+        .addColumn(HumanTaskItem.ATTRIBUTE_PRIORITY, _("Priority"), true)
+        .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+        .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"), true, true)
+        .addColumn(
+                new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
+                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
+                        .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
+                        .setOrder(HumanTaskItem.ATTRIBUTE_PRIORITY, false);
     }
 
     private ItemListingTable performedTasksTable() {
@@ -181,13 +181,13 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
 
     private ItemTable performedTasksItemTable() {
         return new ItemTable(Definitions.get(ArchivedHumanTaskDefinition.TOKEN))
-                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
-                .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
-                .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
-                .addColumn(
-                        new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
-                .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
+        .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
+        .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
+        .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
+        .addColumn(
+                new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
+                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                        .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
     }
 
     private Link newRefreshButton(final ItemTable table) {
@@ -249,19 +249,19 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
 
     private ItemListingFilter myTasksFilter() {
         return new ItemListingFilter(FILTER_ASSIGNED, _("My tasks"), _("Tasks assigned to me"), TABLE_ASSIGNED)
-                .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
-                .addFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId());
+        .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
+        .addFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId());
     }
 
     private ItemListingFilter availableTasksFilter() {
         return new ItemListingFilter(FILTER_UNASSIGNED, _("Available tasks"), _("Unassigned tasks I can do"), TABLE_UNASSIGNED)
-                .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
-                .addFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, "0");
+        .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId())
+        .addFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, "0");
     }
 
     private ItemListingFilter toDoFilter() {
         return new ItemListingFilter(FILTER_AVAILABLE, _("To do"), _("Tasks I can do"), TABLE_AVAILABLE)
-                .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());
+        .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());
     }
 
     @Override
@@ -284,10 +284,10 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     protected ItemListingResourceFilter defineResourceFilters() {
         return new AppResourceFilter(
                 new APISearchRequest(Definitions.get(ProcessDefinition.TOKEN)).addFilter(ProcessItem.FILTER_USER_ID, Session.getUserId().toString())
-                        .addFilter(ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS, "true"),
+                .addFilter(ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS, "true"),
                 TABLE_AVAILABLE)
-                .addFilterMapping(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID)
-                .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());
+        .addFilterMapping(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID)
+        .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTaskPage;
@@ -96,8 +95,6 @@ import com.google.gwt.user.client.History;
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
-    public static String CASE_LIST_PAGE = "ng-caselistingadmin";
-
     protected Map<String, String> angularViewsMap = new HashMap<String, String>();
 
     protected AngularIFrameView angularFrame = new AngularIFrameView();
@@ -113,7 +110,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      * Default Constructor.
      */
     public ConsoleFactoryClient() {
-        angularViewsMap.put(CASE_LIST_PAGE, "/admin/cases/list");
+        angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
     }
 
     private List<String> currentUserAccessRights = null;
@@ -135,8 +132,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new DeactivateUserWarningPopUp();
 
             // Manage Cases pages
-        } else if (CaseListingAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseListingAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new CaseListingAdminPage();
         } else if (CaseQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new CaseQuickDetailsAdminPage();
         } else if (CaseMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -184,7 +179,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new ProcessMoreDetailsAdminPage();
-        /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+            /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
             return new StartProcessOnBehalfPage();*/
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
@@ -263,15 +258,15 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new TaskQuickDetailsAdminPage();
         } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new TaskMoreDetailsAdminPage();
-        
-        /* THEME pages
+
+            /* THEME pages
         } else if (ListThemePage.TOKEN.equals(token)) {
             return new ListThemePage();
         } else if (UploadThemePage.TOKEN.equals(token)) {
             return new UploadThemePage();
         } else if (EditThemePage.TOKEN.equals(token)) {
             return new EditThemePage();
-        */
+             */
 
             // Visualize & do tasks
         } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, getCurrentUserAccessRights())) {

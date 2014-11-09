@@ -8,15 +8,15 @@
  *******************************************************************************/
 package org.bonitasoft.console.client.user.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -45,7 +45,7 @@ public class DisplayCaseFormPage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
@@ -75,7 +75,7 @@ public class DisplayCaseFormPage extends Page {
 
     @Override
     public void buildView() {
-        IFrameView view = new IFrameView(getCaseOverviewUrl());
+        final IFrameView view = new IFrameView(getCaseOverviewUrl());
         addBody(new UiComponent(view));
         view.addTool(new ButtonBack());
     }
@@ -94,8 +94,8 @@ public class DisplayCaseFormPage extends Page {
 
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?ui=form&locale=")
-                .append(locale);
+        .append("homepage?ui=form&locale=")
+        .append(locale);
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
         final String tenantId = ClientApplicationURL.getTenantId();
@@ -104,11 +104,11 @@ public class DisplayCaseFormPage extends Page {
         }
 
         frameURL.append("#form=")
-                .append(processName)
-                .append(UUID_SEPERATOR)
-                .append(processVersion)
-                .append("$recap&mode=form&instance=")
-                .append(caseId).append("&recap=true");
+        .append(processName)
+        .append(UUID_SEPERATOR)
+        .append(processVersion)
+        .append("$recap&mode=form&instance=")
+        .append(caseId).append("&recap=true");
         return frameURL.toString();
     }
 

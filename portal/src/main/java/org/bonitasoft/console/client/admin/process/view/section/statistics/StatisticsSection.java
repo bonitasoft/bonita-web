@@ -16,16 +16,16 @@
  */
 package org.bonitasoft.console.client.admin.process.view.section.statistics;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.ArchivedCasesFiller;
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.FailedTasksFiller;
 import org.bonitasoft.console.client.admin.process.view.section.statistics.filler.OngoingCasesFiller;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.CssId;
@@ -42,19 +42,19 @@ import org.bonitasoft.web.toolkit.client.ui.component.Section;
  */
 public class StatisticsSection extends Section {
 
-    public StatisticsSection(ProcessItem process) {
+    public StatisticsSection(final ProcessItem process) {
         super(new JsId("statistics"), _("Statistics"));
         setId(CssId.QD_SECTION_PROCESS_STATISTICS);
         addBody(numberOfCasesDefinition(process));
         addBody(failedTasksDefinition(process));
     }
 
-    private Definition failedTasksDefinition(ProcessItem process) {
+    private Definition failedTasksDefinition(final ProcessItem process) {
         return new Definition(_("Tasks in failed status: %nb_tasks%", new Arg("nb_tasks", "")), "%%", nbFailedTasksLink(process));
     }
 
-    private Link nbFailedTasksLink(ProcessItem process) {
-        Link nbFailedTasks = new Link(new JsId("nbfailedTasks"), _("?"), _("The number of failed tasks."), newShowTaskListingAction());
+    private Link nbFailedTasksLink(final ProcessItem process) {
+        final Link nbFailedTasks = new Link(new JsId("nbfailedTasks"), _("?"), _("The number of failed tasks."), newShowTaskListingAction());
         nbFailedTasks.addFiller(new FailedTasksFiller(process));
         return nbFailedTasks;
     }
@@ -63,19 +63,19 @@ public class StatisticsSection extends Section {
         return new RedirectionAction(TaskListingAdminPage.TOKEN, getParamMap("_f", TaskListingAdminPage.FILTER_PRIMARY_FAILED));
     }
 
-    private Definition numberOfCasesDefinition(ProcessItem process) {
+    private Definition numberOfCasesDefinition(final ProcessItem process) {
         return new Definition(_("Number of cases: %nb_cases%", new Arg("nb_cases", "")), "%% / %%",
                 nbCasesOngoingLink(process), nbCasesArchivedLink(process));
     }
 
-    private Link nbCasesArchivedLink(ProcessItem process) {
+    private Link nbCasesArchivedLink(final ProcessItem process) {
         final Link nbCasesArchived = new Link(new JsId("nbCasesArchived"), _("%nb_archived% archived", new Arg("nb_archived", "?")),
                 _("The number of archived cases."), newShowArchivedCaseListingAction());
         nbCasesArchived.addFiller(new ArchivedCasesFiller(process));
         return nbCasesArchived;
     }
 
-    private Link nbCasesOngoingLink(ProcessItem process) {
+    private Link nbCasesOngoingLink(final ProcessItem process) {
         final Link nbCasesOngoing = new Link(new JsId("nbCasesOngoing"), _("%nb_ongoing% ongoing", new Arg("nb_ongoing", "?")),
                 _("The number of on going cases."), newShowCaseListingAction(process));
         nbCasesOngoing.addFiller(new OngoingCasesFiller(process));
@@ -83,11 +83,13 @@ public class StatisticsSection extends Section {
     }
 
     protected Action newShowArchivedCaseListingAction() {
-        return new RedirectionAction(CaseListingAdminPage.TOKEN, getParamMap("_f", CaseListingAdminPage.FILTER_SECONDARY_ARCHIVED_CASES));
+        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_ADMIN_TAB_TOKEN
+                + AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, AngularIFrameView.CASE_LISTING_ADMIN_TOKEN));
     }
 
-    protected Action newShowCaseListingAction(ProcessItem process) {
-        return new RedirectionAction(CaseListingAdminPage.TOKEN, getParamMap("_fid", process.getId().toString()));
+    protected Action newShowCaseListingAction(final ProcessItem process) {
+        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_ADMIN_TAB_TOKEN
+                + AngularIFrameView.CASE_LISTING_ADMIN_PROCESS_ID_TOKEN, process.getId().toString()));
     }
 
     protected Map<String, String> getParamMap(final String name, final String value) {
