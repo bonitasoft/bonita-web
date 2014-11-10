@@ -10,7 +10,7 @@
 	<name>forms rpc</name>
 	
   	<properties>
-    	<jacoco.skip>true</jacoco.skip>
+    	<!--<jacoco.skip>true</jacoco.skip>-->
   	</properties>
 	
 	<dependencies>

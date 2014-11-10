@@ -7,6 +7,7 @@ target/
 # intellij settings
 *.iml
 **/.idea/**
+.idea
 
 btm1.tlog
 btm2.tlog
@@ -16,6 +17,6 @@ btm2.tlog
 
 *.orig
 *.tmp
-/forms/
 /common/
+/forms/
 /looknfeel/
