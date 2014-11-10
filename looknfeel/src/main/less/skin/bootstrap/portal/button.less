@@ -28,14 +28,25 @@
   }
 }
 
-.btn-toolbar {
-  margin-bottom: 20px;
-}
+.btn-toolbar {margin-bottom: 20px}
 
 .btn-group .btn {min-width: 30px}
+.btn-action-toggle {margin-right: .5em; visibility: hidden}
+
+.btn-option-list .btn {text-transform: lowercase}
+.btn-option-list .btn:first-letter {text-transform: uppercase}
+
 [class*="btn-action-"] {
   margin-top: -5px;
   background-color: transparent;
   border: 0;
-  line-height: 2em
+  line-height: 2em;
+  cursor: pointer;
+  transition: color .2s ease-in;
 }
+
+[class*="btn-action-"]:hover {text-decoration: none; color: #2a6496}
+.btn-action-toggle {margin-right: .5em; visibility: hidden}
+.btn-action-edit {color: black}
+.btn-group .btn {min-width: 30px}
+.btn-small {font-size: 8px}
