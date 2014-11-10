@@ -97,6 +97,6 @@ class ProcessPermissionRule implements PermissionRule {
             }
             return false
         }
-        return false;
+        return true
     }
 }

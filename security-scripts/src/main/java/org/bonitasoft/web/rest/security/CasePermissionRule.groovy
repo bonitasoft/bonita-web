@@ -59,7 +59,7 @@ class CasePermissionRule implements PermissionRule {
         def body = apiCallContext.getBodyAsJSON()
 
         def string = body.optString("processDefinitionId")
-        if(string == null || string.isEmpty()){
+        if (string == null || string.isEmpty()) {
             return true;
         }
         def processDefinitionId = Long.valueOf(string)
@@ -85,18 +85,11 @@ class CasePermissionRule implements PermissionRule {
             if (apiCallContext.getResourceId() != null) {
                 def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
                 if (apiCallContext.getResourceName().startsWith("archived")) {
-                    //no way to check that the we were involved in an archived case, can just show started by
-                    try {
-
-                        final SearchOptionsBuilder opts = new SearchOptionsBuilder(0, 1);
-                        opts.filter(ArchivedProcessInstancesSearchDescriptor.ID, processInstanceId);
-                        def result = processAPI.searchArchivedProcessInstancesInvolvingUser(currentUserId, opts.done())
-                        def archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceId)
-                        return result.getCount() == 1 || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
-                    } catch (ArchivedProcessInstanceNotFoundException e) {
-                        logger.debug("archived process not found, " + e.getMessage())
-                        return false
-                    }
+                    final SearchOptionsBuilder opts = new SearchOptionsBuilder(0, 1);
+                    opts.filter(ArchivedProcessInstancesSearchDescriptor.ID, processInstanceId);
+                    def result = processAPI.searchArchivedProcessInstancesInvolvingUser(currentUserId, opts.done())
+                    def archivedProcessInstance = processAPI.getArchivedProcessInstance(processInstanceId)
+                    return result.getCount() == 1 || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
                 } else {
                     def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
                     logger.debug("RuleCase : allowed because get on process that user is involved in")
@@ -111,10 +104,13 @@ class CasePermissionRule implements PermissionRule {
                 if (filters.containsKey("processDefinitionId")) {
                     return processAPI.isUserProcessSupervisor(Long.valueOf(filters.get("processDefinitionId")), currentUserId)
                 }
-                if("archivedCase".equals(apiCallContext.getResourceName()) && filters.containsKey("sourceObjectId")){
+                if ("archivedCase".equals(apiCallContext.getResourceName()) && filters.containsKey("sourceObjectId")) {
                     def sourceCase = Long.valueOf(filters.get("sourceObjectId"))
-                    def processInstance = processAPI.getFinalArchivedProcessInstance(sourceCase)
-                    return processAPI.isUserProcessSupervisor(processInstance.getProcessDefinitionId(),currentUserId)
+                    final SearchOptionsBuilder opts = new SearchOptionsBuilder(0, 1);
+                    opts.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, sourceCase);
+                    def result = processAPI.searchArchivedProcessInstancesInvolvingUser(currentUserId, opts.done())
+                    def archivedProcessInstance = processAPI.getFinalArchivedProcessInstance(sourceCase)
+                    return result.getCount() == 1 || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
                 }
             }
         } catch (NotFoundException e) {
