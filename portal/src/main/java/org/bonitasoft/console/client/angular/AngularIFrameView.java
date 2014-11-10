@@ -21,7 +21,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String CASE_LISTING_TAB_TOKEN = "_tab";
 
-    public static final String CASE_LISTING_PROCESS_ID_TOKEN = "_processId";
+    public static final String CASE_LISTING_PROCESS_ID_TOKEN = "processId";
 
     private final IFrameView iframe = new IFrameView();
 
