@@ -14,19 +14,14 @@
  **/
 
 
-
-
-
-
 package org.bonitasoft.web.rest.security
 
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONArray
-import org.json.JSONObject
 
 /**
  *
@@ -52,7 +47,7 @@ class ActorMemberPermissionRule implements PermissionRule {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         } else if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        } else if(apiCallContext.isDELETE()) {
+        } else if (apiCallContext.isDELETE()) {
             //TODO unable to find an actor member with the API!
             return false
         }
@@ -62,30 +57,38 @@ class ActorMemberPermissionRule implements PermissionRule {
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSONArray()
-        for (int i = 0 ; i < body.length(); i++){
+        for (int i = 0; i < body.length(); i++) {
             def object = body.getJSONObject(i)
             def actorId = Long.valueOf(object.optString((ACTOR_ID)))
             if (actorId <= 0) {
                 continue
             }
             def processAPI = apiAccessor.getProcessAPI()
-            def actor = processAPI.getActor(actorId)
-            def processDefinitionId = actor.getProcessDefinitionId()
-            if(!processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)){
-                return false
+            try {
+                def actor = processAPI.getActor(actorId)
+                def processDefinitionId = actor.getProcessDefinitionId()
+                if (!processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)) {
+                    return false
+                }
+            } catch (NotFoundException e) {
+                return true
             }
         }
         return true
     }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def filters = apiCallContext.getFilters()
-        if(filters.containsKey(ACTOR_ID)){
-            def processAPI = apiAccessor.getProcessAPI()
-            def actor = processAPI.getActor(Long.parseLong(filters.get(ACTOR_ID)))
-            def processDefinitionId = actor.getProcessDefinitionId()
-            return processAPI.isUserProcessSupervisor(processDefinitionId,currentUserId)
+        try {
+            def filters = apiCallContext.getFilters()
+            if (filters.containsKey(ACTOR_ID)) {
+                def processAPI = apiAccessor.getProcessAPI()
+                def actor = processAPI.getActor(Long.parseLong(filters.get(ACTOR_ID)))
+                def processDefinitionId = actor.getProcessDefinitionId()
+                return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
+            }
+            return true
+        } catch (NotFoundException e) {
+            return true
         }
-        return true
     }
 }
