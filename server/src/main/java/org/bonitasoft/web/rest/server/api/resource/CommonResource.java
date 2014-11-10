@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -69,6 +70,14 @@ public class CommonResource extends ServerResource {
     public ProcessAPI getEngineProcessAPI() {
         try {
             return TenantAPIAccessor.getProcessAPI(getEngineSession());
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    public CommandAPI getEngineCommandAPI() {
+        try {
+            return TenantAPIAccessor.getCommandAPI(getEngineSession());
         } catch (final Exception e) {
             throw new APIException(e);
         }
