@@ -99,9 +99,6 @@ msgstr ""
 msgid  "Technical error."
 msgstr ""
 
-msgid  "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr ""
-
 msgid  "Process activation state"
 msgstr ""
 
@@ -118,5 +115,8 @@ msgid "Process version"
 msgstr ""
 
 msgid  "Case state"
+msgstr ""
+
+msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
 
