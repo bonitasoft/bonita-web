@@ -58,6 +58,7 @@ public class BonitaRestletApplication extends Application {
 
     @Override
     public void handle(final Request request, final Response response) {
+        request.setLoggable(false);
         Engine.setLogLevel(Level.OFF);
         Engine.setRestletLogLevel(Level.OFF);
         // New Restlet APIs:
