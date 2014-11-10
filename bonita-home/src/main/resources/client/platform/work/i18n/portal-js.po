@@ -59,13 +59,7 @@ msgstr ""
 msgid  "Process name"
 msgstr ""
 
-msgid  "Version"
-msgstr ""
-
 msgid  "Failed"
-msgstr ""
-
-msgid  "State"
 msgstr ""
 
 msgid  "Actions"
@@ -110,3 +104,19 @@ msgstr ""
 
 msgid  "Process activation state"
 msgstr ""
+
+msgid  "Show"
+msgstr ""
+
+msgid  "Healthy"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Process version"
+msgstr ""
+
+msgid  "Case state"
+msgstr ""
+
