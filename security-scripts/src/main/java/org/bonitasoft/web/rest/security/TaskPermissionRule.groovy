@@ -22,6 +22,7 @@ import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
+import org.bonitasoft.engine.bpm.flownode.ArchivedManualTaskInstance
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ManualTaskInstance
 import org.bonitasoft.engine.exception.NotFoundException
@@ -141,8 +142,53 @@ class TaskPermissionRule implements PermissionRule {
 
     private boolean isArchivedFlowNodeAccessible(ProcessAPI processAPI, long taskId, long currentUserId) throws NotFoundException {
         def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(taskId)
-        if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance && currentUserId == archivedFlowNodeInstance.getAssigneeId()) {
-            return true
+        if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance) {
+            if (currentUserId == archivedFlowNodeInstance.getAssigneeId()) {
+                return true
+            }
+            //get the last flow node in journal
+            if(archivedFlowNodeInstance.getAssigneeId() == 0){
+                try{
+                    def instance1 = processAPI.getHumanTaskInstance(archivedFlowNodeInstance.getSourceObjectId())
+                    if(currentUserId == instance1.getAssigneeId()){
+                        return true
+                    }
+                }catch(NotFoundException e){
+                    //do nothing
+                }
+            }
+        }
+        if(archivedFlowNodeInstance instanceof ArchivedManualTaskInstance){
+            try {
+                def parentTask = processAPI.getHumanTaskInstance(archivedFlowNodeInstance.getParentContainerId())
+                if (parentTask.assigneeId > 0) {
+                    if (parentTask.assigneeId == currentUserId) {
+                        return true
+                    }
+                } else {
+                    final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
+                    builder.filter(UserSearchDescriptor.USER_NAME, username);
+                    def searchResult = processAPI.searchUsersWhoCanExecutePendingHumanTask(parentTask.id, builder.done())
+                    if (searchResult.getCount() == 1l) {
+                        logger.debug("The parent task is pending for user")
+                        return true
+                    }
+                }
+            } catch (NotFoundException e) {
+                try {
+                    def instance = processAPI.getArchivedActivityInstance(archivedFlowNodeInstance.getParentContainerId())
+                    //return false because it means the parent is not found, not the element itself
+                    if (instance instanceof ArchivedHumanTaskInstance &&  instance.assigneeId > 0) {
+                        if (instance.assigneeId == currentUserId) {
+                            return true
+                        }
+                    }
+                } catch (NotFoundException e1) {
+                    //return false because it means the parent is not found, not the element itself
+                    return false
+                }
+
+            }
         }
         def processDefinitionId = archivedFlowNodeInstance.getProcessDefinitionId()
         return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
