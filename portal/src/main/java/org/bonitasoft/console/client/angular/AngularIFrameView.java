@@ -17,11 +17,11 @@ public class AngularIFrameView extends RawView {
 
     public static final String CASE_LISTING_ADMIN_TOKEN = "caselistingadmin";
 
-    public static final String CASE_LISTING_ADMIN_ARCHIVED_TAB = "archived";
+    public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
 
-    public static final String CASE_LISTING_ADMIN_TAB_TOKEN = "_tab";
+    public static final String CASE_LISTING_TAB_TOKEN = "_tab";
 
-    public static final String CASE_LISTING_ADMIN_PROCESS_ID_TOKEN = "_processId";
+    public static final String CASE_LISTING_PROCESS_ID_TOKEN = "_processId";
 
     private final IFrameView iframe = new IFrameView();
 

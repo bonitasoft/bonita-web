@@ -83,13 +83,13 @@ public class StatisticsSection extends Section {
     }
 
     protected Action newShowArchivedCaseListingAction() {
-        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_ADMIN_TAB_TOKEN
+        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_TAB_TOKEN
                 + AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, AngularIFrameView.CASE_LISTING_ADMIN_TOKEN));
     }
 
     protected Action newShowCaseListingAction(final ProcessItem process) {
-        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_ADMIN_TAB_TOKEN
-                + AngularIFrameView.CASE_LISTING_ADMIN_PROCESS_ID_TOKEN, process.getId().toString()));
+        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_TAB_TOKEN
+                + AngularIFrameView.CASE_LISTING_PROCESS_ID_TOKEN, process.getId().toString()));
     }
 
     protected Map<String, String> getParamMap(final String name, final String value) {
