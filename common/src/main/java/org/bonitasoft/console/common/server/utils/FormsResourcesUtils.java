@@ -243,7 +243,7 @@ public class FormsResourcesUtils {
                         } catch (final Exception e) {
                             if (LOGGER.isLoggable(Level.WARNING)) {
                                 LOGGER.log(Level.WARNING,
-                                        "Process resources deployment folder contains a directory that does not match a process deployement timestamp: "
+                                        "Process resources deployment folder contains a directory that does not match a process deployment timestamp: "
                                                 + directory.getName(), e);
                             }
                         }
@@ -251,7 +251,7 @@ public class FormsResourcesUtils {
                     if (lastDeployementDate == 0L) {
                         if (LOGGER.isLoggable(Level.WARNING)) {
                             LOGGER.log(Level.WARNING,
-                                    "Process resources deployment folder contains no directory that match a process deployement timestamp.");
+                                    "Process resources deployment folder contains no directory that match a process deployment timestamp.");
                         }
                     }
                     final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastDeployementDate));

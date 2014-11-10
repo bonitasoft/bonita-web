@@ -74,7 +74,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
     }
 
     private Clickable installNewAppLink() {
-        return new Link(_("Install"), _("Opens a popup to install an process"),
+        return new Link(_("Install"), _("Opens a popup to install a process"),
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new UploadProcessPage())));
     }
 

@@ -125,7 +125,7 @@ public class ApplicationResourceServlet extends HttpServlet {
                     } catch (final Exception e) {
                         if (LOGGER.isLoggable(Level.WARNING)) {
                             LOGGER.log(Level.WARNING,
-                                    "Process application resources deployement folder contains a directory that does not match a process deployement timestamp: "
+                                    "Process application resources deployment folder contains a directory that does not match a process deployment timestamp: "
                                             + directory.getName(), e);
                         }
                     }
@@ -133,7 +133,7 @@ public class ApplicationResourceServlet extends HttpServlet {
                 if (lastDeployementDate == 0L) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
                         LOGGER.log(Level.WARNING,
-                                "Process application resources deployement folder contains no directory that match a process deployement timestamp.");
+                                "Process application resources deployment folder contains no directory that match a process deployment timestamp.");
                     }
                 } else {
                     final File file = new File(processDir, lastDeployementDate + File.separator + WEB_RESOURCES_DIR + File.separator + resourcePath);
