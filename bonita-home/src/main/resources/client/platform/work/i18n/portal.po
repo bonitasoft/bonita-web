@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-10 07:02+0100\n"
+"POT-Creation-Date: 2014-11-11 07:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -416,6 +416,7 @@ msgid "user privilege settings"
 msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
 msgid "Monitoring"
 msgstr ""
 
@@ -441,6 +442,10 @@ msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
 msgid "Applications"
+msgstr ""
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
+msgid "Apps management"
 msgstr ""
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/RoleDatastore.java:121
@@ -1259,7 +1264,7 @@ msgid "The openned case will be marked as started by him."
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
-msgid "Opens a popup to install an process"
+msgid "Opens a popup to install a process"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
@@ -1697,7 +1702,7 @@ msgid "Start an instance of process %app_name%"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
-msgid "Delete the Process %app_name%?"
+msgid "Delete the process %app_name%?"
 msgstr ""
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:120
@@ -2391,7 +2396,7 @@ msgstr ""
 msgid ""
 "You risk interrupting one or more processes.\n"
 "\n"
-"Deactivating the only user able to perform a task(s), will cause the interruption of an Process.\n"
+"Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n"
 "\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n"
 "\n"
