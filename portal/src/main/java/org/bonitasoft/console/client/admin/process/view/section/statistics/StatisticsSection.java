@@ -70,7 +70,7 @@ public class StatisticsSection extends Section {
 
     private Link nbCasesArchivedLink(final ProcessItem process) {
         final Link nbCasesArchived = new Link(new JsId("nbCasesArchived"), _("%nb_archived% archived", new Arg("nb_archived", "?")),
-                _("The number of archived cases."), newShowArchivedCaseListingAction());
+                _("The number of archived cases."), newShowArchivedCaseListingAction(process));
         nbCasesArchived.addFiller(new ArchivedCasesFiller(process));
         return nbCasesArchived;
     }
@@ -82,13 +82,16 @@ public class StatisticsSection extends Section {
         return nbCasesOngoing;
     }
 
-    protected Action newShowArchivedCaseListingAction() {
-        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_TAB_TOKEN
-                + AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, AngularIFrameView.CASE_LISTING_ADMIN_TOKEN));
+    protected Action newShowArchivedCaseListingAction(final ProcessItem process) {
+        final Map<String, String> paramMap = getParamMap(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN
+                + AngularIFrameView.CASE_LISTING_TAB_TOKEN, AngularIFrameView.CASE_LISTING_ARCHIVED_TAB);
+        paramMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN + '_' + AngularIFrameView.CASE_LISTING_PROCESS_ID_TOKEN, String.valueOf(process.getId()));
+        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, paramMap);
     }
 
     protected Action newShowCaseListingAction(final ProcessItem process) {
-        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_PROCESS_ID_TOKEN, process.getId()
+        return new RedirectionAction(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, getParamMap(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN + '_'
+                + AngularIFrameView.CASE_LISTING_PROCESS_ID_TOKEN, process.getId()
                 .toString()));
     }
 

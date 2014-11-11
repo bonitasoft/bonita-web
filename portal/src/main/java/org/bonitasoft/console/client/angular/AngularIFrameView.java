@@ -1,6 +1,8 @@
 package org.bonitasoft.console.client.angular;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickEvent;
 import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickHandler;
@@ -25,6 +27,10 @@ public class AngularIFrameView extends RawView {
 
     private final IFrameView iframe = new IFrameView();
 
+    private String url;
+
+    private String token;
+
     public AngularIFrameView() {
         MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
 
@@ -39,12 +45,12 @@ public class AngularIFrameView extends RawView {
     }
 
     public native String getHash() /*-{
-        return $wnd.location.hash;
-    }-*/;
+                                   return $wnd.location.hash;
+                                   }-*/;
 
     public native void updateHash(String hash) /*-{
-        $wnd.location.hash = hash;
-    }-*/;
+                                               $wnd.location.hash = hash;
+                                               }-*/;
 
     @Override
     public String defineToken() {
@@ -68,9 +74,19 @@ public class AngularIFrameView extends RawView {
      * @param url
      *            Iframe url to set
      */
-    public void setUrl(final String url, final String token, final String queryString) {
+    public void setUrl(final String url, final String token) {
         setToken(token);
-        iframe.setUrl(buildAngularUrl(url, token, queryString));
+        this.url = url;
+        this.token = token;
+    }
+
+    /**
+     * @see org.bonitasoft.web.toolkit.client.ui.Callable#setParameters(org.bonitasoft.web.toolkit.client.common.TreeIndexed)
+     */
+    @Override
+    public void setParameters(final TreeIndexed<String> params) {
+        super.setParameters(params);
+        iframe.setUrl(buildAngularUrl(url, token, UrlSerializer.serialize(getParameters())));
     }
 
     /**
@@ -86,9 +102,9 @@ public class AngularIFrameView extends RawView {
      */
     protected String buildAngularUrl(final String url, final String token, final String queryString) {
         return new AngularUrlBuilder(url)
-        .appendQueryStringParameter(token + "_id", getHash())
-        .appendQueryStringParameter(token + "_tab", getHash())
-        .build() + queryString;
+        .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
+        .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash())
+        .build() + '?' + (queryString != null ? queryString.replaceAll(token + '_', "") : "");
     }
 
     /**

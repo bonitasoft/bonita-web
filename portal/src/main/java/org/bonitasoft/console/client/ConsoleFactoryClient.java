@@ -86,7 +86,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.History;
 
 /**
  * console client page
@@ -318,7 +317,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
                 // we do not need to do anything. API callback will handle unauthorized request by reloading the page.
                 new CheckValidSessionBeforeAction(emptyAction).execute();
-                angularFrame.setUrl("#" + angularViewsMap.get(token), token, History.getToken());
+                angularFrame.setUrl("#" + angularViewsMap.get(token), token);
                 return angularFrame;
             } else {
                 //currentAngularIFrameView.setDisplayed(false);
