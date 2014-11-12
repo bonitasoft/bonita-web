@@ -17,7 +17,6 @@
 package org.bonitasoft.console.common.server.login.localization;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,7 +41,7 @@ public class RedirectUrlBuilder {
             );
 
     public RedirectUrlBuilder(final String redirectUrl) {
-        urlBuilder = createBuilder(redirectUrl != null ? redirectUrl : "");
+        urlBuilder = new UrlBuilder(redirectUrl != null ? redirectUrl : "");
     }
 
     public RedirectUrlBuilder appendParameters(final Map<String, String[]> parameters) {
@@ -62,9 +61,7 @@ public class RedirectUrlBuilder {
     }
 
     public void appendParameters(final Map<String, String[]> parameters, final AppendParameter appender) {
-        final Iterator<Entry<String, String[]>> iterator = parameters.entrySet().iterator();
-        while (iterator.hasNext()) {
-            final Entry<String, String[]> next = iterator.next();
+        for (Entry<String, String[]> next : parameters.entrySet()) {
             if (!isBlackListed(next.getKey())) {
                 appender.append(urlBuilder, next.getKey(), new UrlValue(next.getValue()));
             }
@@ -75,7 +72,4 @@ public class RedirectUrlBuilder {
         return blackList.contains(key);
     }
 
-    private UrlBuilder createBuilder(final String baseUrl) {
-        return new UrlBuilder(baseUrl);
-    }
 }

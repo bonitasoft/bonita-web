@@ -28,7 +28,10 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
+import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickEvent;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuItem;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
@@ -84,7 +87,19 @@ public class MenuListCreator {
 
     private MenuLink createLink(final ProfileEntryItem entry) {
         saveFirstPageMet(entry);
-        return new MenuLink(createJsId(entry), _(getLinkName(entry)), _(entry.getDescription()), getEntryUrlToken(entry));
+        final String token = getEntryUrlToken(entry);
+        return new MenuLink(
+                createJsId(entry),
+                _(getLinkName(entry)),
+                _(entry.getDescription()),
+                new RedirectionAction(token) {
+
+                    @Override
+                    public void execute() {
+                        MainEventBus.getInstance().fireEvent(new MenuClickEvent(token));
+                        super.execute();
+                    };
+                });
     }
 
     private JsId createJsId(final ProfileEntryItem entry) {
@@ -128,7 +143,7 @@ public class MenuListCreator {
         }
 
         return new ProfileEntryNameAttributeReader(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntryItem.ATTRIBUTE_PAGE, BonitaPageItem.ATTRIBUTE_DISPLAY_NAME)
-                .read(entry);
+        .read(entry);
     }
 
     protected String getEntryUrlToken(final ProfileEntryItem entry) {

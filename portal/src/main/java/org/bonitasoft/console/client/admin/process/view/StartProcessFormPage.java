@@ -82,7 +82,7 @@ public class StartProcessFormPage extends Page {
         if (userId == null) {
             userId = Session.getUserId().toString();
         }
-        this.setTitle(_("Start an instance of app %app_name%", new Arg("app_name", decodedProcessName)));
+        this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", decodedProcessName)));
         StringBuilder frameURL = new StringBuilder();
 
         frameURL.append(GWT.getModuleBaseURL())
