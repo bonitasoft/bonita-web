@@ -62,7 +62,7 @@ msgstr "Confirmer la suppression?"
 msgid "End date"
 msgstr "Date de Fin"
 
-msgid "No case to display"
+msgid "No cases to display"
 msgstr "Pas de cas à afficher"
 
 msgid "Loading"

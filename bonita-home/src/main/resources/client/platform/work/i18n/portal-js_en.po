@@ -62,8 +62,8 @@ msgstr "Confirm delete?"
 msgid "End date"
 msgstr "End date"
 
-msgid "No case to display"
-msgstr "No case to display"
+msgid "No cases to display"
+msgstr "No cases to display"
 
 msgid "Loading"
 msgstr "Loading"

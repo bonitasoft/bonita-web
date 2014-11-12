@@ -65,7 +65,7 @@ msgstr ""
 msgid "End date"
 msgstr ""
 
-msgid "No case to display"
+msgid "No cases to display"
 msgstr ""
 
 msgid "Loading"
