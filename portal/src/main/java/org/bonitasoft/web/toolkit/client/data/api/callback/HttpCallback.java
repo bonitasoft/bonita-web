@@ -49,7 +49,7 @@ public abstract class HttpCallback implements RequestCallback {
         
         // Same origne policy violation
         // hack to avoid error on timeout exception generating same origne policy violation
-        // Need to deal with specific exception in apps, not in toolkit
+        // Need to deal with specific exception in processes, not in toolkit
         if (response.getStatusCode() == 0) {
             return;
         } 

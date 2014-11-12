@@ -187,7 +187,7 @@ public class CasePermissionRuleTest {
         //when
         def isAuthorized = rule.check(apiSession, apiCallContext, apiAccessor, logger)
         //then
-        assertThat(isAuthorized).isFalse();
+        assertThat(isAuthorized).isTrue();
     }
 
     def havingResourceId(boolean isInvolvedIn) {

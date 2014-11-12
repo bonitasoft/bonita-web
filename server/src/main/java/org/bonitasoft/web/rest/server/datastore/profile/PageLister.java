@@ -25,13 +25,13 @@ public class PageLister {
     static {
         pages.add(new BonitaPageItem("tasklistinguser", _("visualize & do tasks"), _("visualize & do tasks"), _("Tasks")));
         pages.add(new BonitaPageItem("tasklistingadmin", _("manage tasks"), _("manage tasks"), _("Tasks")));
-        pages.add(new BonitaPageItem("tasklistingpm", _("Manage tasks of apps that an entity with this profile can supervise as PM."), _("Manage tasks of apps that an entity with this profile can supervise as PM."), _("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingpm", _("Manage tasks of processes that an entity with this profile can supervise as PM."), _("Manage tasks of processes that an entity with this profile can supervise as PM."), _("Tasks")));
         pages.add(new BonitaPageItem("caselistinguser", _("visualize cases"), _("visualize cases"), _("Cases")));
         pages.add(new BonitaPageItem("caselistingadmin", _("manage cases"), _("manage cases"), _("Cases")));
-        pages.add(new BonitaPageItem("caselistingpm", _("Manage cases of apps that an entity with this profile can supervise as PM."), _("Manage cases of apps that an entity with this profile can supervise as PM."), _("Cases")));
-        pages.add(new BonitaPageItem("processlistinguser", _("visualize & start apps"), _("visualize & start apps"), _("Apps")));
-        pages.add(new BonitaPageItem("processlistingadmin", _("manage apps"), _("manage apps"), _("Apps")));
-        pages.add(new BonitaPageItem("processlistingpm", _("Manage apps that an entity with this profile can supervise as PM."), _("Manage apps that an entity with this profile can supervise as PM."), _("Apps")));
+        pages.add(new BonitaPageItem("caselistingpm", _("Manage cases of processes that an entity with this profile can supervise as PM."), _("Manage cases of processes that an entity with this profile can supervise as PM."), _("Cases")));
+        pages.add(new BonitaPageItem("processlistinguser", _("visualize & start processes"), _("visualize & start processes"), _("Processes")));
+        pages.add(new BonitaPageItem("processlistingadmin", _("manage processes"), _("manage processes"), _("Processes")));
+        pages.add(new BonitaPageItem("processlistingpm", _("Manage processes that an entity with this profile can supervise as PM."), _("Manage processes that an entity with this profile can supervise as PM."), _("Processes")));
         pages.add(new BonitaPageItem("userlistingadmin", _("manage users"), _("manage users"), _("Users")));
         pages.add(new BonitaPageItem("grouplistingadmin", _("manage groups"), _("manage groups"), _("Groups")));
         pages.add(new BonitaPageItem("rolelistingadmin", _("manage roles"), _("manage roles"), _("Roles")));
@@ -41,6 +41,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), _("Manage Look and Feel"), _("Look and Feel")));
         pages.add(new BonitaPageItem("pagelisting", _("Manage custom pages"), _("Manage custom pages"), _("Custom Pages")));
         pages.add(new BonitaPageItem("applicationslistingadmin", _("Manage applications"), _("Manage applications"), _("Applications")));
+        pages.add(new BonitaPageItem("monitoringadmin", _("Monitoring"), _("Monitoring"), _("Apps management")));
     }
 
     public List<BonitaPageItem> getPages() {

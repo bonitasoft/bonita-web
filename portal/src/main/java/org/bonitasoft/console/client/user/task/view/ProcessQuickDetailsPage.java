@@ -67,7 +67,7 @@ public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> i
         RawView view = new StartProcessFormPage();
         view.setParameters(StartProcessFormPage.getItemParams(item));
         AddProcesIdToCookieThenDisplayProcessInstanciationFormAction action = new AddProcesIdToCookieThenDisplayProcessInstanciationFormAction(view);
-        return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this app"), action);
+        return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this process"), action);
     }
 
     @Override

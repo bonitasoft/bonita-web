@@ -111,7 +111,7 @@ public class FormDocumentBuilder {
     /**
      * Retrieve an instance of FormDocumentBuilder or create a new one if necessary.
      * The map contains a cache of instances. Each instance has a validity duration equals to the INSTANCE_EXPIRATION_TIME constant value
-     * The deployement date is also check because a process can be undeployed and redeployed (after modifications) with the same UUID
+     * The deployment date is also check because a process can be undeployed and redeployed (after modifications) with the same UUID
      * 
      * @param session
      *            the engine API session
@@ -120,7 +120,7 @@ public class FormDocumentBuilder {
      * @param locale
      *            the user's locale
      * @param processDeployementDate
-     *            the deployement date of the process
+     *            the deployment date of the process
      * @throws IOException
      * @throws InvalidFormDefinitionException
      * @throws BPMEngineException
@@ -136,7 +136,7 @@ public class FormDocumentBuilder {
     /**
      * Retrieve an instance of FormDocumentBuilder or create a new one if necessary.
      * The map contains a cache of instances. Each instance has a validity duration equals to the INSTANCE_EXPIRATION_TIME constant value
-     * The deployement date is also check because a process can be undeployed and redeployed (after modifications) with the same UUID
+     * The deployment date is also check because a process can be undeployed and redeployed (after modifications) with the same UUID
      * 
      * @param session
      *            the engine API session
@@ -145,7 +145,7 @@ public class FormDocumentBuilder {
      * @param locale
      *            the user's locale
      * @param processDeployementDate
-     *            the deployement date of the process
+     *            the deployment date of the process
      * @param getFormDefinitionFromBAR
      *            indicate if the form definition file should be retrieved from the business archive only (if false, it's sought in the classpath first)
      * @throws IOException
@@ -235,7 +235,7 @@ public class FormDocumentBuilder {
      * @param locale
      *            the user's locale
      * @param processDeployementDate
-     *            the deployement date of the process
+     *            the deployment date of the process
      * @param getFormDefinitionFromBAR
      *            indicate if the form definition file should be retrieved from the business archive only
      * @throws IOException
@@ -250,7 +250,7 @@ public class FormDocumentBuilder {
             InvalidSessionException, RetrieveException {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "Building instance of the Form document builder for process " + processDefinitionID + " with locale " + locale
-                    + " and deployement date " + processDeployementDate.getTime());
+                    + " and deployment date " + processDeployementDate.getTime());
         }
         this.processDefinitionID = processDefinitionID;
         this.locale = locale;
