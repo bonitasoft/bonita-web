@@ -125,7 +125,7 @@ public class CaseListingPage extends ItemListingPage<CaseItem> implements Plugin
         return new ItemTable(itemDefinition)
                 .addColumn(idAttributeDefinition, _("ID"), true)
                 // TODO: Change to display name once it has been supported by engine
-                .addColumn(new DeployedAttributeReader(CaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_NAME), _("App name"), true)
+                .addColumn(new DeployedAttributeReader(CaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_NAME), _("Process name"), true)
                 .addColumn(CaseItem.ATTRIBUTE_START_DATE, _("Start date"));
         // .setOrder(CaseItem.ATTRIBUTE_START_DATE, true);
     }
@@ -135,7 +135,7 @@ public class CaseListingPage extends ItemListingPage<CaseItem> implements Plugin
                 new ItemTable(ArchivedCaseDefinition.get())
                         .addColumn(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, _("ID"), true)
                         // TODO: Change to display name once it has been supported by engine
-                        .addColumn(new DeployedAttributeReader(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_NAME), _("App name"), true)
+                        .addColumn(new DeployedAttributeReader(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_NAME), _("Process name"), true)
                         .addColumn(ArchivedCaseItem.ATTRIBUTE_ARCHIVED_DATE, _("Archived date"))
                 // .setOrder(ArchivedCaseItem.ATTRIBUTE_ARCHIVED_DATE, false)
                 , caseQuickDetailsPage);

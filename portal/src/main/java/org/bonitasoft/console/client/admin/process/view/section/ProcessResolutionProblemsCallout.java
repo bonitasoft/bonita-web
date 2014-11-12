@@ -31,7 +31,7 @@ public class ProcessResolutionProblemsCallout extends CalloutDanger {
     protected List ul;
 
     public ProcessResolutionProblemsCallout(final ProcessConfigurationStateResolver stateResolver) {
-        super(_("The App cannot be enabled"));
+        super(_("The Process cannot be enabled"));
         ul = buildProblemsList(stateResolver);
         append(ul);
     }
@@ -39,13 +39,13 @@ public class ProcessResolutionProblemsCallout extends CalloutDanger {
     private List buildProblemsList(final ProcessConfigurationStateResolver stateResolver) {
         final List ul = new List();
         if (!stateResolver.areActorsResolved()) {
-            ul.append(new Text(_("Entity Mapping must be resolved before enabling the App.")));
+            ul.append(new Text(_("Entity Mapping must be resolved before enabling the Process.")));
         }
         if (!stateResolver.areParametersResolved()) {
-            ul.append(new Text(_("Parameters must be resolved before enabling the App.")));
+            ul.append(new Text(_("Parameters must be resolved before enabling the Process.")));
         }
         if (!stateResolver.areConnectorsResolved()) {
-            ul.append(new Text(_("Connector definitions must be resolved before enabling the App.")));
+            ul.append(new Text(_("Connector definitions must be resolved before enabling the Process.")));
         }
         return ul;
     }

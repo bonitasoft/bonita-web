@@ -34,7 +34,7 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata version() {
-        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_VERSION, _("Version"), _("The version of the app"));
+        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_VERSION, _("Version"), _("The version of the process"));
     }
 
     public void addConfigurationState() {
@@ -42,7 +42,7 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata configurationState() {
-        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_CONFIGURATION_STATE, _("Configuration state "), _("The configuration state of the app"));
+        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_CONFIGURATION_STATE, _("Configuration state "), _("The configuration state of the process"));
     }
 
     public void addLastUpdateDate() {
@@ -50,7 +50,7 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata lastUpdateDate() {
-        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated on"), _("The date when the app was updated"));
+        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated on"), _("The date when the process was updated"));
     }
 
     public void addActivationState() {
@@ -58,7 +58,7 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     }
 
     private ItemDetailsMetadata activationState() {
-        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, _("Activation state"), _("The state of the app"));
+        return new ItemDetailsMetadata(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, _("Activation state"), _("The state of the process"));
     }
     
     public void addInstalledDate() {
@@ -67,7 +67,7 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     
     private ItemDetailsMetadata installedDate() {
         return new ItemDetailsMetadata(new DateAttributeReader(ProcessItem.ATTRIBUTE_DEPLOYMENT_DATE), _("Installed on"),
-                _("The date when this app has been installed"));
+                _("The date when this process has been installed"));
     }
     
     public void addInstalledBy() {
@@ -76,6 +76,6 @@ public class ProcessMetadataBuilder extends MetadataBuilder {
     
     private ItemDetailsMetadata installedBy() {
         return new ItemDetailsMetadata(new DeployedUserReader(ProcessItem.ATTRIBUTE_DEPLOYED_BY_USER_ID),
-                _("Installed by"), _("The user that has uploaded this app"));
+                _("Installed by"), _("The user that has uploaded this process"));
     }
 }

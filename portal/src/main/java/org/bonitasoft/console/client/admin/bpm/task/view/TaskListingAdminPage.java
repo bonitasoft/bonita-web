@@ -108,7 +108,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
 
     @Override
     protected Title defineResourceFiltersTitle() {
-        return new Title(_("Apps"));
+        return new Title(_("Processes"));
     }
 
     @Override
@@ -143,7 +143,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                 .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(
                         new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Process"))
                 .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
                 .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), false)
 
@@ -163,7 +163,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .addColumn(ActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                         .addColumn(
                                 new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Process"))
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
                         .addColumn(new DateAttributeReader(ActivityItem.ATTRIBUTE_REACHED_STATE_DATE), _("Failed on"), false)
                         .addCellFormatter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID + "_" + UserItem.ATTRIBUTE_ICON,
@@ -191,7 +191,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                         .addColumn(
                                 new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Process"))
                         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE, FORMAT.DISPLAY_RELATIVE), _("Due date"), true, true)
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
 
@@ -218,7 +218,7 @@ public class TaskListingAdminPage extends ItemListingPage<CaseItem> {
                         .addColumn(ArchivedActivityItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                         .addColumn(
                                 new FlowNodeContextAttributeReader(FlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedActivityItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                                        ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Process"))
                         .addColumn(new AssignedUserIconAttribeReader(), _("Icon"))
                         .addColumn(new DateAttributeReader(ArchivedTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
 

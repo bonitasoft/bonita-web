@@ -90,7 +90,7 @@ public class DisplayCaseFormPage extends Page {
         }
         final String locale = AbstractI18n.getDefaultLocale().toString();
 
-        this.setTitle(_("Display a case form of app %app_name%", new Arg("app_name", decodedProcessName)));
+        this.setTitle(_("Display a case form of process %app_name%", new Arg("app_name", decodedProcessName)));
 
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append(GWT.getModuleBaseURL())
