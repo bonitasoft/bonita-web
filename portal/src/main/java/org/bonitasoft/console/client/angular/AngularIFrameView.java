@@ -72,7 +72,7 @@ public class AngularIFrameView extends RawView {
 
     /**
      * @param url
-     *            Iframe url to set
+     *        Iframe url to set
      */
     public void setUrl(final String url, final String token) {
         setToken(token);
@@ -93,18 +93,18 @@ public class AngularIFrameView extends RawView {
      * build angular Url
      *
      * @param url
-     *            the angular base path
+     *        the angular base path
      * @param token
-     *            the current page token
+     *        the current page token
      * @param queryString
-     *            the URL query to set
+     *        the URL query to set
      * @return the angular url to access for the given token
      */
     protected String buildAngularUrl(final String url, final String token, final String queryString) {
         return new AngularUrlBuilder(url)
-        .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
-        .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash())
-        .build() + '?' + (queryString != null ? queryString.replaceAll(token + '_', "") : "");
+                .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
+                .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash())
+                .build() + '?' + (queryString != null ? queryString.replaceAll(token + '_', "") : "");
     }
 
     /**

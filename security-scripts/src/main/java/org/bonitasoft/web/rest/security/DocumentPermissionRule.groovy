@@ -14,14 +14,13 @@
  **/
 
 
-
-
 package org.bonitasoft.web.rest.security
 
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.session.APISession
 
 /**
@@ -58,29 +57,36 @@ class DocumentPermissionRule implements PermissionRule {
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def body = apiCallContext.getBodyAsJSON()
         def string = body.optString((PROCESS_INSTANCE_ID))
-        if(string == null || string.isEmpty()){
+        if (string == null || string.isEmpty()) {
             return true;
         }
         def processInstanceId = Long.valueOf(string)
         if (processInstanceId <= 0) {
             return true;
         }
-        def processAPI = apiAccessor.getProcessAPI()
-        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+        try {
+            def processAPI = apiAccessor.getProcessAPI()
+            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+        } catch (NotFoundException e) {
+            return true
+        }
     }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
         def filters = apiCallContext.getFilters()
         def processAPI = apiAccessor.getProcessAPI()
         def processInstanceIdAsString = filters.get(PROCESS_INSTANCE_ID)
-        if(processInstanceIdAsString== null){
+        if (processInstanceIdAsString == null) {
             processInstanceIdAsString = filters.get(CASE_ID)
         }
-        if(processInstanceIdAsString != null){
+        if (processInstanceIdAsString != null) {
             def processInstanceId = Long.valueOf(processInstanceIdAsString)
-            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(),currentUserId)
+            try {
+                return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
+            } catch (NotFoundException e) {
+                return true
+            }
         }
-        //TODO author id + when resource id is here get the document to check if you are involved in the process
         return false;
     }
 }

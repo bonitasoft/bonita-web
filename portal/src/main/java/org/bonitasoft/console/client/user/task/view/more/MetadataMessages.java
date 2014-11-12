@@ -21,11 +21,11 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 public class MetadataMessages {
 
     String app_title() {
-        return _("The app responsible for the creation of this task");
+        return _("The process responsible for the creation of this task");
     }
 
     String app_label() {
-        return _("Apps");
+        return _("Process");
     }
 
     String state_title() {
@@ -37,11 +37,11 @@ public class MetadataMessages {
     }
 
     String app_version_title() {
-        return _("Version of the app");
+        return _("Version of the process");
     }
 
     String app_version_label() {
-        return _("Apps version");
+        return _("Process version");
     }
 
     String case_id_title() {

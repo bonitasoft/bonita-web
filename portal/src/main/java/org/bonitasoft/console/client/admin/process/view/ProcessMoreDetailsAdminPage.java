@@ -119,7 +119,7 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     }
 
     private Clickable newDeleteProcessButton(final ProcessItem process) {
-        return new ButtonAction("btn-delete", _("Delete"), _("Delete this app"), new DeleteProcessAction(process.getId().toString(), process.getDisplayName()));
+        return new ButtonAction("btn-delete", _("Delete"), _("Delete this process"), new DeleteProcessAction(process.getId().toString(), process.getDisplayName()));
     }
 
     protected Clickable newChangeProcessActivationStateButton(final ProcessItem process) {
@@ -135,11 +135,11 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     }
 
     private Clickable newEnableProcessButton(final ProcessItem process) {
-        return new ButtonPrimaryAction("btn-enable", _("Enable"), _("Enable this app"), new EnableProcessAction(process.getId()));
+        return new ButtonPrimaryAction("btn-enable", _("Enable"), _("Enable this process"), new EnableProcessAction(process.getId()));
     }
 
     private Clickable newDisableProcessButton(final ProcessItem process) {
-        return new ButtonAction("btn-disable", _("Disable"), _("Disable this app"), new DisableProcessAction(process.getId()));
+        return new ButtonAction("btn-disable", _("Disable"), _("Disable this process"), new DisableProcessAction(process.getId()));
     }
 
     @Override

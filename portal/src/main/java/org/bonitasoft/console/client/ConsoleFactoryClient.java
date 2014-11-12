@@ -98,6 +98,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
     protected AngularIFrameView angularFrame = new AngularIFrameView();
 
+    private List<String> currentUserAccessRights = null;
+
     private final Action emptyAction = new Action() {
 
         @Override
@@ -111,8 +113,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     public ConsoleFactoryClient() {
         angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
     }
-
-    private List<String> currentUserAccessRights = null;
 
     protected List<String> getCurrentUserAccessRights() {
         if (currentUserAccessRights == null) {
@@ -178,8 +178,10 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new ProcessMoreDetailsAdminPage();
-            /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
-            return new StartProcessOnBehalfPage();*/
+            /*
+             * } else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+             * return new StartProcessOnBehalfPage();
+             */
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
@@ -244,7 +246,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(DeleteProfileMemberPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new DeleteProfileMemberPage();
 
-
         } else if (DeleteActorMemberPage.TOKEN.equals(token)) {
             return new DeleteActorMemberPage();
 
@@ -258,13 +259,14 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new TaskMoreDetailsAdminPage();
 
-            /* THEME pages
-        } else if (ListThemePage.TOKEN.equals(token)) {
-            return new ListThemePage();
-        } else if (UploadThemePage.TOKEN.equals(token)) {
-            return new UploadThemePage();
-        } else if (EditThemePage.TOKEN.equals(token)) {
-            return new EditThemePage();
+            /*
+             * THEME pages
+             * } else if (ListThemePage.TOKEN.equals(token)) {
+             * return new ListThemePage();
+             * } else if (UploadThemePage.TOKEN.equals(token)) {
+             * return new UploadThemePage();
+             * } else if (EditThemePage.TOKEN.equals(token)) {
+             * return new EditThemePage();
              */
 
             // Visualize & do tasks
@@ -405,9 +407,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ArchivedCaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(CaseMoreDetailsPage.TOKEN, CaseMoreDetailsPage.PRIVILEGES);
 
-
-
-
         return pagePrivileges;
     }
 
@@ -415,7 +414,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         final String sessionId = new String(Session.getParameter("session_id"));
 
-        for (final String privilege: privileges) {
+        for (final String privilege : privileges) {
 
             final String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 

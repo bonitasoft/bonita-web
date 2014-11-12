@@ -65,7 +65,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
 
     @Override
     public void defineTitle() {
-        this.setTitle(_("App"));
+        this.setTitle(_("Process"));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
     }
 
     private Clickable installNewAppLink() {
-        return new Link(_("Install"), _("Opens a popup to install an app"),
+        return new Link(_("Install"), _("Opens a popup to install a process"),
                 new CheckValidSessionBeforeAction(new ActionShowPopup(new UploadProcessPage())));
     }
 
@@ -89,23 +89,23 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
     }
 
     private ItemListingFilter newEnabledProcessesFilter() {
-        return new ItemListingFilter("enabledprocesses", _("Enabled"), _("Enabled Apps"), TABLE_ACTION_DISABLE)
+        return new ItemListingFilter("enabledprocesses", _("Enabled"), _("Enabled processes"), TABLE_ACTION_DISABLE)
                 .addFilter(ATTRIBUTE_ACTIVATION_STATE, VALUE_ACTIVATION_STATE_ENABLED);
     }
 
     private ItemListingFilter newDisabledProcessesFilter() {
-        return new ItemListingFilter("disabledprocesses", _("Disabled"), _("Disabled Apps"), TABLE_ACTION_DELETE)
+        return new ItemListingFilter("disabledprocesses", _("Disabled"), _("Disabled processes"), TABLE_ACTION_DELETE)
                 .addFilter(ATTRIBUTE_ACTIVATION_STATE, VALUE_ACTIVATION_STATE_DISABLED);
     }
 
     private ItemListingFilter newResolvedProcessesFilter() {
-        return new ItemListingFilter("resolvedprocesses", _("Resolved"), _("Resolved Apps"), TABLE_ACTION_ENABLE)
+        return new ItemListingFilter("resolvedprocesses", _("Resolved"), _("Resolved processes"), TABLE_ACTION_ENABLE)
                 .addFilter(ATTRIBUTE_ACTIVATION_STATE, VALUE_ACTIVATION_STATE_DISABLED)
                 .addFilter(ProcessItem.ATTRIBUTE_CONFIGURATION_STATE, ProcessItem.VALUE_CONFIGURATION_STATE_RESOLVED);
     }
 
     private ItemListingFilter newUnresolvedProcessesFilter() {
-        return new ItemListingFilter("unresolvedprocesses", _("Unresolved"), _("Unresolved Apps"), TABLE_ACTION_DELETE)
+        return new ItemListingFilter("unresolvedprocesses", _("Unresolved"), _("Unresolved processes"), TABLE_ACTION_DELETE)
                 .addFilter(ATTRIBUTE_ACTIVATION_STATE, VALUE_ACTIVATION_STATE_DISABLED)
                 .addFilter(ProcessItem.ATTRIBUTE_CONFIGURATION_STATE, ProcessItem.VALUE_CONFIGURATION_STATE_UNRESOLVED);
     }
@@ -145,7 +145,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
                 _("Enabled"),
                 createItemTable()
                         .addGroupedAction(
-                                new JsId("disable"), _("Disable"), _("Disable selected apps"), new DisableProcessAction()),
+                                new JsId("disable"), _("Disable"), _("Disable selected processes"), new DisableProcessAction()),
                 getQuickDetailsTargetPage());
     }
 
@@ -160,8 +160,8 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
                 _("Disabled"),
                 createItemTable()
                         .addGroupedAction(
-                                new JsId("enable"), _("Enable"), _("Enable selected apps"), new EnableProcessAction())
-                        .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
+                                new JsId("enable"), _("Enable"), _("Enable selected processes"), new EnableProcessAction())
+                        .addGroupedMultipleDeleteAction(_("Delete selected processes"), ProcessDefinition.get(), _("process"), _("processes")),
                 getQuickDetailsTargetPage());
     }
 
@@ -173,7 +173,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
         return new ItemListingTable(new JsId(TABLE_ACTION_DELETE),
                 _("Deletable"),
                 createItemTable()
-                        .addGroupedMultipleDeleteAction(_("Delete selected apps"), ProcessDefinition.get(), _("app"), _("apps")),
+                        .addGroupedMultipleDeleteAction(_("Delete selected processes"), ProcessDefinition.get(), _("process"), _("processes")),
                 getQuickDetailsTargetPage());
     }
 

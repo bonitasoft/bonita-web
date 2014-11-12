@@ -3,4 +3,10 @@
     <group name="bonita">
         <css>file:src/main/less/main.less</css>
     </group>
+    <group name="bonita-skin">
+        <css>file:src/main/less/skin/bootstrap/portal/main.less</css>
+    </group>
+    <group name="applications-skin">
+        <css>file:src/main/less/skin/bootstrap/applications/main.less</css>
+    </group>
 </groups>

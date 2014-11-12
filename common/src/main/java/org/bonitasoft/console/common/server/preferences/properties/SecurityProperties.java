@@ -229,7 +229,7 @@ public class SecurityProperties {
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING,
-                            "Process application resources deployement folder contains no directory that match a process deployement timestamp.");
+                            "Process resources deployment folder contains no directory that match a process deployment timestamp.");
                 }
             }
         }
@@ -247,7 +247,7 @@ public class SecurityProperties {
             } catch (final Exception e) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING,
-                            "Process application resources deployement folder contains a directory that does not match a process deployement timestamp: "
+                            "Process resources deployment folder contains a directory that does not match a process deployment timestamp: "
                                     + directory.getName(), e);
                 }
             }
