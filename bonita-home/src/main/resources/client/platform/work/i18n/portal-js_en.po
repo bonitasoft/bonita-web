@@ -17,34 +17,55 @@ msgstr ""
 msgid "Columns"
 msgstr "Columns"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filters"
-
-msgid "All versions"
-msgstr "All versions"
-
-msgid "All apps"
-msgstr "All apps"
-
-msgid "All states"
-msgstr "All states"
-
-msgid "started"
-msgstr "started"
-
-msgid "failed"
-msgstr "failed"
-
-msgid "Confirm delete?"
-msgstr "Confirm delete?"
 
 msgid "This case will be definitively deleted."
 msgstr "This case will be definitively deleted."
 
 msgid "These cases will be definitively deleted."
 msgstr "These cases will be definitively deleted."
+
+msgid "Process version"
+msgstr "Process version"
+
+msgid "Process name"
+msgstr "Process name"
+
+msgid "Healthy"
+msgstr "Healthy"
+
+msgid "With failures"
+msgstr "With failures"
+
+msgid "Cases list"
+msgstr "Cases list"
+
+msgid "Failed Tasks"
+msgstr "Failed Tasks"
+
+msgid "Pending Tasks"
+msgstr "Pending Tasks"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} case deleted successfully"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} cases deleted successfully"
+
+msgid "Confirm delete?"
+msgstr "Confirm delete?"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "No case to display"
+msgstr "No case to display"
+
+msgid "Loading"
+msgstr "Loading"
 
 
