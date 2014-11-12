@@ -128,7 +128,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      *
      * @param document
      * @param applicationDeployementDate
-     *            the deployement date of the application
+     *            the deployment date of the application
      * @param locale
      *            the user's locale as a String
      * @return the FormDefinitionAPIImpl instance

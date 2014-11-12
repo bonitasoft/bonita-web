@@ -169,7 +169,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .addColumn(HumanTaskItem.ATTRIBUTE_DUE_DATE, _("Due date"), true, true)
                 .addColumn(
                         new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Process"))
                 .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new OverdueDateCellFormatter())
                 .setOrder(HumanTaskItem.ATTRIBUTE_DUE_DATE, false)
                 .setOrder(HumanTaskItem.ATTRIBUTE_PRIORITY, false);
@@ -186,7 +186,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
                 .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
                 .addColumn(
                         new FlowNodeContextAttributeReader(HumanTaskItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID,
-                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("App"))
+                                ProcessItem.ATTRIBUTE_DISPLAY_NAME), _("Process"))
                 .setOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE, false);
     }
 
@@ -223,8 +223,8 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
 
     @Override
     protected Title defineResourceFiltersTitle() {
-        final Title title = new Title(_("Apps"));
-        title.setTooltip(_("Select an App in the list below to display the available tasks"));
+        final Title title = new Title(_("Processes"));
+        title.setTooltip(_("Select a process in the list below to display the available tasks"));
         return title;
     }
 

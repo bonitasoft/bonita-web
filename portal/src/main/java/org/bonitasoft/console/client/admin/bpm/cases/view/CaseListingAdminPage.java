@@ -76,7 +76,7 @@ public class CaseListingAdminPage extends CaseListingPage {
 
     @Override
     protected Title defineResourceFiltersTitle() {
-        return new Title(_("Apps"));
+        return new Title(_("Processes"));
     }
 
     @Override

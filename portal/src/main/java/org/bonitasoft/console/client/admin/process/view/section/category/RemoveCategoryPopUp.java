@@ -66,7 +66,7 @@ public class RemoveCategoryPopUp extends DeleteItemPage {
     }
 
     private String makeMessage() {
-        return _("Are you sure you want to remove category '%categoryName%' from app '%appName%' ?", 
+        return _("Are you sure you want to remove category '%categoryName%' from process '%appName%' ?", 
                 new Arg("categoryName", new NameAttributeReader().read(category)), 
                 new Arg("appName", new NameAttributeReader().read(process)));
     }

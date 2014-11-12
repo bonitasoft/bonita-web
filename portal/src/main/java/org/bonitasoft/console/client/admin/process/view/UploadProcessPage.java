@@ -62,7 +62,7 @@ public class UploadProcessPage extends Page {
 
     @Override
     public void defineTitle() {
-        this.setTitle(_("Install an app"));
+        this.setTitle(_("Install a process"));
     }
 
     @Override
@@ -72,14 +72,14 @@ public class UploadProcessPage extends Page {
 
     @Override
     public void buildView() {
-        addBody(new Text(_("Browse your computer and select the business archive containing the app definition to install.")));
+        addBody(new Text(_("Browse your computer and select the business archive containing the process definition to install.")));
         addBody(uploadProcessForm());
     }
 
     private Form uploadProcessForm() {
         Form form = new Form();
         form.addEntry(uploadProcessFileUpload());
-        form.addDisabledButton(new JsId("installUpload"), _("Install"), _("Install a app"),
+        form.addDisabledButton(new JsId("installUpload"), _("Install"), _("Install a process"),
                 new SendFormAction(ProcessDefinition.get().getAPIUrl(), getCallBack()));
         form.addCancelButton();
         return form;

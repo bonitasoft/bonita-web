@@ -82,7 +82,7 @@ public class AddProcessCategoryPage extends Page {
                 .addEntryAsAutoComplete(
                         ProcessCategoryItem.ATTRIBUTE_CATEGORY_ID,
                         _("Category"),
-                        _("Select the category which the app will be linked to"),
+                        _("Select the category which the process will be linked to"),
                         Definitions.get(CategoryDefinition.TOKEN),
                         CategoryItem.ATTRIBUTE_NAME,
                         CategoryItem.ATTRIBUTE_ID);

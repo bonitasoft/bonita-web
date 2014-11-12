@@ -55,7 +55,7 @@ public abstract class ListProcessActorMemberPage extends PageOnItem<ActorItem> {
 
     private ItemDeletePopupAction removeActorMemberAction() {
         ItemDeletePopupAction action = new ItemDeletePopupAction(ActorMemberDefinition.get());
-        action.setMessage(_("Are you sur you want to remove selected actor members from app ?"));
+        action.setMessage(_("Are you sur you want to remove selected actor members from the process ?"));
         action.setTitle(_("Confirm removing ?"));
         action.setConfirmButtonLabel(_("Remove"));
         return action;
