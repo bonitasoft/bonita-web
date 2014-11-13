@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-10 14:59+0100\n"
-"PO-Revision-Date: 2014-11-10 10:29-0500\n"
+"PO-Revision-Date: 2014-11-12 03:42-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2900,7 +2900,7 @@ msgstr "Processus"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
 msgid "Process management"
-msgstr "Process management"
+msgstr "Gestion des processus"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
