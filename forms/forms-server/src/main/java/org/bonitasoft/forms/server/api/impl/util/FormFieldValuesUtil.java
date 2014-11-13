@@ -922,17 +922,24 @@ public class FormFieldValuesUtil {
 
         final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID);
         for (final FormWidget formWidget : formWidgets) {
-            if (isExpressionDynamic(formWidget.getInitialValueExpression()) || isArrayOfExpressionsDynamic(formWidget.getInitialValueExpressionArray())
-                    || isExpressionDynamic(formWidget.getAvailableValuesExpression()) || isListOfExpressionsDynamic(formWidget.getAvailableValues())
-                    || isListOfListOfExpressionsDynamic(formWidget.getTableAvailableValues())) {
-                formWidget.setHasDynamicValue(true);
+            if (formCacheUtil.getFormWidget(formID, pageID, formWidget.getId(), locale, processDeployementDate) == null) {
+                storeWidgetInCacheAndSetCacheID(formCacheUtil, formID, pageID, locale, processDeployementDate, formWidget);
             }
-            final String formWidgetCacheId = formCacheUtil.storeFormWidget(formID, pageID, locale, processDeployementDate, formWidget);
-            formWidget.setFormWidgetCacheId(formWidgetCacheId);
-            if (formWidget.getValidators() != null) {
-                formWidget.setValidatorsCacheId(formCacheUtil.storeFieldValidators(formID, pageID, formWidget.getId(), locale, processDeployementDate,
-                        formWidget.getValidators()));
-            }
+        }
+    }
+
+    protected void storeWidgetInCacheAndSetCacheID(final FormCacheUtil formCacheUtil, final String formID, final String pageID, final String locale,
+            final Date processDeployementDate, final FormWidget formWidget) {
+        if (isExpressionDynamic(formWidget.getInitialValueExpression()) || isArrayOfExpressionsDynamic(formWidget.getInitialValueExpressionArray())
+                || isExpressionDynamic(formWidget.getAvailableValuesExpression()) || isListOfExpressionsDynamic(formWidget.getAvailableValues())
+                || isListOfListOfExpressionsDynamic(formWidget.getTableAvailableValues())) {
+            formWidget.setHasDynamicValue(true);
+        }
+        final String formWidgetCacheId = formCacheUtil.storeFormWidget(formID, pageID, locale, processDeployementDate, formWidget);
+        formWidget.setFormWidgetCacheId(formWidgetCacheId);
+        if (formWidget.getValidators() != null) {
+            formWidget.setValidatorsCacheId(formCacheUtil.storeFieldValidators(formID, pageID, formWidget.getId(), locale, processDeployementDate,
+                    formWidget.getValidators()));
         }
     }
 
