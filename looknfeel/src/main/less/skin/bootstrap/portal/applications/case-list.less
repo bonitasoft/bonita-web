@@ -1,0 +1,109 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+// angular case list style
+/////////////////////////////////////////////////////////////////////////////////////////////
+#case-list {
+	width: 100%;
+	padding: 0px 100px 0 100px;
+
+
+	&-tab-content {
+		padding: 25px 0px 0 0px;
+	}
+
+	.case-list-refresh {
+		padding-left : 10px;
+		cursor: pointer;
+	}
+
+	.column-visibility-name{
+		cursor : grab;
+	}
+
+	.column-visibility-checkbox{
+		padding: 0 0 0 10px;
+	}
+	li{
+		&[draggable=true]:hover{
+		background: url(../img/dragndrophover.gif) repeat-y left;
+		}
+		&.lr-drop-target-before{
+			border-color: #999999;
+		}
+	}
+	
+	div.popover{
+		ul, ul li{
+			margin:0;
+			padding:0;
+			list-style: none;
+		}
+	}
+	
+	a.open-link {
+		color: inherit; /* blue colors for links too*/
+		text-decoration: inherit; /* no underline */
+	}
+
+	.case-{
+		&column.st-sort-
+			&ascent:after{
+				content: '\25B2';
+			}
+			&descent:after{
+				content: '\25BC';
+			}
+		}
+		&checkbox {
+			padding-left: 15px;
+			width: 40px;
+		}
+		&selected {
+			background-color: blue;
+		}
+	}
+
+	.lr-drop-target-before{
+		border-left: 2px solid orange;
+	}
+
+	.lr-drop-target-after{
+		border-right: 2px solid orange;
+	}
+
+	.cases-nb-results{
+		border: 0;
+	}
+
+	#cases-results-size{
+		margin: 28px 20px;
+	}
+
+	button{
+		text-transform: capitalize;
+		min-width: 60px;
+	}
+
+	.dropdown-menu {
+		overflow-y: auto;
+		max-height: 315px;
+	}
+
+	.glyphicon-none:before {
+		content: "\2122";
+		color: transparent !important;
+	}
+
+	.pointer{
+		cursor: pointer;
+	}
+	
+	.glyphicon-refresh-animate {
+		-animation: spin .7s infinite linear;
+		-webkit-animation: spin2 .7s infinite linear;
+	}
+
+	@-webkit-keyframes spin2 {
+		from { -webkit-transform: rotate(0deg);}
+		to { -webkit-transform: rotate(360deg);}
+	}
+}
