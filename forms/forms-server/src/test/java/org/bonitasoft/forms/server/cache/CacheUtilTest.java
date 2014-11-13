@@ -18,6 +18,7 @@ package org.bonitasoft.forms.server.cache;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import net.sf.ehcache.CacheManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,6 +31,8 @@ import org.junit.Test;
  */
 public class CacheUtilTest {
 
+    protected CacheManager cacheManager = null;
+
     static {
         final String bonitaHome = System.getProperty("bonita.home");
         if (bonitaHome == null) {
@@ -39,48 +42,49 @@ public class CacheUtilTest {
             System.err.println("\n\n*** bonita.home already set to: " + bonitaHome + " \n\n\n");
         }
     }
-    
+
     @Before
     public void setUp() {
-        assertNotNull("Cannot create cache", CacheUtil.createCache(CacheUtil.CACHE_MANAGER.getName(),
-                CacheUtil.CACHE_MANAGER.getDiskStorePath()));
+        cacheManager = CacheUtil.getCacheManager(System.getProperty("java.io.tmpdir"));
+        assertNotNull("Cannot create cache", CacheUtil.createCache(cacheManager, cacheManager.getName()));
     }
-    
+
     @After
     public void tearDown() {
-        CacheUtil.clear(CacheUtil.CACHE_MANAGER.getName());
+        if (cacheManager != null) {
+            CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
+        }
     }
-   
+
 
     @Test
     public void testCreateCaches() {
         try{
-        assertNotNull("Cannot create caches", CacheUtil.createCache(CacheUtil.CACHE_MANAGER.getName(),
-                CacheUtil.CACHE_MANAGER.getDiskStorePath()));
+            assertNotNull("Cannot create caches", CacheUtil.createCache(cacheManager, cacheManager.getName()));
         }finally{
-            CacheUtil.clear(CacheUtil.CACHE_MANAGER.getName());
+            CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
         }
     }
-    
+
     @Test
     public void testStore() {
-        CacheUtil.store(CacheUtil.CACHE_MANAGER.getName(), CacheUtil.CACHE_MANAGER.getDiskStorePath(),
+        CacheUtil.store(cacheManager.getDiskStorePath(), cacheManager.getName(),
                 new String("testStoreKey"), new String("testStoreValue"));
-         assertNotNull("Cannot store", CacheUtil.CACHE_MANAGER.getCache(CacheUtil.CACHE_MANAGER.getName()));
+        assertNotNull("Cannot store", cacheManager.getCache(cacheManager.getName()));
     }
-    
+
     @Test
     public void testGet() {
-        CacheUtil.store(CacheUtil.CACHE_MANAGER.getName(), CacheUtil.CACHE_MANAGER.getDiskStorePath(),
+        CacheUtil.store(cacheManager.getDiskStorePath(), cacheManager.getName(),
                 new String("testStoreKey"), new String("testStoreValue"));
-        assertNotNull("Cannot get the element in the cache", CacheUtil.get(CacheUtil.CACHE_MANAGER.getName(),
+        assertNotNull("Cannot get the element in the cache", CacheUtil.get(cacheManager.getDiskStorePath(), cacheManager.getName(),
                 "testStoreKey"));
     }
-    
+
     @Test
     public void testClear() {
-        CacheUtil.clear(CacheUtil.CACHE_MANAGER.getName());
-        assertNull("Cannot clear the cache", CacheUtil.get(CacheUtil.CACHE_MANAGER.getName(),
+        CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
+        assertNull("Cannot clear the cache", CacheUtil.get(cacheManager.getName(), cacheManager.getDiskStorePath(),
                 "testStoreKey"));
     }
 
