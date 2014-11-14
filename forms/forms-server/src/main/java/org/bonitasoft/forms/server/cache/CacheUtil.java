@@ -40,22 +40,25 @@ public class CacheUtil {
 
     protected static synchronized CacheManager getCacheManager(final String diskStorePath) {
         if (CACHE_MANAGER == null) {
-            String pathToCacheConfigFile;
+            File cacheConfigFile;
             try {
-                pathToCacheConfigFile = WebBonitaConstantsUtils.getInstance().getConfFolder().getAbsolutePath() + "/cache-config.xml";
+                cacheConfigFile = new File(WebBonitaConstantsUtils.getInstance().getConfFolder().getAbsolutePath() + "/cache-config.xml");
             } catch (final Exception e) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, "Unable to retrieve the path of the cache configuration file.", e);
                 }
-                pathToCacheConfigFile = null;
+                cacheConfigFile = null;
             }
-            if (pathToCacheConfigFile != null) {
-                final Configuration configuration = ConfigurationFactory.parseConfiguration(new File(pathToCacheConfigFile));
+            if (cacheConfigFile != null && cacheConfigFile.exists()) {
+                final Configuration configuration = ConfigurationFactory.parseConfiguration(cacheConfigFile);
                 final DiskStoreConfiguration diskStoreConfiguration = new DiskStoreConfiguration();
                 diskStoreConfiguration.setPath(diskStorePath);
                 configuration.addDiskStore(diskStoreConfiguration);
                 CACHE_MANAGER = new CacheManager(configuration);
             } else {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Unable to retrieve the cache configuration file. Creating a cache manager with the default configuration");
+                }
                 CACHE_MANAGER = new CacheManager();
             }
         }
