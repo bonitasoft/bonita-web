@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-12 03:42-0500\n"
+"PO-Revision-Date: 2014-11-13 05:26-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,33 +17,54 @@ msgstr ""
 msgid "Columns"
 msgstr "Colonnes"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtres"
-
-msgid "All versions"
-msgstr "Toutes les versions"
-
-msgid "All apps"
-msgstr "Tous les processus"
-
-msgid "All states"
-msgstr "Tous les états"
-
-msgid "started"
-msgstr "démarré"
-
-msgid "failed"
-msgstr "en échec"
-
-msgid "Confirm delete?"
-msgstr "Confirmer la suppression?"
 
 msgid "This case will be definitively deleted."
 msgstr "Ce cas sera définitivement supprimé."
 
 msgid "These cases will be definitively deleted."
 msgstr "Ces cas seront définitivement supprimés."
+
+msgid "Process version"
+msgstr "Version du processus"
+
+msgid "Process name"
+msgstr "Nom du processus"
+
+msgid "Healthy"
+msgstr "Healthy"
+
+msgid "With failures"
+msgstr "With failures"
+
+msgid "Cases list"
+msgstr "Cases list"
+
+msgid "Failed Tasks"
+msgstr "Tâches en échec"
+
+msgid "Pending Tasks"
+msgstr "Pending Tasks"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} case deleted successfully"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} cases deleted successfully"
+
+msgid "Confirm delete?"
+msgstr "Confirmer la suppression?"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "No cases to display"
+msgstr "No cases to display"
+
+msgid "Loading"
+msgstr "Loading"
 

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-10 10:37-0500\n"
+"PO-Revision-Date: 2014-11-13 05:43-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -17,33 +17,54 @@ msgstr ""
 msgid "Columns"
 msgstr "Columns"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtros"
-
-msgid "All versions"
-msgstr "All versions"
-
-msgid "All apps"
-msgstr "All apps"
-
-msgid "All states"
-msgstr "All states"
-
-msgid "started"
-msgstr "started"
-
-msgid "failed"
-msgstr "failed"
-
-msgid "Confirm delete?"
-msgstr "Confirm delete?"
 
 msgid "This case will be definitively deleted."
 msgstr "This case will be definitively deleted."
 
 msgid "These cases will be definitively deleted."
 msgstr "These cases will be definitively deleted."
+
+msgid "Process version"
+msgstr "Process version"
+
+msgid "Process name"
+msgstr "Nombre de Proceso"
+
+msgid "Healthy"
+msgstr "Healthy"
+
+msgid "With failures"
+msgstr "With failures"
+
+msgid "Cases list"
+msgstr "Cases list"
+
+msgid "Failed Tasks"
+msgstr "Tareas fallidas"
+
+msgid "Pending Tasks"
+msgstr "Pending Tasks"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} case deleted successfully"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} cases deleted successfully"
+
+msgid "Confirm delete?"
+msgstr "Confirm delete?"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "No cases to display"
+msgstr "No cases to display"
+
+msgid "Loading"
+msgstr "Loading"
 
