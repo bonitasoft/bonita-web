@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-11 03:02+0100\n"
-"PO-Revision-Date: 2014-11-12 03:39-0500\n"
+"POT-Creation-Date: 2014-11-13 03:02+0100\n"
+"PO-Revision-Date: 2014-11-13 05:22-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -457,33 +457,35 @@ msgstr "L'état du cas"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:183
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:28
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:226
-#: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:69
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:111
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:79
-#: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
-#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
-#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
-#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
-msgid "Apps"
-msgstr "Apps"
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:172
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:189
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:68
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:146
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:166
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:194
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:221
+msgid "Process"
+msgstr "Processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:184
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:24
-msgid "The app responsible for the creation of this task"
-msgstr "L'app dont est extraite la tâche"
+msgid "The process responsible for the creation of this task"
+msgstr "Le processus dont est issue la tâche"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:190
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:43
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:44
-msgid "Apps version"
-msgstr "Version de l'apps"
+#: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:106
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:124
+msgid "Process version"
+msgstr "Version du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:191
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:205
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/more/MetadataMessages.java:40
-msgid "Version of the app"
-msgstr "Version de l'App"
+msgid "Version of the process"
+msgstr "Version du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataTaskBuilder.java:197
 msgid "Subprocess"
@@ -731,8 +733,8 @@ msgstr "Suppérieur de l'utilisateur"
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:43
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:106
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:124
-msgid "The version of the app that created this case"
-msgstr "La version de l'application de ce cas."
+msgid "The version of the process that created this case"
+msgstr "La version du processus dont est issu ce cas"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/MetadataCaseBuilder.java:52
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/snippet/CaseWorkedOnSnippet.java:68
@@ -789,32 +791,32 @@ msgid "The date when the case was updated"
 msgstr "La date de dernière mise à jour du cas"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:37
-msgid "The version of the app"
-msgstr "La version de l'app"
+msgid "The version of the process"
+msgstr "La version du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:45
 msgid "Configuration state "
 msgstr "Etat de la configuration "
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:45
-msgid "The configuration state of the app"
-msgstr "L'état de configuration de l'application"
+msgid "The configuration state of the process"
+msgstr "L'état de configuration du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:53
 msgid "Last updated on"
 msgstr "Dernière mise à jour le"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:53
-msgid "The date when the app was updated"
-msgstr "La date de mise à jour de l'App"
+msgid "The date when the process was updated"
+msgstr "La date de mise à jour du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:61
 msgid "Activation state"
 msgstr "État d'activation"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:61
-msgid "The state of the app"
-msgstr "L'état de l'application"
+msgid "The state of the process"
+msgstr "L'état du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:69
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:196
@@ -822,16 +824,16 @@ msgid "Installed on"
 msgstr "Installé le"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:70
-msgid "The date when this app has been installed"
-msgstr "La date, d'installation de cette application"
+msgid "The date when this process has been installed"
+msgstr "La date d'installation de ce processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:79
 msgid "Installed by"
 msgstr "Installé par"
 
 #: portal/src/main/java/org/bonitasoft/console/client/common/metadata/ProcessMetadataBuilder.java:79
-msgid "The user that has uploaded this app"
-msgstr "L'utilisateur qui a téléchargé l'app"
+msgid "The user that has uploaded this process"
+msgstr "L'utilisateur qui a installé le processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TaskButtonFactory.java:38
 msgid "Do it"
@@ -897,8 +899,8 @@ msgid "Start"
 msgstr "Démarrer"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/ProcessQuickDetailsPage.java:70
-msgid "Start this app"
-msgstr "Démarrer cette app"
+msgid "Start this process"
+msgstr "Démarrer ce processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:100
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:83
@@ -921,17 +923,6 @@ msgstr "Que j'ai prises"
 msgid "Hidden to me"
 msgstr "Qui me sont masquées"
 
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:172
-#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:189
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:68
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:146
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:166
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:194
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:221
-msgid "App"
-msgstr "App"
-
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:179
 msgid "Performed"
 msgstr "Exécutées"
@@ -942,9 +933,20 @@ msgstr "Exécutées"
 msgid "Performed date"
 msgstr "Date d'exécution"
 
+#: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:226
+#: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:69
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/task/view/TaskListingAdminPage.java:111
+#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseListingAdminPage.java:79
+#: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:34
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
+msgid "Processes"
+msgstr "Processus"
+
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:227
-msgid "Select an App in the list below to display the available tasks"
-msgstr "Sélectionnez une app dans la liste ci-dessous pour afficher les tâches disponibles"
+msgid "Select a process in the list below to display the available tasks"
+msgstr "Sélectionnez un processus dans la liste ci-dessous pour en afficher les tâches disponibles"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/task/view/TasksListingPage.java:238
 msgid "Status"
@@ -1001,8 +1003,8 @@ msgid "All"
 msgstr "Tous"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:86
-msgid "Display a summary of all apps"
-msgstr "Afficher un résumé de toutes les Apps"
+msgid "Display a summary of all processes"
+msgstr "Afficher un résumé de tous les processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/application/view/ProcessListingPage.java:105
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/CategoriesSection.java:45
@@ -1130,16 +1132,16 @@ msgstr "Id"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:128
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:138
-msgid "App name"
-msgstr "Nom de l'app"
+msgid "Process name"
+msgstr "Nom du processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/CaseListingPage.java:129
 msgid "Start date"
 msgstr "Débuté le"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/DisplayCaseFormPage.java:93
-msgid "Display a case form of app %app_name%"
-msgstr "Afficher un formulaire de cas dans l'ass %app_name %"
+msgid "Display a case form of process %app_name%"
+msgstr "Afficher un formulaire de démarrage du processus %app_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseMoreDetailsPage.java:73
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/ArchivedCaseQuickDetailsPage.java:57
@@ -1178,11 +1180,6 @@ msgstr "Précédent"
 #: portal/src/main/java/org/bonitasoft/web/toolkit/client/ui/component/button/ButtonBack.java:35
 msgid "Go back to previous view"
 msgstr "Retour à la page précédente"
-
-#: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:106
-#: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/AbstractCaseQuickDetailsAdminPage.java:124
-msgid "App version"
-msgstr "Version de l'app"
 
 #: portal/src/main/java/org/bonitasoft/console/client/user/cases/view/AbstractCaseQuickDetailsPage.java:138
 msgid "Tasks to do"
@@ -1569,24 +1566,24 @@ msgid "Add this membership"
 msgstr "Ajouter cette adhésion"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
-msgid "Delete the app %app_name%?"
-msgstr "Supprimer l'app %app_name%?"
+msgid "Delete the process %app_name%?"
+msgstr "Delete the process %app_name%?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessQuickDetailsAdminPage.java:72
-msgid "Show more details about this apps"
-msgstr "Afficher plus de détails sur cette apps"
+msgid "Show more details about this process"
+msgstr "Afficher plus d'informations sur ce processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:73
-msgid "Start a app on behalf of another user"
-msgstr "Démarrer une app au titre en tant qu'un autre utilisateur"
+msgid "Start a process on behalf of another user"
+msgstr "Démarrer un processus au nom d'un autre utilisateur"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:83
-msgid "Start this app on behalf of selected user"
-msgstr "Démarrer cette App à la place de l'utilisateur sélectionné"
+msgid "Start this process on behalf of selected user"
+msgstr "Démarrer ce processus au nom d'un autre utilisateur"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:89
-msgid "Select a user to start app %app_name% %app_version%"
-msgstr "Sélectionner un utilisateur pour démarrer l'app %app_name% %app_version%"
+msgid "Select a user to start process %app_name% %app_version%"
+msgstr "Sélectionnez un utilisateur pour démarrer le processus %app_name%%app_version%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessOnBehalfPage.java:93
 msgid "The openned case will be marked as started by him."
@@ -1604,8 +1601,8 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:122
-msgid "Delete this app"
-msgstr "Supprimer cette app"
+msgid "Delete this process"
+msgstr "Supprimer ce processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
@@ -1613,8 +1610,8 @@ msgid "Enable"
 msgstr "Activer"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:138
-msgid "Enable this app"
-msgstr "Activer cette app"
+msgid "Enable this process"
+msgstr "Activer ce processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:142
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:148
@@ -1622,8 +1619,8 @@ msgid "Disable"
 msgstr "Désactiver"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessMoreDetailsAdminPage.java:142
-msgid "Disable this app"
-msgstr "Désactiver cette app"
+msgid "Disable this process"
+msgstr "Désactiver ce processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMembershipPage.java:52
 msgid "Edit memberships of actor %actor_name%"
@@ -1644,8 +1641,8 @@ msgid "Actor mapping"
 msgstr "Association acteurs/utilisateurs"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:63
-msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
-msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) à associer aux acteurs. Ces entités exécuteront les tâches \"humaines\" dans l'application."
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) à associer aux acteurs. Ces entités exécuteront les tâches \"humaines\" du processus."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/EntityMappingSection.java:66
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
@@ -1726,8 +1723,8 @@ msgid "Add a role to %actor_name%"
 msgstr "Ajouter un rôle à %actor_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:58
-msgid "Are you sur you want to remove selected actor members from app ?"
-msgstr "Etes-vous sûr de vouloir supprimer de l'app les membres de l'acteur sélectionnés ?"
+msgid "Are you sur you want to remove selected actor members from the process ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer de cet acteur les entités sélectionnées ?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/entitymapping/ListProcessActorMemberPage.java:59
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/RemoveCategoryPopUp.java:50
@@ -1806,20 +1803,20 @@ msgid "Class name"
 msgstr "Nom de la classe"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:34
-msgid "The App cannot be enabled"
-msgstr "L'App ne peut être activée"
+msgid "The Process cannot be enabled"
+msgstr "Le processus ne peut être activé"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:42
-msgid "Entity Mapping must be resolved before enabling the App."
-msgstr "Toutes les entités doivent être configurées pour pouvoir activer l'app."
+msgid "Entity Mapping must be resolved before enabling the Process."
+msgstr "Toutes les entités doivent être configurées pour pouvoir activer le processus."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:45
-msgid "Parameters must be resolved before enabling the App."
-msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer l'App."
+msgid "Parameters must be resolved before enabling the Process."
+msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le processus."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/ProcessResolutionProblemsCallout.java:48
-msgid "Connector definitions must be resolved before enabling the App."
-msgstr "Tous les connecteurs doivent avoir une implémentation associée pour pouvoir activer l'App."
+msgid "Connector definitions must be resolved before enabling the Process."
+msgstr "Les définitions de connecteur doivent être résolues pour pouvoir activer le processus."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/configuration/ConfigurationState.java:27
 msgid "RESOLVED"
@@ -1873,8 +1870,8 @@ msgid "Confirm removing"
 msgstr "Confirmer la suppression"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/RemoveCategoryPopUp.java:69
-msgid "Are you sure you want to remove category '%categoryName%' from app '%appName%' ?"
-msgstr "Êtes-vous sûr de vouloir enlever la catégorie %categoryName% de l'app '%appName%'?"
+msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
+msgstr "Êtes-vous sûr(e) de vouloir retirer la catégorie %categoryName% du processus '%appName%' ?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/AddProcessCategoryPage.java:63
 msgid "Add a new category to %%"
@@ -1885,8 +1882,8 @@ msgid "Category"
 msgstr "Catégorie"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/AddProcessCategoryPage.java:85
-msgid "Select the category which the app will be linked to"
-msgstr "Sélectionner la catégorie à associer à l'app"
+msgid "Select the category which the process will be linked to"
+msgstr "Sélectionner la catégorie à associer au processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/section/category/AddProcessCategoryPage.java:91
 msgid "This category was not found or this field is mandatory"
@@ -1909,21 +1906,18 @@ msgid "Create"
 msgstr "Créer"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:65
-msgid "Install an app"
-msgstr "Installer une app"
+#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:82
+msgid "Install a process"
+msgstr "Installer un processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:75
-msgid "Browse your computer and select the business archive containing the app definition to install."
-msgstr "Parcourez votre ordinateur et sélectionnez le fichier contenant la définition de l'app à installer."
+msgid "Browse your computer and select the business archive containing the process definition to install."
+msgstr "Recherchez et sélectionnez le fichier contenant la définition du processus à installer (.bar)."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:82
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
 msgid "Install"
 msgstr "Installer"
-
-#: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:82
-msgid "Install a app"
-msgstr "Installer une app"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/UploadProcessPage.java:98
 msgid "Business archive"
@@ -1934,12 +1928,12 @@ msgid "A business archive has a .bar extension"
 msgstr "Une archive a .bar comme extension"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
-msgid "Opens a popup to install an app"
-msgstr "Ouvre une pop up pour installer une App"
+msgid "Opens a popup to install a process"
+msgstr "Opens a popup to install a process"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
-msgid "Enabled Apps"
-msgstr "Apps activées"
+msgid "Enabled processes"
+msgstr "Processus activés"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:97
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:160
@@ -1947,47 +1941,47 @@ msgid "Disabled"
 msgstr "Désactivés"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:97
-msgid "Disabled Apps"
-msgstr "Apps désactivées"
+msgid "Disabled processes"
+msgstr "Processus désactivés"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:102
-msgid "Resolved Apps"
-msgstr "Apps résolues"
+msgid "Resolved processes"
+msgstr "Processus résolus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:108
-msgid "Unresolved Apps"
-msgstr "Apps non résolues"
+msgid "Unresolved processes"
+msgstr "Processus non résolus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:148
-msgid "Disable selected apps"
-msgstr "Désactiver les Apps sélectionnées"
+msgid "Disable selected processes"
+msgstr "Désactiver les processus sélectionnés"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:163
-msgid "Enable selected apps"
-msgstr "Activer les Apps sélectionnées"
+msgid "Enable selected processes"
+msgstr "Activer les processus sélectionnés"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:176
-msgid "Delete selected apps"
-msgstr "Supprimer les Apps sélectionnées"
+msgid "Delete selected processes"
+msgstr "Supprimer les processus sélectionnés"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:176
-msgid "app"
-msgstr "App"
+msgid "process"
+msgstr "processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:164
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:176
-msgid "apps"
-msgstr "Apps"
+msgid "processes"
+msgstr "processus"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:174
 msgid "Deletable"
 msgstr "À supprimer"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/StartProcessFormPage.java:85
-msgid "Start an instance of app %app_name%"
-msgstr "Démarrer un cas de l'app %app_name%"
+msgid "Start an instance of process %app_name%"
+msgstr "Démarrer une instance de processus %app_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/UpdateUserFormAction.java:59
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/action/AddUserFormAction.java:52
@@ -2055,8 +2049,8 @@ msgid "Warning"
 msgstr "Attention"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:58
-msgid "You risk interrupting one or more apps.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n\nBefore proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "Cette action pourrait interrompre une ou plusieurs apps.\n\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'une(des) app(s).\n\nIl est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\nConfirmez-vous la désactivation de cet utilisateur?"
+msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
+msgstr "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:77
 msgid "Dactivate selected user"
@@ -3123,29 +3117,28 @@ msgid "User"
 msgstr "Utilisateur"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:25
-msgid "The user can view and perform tasks and can start a new case of an app."
-msgstr "L'utilisateur peut visualiser et réaliser des tâches. Il peut également démarrer un nouveau cas d'application."
+msgid "The user can view and perform tasks and can start a new case of a process."
+msgstr "L'utilisateur peut visualiser et réaliser des tâches. Il peut également créer de nouveaux cas en démarrant un processus."
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:30
 msgid "Administrator"
 msgstr "Administrateur"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:32
-msgid "The administrator can install an app, manage the organization, and handle some errors (for example, by replaying a task)."
-msgstr "L'administrateur peut installer une application, gérer l'organisation et gérer des erreurs (par exemple, en rejouant une tâche)."
+msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
+msgstr "L'administrateur peut installer un processus, gérer l'organisation et gérer certaines erreurs (par exemple, en rejouant une tâche)."
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:37
 msgid "Process manager"
 msgstr "Gestionnaire de processus"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileTypesI18N.java:39
-msgid "The Process manager can supervise designated apps, and manage cases and tasks of those apps."
-msgstr "Le Gestionnaire de Processus supervise les apps qui lui sont attribuées et gère les cas et les tâches de ces apps."
+msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
+msgstr "Le Gestionnaire de Processus supervise les processus qui lui sont attribués et gère les cas et les tâches de ces processus."
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:52
-#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
-msgid "Apps management"
-msgstr "Gestion d'apps"
+msgid "Process management"
+msgstr "Gestion des processus"
 
 #: server/src/main/java/org/bonitasoft/console/common/server/ProfileEntriesI18N.java:58
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
@@ -3169,8 +3162,8 @@ msgid "manage tasks"
 msgstr "gérer des tâches"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:28
-msgid "Manage tasks of apps that an entity with this profile can supervise as PM."
-msgstr "Gère les tâches de l'app qu'une entité de ce profil peut superviser en tant que PM."
+msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
+msgstr "Gérer les tâches de processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:29
 msgid "visualize cases"
@@ -3181,20 +3174,20 @@ msgid "manage cases"
 msgstr "Gérer des cas"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:31
-msgid "Manage cases of apps that an entity with this profile can supervise as PM."
-msgstr "Gère les cas de l'app qu'une entité de ce profil peut superviser en tant que PM."
+msgid "Manage cases of processes that an entity with this profile can supervise as PM."
+msgstr "Gérer les cas de processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:32
-msgid "visualize & start apps"
-msgstr "visualiser & démarrer une apps"
+msgid "visualize & start processes"
+msgstr "Visualiser & démarrer les processus"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:33
-msgid "manage apps"
-msgstr "Gérer les apps"
+msgid "manage processes"
+msgstr "gérer les processus"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:34
-msgid "Manage apps that an entity with this profile can supervise as PM."
-msgstr "Gère les apps qu'une entité de ce profil peut superviser en tant que PM."
+msgid "Manage processes that an entity with this profile can supervise as PM."
+msgstr "Gérer les processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:35
 msgid "manage users"
@@ -3249,6 +3242,10 @@ msgstr "Gérer les applications"
 msgid "Applications"
 msgstr "Applications"
 
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
+msgid "Apps management"
+msgstr "Gestion d'apps"
+
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/RoleDatastore.java:121
 msgid "Can't create role. Role '%roleName%' already exists"
 msgstr "Il n'est pas possible de créer ce rôle, car '%roleName%' est déjà présent"
@@ -3278,8 +3275,8 @@ msgid "This user has already been mapped to actor"
 msgstr "Cet utilisateur est déjà lié à l'acteur"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/ProcessCategoryDatastore.java:103
-msgid "This category has already been added to this apps"
-msgstr "Cette catégorie a déjà été ajoutée à cette app"
+msgid "This category has already been added to this process"
+msgstr "Cette catégorie a déjà été ajoutée à ce processus"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/bpm/process/helper/ProcessItemConverter.java:65
 msgid "Process definition not found for id %processId%"
@@ -3322,8 +3319,8 @@ msgid "Error when updating %activityId% activity variables"
 msgstr "Erreur lors de la mise à jour des variables de l'activité de %activityId%"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:84
-msgid "Apps %appName% in version %version% already exists"
-msgstr "L'app %appName% dans la version %version% existe"
+msgid "Process %appName% in version %version% already exists"
+msgstr " Le processus %appName% existe déjà en version %version% "
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ProcessEngineClient.java:87
 msgid "Unable to deploy business archive"
@@ -3346,30 +3343,37 @@ msgid "Unable to get process data definitions, process %processId% not found"
 msgstr "Impossible d'obtenir des définitions de données de processus, car %processId% est introuvable"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:42
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:42
 msgid "Can't update user. User not found"
 msgstr "Impossible de mettre à jour les données de l'utilisateur. L'utilisateur est introuvable"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:44
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:44
 msgid "Error when updating user"
 msgstr "Erreur lors de l'actualisation des données de l'utilisateur"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:52
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:52
 msgid "Can't create user. User '%userName%' already exists"
 msgstr "Il n'est pas possible de créer cet utilisateur, car '%userName%' est déjà présent"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:55
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:55
 msgid "Error when creating user"
 msgstr "Erreur lors de la création de l'utilisateur"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:63
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:63
 msgid "User not found"
 msgstr "Utilisateur introuvable"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:71
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:71
 msgid "Error when deleting users"
 msgstr "Erreur lors de la désactivation des utilisateurs"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:79
+#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:79
 msgid "Error when searching users"
 msgstr "Erreur lors de la recherche des utilisateurs"
 
