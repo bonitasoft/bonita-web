@@ -922,9 +922,7 @@ public class FormFieldValuesUtil {
 
         final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID);
         for (final FormWidget formWidget : formWidgets) {
-            if (formCacheUtil.getFormWidget(formID, pageID, formWidget.getId(), locale, processDeployementDate) == null) {
-                storeWidgetInCacheAndSetCacheID(formCacheUtil, formID, pageID, locale, processDeployementDate, formWidget);
-            }
+            storeWidgetInCacheAndSetCacheID(formCacheUtil, formID, pageID, locale, processDeployementDate, formWidget);
         }
     }
 
