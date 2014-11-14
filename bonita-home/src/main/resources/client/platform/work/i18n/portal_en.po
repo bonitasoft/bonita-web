@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-09 07:03+0100\n"
-"PO-Revision-Date: 2014-11-10 10:29-0500\n"
+"POT-Creation-Date: 2014-11-13 07:04+0100\n"
+"PO-Revision-Date: 2014-11-13 05:23-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -413,6 +413,7 @@ msgid "user privilege settings"
 msgstr "user privilege settings"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:40
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
 msgid "Monitoring"
 msgstr "Monitoring"
 
@@ -439,6 +440,10 @@ msgstr "Manage applications"
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:43
 msgid "Applications"
 msgstr "Applications"
+
+#: server/src/main/java/org/bonitasoft/web/rest/server/datastore/profile/PageLister.java:44
+msgid "Apps management"
+msgstr "Apps management"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/datastore/organization/RoleDatastore.java:121
 msgid "Can't create role. Role '%roleName%' already exists"
@@ -1256,8 +1261,8 @@ msgid "The openned case will be marked as started by him."
 msgstr "The openned case will be marked as started by him."
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:77
-msgid "Opens a popup to install an process"
-msgstr "Opens a popup to install an process"
+msgid "Opens a popup to install a process"
+msgstr "Opens a popup to install a process"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:92
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/view/ProcessListingAdminPage.java:145
@@ -1694,8 +1699,8 @@ msgid "Start an instance of process %app_name%"
 msgstr "Start an instance of process %app_name%"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/process/action/DeleteProcessAction.java:39
-msgid "Delete the Process %app_name%?"
-msgstr "Delete the Process %app_name%?"
+msgid "Delete the process %app_name%?"
+msgstr "Delete the process %app_name%?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/bpm/cases/view/CaseMoreDetailsAdminPage.java:120
 msgid "Pending tasks"
@@ -2385,8 +2390,8 @@ msgid "Warning"
 msgstr "Warning"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:58
-msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of an Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
+msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
+msgstr "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
 
 #: portal/src/main/java/org/bonitasoft/console/client/admin/organization/users/view/DeactivateUserWarningPopUp.java:77
 msgid "Dactivate selected user"
