@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-13 05:25-0500\n"
+"PO-Revision-Date: 2014-11-14 05:51-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -93,14 +93,14 @@ msgstr "10 min."
 msgid "Technical error."
 msgstr "Erreur technique."
 
-msgid "Process activation state"
-msgstr "État d'activation du processus"
+msgid "Process state"
+msgstr "État du processus"
 
 msgid "Show"
-msgstr "Show"
+msgstr "Voir"
 
 msgid "Healthy"
-msgstr "Healthy"
+msgstr "Sains"
 
 msgid "Open"
 msgstr "Ouvrir"
@@ -109,8 +109,8 @@ msgid "Process version"
 msgstr "Version du processus"
 
 msgid "Case state"
-msgstr "Case state"
+msgstr "Etat du cas"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
