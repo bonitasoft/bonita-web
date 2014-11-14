@@ -45,11 +45,11 @@
     margin-right: 20px;
   }
 
-  .monitoring-page .totalMonitoring .label {
+  .totalMonitoring .label {
     font-size: inherit;
   }
 
-  .monitoring-page img {
+  img {
     vertical-align: bottom;
   }
 
@@ -59,7 +59,7 @@
 
   .refreshBlock {
     position: relative;
-    bottom: 24px;
+    bottom: 40px;
     right: 16px;
   }
 
@@ -83,6 +83,12 @@
   button.dropdown-toggle {
     text-transform: capitalize;
   }
+
+  .refreshBlock button.dropdown-toggle {
+    text-transform: none;
+  }
+
+
   .pagination > .disabled > span,
   .pagination > .disabled > span:hover,
   .pagination > .disabled > span:focus,
@@ -97,12 +103,8 @@
     max-height: 315px;
   }
 
-  .monitoring-page .center {
+  .center {
     margin: 10px 0 20px;
-  }
-
-  hr {
-    width: 100%;
   }
 
   .table {
@@ -111,6 +113,7 @@
 
   h1 {
     margin-bottom: 0px;
+    color: #b20706;
   }
 
   .pagination {
@@ -166,5 +169,14 @@
 
   #process-list .action-column {
     width: 250px;
+  }
+
+  .totals-panel .panel-heading {
+    border-bottom: none;
+
+    h4 {
+      position: absolute;
+      color: #333;
+    }
   }
 }

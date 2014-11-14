@@ -44,7 +44,7 @@ msgstr ""
 msgid  "Healthy cases"
 msgstr ""
 
-msgid  "Failed cases"
+msgid  "Cases with failures"
 msgstr ""
 
 msgid  "Filter on process"
@@ -105,7 +105,7 @@ msgstr ""
 msgid  "Show"
 msgstr ""
 
-msgid  "Healthy"
+msgid  "Healthy cases"
 msgstr ""
 
 msgid "Open"
@@ -119,4 +119,3 @@ msgstr ""
 
 msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
-
