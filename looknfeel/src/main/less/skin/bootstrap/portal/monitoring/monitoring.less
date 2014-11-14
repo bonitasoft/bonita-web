@@ -1,6 +1,10 @@
+@panelHeaderBG: #333;
+@fontLightColor: #6e6f6b;
+@titleColor: #b20706;
+
 .monitoring-page {
   .panel-default > .panel-heading {
-    color: #323232;
+    color: @panelHeaderBG;
   }
 
   .center {
@@ -77,7 +81,7 @@
   }
 
   tbody {
-    color: #6e6f6b;
+    color: @fontLightColor;
   }
 
   button.dropdown-toggle {
@@ -113,7 +117,7 @@
 
   h1 {
     margin-bottom: 0px;
-    color: #b20706;
+    color: @titleColor;
   }
 
   .pagination {
@@ -176,7 +180,7 @@
 
     h4 {
       position: absolute;
-      color: #333;
+      color: @panelHeaderBG;
     }
   }
 }
