@@ -114,5 +114,3 @@ msgstr "Case state"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
-msgid "Process activation state"
-msgstr "Estado de Activación del Proceso"
