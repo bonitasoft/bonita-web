@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
@@ -61,7 +61,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         PRIVILEGES.add(TasksListingPage.TOKEN);
         PRIVILEGES.add(TaskListingAdminPage.TOKEN); // FIX ME: we should create a humantaskmoredetails admin page so ill never need this
         PRIVILEGES.add(CaseListingPage.TOKEN);
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
@@ -82,7 +82,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         this.addParameter(PARAMETER_ITEM_ID, taskId.toString());
     }
 
-    public PerformTaskPage(final APIID taskId, APIID userId) {
+    public PerformTaskPage(final APIID taskId, final APIID userId) {
         this();
         this.addParameter(PARAMETER_ITEM_ID, taskId.toString());
         this.addParameter(PARAMETER_USER_ID, userId.toString());
@@ -121,8 +121,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
         final StringBuilder frameURL = new StringBuilder()
 
-                .append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=")
-                .append(AbstractI18n.getDefaultLocale().toString());
+        .append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=")
+        .append(AbstractI18n.getDefaultLocale().toString());
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
         final String tenantId = ClientApplicationURL.getTenantId();
@@ -136,14 +136,14 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
 
         frameURL.append("#form=")
-                .append(URL.encodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
-                .append(URL.encodeQueryString(item.getProcess().getVersion())).append(UUID_SEPERATOR)
-                .append(URL.encodeQueryString(item.getName()))
+        .append(URL.encodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
+        .append(URL.encodeQueryString(item.getProcess().getVersion())).append(UUID_SEPERATOR)
+        .append(URL.encodeQueryString(item.getName()))
 
-                .append("$entry")
+        .append("$entry")
 
-                .append("&task=").append(item.getId())
-                .append("&mode=form");
+        .append("&task=").append(item.getId())
+        .append("&mode=form");
 
         if (assignTask) {
             frameURL.append("&assignTask=true");

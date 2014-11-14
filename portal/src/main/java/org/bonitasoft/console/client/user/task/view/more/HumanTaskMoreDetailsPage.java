@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
@@ -50,15 +50,15 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
  */
 public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTaskItem> implements PluginTask {
 
-    public static String TOKEN = "taskdetails";    
-    
+    public static String TOKEN = "taskdetails";
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(TasksListingPage.TOKEN);
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
         PRIVILEGES.add(CaseListingPage.TOKEN);
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
@@ -68,12 +68,12 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
         super(HumanTaskDefinition.get());
     }
 
-    public HumanTaskMoreDetailsPage(HumanTaskItem task) {
+    public HumanTaskMoreDetailsPage(final HumanTaskItem task) {
         super(HumanTaskDefinition.get(), task);
     }
 
     @Override
-    protected void buildToolbar(HumanTaskItem item) {
+    protected void buildToolbar(final HumanTaskItem item) {
         super.buildToolbar(item);
         final TaskButtonFactory factory = new TaskButtonFactory();
         if (!isTaskAssignedToOtherUser(item) && item.isUserTask()) {
@@ -99,7 +99,7 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
                 }
 
                 @Override
-                protected void on404NotFound(String message) {
+                protected void on404NotFound(final String message) {
                     addIgnoreButton(factory);
                 }
 
@@ -120,7 +120,7 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
         addToolbarLink(factory.createIgnoreButton(new UserTasksHideAction(Session.getUserId(), getItemId())));
     }
 
-    private void isTaskHidden(HumanTaskItem item, APICallback callback) {
+    private void isTaskHidden(final HumanTaskItem item, final APICallback callback) {
         final APIID compAPIId = APIID.makeAPIID(Session.getUserId().toLong(), item.getId().toLong());
         APIRequest.get(compAPIId, Definitions.get(HiddenUserTaskDefinition.TOKEN), callback).run();
     }

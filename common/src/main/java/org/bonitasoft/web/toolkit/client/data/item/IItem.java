@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,7 +25,6 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Séverin Moussel
- * 
  */
 public interface IItem extends JsonSerializable {
 
@@ -39,25 +36,25 @@ public interface IItem extends JsonSerializable {
 
     /**
      * @param applyOutputModifiers
-     *            the applyOutputModifiers to set
+     *        the applyOutputModifiers to set
      */
     public abstract void setApplyOutputModifiers(final boolean applyOutputModifiers);
 
     /**
      * @param applyInputModifiers
-     *            the applyInputModifiers to set
+     *        the applyInputModifiers to set
      */
     public abstract void setApplyInputModifiers(final boolean applyInputModifiers);
 
     /**
      * @param applyValidators
-     *            the applyValidators to set
+     *        the applyValidators to set
      */
     public abstract void setApplyValidators(final boolean applyValidators);
 
     /**
      * @param applyValidatorMandatory
-     *            the applyValidatorMandatory to set
+     *        the applyValidatorMandatory to set
      */
     public abstract void setApplyValidatorMandatory(final boolean applyValidatorMandatory);
 
@@ -65,11 +62,11 @@ public interface IItem extends JsonSerializable {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final String value);
 
@@ -79,11 +76,11 @@ public interface IItem extends JsonSerializable {
      * Set a Date attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final Date value);
 
@@ -91,11 +88,11 @@ public interface IItem extends JsonSerializable {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final APIID value);
 
@@ -103,11 +100,11 @@ public interface IItem extends JsonSerializable {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final String value, final boolean applyModifiers, final boolean applyValidators);
 
@@ -115,11 +112,11 @@ public interface IItem extends JsonSerializable {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final Object value, final boolean applyModifiers, final boolean applyValidators);
 
@@ -128,11 +125,11 @@ public interface IItem extends JsonSerializable {
      * Set an attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final APIID value, final boolean applyModifiers, final boolean applyValidators);
 
@@ -140,84 +137,84 @@ public interface IItem extends JsonSerializable {
      * Set a Date attribute value.
      * <p>
      * The attribute is consider as non existent before the first call of this function. The JSonItemReader fills it.
-     * 
+     *
      * @param name
-     *            The name of the attribute. Must be the same as in the ItemDefinition.
+     *        The name of the attribute. Must be the same as in the ItemDefinition.
      * @param value
-     *            The value of the Item.
+     *        The value of the Item.
      */
     public abstract void setAttribute(final String name, final Date value, final boolean applyModifiers, final boolean applyValidators);
 
     /**
      * Set a deployed version of an attribute
-     * 
+     *
      * @param attributeName
-     *            The name of the attribute to deploy
+     *        The name of the attribute to deploy
      * @param item
-     *            The deployed version of the attribute
+     *        The deployed version of the attribute
      */
     public abstract void setDeploy(final String attributeName, final IItem item);
 
     /**
      * Remove a deployed version of an attribute
-     * 
+     *
      * @param attributeName
-     *            The name of the attribute deploy to remove
+     *        The name of the attribute deploy to remove
      */
     public abstract void removeDeploy(final String attributeName);
 
     /**
      * Indicate if there are no attribute defined.
-     * 
+     *
      * @return This methods returns TRUE if there are no attributes, otherwise FALSE.
      */
     public abstract boolean isEmpty();
 
     /**
      * Indicate if the attribute exists even if its value is NULL or empty.
-     * 
+     *
      * @param name
-     *            The name of the attribute to check.
+     *        The name of the attribute to check.
      * @return This method returns TRUE if the attribute exists, otherwise FALSE.
      */
     public abstract boolean hasAttribute(final String name);
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param attributeName
-     *            The name of the attribute
+     *        The name of the attribute
      * @param applyModifiers
-     *            Indicate whether or not the output modifiers defined for this resource need to be apply.
+     *        Indicate whether or not the output modifiers defined for this resource need to be apply.
      * @return This function returns the value of the attribute or the defaultValue set.
      */
     public abstract String getAttributeValue(final String attributeName, final boolean applyModifiers);
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param attributeName
-     *            The name of the attribute
+     *        The name of the attribute
      * @return This function returns the value of the attribute or NULL if not set.
      */
     public abstract String getAttributeValue(final String attributeName);
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param itemAttribute
-     *            The attribute
+     *        The attribute
      * @return This function returns the value of the attribute or NULL if not set.
      */
     public abstract String getAttributeValue(final ItemAttribute itemAttribute);
 
     /**
      * Get the value of an attribute
-     * 
+     *
      * @param itemAttribute
-     *            The name of the attribute
+     *        The name of the attribute
      * @param applyModifiers
-     *            Indicate whether or not the output modifiers defined for this resource need to be apply.
+     *        Indicate whether or not the output modifiers defined for this resource need to be apply.
      * @return This function returns the value of the attribute or the defaultValue set.
      */
     public abstract String getAttributeValue(final ItemAttribute itemAttribute, final boolean applyModifiers);
@@ -244,9 +241,9 @@ public interface IItem extends JsonSerializable {
 
     /**
      * Get a deployed version of an attribute
-     * 
+     *
      * @param attributeName
-     *            The name of the attribute to deploy
+     *        The name of the attribute to deploy
      * @return This method returns the deployed version of an attribute if it's available, otherwise NULL.
      */
     public abstract IItem getDeploy(final String attributeName);
@@ -261,7 +258,7 @@ public interface IItem extends JsonSerializable {
      * Get the definition of an Item
      * <p>
      * This function must be overridden to return the definition corresponding to the IItem type.b
-     * 
+     *
      * @return This function return an instance of ItemDefinition for the current IItem type
      */
     abstract public ItemDefinition<?> getItemDefinition();

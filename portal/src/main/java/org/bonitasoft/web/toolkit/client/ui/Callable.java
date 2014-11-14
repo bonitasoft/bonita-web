@@ -54,11 +54,11 @@ public abstract class Callable {
     }
 
     public void addParameter(final String name, final String value) {
-        this.params.addValue(name, value);
+        params.addValue(name, value);
     }
 
     public void addParameter(final String name, final String... values) {
-        this.params.addValue(name, values);
+        params.addValue(name, values);
     }
 
     public void addParameter(final String name, final Map<String, String> params) {
@@ -82,11 +82,11 @@ public abstract class Callable {
     }
 
     public String getParameter(final String name, final String defaultValue) {
-        if (!this.params.containsKey(name)) {
+        if (!params.containsKey(name)) {
             return defaultValue;
         }
 
-        final AbstractTreeNode<String> param = this.params.get(name);
+        final AbstractTreeNode<String> param = params.get(name);
 
         if (param == null) {
             return null;
@@ -104,11 +104,11 @@ public abstract class Callable {
     }
 
     public List<String> getArrayParameter(final String name, final List<String> defaultValue) {
-        if (!this.params.containsKey(name)) {
+        if (!params.containsKey(name)) {
             return defaultValue;
         }
 
-        final AbstractTreeNode<String> param = this.params.get(name);
+        final AbstractTreeNode<String> param = params.get(name);
 
         if (param instanceof TreeLeaf<?>) {
             final List<String> results = new ArrayList<String>();
@@ -128,7 +128,7 @@ public abstract class Callable {
     }
 
     public TreeIndexed<String> getParameters() {
-        return this.params;
+        return params;
     }
 
 }
