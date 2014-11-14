@@ -163,7 +163,7 @@ public class FormCacheUtil {
     }
 
     public void storeFormPermissions(final String formID, final String locale, final Date applicationDeployementDate, final String formPermissions) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_PERMISSIONS_CACHE, CACHE_DISK_STORE_PATH, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PERMISSIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
                 + tenantID, formPermissions);
     }
 
