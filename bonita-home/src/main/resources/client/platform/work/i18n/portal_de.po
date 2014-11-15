@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-12 22:53+0100\n"
-"PO-Revision-Date: 2014-11-14 05:53-0500\n"
+"POT-Creation-Date: 2014-11-14 17:50+0100\n"
+"PO-Revision-Date: 2014-11-15 08:56-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -3188,37 +3188,30 @@ msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Fehler beim Löschen eines Elements mit dem Id %id%"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:42
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:42
 msgid "Can't update user. User not found"
 msgstr "Benutzer kann nicht aktualisiert werden. Benutzer wurde nicht gefunden."
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:44
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:44
 msgid "Error when updating user"
 msgstr "Fehler beim Aktualisieren des Benutzers"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:52
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:52
 msgid "Can't create user. User '%userName%' already exists"
 msgstr "Benutzer kann nicht erstellt werden. Benutzer '%userName%' existiert schon"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:55
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:55
 msgid "Error when creating user"
 msgstr "Fehler beim Erstellen des Benutzers"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:63
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:63
 msgid "User not found"
 msgstr "Benutzer nicht gefunden"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:71
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:71
 msgid "Error when deleting users"
 msgstr "Fehler beim Löschen von Benutzern"
 
 #: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/UserEngineClient.java:79
-#: server/src/main/java/org/bonitasoft/web/rest/server/engineclient/ApplicationEngineClient.java:79
 msgid "Error when searching users"
 msgstr "Fehler bei der Benutzer-Suche"
 
