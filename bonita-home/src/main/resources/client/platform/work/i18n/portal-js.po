@@ -20,93 +20,54 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr ""
 
 msgid "Filters"
 msgstr ""
 
-msgid "All versions"
+msgid "This case will be definitively deleted."
 msgstr ""
 
-msgid "All apps"
+msgid "These cases will be definitively deleted."
 msgstr ""
 
-
-# processMonitoring
-
-msgid  "Monitor open cases"
+msgid "Process version"
 msgstr ""
 
-msgid "Open cases"
+msgid "Process name"
 msgstr ""
 
-msgid  "Healthy cases"
+msgid "Healthy"
 msgstr ""
 
-msgid  "Failed cases"
+msgid "With failures"
 msgstr ""
 
-msgid  "Filter on process"
+msgid "Cases list"
 msgstr ""
 
-msgid  "Process list"
+msgid "Failed Tasks"
 msgstr ""
 
-msgid  "Refresh"
+msgid "Pending Tasks"
 msgstr ""
 
-msgid  "Process name"
+msgid "{{nbOfDeletedCases}} case deleted successfully"
 msgstr ""
 
-msgid  "Version"
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
 msgstr ""
 
-msgid  "Failed"
+msgid "Confirm delete?"
 msgstr ""
 
-msgid  "State"
+msgid "End date"
 msgstr ""
 
-msgid  "Actions"
+msgid "No cases to display"
 msgstr ""
 
-msgid  "Wait ..."
+msgid "Loading"
 msgstr ""
 
-# Pagination label: "1 - 10 of 300"
-msgid  "of"
-msgstr ""
-
-msgid  "No data"
-msgstr ""
-
-msgid  "Error!"
-msgstr ""
-
-msgid  "Started"
-msgstr ""
-
-msgid  "All"
-msgstr ""
-
-msgid  "Never"
-msgstr ""
-
-msgid  "30 s."
-msgstr ""
-
-msgid  "1 min."
-msgstr ""
-
-msgid  "10 min."
-msgstr ""
-
-msgid  "Technical error."
-msgstr ""
-
-msgid  "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr ""
-
-msgid  "Process activation state"
-msgstr ""
