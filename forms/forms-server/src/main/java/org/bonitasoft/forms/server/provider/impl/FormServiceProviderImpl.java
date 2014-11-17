@@ -1969,15 +1969,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                     logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final CreationException e) {
-                    final String message = "It is not possible to start the apps. Please contact your administrator";
+                    final String message = "It is not possible to start the process. Please contact your administrator";
                     logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final ProcessActivationException e) {
-                    final String message = "It is not possible to start the apps. Please contact your administrator";
+                    final String message = "It is not possible to start the process. Please contact your administrator";
                     logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 } catch (final ExecutionException e) {
-                    final String message = "It is not possible to start the apps. Please contact your administrator";
+                    final String message = "It is not possible to start the process. Please contact your administrator";
                     logSevereWithContext(message, e, context);
                     throw new FormNotFoundException(message);
                 }

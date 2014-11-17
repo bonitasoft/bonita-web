@@ -50,7 +50,7 @@ public class FormAPIFactory {
      * @param document
      *            the document
      * @param processDeployementDate
-     *            the process deployement date
+     *            the process deployment date
      * @param locale
      *            locale
      * @return the from definition API implementation

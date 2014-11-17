@@ -5,12 +5,12 @@
  * it under the terms of the GNU General private License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General protected License for more details.
- * 
+ *
  * You should have received a copy of the GNU General protected License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Paul AMAR
- * 
+ *
  *         Used only to generate .po files
  */
 public class ProfileEntriesI18N {
@@ -31,7 +31,7 @@ public class ProfileEntriesI18N {
 
     protected static final String CASES = _("Cases");
 
-    protected static final String APPS = _("Apps");
+    protected static final String PROCESSES = _("Processes");
 
     protected static final String TASKS = _("Tasks");
 
@@ -49,7 +49,7 @@ public class ProfileEntriesI18N {
 
     protected static final String ORGANIZATION = _("Organization");
 
-    protected static final String APPS_MANAGEMENT = _("Apps management");
+    protected static final String PROCESS_MANAGEMENT = _("Process management");
 
     protected static final String CONFIGURATION = _("Configuration");
 

@@ -60,7 +60,7 @@ public class EntityMappingSection extends Section {
 
         addHeader(configurationStateText);
         addBody(new Paragraph(
-                _("Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."))
+                _("Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."))
                 .addClass("section_description"));
         addBody(entityMappingTable);
         final String explanations = _("For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal.");

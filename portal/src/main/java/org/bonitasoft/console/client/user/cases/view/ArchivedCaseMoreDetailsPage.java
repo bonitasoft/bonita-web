@@ -70,7 +70,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
 
     @Override
     protected void defineTitle(final ArchivedCaseItem item) {
-        setTitle(_("Case id: ") + item.getSourceObjectId() + " - App: " + item.getProcess().getDisplayName());
+        setTitle(_("Case id: ") + item.getSourceObjectId() + " - Process: " + item.getProcess().getDisplayName());
     }
 
     @Override

@@ -70,7 +70,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
 
     @Override
     protected void defineTitle(final CaseItem item) {
-        setTitle(_("Case id") + ": " + item.getId() + " - App: "
+        setTitle(_("Case id") + ": " + item.getId() + " - Process: "
                 + item.getDeploy(CaseItem.ATTRIBUTE_PROCESS_ID).getAttributeValue(ProcessItem.ATTRIBUTE_DISPLAY_NAME));
     }
 
@@ -121,7 +121,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
 
     protected ItemDetailsMetadata processVersion() {
         return new ItemDetailsMetadata(new DeployedAttributeReader(CaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION),
-                _("App version"), _("The version of the app that created this case"));
+                _("Process version"), _("The version of the process that created this case"));
     }
 
     protected abstract String getMoreDetailsPageToken();

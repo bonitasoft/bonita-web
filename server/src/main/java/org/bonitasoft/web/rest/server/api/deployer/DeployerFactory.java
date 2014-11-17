@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,32 +30,32 @@ import org.bonitasoft.web.rest.server.framework.Deployer;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class DeployerFactory {
 
-    private APISession apiSession;
+    private final APISession apiSession;
 
-    private EngineClientFactory factory;
+    private final EngineClientFactory factory;
 
-    public DeployerFactory(APISession apiSession) {
+    public DeployerFactory(final APISession apiSession) {
         this.apiSession = apiSession;
         factory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
     }
 
-    public UserDeployer createUserDeployer(String attribute) {
+    public UserDeployer createUserDeployer(final String attribute) {
         return new UserDeployer(new UserDatastore(apiSession), attribute);
     }
 
-    public Deployer createProfileDeployer(String attribute) {
+    public Deployer createProfileDeployer(final String attribute) {
         return new GenericDeployer<ProfileItem>(createProfileGetter(), attribute);
     }
 
-    public Deployer createProfileEntryDeployer(String attribute) {
+    public Deployer createProfileEntryDeployer(final String attribute) {
         return new GenericDeployer<ProfileEntryItem>(createProfileEntryGetter(), attribute);
     }
 
-    public Deployer createBonitaPageDeployer(String attribute) {
+    public Deployer createBonitaPageDeployer(final String attribute) {
         return new GenericDeployer<BonitaPageItem>(new GetBonitaPageHelper(), attribute);
     }
 

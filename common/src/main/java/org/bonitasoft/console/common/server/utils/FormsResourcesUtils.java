@@ -163,7 +163,7 @@ public class FormsResourcesUtils {
                 processClassLoader = new URLClassLoader(librariesURLs, Thread.currentThread().getContextClassLoader());
             }
         } catch (final IOException e) {
-            final String message = "Unable to create the class loader for the application's libraries";
+            final String message = "Unable to create the class loader for the process's libraries";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
@@ -243,7 +243,7 @@ public class FormsResourcesUtils {
                         } catch (final Exception e) {
                             if (LOGGER.isLoggable(Level.WARNING)) {
                                 LOGGER.log(Level.WARNING,
-                                        "Process application resources deployment folder contains a directory that does not match a process deployement timestamp: "
+                                        "Process resources deployment folder contains a directory that does not match a process deployment timestamp: "
                                                 + directory.getName(), e);
                             }
                         }
@@ -251,14 +251,14 @@ public class FormsResourcesUtils {
                     if (lastDeployementDate == 0L) {
                         if (LOGGER.isLoggable(Level.WARNING)) {
                             LOGGER.log(Level.WARNING,
-                                    "Process application resources deployment folder contains no directory that match a process deployement timestamp.");
+                                    "Process resources deployment folder contains no directory that match a process deployment timestamp.");
                         }
                     }
                     final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastDeployementDate));
                     processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
                 }
             } catch (final IOException e) {
-                final String message = "Unable to create the class loader for the application's libraries";
+                final String message = "Unable to create the class loader for the process's libraries";
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, message, e);
                 }
@@ -308,7 +308,7 @@ public class FormsResourcesUtils {
     }
 
     /**
-     * Get the application resource directory
+     * Get the process resource directory
      *
      * @param session
      *        the API session

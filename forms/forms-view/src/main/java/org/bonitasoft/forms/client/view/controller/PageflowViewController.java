@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -57,7 +57,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Controller dealing with Task form controls before display
- * 
+ *
  * @author Ruiheng Fan
  */
 public class PageflowViewController {
@@ -131,7 +131,7 @@ public class PageflowViewController {
 
     /**
      * Constructor
-     * 
+     *
      * @param formID
      * @param urlContext
      * @param user
@@ -329,8 +329,13 @@ public class PageflowViewController {
          */
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
-            urlContext.putAll(newContext);
-            redirectToConfirmationPage(getConfirmationPageHandler());
+            if (domUtils.isPageInFrame()) {
+                domUtils.notifyParentFrame(null, false);
+            }
+            if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                urlContext.putAll(newContext);
+                redirectToConfirmationPage(getConfirmationPageHandler());
+            }
         }
 
         /**
@@ -354,14 +359,31 @@ public class PageflowViewController {
                 throw caught;
             } catch (final IllegalActivityTypeException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskFormSkippedError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, elementId));
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame("taskFormSkippedError", true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
+                            elementId));
+                }
             } catch (final FormAlreadySubmittedException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, elementId));
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
+                            elementId));
+                }
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskExecutionError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame("taskExecutionError", true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
                         new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, t, elementId));
+                }
             }
         }
     }
