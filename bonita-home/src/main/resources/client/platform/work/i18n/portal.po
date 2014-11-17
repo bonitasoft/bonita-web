@@ -320,10 +320,28 @@ msgstr ""
 msgid "Analytics"
 msgstr ""
 
+msgid "App"
+msgstr ""
+
+msgid "App name"
+msgstr ""
+
+msgid "App version"
+msgstr ""
+
 msgid "Applications"
 msgstr ""
 
+msgid "Apps"
+msgstr ""
+
+msgid "Apps %appName% in version %version% already exists"
+msgstr ""
+
 msgid "Apps management"
+msgstr ""
+
+msgid "Apps version"
 msgstr ""
 
 msgid "April"
@@ -338,13 +356,13 @@ msgstr ""
 msgid "Archives"
 msgstr ""
 
-msgid "Are you sur you want to remove selected actor members from the process ?"
+msgid "Are you sur you want to remove selected actor members from app ?"
 msgstr ""
 
 msgid "Are you sure you want to delete this membership ?"
 msgstr ""
 
-msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
+msgid "Are you sure you want to remove category '%categoryName%' from app '%appName%' ?"
 msgstr ""
 
 msgid "Assign"
@@ -395,7 +413,7 @@ msgstr ""
 msgid "Bonita Portal"
 msgstr ""
 
-msgid "Browse your computer and select the business archive containing the process definition to install."
+msgid "Browse your computer and select the business archive containing the app definition to install."
 msgstr ""
 
 msgid "Business archive"
@@ -464,6 +482,9 @@ msgstr ""
 msgid "Cases"
 msgstr ""
 
+msgid "Cases "
+msgstr ""
+
 msgid "Cases I have started"
 msgstr ""
 
@@ -471,6 +492,9 @@ msgid "Cases I have started or I have worked on"
 msgstr ""
 
 msgid "Cases I worked on"
+msgstr ""
+
+msgid "Cases started or worked on by someone"
 msgstr ""
 
 msgid "Categories"
@@ -548,7 +572,7 @@ msgstr ""
 msgid "Connector definitions"
 msgstr ""
 
-msgid "Connector definitions must be resolved before enabling the Process."
+msgid "Connector definitions must be resolved before enabling the App."
 msgstr ""
 
 msgid "Connectors"
@@ -626,25 +650,28 @@ msgstr ""
 msgid "Delete %resource_name%"
 msgstr ""
 
-msgid "Delete selected groups"
+msgid "Delete selected apps"
 msgstr ""
 
-msgid "Delete selected processes"
+msgid "Delete selected cases"
+msgstr ""
+
+msgid "Delete selected groups"
 msgstr ""
 
 msgid "Delete selected roles"
 msgstr ""
 
-msgid "Delete the process %app_name%?"
+msgid "Delete the app %app_name%?"
+msgstr ""
+
+msgid "Delete this app"
 msgstr ""
 
 msgid "Delete this member"
 msgstr ""
 
 msgid "Delete this membership"
-msgstr ""
-
-msgid "Delete this process"
 msgstr ""
 
 msgid "Description"
@@ -662,25 +689,25 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-msgid "Disable selected processes"
+msgid "Disable selected apps"
 msgstr ""
 
-msgid "Disable this process"
+msgid "Disable this app"
 msgstr ""
 
 msgid "Disabled"
 msgstr ""
 
-msgid "Disabled processes"
+msgid "Disabled Apps"
 msgstr ""
 
 msgid "Discuss :"
 msgstr ""
 
-msgid "Display a case form of process %app_name%"
+msgid "Display a case form of app %app_name%"
 msgstr ""
 
-msgid "Display a summary of all processes"
+msgid "Display a summary of all apps"
 msgstr ""
 
 msgid "Display name"
@@ -764,16 +791,16 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-msgid "Enable selected processes"
+msgid "Enable selected apps"
 msgstr ""
 
-msgid "Enable this process"
+msgid "Enable this app"
 msgstr ""
 
 msgid "Enabled"
 msgstr ""
 
-msgid "Enabled processes"
+msgid "Enabled Apps"
 msgstr ""
 
 msgid "Enter a category name"
@@ -845,7 +872,7 @@ msgstr ""
 msgid "Enter the zip code of this user"
 msgstr ""
 
-msgid "Entity Mapping must be resolved before enabling the Process."
+msgid "Entity Mapping must be resolved before enabling the App."
 msgstr ""
 
 msgid "Error"
@@ -1031,7 +1058,10 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
-msgid "Install a process"
+msgid "Install a app"
+msgstr ""
+
+msgid "Install an app"
 msgstr ""
 
 msgid "Installed by"
@@ -1142,19 +1172,19 @@ msgstr ""
 msgid "Manage applications"
 msgstr ""
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
+msgid "Manage apps that an entity with this profile can supervise as PM."
+msgstr ""
+
+msgid "Manage cases of apps that an entity with this profile can supervise as PM."
 msgstr ""
 
 msgid "Manage custom pages"
 msgstr ""
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr ""
-
 msgid "Manage profiles"
 msgstr ""
 
-msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
+msgid "Manage tasks of apps that an entity with this profile can supervise as PM."
 msgstr ""
 
 msgid "Manager"
@@ -1292,6 +1322,9 @@ msgstr ""
 msgid "Only the value attribute can be updated"
 msgstr ""
 
+msgid "Opened"
+msgstr ""
+
 msgid "Opens a popup to create a group"
 msgstr ""
 
@@ -1301,7 +1334,7 @@ msgstr ""
 msgid "Opens a popup to create a user"
 msgstr ""
 
-msgid "Opens a popup to install a process"
+msgid "Opens a popup to install an app"
 msgstr ""
 
 msgid "Organisation file"
@@ -1327,7 +1360,7 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-msgid "Parameters must be resolved before enabling the Process."
+msgid "Parameters must be resolved before enabling the App."
 msgstr ""
 
 msgid "Parent Group"
@@ -1411,28 +1444,10 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-msgid "Process"
-msgstr ""
-
-msgid "Process %appName% in version %version% already exists"
-msgstr ""
-
 msgid "Process definition not found for id %processId%"
 msgstr ""
 
-msgid "Process management"
-msgstr ""
-
 msgid "Process manager"
-msgstr ""
-
-msgid "Process name"
-msgstr ""
-
-msgid "Process version"
-msgstr ""
-
-msgid "Processes"
 msgstr ""
 
 msgid "Profile"
@@ -1465,7 +1480,7 @@ msgstr ""
 msgid "Resolved"
 msgstr ""
 
-msgid "Resolved processes"
+msgid "Resolved Apps"
 msgstr ""
 
 msgid "Retrieve"
@@ -1522,9 +1537,6 @@ msgstr ""
 msgid "Select a group to set to this user"
 msgstr ""
 
-msgid "Select a process in the list below to display the available tasks"
-msgstr ""
-
 msgid "Select a role"
 msgstr ""
 
@@ -1540,7 +1552,10 @@ msgstr ""
 msgid "Select a user to be added to actor"
 msgstr ""
 
-msgid "Select a user to start process %app_name% %app_version%"
+msgid "Select a user to start app %app_name% %app_version%"
+msgstr ""
+
+msgid "Select an App in the list below to display the available tasks"
 msgstr ""
 
 msgid "Select an avatar for this group"
@@ -1555,10 +1570,10 @@ msgstr ""
 msgid "Select profile"
 msgstr ""
 
-msgid "Select the category which the process will be linked to"
+msgid "Select the category which the app will be linked to"
 msgstr ""
 
-msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the app."
 msgstr ""
 
 msgid "Select the manager of this user"
@@ -1591,7 +1606,7 @@ msgstr ""
 msgid "Show all profiles of portal"
 msgstr ""
 
-msgid "Show more details about this process"
+msgid "Show more details about this apps"
 msgstr ""
 
 msgid "Show more details about this profile"
@@ -1633,19 +1648,19 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-msgid "Start a process on behalf of another user"
+msgid "Start a app on behalf of another user"
 msgstr ""
 
-msgid "Start an instance of process %app_name%"
+msgid "Start an instance of app %app_name%"
 msgstr ""
 
 msgid "Start date"
 msgstr ""
 
-msgid "Start this process"
+msgid "Start this app"
 msgstr ""
 
-msgid "Start this process on behalf of selected user"
+msgid "Start this app on behalf of selected user"
 msgstr ""
 
 msgid "Started by"
@@ -1726,13 +1741,16 @@ msgstr ""
 msgid "Th"
 msgstr ""
 
-msgid "The Process cannot be enabled"
+msgid "The App cannot be enabled"
 msgstr ""
 
-msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
+msgid "The Process manager can supervise designated apps, and manage cases and tasks of those apps."
 msgstr ""
 
-msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
+msgid "The administrator can install an app, manage the organization, and handle some errors (for example, by replaying a task)."
+msgstr ""
+
+msgid "The app responsible for the creation of this task"
 msgstr ""
 
 msgid "The application encountered an error."
@@ -1743,7 +1761,7 @@ msgid ""
 "If the error persists, please contact Bonitasoft support"
 msgstr ""
 
-msgid "The configuration state of the process"
+msgid "The configuration state of the app"
 msgstr ""
 
 msgid "The current state of the case"
@@ -1770,10 +1788,10 @@ msgstr ""
 msgid "The date of the last update of the user"
 msgstr ""
 
-msgid "The date when the case was updated"
+msgid "The date when the app was updated"
 msgstr ""
 
-msgid "The date when the process was updated"
+msgid "The date when the case was updated"
 msgstr ""
 
 msgid "The date when the task must be finished"
@@ -1782,7 +1800,7 @@ msgstr ""
 msgid "The date when the task was assigned"
 msgstr ""
 
-msgid "The date when this process has been installed"
+msgid "The date when this app has been installed"
 msgstr ""
 
 msgid "The date while the case has been started"
@@ -1836,16 +1854,13 @@ msgstr ""
 msgid "The priority of the task"
 msgstr ""
 
-msgid "The process responsible for the creation of this task"
-msgstr ""
-
 msgid "The server is not available"
 msgstr ""
 
-msgid "The state of the case"
+msgid "The state of the app"
 msgstr ""
 
-msgid "The state of the process"
+msgid "The state of the case"
 msgstr ""
 
 msgid "The state of the task"
@@ -1857,13 +1872,13 @@ msgstr ""
 msgid "The type of the task"
 msgstr ""
 
-msgid "The user can view and perform tasks and can start a new case of a process."
+msgid "The user can view and perform tasks and can start a new case of an app."
 msgstr ""
 
 msgid "The user that has started this case"
 msgstr ""
 
-msgid "The user that has uploaded this process"
+msgid "The user that has uploaded this app"
 msgstr ""
 
 msgid "The user who did the task."
@@ -1872,10 +1887,10 @@ msgstr ""
 msgid "The username to which the task is assigned."
 msgstr ""
 
-msgid "The version of the process"
+msgid "The version of the app"
 msgstr ""
 
-msgid "The version of the process that created this case"
+msgid "The version of the app that created this case"
 msgstr ""
 
 msgid "These %item_name_plural% will be definitively deleted."
@@ -1884,7 +1899,7 @@ msgstr ""
 msgid "This %item_name% will be definitively deleted."
 msgstr ""
 
-msgid "This category has already been added to this process"
+msgid "This category has already been added to this apps"
 msgstr ""
 
 msgid "This category was not found or this field is mandatory"
@@ -1986,7 +2001,7 @@ msgstr ""
 msgid "Unresolved"
 msgstr ""
 
-msgid "Unresolved processes"
+msgid "Unresolved Apps"
 msgstr ""
 
 msgid "Unsupported file."
@@ -2043,7 +2058,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-msgid "Version of the process"
+msgid "Version of the app"
 msgstr ""
 
 msgid "Warning"
@@ -2071,11 +2086,11 @@ msgid "Yes"
 msgstr ""
 
 msgid ""
-"You risk interrupting one or more processes.\n"
+"You risk interrupting one or more apps.\n"
 "\n"
-"Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n"
+"Deactivating the only user able to perform a task(s), will cause the interruption of an app(s).\n"
 "\n"
-"Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n"
+"Before proceeding, you may want to go to the 'More' page of the app and check the actor mapping.\n"
 "\n"
 "Are you sure you want to deactivate this user now ?"
 msgstr ""
@@ -2092,10 +2107,22 @@ msgstr ""
 msgid "add"
 msgstr ""
 
+msgid "app"
+msgstr ""
+
+msgid "apps"
+msgstr ""
+
 msgid "ascending"
 msgstr ""
 
 msgid "by"
+msgstr ""
+
+msgid "case"
+msgstr ""
+
+msgid "cases"
 msgstr ""
 
 msgid "create"
@@ -2128,13 +2155,13 @@ msgstr ""
 msgid "in %time%"
 msgstr ""
 
+msgid "manage apps"
+msgstr ""
+
 msgid "manage cases"
 msgstr ""
 
 msgid "manage groups"
-msgstr ""
-
-msgid "manage processes"
 msgstr ""
 
 msgid "manage roles"
@@ -2162,12 +2189,6 @@ msgid "mo"
 msgstr ""
 
 msgid "or"
-msgstr ""
-
-msgid "process"
-msgstr ""
-
-msgid "processes"
 msgstr ""
 
 msgid "remove"
@@ -2236,7 +2257,7 @@ msgstr ""
 msgid "visualize & do tasks"
 msgstr ""
 
-msgid "visualize & start processes"
+msgid "visualize & start apps"
 msgstr ""
 
 msgid "visualize cases"
