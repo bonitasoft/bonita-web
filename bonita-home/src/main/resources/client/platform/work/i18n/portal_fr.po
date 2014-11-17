@@ -2,13 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2014-11-09 01:02+0100\n"
-"PO-Revision-Date: 2014-11-14 05:50-0500\n"
-=======
 "POT-Creation-Date: 2014-11-15 14:43+0100\n"
 "PO-Revision-Date: 2014-11-17 04:43-0500\n"
->>>>>>> origin/master
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
