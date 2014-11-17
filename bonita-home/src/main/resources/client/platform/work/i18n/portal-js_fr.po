@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-15 08:52-0500\n"
+"PO-Revision-Date: 2014-11-15 08:54-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,54 +17,100 @@ msgstr ""
 msgid "Columns"
 msgstr "Colonnes"
 
-msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "{{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtres"
 
-msgid "This case will be definitively deleted."
-msgstr "Ce cas sera définitivement supprimé."
+msgid "All versions"
+msgstr "Toutes les versions"
 
-msgid "These cases will be definitively deleted."
-msgstr "Ces cas seront définitivement supprimés."
+msgid "All apps"
+msgstr "Tous les processus"
 
-msgid "Process version"
-msgstr "Version du processus"
+msgid "Monitor active cases"
+msgstr "Monitor active cases"
+
+msgid "Open cases"
+msgstr "Cas démarrés"
+
+msgid "Healthy cases"
+msgstr "Cas sans erreur"
+
+msgid "Cases with failures"
+msgstr "Cases with failures"
+
+msgid "Filter on process"
+msgstr "Filtre de processus"
+
+msgid "Process list"
+msgstr "Liste des processus"
+
+msgid "Refresh"
+msgstr "Rafraîchir"
 
 msgid "Process name"
 msgstr "Nom du processus"
 
-msgid "Healthy"
-msgstr "Sains"
+msgid "Failed"
+msgstr "En échec"
 
-msgid "With failures"
-msgstr "Avec des erreurs"
+msgid "Actions"
+msgstr "Actions"
 
-msgid "Cases list"
-msgstr "Liste des cas"
+msgid "Wait ..."
+msgstr "Patientez ..."
 
-msgid "Failed Tasks"
-msgstr "Tâches en échec"
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "de"
 
-msgid "Pending Tasks"
-msgstr "Tâches en attente"
+msgid "No data"
+msgstr "Pas de donnée disponible"
 
-msgid "{{nbOfDeletedCases}} case deleted successfully"
-msgstr "{{nbOfDeletedCases}} cas supprimé avec succès"
+msgid "Error!"
+msgstr "Erreur!"
 
-msgid "{{nbOfDeletedCases}} cases deleted successfully"
-msgstr "{{nbOfDeletedCases}} cas supprimés avec succès"
+msgid "Started"
+msgstr "Démarré"
 
-msgid "Confirm delete?"
-msgstr "Confirmer la suppression?"
+msgid "All"
+msgstr "Tous"
 
-msgid "End date"
-msgstr "Date de fin "
+msgid "Never"
+msgstr "Jamais"
 
-msgid "No cases to display"
-msgstr "Aucun cas à afficher"
+msgid "30 s."
+msgstr "30 sec."
 
-msgid "Loading"
-msgstr "Chargement…"
+msgid "1 min."
+msgstr "1 min."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "Technical error."
+msgstr "Erreur technique."
+
+msgid "Process state"
+msgstr "État du processus"
+
+msgid "Show"
+msgstr "Voir"
+
+msgid "Healthy cases"
+msgstr "Cas sans erreur"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Process version"
+msgstr "Version du processus"
+
+msgid "Case state"
+msgstr "Etat du cas"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 

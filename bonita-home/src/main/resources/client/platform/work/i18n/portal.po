@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-15 14:43+0100\n"
+"POT-Creation-Date: 2014-11-15 22:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -464,6 +464,9 @@ msgstr ""
 msgid "Cases"
 msgstr ""
 
+msgid "Cases "
+msgstr ""
+
 msgid "Cases I have started"
 msgstr ""
 
@@ -471,6 +474,9 @@ msgid "Cases I have started or I have worked on"
 msgstr ""
 
 msgid "Cases I worked on"
+msgstr ""
+
+msgid "Cases started or worked on by someone"
 msgstr ""
 
 msgid "Categories"
@@ -624,6 +630,9 @@ msgid "Delete"
 msgstr ""
 
 msgid "Delete %resource_name%"
+msgstr ""
+
+msgid "Delete selected cases"
 msgstr ""
 
 msgid "Delete selected groups"
@@ -1290,6 +1299,9 @@ msgid "Ok"
 msgstr ""
 
 msgid "Only the value attribute can be updated"
+msgstr ""
+
+msgid "Opened"
 msgstr ""
 
 msgid "Opens a popup to create a group"
@@ -2096,6 +2108,12 @@ msgid "ascending"
 msgstr ""
 
 msgid "by"
+msgstr ""
+
+msgid "case"
+msgstr ""
+
+msgid "cases"
 msgstr ""
 
 msgid "create"
