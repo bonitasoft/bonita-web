@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTaskPage;
@@ -87,7 +86,6 @@ import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.History;
 
 /**
  * console client page
@@ -96,11 +94,11 @@ import com.google.gwt.user.client.History;
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
-    public static String CASE_LIST_PAGE = "ng-caselistingadmin";
-
     protected Map<String, String> angularViewsMap = new HashMap<String, String>();
 
     protected AngularIFrameView angularFrame = new AngularIFrameView();
+
+    private List<String> currentUserAccessRights = null;
 
     private final Action emptyAction = new Action() {
 
@@ -113,10 +111,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      * Default Constructor.
      */
     public ConsoleFactoryClient() {
-        angularViewsMap.put(CASE_LIST_PAGE, "/admin/cases/list");
+        angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
     }
-
-    private List<String> currentUserAccessRights = null;
 
     protected List<String> getCurrentUserAccessRights() {
         if (currentUserAccessRights == null) {
@@ -135,8 +131,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new DeactivateUserWarningPopUp();
 
             // Manage Cases pages
-        } else if (CaseListingAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseListingAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new CaseListingAdminPage();
         } else if (CaseQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new CaseQuickDetailsAdminPage();
         } else if (CaseMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(CaseMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -184,8 +178,10 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new ProcessMoreDetailsAdminPage();
-        /*} else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
-            return new StartProcessOnBehalfPage();*/
+            /*
+             * } else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
+             * return new StartProcessOnBehalfPage();
+             */
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
@@ -250,7 +246,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (DeleteProfileMemberPage.TOKEN.equals(token) && isUserAuthorized(DeleteProfileMemberPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new DeleteProfileMemberPage();
 
-
         } else if (DeleteActorMemberPage.TOKEN.equals(token)) {
             return new DeleteActorMemberPage();
 
@@ -263,15 +258,16 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new TaskQuickDetailsAdminPage();
         } else if (TaskMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(TaskMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new TaskMoreDetailsAdminPage();
-        
-        /* THEME pages
-        } else if (ListThemePage.TOKEN.equals(token)) {
-            return new ListThemePage();
-        } else if (UploadThemePage.TOKEN.equals(token)) {
-            return new UploadThemePage();
-        } else if (EditThemePage.TOKEN.equals(token)) {
-            return new EditThemePage();
-        */
+
+            /*
+             * THEME pages
+             * } else if (ListThemePage.TOKEN.equals(token)) {
+             * return new ListThemePage();
+             * } else if (UploadThemePage.TOKEN.equals(token)) {
+             * return new UploadThemePage();
+             * } else if (EditThemePage.TOKEN.equals(token)) {
+             * return new EditThemePage();
+             */
 
             // Visualize & do tasks
         } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -323,7 +319,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
                 // we do not need to do anything. API callback will handle unauthorized request by reloading the page.
                 new CheckValidSessionBeforeAction(emptyAction).execute();
-                angularFrame.setUrl("#" + angularViewsMap.get(token), token, History.getToken());
+                angularFrame.setUrl("#" + angularViewsMap.get(token), token);
                 return angularFrame;
             } else {
                 //currentAngularIFrameView.setDisplayed(false);
@@ -411,9 +407,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ArchivedCaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(CaseMoreDetailsPage.TOKEN, CaseMoreDetailsPage.PRIVILEGES);
 
-
-
-
         return pagePrivileges;
     }
 
@@ -421,7 +414,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         final String sessionId = new String(Session.getParameter("session_id"));
 
-        for (final String privilege: privileges) {
+        for (final String privilege : privileges) {
 
             final String calcSHA1 = SHA1.calcSHA1(privilege.concat(sessionId));
 

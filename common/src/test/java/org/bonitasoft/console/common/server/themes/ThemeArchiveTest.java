@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 
 import org.bonitasoft.engine.commons.io.IOUtil;
 import org.junit.Before;
@@ -30,7 +29,7 @@ public class ThemeArchiveTest {
 
     @Test
     public void should_extract_the_given_zip_into_destination_folder() throws Exception {
-        ThemeArchive themeArchive = new ThemeArchive(createContent());
+        final ThemeArchive themeArchive = new ThemeArchive(createContent());
 
         themeArchive.extract(themeDirectory);
 
@@ -39,18 +38,18 @@ public class ThemeArchiveTest {
 
     @Test
     public void should_add_given_file_to_theme_directory() throws Exception {
-        ThemeArchive themeArchive = new ThemeArchive(empty());
+        final ThemeArchive themeArchive = new ThemeArchive(createContent());
 
-        themeArchive.extract(themeDirectory).add("bonita.css", "body {}".getBytes());
+        themeArchive.extract(themeDirectory).add("style.css", "body {}".getBytes());
 
-        assertThat(themeDirectory.list()).containsOnly("bonita.css");
+        assertThat(themeDirectory.list()).containsOnly("bonita.css", "style.css");
     }
 
     @Test
     public void should_replace_old_directory_with_zip_content() throws Exception {
         themeDirectory.mkdir();
         new File(themeDirectory, "old-style.css").createNewFile();
-        ThemeArchive themeArchive = new ThemeArchive(createContent());
+        final ThemeArchive themeArchive = new ThemeArchive(createContent());
 
         themeArchive.extract(themeDirectory);
 
@@ -59,17 +58,13 @@ public class ThemeArchiveTest {
 
     @Test
     public void should_return_zip_as_byte_array() throws Exception {
-        byte[] content = createContent();
-        ThemeArchive themeArchive = new ThemeArchive(content);
+        final byte[] content = createContent();
+        final ThemeArchive themeArchive = new ThemeArchive(content);
 
         assertThat(themeArchive.asByteArray()).isEqualTo(content);
     }
 
     private byte[] createContent() throws IOException {
         return IOUtil.zip(singletonMap("bonita.css", "body {}".getBytes()));
-    }
-
-    private byte[] empty() throws IOException {
-        return IOUtil.zip(Collections.<String, byte[]>emptyMap());
     }
 }

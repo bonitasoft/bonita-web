@@ -131,8 +131,8 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
         try {
             final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
-            addFilterToSearchBuilder(filters, builder, RoleItem.ATTRIBUTE_NAME, RoleSearchDescriptor.NAME);
-            addFilterToSearchBuilder(filters, builder, RoleItem.ATTRIBUTE_DISPLAY_NAME, RoleSearchDescriptor.DISPLAY_NAME);
+            addStringFilterToSearchBuilder(filters, builder, RoleItem.ATTRIBUTE_NAME, RoleSearchDescriptor.NAME);
+            addStringFilterToSearchBuilder(filters, builder, RoleItem.ATTRIBUTE_DISPLAY_NAME, RoleSearchDescriptor.DISPLAY_NAME);
 
             final SearchResult<Role> engineSearchResults = getIdentityAPI().searchRoles(builder.done());
             final List<RoleItem> consoleSearchResults = new ArrayList<RoleItem>();

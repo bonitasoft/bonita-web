@@ -15,6 +15,7 @@
 package org.bonitasoft.web.toolkit.client.data.item;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 
@@ -23,13 +24,13 @@ import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
  */
 public class Definitions {
 
-    private final HashMap<String, ItemDefinition<?>> itemDefinitions = new HashMap<String, ItemDefinition<?>>();
+    private final Map<String, ItemDefinition<?>> itemDefinitions = new HashMap<String, ItemDefinition<?>>();
 
     private static final Definitions INSTANCE = new Definitions();
 
     /**
      * Get the ViewController instance.
-     * 
+     *
      * @return the unique instance of the ViewController.
      */
     public static Definitions getInstance() {
@@ -41,19 +42,18 @@ public class Definitions {
     }
 
     public final ItemDefinition<?> getDefinition(final String token) {
-        if (this.itemDefinitions.containsKey(token)) {
-            return this.itemDefinitions.get(token);
+        if (itemDefinitions.containsKey(token)) {
+            return itemDefinitions.get(token);
         } else if (DummyItemDefinition.TOKEN.equals(token)) {
             return new DummyItemDefinition();
         } else {
             final ItemDefinition<?> itemDefinition = ItemDefinitionFactory.getDefaultFactory().defineItemDefinitions(token);
             if (itemDefinition != null) {
-                this.itemDefinitions.put(token, itemDefinition);
+                itemDefinitions.put(token, itemDefinition);
                 return itemDefinition;
-            } else {
-                // TODO Throw exception
-                return null;
             }
+            // TODO Throw exception
+            return null;
         }
     }
 

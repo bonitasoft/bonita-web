@@ -228,7 +228,7 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
      * @param builder
      */
     private void adjustSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder) {
-        addFilterToSearchBuilder(filters, builder, CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, SearchCommentsDescriptor.PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, SearchCommentsDescriptor.PROCESS_INSTANCE_ID);
     }
 
     /*
