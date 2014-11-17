@@ -14,9 +14,5 @@
     <add-linker name="xsiframe"/>
     <set-configuration-property name="devModeRedirectEnabled" value="true"/>
     <set-property name="compiler.useSourceMaps" value="true" />
-
-    <replace-with class="org.bonitasoft.console.client.angular.AngularProxiedResourceRoot">
-        <when-type-is class="org.bonitasoft.console.client.angular.AngularResourceRoot"/>
-    </replace-with>
-
+ 
 </module>

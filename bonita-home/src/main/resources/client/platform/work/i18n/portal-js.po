@@ -35,7 +35,7 @@ msgstr ""
 
 # processMonitoring
 
-msgid  "Monitor open cases"
+msgid  "Monitor active cases"
 msgstr ""
 
 msgid "Open cases"
@@ -44,7 +44,7 @@ msgstr ""
 msgid  "Healthy cases"
 msgstr ""
 
-msgid  "Failed cases"
+msgid  "Cases with failures"
 msgstr ""
 
 msgid  "Filter on process"
@@ -59,13 +59,7 @@ msgstr ""
 msgid  "Process name"
 msgstr ""
 
-msgid  "Version"
-msgstr ""
-
 msgid  "Failed"
-msgstr ""
-
-msgid  "State"
 msgstr ""
 
 msgid  "Actions"
@@ -105,8 +99,23 @@ msgstr ""
 msgid  "Technical error."
 msgstr ""
 
-msgid  "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgid  "Process state"
 msgstr ""
 
-msgid  "Process activation state"
+msgid  "Show"
+msgstr ""
+
+msgid  "Healthy cases"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Process version"
+msgstr ""
+
+msgid  "Case state"
+msgstr ""
+
+msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
