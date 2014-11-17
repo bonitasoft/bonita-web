@@ -17,54 +17,91 @@ msgstr ""
 msgid "Columns"
 msgstr "Colonnes"
 
-msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "{{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filtres"
 
-msgid "This case will be definitively deleted."
-msgstr "Ce cas sera définitivement supprimé."
+msgid "All versions"
+msgstr "Toutes les versions"
 
-msgid "These cases will be definitively deleted."
-msgstr "Ces cas seront définitivement supprimés."
+msgid "All apps"
+msgstr "Tous les processus"
 
-msgid "Process version"
-msgstr "Version du processus"
+msgid "Monitor open cases"
+msgstr "Monitorer les cas démarrés"
+
+msgid "Open cases"
+msgstr "Cas démarrés"
+
+msgid "Healthy cases"
+msgstr "Cas sans erreur"
+
+msgid "Failed cases"
+msgstr "Cas en échec"
+
+msgid "Filter on process"
+msgstr "Filtre de processus"
+
+msgid "Process list"
+msgstr "Liste des processus"
+
+msgid "Refresh"
+msgstr "Rafraîchir"
 
 msgid "Process name"
 msgstr "Nom du processus"
 
-msgid "Healthy"
-msgstr "Sains"
+msgid "Version"
+msgstr "Version"
 
-msgid "With failures"
-msgstr "Avec des erreurs"
+msgid "Failed"
+msgstr "En échec"
 
-msgid "Cases list"
-msgstr "Liste des cas"
+msgid "State"
+msgstr "Etat"
 
-msgid "Failed Tasks"
-msgstr "Tâches en échec"
+msgid "Actions"
+msgstr "Actions"
 
-msgid "Pending Tasks"
-msgstr "Tâches en attente"
+msgid "Wait ..."
+msgstr "Patientez ..."
 
-msgid "{{nbOfDeletedCases}} case deleted successfully"
-msgstr "{{nbOfDeletedCases}} cas supprimé avec succès"
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "de"
 
-msgid "{{nbOfDeletedCases}} cases deleted successfully"
-msgstr "{{nbOfDeletedCases}} cas supprimés avec succès"
+msgid "No data"
+msgstr "Pas de donnée disponible"
 
-msgid "Confirm delete?"
-msgstr "Confirmer la suppression?"
+msgid "Error!"
+msgstr "Erreur!"
 
-msgid "End date"
-msgstr "Date de fin "
+msgid "Started"
+msgstr "Démarré"
 
-msgid "No cases to display"
-msgstr "Aucun cas à afficher"
+msgid "All"
+msgstr "Tous"
 
-msgid "Loading"
-msgstr "Chargement…"
+msgid "Never"
+msgstr "Jamais"
+
+msgid "30 s."
+msgstr "30 sec."
+
+msgid "1 min."
+msgstr "1 min."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "Technical error."
+msgstr "Erreur technique."
+
+msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "Résultats : {{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+
+msgid "Process activation state"
+msgstr "État d'activation du processus"
 
