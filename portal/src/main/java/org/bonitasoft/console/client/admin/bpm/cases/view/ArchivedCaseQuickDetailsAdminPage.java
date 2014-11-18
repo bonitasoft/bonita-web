@@ -16,12 +16,13 @@
  */
 package org.bonitasoft.console.client.admin.bpm.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
@@ -45,7 +46,7 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
     }
 
     public ArchivedCaseQuickDetailsAdminPage() {
@@ -68,7 +69,7 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ArchivedCaseItem item) {
-        MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
+        final MetadataCaseBuilder metadatas = new MetadataCaseBuilder();
         metadatas.addAppsVersion();
         metadatas.addStartDate();
         metadatas.addStartedBy(item);
@@ -76,7 +77,7 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
     }
 
     @Override
-    protected void buildToolbar(ArchivedCaseItem item) {
+    protected void buildToolbar(final ArchivedCaseItem item) {
         addToolbarLink(new CaseOverviewButton(item));
         addToolbarLink(moreButton(item));
     }
@@ -88,13 +89,13 @@ public class ArchivedCaseQuickDetailsAdminPage extends ItemQuickDetailsPage<Arch
 
     @Override
     protected void buildBody(final ArchivedCaseItem item) {
-        ArchivedTasksSection taskSection = new ArchivedTasksSection(item);
+        final ArchivedTasksSection taskSection = new ArchivedTasksSection(item);
         taskSection.setNbLinesByPages(5);
         addBody(taskSection);
 
         addBody(new CommentSectionSnippet(item.getSourceObjectId(), true)
-                .setNbLinesByPage(5)
-                .build());
+        .setNbLinesByPage(5)
+        .build());
     }
 
     @Override

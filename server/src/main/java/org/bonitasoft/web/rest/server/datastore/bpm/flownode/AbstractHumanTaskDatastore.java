@@ -80,16 +80,16 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
 
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
         if (!filters.containsKey(HumanTaskItem.FILTER_USER_ID) && !filters.containsKey(HumanTaskItem.FILTER_TEAM_MANAGER_ID)) {
-            addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PROCESS_ID, HumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+            addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PROCESS_ID, HumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         }
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_STATE, HumanTaskInstanceSearchDescriptor.STATE_NAME);
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
+        addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_STATE, HumanTaskInstanceSearchDescriptor.STATE_NAME);
+        addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
         // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
         // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_TEAM_MANAGER_ID, HumanTaskInstanceSearchDescriptor.TEAM_MANAGER_ID);
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, HumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
-        addFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PRIORITY, HumanTaskInstanceSearchDescriptor.PRIORITY);
+        addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, HumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
+        addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PRIORITY, HumanTaskInstanceSearchDescriptor.PRIORITY);
 
         return builder;
     }

@@ -360,7 +360,7 @@ public class PageflowViewController {
             } catch (final IllegalActivityTypeException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskFormSkippedError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame(errorMessage, true);
+                    domUtils.notifyParentFrame("taskFormSkippedError", true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
@@ -369,7 +369,7 @@ public class PageflowViewController {
             } catch (final FormAlreadySubmittedException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame(errorMessage, true);
+                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
@@ -378,7 +378,7 @@ public class PageflowViewController {
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskExecutionError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame(errorMessage, true);
+                    domUtils.notifyParentFrame("taskExecutionError", true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,

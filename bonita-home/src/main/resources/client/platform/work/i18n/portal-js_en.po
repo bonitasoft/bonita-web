@@ -17,94 +17,55 @@ msgstr ""
 msgid "Columns"
 msgstr "Columns"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "Filters"
 msgstr "Filters"
 
-msgid "All versions"
-msgstr "All versions"
+msgid "This case will be definitively deleted."
+msgstr "This case will be definitively deleted."
 
-msgid "All apps"
-msgstr "All apps"
+msgid "These cases will be definitively deleted."
+msgstr "These cases will be definitively deleted."
 
+msgid "Process version"
+msgstr "Process version"
 
-
-# processMonitoring
-
-msgid  "Monitor open cases"
-msgstr "Monitor open cases"
-
-msgid "Open cases"
-msgstr "Open cases"
-
-msgid  "Healthy cases"
-msgstr "Healthy cases"
-
-msgid  "Failed cases"
-msgstr "Failed cases"
-
-msgid  "Filter on process"
-msgstr "Filter on process"
-
-msgid  "Process list"
-msgstr "Process list"
-
-msgid  "Refresh"
-msgstr "Refresh"
-
-msgid  "Process name"
+msgid "Process name"
 msgstr "Process name"
 
-msgid  "Version"
-msgstr "Version"
+msgid "Healthy"
+msgstr "Healthy"
 
-msgid  "Failed"
-msgstr "Failed"
+msgid "With failures"
+msgstr "With failures"
 
-msgid  "State"
-msgstr "State"
+msgid "Cases list"
+msgstr "Cases list"
 
-msgid  "Actions"
-msgstr "Actions"
+msgid "Failed Tasks"
+msgstr "Failed Tasks"
 
-msgid  "Wait ..."
-msgstr "Wait ..."
+msgid "Pending Tasks"
+msgstr "Pending Tasks"
 
-# Pagination label: "1 - 10 of 300"
-msgid  "of"
-msgstr "of"
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} case deleted successfully"
 
-msgid  "No data"
-msgstr "No data"
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} cases deleted successfully"
 
-msgid  "Error!"
-msgstr "Error!"
+msgid "Confirm delete?"
+msgstr "Confirm delete?"
 
-msgid  "Started"
-msgstr "Started"
+msgid "End date"
+msgstr "End date"
 
-msgid  "All"
-msgstr "All"
+msgid "No cases to display"
+msgstr "No cases to display"
 
-msgid  "Never"
-msgstr "Never"
+msgid "Loading"
+msgstr "Loading"
 
-msgid  "30 s."
-msgstr "30 s."
 
-msgid  "1 min."
-msgstr "1 min."
-
-msgid  "10 min."
-msgstr "10 min."
-
-msgid  "Technical error."
-msgstr "Technical error."
-
-msgid  "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-
-msgid  "Process activation state"
-msgstr "Process activation state"

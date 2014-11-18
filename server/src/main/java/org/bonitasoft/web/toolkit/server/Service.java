@@ -146,7 +146,7 @@ public abstract class Service {
         return caller.getParameters();
     }
 
-    public final LOCALE getLocale() {
+    public LOCALE getLocale() {
         try {
             return LOCALE.valueOf(caller.getLocale());
         } catch (final IllegalArgumentException e) {

@@ -199,7 +199,7 @@ public abstract class Item implements IItem {
      *        The value of the Item.
      */
     @Override
-    public final void setAttribute(final String name, final String value) {
+    public void setAttribute(final String name, final String value) {
         setAttribute(
                 name,
                 value,
@@ -334,7 +334,7 @@ public abstract class Item implements IItem {
      *        The deployed version of the attribute
      */
     @Override
-    public final void setDeploy(final String attributeName, final IItem item) {
+    public void setDeploy(final String attributeName, final IItem item) {
         deploys.put(attributeName, item);
     }
 
@@ -455,7 +455,7 @@ public abstract class Item implements IItem {
      * @return This function returns the value of the attribute or NULL if not set.
      */
     @Override
-    public final String getAttributeValue(final String attributeName) {
+    public String getAttributeValue(final String attributeName) {
         return this.getAttributeValue(attributeName, applyOutputModifiers == null ? applyOutputModifiersByDefault : applyOutputModifiers);
     }
 
