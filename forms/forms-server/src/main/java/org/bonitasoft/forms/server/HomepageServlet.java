@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.themes.CompilableFile;
 import org.bonitasoft.console.common.server.themes.ThemeArchive;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -175,6 +176,7 @@ public class HomepageServlet extends ThemeResourceServlet {
         Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
         new ThemeArchive(theme.getContent())
                 .extract(portalThemeDirectory)
+                .compile(CompilableFile.ALWAYS_COMPILED_FILES)
                 .add("bonita.css", theme.getCssContent());
     }
 
