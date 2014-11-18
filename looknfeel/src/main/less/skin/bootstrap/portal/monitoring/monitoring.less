@@ -3,6 +3,10 @@
 @titleColor: #b20706;
 
 .monitoring-page {
+  .col-lg-offset-1_5 {
+    margin-left: 12.5%;
+  }
+
   .panel-default > .panel-heading {
     color: @panelHeaderBG;
   }
@@ -13,11 +17,6 @@
   }
 
   .totalMonitoring {
-    width: 20%;
-    min-width: 200px;
-    margin: 0px 2px 0px 2px;
-    padding: 5px 10px;
-    display: inline-block;
     font-size: 20px;
   }
 
@@ -180,6 +179,7 @@
 
     h4 {
       position: absolute;
+      top: 0;
       color: @panelHeaderBG;
     }
   }
@@ -193,4 +193,37 @@
     text-decoration: inherit;
   }
 
+  .clickable:focus {
+    outline: none;
+  }
+
+  .popover-error {
+    background-color: #f2dede;
+    color: #a94442;
+
+    &.top > .arrow:after {
+      border-top-color: #f2dede;
+    }
+    &.left > .arrow:after {
+      border-left-color: #f2dede;
+    }
+    &.right > .arrow:after {
+      border-right-color: #f2dede;
+    }
+    &.bottom > .arrow:after {
+      border-bottom-color: #f2dede;
+    }
+  }
+}
+
+@media (max-width: 1500px) and (min-width: 1199px) {
+  .monitoring-page {
+    .col-1500-10 {
+      width: 83.333333333%;
+    }
+    .col-1500-offset-1 {
+      margin-left: 8.3333333333%;
+    }
+
+  }
 }
