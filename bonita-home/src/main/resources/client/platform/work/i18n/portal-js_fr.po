@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-17 04:43-0500\n"
+"PO-Revision-Date: 2014-11-17 12:12-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -29,8 +29,8 @@ msgstr "Toutes les versions"
 msgid "All apps"
 msgstr "Tous les processus"
 
-msgid "Monitor open cases"
-msgstr "Monitorer les cas démarrés"
+msgid "Monitor active cases"
+msgstr "Monitor active cases"
 
 msgid "Open cases"
 msgstr "Cas démarrés"
@@ -38,8 +38,8 @@ msgstr "Cas démarrés"
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
 
-msgid "Failed cases"
-msgstr "Cas en échec"
+msgid "Cases with failures"
+msgstr "Cases with failures"
 
 msgid "Filter on process"
 msgstr "Filtre de processus"
@@ -53,14 +53,8 @@ msgstr "Rafraîchir"
 msgid "Process name"
 msgstr "Nom du processus"
 
-msgid "Version"
-msgstr "Version"
-
 msgid "Failed"
 msgstr "En échec"
-
-msgid "State"
-msgstr "Etat"
 
 msgid "Actions"
 msgstr "Actions"
@@ -99,9 +93,24 @@ msgstr "10 min."
 msgid "Technical error."
 msgstr "Erreur technique."
 
-msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "Résultats : {{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+msgid "Process state"
+msgstr "État du processus"
 
-msgid "Process activation state"
-msgstr "État d'activation du processus"
+msgid "Show"
+msgstr "Voir"
+
+msgid "Healthy cases"
+msgstr "Cas sans erreur"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Process version"
+msgstr "Version du processus"
+
+msgid "Case state"
+msgstr "Etat du cas"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
