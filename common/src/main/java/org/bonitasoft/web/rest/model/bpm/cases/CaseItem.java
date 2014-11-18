@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 BonitaSoft S.A.
+ * Copyright (C) 2011, 2014 BonitaSoft S.A.
  * BonitaSoft, 31 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.web.rest.model.bpm.cases;
 
+import java.util.Date;
+
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -23,29 +25,21 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
-import java.util.Date;
-
 /**
  * process instance item
  *
  * @author Haojie Yuan
+ * @author Celine Souchet
  */
 public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniqueId {
 
     public static final String ATTRIBUTE_VARIABLES = "variables";
 
-    public CaseItem() {
-        super();
-    }
-
-    public CaseItem(final IItem item) {
-        super(item);
-    }
-
     public static final String ATTRIBUTE_STATE = "state";
 
-
     public static final String ATTRIBUTE_PROCESS_ID = "processDefinitionId";
+
+    public static final String ATTRIBUTE_PROCESS_NAME = "name";
 
     public static final String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
 
@@ -56,6 +50,10 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public static final String ATTRIBUTE_START_DATE = "start";
 
     public static final String ATTRIBUTE_END_DATE = "end_date";
+
+    public static final String COUNTER_FAILED_FLOW_NODES = "failedFlowNodes";
+
+    public static final String COUNTER_ACTIVE_FLOW_NODES = "activeFlowNodes";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -96,6 +94,17 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String FILTER_CALLER = "caller";
 
+    public static final String FILTER_STATE = "state";
+
+
+    public CaseItem() {
+        super();
+    }
+
+    public CaseItem(final IItem item) {
+        super(item);
+    }
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GETTERS AND SETTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +114,6 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public UserItem getStartedByUser() {
         return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_USER_ID));
     }
-
 
     public UserItem getStartedBySubstituteUser() {
         return new UserItem(getDeploy(ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID));
@@ -177,7 +185,6 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     }
 
     /**
-     *
      * @param date
      *            Must be SQL formated date
      */

@@ -1,0 +1,116 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: 2014-11-17 12:12-0500\n"
+"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: crowdin.com\n"
+
+msgid "Columns"
+msgstr "Colonnes"
+
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+
+msgid "Filters"
+msgstr "Filtres"
+
+msgid "All versions"
+msgstr "Toutes les versions"
+
+msgid "All apps"
+msgstr "Tous les processus"
+
+msgid "Monitor active cases"
+msgstr "Monitor active cases"
+
+msgid "Open cases"
+msgstr "Cas démarrés"
+
+msgid "Healthy cases"
+msgstr "Cas sans erreur"
+
+msgid "Cases with failures"
+msgstr "Cases with failures"
+
+msgid "Filter on process"
+msgstr "Filtre de processus"
+
+msgid "Process list"
+msgstr "Liste des processus"
+
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+msgid "Process name"
+msgstr "Nom du processus"
+
+msgid "Failed"
+msgstr "En échec"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Wait ..."
+msgstr "Patientez ..."
+
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "de"
+
+msgid "No data"
+msgstr "Pas de donnée disponible"
+
+msgid "Error!"
+msgstr "Erreur!"
+
+msgid "Started"
+msgstr "Démarré"
+
+msgid "All"
+msgstr "Tous"
+
+msgid "Never"
+msgstr "Jamais"
+
+msgid "30 s."
+msgstr "30 sec."
+
+msgid "1 min."
+msgstr "1 min."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "Technical error."
+msgstr "Erreur technique."
+
+msgid "Process state"
+msgstr "État du processus"
+
+msgid "Show"
+msgstr "Voir"
+
+msgid "Healthy cases"
+msgstr "Cas sans erreur"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Process version"
+msgstr "Version du processus"
+
+msgid "Case state"
+msgstr "Etat du cas"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+

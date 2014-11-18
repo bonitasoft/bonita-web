@@ -66,7 +66,7 @@ public class ProcessListingPage extends ItemListingPage<ProcessItem> implements 
 
     @Override
     public void defineTitle() {
-        setTitle(_("Apps"));
+        setTitle(_("Processes"));
 
     }
 
@@ -83,7 +83,7 @@ public class ProcessListingPage extends ItemListingPage<ProcessItem> implements 
     }
 
     private ItemListingFilter allProcessesFilter() {
-        return new ItemListingFilter(FILTER_ALL, _("All"), _("Display a summary of all apps"), TABLE_ALL);
+        return new ItemListingFilter(FILTER_ALL, _("All"), _("Display a summary of all processes"), TABLE_ALL);
     }
 
     @Override

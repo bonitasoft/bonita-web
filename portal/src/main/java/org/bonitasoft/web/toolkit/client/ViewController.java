@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 import org.bonitasoft.web.toolkit.client.eventbus.events.ChangeViewEvent;
@@ -30,7 +31,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Refreshable;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.CustomPanel;
-import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.DeleteItemPage;
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
@@ -68,6 +68,8 @@ public class ViewController {
     private String currentPageToken = null;
 
     private final boolean disableUpdateAppView = false;
+
+    private static boolean isAngularFrameDisplayed = false;
 
     private final List<AbstractComponent> componentsWaitingForLoad = new LinkedList<AbstractComponent>();
 
@@ -187,6 +189,7 @@ public class ViewController {
         return showView(ViewController.getInstance().createView(token, params), rootElement, params);
     }
 
+
     public static RawView showView(final RawView view, final Element rootElement, final TreeIndexed<String> params) {
         // Set the parent Element to the view that will be displayed
         view.setParentElement(rootElement);
@@ -208,15 +211,23 @@ public class ViewController {
         }
 
         final CustomPanel widget = view.toWidget();
-
         final Element widgetElement = widget.getElement();
-        if (!(view instanceof PageOnItem<?>)) {
-            $(rootElement).empty();
-        } else {
-            $(widgetElement).hide();
-        }
-        rootElement.appendChild(widgetElement);
 
+        if (view instanceof AngularIFrameView) {
+            if (!isAngularFrameDisplayed) {
+                $(rootElement).empty();
+            }
+            isAngularFrameDisplayed = true;
+        } else {
+            isAngularFrameDisplayed = false;
+            if (view instanceof PageOnItem<?>) {
+                $(widgetElement).hide();
+            } else {
+                $(rootElement).empty();
+            }
+        }
+
+        rootElement.appendChild(widgetElement);
         ViewController.updateUI(rootElement, true);
         widget.onLoad();
 

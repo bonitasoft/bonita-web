@@ -492,6 +492,20 @@ public class DOMUtils {
     }-*/;
 
     /**
+     * Indicates to the parent farme that a form was submitted (and the response was successful)
+     *
+     * @param message
+     * @return true if the page is in a frame
+     */
+    native public void notifyParentFrame(String message, boolean isError)
+    /*-{
+        if(isError) {
+            message = "error:" + message;
+        }
+        $wnd.top.postMessage(message, '*');
+    }-*/;
+
+    /**
      * Override the web browser native inputs if the js to do so is present
      *
      * @return true if the Javascript was applied

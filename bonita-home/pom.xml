@@ -10,7 +10,7 @@
 	<name>web bonita-home</name>
 
   	<properties>
-    	<jacoco.skip>true</jacoco.skip>
+    	<!--<jacoco.skip>true</jacoco.skip>-->
         <bonita.home>${project.build.directory}/bonita-home</bonita.home>
   	</properties>
 
@@ -87,6 +87,26 @@
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>${bonita.home}/engine-less/client/platform/tenant-template/work/theme/portal</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-security-scripts</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.bonitasoft.console</groupId>
+                                    <artifactId>security-scripts</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>bin</classifier>
+                                    <type>zip</type>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${bonita.home}/home/server/platform/tenant-template/conf/security-scripts</outputDirectory>
                         </configuration>
                     </execution>
 				</executions>

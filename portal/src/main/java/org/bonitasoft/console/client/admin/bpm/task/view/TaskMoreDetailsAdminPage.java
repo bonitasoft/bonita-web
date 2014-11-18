@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.TaskSkipAction;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
@@ -69,7 +69,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
     }
@@ -195,7 +195,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                 metadatas.addExecutedBy();
             }
         }
-        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))) {
+        if (!task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName())) {
             metadatas.AddSubAppsName();
             metadatas.AddSubAppsVersion();
         }
@@ -227,7 +227,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         if (item.isArchived()) {
             return new ArchivedConnectorInstanceSectionSnippet(item).setNbLinesByPage(10).build();
         } else {
-            Section connectorSection = new Section(_("Connectors"));
+            final Section connectorSection = new Section(_("Connectors"));
             connectorSection.setId(CssId.MD_SECTION_CONNECTORS);
             return connectorSection.addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
         }

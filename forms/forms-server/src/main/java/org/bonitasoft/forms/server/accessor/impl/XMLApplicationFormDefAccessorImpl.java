@@ -5,18 +5,29 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.forms.server.accessor.impl;
 
-import org.bonitasoft.forms.client.model.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.FormType;
+import org.bonitasoft.forms.client.model.FormValidator;
+import org.bonitasoft.forms.client.model.FormWidget;
+import org.bonitasoft.forms.client.model.TransientData;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
 import org.bonitasoft.forms.server.accessor.impl.util.XPathUtil;
@@ -29,18 +40,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Implementation of {@link IApplicationFormDefAccessor} allowing to parse the xml form definition file to get the application
  * config
- * 
+ *
  * @author Anthony Birembaut, Haojie Yuan
- * 
+ *
  */
 public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApplicationFormDefAccessor {
 
@@ -95,9 +100,9 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
     protected XMLExpressionsUtil xmlExpressionsUtil;
 
     /**
-     * 
+     *
      * Default constructor.
-     * 
+     *
      * @param tenantID
      * @param document
      * @param formId
@@ -239,7 +244,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
 
     /**
      * Retrieve the page node for a given page id
-     * 
+     *
      * @param pageId
      * @return the {@link Node} for the page
      */
@@ -250,7 +255,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
 
     /**
      * Build the xpath query to get a application page
-     * 
+     *
      * @param pageId
      * @return an xpath query under the form of a String
      */
@@ -269,7 +274,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
 
     /**
      * Retrieve the page node for a given page id
-     * 
+     *
      * @param formId
      *            the formId
      * @return the {@link Node} for the page
@@ -281,7 +286,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
 
     /**
      * Build the xpath query to get a application page
-     * 
+     *
      * @param formId
      *            the formId
      * @return an xpath query under the form of a String
@@ -317,7 +322,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
             }
             throw new InvalidFormDefinitionException(errorMessage);
         } else {
-            widgets = WidgetBuilderFactory.getXMLWidgetBuilder(null, 0, locale, applicationDeploymentDate).getPageWidgets(pageNode, isEditMode);
+            widgets = WidgetBuilderFactory.getXMLWidgetBuilder().getPageWidgets(pageNode, isEditMode);
         }
         return widgets;
     }
@@ -338,7 +343,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
             }
             throw new InvalidFormDefinitionException(errorMessage);
         } else {
-            pageValidators = WidgetBuilderFactory.getXMLWidgetBuilder(null, 0, locale, applicationDeploymentDate).getPageValidators(pageNode);
+            pageValidators = WidgetBuilderFactory.getXMLWidgetBuilder().getPageValidators(pageNode);
         }
         return pageValidators;
     }
@@ -471,7 +476,7 @@ public class XMLApplicationFormDefAccessorImpl extends XPathUtil implements IApp
     @Override
     public List<FormAction> getActions(final String pageId) throws InvalidFormDefinitionException, ApplicationFormDefinitionNotFoundException {
 
-        return WidgetBuilderFactory.getXMLWidgetBuilder(null, 0, locale, applicationDeploymentDate).getActions(formNode, pageId);
+        return WidgetBuilderFactory.getXMLWidgetBuilder().getActions(formNode, pageId);
     }
 
     /**

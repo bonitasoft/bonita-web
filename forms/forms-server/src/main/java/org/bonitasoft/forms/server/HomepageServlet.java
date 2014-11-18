@@ -17,6 +17,10 @@
  */
 package org.bonitasoft.forms.server;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,24 +31,17 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.themes.ThemeDatastore;
-import org.bonitasoft.console.common.server.themes.ThemeManager;
+import org.bonitasoft.console.common.server.themes.ThemeArchive;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
-import org.bonitasoft.console.common.server.themes.ThemeStructureException;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.ThemeAPI;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.theme.Theme;
 import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -173,13 +170,12 @@ public class HomepageServlet extends ThemeResourceServlet {
         return themeAPI.getLastUpdateDate(ThemeType.PORTAL).getTime();
     }
 
-    protected void updateThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException, IOException, ThemeStructureException {
-        final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
-        final ThemeManager themeManager = new ThemeManager(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()));
-        final ThemeDatastore themeDataStore = new ThemeDatastore(themeAPI, themeManager);
-        themeDataStore.updateCurrentThemeFromEngine();
-
+    protected void updateThemeFromEngine(final APISession apiSession, final File portalThemeDirectory) throws BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException, IOException {
+        Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
+        new ThemeArchive(theme.getContent())
+                .extract(portalThemeDirectory)
+                .add("bonita.css", theme.getCssContent());
     }
 
     protected String getFileName(final boolean isForm) {

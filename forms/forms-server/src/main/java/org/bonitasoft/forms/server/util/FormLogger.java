@@ -14,68 +14,62 @@ public class FormLogger implements IFormLogger {
     protected Logger LOGGER;
 
     public FormLogger(String className) {
-        LOGGER = Logger.getLogger(className);;
+        LOGGER = Logger.getLogger(className);
     }
 
     @Override
-    public void log(Level level, String message, Map<String, Object> pcontext) {
-        this.log(level, message, null, pcontext);
+    public void log(Level level, String message, Map<String, Object> context) {
+        this.log(level, message, null, context);
     }
 
     @Override
-    public void log(Level level, String message, Throwable e, Map<String, Object> pcontext) {
-        if (e == null)
-            e = new Exception();
-
-        FormContextUtil ctxu = new FormContextUtil(pcontext);
+    public void log(Level level, String message, Throwable e, Map<String, Object> context) {
+        if (!isLoggable(level)) {
+            return;
+        }
+        FormContextUtil formContextUtil = new FormContextUtil(context);
         String prefixMessage = "";
-
-        if (ctxu.getSession() != null && ctxu.getUserName() != null) {
-            prefixMessage += "Username<" + ctxu.getUserName() + "> ";
+        if (formContextUtil.getSession() != null && formContextUtil.getUserName() != null) {
+            prefixMessage += "Username<" + formContextUtil.getUserName() + "> ";
         }
-
-        if (ctxu.getFormName() != null) {
-            prefixMessage += "Form<" + ctxu.getFormName() + "> ";
+        if (formContextUtil.getFormName() != null) {
+            prefixMessage += "Form<" + formContextUtil.getFormName() + "> ";
         }
-
-        HashMap<String, FormFieldValue> submittedFields = ctxu.getSubmittedFields();
+        HashMap<String, FormFieldValue> submittedFields = formContextUtil.getSubmittedFields();
         if (!submittedFields.isEmpty()) {
             prefixMessage += "Submitted Fields<";
             String fieldStringRepresentation = getFormFieldStringRepresentation("", submittedFields);
             prefixMessage += fieldStringRepresentation + "> ";
         }
-
         try {
-            // in case of process instanciation
-            if (ctxu.getProcessDefinitionId() != null) {
-                prefixMessage += "Process<" + ctxu.getProcessName();
-                if (ctxu.getProcessVersion() != null) {
-                    prefixMessage += " " + ctxu.getProcessVersion();
+            // in case of process instantiation
+            if (formContextUtil.getProcessDefinitionId() != null) {
+                prefixMessage += "Process<" + formContextUtil.getProcessName();
+                if (formContextUtil.getProcessVersion() != null) {
+                    prefixMessage += " " + formContextUtil.getProcessVersion();
                 }
                 prefixMessage += "> ";
-            } else if (ctxu.getTaskId() != null) {
-                prefixMessage += "Task<" + ctxu.getTaskName() + "> ";
+            } else if (formContextUtil.getTaskId() != null) {
+                prefixMessage += "Task<" + formContextUtil.getTaskName() + "> ";
             }
 
         } catch (ProcessDefinitionNotFoundException e1) {
-            prefixMessage += "Process definition not found " + e1.getMessage();
+            prefixMessage += "Process<" + formContextUtil.getProcessDefinitionId() + "> ";
         } catch (BPMEngineException e1) {
-            prefixMessage += e1.getMessage();
+            prefixMessage += "Process<" + formContextUtil.getProcessDefinitionId() + "> ";
         }
-        if (message == null) {
-            message = "";
+        if (!prefixMessage.isEmpty()) {
+            if (message == null) {
+                message = prefixMessage;
+            } else {
+                message = prefixMessage + " " + message;
+            }
         }
-        message = prefixMessage;
+        internalLog(level, message, e);
+    }
 
-        if (LOGGER.isLoggable(Level.SEVERE)) {
-            LOGGER.log(Level.SEVERE, message, e);
-        } else if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, message, e);
-        } else if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, message, e);
-        } else if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, message, e);
-        }
+    protected void internalLog(Level level, String message, Throwable e) {
+        LOGGER.log(level, message, e);
     }
 
     protected String getFormFieldStringRepresentation(String returnedStr, Map<String, FormFieldValue> submittedFields) {

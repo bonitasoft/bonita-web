@@ -40,7 +40,7 @@ public class MetadataCaseBuilder extends MetadataBuilder {
     
     private ItemDetailsMetadata createAppsVersion() {
         return new ItemDetailsMetadata(new DeployedAttributeReader(CaseItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_VERSION), 
-                _("Apps version"),  _("The version of the app that created this case"));
+                _("Process version"),  _("The version of the process that created this case"));
     }
 
     public MetadataCaseBuilder addStartDate() {

@@ -76,6 +76,11 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
     public static final int MAX_LENGTH_BOOLEAN = 5;
 
     /**
+     * The maximum length of a URL
+     */
+    public static final int MAX_LENGTH_URL = 1024;
+
+    /**
      * The type of value an attribute can get.
      * 
      * @author Séverin Moussel
@@ -126,8 +131,16 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
          * </ul>
          */
         EMAIL,
-
-        URL, ITEM_ID
+        
+        /**
+         * A URL
+         * <ul>
+         * <li>Validate max length of {@value #MAX_LENGTH_URL}</li>
+         * </ul>
+         */
+        URL, 
+        
+        ITEM_ID
     };
 
     private String name = null;
@@ -194,14 +207,14 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
                 break;
             case URL:
                 addValidator(new StringFormatURLValidator());
-                addValidator(new StringMaxLengthValidator(MAX_LENGTH_STRING));
+                addValidator(new StringMaxLengthValidator(MAX_LENGTH_URL));
                 break;
             case COLOR:
                 addValidator(new StringFormatColorValidator());
                 addValidator(new StringMaxLengthValidator(MAX_LENGTH_COLOR));
                 break;
             default:
-                addValidator(new StringMaxLengthValidator(MAX_LENGTH_STRING));
+                addValidator(new StringMaxLengthValidator(MAX_LENGTH_URL));
                 break;
         }
     }

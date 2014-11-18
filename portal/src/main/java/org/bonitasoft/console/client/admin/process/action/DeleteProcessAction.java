@@ -36,7 +36,7 @@ public class DeleteProcessAction extends ItemDeletePopupAction {
      * @param itemDefinition
      */
     public DeleteProcessAction(final String processId, final String processName) {
-        super(_("App"), _("Delete the app %app_name%?", new Arg("app_name", processName)), Definitions.get(ProcessDefinition.TOKEN), processId);
+        super(_("Process"), _("Delete the process %app_name%?", new Arg("app_name", processName)), Definitions.get(ProcessDefinition.TOKEN), processId);
         addRedirectTokenParameter(ProcessListingAdminPage.TOKEN);
     }
 

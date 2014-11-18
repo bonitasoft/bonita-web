@@ -15,6 +15,7 @@
 package org.bonitasoft.web.toolkit.client.data.api.request;
 
 import org.bonitasoft.web.toolkit.client.UserSessionVariables;
+import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 
 import com.google.gwt.http.client.Request;
@@ -35,11 +36,11 @@ public class HttpRequest {
 
     /**
      * Send a GET HTTP request
-     * 
+     *
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      */
     public void send(final String url, final HttpCallback callback) {
         this.send(RequestBuilder.GET, url, null, null, callback);
@@ -47,13 +48,13 @@ public class HttpRequest {
 
     /**
      * Send a POST HTTP request
-     * 
+     *
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param datas
-     *            The data to send
+     *        The data to send
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      */
     public void send(final String url, final String datas, final HttpCallback callback) {
         this.send(RequestBuilder.POST, url, datas, null, callback);
@@ -61,13 +62,13 @@ public class HttpRequest {
 
     /**
      * Send the HTTP request
-     * 
+     *
      * @param method
-     *            The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
+     *        The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      */
     public void send(final Method method, final String url, final HttpCallback callback) {
         this.send(method, url, null, null, callback);
@@ -75,15 +76,15 @@ public class HttpRequest {
 
     /**
      * Send the HTTP request with data
-     * 
+     *
      * @param method
-     *            The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
+     *        The method to use between RequestBuilder.GET, RequestBuilder.POST, RequestBuilder.PUT, RequestBuilder.DELETE
      * @param callback
-     *            The APICallback to call onSuccess or onError.
+     *        The APICallback to call onSuccess or onError.
      * @param url
-     *            The URL of the API
+     *        The URL of the API
      * @param datas
-     *            The data to send
+     *        The data to send
      */
     public void send(final Method method, final String url, final String datas, final String contentType, final HttpCallback callback) {
         final RequestBuilder builder = new RequestBuilder(method, url);
@@ -93,10 +94,11 @@ public class HttpRequest {
         if (contentType != null) {
             builder.setHeader("Content-Type", (contentType != null ? contentType : "text/plain") + ";charset=UTF-8");
         }
-        
+
         if (UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN) != null) {
-            builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));    
+            builder.setHeader("X-Bonita-API-Token", UserSessionVariables.getUserVariable(UserSessionVariables.API_TOKEN));
         }
+
         builder.setTimeoutMillis(30000);
         builder.setCallback(callback);
         Request request = null;

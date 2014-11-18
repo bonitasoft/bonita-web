@@ -1,0 +1,71 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bonita-portal-js\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: 2014-10-09 20:34-0400\n"
+"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: crowdin.com\n"
+
+msgid "Columns"
+msgstr "Columns"
+
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+
+msgid "Filters"
+msgstr "Filters"
+
+msgid "This case will be definitively deleted."
+msgstr "This case will be definitively deleted."
+
+msgid "These cases will be definitively deleted."
+msgstr "These cases will be definitively deleted."
+
+msgid "Process version"
+msgstr "Process version"
+
+msgid "Process name"
+msgstr "Process name"
+
+msgid "Healthy"
+msgstr "Healthy"
+
+msgid "With failures"
+msgstr "With failures"
+
+msgid "Cases list"
+msgstr "Cases list"
+
+msgid "Failed Tasks"
+msgstr "Failed Tasks"
+
+msgid "Pending Tasks"
+msgstr "Pending Tasks"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} case deleted successfully"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} cases deleted successfully"
+
+msgid "Confirm delete?"
+msgstr "Confirm delete?"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "No cases to display"
+msgstr "No cases to display"
+
+msgid "Loading"
+msgstr "Loading"
+
+

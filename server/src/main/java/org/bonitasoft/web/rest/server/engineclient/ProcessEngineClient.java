@@ -78,7 +78,7 @@ public class ProcessEngineClient {
             return getProcessApi().deploy(businessArchive);
         } catch (final AlreadyExistsException e) {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
-            throw new APIException(new _("Apps %appName% in version %version% already exists", new Arg("appName", processDefinition.getName()), new Arg(
+            throw new APIException(new _("Process %appName% in version %version% already exists", new Arg("appName", processDefinition.getName()), new Arg(
                     "version", processDefinition.getVersion())), e);
         } catch (final Exception e) {
             throw new APIException(new _("Unable to deploy business archive"), e);
