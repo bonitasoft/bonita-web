@@ -138,6 +138,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
         addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
+        addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_NAME, FlowNodeInstanceSearchDescriptor.NAME);
         builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "aborted");
         builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "cancelled");
         builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "completed");
