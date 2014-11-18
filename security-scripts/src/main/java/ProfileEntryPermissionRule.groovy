@@ -26,7 +26,7 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Secure profile related related resources
+ * Secure profile related resources
  *
  * can be added to
  * <ul>

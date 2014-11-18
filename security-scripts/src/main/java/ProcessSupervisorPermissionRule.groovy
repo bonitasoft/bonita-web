@@ -22,7 +22,7 @@ import org.bonitasoft.engine.session.APISession
 
 /**
  *
- * Let a user view and add process su only if he is process owner
+ * Let a user view and add process only if he is process owner
  *
  * <ul>
  *     <li>bpm/processSupervisor</li>
