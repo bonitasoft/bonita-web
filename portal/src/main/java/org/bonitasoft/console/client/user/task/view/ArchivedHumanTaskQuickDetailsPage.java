@@ -5,26 +5,26 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
@@ -44,19 +44,19 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<ArchivedHumanTaskItem> implements PluginTask {
 
     public static final String TOKEN = "archivedtaskquickdetails";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(TasksListingPage.TOKEN);
         PRIVILEGES.add(TaskListingAdminPage.TOKEN); //FIX ME: we should create a humantaskmoredetails admin page so ill never need this
         PRIVILEGES.add(CaseListingPage.TOKEN);
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
@@ -81,7 +81,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
 
     @Override
     protected LinkedList<ItemDetailsMetadata> defineMetadatas(final ArchivedHumanTaskItem task) {
-        MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
+        final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addCaseId(task, CaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.TOKEN);
         metadatas.addDueDate(DateFormat.FORMAT.DISPLAY_RELATIVE);
         metadatas.addAppsName();

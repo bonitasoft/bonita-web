@@ -1,0 +1,196 @@
+@panelHeaderBG: #333;
+@fontLightColor: #6e6f6b;
+@titleColor: #b20706;
+
+.monitoring-page {
+  .panel-default > .panel-heading {
+    color: @panelHeaderBG;
+  }
+
+  .center {
+    margin: 10px 0px 10px 0px;
+    text-align: center;
+  }
+
+  .totalMonitoring {
+    width: 20%;
+    min-width: 200px;
+    margin: 0px 2px 0px 2px;
+    padding: 5px 10px;
+    display: inline-block;
+    font-size: 20px;
+  }
+
+  .totalLabel {
+    margin: 5px 0px 10px;
+  }
+
+  .right {
+    margin: 0px 0px 5px 0px;
+    /*text-align: right;*/
+    float: right;
+  }
+
+  .selectField {
+    display: inline-block;
+    width: auto;
+    margin: 0px 10px 0px 3px;
+  }
+
+  .filterFieldProcess {
+    display: inline-block;
+    max-width: 300px;
+    margin-right: 20px;
+  }
+
+  .filterFieldFailed {
+    display: inline-block;
+    width: auto;
+    margin-right: 20px;
+  }
+
+  .totalMonitoring .label {
+    font-size: inherit;
+  }
+
+  img {
+    vertical-align: bottom;
+  }
+
+  .filterFieldVersion {
+    margin-right: 20px;
+  }
+
+  .refreshBlock {
+    position: relative;
+    bottom: 40px;
+    right: 16px;
+  }
+
+  .glyphicon-chevron-up,
+  .glyphicon-chevron-down {
+    font-size: 10px;
+  }
+  .pagination-results {
+    margin: 18px 20px;
+  }
+
+  .paginationBlock {
+    position: relative;
+    bottom: 3px;
+  }
+
+  tbody {
+    color: @fontLightColor;
+  }
+
+  button.dropdown-toggle {
+    text-transform: capitalize;
+  }
+
+  .refreshBlock button.dropdown-toggle {
+    text-transform: none;
+  }
+
+
+  .pagination > .disabled > span,
+  .pagination > .disabled > span:hover,
+  .pagination > .disabled > span:focus,
+  .pagination > .disabled > a,
+  .pagination > .disabled > a:hover,
+  .pagination > .disabled > a:focus {
+    cursor: default;
+  }
+
+  .dropdown-menu {
+    overflow-y: auto;
+    max-height: 315px;
+  }
+
+  .center {
+    margin: 10px 0 20px;
+  }
+
+  .table {
+    margin-bottom: 0px;
+  }
+
+  h1 {
+    margin-bottom: 0px;
+    color: @titleColor;
+  }
+
+  .pagination {
+    margin-top: 10px;
+  }
+
+  #process-list .panel-body {
+    padding-top: 5px;
+  }
+
+  th .ng-binding {
+    cursor: pointer;
+  }
+
+  div[dropdown] {
+    margin-left: 0.5em;
+  }
+
+  div[dropdown] button {
+    min-width: 60px;
+  }
+
+  .glyphicon-refresh-animate {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left: -20px;
+    top: 4px;
+
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+  }
+
+  @-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+  }
+
+  @keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+  }
+
+  #process-list .number-column,
+  #process-list .version-column {
+    width: 150px;
+  }
+
+  #process-list .icon-column {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  #process-list .action-column {
+    width: 250px;
+  }
+
+  .totals-panel .panel-heading {
+    border-bottom: none;
+
+    h4 {
+      position: absolute;
+      color: @panelHeaderBG;
+    }
+  }
+
+  .clickable {
+    color: inherit;
+  }
+
+  .clickable:hover {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+}

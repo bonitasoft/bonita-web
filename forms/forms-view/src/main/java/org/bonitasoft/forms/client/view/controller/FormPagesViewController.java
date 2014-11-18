@@ -1269,7 +1269,7 @@ public class FormPagesViewController {
             } catch (final FormAlreadySubmittedException e) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame(errorMessage, true);
+                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
@@ -1285,7 +1285,7 @@ public class FormPagesViewController {
                     errorMessage = FormsResourceBundle.getErrors().fileTooBigErrorWithSize(maxSize);
                 }
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame(errorMessage, true);
+                    domUtils.notifyParentFrame("fileTooBigError", true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     Window.alert(errorMessage);
@@ -1293,7 +1293,7 @@ public class FormPagesViewController {
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formSubmissionError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame(errorMessage, true);
+                    domUtils.notifyParentFrame("formSubmissionError", true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,

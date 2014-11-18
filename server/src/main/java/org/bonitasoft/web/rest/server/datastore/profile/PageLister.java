@@ -61,7 +61,7 @@ public class PageLister {
         final List<BonitaPageItem> pagelist = new ArrayList<BonitaPageItem>();
 
         for (final BonitaPageItem page : pages) {
-            if (!(pagesTokenToSkip.contains(page.getToken()))) {
+            if (!pagesTokenToSkip.contains(page.getToken())) {
                 pagelist.add(page);
             }
         }

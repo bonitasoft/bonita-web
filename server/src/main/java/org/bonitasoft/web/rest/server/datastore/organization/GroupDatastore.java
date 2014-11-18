@@ -70,9 +70,9 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         try {
             final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
-            addFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_NAME, GroupSearchDescriptor.NAME);
-            addFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_DISPLAY_NAME, GroupSearchDescriptor.DISPLAY_NAME);
-            addFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_PARENT_PATH, GroupSearchDescriptor.PARENT_PATH);
+            addStringFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_NAME, GroupSearchDescriptor.NAME);
+            addStringFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_DISPLAY_NAME, GroupSearchDescriptor.DISPLAY_NAME);
+            addStringFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_PARENT_PATH, GroupSearchDescriptor.PARENT_PATH);
             
             SearchResult<Group> engineSearchResults;
             engineSearchResults = TenantAPIAccessor.getIdentityAPI(getEngineSession()).searchGroups(builder.done());
