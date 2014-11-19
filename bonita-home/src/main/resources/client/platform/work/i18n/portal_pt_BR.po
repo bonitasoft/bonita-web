@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-16 02:00+0100\n"
-"PO-Revision-Date: 2014-11-17 04:52-0500\n"
+"POT-Creation-Date: 2014-11-18 02:00+0100\n"
+"PO-Revision-Date: 2014-11-18 11:05-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -461,9 +461,6 @@ msgstr "Variável de processo"
 msgid "Cases"
 msgstr "Instâncias de processo"
 
-msgid "Cases "
-msgstr "Casos "
-
 msgid "Cases I have started"
 msgstr "Casos que eu iniciei"
 
@@ -472,9 +469,6 @@ msgstr "Casos que eu iniciei ou já trabalhei"
 
 msgid "Cases I worked on"
 msgstr "Instâncias de processo nas quais eu trabalhei"
-
-msgid "Cases started or worked on by someone"
-msgstr "Casos iniciados ou com atuação de algum usuário"
 
 msgid "Categories"
 msgstr "Categorias"
@@ -628,9 +622,6 @@ msgstr "Excluir"
 
 msgid "Delete %resource_name%"
 msgstr "Excluir % resource_name %"
-
-msgid "Delete selected cases"
-msgstr "Excluir casos selecionados"
 
 msgid "Delete selected groups"
 msgstr "Excluir grupos selecionados"
@@ -1298,9 +1289,6 @@ msgstr "Ok"
 msgid "Only the value attribute can be updated"
 msgstr "Apenas o valor do atributo pode ser atualizado"
 
-msgid "Opened"
-msgstr "Aberto"
-
 msgid "Opens a popup to create a group"
 msgstr "Abre um popup para criar um grupo"
 
@@ -1440,7 +1428,7 @@ msgid "Process version"
 msgstr "Process version"
 
 msgid "Processes"
-msgstr "Processes"
+msgstr "Processos"
 
 msgid "Profile"
 msgstr "Privilégio"
@@ -1737,10 +1725,10 @@ msgid "The Process cannot be enabled"
 msgstr "The Process cannot be enabled"
 
 msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
-msgstr "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
+msgstr "O Gerente de Processo pode supervisionar os processos designados e gerenciar casos e tarefas desses processos."
 
 msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
-msgstr "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
+msgstr "O administrador pode instalar um processo, gerenciar a organização e manipular alguns erros (por exemplo, reexecutar uma tarefa)."
 
 msgid "The application encountered an error."
 msgstr "Ocorreu um erro na aplicação."
@@ -1863,7 +1851,7 @@ msgid "The type of the task"
 msgstr "O tipo da tarefa"
 
 msgid "The user can view and perform tasks and can start a new case of a process."
-msgstr "The user can view and perform tasks and can start a new case of a process."
+msgstr "O usuário pode visualizar e executar tarefas e pode iniciar um novo caso de um processo."
 
 msgid "The user that has started this case"
 msgstr "O usuário que iniciou esta instância de processo"
@@ -2095,12 +2083,6 @@ msgstr "crescente"
 
 msgid "by"
 msgstr "por"
-
-msgid "case"
-msgstr "caso"
-
-msgid "cases"
-msgstr "casos"
 
 msgid "create"
 msgstr "criar"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-16 02:00+0100\n"
-"PO-Revision-Date: 2014-11-17 04:46-0500\n"
+"POT-Creation-Date: 2014-11-18 02:00+0100\n"
+"PO-Revision-Date: 2014-11-18 04:58-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -461,9 +461,6 @@ msgstr "Fallvariable"
 msgid "Cases"
 msgstr "Fälle"
 
-msgid "Cases "
-msgstr "Fälle "
-
 msgid "Cases I have started"
 msgstr "Fälle, die ich begonnen habe"
 
@@ -472,9 +469,6 @@ msgstr "Fälle, die ich begonnen oder bearbeitet habe"
 
 msgid "Cases I worked on"
 msgstr "Von mir bearbeitete Fälle"
-
-msgid "Cases started or worked on by someone"
-msgstr "Fälle, mit denen begonnen wurde oder an denen gearbeitet wird"
 
 msgid "Categories"
 msgstr "Kategorien"
@@ -628,9 +622,6 @@ msgstr "Löschen"
 
 msgid "Delete %resource_name%"
 msgstr "%resource_name% löschen"
-
-msgid "Delete selected cases"
-msgstr "Löschen der ausgewählten Fälle"
 
 msgid "Delete selected groups"
 msgstr "Ausgewählte Gruppen löschen"
@@ -1297,9 +1288,6 @@ msgstr "Ok"
 
 msgid "Only the value attribute can be updated"
 msgstr "Nur das Wert-Attribut kann aktualisiert werden"
-
-msgid "Opened"
-msgstr "Geöffnet"
 
 msgid "Opens a popup to create a group"
 msgstr "Öffnet ein Pop-up zum Erstellen einer Gruppe"
@@ -2095,12 +2083,6 @@ msgstr "aufsteigend"
 
 msgid "by"
 msgstr "von"
-
-msgid "case"
-msgstr "Fall"
-
-msgid "cases"
-msgstr "Fälle"
 
 msgid "create"
 msgstr "Erstellen"
