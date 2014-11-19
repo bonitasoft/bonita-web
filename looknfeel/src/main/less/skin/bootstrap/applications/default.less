@@ -15,6 +15,6 @@ iframe {
   prevent the scrollbar when the page is < window.innerHeight
  */
 .content {
-  height: calc(100% - 51px);
+  height: ~"calc(100% - 51px)";  // Less compute the calc fonction -> return calc(49%)...
   position: relative;
 }
