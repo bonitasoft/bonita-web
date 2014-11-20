@@ -1,0 +1,107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: 2014-11-17 04:45-0500\n"
+"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+
+msgid "Columns"
+msgstr "Columns"
+
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+
+msgid "Filters"
+msgstr "Filter"
+
+msgid "All versions"
+msgstr "All versions"
+
+msgid "All apps"
+msgstr "All apps"
+
+msgid "Monitor open cases"
+msgstr "Monitor open cases"
+
+msgid "Open cases"
+msgstr "Open cases"
+
+msgid "Healthy cases"
+msgstr "Healthy cases"
+
+msgid "Failed cases"
+msgstr "Failed cases"
+
+msgid "Filter on process"
+msgstr "Filter on process"
+
+msgid "Process list"
+msgstr "Process list"
+
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+msgid "Process name"
+msgstr "Process name"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+msgid "State"
+msgstr "Status"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Wait ..."
+msgstr "Wait ..."
+
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "von"
+
+msgid "No data"
+msgstr "Keine Daten"
+
+msgid "Error!"
+msgstr "Fehler!"
+
+msgid "Started"
+msgstr "Gestartet"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Never"
+msgstr "Never"
+
+msgid "30 s."
+msgstr "30 s."
+
+msgid "1 min."
+msgstr "1 min."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "Technical error."
+msgstr "Technical error."
+
+msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
+msgid "Process activation state"
+msgstr "Process activation state"
+

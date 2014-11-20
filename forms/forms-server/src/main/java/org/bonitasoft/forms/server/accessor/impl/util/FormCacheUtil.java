@@ -1,17 +1,23 @@
 package org.bonitasoft.forms.server.accessor.impl.util;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.forms.client.model.*;
-import org.bonitasoft.forms.server.cache.CacheUtil;
-import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
-
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.forms.client.model.ApplicationConfig;
+import org.bonitasoft.forms.client.model.Expression;
+import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.FormPage;
+import org.bonitasoft.forms.client.model.FormValidator;
+import org.bonitasoft.forms.client.model.FormWidget;
+import org.bonitasoft.forms.client.model.TransientData;
+import org.bonitasoft.forms.server.cache.CacheUtil;
+import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
+
 public class FormCacheUtil {
-	
+
     /**
      * Logger
      */
@@ -66,9 +72,6 @@ public class FormCacheUtil {
         }
     }
 
-    protected static int getContextClassLoaderHash() {
-        return Thread.currentThread().getContextClassLoader().hashCode();
-    }
 
     protected static String getDateStr(final Date date) {
         if (date != null) {
@@ -76,187 +79,220 @@ public class FormCacheUtil {
         }
         return "";
     }
-    
+
     public Expression getFirstPage(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (Expression)CacheUtil.get(FORM_FIRST_PAGE_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (Expression) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_FIRST_PAGE_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public void storeFirstPage(final String formID, final String locale, final Date applicationDeployementDate, final Expression firstPage) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_FIRST_PAGE_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, firstPage);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_FIRST_PAGE_CACHE, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
+                + tenantID, firstPage);
     }
-    
+
     public FormPage getPage(final String formID, final String locale, final Date applicationDeployementDate, final String pageId) throws InvalidFormDefinitionException {
-        return (FormPage)CacheUtil.get(FORM_PAGES_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + pageId + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (FormPage) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_PAGES_CACHE, formID + locale + getDateStr(applicationDeployementDate) + pageId
+                + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public void storePage(final String formID, final String locale, final Date applicationDeployementDate, final FormPage formPage) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_PAGES_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + formPage.getPageId() + DOMAIN_KEY_CONNECTOR + tenantID, formPage);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PAGES_CACHE, formID + locale + getDateStr(applicationDeployementDate) + formPage.getPageId()
+                + DOMAIN_KEY_CONNECTOR + tenantID, formPage);
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<TransientData> getTransientData(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (List<TransientData>)CacheUtil.get(FORM_TRANSIENT_DATA_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (List<TransientData>) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_TRANSIENT_DATA_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR
+                + tenantID);
     }
-    
+
     public void storeTransientData(final String formID, final String locale, final Date applicationDeployementDate, final List<TransientData> transientData) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_TRANSIENT_DATA_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, transientData);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_TRANSIENT_DATA_CACHE, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
+                + tenantID, transientData);
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<FormAction> getPageActions(final String formID, final String locale, final Date applicationDeployementDate, final String activityName, final String pageId) throws InvalidFormDefinitionException {
-        return (List<FormAction>)CacheUtil.get(FORM_PAGE_ACTIONS_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + activityName + pageId + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (List<FormAction>) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_PAGE_ACTIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + activityName + pageId
+                + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public void storePageActions(final String formID, final String locale, final Date applicationDeployementDate, final String activityName, final String pageId, final List<FormAction> actions) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_PAGE_ACTIONS_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + activityName + pageId + DOMAIN_KEY_CONNECTOR + tenantID, actions);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PAGE_ACTIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate) + activityName + pageId
+                + DOMAIN_KEY_CONNECTOR + tenantID, actions);
     }
-    	
+
 	public ApplicationConfig getApplicationConfig(final String formID, final String locale, final Date applicationDeployementDate, final boolean includeApplicationTemplate) throws InvalidFormDefinitionException {
-	    return (ApplicationConfig)CacheUtil.get(FORM_CONFIG_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + Boolean.toString(includeApplicationTemplate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (ApplicationConfig) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_CONFIG_CACHE,
+                formID + locale + getDateStr(applicationDeployementDate) + Boolean.toString(includeApplicationTemplate) + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public final void storeApplicationConfig(final String formID, final String locale, final Date applicationDeployementDate, final boolean includeApplicationTemplate, final ApplicationConfig ApplicationConfig) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_CONFIG_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + Boolean.toString(includeApplicationTemplate) + DOMAIN_KEY_CONNECTOR + tenantID, ApplicationConfig);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_CONFIG_CACHE,
+                formID + locale + getDateStr(applicationDeployementDate) + Boolean.toString(includeApplicationTemplate) + DOMAIN_KEY_CONNECTOR + tenantID,
+                ApplicationConfig);
     }
-    
+
     public String getApplicationPermissions(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_APPLICATION_PERMISSIONS_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_APPLICATION_PERMISSIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR
+                + tenantID);
     }
-    
+
     public void storeApplicationPermissions(final String formID, final String locale, final Date applicationDeployementDate, final String applicationPermissions) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_APPLICATION_PERMISSIONS_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, applicationPermissions);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_APPLICATION_PERMISSIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR + tenantID, applicationPermissions);
     }
-    
+
     public String getMigrationProductVersion(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_MIGRATION_PRODUCT_VERSION_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_MIGRATION_PRODUCT_VERSION_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR
+                + tenantID);
     }
-    
+
     public void storeMigrationProductVersion(final String formID, final String locale, final Date applicationDeployementDate, final String migrationProductVersion) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_MIGRATION_PRODUCT_VERSION_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, migrationProductVersion);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_MIGRATION_PRODUCT_VERSION_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR + tenantID, migrationProductVersion);
     }
-    
+
     public String getFormPermissions(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_PERMISSIONS_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_PERMISSIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public void storeFormPermissions(final String formID, final String locale, final Date applicationDeployementDate, final String formPermissions) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_PERMISSIONS_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, formPermissions);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PERMISSIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
+                + tenantID, formPermissions);
     }
-    
+
     public String getNextForm(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_NEXT_FORM_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_NEXT_FORM_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public void storeNextForm(final String formID, final String locale, final Date applicationDeployementDate, final String nextForm) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_NEXT_FORM_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, nextForm);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_NEXT_FORM_CACHE,
+                formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, nextForm);
     }
-    
+
     public String getFormPageLayout(final String formID, final String locale, final Date applicationDeployementDate,final String pageId) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_PAGE_LAYOUT_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate)+ pageId + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_PAGE_LAYOUT_CACHE, formID + locale + getDateStr(applicationDeployementDate) + pageId
+                + DOMAIN_KEY_CONNECTOR
+                + tenantID);
     }
-    
+
     public void storeFormPageLayout(final String formID, final String locale, final Date applicationDeployementDate,final String pageId, final String formPageLayout) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_PAGE_LAYOUT_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate)+ pageId + DOMAIN_KEY_CONNECTOR + tenantID, formPageLayout);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PAGE_LAYOUT_CACHE, formID + locale + getDateStr(applicationDeployementDate) + pageId + DOMAIN_KEY_CONNECTOR
+                + tenantID, formPageLayout);
     }
-    
+
     public String getApplicationVersion(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_APPLICATION_VERSION_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_APPLICATION_VERSION_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR
+                + tenantID);
     }
-    
+
     public void storeApplicationVersion(final String formID, final String locale, final Date applicationDeployementDate, final String applicationVersion) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_APPLICATION_VERSION_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, applicationVersion);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_APPLICATION_VERSION_CACHE, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
+                + tenantID, applicationVersion);
     }
-    
+
     public String getApplicationName(final String formID, final String locale, final Date applicationDeployementDate) throws InvalidFormDefinitionException {
-        return (String)CacheUtil.get(FORM_APPLICATION_NAME_CACHE, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_APPLICATION_NAME_CACHE, formID + locale + getDateStr(applicationDeployementDate)
+                + DOMAIN_KEY_CONNECTOR + tenantID);
     }
-    
+
     public void storeApplicationName(final String formID, final String locale, final Date applicationDeployementDate, final String applicationName) throws InvalidFormDefinitionException {
-        CacheUtil.store(FORM_APPLICATION_NAME_CACHE, CACHE_DISK_STORE_PATH, getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID, applicationName);
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_APPLICATION_NAME_CACHE, formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR
+                + tenantID, applicationName);
     }
-    
+
     public FormWidget getFormWidget(final String formWidgetCacheId){
-        return (FormWidget) CacheUtil.get(FORM_WIDGET_CACHE, formWidgetCacheId);
+        return (FormWidget) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_WIDGET_CACHE, formWidgetCacheId);
     }
-    
+
+    public FormWidget getFormWidget(final String formID, final String pageID, final String widgetID, final String locale, final Date processDeployementDate) {
+        return getFormWidget(formID + pageID + widgetID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID);
+    }
+
     public String storeFormWidget(final String formID, final String pageID, final String locale, final Date processDeployementDate, final FormWidget formWidget) {
-        final String formWidgetCacheId = getContextClassLoaderHash() + formID + pageID + formWidget.getId() + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
-        CacheUtil.store(FORM_WIDGET_CACHE, CACHE_DISK_STORE_PATH, formWidgetCacheId, formWidget);
+        final String formWidgetCacheId = formID + pageID + formWidget.getId() + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_WIDGET_CACHE, formWidgetCacheId, formWidget);
         return formWidgetCacheId;
     }
 
-    public Expression getNextPageIdExpression(String nextPageExpressionId) {
-        return (Expression) CacheUtil.get(NEXT_PAGE_ID_EXPRESSION_CACHE, nextPageExpressionId);
+    public Expression getNextPageIdExpression(final String nextPageExpressionId) {
+        return (Expression) CacheUtil.get(CACHE_DISK_STORE_PATH, NEXT_PAGE_ID_EXPRESSION_CACHE, nextPageExpressionId);
     }
-    
+
     public String storeNextPageIdExpression(final String formID, final String pageID, final String locale, final Date processDeployementDate, final Expression nextPageIdExpression) {
-        final String nextPageExpressionId = getContextClassLoaderHash() + formID + pageID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
-        CacheUtil.store(NEXT_PAGE_ID_EXPRESSION_CACHE, CACHE_DISK_STORE_PATH, nextPageExpressionId, nextPageIdExpression);
+        final String nextPageExpressionId = formID + pageID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
+        CacheUtil.store(CACHE_DISK_STORE_PATH, NEXT_PAGE_ID_EXPRESSION_CACHE, nextPageExpressionId, nextPageIdExpression);
         return nextPageExpressionId;
     }
-    
+
     @SuppressWarnings("unchecked")
-    public List<FormValidator> getFieldValidators(String fieldValidatorsId) {
-        return (List<FormValidator>) CacheUtil.get(FIELD_VALIDATORS_CACHE, fieldValidatorsId);
+    public List<FormValidator> getFieldValidators(final String fieldValidatorsId) {
+        return (List<FormValidator>) CacheUtil.get(CACHE_DISK_STORE_PATH, FIELD_VALIDATORS_CACHE, fieldValidatorsId);
     }
-    
-    public String storeFieldValidators(final String formID, final String pageID, final String widgetID, final String locale, final Date processDeployementDate, List<FormValidator> validators) {
-        final String validatorsId = getContextClassLoaderHash() + formID + pageID + widgetID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
-        CacheUtil.store(FIELD_VALIDATORS_CACHE, CACHE_DISK_STORE_PATH, validatorsId, validators);
+
+    public String storeFieldValidators(final String formID, final String pageID, final String widgetID, final String locale, final Date processDeployementDate, final List<FormValidator> validators) {
+        final String validatorsId = formID + pageID + widgetID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FIELD_VALIDATORS_CACHE, validatorsId, validators);
         return validatorsId;
     }
-    
+
     @SuppressWarnings("unchecked")
-    public List<FormValidator> getPageValidators(String pageValidatorsId) {
-        return (List<FormValidator>) CacheUtil.get(PAGE_VALIDATORS_CACHE, pageValidatorsId);
+    public List<FormValidator> getPageValidators(final String pageValidatorsId) {
+        return (List<FormValidator>) CacheUtil.get(CACHE_DISK_STORE_PATH, PAGE_VALIDATORS_CACHE, pageValidatorsId);
     }
-    
-    public String storePageValidators(final String formID, final String pageID, final String locale, final Date processDeployementDate, List<FormValidator> validators) {
-        final String validatorsId = getContextClassLoaderHash() + formID + pageID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
-        CacheUtil.store(PAGE_VALIDATORS_CACHE, CACHE_DISK_STORE_PATH, validatorsId, validators);
+
+    public String storePageValidators(final String formID, final String pageID, final String locale, final Date processDeployementDate, final List<FormValidator> validators) {
+        final String validatorsId = formID + pageID + locale + getDateStr(processDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
+        CacheUtil.store(CACHE_DISK_STORE_PATH, PAGE_VALIDATORS_CACHE, validatorsId, validators);
         return validatorsId;
     }
-    
+
     public String getPageLayoutContent(final String bodyContentId) throws InvalidFormDefinitionException {
-        final String bodyContent = (String) CacheUtil.get(FORM_PAGE_LAYOUT_CACHE, bodyContentId);
-        return bodyContent;
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_PAGE_LAYOUT_CACHE, bodyContentId);
     }
 
     public String storePageLayoutContent(final String formID, final String PageID, final String locale, final Date applicationDeployementDate, final String BodyContent) throws InvalidFormDefinitionException {
-        final String bodyContentId = getContextClassLoaderHash() + formID + PageID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
-        CacheUtil.store(FORM_PAGE_LAYOUT_CACHE, CACHE_DISK_STORE_PATH, bodyContentId, BodyContent);
+        final String bodyContentId = formID + PageID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PAGE_LAYOUT_CACHE, bodyContentId, BodyContent);
         return bodyContentId;
     }
 
     public String getApplicationLayoutContent(final String bodyContentId) throws InvalidFormDefinitionException {
-        final String bodyContent = (String) CacheUtil.get(FORM_APPLICATION_LAYOUT_CACHE, bodyContentId);
-        return bodyContent;
+        return (String) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_APPLICATION_LAYOUT_CACHE, bodyContentId);
     }
 
     public String storeApplicationLayoutContent(final String formID, final String locale, final Date applicationDeployementDate, final String BodyContent) throws InvalidFormDefinitionException {
-        final String bodyContentId = getContextClassLoaderHash() + formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
-        CacheUtil.store(FORM_APPLICATION_LAYOUT_CACHE, CACHE_DISK_STORE_PATH, bodyContentId, BodyContent);
+        final String bodyContentId = formID + locale + getDateStr(applicationDeployementDate) + DOMAIN_KEY_CONNECTOR + tenantID;
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_APPLICATION_LAYOUT_CACHE, bodyContentId, BodyContent);
         return bodyContentId;
     }
 
     public void clearAll() {
-        CacheUtil.clear(FORM_FIRST_PAGE_CACHE);
-        CacheUtil.clear(FORM_PAGES_CACHE);
-        CacheUtil.clear(FORM_TRANSIENT_DATA_CACHE);
-        CacheUtil.clear(FORM_PAGE_ACTIONS_CACHE);
-        CacheUtil.clear(FORM_CONFIG_CACHE);
-        CacheUtil.clear(FORM_APPLICATION_PERMISSIONS_CACHE);
-        CacheUtil.clear(FORM_MIGRATION_PRODUCT_VERSION_CACHE);
-        CacheUtil.clear(FORM_PERMISSIONS_CACHE);
-        CacheUtil.clear(FORM_NEXT_FORM_CACHE);
-        CacheUtil.clear(FORM_PAGE_LAYOUT_CACHE);
-        CacheUtil.clear(FORM_APPLICATION_VERSION_CACHE);
-        CacheUtil.clear(FORM_APPLICATION_NAME_CACHE);
-        CacheUtil.clear(NEXT_PAGE_ID_EXPRESSION_CACHE);
-        CacheUtil.clear(FIELD_VALIDATORS_CACHE);
-        CacheUtil.clear(PAGE_VALIDATORS_CACHE);
-        CacheUtil.clear(FORM_WIDGET_CACHE);
-        CacheUtil.clear(FORM_APPLICATION_LAYOUT_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_FIRST_PAGE_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_PAGES_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_TRANSIENT_DATA_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_PAGE_ACTIONS_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_CONFIG_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_APPLICATION_PERMISSIONS_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_MIGRATION_PRODUCT_VERSION_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_PERMISSIONS_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_NEXT_FORM_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_PAGE_LAYOUT_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_APPLICATION_VERSION_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_APPLICATION_NAME_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, NEXT_PAGE_ID_EXPRESSION_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FIELD_VALIDATORS_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, PAGE_VALIDATORS_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_WIDGET_CACHE);
+        CacheUtil.clear(CACHE_DISK_STORE_PATH, FORM_APPLICATION_LAYOUT_CACHE);
     }
 
 }
