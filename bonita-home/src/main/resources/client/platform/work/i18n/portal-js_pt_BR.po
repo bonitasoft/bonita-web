@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-17 04:51-0500\n"
+"PO-Revision-Date: 2014-11-19 06:07-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -15,43 +15,43 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Colunas"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
 
 msgid "Filters"
 msgstr "Filtros"
 
 msgid "All versions"
-msgstr "All versions"
+msgstr "Todas as versões"
 
 msgid "All apps"
-msgstr "All apps"
+msgstr "Todos os aplicativos"
 
 msgid "Monitor open cases"
-msgstr "Monitor open cases"
+msgstr "Monitorar casos abertos"
 
 msgid "Open cases"
-msgstr "Open cases"
+msgstr "Casos abertos"
 
 msgid "Healthy cases"
-msgstr "Healthy cases"
+msgstr "Casos sem erros"
 
 msgid "Failed cases"
-msgstr "Failed cases"
+msgstr "Casos com erros"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtrar por processo"
 
 msgid "Process list"
-msgstr "Process list"
+msgstr "Lista de processos"
 
 msgid "Refresh"
 msgstr "Atualizar"
 
 msgid "Process name"
-msgstr "Process name"
+msgstr "Nome do Processo"
 
 msgid "Version"
 msgstr "Versão"
@@ -66,7 +66,7 @@ msgid "Actions"
 msgstr "Ações"
 
 msgid "Wait ..."
-msgstr "Wait ..."
+msgstr "Aguarde ..."
 
 # Pagination label: "1 - 10 of 300"
 msgid "of"
@@ -85,7 +85,7 @@ msgid "All"
 msgstr "Todos "
 
 msgid "Never"
-msgstr "Never"
+msgstr "Nunca"
 
 msgid "30 s."
 msgstr "30 s."
@@ -97,11 +97,11 @@ msgid "10 min."
 msgstr "10 min."
 
 msgid "Technical error."
-msgstr "Technical error."
+msgstr "Erro técnico."
 
 msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "Resultados: {{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "Process activation state"
-msgstr "Process activation state"
+msgstr "Estado de ativação do processo"
 
