@@ -582,13 +582,9 @@
                                 <bonita.home>${bonita.home.test}/bonita</bonita.home>
                             </systemPropertyVariables>
                             <includes>
-                                <!--unit tests managed by surefire -->
-                                <exclude>**/*Test.java</exclude>
-
                                 <!--the following are failsafe conventions -->
                                 <include>**/*IT.java</include>
                                 <include>**/*IntegrationTest.java</include>
-
                             </includes>
                         </configuration>
                     </execution>
@@ -599,14 +595,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <includes>
-                        <!--unit tests managed by surefire -->
-                        <include>**/*Test.java</include>
-
+                    <excludes>
                         <!--the following are failsafe conventions -->
                         <exclude>**/*IT.java</exclude>
                         <exclude>**/*IntegrationTest.java</exclude>
-                    </includes>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
