@@ -44,7 +44,6 @@
         
         <!-- used when sonar profile is not active -->
         <jacoco.agent.it.arg></jacoco.agent.it.arg>
-        <jacoco.agent.ut.arg></jacoco.agent.ut.arg>
     </properties>
 
     <dependencyManagement>
@@ -580,12 +579,11 @@
                         <configuration>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
                             <systemPropertyVariables>
-                                <!--<bonita.home>${project.build.directory}/bonita/home</bonita.home> -->
                                 <bonita.home>${bonita.home.test}/bonita</bonita.home>
                             </systemPropertyVariables>
                             <includes>
                                 <!--unit tests managed by surefire -->
-                                <exclude>**.*Test.java</exclude>
+                                <exclude>**/*Test.java</exclude>
 
                                 <!--the following are failsafe conventions -->
                                 <include>**/*IT.java</include>
@@ -601,7 +599,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>${jacoco.agent.ut.arg}</argLine>
                     <includes>
                         <!--unit tests managed by surefire -->
                         <include>**/*Test.java</include>
@@ -745,6 +742,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <argLine>${jacoco.agent.ut.arg}</argLine>
                             <properties>
                                 <property>
                                     <name>listener</name>
