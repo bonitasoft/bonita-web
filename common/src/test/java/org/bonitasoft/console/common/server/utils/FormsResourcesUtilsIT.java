@@ -20,7 +20,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.junit.Test;
 
-public class TestFormsResourcesUtils extends AbstractJUnitTest {
+public class FormsResourcesUtilsIT extends AbstractJUnitTest {
 
     protected APISession getSession() {
         return getInitiator().getSession();
