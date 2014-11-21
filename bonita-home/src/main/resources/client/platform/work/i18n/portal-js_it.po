@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-17 04:47-0500\n"
+"PO-Revision-Date: 2014-11-20 10:49-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -15,37 +15,37 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Colonne"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Risultati: da {{currentFirstResultIndex}} a {{currentLastResultIndex}} su {{total}}"
 
 msgid "Filters"
 msgstr "Filtri"
 
 msgid "All versions"
-msgstr "All versions"
+msgstr "Tutte le versioni"
 
 msgid "All apps"
-msgstr "All apps"
+msgstr "Tutte le apps"
 
-msgid "Monitor open cases"
-msgstr "Monitor open cases"
+msgid "Monitor active cases"
+msgstr "Monitor i casi attivi"
 
 msgid "Open cases"
-msgstr "Open cases"
+msgstr "Casi aperti"
 
 msgid "Healthy cases"
-msgstr "Healthy cases"
+msgstr "Casi sani"
 
-msgid "Failed cases"
-msgstr "Failed cases"
+msgid "Cases with failures"
+msgstr "Casi con errori"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtrare sul processo"
 
 msgid "Process list"
-msgstr "Process list"
+msgstr "Lista dei processi"
 
 msgid "Refresh"
 msgstr "Aggiorna"
@@ -53,14 +53,8 @@ msgstr "Aggiorna"
 msgid "Process name"
 msgstr "Process name"
 
-msgid "Version"
-msgstr "Versione"
-
 msgid "Failed"
 msgstr "Fallito"
-
-msgid "State"
-msgstr "Stato"
 
 msgid "Actions"
 msgstr "azioni"
@@ -99,9 +93,24 @@ msgstr "10 min."
 msgid "Technical error."
 msgstr "Technical error."
 
-msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgid "Process state"
+msgstr "Process state"
 
-msgid "Process activation state"
-msgstr "Process activation state"
+msgid "Show"
+msgstr "Show"
+
+msgid "Healthy cases"
+msgstr "Casi sani"
+
+msgid "Open"
+msgstr "Apri"
+
+msgid "Process version"
+msgstr "Process version"
+
+msgid "Case state"
+msgstr "Case state"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 

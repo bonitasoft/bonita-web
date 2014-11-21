@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-16 07:01+0100\n"
-"PO-Revision-Date: 2014-11-17 04:47-0500\n"
+"PO-Revision-Date: 2014-11-20 10:49-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1140,19 +1140,19 @@ msgid "Manage applications"
 msgstr "Gestire le Applicazioni"
 
 msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "Manage cases of processes that an entity with this profile can supervise as PM."
+msgstr "Gestisci i casi dei processi che una entità con questo profilo puo' supervisionare come PM."
 
 msgid "Manage custom pages"
 msgstr "Gestire le pagine personalizzate"
 
 msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "Manage processes that an entity with this profile can supervise as PM."
+msgstr "Gestisci i processi che una entità con questo profilo puo' supervisionare come PM."
 
 msgid "Manage profiles"
 msgstr "Gestisci i profili"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "Manage tasks of processes that an entity with this profile can supervise as PM."
+msgstr "Gestisci i task dei processi che una entità con questo profilo puo' supervisionare come PM."
 
 msgid "Manager"
 msgstr "Manager"
@@ -1410,7 +1410,7 @@ msgid "Process"
 msgstr "Processo"
 
 msgid "Process %appName% in version %version% already exists"
-msgstr "Process %appName% in version %version% already exists"
+msgstr "Il processo %appName% nella versione %version% è già esistente"
 
 msgid "Process definition not found for id %processId%"
 msgstr "La definizione di processo non è stata trovati per l'id %processId%"
@@ -1428,7 +1428,7 @@ msgid "Process version"
 msgstr "Process version"
 
 msgid "Processes"
-msgstr "Processes"
+msgstr "Processi"
 
 msgid "Profile"
 msgstr "Privilegi"
@@ -1725,10 +1725,10 @@ msgid "The Process cannot be enabled"
 msgstr "The Process cannot be enabled"
 
 msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
-msgstr "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
+msgstr "Il process manager può supervisionare i processi per i quali è supervisore, gestendone i casi e le attività."
 
 msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
-msgstr "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
+msgstr "L'amministratore può installare un processo, gestire l'organizzazione e trattare alcuni errori ( ad esempio, rieseguendo un task )."
 
 msgid "The application encountered an error."
 msgstr "L'applicazione ha rilevato un errore."
@@ -1851,7 +1851,7 @@ msgid "The type of the task"
 msgstr "Il tipo di task"
 
 msgid "The user can view and perform tasks and can start a new case of a process."
-msgstr "The user can view and perform tasks and can start a new case of a process."
+msgstr "L'utente può visualizzare ed eseguire dei task e può iniziare un nuovo caso di un processo."
 
 msgid "The user that has started this case"
 msgstr "L'utente che ha avviato questo caso"
@@ -1878,7 +1878,7 @@ msgid "This %item_name% will be definitively deleted."
 msgstr "Questo %item_name% verrà eliminato definitivamente."
 
 msgid "This category has already been added to this process"
-msgstr "This category has already been added to this process"
+msgstr "Questa categoria è già stata aggiunta a questo processo"
 
 msgid "This category was not found or this field is mandatory"
 msgstr "Questa categoria non è stata trovata o questo campo è obbligatorio"
@@ -2121,7 +2121,7 @@ msgid "manage groups"
 msgstr "Gestire i gruppi"
 
 msgid "manage processes"
-msgstr "manage processes"
+msgstr "gestire i processi"
 
 msgid "manage roles"
 msgstr "Gestire i ruoli"
@@ -2223,7 +2223,7 @@ msgid "visualize & do tasks"
 msgstr "Visualizzare ed eseguire i task"
 
 msgid "visualize & start processes"
-msgstr "visualize & start processes"
+msgstr "visualizzare e avviare i processi"
 
 msgid "visualize cases"
 msgstr "Visualizzare i casi"
