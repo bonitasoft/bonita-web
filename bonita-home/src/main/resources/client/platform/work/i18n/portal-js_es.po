@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-14 05:59-0500\n"
+"PO-Revision-Date: 2014-11-20 04:44-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -29,8 +29,8 @@ msgstr "All versions"
 msgid "All apps"
 msgstr "All apps"
 
-msgid "Monitor open cases"
-msgstr "Motiorizar casos abiertos"
+msgid "Monitor active cases"
+msgstr "Monitor active cases"
 
 msgid "Open cases"
 msgstr "Casos abiertos"
@@ -38,8 +38,8 @@ msgstr "Casos abiertos"
 msgid "Healthy cases"
 msgstr "Casos activos"
 
-msgid "Failed cases"
-msgstr "Casos fallidos"
+msgid "Cases with failures"
+msgstr "Cases with failures"
 
 msgid "Filter on process"
 msgstr "Filter on process"
@@ -53,14 +53,8 @@ msgstr "Refrescar"
 msgid "Process name"
 msgstr "Nombre de Proceso"
 
-msgid "Version"
-msgstr "Versión"
-
 msgid "Failed"
 msgstr "Fallido"
-
-msgid "State"
-msgstr "Estado"
 
 msgid "Actions"
 msgstr "acciones"
@@ -99,9 +93,36 @@ msgstr "10 min."
 msgid "Technical error."
 msgstr "Technical error."
 
-msgid "Results: {{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "Resultados: {{getStartIndexOfPage()}} de {{getEndIndexOfPage()}} a {{getTotalProcesses()}}"
+msgid "Process state"
+msgstr "Process state"
 
-msgid "Process activation state"
-msgstr "Estado de Activación del Proceso"
+msgid "Show"
+msgstr "Mostrar"
+
+msgid "Healthy cases"
+msgstr "Casos activos"
+
+msgid "Open"
+msgstr "Abrir"
+
+msgid "Process version"
+msgstr "Process version"
+
+msgid "Case state"
+msgstr "Case state"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
+msgid "Disabled, no new instance can be started"
+msgstr "Disabled, no new instance can be started"
+
+msgid "Process enabled"
+msgstr "Process enabled"
+
+msgid "View case list"
+msgstr "View case list"
+
+msgid "View diagram"
+msgstr "View diagram"
 
