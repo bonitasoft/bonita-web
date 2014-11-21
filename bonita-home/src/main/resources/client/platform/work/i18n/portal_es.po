@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 02:00+0100\n"
-"PO-Revision-Date: 2014-11-18 05:04-0500\n"
+"POT-Creation-Date: 2014-11-15 14:43+0100\n"
+"PO-Revision-Date: 2014-11-20 04:44-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -132,7 +132,7 @@ msgid "%nb_ongoing% ongoing"
 msgstr "%nb_ongoing% en marcha"
 
 msgid "%rolename%"
-msgstr "%rolename%"
+msgstr "%nombre de actor%"
 
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% of %groupname%"
@@ -189,7 +189,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 msgid "Actor mapping"
-msgstr "Mapeo de actores"
+msgstr "mapa de actores"
 
 msgid "Actor name"
 msgstr "Nombre del actor"
@@ -759,7 +759,7 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr "Activar"
+msgstr "Activado"
 
 msgid "Enable selected processes"
 msgstr "Enable selected processes"
@@ -840,7 +840,7 @@ msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
 msgid "Enter the zip code of this user"
-msgstr "Indique el código postal de este usuario"
+msgstr "Ingrese el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "Entity Mapping must be resolved before enabling the Process."
@@ -1557,7 +1557,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 
 msgid "Select the manager of this user"
-msgstr "Seleccione el responsable de este usuario"
+msgstr "Seleccione el gerente de este usuario"
 
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
@@ -2034,7 +2034,7 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Version"
-msgstr "Versión"
+msgstr "Version"
 
 msgid "Version of the process"
 msgstr "Version of the process"
