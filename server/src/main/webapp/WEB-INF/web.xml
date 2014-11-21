@@ -448,6 +448,10 @@
         <servlet-name>formsCache</servlet-name>
         <url-pattern>/portal/formsCache</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>formsCache</servlet-name>
+        <url-pattern>/portal/formsCache/*</url-pattern>
+    </servlet-mapping>
     <!-- For engine HTTP API -->
     ${enable.engine.http.api.start}
     <servlet-mapping>

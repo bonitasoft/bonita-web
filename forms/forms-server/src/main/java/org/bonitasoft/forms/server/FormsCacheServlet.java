@@ -75,8 +75,8 @@ public class FormsCacheServlet extends HttpServlet {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms: the parameter "
                     + FormServiceProviderUtil.PROCESS_UUID
                     + " is undefined.";
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, errorMessage);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage);
             }
             throw new ServletException(errorMessage);
         }
@@ -97,7 +97,7 @@ public class FormsCacheServlet extends HttpServlet {
         } catch (final Exception e) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+                LOGGER.log(Level.SEVERE, errorMessage, e);
             }
             throw new ServletException(errorMessage);
         }
@@ -108,16 +108,16 @@ public class FormsCacheServlet extends HttpServlet {
 
         if (request.getPathInfo() == null || request.getPathInfo().isEmpty()) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to load a forms IDs are missing";
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, errorMessage);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.FINE, errorMessage);
             }
             throw new ServletException(errorMessage);
         }
         final String[] pathInfo = request.getPathInfo().split("/");
         if (pathInfo.length < 3) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to load a forms: a process ID and a form ID are expected in the Path of the URL";
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, errorMessage);
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, errorMessage);
             }
             throw new ServletException(errorMessage);
         }
@@ -135,7 +135,7 @@ public class FormsCacheServlet extends HttpServlet {
         } catch (final Exception e) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+                LOGGER.log(Level.SEVERE, errorMessage, e);
             }
             throw new ServletException(errorMessage);
         }
