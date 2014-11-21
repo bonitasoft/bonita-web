@@ -42,6 +42,7 @@ import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 import org.bonitasoft.forms.server.util.LocaleUtil;
+import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.w3c.dom.Document;
 
 /**
@@ -92,7 +93,7 @@ public class FormsCacheServlet extends HttpServlet {
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             final PrintWriter printWriter = response.getWriter();
-            printWriter.print(formIDs.toString());
+            printWriter.print(JSonSerializer.serializeCollection(formIDs));
             printWriter.close();
         } catch (final Exception e) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
