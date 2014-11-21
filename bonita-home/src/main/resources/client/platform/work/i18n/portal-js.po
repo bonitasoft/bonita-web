@@ -140,3 +140,9 @@ msgstr ""
 
 msgid  "DEFAULT ZOOM LEVEL"
 msgstr ""
+
+msgid  "MIN"
+msgstr ""
+
+msgid  "MAX"
+msgstr ""
