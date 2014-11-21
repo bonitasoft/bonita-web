@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +142,7 @@ public class APIProcessTest {
 
         final long numberOfFailedCases = 2L;
         final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(CaseItem.FILTER_CALLER, "any");
         filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
         filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
         doReturn(numberOfFailedCases).when(caseDatastore).count(null, null, filters);
@@ -181,10 +181,12 @@ public class APIProcessTest {
         doReturn(id).when(item).getId();
 
         final List<String> counters = Arrays.asList(ProcessItem.COUNTER_OPEN_CASES);
+        final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(CaseItem.FILTER_CALLER, "any");
+        filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, id.toString());
 
         final long numberOfOpenCases = 2L;
-        doReturn(numberOfOpenCases).when(caseDatastore)
-                .count(null, null, Collections.singletonMap(CaseItem.ATTRIBUTE_PROCESS_ID, id.toString()));
+        doReturn(numberOfOpenCases).when(caseDatastore).count(null, null, filters);
 
         // When
         apiProcess.fillCounters(item, counters);

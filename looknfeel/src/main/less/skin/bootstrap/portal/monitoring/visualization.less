@@ -70,7 +70,6 @@
   .edge {
     stroke: black;
     fill: none;
-    marker-end: url(#markerArrow);
   }
 
   .nbReadyText,
@@ -135,11 +134,16 @@
     fill: #dff0d8;
   }
 
-  svg.isDone .bordered-box {
+  svg .isDone .bordered-box {
     stroke: black;
   }
 
   svg .default-edge-strike {
+    stroke: black;
+  }
+
+  svg .conditional-diamond {
+    fill: white;
     stroke: black;
   }
 }

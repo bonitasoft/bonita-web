@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-18 10:56-0500\n"
+"PO-Revision-Date: 2014-11-20 04:32-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -113,4 +113,16 @@ msgstr "Etat du cas"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+
+msgid "Disabled, no new instance can be started"
+msgstr "Disabled, no new instance can be started"
+
+msgid "Process enabled"
+msgstr "Process enabled"
+
+msgid "View case list"
+msgstr "View case list"
+
+msgid "View diagram"
+msgstr "View diagram"
 

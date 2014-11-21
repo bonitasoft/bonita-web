@@ -131,3 +131,18 @@ msgstr ""
 
 msgid  "View diagram"
 msgstr ""
+
+msgid  "Drawing diagram ..."
+msgstr ""
+
+msgid  "Error on drawing diagram !"
+msgstr ""
+
+msgid  "DEFAULT ZOOM LEVEL"
+msgstr ""
+
+msgid  "MIN"
+msgstr ""
+
+msgid  "MAX"
+msgstr ""

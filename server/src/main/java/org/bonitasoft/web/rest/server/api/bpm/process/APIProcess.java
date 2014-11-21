@@ -15,7 +15,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,6 +153,7 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
     private void fillNumberOfFailedCasesIfFailedCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_FAILED_CASES)) {
             final Map<String, String> filters = new HashMap<String, String>();
+            filters.put(CaseItem.FILTER_CALLER, "any");
             filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
             filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
             item.setAttribute(ProcessItem.COUNTER_FAILED_CASES, getCaseDatastore().count(null, null, filters));
@@ -163,8 +163,10 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
     private void fillNumberOfOpenCasesIfOpenCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_OPEN_CASES)) {
             // Open is all states without the terminal states
-            item.setAttribute(ProcessItem.COUNTER_OPEN_CASES,
-                    getCaseDatastore().count(null, null, Collections.singletonMap(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString())));
+            final Map<String, String> filters = new HashMap<String, String>();
+            filters.put(CaseItem.FILTER_CALLER, "any");
+            filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
+            item.setAttribute(ProcessItem.COUNTER_OPEN_CASES, getCaseDatastore().count(null, null, filters));
         }
     }
 
