@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,14 +41,14 @@ import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 /**
  * API to retrieve the different form components associated with a process and its activities.
  * The application form construction mechanism leverage this API.
- * 
+ *
  * @author Anthony Birembaut, Haojie Yuan
  */
 public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the application permission string
-     * 
+     *
      * @param formID
      *            the formID of the application form
      * @param context
@@ -64,7 +64,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the product version as a string
-     * 
+     *
      * @param context
      *            Map containing the URL parameters
      * @return product version
@@ -77,7 +77,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the migration product version string
-     * 
+     *
      * @param formID
      *            the formID of the application form
      * @param context
@@ -93,7 +93,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the form permissions string
-     * 
+     *
      * @param formID
      *            the formID of the specific form
      * @param context
@@ -109,7 +109,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the next form
-     * 
+     *
      * @param formID
      *            the form ID
      * @param context
@@ -124,26 +124,8 @@ public interface IFormDefinitionAPI {
             FormServiceProviderNotFoundException, SessionTimeoutException;
 
     /**
-     * Retrieve the entry form lay-out
-     * 
-     * @param formID
-     *            the form ID
-     * @param pageID
-     *            the page ID
-     * @param context
-     *            Map containing the URL parameters
-     * @return the entry form lay-out
-     * @throws ApplicationFormDefinitionNotFoundException
-     * @throws InvalidFormDefinitionException
-     * @throws FormServiceProviderNotFoundException
-     * @throws SessionTimeoutException
-     */
-    String getFormPageLayout(String formID, String pageID, Map<String, Object> context) throws ApplicationFormDefinitionNotFoundException,
-            InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException;
-
-    /**
      * Retrieve the application config including the application template
-     * 
+     *
      * @param context
      *            Map containing the URL parameters
      * @param formID
@@ -162,7 +144,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the expression which can be evaluated to get the first page of the form
-     * 
+     *
      * @param formID
      *            the form ID
      * @param context
@@ -179,7 +161,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the list of transient data for a form
-     * 
+     *
      * @param formID
      *            the form ID
      * @param context
@@ -196,7 +178,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve a page data containing a template and a list of the widgets to be displayed
-     * 
+     *
      * @param formID
      *            the form ID
      * @param pageId
@@ -216,7 +198,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the confirmation template for a form
-     * 
+     *
      * @param formID
      *            the form ID
      * @param context
@@ -234,7 +216,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve a list of actions to be executed at form submission
-     * 
+     *
      * @param formID
      *            the form ID
      * @param pageIds
@@ -253,7 +235,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Parse a page layout and insert some step attributes in it
-     * 
+     *
      * @param bodyContent
      *            the body content
      * @param stepAttributes
@@ -266,7 +248,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve and initialize the transient data for a form
-     * 
+     *
      * @param transientData
      *            the List of transient data
      * @param locale
@@ -280,7 +262,7 @@ public interface IFormDefinitionAPI {
      * @throws SessionTimeoutException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws FormInitializationException 
+     * @throws FormInitializationException
      */
     Map<String, Serializable> getTransientDataContext(List<TransientData> transientData, Locale userLocale, Map<String, Object> context)
             throws FormNotFoundException, FormServiceProviderNotFoundException, ClassNotFoundException, SessionTimeoutException, FileTooBigException,
@@ -288,7 +270,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Set the application definition deploy date
-     * 
+     *
      * @param applicationDefinitionDate
      *            the Date that the application was deployed
      */
@@ -296,7 +278,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Retrieve the application error template
-     * 
+     *
      * @return the error page template
      * @param context
      *            Map containing the URL parameters
@@ -308,5 +290,35 @@ public interface IFormDefinitionAPI {
      */
     HtmlTemplate getApplicationErrorLayout(Map<String, Object> context) throws InvalidFormDefinitionException, FileNotFoundException,
             ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException;
+
+    /**
+     * Cache the form whose ID is specified
+     *
+     * @param formID
+     * @param context
+     * @return
+     * @throws InvalidFormDefinitionException
+     * @throws FormNotFoundException
+     * @throws ApplicationFormDefinitionNotFoundException
+     * @throws FormServiceProviderNotFoundException
+     * @throws SessionTimeoutException
+     * @throws FileNotFoundException
+     */
+    void cacheForm(String formId, Map<String, Object> context) throws InvalidFormDefinitionException,
+            FormNotFoundException, ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException,
+            FileNotFoundException;
+
+    /**
+     * Retrieve the list of forms of the application
+     *
+     * @param context
+     * @return
+     * @throws InvalidFormDefinitionException
+     * @throws FormServiceProviderNotFoundException
+     * @throws SessionTimeoutException
+     * @throws ApplicationFormDefinitionNotFoundException
+     */
+    List<String> getFormsList(Map<String, Object> context) throws InvalidFormDefinitionException, FormServiceProviderNotFoundException,
+            SessionTimeoutException, ApplicationFormDefinitionNotFoundException;
 
 }

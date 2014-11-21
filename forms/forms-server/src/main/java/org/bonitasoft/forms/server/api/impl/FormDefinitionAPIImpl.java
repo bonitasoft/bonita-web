@@ -129,7 +129,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * Constructor
-     * 
+     *
      * @param tenant ID
      * @param document
      * @param formCacheUtil
@@ -275,22 +275,6 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * {@inheritDoc}
      */
     @Override
-    public String getFormPageLayout(final String formID, final String pageID, final Map<String, Object> context)
-            throws ApplicationFormDefinitionNotFoundException, InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException {
-        String formPageLayout = formCacheUtil.getFormPageLayout(formID, locale, applicationDeploymentDate, pageID);
-        if (formPageLayout == null) {
-            formPageLayout = getApplicationFormDefinition(formID, context).getFormPageLayout(pageID);
-            if (formID != null) {
-                formCacheUtil.storeFormPageLayout(formID, locale, applicationDeploymentDate, pageID, formPageLayout);
-            }
-        }
-        return formPageLayout;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Expression getFormFirstPage(final String formID, final Map<String, Object> context) throws InvalidFormDefinitionException, FormNotFoundException,
             ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException {
         Expression firstPage = formCacheUtil.getFirstPage(formID, locale, applicationDeploymentDate);
@@ -315,21 +299,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         if (formPage == null) {
             final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formID, context);
             try {
-                final FormType formType = applicationFormDefinition.getFormType();
-                final List<FormWidget> pageWidgets = applicationFormDefinition.getPageWidgets(pageId);
-                final List<FormValidator> pageValidators = applicationFormDefinition.getPageValidators(pageId);
-                final HtmlTemplate pageLayout = getFormPageLayout(applicationFormDefinition, formType, pageId, context, pageWidgets, pageValidators);
-                final Expression pageLabelExpression = applicationFormDefinition.getPageLabelExpression(pageId);
-                final boolean allowHTMLInLabel = applicationFormDefinition.isHTMLAllowedInLabel(pageId);
-                formPage = new FormPage(pageId, pageLabelExpression, pageLayout, pageWidgets, pageValidators, formType, allowHTMLInLabel);
-                final Expression applicationNextPageExpression = applicationFormDefinition.getNextPageExpression(pageId);
-                formPage.setNextPageExpression(applicationNextPageExpression);
-                if (formID != null) {
-                    formPage.setNextPageExpressionId(formCacheUtil.storeNextPageIdExpression(formID, pageId, locale, applicationDeploymentDate,
-                            applicationNextPageExpression));
-                    formPage.setPageValidatorsId(formCacheUtil.storePageValidators(formID, pageId, locale, applicationDeploymentDate, pageValidators));
-                    formCacheUtil.storePage(formID, locale, applicationDeploymentDate, formPage);
-                }
+                formPage = buildAndStoreFormPageInCache(applicationFormDefinition, formID, pageId, context);
             } catch (final InvalidFormDefinitionException e) {
                 if (LOGGER.isLoggable(Level.INFO)) {
                     LOGGER.log(Level.INFO, "Failed to parse the forms definition file.");
@@ -346,6 +316,28 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             }
             formPage.getPageLayout().setBodyContentId(bodyContentId);
             formPage.getPageLayout().setBodyContent(null);
+        }
+        return formPage;
+    }
+
+    protected FormPage buildAndStoreFormPageInCache(final IApplicationFormDefAccessor applicationFormDefinition, final String formID, final String pageId,
+            final Map<String, Object> context) throws InvalidFormDefinitionException, ApplicationFormDefinitionNotFoundException, FileNotFoundException,
+            FormServiceProviderNotFoundException, SessionTimeoutException {
+        FormPage formPage;
+        final FormType formType = applicationFormDefinition.getFormType();
+        final List<FormWidget> pageWidgets = applicationFormDefinition.getPageWidgets(pageId);
+        final List<FormValidator> pageValidators = applicationFormDefinition.getPageValidators(pageId);
+        final HtmlTemplate pageLayout = getFormPageLayout(applicationFormDefinition, formType, pageId, context, pageWidgets, pageValidators);
+        final Expression pageLabelExpression = applicationFormDefinition.getPageLabelExpression(pageId);
+        final boolean allowHTMLInLabel = applicationFormDefinition.isHTMLAllowedInLabel(pageId);
+        formPage = new FormPage(pageId, pageLabelExpression, pageLayout, pageWidgets, pageValidators, formType, allowHTMLInLabel);
+        final Expression applicationNextPageExpression = applicationFormDefinition.getNextPageExpression(pageId);
+        formPage.setNextPageExpression(applicationNextPageExpression);
+        if (formID != null) {
+            formPage.setNextPageExpressionId(formCacheUtil.storeNextPageIdExpression(formID, pageId, locale, applicationDeploymentDate,
+                    applicationNextPageExpression));
+            formPage.setPageValidatorsId(formCacheUtil.storePageValidators(formID, pageId, locale, applicationDeploymentDate, pageValidators));
+            formCacheUtil.storePage(formID, locale, applicationDeploymentDate, formPage);
         }
         return formPage;
     }
@@ -471,13 +463,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formID, context);
         for (final String pageId : pageIds) {
-            List<FormAction> pageActions = formCacheUtil.getPageActions(formID, locale, applicationDeploymentDate,
-                    formID, pageId);
+            List<FormAction> pageActions = formCacheUtil.getPageActions(formID, locale, applicationDeploymentDate, pageId);
             if (pageActions == null) {
                 pageActions = applicationFormDefinition.getActions(pageId);
                 if (formID != null) {
-                    formCacheUtil.storePageActions(formID, locale, applicationDeploymentDate, formID, pageId,
-                            pageActions);
+                    formCacheUtil.storePageActions(formID, locale, applicationDeploymentDate, pageId, pageActions);
                 }
             }
             formActions.addAll(pageActions);
@@ -970,5 +960,26 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             source = source.replaceAll(entry.getValue(), Matcher.quoteReplacement(entry.getKey()));
         }
         return source;
+    }
+
+    @Override
+    public void cacheForm(final String formId, final Map<String, Object> context) throws InvalidFormDefinitionException, FormNotFoundException,
+            ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException, FileNotFoundException {
+        final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formId, context);
+        final List<String> pages = applicationFormDefinition.getPages();
+        for (final String pageId : pages) {
+            buildAndStoreFormPageInCache(applicationFormDefinition, formId, pageId, context);
+        }
+        getFormPermissions(formId, context);
+        getFormFirstPage(formId, context);
+        getFormTransientData(formId, context);
+        getFormActions(formId, pages, context);
+    }
+
+    @Override
+    public List<String> getFormsList(final Map<String, Object> context) throws InvalidFormDefinitionException, FormServiceProviderNotFoundException,
+            SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
+        final IApplicationConfigDefAccessor applicationConfigFormDefinition = getApplicationConfigDefinition(context);
+        return applicationConfigFormDefinition.getApplicationFormsList();
     }
 }
