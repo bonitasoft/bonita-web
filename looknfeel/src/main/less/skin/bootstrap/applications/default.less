@@ -1,21 +1,20 @@
+html, body, iframe, .wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+
 iframe {
-  height: 100%;
-  width: 100%;
-  border: none;
+  border: 0;
   display: block;
+  position: absolute;
 }
 
-.wrapper {
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-
-.header {
-    display: table-row;
-}
-
+/*
+  The height is window.innerHeight - navbar.height
+  prevent the scrollbar when the page is < window.innerHeight
+ */
 .content {
-    display: table-row;
-    height: 100%;
+  height: ~"calc(100% - 51px)";  // Less compute the calc fonction -> return calc(49%)...
+  position: relative;
 }
