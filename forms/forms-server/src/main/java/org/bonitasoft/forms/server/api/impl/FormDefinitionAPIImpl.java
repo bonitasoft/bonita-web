@@ -300,14 +300,6 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formID, context);
             try {
                 formPage = buildAndStoreFormPageInCache(applicationFormDefinition, formID, pageId, context);
-                // store bodycontent in the cache using formId PageId
-                String bodyContentId = null;
-                if (formID != null) {
-                    bodyContentId = formCacheUtil.storePageLayoutContent(formID, pageId, locale, applicationDeploymentDate, formPage.getPageLayout()
-                            .getBodyContent());
-                }
-                formPage.getPageLayout().setBodyContentId(bodyContentId);
-                formPage.getPageLayout().setBodyContent(null);
             } catch (final InvalidFormDefinitionException e) {
                 if (LOGGER.isLoggable(Level.INFO)) {
                     LOGGER.log(Level.INFO, "Failed to parse the forms definition file.");
@@ -334,6 +326,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             formPage.setNextPageExpressionId(formCacheUtil.storeNextPageIdExpression(formID, pageId, locale, applicationDeploymentDate,
                     applicationNextPageExpression));
             formPage.setPageValidatorsId(formCacheUtil.storePageValidators(formID, pageId, locale, applicationDeploymentDate, pageValidators));
+            // store bodycontent in the cache using formId PageId
+            final String bodyContentId = formCacheUtil.storePageLayoutContent(formID, pageId, locale, applicationDeploymentDate, formPage.getPageLayout()
+                    .getBodyContent());
+            formPage.getPageLayout().setBodyContentId(bodyContentId);
+            formPage.getPageLayout().setBodyContent(null);
             formCacheUtil.storePage(formID, locale, applicationDeploymentDate, formPage);
         }
         return formPage;
