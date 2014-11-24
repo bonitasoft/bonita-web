@@ -957,7 +957,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formId, context);
         final List<String> pages = applicationFormDefinition.getPages();
         for (final String pageId : pages) {
-            buildAndStoreFormPageInCache(applicationFormDefinition, formId, pageId, context);
+            getFormPage(formId, pageId, context);
         }
         getApplicationConfig(context, formId, false);
         getApplicationConfig(context, formId, true);

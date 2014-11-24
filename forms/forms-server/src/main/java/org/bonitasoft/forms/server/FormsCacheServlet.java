@@ -81,95 +81,92 @@ public class FormsCacheServlet extends HttpServlet {
                 LOGGER.log(Level.INFO, errorMessage);
             }
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
-        }
-        final Map<String, Object> urlContext = new HashMap<String, Object>();
-        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processIDStr);
-        final String localeStr = localeUtil.getLocale(request);
-        final Locale userLocale = localeUtil.resolveLocale(localeStr);
+        } else {
+            final Map<String, Object> urlContext = new HashMap<String, Object>();
+            urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processIDStr);
+            final String localeStr = localeUtil.getLocale(request);
+            final Locale userLocale = localeUtil.resolveLocale(localeStr);
 
-        try {
-            final Map<String, Object> context = initContext(request, urlContext, userLocale);
-            final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr);
-            final List<String> formIDs = definitionAPI.getFormsList(context);
-            response.setContentType("text/html");
-            response.setCharacterEncoding("UTF-8");
-            final PrintWriter printWriter = response.getWriter();
-            printWriter.print(JSonSerializer.serializeCollection(formIDs));
-            printWriter.close();
-        } catch (final FormNotFoundException e) {
-            final String errorMessage = "Cannot find any form definition for process " + processIDStr;
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, errorMessage, e);
+            try {
+                final Map<String, Object> context = initContext(request, urlContext, userLocale);
+                final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr);
+                final List<String> formIDs = definitionAPI.getFormsList(context);
+                response.setContentType("text/html");
+                response.setCharacterEncoding("UTF-8");
+                final PrintWriter printWriter = response.getWriter();
+                printWriter.print(JSonSerializer.serializeCollection(formIDs));
+                printWriter.close();
+            } catch (final FormNotFoundException e) {
+                final String errorMessage = "Cannot find any form definition for process " + processIDStr;
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
+            } catch (final NoCredentialsInSessionException e) {
+                final String errorMessage = "Cannot find the API session in the HTTP Session.";
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.log(Level.FINEST, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
+            } catch (final Exception e) {
+                final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new ServletException(errorMessage);
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
-        } catch (final NoCredentialsInSessionException e) {
-            final String errorMessage = "Cannot find the API session in the HTTP Session.";
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, errorMessage, e);
-            }
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
-        } catch (final Exception e) {
-            final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
-            }
-            throw new ServletException(errorMessage);
         }
     }
 
     @Override
     protected void doPut(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
-        if (request.getPathInfo() == null || request.getPathInfo().isEmpty()) {
-            final String errorMessage = "Error while using the servlet FormsCacheServlet to load a forms IDs are missing";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.FINE, errorMessage);
-            }
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
+        String[] pathInfo = null;
+        if (request.getPathInfo() != null && !request.getPathInfo().isEmpty()) {
+            pathInfo = request.getPathInfo().split("/");
         }
-        final String[] pathInfo = request.getPathInfo().split("/");
-        if (pathInfo.length < 3) {
+        if (pathInfo == null || pathInfo.length < 3) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to load a forms: a process ID and a form ID are expected in the Path of the URL";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, errorMessage);
             }
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
-        }
-        final String processIDStr = pathInfo[1];
-        final String formID = pathInfo[2];
-        final Map<String, Object> urlContext = new HashMap<String, Object>();
-        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processIDStr);
-        final String localeStr = localeUtil.getLocale(request);
-        final Locale userLocale = localeUtil.resolveLocale(localeStr);
-
-        try {
-            final Map<String, Object> context = initContext(request, urlContext, userLocale);
-            final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr);
-            definitionAPI.cacheForm(formID, context);
-        } catch (final FormNotFoundException e) {
-            final String errorMessage = "Cannot find any form definition for process " + processIDStr;
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, errorMessage, e);
+        } else {
+            final String processIDStr = pathInfo[1];
+            final String formID = pathInfo[2];
+            final Map<String, Object> urlContext = new HashMap<String, Object>();
+            urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processIDStr);
+            final String localeStr = localeUtil.getLocale(request);
+            final Locale userLocale = localeUtil.resolveLocale(localeStr);
+            try {
+                final Map<String, Object> context = initContext(request, urlContext, userLocale);
+                final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr);
+                definitionAPI.cacheForm(formID, context);
+            } catch (final FormNotFoundException e) {
+                final String errorMessage = "Cannot find any form definition for process " + processIDStr;
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
+            } catch (final ApplicationFormDefinitionNotFoundException e) {
+                final String errorMessage = "Cannot find any form definition for process " + processIDStr + " and form " + formID;
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
+            } catch (final NoCredentialsInSessionException e) {
+                final String errorMessage = "Cannot find the API session in the HTTP Session.";
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.log(Level.FINEST, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
+            } catch (final Exception e) {
+                final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                }
+                throw new ServletException(errorMessage);
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
-        } catch (final ApplicationFormDefinitionNotFoundException e) {
-            final String errorMessage = "Cannot find any form definition for process " + processIDStr + " and form " + formID;
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, errorMessage, e);
-            }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
-        } catch (final NoCredentialsInSessionException e) {
-            final String errorMessage = "Cannot find the API session in the HTTP Session.";
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, errorMessage, e);
-            }
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
-        } catch (final Exception e) {
-            final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
-            }
-            throw new ServletException(errorMessage);
         }
     }
 
