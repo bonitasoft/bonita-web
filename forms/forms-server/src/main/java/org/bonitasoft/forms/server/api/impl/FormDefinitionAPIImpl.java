@@ -160,7 +160,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * @throws ApplicationFormDefinitionNotFoundException
      */
     protected IApplicationConfigDefAccessor getApplicationConfigDefinition(final Map<String, Object> context) throws FormServiceProviderNotFoundException,
-            SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
+            SessionTimeoutException {
         FormServiceProvider formServiceProvider = null;
         formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
         return formServiceProvider.getApplicationConfigDefinition(formDefinitionDocument, context);
@@ -970,6 +970,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
         for (final String pageId : pages) {
             buildAndStoreFormPageInCache(applicationFormDefinition, formId, pageId, context);
         }
+        getApplicationConfig(context, formId, false);
+        getApplicationConfig(context, formId, true);
         getFormPermissions(formId, context);
         getFormFirstPage(formId, context);
         getFormTransientData(formId, context);
@@ -978,7 +980,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     @Override
     public List<String> getFormsList(final Map<String, Object> context) throws InvalidFormDefinitionException, FormServiceProviderNotFoundException,
-            SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
+            SessionTimeoutException {
         final IApplicationConfigDefAccessor applicationConfigFormDefinition = getApplicationConfigDefinition(context);
         return applicationConfigFormDefinition.getApplicationFormsList();
     }

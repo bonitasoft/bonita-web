@@ -316,9 +316,8 @@ public interface IFormDefinitionAPI {
      * @throws InvalidFormDefinitionException
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
-     * @throws ApplicationFormDefinitionNotFoundException
      */
     List<String> getFormsList(Map<String, Object> context) throws InvalidFormDefinitionException, FormServiceProviderNotFoundException,
-            SessionTimeoutException, ApplicationFormDefinitionNotFoundException;
+            SessionTimeoutException;
 
 }

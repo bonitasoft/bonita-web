@@ -1594,7 +1594,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     @Override
     public IApplicationConfigDefAccessor getApplicationConfigDefinition(final Document formDefinitionDocument, final Map<String, Object> context)
-            throws SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
+            throws SessionTimeoutException {
         final FormContextUtil ctxu = new FormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
