@@ -115,9 +115,15 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
                     new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
         }
 
-        if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
-                    new CaseDatastore(getEngineSession()).get(item.getCaseId()));
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item) || isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, deploys, item)) {
+            final CaseItem item2 = new CaseDatastore(getEngineSession()).get(item.getCaseId());
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, item2);
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, item2);
+        }
+
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, deploys, item)) {
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
+                    new CaseDatastore(getEngineSession()).get(item.getParentCaseId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
@@ -181,6 +187,8 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         final List<String> attributes = new ArrayList<String>();
 
         attributes.add(FlowNodeItem.ATTRIBUTE_CASE_ID);
+        attributes.add(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID);
+        attributes.add(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_PROCESS_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_DESCRIPTION);
         attributes.add(FlowNodeItem.ATTRIBUTE_NAME);
