@@ -108,6 +108,12 @@ public class FormsCacheServlet extends HttpServlet {
                     LOGGER.log(Level.FINEST, errorMessage, e);
                 }
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
+            } catch (final SessionTimeoutException e) {
+                final String errorMessage = "The session has timed out.";
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.log(Level.FINEST, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
             } catch (final Exception e) {
                 final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
                 if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -156,6 +162,12 @@ public class FormsCacheServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, errorMessage);
             } catch (final NoCredentialsInSessionException e) {
                 final String errorMessage = "Cannot find the API session in the HTTP Session.";
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.log(Level.FINEST, errorMessage, e);
+                }
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
+            } catch (final SessionTimeoutException e) {
+                final String errorMessage = "The session has timed out.";
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, errorMessage, e);
                 }

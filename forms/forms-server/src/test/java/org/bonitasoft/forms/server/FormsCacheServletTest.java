@@ -5,7 +5,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
+import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
+import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,5 +93,55 @@ public class FormsCacheServletTest {
         formsCacheServlet.doPut(request, response);
 
         verify(formDefinitionAPI, times(1)).cacheForm("processName--1.0$ENTRY", context);
+    }
+
+    @Test
+    public void should_put_call_send_error_status_code_when_form_definition_not_found() throws Exception {
+
+        doReturn("/12/processName--1.0$ENTRY").when(request).getPathInfo();
+        doReturn(session).when(request).getSession();
+        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(Locale.ENGLISH).when(request).getLocale();
+        final Map<String, Object> context = new HashMap<String, Object>();
+        doReturn(context).when(formsCacheServlet).initContext(any(HttpServletRequest.class), anyMap(), any(Locale.class));
+        doThrow(FormNotFoundException.class).when(formsCacheServlet).getDefinitionAPI(any(HttpServletRequest.class), anyMap(), anyString());
+        doReturn(1l).when(formsCacheServlet).getTenantID(request);
+
+        formsCacheServlet.doPut(request, response);
+
+        verify(response, times(1)).sendError(eq(HttpServletResponse.SC_NOT_FOUND), anyString());
+    }
+
+    @Test
+    public void should_put_call_send_error_status_code_when_form_not_found() throws Exception {
+
+        doReturn("/12/processName--1.0$ENTRY").when(request).getPathInfo();
+        doReturn(session).when(request).getSession();
+        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(Locale.ENGLISH).when(request).getLocale();
+        final Map<String, Object> context = new HashMap<String, Object>();
+        doReturn(context).when(formsCacheServlet).initContext(any(HttpServletRequest.class), anyMap(), any(Locale.class));
+        doReturn(formDefinitionAPI).when(formsCacheServlet).getDefinitionAPI(any(HttpServletRequest.class), anyMap(), anyString());
+        doReturn(1l).when(formsCacheServlet).getTenantID(request);
+        doThrow(ApplicationFormDefinitionNotFoundException.class).when(formDefinitionAPI).cacheForm(anyString(), anyMap());
+
+        formsCacheServlet.doPut(request, response);
+
+        verify(response, times(1)).sendError(eq(HttpServletResponse.SC_NOT_FOUND), anyString());
+    }
+
+    @Test
+    public void should_get_call_send_error_status_code_when_form_definition_not_found() throws Exception {
+
+        doReturn("12").when(request).getParameter(FormServiceProviderUtil.PROCESS_UUID);
+        doReturn(session).when(request).getSession();
+        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(Locale.ENGLISH).when(request).getLocale();
+        doThrow(FormNotFoundException.class).when(formsCacheServlet).getDefinitionAPI(any(HttpServletRequest.class), anyMap(), anyString());
+        doReturn(1l).when(formsCacheServlet).getTenantID(request);
+
+        formsCacheServlet.doGet(request, response);
+
+        verify(response, times(1)).sendError(eq(HttpServletResponse.SC_NOT_FOUND), anyString());
     }
 }

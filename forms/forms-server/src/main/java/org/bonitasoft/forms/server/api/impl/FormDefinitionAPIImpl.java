@@ -61,6 +61,7 @@ import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
+import org.bonitasoft.forms.server.accessor.impl.XMLApplicationFormDefAccessorImpl;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
@@ -955,6 +956,18 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException, FileNotFoundException,
             InvalidFormTemplateException {
         final IApplicationFormDefAccessor applicationFormDefinition = getApplicationFormDefinition(formId, context);
+        if (applicationFormDefinition instanceof XMLApplicationFormDefAccessorImpl) {
+            //Only cache the forms that are generated from the forms.xml not the ones generated from the engine variables
+            cacheForm(applicationFormDefinition, formId, context);
+        } else {
+            //Forms that are not in the forms.xml are not returned by getFormList so they are not supported by this method
+            throw new ApplicationFormDefinitionNotFoundException("The form with ID " + formId + " is not in the forms.xml");
+        }
+    }
+
+    protected void cacheForm(final IApplicationFormDefAccessor applicationFormDefinition, final String formId, final Map<String, Object> context)
+            throws InvalidFormDefinitionException, FormNotFoundException, FileNotFoundException, ApplicationFormDefinitionNotFoundException,
+            FormServiceProviderNotFoundException, SessionTimeoutException, InvalidFormTemplateException {
         final List<String> pages = applicationFormDefinition.getPages();
         for (final String pageId : pages) {
             getFormPage(formId, pageId, context);
