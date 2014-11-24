@@ -1,0 +1,137 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: 2014-11-21 08:56-0500\n"
+"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: Portuguese, Brazilian\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+
+msgid "Columns"
+msgstr "Colunas"
+
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
+
+msgid "Filters"
+msgstr "Filtros"
+
+msgid "All versions"
+msgstr "Todas as versões"
+
+msgid "All apps"
+msgstr "Todos os aplicativos"
+
+msgid "Monitor active cases"
+msgstr "Monitorar casos ativos"
+
+msgid "Open cases"
+msgstr "Casos abertos"
+
+msgid "Healthy cases"
+msgstr "Casos sem erros"
+
+msgid "Cases with failures"
+msgstr "Casos com erros"
+
+msgid "Filter on process"
+msgstr "Filtrar por processo"
+
+msgid "Process list"
+msgstr "Lista de processos"
+
+msgid "Refresh"
+msgstr "Atualizar"
+
+msgid "Process name"
+msgstr "Nome do Processo"
+
+msgid "Failed"
+msgstr "Falhou"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Wait ..."
+msgstr "Aguarde ..."
+
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "de"
+
+msgid "No data"
+msgstr "Não há dados"
+
+msgid "Error!"
+msgstr "Erro!"
+
+msgid "Started"
+msgstr "Iniciado"
+
+msgid "All"
+msgstr "Todos "
+
+msgid "Never"
+msgstr "Nunca"
+
+msgid "30 s."
+msgstr "30 s."
+
+msgid "1 min."
+msgstr "1 min."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "Technical error."
+msgstr "Erro técnico."
+
+msgid "Process state"
+msgstr "Estado do processo"
+
+msgid "Show"
+msgstr "Mostar"
+
+msgid "Healthy cases"
+msgstr "Casos sem erros"
+
+msgid "Open"
+msgstr "Abrir"
+
+msgid "Process version"
+msgstr "Versão do processo"
+
+msgid "Case state"
+msgstr "Estado do caso"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+
+msgid "Disabled, no new instance can be started"
+msgstr "Disabled, no new instance can be started"
+
+msgid "Process enabled"
+msgstr "Process enabled"
+
+msgid "View case list"
+msgstr "View case list"
+
+msgid "View diagram"
+msgstr "View diagram"
+
+msgid "Drawing diagram ..."
+msgstr "Drawing diagram ..."
+
+msgid "Error on drawing diagram !"
+msgstr "Error on drawing diagram !"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "DEFAULT ZOOM LEVEL"
+

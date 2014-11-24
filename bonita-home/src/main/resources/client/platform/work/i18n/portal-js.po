@@ -119,3 +119,30 @@ msgstr ""
 
 msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
+
+msgid  "Disabled, no new instance can be started"
+msgstr ""
+
+msgid  "Process enabled"
+msgstr ""
+
+msgid  "View case list"
+msgstr ""
+
+msgid  "View diagram"
+msgstr ""
+
+msgid  "Drawing diagram ..."
+msgstr ""
+
+msgid  "Error on drawing diagram !"
+msgstr ""
+
+msgid  "DEFAULT ZOOM LEVEL"
+msgstr ""
+
+msgid  "MIN"
+msgstr ""
+
+msgid  "MAX"
+msgstr ""

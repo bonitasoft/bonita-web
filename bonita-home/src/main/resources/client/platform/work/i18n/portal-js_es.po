@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-18 05:04-0500\n"
+"PO-Revision-Date: 2014-11-21 09:00-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -113,4 +113,25 @@ msgstr "Case state"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
+msgid "Disabled, no new instance can be started"
+msgstr "Disabled, no new instance can be started"
+
+msgid "Process enabled"
+msgstr "Process enabled"
+
+msgid "View case list"
+msgstr "View case list"
+
+msgid "View diagram"
+msgstr "View diagram"
+
+msgid "Drawing diagram ..."
+msgstr "Drawing diagram ..."
+
+msgid "Error on drawing diagram !"
+msgstr "Error on drawing diagram !"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "DEFAULT ZOOM LEVEL"
 

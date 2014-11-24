@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -82,7 +80,7 @@ public abstract class API<ITEM extends IItem> {
      * Set the caller.
      *
      * @param caller
-     *            The ServletCall responsible of this service.
+     *        The ServletCall responsible of this service.
      */
     public final void setCaller(final APIServletCall caller) {
         this.caller = caller;
@@ -354,11 +352,11 @@ public abstract class API<ITEM extends IItem> {
      * The original filename will be kept.
      *
      * @param attributeName
-     *            The name of the attribute representing the file.
+     *        The name of the attribute representing the file.
      * @param attributeValue
-     *            The value of the attribute representing the file.
+     *        The value of the attribute representing the file.
      * @param newDirectory
-     *            The destination directory path.
+     *        The destination directory path.
      * @return This method return the file in the destination directory.
      */
     protected final File upload(final String attributeName, final String attributeValue, final String newDirectory) {
@@ -370,11 +368,11 @@ public abstract class API<ITEM extends IItem> {
      * The original filename will be kept.
      *
      * @param attributeName
-     *            The name of the attribute representing the file.
+     *        The name of the attribute representing the file.
      * @param attributeValue
-     *            The value of the attribute representing the file.
+     *        The value of the attribute representing the file.
      * @param newDirectory
-     *            The destination directory path.
+     *        The destination directory path.
      * @return This method return the file in the destination directory.
      */
     protected final File uploadAutoRename(final String attributeName, final String attributeValue, final String newDirectory) {
@@ -386,7 +384,6 @@ public abstract class API<ITEM extends IItem> {
             if (destinationDirectory.exists()) {
                 final String extension = this.getFileExtension(destinationFilename);
                 final File destinationFile = File.createTempFile("avatar", extension, destinationDirectory);
-                destinationFile.deleteOnExit();
                 destinationFilename = destinationFile.getName().substring(0, destinationFile.getName().length() - extension.length());
             }
 
@@ -401,13 +398,13 @@ public abstract class API<ITEM extends IItem> {
      * Rename and upload the file to the defined directory.
      *
      * @param attributeName
-     *            The name of the attribute representing the file.
+     *        The name of the attribute representing the file.
      * @param attributeValue
-     *            The value of the attribute representing the file.
+     *        The value of the attribute representing the file.
      * @param newDirectory
-     *            The destination directory path.
+     *        The destination directory path.
      * @param newName
-     *            The name to set to the file without the extension (the original extension will be kept)
+     *        The name to set to the file without the extension (the original extension will be kept)
      * @return This method return the file in the destination directory.
      */
     protected final File upload(final String attributeName, final String attributeValue, final String newDirectory, final String newName) {
@@ -454,10 +451,9 @@ public abstract class API<ITEM extends IItem> {
      * Get a value in a map of attributes and convert it to an APIID.
      *
      * @param attributes
-     *            The map of attributes to search in
+     *        The map of attributes to search in
      * @param attributeName
-     *            The name of the attribute to get.
-     *
+     *        The name of the attribute to get.
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final APIID getAttributeAsAPIID(final Map<String, String> attributes, final String attributeName) {
@@ -473,10 +469,9 @@ public abstract class API<ITEM extends IItem> {
      * Get a value in a map of attributes and convert it to a long.
      *
      * @param attributes
-     *            The map of attributes to search in
+     *        The map of attributes to search in
      * @param attributeName
-     *            The name of the attribute to get.
-     *
+     *        The name of the attribute to get.
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final Long getAttributeAsLong(final Map<String, String> attributes, final String attributeName) {
@@ -491,10 +486,9 @@ public abstract class API<ITEM extends IItem> {
      * Get a value in a map of attributes and convert it to an Integer.
      *
      * @param attributes
-     *            The map of attributes to search in
+     *        The map of attributes to search in
      * @param attributeName
-     *            The name of the attribute to get.
-     *
+     *        The name of the attribute to get.
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final Integer getAttributeAsInteger(final Map<String, String> attributes, final String attributeName) {
@@ -509,10 +503,9 @@ public abstract class API<ITEM extends IItem> {
      * Get a value in a map of attributes and convert it to an Integer.
      *
      * @param attributes
-     *            The map of attributes to search in
+     *        The map of attributes to search in
      * @param attributeName
-     *            The name of the attribute to get.
-     *
+     *        The name of the attribute to get.
      * @return This method returns the APIID corresponding or NULL if the attribute doesn't exist or is empty.
      */
     protected final Boolean getAttributeAsBoolean(final Map<String, String> attributes, final String attributeName) {
@@ -583,11 +576,11 @@ public abstract class API<ITEM extends IItem> {
      * The resulted path will be "filename.ext"
      *
      * @param attributeName
-     *            The name of the attribute that contains a file to upload
+     *        The name of the attribute that contains a file to upload
      * @param item
-     *            The item containing the attribute to upload
+     *        The item containing the attribute to upload
      * @param targetFolderPath
-     *            The path of the directory where the uploaded file will be stored
+     *        The path of the directory where the uploaded file will be stored
      */
     protected final void uploadForAdd(final String attributeName, final IItem item, final String targetFolderPath) {
         uploadForAdd(attributeName, item, targetFolderPath, "");
@@ -598,13 +591,13 @@ public abstract class API<ITEM extends IItem> {
      * The resulted path will be "subFolder/filename.ext"
      *
      * @param attributeName
-     *            The name of the attribute that contains a file to upload
+     *        The name of the attribute that contains a file to upload
      * @param item
-     *            The item containing the attribute to upload
+     *        The item containing the attribute to upload
      * @param targetPath
-     *            The path of the directory where the uploaded file will be stored
+     *        The path of the directory where the uploaded file will be stored
      * @param prefix
-     *            The specific folder under targetFolderPath
+     *        The specific folder under targetFolderPath
      */
     protected final void uploadForAdd(final String attributeName, final IItem item, final String targetPath, final String prefix) {
 
@@ -622,11 +615,11 @@ public abstract class API<ITEM extends IItem> {
      * The resulted path will be "filename.ext"
      *
      * @param attributeName
-     *            The name of the attribute that contains a file to upload
+     *        The name of the attribute that contains a file to upload
      * @param item
-     *            The item containing the attribute to upload
+     *        The item containing the attribute to upload
      * @param targetFolderPath
-     *            The path of the directory where the uploaded file will be stored
+     *        The path of the directory where the uploaded file will be stored
      */
     protected final void uploadForUpdate(final String attributeName, final APIID id, final Map<String, String> item, final String targetFolderPath) {
         uploadForUpdate(attributeName, id, item, targetFolderPath, "");
@@ -637,13 +630,13 @@ public abstract class API<ITEM extends IItem> {
      * The resulted path will be "subFolder/filename.ext"
      *
      * @param attributeName
-     *            The name of the attribute that contains a file to upload
+     *        The name of the attribute that contains a file to upload
      * @param item
-     *            The item containing the attribute to upload
+     *        The item containing the attribute to upload
      * @param targetPath
-     *            The path of the directory where the uploaded file will be stored
+     *        The path of the directory where the uploaded file will be stored
      * @param prefix
-     *            The path to add before the filename before saving
+     *        The path to add before the filename before saving
      */
     protected final void uploadForUpdate(final String attributeName, final APIID id, final Map<String, String> item, final String targetPath,
             final String prefix) {

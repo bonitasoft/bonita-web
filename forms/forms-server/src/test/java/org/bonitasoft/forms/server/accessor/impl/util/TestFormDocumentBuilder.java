@@ -39,35 +39,35 @@ import org.w3c.dom.Document;
 
 /**
  * Test for the implementation of the form document builder
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public class TestFormDocumentBuilder extends FormsTestCase {
 
     @Test
     public void testInterpreteFormXMLWithI18n() throws Exception {
-        Document document = FormDocumentBuilderFactory.getFormDocumentBuilder(getSession(), -1, "fr", null).getDocument();
+        final Document document = FormDocumentBuilderFactory.getFormDocumentBuilder(getSession(), -1, "fr", null).getDocument();
 
-        IApplicationFormDefAccessor formDefAccessor = new XMLApplicationFormDefAccessorImpl(0, document, "firstProcess--1.0--task1$entry", null, null);
+        final IApplicationFormDefAccessor formDefAccessor = new XMLApplicationFormDefAccessorImpl(0, document, "firstProcess--1.0--task1$entry", null, null);
 
         Assert.assertEquals("Commentaire", formDefAccessor.getPageWidgets("0").get(0).getTitleExpression().getContent());
     }
 
     @Test
     public void testInterpreteFormXMLWithI18nDefault() throws Exception {
-        Document document = FormDocumentBuilderFactory.getFormDocumentBuilder(getSession(), -1, null, null).getDocument();
+        final Document document = FormDocumentBuilderFactory.getFormDocumentBuilder(getSession(), -1, null, null).getDocument();
 
-        IApplicationFormDefAccessor formDefAccessor = new XMLApplicationFormDefAccessorImpl(0, document, "firstProcess--1.0--task1$entry", null, null);
+        final IApplicationFormDefAccessor formDefAccessor = new XMLApplicationFormDefAccessorImpl(0, document, "firstProcess--1.0--task1$entry", null, null);
 
         Assert.assertEquals("Comment", formDefAccessor.getPageWidgets("0").get(0).getTitleExpression().getContent());
     }
 
     @Test
     public void testInterpreteFormXMLWithI18nNotExisting() throws Exception {
-        Document document = FormDocumentBuilderFactory.getFormDocumentBuilder(getSession(), -1, "de", null).getDocument();
+        final Document document = FormDocumentBuilderFactory.getFormDocumentBuilder(getSession(), -1, "de", null).getDocument();
 
-        IApplicationFormDefAccessor formDefAccessor = new XMLApplicationFormDefAccessorImpl(0, document, "firstProcess--1.0--task1$entry", null, null);
+        final IApplicationFormDefAccessor formDefAccessor = new XMLApplicationFormDefAccessorImpl(0, document, "firstProcess--1.0--task1$entry", null, null);
 
         Assert.assertEquals("Comment", formDefAccessor.getPageWidgets("0").get(0).getTitleExpression().getContent());
     }
@@ -75,13 +75,13 @@ public class TestFormDocumentBuilder extends FormsTestCase {
     @Test
     public void testExtractResourcesFromBar() throws Exception {
 
-        ProcessDefinitionBuilder processBuilder = new ProcessDefinitionBuilder();
-        
-        DesignProcessDefinition simpleProcess = processBuilder.createNewInstance("simple_process", "1.0").addActor("john")
+        final ProcessDefinitionBuilder processBuilder = new ProcessDefinitionBuilder();
+
+        final DesignProcessDefinition simpleProcess = processBuilder.createNewInstance("simple_process", "1.0").addActor("john")
                 .addUserTask("task1", "john").getProcess();
 
-        InputStream inputStream = getClass().getResourceAsStream("/" + FormDocumentBuilder.FORM_DEFINITION_DEFAULT_FILE_NAME);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        final InputStream inputStream = getClass().getResourceAsStream("/" + FormDocumentBuilder.FORM_DEFINITION_DEFAULT_FILE_NAME);
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] content;
         try {
             int b = inputStream.read();
@@ -98,15 +98,15 @@ public class TestFormDocumentBuilder extends FormsTestCase {
         final BusinessArchiveBuilder businessArchiveBuilder = new BusinessArchiveBuilder().createNewBusinessArchive();
         final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(simpleProcess)
                 .addExternalResource(new BarResource("forms/" + FormDocumentBuilder.FORM_DEFINITION_DEFAULT_FILE_NAME, content)).done();
-        ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getSession());
-        ProcessDefinition bonitaProcess = processAPI.deploy(businessArchive);
-        Date deploymentDate = processAPI.getProcessDeploymentInfo(bonitaProcess.getId()).getDeploymentDate();
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getSession());
+        final ProcessDefinition bonitaProcess = processAPI.deploy(businessArchive);
+        final Date deploymentDate = processAPI.getProcessDeploymentInfo(bonitaProcess.getId()).getDeploymentDate();
 
         try {
             FormDocumentBuilder.getInstance(getSession(), bonitaProcess.getId(), "en", deploymentDate, true).getDocument();
 
-            File resourcesDir = FormsResourcesUtils.getApplicationResourceDir(getSession(), bonitaProcess.getId(), deploymentDate);
-            File formsFile = new File(resourcesDir, FormDocumentBuilder.FORM_DEFINITION_DEFAULT_FILE_NAME);
+            final File resourcesDir = FormsResourcesUtils.getApplicationResourceDir(getSession(), bonitaProcess.getId(), deploymentDate);
+            final File formsFile = new File(resourcesDir, FormDocumentBuilder.FORM_DEFINITION_DEFAULT_FILE_NAME);
             if (!formsFile.exists()) {
                 Assert.fail();
             }
