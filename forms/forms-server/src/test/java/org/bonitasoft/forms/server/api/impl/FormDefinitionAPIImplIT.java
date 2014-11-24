@@ -14,10 +14,6 @@
  */
 package org.bonitasoft.forms.server.api.impl;
 
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -45,8 +41,6 @@ import org.bonitasoft.forms.client.model.FormPage;
 import org.bonitasoft.forms.client.model.HtmlTemplate;
 import org.bonitasoft.forms.client.model.TransientData;
 import org.bonitasoft.forms.server.FormsTestCase;
-import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
-import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.builder.IFormBuilder;
@@ -56,8 +50,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.w3c.dom.Document;
 
 /**
@@ -65,16 +57,13 @@ import org.w3c.dom.Document;
  *
  * @author Anthony Birembaut, Haojie Yuan
  */
-@RunWith(MockitoJUnitRunner.class)
-public class TestFormDefinitionAPIImpl extends FormsTestCase {
+public class FormDefinitionAPIImplIT extends FormsTestCase {
 
     private ProcessDefinition bonitaProcess;
 
     private Date deployementDate;
 
     private final Map<String, Object> context = new HashMap<String, Object>();
-
-    // private LoginContext loginContext;
 
     private IFormBuilder formBuilder;
 
@@ -128,7 +117,6 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
     @Override
     @After
     public void tearDown() throws Exception {
-
         processAPI.deleteProcess(bonitaProcess.getId());
         super.tearDown();
     }
@@ -171,19 +159,6 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         final FormPage result = api.getFormPage(formID, pageID, context);
         Assert.assertNotNull(result);
         Assert.assertEquals("processPage1", result.getPageId());
-    }
-
-    @Test
-    public void testGetFormPageFromCache() throws Exception {
-        final FormCacheUtil formCacheUtil = spy(FormCacheUtilFactory.getTenantFormCacheUtil(getSession().getTenantId()));
-        final IFormDefinitionAPI api = new FormDefinitionAPIImpl(getSession().getTenantId(), document, formCacheUtil, deployementDate,
-                Locale.ENGLISH.toString());
-        final FormPage formPageFirstCall = api.getFormPage(formID, pageID, context);
-        final FormPage formPage = api.getFormPage(formID, pageID, context);
-        Assert.assertNotNull(formPage);
-        verify(formCacheUtil, times(2)).getPage(formID, Locale.ENGLISH.toString(), deployementDate, pageID);
-        verify(formCacheUtil, times(1)).storePage(formID, Locale.ENGLISH.toString(), deployementDate, formPageFirstCall);
-        Assert.assertEquals("processPage1", formPage.getPageId());
     }
 
     @Test

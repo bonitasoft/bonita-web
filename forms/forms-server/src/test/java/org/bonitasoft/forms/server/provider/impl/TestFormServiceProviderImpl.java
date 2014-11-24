@@ -70,10 +70,6 @@ import org.w3c.dom.Document;
  */
 public class TestFormServiceProviderImpl extends FormsTestCase {
 
-    // protected static final String USERNAME = "dwight";
-    //
-    // protected static final String PASSWORD = "Schrute";
-
     protected ProcessDefinition processDefinition;
 
     protected long processInstanceId;
