@@ -87,13 +87,19 @@ msgstr ""
 msgid  "Never"
 msgstr ""
 
-msgid  "30 s."
-msgstr ""
-
 msgid  "1 min."
 msgstr ""
 
+msgid  "5 min."
+msgstr ""
+
 msgid  "10 min."
+msgstr ""
+
+msgid  "30 min."
+msgstr ""
+
+msgid  "1 h."
 msgstr ""
 
 msgid  "Technical error."
