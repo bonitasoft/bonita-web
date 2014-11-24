@@ -39,12 +39,13 @@ import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
+import org.bonitasoft.forms.server.util.LocaleUtil;
 import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
 /**
  * Servlet allowing to download the forms layout
- * 
+ *
  * @author Julien Mege
  */
 public class FormLayoutDownloadServlet extends HttpServlet {
@@ -165,7 +166,7 @@ public class FormLayoutDownloadServlet extends HttpServlet {
 
     protected String getFormLocale(final HttpServletRequest request) {
         String userLocaleStr = null;
-        final String theLocaleCookieName = FormsServlet.FORM_LOCALE_COOKIE_NAME;
+        final String theLocaleCookieName = LocaleUtil.FORM_LOCALE_COOKIE_NAME;
         final Cookie theCookies[] = request.getCookies();
         Cookie theCookie = null;
         if (theCookies != null) {

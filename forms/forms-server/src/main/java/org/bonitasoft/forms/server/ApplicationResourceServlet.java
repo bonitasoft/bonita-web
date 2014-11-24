@@ -37,7 +37,7 @@ import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 
 /**
  * Servlet allowing to download process application resources
- * 
+ *
  * @author Anthony Birembaut
  */
 public class ApplicationResourceServlet extends HttpServlet {
@@ -48,7 +48,7 @@ public class ApplicationResourceServlet extends HttpServlet {
     private static final long serialVersionUID = 5209516978177786895L;
 
     /**
-     * process id : indicate the process for witch the form has to be displayed
+     * process id : indicate the process for which the form has to be displayed
      */
     public static final String PROCESS_ID_PARAM = "process";
 
@@ -200,7 +200,7 @@ public class ApplicationResourceServlet extends HttpServlet {
 
     /**
      * Retrieve the tenantID from the session
-     * 
+     *
      * @param request
      *            the HTTP request
      * @return the tenantID

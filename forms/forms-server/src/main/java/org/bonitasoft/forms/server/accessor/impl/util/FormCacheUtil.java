@@ -113,14 +113,15 @@ public class FormCacheUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public List<FormAction> getPageActions(final String formID, final String locale, final Date applicationDeployementDate, final String activityName, final String pageId) throws InvalidFormDefinitionException {
+    public List<FormAction> getPageActions(final String formID, final String locale, final Date applicationDeployementDate, final String pageId)
+            throws InvalidFormDefinitionException {
         return (List<FormAction>) CacheUtil.get(CACHE_DISK_STORE_PATH, FORM_PAGE_ACTIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate)
-                + activityName + pageId
-                + DOMAIN_KEY_CONNECTOR + tenantID);
+                + pageId + DOMAIN_KEY_CONNECTOR + tenantID);
     }
 
-    public void storePageActions(final String formID, final String locale, final Date applicationDeployementDate, final String activityName, final String pageId, final List<FormAction> actions) throws InvalidFormDefinitionException {
-        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PAGE_ACTIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate) + activityName + pageId
+    public void storePageActions(final String formID, final String locale, final Date applicationDeployementDate, final String pageId,
+            final List<FormAction> actions) throws InvalidFormDefinitionException {
+        CacheUtil.store(CACHE_DISK_STORE_PATH, FORM_PAGE_ACTIONS_CACHE, formID + locale + getDateStr(applicationDeployementDate) + pageId
                 + DOMAIN_KEY_CONNECTOR + tenantID, actions);
     }
 

@@ -370,6 +370,10 @@
         <servlet-class>org.bonitasoft.forms.server.HomepageServlet</servlet-class>
     </servlet>
     <!-- End theme -->
+    <servlet>
+        <servlet-name>formsCache</servlet-name>
+        <servlet-class>org.bonitasoft.forms.server.FormsCacheServlet</servlet-class>
+    </servlet>
     <!-- For engine HTTP API -->
     ${enable.engine.http.api.start}
     <servlet>
@@ -472,6 +476,14 @@
     <servlet-mapping>
         <servlet-name>org.bonitasoft.forms.server.FormLayoutDownloadServletconsole/formLayoutDownload</servlet-name>
         <url-pattern>/portal/formLayoutDownload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>formsCache</servlet-name>
+        <url-pattern>/portal/formsCache</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>formsCache</servlet-name>
+        <url-pattern>/portal/formsCache/*</url-pattern>
     </servlet-mapping>
     <!-- For engine HTTP API -->
     ${enable.engine.http.api.start}
