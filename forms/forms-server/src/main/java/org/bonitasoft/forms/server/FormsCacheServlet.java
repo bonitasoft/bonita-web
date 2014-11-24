@@ -34,6 +34,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
+import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormServiceProviderNotFoundException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
@@ -73,6 +74,7 @@ public class FormsCacheServlet extends HttpServlet {
         final String processIDStr = request.getParameter(FormServiceProviderUtil.PROCESS_UUID);
 
         if (processIDStr == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms: the parameter "
                     + FormServiceProviderUtil.PROCESS_UUID
                     + " is undefined.";
@@ -88,13 +90,26 @@ public class FormsCacheServlet extends HttpServlet {
 
         try {
             final Map<String, Object> context = initContext(request, urlContext, userLocale);
-            final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr, userLocale);
+            final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr);
             final List<String> formIDs = definitionAPI.getFormsList(context);
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             final PrintWriter printWriter = response.getWriter();
             printWriter.print(JSonSerializer.serializeCollection(formIDs));
             printWriter.close();
+        } catch (final FormNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            final String errorMessage = "Cannot find any form definition for process " + processIDStr;
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, errorMessage, e);
+            }
+            throw new ServletException(errorMessage);
+        } catch (final NoCredentialsInSessionException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            final String errorMessage = "Cannot find the API session in the HTTP Session.";
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.log(Level.FINEST, errorMessage, e);
+            }
         } catch (final Exception e) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -108,6 +123,7 @@ public class FormsCacheServlet extends HttpServlet {
     protected void doPut(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         if (request.getPathInfo() == null || request.getPathInfo().isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             final String errorMessage = "Error while using the servlet FormsCacheServlet to load a forms IDs are missing";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.FINE, errorMessage);
@@ -115,6 +131,7 @@ public class FormsCacheServlet extends HttpServlet {
             throw new ServletException(errorMessage);
         }
         final String[] pathInfo = request.getPathInfo().split("/");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         if (pathInfo.length < 3) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to load a forms: a process ID and a form ID are expected in the Path of the URL";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -131,8 +148,28 @@ public class FormsCacheServlet extends HttpServlet {
 
         try {
             final Map<String, Object> context = initContext(request, urlContext, userLocale);
-            final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr, userLocale);
+            final IFormDefinitionAPI definitionAPI = getDefinitionAPI(request, context, localeStr);
             definitionAPI.cacheForm(formID, context);
+        } catch (final FormNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            final String errorMessage = "Cannot find any form definition for process " + processIDStr;
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, errorMessage, e);
+            }
+            throw new ServletException(errorMessage);
+        } catch (final ApplicationFormDefinitionNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            final String errorMessage = "Cannot find any form definition for process " + processIDStr + " and form " + formID;
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, errorMessage, e);
+            }
+            throw new ServletException(errorMessage);
+        } catch (final NoCredentialsInSessionException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            final String errorMessage = "Cannot find the API session in the HTTP Session.";
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.log(Level.FINEST, errorMessage, e);
+            }
         } catch (final Exception e) {
             final String errorMessage = "Error while using the servlet FormsCacheServlet to get a list of forms.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -142,8 +179,8 @@ public class FormsCacheServlet extends HttpServlet {
         }
     }
 
-    protected IFormDefinitionAPI getDefinitionAPI(final HttpServletRequest request, final Map<String, Object> context, final String localeStr,
-            final Locale userLocale) throws NoCredentialsInSessionException, FormServiceProviderNotFoundException, FormNotFoundException, IOException,
+    protected IFormDefinitionAPI getDefinitionAPI(final HttpServletRequest request, final Map<String, Object> context, final String localeStr)
+            throws NoCredentialsInSessionException, FormServiceProviderNotFoundException, FormNotFoundException, IOException,
             InvalidFormDefinitionException, SessionTimeoutException {
         final long tenantID = getTenantID(request);
         final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
@@ -164,7 +201,7 @@ public class FormsCacheServlet extends HttpServlet {
             context.put(FormServiceProviderUtil.API_SESSION, apiSession);
             return context;
         } else {
-            throw new NoCredentialsInSessionException("Cannot find the API session in the HTTP Session. Are you logged in ?");
+            throw new NoCredentialsInSessionException();
         }
     }
 

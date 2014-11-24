@@ -37,6 +37,7 @@ import org.bonitasoft.forms.server.exception.FormInitializationException;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.exception.FormServiceProviderNotFoundException;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
+import org.bonitasoft.forms.server.exception.InvalidFormTemplateException;
 
 /**
  * API to retrieve the different form components associated with a process and its activities.
@@ -127,20 +128,23 @@ public interface IFormDefinitionAPI {
      * Retrieve the application config including the application template
      *
      * @param context
-     *            Map containing the URL parameters
+     *        Map containing the URL parameters
      * @param formID
-     *            the form ID
+     *        the form ID
      * @param includeApplicationTemplate
      * @param includeApplicationTemplate
-     *            indicate whether the Level 1 HTM template should be returned or not within the ApplicationConfig object
+     *        indicate whether the Level 1 HTM template should be returned or not within the ApplicationConfig object
      * @return a {@link ApplicationConfig} object containing the elements required to build the level1 (application template)
      * @throws InvalidFormDefinitionException
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
      * @throws ApplicationFormDefinitionNotFoundException
+     * @throws InvalidFormTemplateException
+     * @throws FileNotFoundException
      */
     ApplicationConfig getApplicationConfig(Map<String, Object> context, String formID, boolean includeApplicationTemplate)
-            throws InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException, ApplicationFormDefinitionNotFoundException;
+            throws InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException, ApplicationFormDefinitionNotFoundException,
+            FileNotFoundException, InvalidFormTemplateException;
 
     /**
      * Retrieve the expression which can be evaluated to get the first page of the form
@@ -293,7 +297,7 @@ public interface IFormDefinitionAPI {
 
     /**
      * Cache the form whose ID is specified
-     *
+     * 
      * @param formID
      * @param context
      * @return
@@ -303,10 +307,11 @@ public interface IFormDefinitionAPI {
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
      * @throws FileNotFoundException
+     * @throws InvalidFormTemplateException
      */
     void cacheForm(String formId, Map<String, Object> context) throws InvalidFormDefinitionException,
             FormNotFoundException, ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException,
-            FileNotFoundException;
+            FileNotFoundException, InvalidFormTemplateException;
 
     /**
      * Retrieve the list of forms of the application
@@ -316,9 +321,8 @@ public interface IFormDefinitionAPI {
      * @throws InvalidFormDefinitionException
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
-     * @throws ApplicationFormDefinitionNotFoundException
      */
     List<String> getFormsList(Map<String, Object> context) throws InvalidFormDefinitionException, FormServiceProviderNotFoundException,
-            SessionTimeoutException, ApplicationFormDefinitionNotFoundException;
+            SessionTimeoutException;
 
 }

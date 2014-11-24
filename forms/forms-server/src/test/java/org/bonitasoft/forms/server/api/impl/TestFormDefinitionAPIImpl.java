@@ -263,7 +263,6 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression(null, "process label", "TYPE_CONSTANT", String.class.getName(), null);
-        formBuilder.addLayout("/process-template.html");
         formBuilder.addPermissions("application#test");
 
         formBuilder.addEntryForm(formID);
