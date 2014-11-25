@@ -56,6 +56,12 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
+msgid "Healthy"
+msgstr ""
+
+msgid "With Failures"
+msgstr ""
+
 # processMonitoring
 
 msgid  "Monitor active cases"
