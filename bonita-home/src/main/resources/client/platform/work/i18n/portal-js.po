@@ -23,15 +23,38 @@ msgstr ""
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
 msgstr ""
 
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr ""
+
+msgid "Failed flownodes"
+msgstr ""
+
+msgid "Pending flownodes"
+msgstr ""
+
+msgid "No cases to display"
+msgstr ""
+
+msgid "Cases list"
+msgstr ""
+
+msgid "End date"
+msgstr ""
+
+msgid "Confirm delete?"
+msgstr ""
+
 msgid "Filters"
 msgstr ""
-
-msgid "All versions"
-msgstr ""
-
-msgid "All apps"
-msgstr ""
-
 
 # processMonitoring
 
