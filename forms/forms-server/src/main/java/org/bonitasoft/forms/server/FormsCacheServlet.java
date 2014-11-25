@@ -128,7 +128,7 @@ public class FormsCacheServlet extends HttpServlet {
     protected void doPut(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         String[] pathInfo = null;
-        if (request.getPathInfo() != null && !request.getPathInfo().isEmpty()) {
+        if (request.getPathInfo() != null && request.getPathInfo().startsWith("/")) {
             pathInfo = request.getPathInfo().split("/");
         }
         if (pathInfo == null || pathInfo.length < 3) {
