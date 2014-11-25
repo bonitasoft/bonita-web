@@ -35,10 +35,10 @@ msgstr ""
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr ""
 
-msgid "Failed flownodes"
+msgid "Failed Flow Nodes"
 msgstr ""
 
-msgid "Pending flownodes"
+msgid "Pending Flow Nodes"
 msgstr ""
 
 msgid "No cases to display"
