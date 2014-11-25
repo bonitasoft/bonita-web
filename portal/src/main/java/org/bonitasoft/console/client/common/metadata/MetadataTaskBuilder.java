@@ -5,18 +5,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.client.common.metadata;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
@@ -54,7 +52,6 @@ import com.google.gwt.user.client.Element;
 
 /**
  * @author Vincent Elcrin
- *
  */
 public class MetadataTaskBuilder extends MetadataBuilder {
 
@@ -64,7 +61,7 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 "<a class='definition caseid' title='{0}'>" +
                         "<label>{1}: </label><span>{2}</span>" +
                         "</a>")
-        SafeHtml caseId(String title, String label, String id);
+                SafeHtml caseId(String title, String label, String id);
     }
 
     private static Templates TEMPLATES = GWT.create(Templates.class);
@@ -85,12 +82,12 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         add(createMetaSubAppsVersion());
     }
 
-
     /**
-     *
      * @param anchor
      * @param task
+     * @deprecated
      */
+    @Deprecated
     public void addCaseId(final IFlowNodeItem task, final String targetPageToken, final String targetArchivedPageToken) {
         final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(TEMPLATES.caseId(
                 _("The id of the related case"),
@@ -102,24 +99,26 @@ public class MetadataTaskBuilder extends MetadataBuilder {
 
     /**
      * Is static to be accessible in HumanTaskMetadataView which is the same code but really shouldn't.
+     *
      * @param anchor
      * @param task
      */
     public static void setCaseHref(final AnchorElement anchor, final IFlowNodeItem task, final String targetPageToken, final String targetArchivedPageToken) {
-        APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(task.getCaseId());
+        final APIGetRequest request = new APIGetRequest(CaseDefinition.get()).setId(task.getCaseId());
         request.run(new APICallback() {
 
             @Override
-            public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 anchor.setHref("#?id=" + task.getCaseId() + "&_p=" + targetPageToken + "&_pf=" + Session.getCurrentProfile());
             }
 
             @Override
-            protected void on404NotFound(String message) {
+            protected void on404NotFound(final String message) {
                 getArchivedCaseId(task, new APICallback() {
+
                     @Override
-                    public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-                        ArchivedCaseItem archive =  JSonItemReader.parseItem(response, ArchivedCaseDefinition.get());
+                    public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+                        final ArchivedCaseItem archive = JSonItemReader.parseItem(response, ArchivedCaseDefinition.get());
                         anchor.setHref("#?id=" + archive.getId() + "&_p=" + targetArchivedPageToken + "&_pf=" + Session.getCurrentProfile());
                     }
                 });
@@ -127,8 +126,8 @@ public class MetadataTaskBuilder extends MetadataBuilder {
         });
     }
 
-    public static void getArchivedCaseId(IFlowNodeItem task, APICallback callback) {
-        APISearchRequest request = new APISearchRequest(ArchivedCaseDefinition.get());
+    public static void getArchivedCaseId(final IFlowNodeItem task, final APICallback callback) {
+        final APISearchRequest request = new APISearchRequest(ArchivedCaseDefinition.get());
         request.addFilter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, task.getCaseId().toString());
         request.run(callback);
     }
@@ -205,7 +204,6 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 _("Version of the process"));
     }
 
-
     private ItemDetailsMetadata createMetaCaseId() {
         return new ItemDetailsMetadata(IActivityItem.ATTRIBUTE_CASE_ID, _("Case"), _("The id of the related case"));
     }
@@ -250,7 +248,5 @@ public class MetadataTaskBuilder extends MetadataBuilder {
                 _("Due date"),
                 _("The date when the task must be finished"));
     }
-
-
 
 }

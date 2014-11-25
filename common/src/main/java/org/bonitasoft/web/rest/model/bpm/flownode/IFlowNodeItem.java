@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,7 +25,6 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
  * @author Séverin Moussel
- * 
  */
 public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, ItemHasDualDescription {
 
@@ -37,17 +34,32 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
 
     public static String ATTRIBUTE_PROCESS_ID = "processId";
 
-    public static String ATTRIBUTE_CASE_ID = "caseId";
+    /**
+     * @deprecated since 6.4.0
+     * @see IFlowNodeItem#ATTRIBUTE_ROOT_CASE_ID
+     */
+    @Deprecated
+    public final static String ATTRIBUTE_CASE_ID = "caseId";
 
-    public static final String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
-    
-    public static String ATTRIBUTE_STATE = "state";
+    /**
+     * @since 6.4.0
+     */
+    public final static String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
 
-    public static String ATTRIBUTE_TYPE = "type";
+    /**
+     * @since 6.4.0
+     */
+    public final static String ATTRIBUTE_PARENT_CASE_ID = "parentCaseId";
 
-    public static String ATTRIBUTE_EXECUTED_BY_USER_ID = "executedBy";
-    
-    public static String ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID = "executedBySubstitute";
+    public final static String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
+
+    public final static String ATTRIBUTE_STATE = "state";
+
+    public final static String ATTRIBUTE_TYPE = "type";
+
+    public final static String ATTRIBUTE_EXECUTED_BY_USER_ID = "executedBy";
+
+    public final static String ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID = "executedBySubstitute";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
@@ -110,20 +122,60 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
 
     public APIID getProcessId();
 
+    /**
+     * @param id
+     * @deprecated Since 6.4.0
+     * @see IFlowNodeItem#setRootCaseId(APIID)
+     */
+    @Deprecated
     public void setCaseId(final APIID id);
 
+    /**
+     * @param id
+     * @deprecated Since 6.4.0
+     * @see IFlowNodeItem#setRootCaseId(String)
+     */
+    @Deprecated
     public void setCaseId(final String id);
 
+    /**
+     * @param id
+     * @deprecated Since 6.4.0
+     * @see IFlowNodeItem#setRootCaseId(Long)
+     */
+    @Deprecated
     public void setCaseId(final Long id);
 
+    public void setRootCaseId(final APIID id);
+
+    public void setRootCaseId(final String id);
+
+    public void setRootCaseId(final Long id);
+
+    public void setParentCaseId(final APIID id);
+
+    public void setParentCaseId(final String id);
+
+    public void setParentCaseId(final Long id);
+
+    /**
+     * @return
+     * @Deprecated Since 6.4.0
+     * @see IFlowNodeItem#getRootCaseId()
+     */
+    @Deprecated
     public APIID getCaseId();
+
+    public APIID getRootCaseId();
+
+    public APIID getParentCaseId();
 
     public void setRootContainerId(final APIID rootContainerId);
 
     public void setRootContainerId(final String rootContainerId);
-    
+
     public void setRootContainerId(final Long rootContainerId);
-    
+
     public APIID getRootContainerId();
 
     public void setState(final String state);
@@ -153,11 +205,21 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
     public APIID getExecutedBySubstituteUserId();
 
     public UserItem getExecutedBySubstituteUser();
-    
+
     public ProcessItem getProcess();
 
+    /**
+     * @return
+     * @deprecated since 6.4.0
+     * @see IFlowNodeItem#getCase()
+     */
+    @Deprecated
     public CaseItem getCase();
-    
+
+    public CaseItem getRootCase();
+
+    public CaseItem getParentCase();
+
     public ProcessItem getRootContainerProcess();
 
     public boolean isUserTask();

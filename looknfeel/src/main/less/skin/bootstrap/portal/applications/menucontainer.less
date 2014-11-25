@@ -4,6 +4,8 @@
 }
 
 
+.menu-choice-container {padding: 0}
+
 .angular-ui-tree-node, .angular-ui-tree-placeholder {
     display: block;
     position: relative;
@@ -24,13 +26,12 @@
 }
 
 .angular-ui-tree-placeholder {background-color: rgba(0,0,0,.1)}
-.angular-ui-tree-hidden {
-    display: none;
-}
+.angular-ui-tree-hidden {display: none}
 .angular-ui-tree-handle {
-    cursor: move;
-    text-decoration: none;
-    font-weight: 700;
+  cursor: move;
+  cursor: -webkit-grab; /* Mac OS ... */
+  text-decoration: none;
+  font-weight: 700;
 
 }
 

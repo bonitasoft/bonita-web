@@ -70,10 +70,6 @@ import org.w3c.dom.Document;
  */
 public class TestFormServiceProviderImpl extends FormsTestCase {
 
-    // protected static final String USERNAME = "dwight";
-    //
-    // protected static final String PASSWORD = "Schrute";
-
     protected ProcessDefinition processDefinition;
 
     protected long processInstanceId;
@@ -91,7 +87,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
                 "application",
                 String.class.getName(),
                 expressionBuilder.createNewInstance("word").setContent("Word").setExpressionType(ExpressionType.TYPE_CONSTANT.name())
-                .setReturnType(String.class.getName()).done());
+                        .setReturnType(String.class.getName()).done());
         processBuilder.addDocumentDefinition("doc1").addUrl("www.bonitasoft.org");
         processBuilder.addDocumentDefinition("doc2").addContentFileName("filename.txt").addFile("barFilename.txt");
         processBuilder.addActor("myActor");

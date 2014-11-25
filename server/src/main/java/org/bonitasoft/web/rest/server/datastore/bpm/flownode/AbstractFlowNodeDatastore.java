@@ -69,7 +69,8 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         result.setDescription(item.getDescription());
         result.setDisplayDescription(item.getDisplayDescription());
         result.setExecutedByUserId(item.getExecutedBy());
-        result.setCaseId(item.getRootContainerId());
+        result.setRootCaseId(item.getRootContainerId());
+        result.setParentCaseId(item.getParentProcessInstanceId());
         result.setProcessId(item.getProcessDefinitionId());
         result.setState(item.getState());
         result.setType(item.getType().name());
@@ -135,6 +136,8 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
             final Map<String, String> filters) {
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, FlowNodeInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
         addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);

@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -129,12 +127,12 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
 
     /**
      * Constructor
-     * 
+     *
      * @param tenant ID
      * @param document
      * @param formCacheUtil
      * @param applicationDeployementDate
-     *            the deployment date of the application
+     *        the deployment date of the application
      * @param locale
      *        the user's locale as a String
      * @return the FormDefinitionAPIImpl instance
@@ -170,7 +168,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * get XMLApplicationFormDefAccessorImpl by FormServiceProvider
      *
      * @param formId
-     *            the form ID
+     *        the form ID
      * @throws ApplicationFormDefinitionNotFoundException
      * @throws InvalidFormDefinitionException
      * @throws FormServiceProviderNotFoundException
@@ -179,10 +177,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     protected IApplicationFormDefAccessor getApplicationFormDefinition(final String formId, final Map<String, Object> context)
             throws ApplicationFormDefinitionNotFoundException, InvalidFormDefinitionException, FormServiceProviderNotFoundException, SessionTimeoutException {
         context.put(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE, applicationDeploymentDate);
-        FormServiceProvider formServiceProvider = null;
-        formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
-        final IApplicationFormDefAccessor applicationDefAccessor = formServiceProvider.getApplicationFormDefinition(formId, formDefinitionDocument, context);
-        return applicationDefAccessor;
+        final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
+        return formServiceProvider.getApplicationFormDefinition(formId, formDefinitionDocument, context);
     }
 
     /**
@@ -354,13 +350,13 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * Retrieve the template associated with a instantiation form page
      *
      * @param applicationDefAccessor
-     *            the application form definition accessor
+     *        the application form definition accessor
      * @param formType
-     *            the form type
+     *        the form type
      * @param pageId
-     *            the page ID
+     *        the page ID
      * @param context
-     *            the Map of context
+     *        the Map of context
      * @param pageWidgets
      * @param pageValidators
      * @return an {@link HtmlTemplate} object containing the elements required to
@@ -603,7 +599,8 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                         try {
                             // Load both classes in the current classloader because evaluatedValue comes from another classloader (server side)
                             final Class<?> dataClass = Thread.currentThread().getContextClassLoader().loadClass(className);
-                            final Class<?> localEvaluatedValueClass = Thread.currentThread().getContextClassLoader().loadClass(evaluatedValue.getClass().getName());
+                            final Class<?> localEvaluatedValueClass = Thread.currentThread().getContextClassLoader()
+                                    .loadClass(evaluatedValue.getClass().getName());
                             localEvaluatedValueClass.asSubclass(dataClass);
                         } catch (final ClassCastException e) {
                             throw new IllegalArgumentException();
@@ -638,11 +635,11 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * get a page layout
      *
      * @param layoutPath
-     *            The path of the layout
+     *        The path of the layout
      * @param applicationDeploymentDate
-     *            The date of the application deployed
+     *        The date of the application deployed
      * @param context
-     *            Map containing the URL parameters
+     *        Map containing the URL parameters
      * @return HtmlTemplate
      * @throws FileNotFoundException
      * @throws InvalidFormDefinitionException
@@ -733,13 +730,13 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * get a layout
      *
      * @param layoutLocation
-     *            The location of the layout
+     *        The location of the layout
      * @param layoutTypeName
-     *            The type of the layout
+     *        The type of the layout
      * @param applicationDeploymentDate
-     *            The date of the application deployed
+     *        The date of the application deployed
      * @param context
-     *            Map containing the URL parameters
+     *        Map containing the URL parameters
      * @return HtmlTemplate
      * @throws FileNotFoundException
      * @throws InvalidFormTemplateException

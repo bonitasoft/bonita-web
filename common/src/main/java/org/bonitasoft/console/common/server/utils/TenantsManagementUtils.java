@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,9 +38,8 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 
 /**
  * Tenant management utils class
- * 
+ *
  * @author Anthony Birembaut
- * 
  */
 public class TenantsManagementUtils {
 
@@ -58,7 +55,7 @@ public class TenantsManagementUtils {
 
     /**
      * Copy file
-     * 
+     *
      * @param sourceFile
      * @param targetFile
      * @throws IOException
@@ -99,7 +96,7 @@ public class TenantsManagementUtils {
 
     /**
      * Copy a directory
-     * 
+     *
      * @param sourceDir
      * @param targetDir
      * @throws IOException
@@ -126,7 +123,7 @@ public class TenantsManagementUtils {
 
     /**
      * Delete a directory
-     * 
+     *
      * @param targetDir
      */
     protected static void deleteDirectory(final String targetDir) {
@@ -165,7 +162,7 @@ public class TenantsManagementUtils {
 
     /**
      * copy the tenant template directory
-     * 
+     *
      * @return true if the tenant directory was created
      * @param tenantId
      * @throws IOException
@@ -176,9 +173,17 @@ public class TenantsManagementUtils {
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
         final String sourceDirPath = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
         // copy configuration files
-        final File targetDir = new File(targetDirPath + File.separator + WebBonitaConstants.workFolderName);
+        final boolean workIsCopied = copyDirectory(targetDirPath, sourceDirPath, new File(targetDirPath + File.separator
+                + WebBonitaConstants.workFolderName));
+        final boolean confIsCopied = copyDirectory(targetDirPath, sourceDirPath, new File(targetDirPath + File.separator
+                + WebBonitaConstants.confFolderName));
+        return workIsCopied && confIsCopied;
+    }
+
+    private static boolean copyDirectory(final String targetDirPath, final String sourceDirPath, final File targetDir) throws IOException {
         if (!targetDir.exists()) {
             try {
+                deleteDirectory(targetDirPath);
                 copyDirectory(sourceDirPath, targetDirPath);
                 return true;
             } catch (final IOException e) {
@@ -191,9 +196,9 @@ public class TenantsManagementUtils {
 
     /**
      * Get default tenant ID
-     * 
+     *
      * @throws DefaultTenantIdException
-     *             If default tenant id couldn't be retrieved
+     *         If default tenant id couldn't be retrieved
      */
     public static long getDefaultTenantId() {
         try {

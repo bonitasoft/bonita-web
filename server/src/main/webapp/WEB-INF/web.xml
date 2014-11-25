@@ -164,6 +164,11 @@
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
+        <!-- Uncomment those lines to apply security checks also on portal servlets -->
+        <!-- <url-pattern>/portal/formsDocumentDownload</url-pattern> -->
+        <!-- <url-pattern>/portal/documentDownload</url-pattern> -->
+        <!-- <url-pattern>/portal/downloadDocument</url-pattern> -->
+        <!--  Add more servlet mappings here -->  
     </filter-mapping>
     <filter-mapping>
         <filter-name>TokenGeneratorFilter</filter-name>

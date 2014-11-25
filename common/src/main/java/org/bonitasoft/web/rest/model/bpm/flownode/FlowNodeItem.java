@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,7 +25,6 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Séverin Moussel
- * 
  */
 public class FlowNodeItem extends Item implements IFlowNodeItem {
 
@@ -61,7 +58,7 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
 
     @Override
     public String ensureDescription() {
-        if(StringUtil.isBlank(getDisplayDescription())) {
+        if (StringUtil.isBlank(getDisplayDescription())) {
             return getDescription();
         }
         return getDisplayDescription();
@@ -89,7 +86,7 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
 
     @Override
     public String ensureName() {
-        if(StringUtil.isBlank(getDisplayName())) {
+        if (StringUtil.isBlank(getDisplayName())) {
             return getName();
         }
         return getDisplayName();
@@ -126,45 +123,92 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     }
 
     @Override
+    @Deprecated
     public final void setCaseId(final APIID id) {
-        setAttribute(ATTRIBUTE_CASE_ID, id);
+        setRootCaseId(id);
     }
 
     @Override
+    @Deprecated
     public final void setCaseId(final String id) {
-        setAttribute(ATTRIBUTE_CASE_ID, id);
+        setRootCaseId(id);
     }
 
     @Override
+    @Deprecated
     public final void setCaseId(final Long id) {
-        setAttribute(ATTRIBUTE_CASE_ID, id);
+        setRootCaseId(id);
     }
 
     @Override
+    @Deprecated
     public final APIID getCaseId() {
         return getAttributeValueAsAPIID(ATTRIBUTE_CASE_ID);
     }
 
     @Override
+    public void setRootCaseId(final APIID id) {
+        setAttribute(ATTRIBUTE_ROOT_CASE_ID, id);
+        setAttribute(ATTRIBUTE_CASE_ID, id);
+    }
+
+    @Override
+    public void setRootCaseId(final String id) {
+        setAttribute(ATTRIBUTE_ROOT_CASE_ID, id);
+        setAttribute(ATTRIBUTE_CASE_ID, id);
+    }
+
+    @Override
+    public void setRootCaseId(final Long id) {
+        setAttribute(ATTRIBUTE_ROOT_CASE_ID, id);
+        setAttribute(ATTRIBUTE_CASE_ID, id);
+    }
+
+    @Override
+    public APIID getRootCaseId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CASE_ID);
+    }
+
+    @Override
+    public void setParentCaseId(final APIID id) {
+        setAttribute(ATTRIBUTE_PARENT_CASE_ID, id);
+    }
+
+    @Override
+    public void setParentCaseId(final String id) {
+        setAttribute(ATTRIBUTE_PARENT_CASE_ID, id);
+    }
+
+    @Override
+    public void setParentCaseId(final Long id) {
+        setAttribute(ATTRIBUTE_PARENT_CASE_ID, id);
+    }
+
+    @Override
+    public APIID getParentCaseId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_PARENT_CASE_ID);
+    }
+
+    @Override
     public final void setRootContainerId(final APIID rootContainerId) {
-    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
+        setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
     }
 
     @Override
     public final void setRootContainerId(final String rootContainerId) {
-    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
+        setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
     }
-    
+
     @Override
     public final void setRootContainerId(final Long rootContainerId) {
-    	setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);	
+        setAttribute(ATTRIBUTE_ROOT_CONTAINER_ID, rootContainerId);
     }
-    
-    @Override 
+
+    @Override
     public APIID getRootContainerId() {
-    	return this.getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CONTAINER_ID);
+        return this.getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CONTAINER_ID);
     }
-    
+
     @Override
     public final void setState(final String state) {
         setAttribute(ATTRIBUTE_STATE, state);
@@ -209,19 +253,19 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     public final UserItem getExecutedByUser() {
         return new UserItem(getDeploy(ATTRIBUTE_EXECUTED_BY_USER_ID));
     }
-    
+
     @Override
-    public void setExecutedBySubstituteUserId(APIID id) {
+    public void setExecutedBySubstituteUserId(final APIID id) {
         setAttribute(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, id);
     }
 
     @Override
-    public void setExecutedBySubstituteUserId(String id) {
+    public void setExecutedBySubstituteUserId(final String id) {
         setAttribute(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, id);
     }
 
     @Override
-    public void setExecutedBySubstituteUserId(Long id) {
+    public void setExecutedBySubstituteUserId(final Long id) {
         setAttribute(ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID, id);
     }
 
@@ -241,15 +285,26 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     }
 
     @Override
+    @Deprecated
     public final CaseItem getCase() {
         return new CaseItem(getDeploy(ATTRIBUTE_CASE_ID));
     }
 
     @Override
-    public final ProcessItem getRootContainerProcess() {
-    	return new ProcessItem(getDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
+    public final CaseItem getRootCase() {
+        return new CaseItem(getDeploy(ATTRIBUTE_ROOT_CASE_ID));
     }
-    
+
+    @Override
+    public final CaseItem getParentCase() {
+        return new CaseItem(getDeploy(ATTRIBUTE_PARENT_CASE_ID));
+    }
+
+    @Override
+    public final ProcessItem getRootContainerProcess() {
+        return new ProcessItem(getDeploy(ATTRIBUTE_ROOT_CONTAINER_ID));
+    }
+
     @Override
     public ItemDefinition getItemDefinition() {
         return FlowNodeDefinition.get();
