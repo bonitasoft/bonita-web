@@ -190,3 +190,6 @@ msgstr ""
 
 msgid  "Version"
 msgstr ""
+
+msgid  "Diagram is currently downloading."
+msgstr ""
