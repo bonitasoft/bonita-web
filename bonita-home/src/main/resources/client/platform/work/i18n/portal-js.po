@@ -62,6 +62,12 @@ msgstr ""
 msgid "With Failures"
 msgstr ""
 
+msgid "All versions"
+msgstr ""
+
+msgid "All apps"
+msgstr ""
+
 # processMonitoring
 
 msgid  "Monitor active cases"
@@ -134,7 +140,7 @@ msgstr ""
 msgid  "Technical error."
 msgstr ""
 
-msgid  "Process state"
+msgid  "State"
 msgstr ""
 
 msgid  "Show"
@@ -180,4 +186,7 @@ msgid  "MIN"
 msgstr ""
 
 msgid  "MAX"
+msgstr ""
+
+msgid  "Version"
 msgstr ""
