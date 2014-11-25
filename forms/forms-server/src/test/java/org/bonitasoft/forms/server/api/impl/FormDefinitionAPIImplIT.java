@@ -59,8 +59,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.w3c.dom.Document;
 
 /**
@@ -69,7 +67,6 @@ import org.w3c.dom.Document;
  * @author Anthony Birembaut, Haojie Yuan
  *
  */
-@RunWith(MockitoJUnitRunner.class)
 public class FormDefinitionAPIImplIT extends FormsTestCase {
 
     private ProcessDefinition bonitaProcess;
@@ -122,7 +119,6 @@ public class FormDefinitionAPIImplIT extends FormsTestCase {
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
         context.put(FormServiceProviderUtil.API_SESSION, getSession());
-
     }
 
     @Override
