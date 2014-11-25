@@ -23,7 +23,43 @@ msgstr ""
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
 msgstr ""
 
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr ""
+
+msgid "Failed Flow Nodes"
+msgstr ""
+
+msgid "Pending Flow Nodes"
+msgstr ""
+
+msgid "No cases to display"
+msgstr ""
+
+msgid "Cases list"
+msgstr ""
+
+msgid "End date"
+msgstr ""
+
+msgid "Confirm delete?"
+msgstr ""
+
 msgid "Filters"
+msgstr ""
+
+msgid "Healthy"
+msgstr ""
+
+msgid "With Failures"
 msgstr ""
 
 msgid "All versions"
@@ -31,7 +67,6 @@ msgstr ""
 
 msgid "All apps"
 msgstr ""
-
 
 # processMonitoring
 
@@ -105,7 +140,7 @@ msgstr ""
 msgid  "Technical error."
 msgstr ""
 
-msgid  "Process state"
+msgid  "State"
 msgstr ""
 
 msgid  "Show"
@@ -151,4 +186,7 @@ msgid  "MIN"
 msgstr ""
 
 msgid  "MAX"
+msgstr ""
+
+msgid  "Version"
 msgstr ""
