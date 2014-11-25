@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-21 08:51-0500\n"
+"PO-Revision-Date: 2014-11-24 13:06-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -15,37 +15,37 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Spalten"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Ergebnisse: {{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{total}}"
 
 msgid "Filters"
 msgstr "Filter"
 
 msgid "All versions"
-msgstr "All versions"
+msgstr "Alle Versionen"
 
 msgid "All apps"
-msgstr "All apps"
+msgstr "Alle Apps"
 
 msgid "Monitor active cases"
-msgstr "Monitor active cases"
+msgstr "Monitoring der laufenden Fälle"
 
 msgid "Open cases"
-msgstr "Open cases"
+msgstr "Offene Fälle"
 
 msgid "Healthy cases"
-msgstr "Healthy cases"
+msgstr "Fehlerfreie Fälle"
 
 msgid "Cases with failures"
-msgstr "Cases with failures"
+msgstr "Fällen mit Fehlschlägen"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtern nach Prozess"
 
 msgid "Process list"
-msgstr "Process list"
+msgstr "Prozessliste"
 
 msgid "Refresh"
 msgstr "Aktualisieren"
@@ -60,7 +60,7 @@ msgid "Actions"
 msgstr "Aktionen"
 
 msgid "Wait ..."
-msgstr "Wait ..."
+msgstr "Warten ..."
 
 # Pagination label: "1 - 10 of 300"
 msgid "of"
@@ -100,7 +100,7 @@ msgid "Show"
 msgstr "Show"
 
 msgid "Healthy cases"
-msgstr "Healthy cases"
+msgstr "Fehlerfreie Fälle"
 
 msgid "Open"
 msgstr "Öffnen"
@@ -112,26 +112,32 @@ msgid "Case state"
 msgstr "Case state"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProcesses()}}"
 
 msgid "Disabled, no new instance can be started"
-msgstr "Disabled, no new instance can be started"
+msgstr "Deaktiviert, es kann keine neue Instanz gestartet werden"
 
 msgid "Process enabled"
-msgstr "Process enabled"
+msgstr "Prozess aktiviert"
 
 msgid "View case list"
-msgstr "View case list"
+msgstr "Liste der Fälle anzeigen"
 
 msgid "View diagram"
-msgstr "View diagram"
+msgstr "Diagramm anzeigen"
 
 msgid "Drawing diagram ..."
-msgstr "Drawing diagram ..."
+msgstr "Diagramm zeichnen..."
 
 msgid "Error on drawing diagram !"
-msgstr "Error on drawing diagram !"
+msgstr "Fehler beim Zeichnen des Diagramms!"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "DEFAULT ZOOM LEVEL"
+msgstr "STANDARD-ZOOM-NIVEAU"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
 

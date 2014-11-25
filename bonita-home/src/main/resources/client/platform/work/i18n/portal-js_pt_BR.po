@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-21 08:56-0500\n"
+"PO-Revision-Date: 2014-11-24 06:11-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -134,4 +134,10 @@ msgstr "Error on drawing diagram !"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "DEFAULT ZOOM LEVEL"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
 
