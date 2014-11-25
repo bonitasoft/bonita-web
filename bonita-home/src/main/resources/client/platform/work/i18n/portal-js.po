@@ -193,3 +193,6 @@ msgstr ""
 
 msgid  "Diagram is currently downloading."
 msgstr ""
+
+msgid  "Diagram"
+msgstr ""
