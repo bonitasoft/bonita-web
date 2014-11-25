@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-21 12:03-0500\n"
+"PO-Revision-Date: 2014-11-24 13:01-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -121,17 +121,23 @@ msgid "Process enabled"
 msgstr "Process enabled"
 
 msgid "View case list"
-msgstr "View case list"
+msgstr "Voir la liste des cas"
 
 msgid "View diagram"
-msgstr "View diagram"
+msgstr "Voir le diagramme"
 
 msgid "Drawing diagram ..."
-msgstr "Drawing diagram ..."
+msgstr "Dessin du diagramme..."
 
 msgid "Error on drawing diagram !"
-msgstr "Error on drawing diagram !"
+msgstr "Error lors du dessin du diagramme !"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "DEFAULT ZOOM LEVEL"
+msgstr "Niveau de zoom par défaut"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
 

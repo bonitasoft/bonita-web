@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-21 08:53-0500\n"
+"PO-Revision-Date: 2014-11-24 06:04-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -60,7 +60,7 @@ msgid "Actions"
 msgstr "azioni"
 
 msgid "Wait ..."
-msgstr "Wait ..."
+msgstr "Attendere ..."
 
 # Pagination label: "1 - 10 of 300"
 msgid "of"
@@ -79,10 +79,10 @@ msgid "All"
 msgstr "Tutti"
 
 msgid "Never"
-msgstr "Never"
+msgstr "Mai"
 
 msgid "30 s."
-msgstr "30 s."
+msgstr "30 sec."
 
 msgid "1 min."
 msgstr "1 min."
@@ -91,13 +91,13 @@ msgid "10 min."
 msgstr "10 min."
 
 msgid "Technical error."
-msgstr "Technical error."
+msgstr "Errore tecnico."
 
 msgid "Process state"
-msgstr "Process state"
+msgstr "Stato del processo"
 
 msgid "Show"
-msgstr "Show"
+msgstr "Visualizza"
 
 msgid "Healthy cases"
 msgstr "Casi sani"
@@ -109,13 +109,13 @@ msgid "Process version"
 msgstr "Process version"
 
 msgid "Case state"
-msgstr "Case state"
+msgstr "Stato del caso"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
 msgid "Disabled, no new instance can be started"
-msgstr "Disabled, no new instance can be started"
+msgstr "Disabilitato, nessuna nuova istanza può essere avviata"
 
 msgid "Process enabled"
 msgstr "Process enabled"
@@ -134,4 +134,10 @@ msgstr "Error on drawing diagram !"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "DEFAULT ZOOM LEVEL"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
 
