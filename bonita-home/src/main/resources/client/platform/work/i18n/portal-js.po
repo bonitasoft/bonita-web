@@ -56,10 +56,10 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-msgid "Healthy"
+msgid "Archived cases"
 msgstr ""
 
-msgid "With Failures"
+msgid "With failures"
 msgstr ""
 
 msgid "items per page"
