@@ -739,6 +739,7 @@
                             </properties>
                         </configuration>
                     </plugin>
+                    <!-- declare the failsafe plugin again in the sonar profile, because just overriding the argline here doesn't work -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
