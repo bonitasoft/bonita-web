@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-24 13:05-0500\n"
+"PO-Revision-Date: 2014-11-25 07:50-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -51,7 +51,7 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 msgid "Process name"
-msgstr "Process name"
+msgstr "Prozessname"
 
 msgid "Failed"
 msgstr "Fehlgeschlagen"
@@ -79,7 +79,7 @@ msgid "All"
 msgstr "Alle"
 
 msgid "Never"
-msgstr "Never"
+msgstr "Niemals"
 
 msgid "30 s."
 msgstr "30 s."
@@ -91,13 +91,13 @@ msgid "10 min."
 msgstr "10 min."
 
 msgid "Technical error."
-msgstr "Technical error."
+msgstr "Technischer Fehler."
 
 msgid "Process state"
-msgstr "Process state"
+msgstr "Prozesszustand"
 
 msgid "Show"
-msgstr "Show"
+msgstr "Anzeigen"
 
 msgid "Healthy cases"
 msgstr "Fehlerfreie Fälle"
@@ -109,8 +109,35 @@ msgid "Process version"
 msgstr "Process version"
 
 msgid "Case state"
-msgstr "Case state"
+msgstr "Zustand des Falls"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProcesses()}}"
+
+msgid "Disabled, no new instance can be started"
+msgstr "Deaktiviert, es kann keine neue Instanz gestartet werden"
+
+msgid "Process enabled"
+msgstr "Prozess aktiviert"
+
+msgid "View case list"
+msgstr "Liste der Fälle anzeigen"
+
+msgid "View diagram"
+msgstr "Diagramm anzeigen"
+
+msgid "Drawing diagram ..."
+msgstr "Diagramm zeichnen..."
+
+msgid "Error on drawing diagram !"
+msgstr "Fehler beim Zeichnen des Diagramms!"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "STANDARD-ZOOM-NIVEAU"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
 

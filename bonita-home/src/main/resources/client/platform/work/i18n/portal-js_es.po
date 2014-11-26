@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-24 06:14-0500\n"
+"PO-Revision-Date: 2014-11-25 13:26-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -15,22 +15,22 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Columnas"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
 
 msgid "Filters"
 msgstr "Filtros"
 
 msgid "All versions"
-msgstr "All versions"
+msgstr "Todas las versiones"
 
 msgid "All apps"
-msgstr "All apps"
+msgstr "Todas las aplicaciones"
 
 msgid "Monitor active cases"
-msgstr "Monitor active cases"
+msgstr "Monitorización casos activos"
 
 msgid "Open cases"
 msgstr "Casos abiertos"
@@ -39,10 +39,10 @@ msgid "Healthy cases"
 msgstr "Casos activos"
 
 msgid "Cases with failures"
-msgstr "Cases with failures"
+msgstr "Casos con fallos"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtrar por proceso"
 
 msgid "Process list"
 msgstr "Lista de Procesos"
@@ -113,4 +113,31 @@ msgstr "Case state"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
+msgid "Disabled, no new instance can be started"
+msgstr "Desactivado, no puede iniciarse ninguna nueva instancia"
+
+msgid "Process enabled"
+msgstr "Proceso activado"
+
+msgid "View case list"
+msgstr "Ver lista de casos"
+
+msgid "View diagram"
+msgstr "Ver diagrama"
+
+msgid "Drawing diagram ..."
+msgstr "Dibujando el diagrama ..."
+
+msgid "Error on drawing diagram !"
+msgstr "¡Error dibujando el diagrama!"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "ZOOM POR DEFECTO"
+
+msgid "MIN"
+msgstr "MÍN"
+
+msgid "MAX"
+msgstr "MÁX"
 
