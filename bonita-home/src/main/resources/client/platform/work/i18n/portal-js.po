@@ -65,6 +65,12 @@ msgstr ""
 msgid "items per page"
 msgstr ""
 
+msgid "Loading"
+msgstr ""
+
+msgid "Case details"
+msgstr ""
+
 msgid "columns selection"
 msgstr ""
 
