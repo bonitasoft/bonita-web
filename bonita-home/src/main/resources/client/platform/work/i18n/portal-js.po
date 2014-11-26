@@ -65,9 +65,6 @@ msgstr ""
 msgid "items per page"
 msgstr ""
 
-msgid "Loading"
-msgstr ""
-
 msgid "Case details"
 msgstr ""
 
@@ -204,6 +201,9 @@ msgid  "MAX"
 msgstr ""
 
 msgid  "Version"
+msgstr ""
+
+msgid  "Totals"
 msgstr ""
 
 msgid  "Loading..."
