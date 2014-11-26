@@ -182,10 +182,10 @@ msgstr ""
 msgid  "View process"
 msgstr ""
 
-msgid  "Drawing diagram ..."
+msgid  "Drawing process..."
 msgstr ""
 
-msgid  "Error on drawing diagram !"
+msgid  "Error on drawing process!"
 msgstr ""
 
 msgid  "DEFAULT ZOOM LEVEL"
