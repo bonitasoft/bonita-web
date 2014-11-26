@@ -23,7 +23,7 @@ import org.junit.Test;
 /**
  * @author Anthony Birembaut
  */
-public class TestDefaultPropertiesAccessor extends FormsTestCase {
+public class DefaultPropertiesAccessorIT extends FormsTestCase {
 
     private DefaultFormsProperties defaultPropertiesAccessor;
 

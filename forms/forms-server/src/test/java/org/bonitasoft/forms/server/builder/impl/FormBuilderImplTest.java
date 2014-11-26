@@ -55,7 +55,7 @@ import org.w3c.dom.Document;
  *
  * @author Anthony Birembaut
  */
-public class TestFormBuilderImpl {
+public class FormBuilderImplTest {
 
     public final static String GROOVY = "GROOVY";
 

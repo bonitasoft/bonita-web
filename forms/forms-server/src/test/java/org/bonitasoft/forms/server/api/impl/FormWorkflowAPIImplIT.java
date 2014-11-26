@@ -78,7 +78,7 @@ import org.mockito.Mockito;
  * @author Anthony Birembaut
  * 
  */
-public class TestFormWorkflowAPIImpl extends FormsTestCase {
+public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     private ProcessAPI processAPI = null;
 
@@ -153,7 +153,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         final HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -175,7 +175,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -195,7 +195,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
@@ -213,7 +213,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -233,7 +233,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
@@ -251,7 +251,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -289,7 +289,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
@@ -317,7 +317,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -351,7 +351,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
@@ -404,7 +404,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
@@ -436,7 +436,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -448,7 +448,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
@@ -465,7 +465,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         final HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -484,7 +484,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         final HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -505,7 +505,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         final HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
@@ -576,7 +576,7 @@ public class TestFormWorkflowAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormWorkflowAPIImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         final HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
