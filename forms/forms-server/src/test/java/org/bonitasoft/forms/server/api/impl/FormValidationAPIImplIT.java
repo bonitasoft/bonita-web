@@ -58,7 +58,7 @@ import org.junit.Test;
  * @author Anthony Birembaut
  * 
  */
-public class TestFormValidationAPIImpl extends FormsTestCase {
+public class FormValidationAPIImplIT extends FormsTestCase {
 
     protected static final String USERNAME = "dwight";
 

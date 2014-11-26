@@ -33,6 +33,7 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 
@@ -147,12 +148,8 @@ public class TenantsManagementUtils {
      */
     public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException, BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
-        return !getUserProfiles(apiSession).isEmpty();
-    }
-
-    private static List<Profile> getUserProfiles(final APISession session) throws InvalidSessionException, NotFoundException, BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException {
-        return getProfileApi(session).getProfilesForUser(session.getUserId());
+        final List<Profile> userProfiles = getProfileApi(apiSession).getProfilesForUser(apiSession.getUserId(), 0, 1, ProfileCriterion.ID_ASC);
+        return !userProfiles.isEmpty();
     }
 
     private static ProfileAPI getProfileApi(final APISession session) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
@@ -173,15 +170,9 @@ public class TenantsManagementUtils {
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
         final String sourceDirPath = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
         // copy configuration files
-        final boolean workIsCopied = copyDirectory(targetDirPath, sourceDirPath, new File(targetDirPath + File.separator
-                + WebBonitaConstants.workFolderName));
-        final boolean confIsCopied = copyDirectory(targetDirPath, sourceDirPath, new File(targetDirPath + File.separator
-                + WebBonitaConstants.confFolderName));
-        return workIsCopied && confIsCopied;
-    }
-
-    private static boolean copyDirectory(final String targetDirPath, final String sourceDirPath, final File targetDir) throws IOException {
-        if (!targetDir.exists()) {
+        final File workDir = new File(targetDirPath + File.separator + WebBonitaConstants.workFolderName);
+        final File confDir = new File(targetDirPath + File.separator + WebBonitaConstants.confFolderName);
+        if (!workDir.exists() || !confDir.exists() || confDir.list().length == 0) {
             try {
                 deleteDirectory(targetDirPath);
                 copyDirectory(sourceDirPath, targetDirPath);

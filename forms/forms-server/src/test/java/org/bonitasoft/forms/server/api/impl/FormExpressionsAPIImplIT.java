@@ -68,7 +68,7 @@ import org.junit.Test;
  * @author Anthony Birembaut
  *
  */
-public class TestFormExpressionsAPIImpl extends FormsTestCase {
+public class FormExpressionsAPIImplIT extends FormsTestCase {
 
     private ProcessAPI processAPI = null;
 
@@ -164,7 +164,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormExpressionsAPIImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormExpressionsAPIImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
@@ -277,7 +277,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormExpressionsAPIImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormExpressionsAPIImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
@@ -295,7 +295,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormExpressionsAPIImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormExpressionsAPIImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
@@ -310,7 +310,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormExpressionsAPIImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormExpressionsAPIImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
@@ -324,7 +324,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormExpressionsAPIImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormExpressionsAPIImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
@@ -360,7 +360,7 @@ public class TestFormExpressionsAPIImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormExpressionsAPIImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormExpressionsAPIImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());

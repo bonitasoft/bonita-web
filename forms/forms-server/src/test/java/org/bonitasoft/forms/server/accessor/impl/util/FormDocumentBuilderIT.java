@@ -43,7 +43,7 @@ import org.w3c.dom.Document;
  * @author Anthony Birembaut
  *
  */
-public class TestFormDocumentBuilder extends FormsTestCase {
+public class FormDocumentBuilderIT extends FormsTestCase {
 
     @Test
     public void testInterpreteFormXMLWithI18n() throws Exception {
