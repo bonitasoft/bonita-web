@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-24 06:11-0500\n"
+"PO-Revision-Date: 2014-11-25 13:23-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -20,14 +20,44 @@ msgstr "Colunas"
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
 msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
 
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "The deleted case will be permanently deleted and will not be stored in the archives."
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "These deleted cases will be permanently deleted and will not be stored in the archives."
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "The deleted case will be permanently deleted from the archives."
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "These deleted cases will be permanently deleted from the archives."
+
+msgid "Failed Flow Nodes"
+msgstr "Failed Flow Nodes"
+
+msgid "Pending Flow Nodes"
+msgstr "Pending Flow Nodes"
+
+msgid "No cases to display"
+msgstr "Nenhum caso para exibir"
+
+msgid "Cases list"
+msgstr "Lista de casos"
+
+msgid "End date"
+msgstr "Data de Fim"
+
+msgid "Confirm delete?"
+msgstr "Confirmar exclusão?"
+
 msgid "Filters"
 msgstr "Filtros"
 
-msgid "All versions"
-msgstr "Todas as versões"
+msgid "Healthy"
+msgstr "Sem erros"
 
-msgid "All apps"
-msgstr "Todos os aplicativos"
+msgid "With Failures"
+msgstr "With Failures"
 
 msgid "Monitor active cases"
 msgstr "Monitorar casos ativos"
@@ -81,14 +111,20 @@ msgstr "Todos "
 msgid "Never"
 msgstr "Nunca"
 
-msgid "30 s."
-msgstr "30 s."
-
 msgid "1 min."
 msgstr "1 min."
 
+msgid "5 min."
+msgstr "5 min."
+
 msgid "10 min."
 msgstr "10 min."
+
+msgid "30 min."
+msgstr "30 min."
+
+msgid "1 h."
+msgstr "1 h."
 
 msgid "Technical error."
 msgstr "Erro técnico."

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-24 06:15-0500\n"
+"PO-Revision-Date: 2014-11-25 13:27-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -15,22 +15,52 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Columnas"
 
 msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "El caso eliminado se eliminará permanentemente y no se archivará."
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Estos casos eliminados se eliminarán permanentemente y no se archivarán."
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "El caso eliminado se eliminará permanentemente del histórico."
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "Estos casos eliminados se eliminarán permanentemente del histórico."
+
+msgid "Failed Flow Nodes"
+msgstr "Flow Nodes fallidos"
+
+msgid "Pending Flow Nodes"
+msgstr "Flow Nodes pendientes"
+
+msgid "No cases to display"
+msgstr "No cases to display"
+
+msgid "Cases list"
+msgstr "Lista de casos"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "Confirm delete?"
+msgstr "¿Confirmar borrado?"
 
 msgid "Filters"
 msgstr "Filtros"
 
-msgid "All versions"
-msgstr "All versions"
+msgid "Healthy"
+msgstr "Saludable"
 
-msgid "All apps"
-msgstr "All apps"
+msgid "With Failures"
+msgstr "Con fallos"
 
 msgid "Monitor active cases"
-msgstr "Monitor active cases"
+msgstr "Monitorización casos activos"
 
 msgid "Open cases"
 msgstr "Casos abiertos"
@@ -39,10 +69,10 @@ msgid "Healthy cases"
 msgstr "Casos activos"
 
 msgid "Cases with failures"
-msgstr "Cases with failures"
+msgstr "Casos con fallos"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtrar por proceso"
 
 msgid "Process list"
 msgstr "Lista de Procesos"
@@ -81,14 +111,20 @@ msgstr "Todos"
 msgid "Never"
 msgstr "Nunca"
 
-msgid "30 s."
-msgstr "30 s."
-
 msgid "1 min."
 msgstr "1 min."
 
+msgid "5 min."
+msgstr "5 min."
+
 msgid "10 min."
 msgstr "10 min."
+
+msgid "30 min."
+msgstr "30 min."
+
+msgid "1 h."
+msgstr "1 h."
 
 msgid "Technical error."
 msgstr "Technical error."
@@ -115,29 +151,29 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
 msgid "Disabled, no new instance can be started"
-msgstr "Disabled, no new instance can be started"
+msgstr "Desactivado, no puede iniciarse ninguna nueva instancia"
 
 msgid "Process enabled"
-msgstr "Process enabled"
+msgstr "Proceso activado"
 
 msgid "View case list"
-msgstr "View case list"
+msgstr "Ver lista de casos"
 
 msgid "View diagram"
-msgstr "View diagram"
+msgstr "Ver diagrama"
 
 msgid "Drawing diagram ..."
-msgstr "Drawing diagram ..."
+msgstr "Dibujando el diagrama ..."
 
 msgid "Error on drawing diagram !"
-msgstr "Error on drawing diagram !"
+msgstr "¡Error dibujando el diagrama!"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "DEFAULT ZOOM LEVEL"
+msgstr "ZOOM POR DEFECTO"
 
 msgid "MIN"
-msgstr "MIN"
+msgstr "MÍN"
 
 msgid "MAX"
-msgstr "MAX"
+msgstr "MÁX"
 
