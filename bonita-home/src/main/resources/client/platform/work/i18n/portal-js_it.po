@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-25 13:16-0500\n"
+"PO-Revision-Date: 2014-11-26 08:23-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -58,6 +58,12 @@ msgstr "Sano"
 
 msgid "With Failures"
 msgstr "Con errori"
+
+msgid "All versions"
+msgstr "Tutte le versioni"
+
+msgid "All apps"
+msgstr "Tutte le apps"
 
 msgid "Monitor active cases"
 msgstr "Monitor i casi attivi"
@@ -129,8 +135,8 @@ msgstr "1 h."
 msgid "Technical error."
 msgstr "Errore tecnico."
 
-msgid "Process state"
-msgstr "Stato del processo"
+msgid "State"
+msgstr "Stato"
 
 msgid "Show"
 msgstr "Visualizza"
@@ -139,7 +145,7 @@ msgid "Healthy cases"
 msgstr "Casi sani"
 
 msgid "Open"
-msgstr "Apri"
+msgstr "Aperti"
 
 msgid "Process version"
 msgstr "Versione del processo"
@@ -150,8 +156,8 @@ msgstr "Stato del caso"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
-msgid "Disabled, no new instance can be started"
-msgstr "Disabilitato, nessuna nuova istanza può essere avviata"
+msgid "Disabled, no new case can be started"
+msgstr "Disabilitato, nessun nuovo caso può essere avviato"
 
 msgid "Process enabled"
 msgstr "Processo attivato"
@@ -176,4 +182,10 @@ msgstr "MIN"
 
 msgid "MAX"
 msgstr "MAX"
+
+msgid "Version"
+msgstr "Versione"
+
+msgid "Diagram is currently downloading."
+msgstr "Scaricamento del diagramma in corso."
 

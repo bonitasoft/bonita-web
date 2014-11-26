@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-25 13:27-0500\n"
+"PO-Revision-Date: 2014-11-26 08:34-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -39,13 +39,13 @@ msgid "Pending Flow Nodes"
 msgstr "Flow Nodes pendientes"
 
 msgid "No cases to display"
-msgstr "No cases to display"
+msgstr "No hay casos para mostrar"
 
 msgid "Cases list"
 msgstr "Lista de casos"
 
 msgid "End date"
-msgstr "End date"
+msgstr "Fecha fin"
 
 msgid "Confirm delete?"
 msgstr "¿Confirmar borrado?"
@@ -54,10 +54,16 @@ msgid "Filters"
 msgstr "Filtros"
 
 msgid "Healthy"
-msgstr "Saludable"
+msgstr "Sin error"
 
 msgid "With Failures"
 msgstr "Con fallos"
+
+msgid "All versions"
+msgstr "Todas las versiones"
+
+msgid "All apps"
+msgstr "Todas las aplicaciones"
 
 msgid "Monitor active cases"
 msgstr "Monitorización casos activos"
@@ -127,10 +133,10 @@ msgid "1 h."
 msgstr "1 h."
 
 msgid "Technical error."
-msgstr "Technical error."
+msgstr "Error técnico."
 
-msgid "Process state"
-msgstr "Process state"
+msgid "State"
+msgstr "Estado"
 
 msgid "Show"
 msgstr "Mostrar"
@@ -139,19 +145,19 @@ msgid "Healthy cases"
 msgstr "Casos activos"
 
 msgid "Open"
-msgstr "Abrir"
+msgstr "Abiertos"
 
 msgid "Process version"
-msgstr "Process version"
+msgstr "Versión de proceso"
 
 msgid "Case state"
-msgstr "Case state"
+msgstr "Estado del caso"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
-msgid "Disabled, no new instance can be started"
-msgstr "Desactivado, no puede iniciarse ninguna nueva instancia"
+msgid "Disabled, no new case can be started"
+msgstr "Desactivado, no puede iniciarse ningún nuevo caso"
 
 msgid "Process enabled"
 msgstr "Proceso activado"
@@ -176,4 +182,10 @@ msgstr "MÍN"
 
 msgid "MAX"
 msgstr "MÁX"
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Diagram is currently downloading."
+msgstr "El diagrama se está descargando actualmente."
 

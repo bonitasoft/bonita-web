@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-25 13:11-0500\n"
+"PO-Revision-Date: 2014-11-26 08:15-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -21,16 +21,16 @@ msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{t
 msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
-msgstr "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
 
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
-msgstr "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Ces cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
 
 msgid "The deleted case will be permanently deleted from the archives."
-msgstr "The deleted case will be permanently deleted from the archives."
+msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "These deleted cases will be permanently deleted from the archives."
+msgstr "Ces cas supprimés le seront définitivement des archives."
 
 msgid "Failed Flow Nodes"
 msgstr "Failed Flow Nodes"
@@ -57,10 +57,16 @@ msgid "Healthy"
 msgstr "Sans erreur"
 
 msgid "With Failures"
-msgstr "With Failures"
+msgstr "Avec erreurs"
+
+msgid "All versions"
+msgstr "Toutes les versions"
+
+msgid "All apps"
+msgstr "Tous les processus"
 
 msgid "Monitor active cases"
-msgstr "Monitoring des cas en cours"
+msgstr "Monitoring des cas actifs"
 
 msgid "Open cases"
 msgstr "Cas démarrés"
@@ -129,8 +135,8 @@ msgstr "1 h."
 msgid "Technical error."
 msgstr "Erreur technique."
 
-msgid "Process state"
-msgstr "État du processus"
+msgid "State"
+msgstr "Etat"
 
 msgid "Show"
 msgstr "Voir"
@@ -139,7 +145,7 @@ msgid "Healthy cases"
 msgstr "Cas sans erreur"
 
 msgid "Open"
-msgstr "Ouvrir"
+msgstr "En cours"
 
 msgid "Process version"
 msgstr "Version du processus"
@@ -150,8 +156,8 @@ msgstr "Etat du cas"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
-msgid "Disabled, no new instance can be started"
-msgstr "Disabled, no new instance can be started"
+msgid "Disabled, no new case can be started"
+msgstr "Disabled, no new case can be started"
 
 msgid "Process enabled"
 msgstr "Process enabled"
@@ -176,4 +182,10 @@ msgstr "MIN"
 
 msgid "MAX"
 msgstr "MAX"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Diagram is currently downloading."
+msgstr "Diagram is currently downloading."
 

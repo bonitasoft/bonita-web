@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-25 13:23-0500\n"
+"PO-Revision-Date: 2014-11-26 08:30-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -21,22 +21,22 @@ msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{t
 msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
-msgstr "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "O caso será permanentemente excluído e não será armazenado nos arquivos."
 
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
-msgstr "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Estes casos serão permanentemente excluídos e não serão armazenado nos arquivos."
 
 msgid "The deleted case will be permanently deleted from the archives."
-msgstr "The deleted case will be permanently deleted from the archives."
+msgstr "O caso será excluído dos arquivos permanentemente."
 
 msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "These deleted cases will be permanently deleted from the archives."
+msgstr "Estes casos serão excluídos dos arquivos permanentemente."
 
 msgid "Failed Flow Nodes"
-msgstr "Failed Flow Nodes"
+msgstr "Etapas em erro"
 
 msgid "Pending Flow Nodes"
-msgstr "Pending Flow Nodes"
+msgstr "Etapas pendentes"
 
 msgid "No cases to display"
 msgstr "Nenhum caso para exibir"
@@ -57,7 +57,13 @@ msgid "Healthy"
 msgstr "Sem erros"
 
 msgid "With Failures"
-msgstr "With Failures"
+msgstr "Com erros"
+
+msgid "All versions"
+msgstr "Todas as versões"
+
+msgid "All apps"
+msgstr "Todos os aplicativos"
 
 msgid "Monitor active cases"
 msgstr "Monitorar casos ativos"
@@ -129,8 +135,8 @@ msgstr "1 h."
 msgid "Technical error."
 msgstr "Erro técnico."
 
-msgid "Process state"
-msgstr "Estado do processo"
+msgid "State"
+msgstr "Estado"
 
 msgid "Show"
 msgstr "Mostar"
@@ -139,7 +145,7 @@ msgid "Healthy cases"
 msgstr "Casos sem erros"
 
 msgid "Open"
-msgstr "Abrir"
+msgstr "Abertos"
 
 msgid "Process version"
 msgstr "Versão do processo"
@@ -150,30 +156,36 @@ msgstr "Estado do caso"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
-msgid "Disabled, no new instance can be started"
-msgstr "Disabled, no new instance can be started"
+msgid "Disabled, no new case can be started"
+msgstr "Desativado, nenhum novo caso pode ser iniciado"
 
 msgid "Process enabled"
-msgstr "Process enabled"
+msgstr "Processo ativado"
 
 msgid "View case list"
-msgstr "View case list"
+msgstr "Ver lista de caso"
 
 msgid "View diagram"
-msgstr "View diagram"
+msgstr "Exibir diagrama"
 
 msgid "Drawing diagram ..."
-msgstr "Drawing diagram ..."
+msgstr "Desenhando o diagrama..."
 
 msgid "Error on drawing diagram !"
-msgstr "Error on drawing diagram !"
+msgstr "Erro ao desenhar o diagrama!"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "DEFAULT ZOOM LEVEL"
+msgstr "NÍVEL DE ZOOM PADRÃO"
 
 msgid "MIN"
 msgstr "MIN"
 
 msgid "MAX"
 msgstr "MAX"
+
+msgid "Version"
+msgstr "Versão"
+
+msgid "Diagram is currently downloading."
+msgstr "O diagrama está sendo baixado."
 
