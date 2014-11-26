@@ -49,7 +49,7 @@ import org.junit.Test;
  * @author Vincent Elcrin
  * 
  */
-public class TestProcessValidation extends EngineSetup {
+public class ProcessValidationTest extends EngineSetup {
 
     private TestCase testCase;
 

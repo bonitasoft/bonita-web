@@ -40,6 +40,7 @@ import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
+import org.bonitasoft.forms.client.model.ActionType;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
@@ -58,8 +59,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.w3c.dom.Document;
 
 /**
@@ -68,16 +67,13 @@ import org.w3c.dom.Document;
  * @author Anthony Birembaut, Haojie Yuan
  *
  */
-@RunWith(MockitoJUnitRunner.class)
-public class TestFormDefinitionAPIImpl extends FormsTestCase {
+public class FormDefinitionAPIImplIT extends FormsTestCase {
 
     private ProcessDefinition bonitaProcess;
 
     private Date deployementDate;
 
     private final Map<String, Object> context = new HashMap<String, Object>();
-
-    // private LoginContext loginContext;
 
     private IFormBuilder formBuilder;
 
@@ -116,23 +112,20 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         final Map<String, Object> urlContext = new HashMap<String, Object>();
         urlContext.put(FormServiceProviderUtil.PROCESS_UUID, bonitaProcess.getId());
         urlContext.put(FormServiceProviderUtil.IS_EDIT_MODE, true);
-        urlContext.put(FormServiceProviderUtil.DOCUMENT, document);
         urlContext.put(FormServiceProviderUtil.FORM_ID, formID);
         urlContext.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
-        urlContext.put(FormServiceProviderUtil.APPLICATION_DEPLOYMENT_DATE, deployementDate);
         urlContext.put(FormServiceProviderUtil.MODE, "form");
-        urlContext.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, context);
+        context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, context);
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
         context.put(FormServiceProviderUtil.API_SESSION, getSession());
-
     }
 
     @Override
     @After
     public void tearDown() throws Exception {
 
-        processAPI.deleteProcess(bonitaProcess.getId());
+        processAPI.deleteProcessDefinition(bonitaProcess.getId());
         super.tearDown();
     }
 
@@ -190,14 +183,6 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
     }
 
     @Test
-    public void testFormPageLayout() throws Exception {
-        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        final String result = api.getFormPageLayout(formID, pageID, context);
-        Assert.assertNotNull(result);
-        Assert.assertEquals("/process-page1-template.html", result);
-    }
-
-    @Test
     public void testGetApplicationConfig() throws Exception {
         final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
         final ApplicationConfig result = api.getApplicationConfig(context, formID, false);
@@ -220,6 +205,8 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         pageIds.add(pageID);
         final List<FormAction> result = api.getFormActions(formID, pageIds, context);
         Assert.assertNotNull(result);
+        Assert.assertFalse(result.isEmpty());
+        Assert.assertEquals("variableName", result.get(0).getVariableName());
     }
 
     @Test
@@ -244,20 +231,43 @@ public class TestFormDefinitionAPIImpl extends FormsTestCase {
         Assert.assertNotNull(result);
     }
 
+    @Test
+    public void testCacheForms() throws Exception {
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        api.cacheForm(formID, context);
+        final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(getSession().getTenantId());
+        final FormPage formPageFromCache = formCacheUtil.getPage(formID, Locale.ENGLISH.toString(), deployementDate, pageID);
+        Assert.assertNotNull(formPageFromCache);
+        Assert.assertEquals(pageID, formPageFromCache.getPageId());
+        final List<FormAction> pageActions = formCacheUtil.getPageActions(formID, Locale.ENGLISH.toString(), deployementDate, pageID);
+        Assert.assertNotNull(pageActions);
+        Assert.assertFalse(pageActions.isEmpty());
+        Assert.assertEquals("variableName", pageActions.get(0).getVariableName());
+    }
+
+    @Test
+    public void testGetFormsList() throws Exception {
+        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
+        final List<String> formsList = api.getFormsList(context);
+        Assert.assertNotNull(formsList);
+        Assert.assertFalse(formsList.isEmpty());
+        Assert.assertEquals(formID, formsList.get(0));
+    }
+
     private File buildComplexFormXML() throws Exception {
         formBuilder.createFormDefinition();
         formBuilder.addMigrationProductVersion("6.0");
         formBuilder.addApplication("processName", "1.0");
         formBuilder.addLabelExpression(null, "process label", "TYPE_CONSTANT", String.class.getName(), null);
-        formBuilder.addLayout("/process-template.html");
         formBuilder.addPermissions("application#test");
 
-        formBuilder.addEntryForm("processName--1.0$entry");
+        formBuilder.addEntryForm(formID);
         formBuilder.addFirstPageIdExpression(null, "processPage1", "TYPE_CONSTANT", String.class.getName(), null);
         formBuilder.addPermissions("process#test1");
-        formBuilder.addPage("processPage1");
+        formBuilder.addPage(pageID);
         formBuilder.addLabelExpression(null, "page1 label", "TYPE_CONSTANT", String.class.getName(), null);
         formBuilder.addLayout("/process-page1-template.html");
+        formBuilder.addAction(ActionType.ASSIGNMENT, "variableName", String.class.getName(), "=", String.class.getName(), "submitButtonId");
         formBuilder.addMandatoryLabelExpression(null, "mandatory-label", "TYPE_CONSTANT", String.class.getName(), null);
 
         return formBuilder.done();

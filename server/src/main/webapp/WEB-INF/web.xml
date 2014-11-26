@@ -164,10 +164,11 @@
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
+        <!-- Uncomment those lines to apply security checks also on portal servlets -->
         <!-- <url-pattern>/portal/formsDocumentDownload</url-pattern> -->
         <!-- <url-pattern>/portal/documentDownload</url-pattern> -->
         <!-- <url-pattern>/portal/downloadDocument</url-pattern> -->
-        <!-- <url-pattern>/serverAPI/*</url-pattern> -->
+        <!--  Add more servlet mappings here -->  
     </filter-mapping>
     <filter-mapping>
         <filter-name>TokenGeneratorFilter</filter-name>
@@ -369,6 +370,10 @@
         <servlet-class>org.bonitasoft.forms.server.HomepageServlet</servlet-class>
     </servlet>
     <!-- End theme -->
+    <servlet>
+        <servlet-name>formsCache</servlet-name>
+        <servlet-class>org.bonitasoft.forms.server.FormsCacheServlet</servlet-class>
+    </servlet>
     <!-- For engine HTTP API -->
     ${enable.engine.http.api.start}
     <servlet>
@@ -471,6 +476,14 @@
     <servlet-mapping>
         <servlet-name>org.bonitasoft.forms.server.FormLayoutDownloadServletconsole/formLayoutDownload</servlet-name>
         <url-pattern>/portal/formLayoutDownload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>formsCache</servlet-name>
+        <url-pattern>/portal/formsCache</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>formsCache</servlet-name>
+        <url-pattern>/portal/formsCache/*</url-pattern>
     </servlet-mapping>
     <!-- For engine HTTP API -->
     ${enable.engine.http.api.start}

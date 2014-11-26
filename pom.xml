@@ -41,9 +41,6 @@
 
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
-        
-        <!-- used when sonar profile is not active -->
-        <jacoco.agent.it.arg></jacoco.agent.it.arg>
     </properties>
 
     <dependencyManagement>
@@ -577,7 +574,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
+                            <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
                             <systemPropertyVariables>
                                 <bonita.home>${bonita.home.test}/bonita</bonita.home>
                             </systemPropertyVariables>
@@ -700,6 +697,10 @@
                             <excludes>
                                 <exclude>org.bonitasoft.console.client.*</exclude>
                                 <exclude>com.bonitasoft.console.client.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.view.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.view.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.i18n.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.i18n.*</exclude>
                             </excludes>
                         </configuration>
                         <executions>
@@ -729,8 +730,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <!-- Avoid executing the tests twice (they are already launched with failsafe) -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -743,6 +742,30 @@
                                 </property>
                             </properties>
                         </configuration>
+                    </plugin>
+                    <!-- declare the failsafe plugin again in the sonar profile, because just overriding the argline here doesn't work -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                                <configuration>
+                                    <argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
+                                    <systemPropertyVariables>
+                                        <bonita.home>${bonita.home.test}/bonita</bonita.home>
+                                    </systemPropertyVariables>
+                                    <includes>
+                                        <!--the following are failsafe conventions -->
+                                        <include>**/*IT.java</include>
+                                        <include>**/*IntegrationTest.java</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

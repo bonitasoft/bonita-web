@@ -1,0 +1,24 @@
+bootstrap-form-control label::after {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 88;
+}
+
+bootstrap-form-control label::after {
+  top: 32px;
+  right: 42px;
+  height: 20px;
+  width: 20px;
+  background: white;
+  border: 1px solid white;
+}
+
+.field-upload-container label::after {display: none}
+.select-form-container label::after {
+  top: 26px;
+  right: 1px;
+  width: 65px;
+  height: 32px;
+  background: white url("themeResource?theme=portal&location=skin/images/form-select.png") no-repeat right center
+}

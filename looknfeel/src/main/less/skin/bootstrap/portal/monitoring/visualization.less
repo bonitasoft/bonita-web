@@ -99,11 +99,22 @@
     margin: 0 5px;
   }
 
+  .zoom-buttons .reset {
+    margin-left: 1em;
+  }
+
+  .reset {
+    margin-left: 10px;
+  }
+
   .panzoom-parent {
     overflow: hidden;
     position: relative;
+    border: solid 1px #ddd;
     /*-webkit-perspective: 1000;*/
     /*-webkit-backface-visibility: hidden;*/
+    min-height: 100%;
+    min-height: 100vh;
   }
 
   .panzoom {
@@ -122,6 +133,10 @@
 
   svg .label-default {
     fill: #5cb85c;
+  }
+
+  svg .label-exec {
+    fill: #000000;
   }
 
   svg .hasFailedCases .bordered-box {

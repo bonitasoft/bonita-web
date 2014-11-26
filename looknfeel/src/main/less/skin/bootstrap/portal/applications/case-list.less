@@ -2,9 +2,7 @@
 // angular case list style
 /////////////////////////////////////////////////////////////////////////////////////////////
 #case-list {
-	width: 100%;
-	padding: 0px 100px 0 100px;
-
+	margin-top : -35px;
 
 	&-tab-content {
 		padding: 25px 0px 0 0px;
@@ -24,10 +22,7 @@
 	}
 	li{
 		&[draggable=true]:hover{
-		background: url("themeResource?theme=portal&location=skin/images/dragndrophover.gif") repeat-y left;
-		}
-		&.lr-drop-target-before{
-			border-color: #999999;
+			background: url("themeResource?theme=portal&location=skin/images/dragndrophover.gif") repeat-y left;
 		}
 	}
 	
@@ -60,14 +55,20 @@
 		&selected {
 			background-color: blue;
 		}
+		&action {
+			height : 28px;
+		}
+		&link{
+			padding-left: 20px;
+		}
 	}
 
-	.lr-drop-target-before{
-		border-left: 2px solid orange;
+	.title {
+		font-size: 18px;
 	}
 
-	.lr-drop-target-after{
-		border-right: 2px solid orange;
+	h1 {
+		margin-bottom : 5px;
 	}
 
 	.cases-nb-results{
@@ -95,6 +96,10 @@
 
 	.pointer{
 		cursor: pointer;
+	}
+
+	.glyphicon-chevron-down, .glyphicon-chevron-up {
+		font-size : 10px;
 	}
 	
 	.glyphicon-refresh-animate {

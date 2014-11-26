@@ -25,7 +25,7 @@ import org.junit.Test;
  * @author Anthony Birembaut
  *
  */
-public class TestDefaultValidatorsAccessor extends FormsTestCase {
+public class DefaultValidatorsAccessorIT extends FormsTestCase {
     
     private DefaultValidatorsProperties defaultValidatorsAccessor;
 

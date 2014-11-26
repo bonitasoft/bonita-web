@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-15 14:43+0100\n"
-"PO-Revision-Date: 2014-11-25 13:26-0500\n"
+"POT-Creation-Date: 2014-11-20 05:01+0100\n"
+"PO-Revision-Date: 2014-11-26 08:33-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -132,7 +132,7 @@ msgid "%nb_ongoing% ongoing"
 msgstr "%nb_ongoing% en marcha"
 
 msgid "%rolename%"
-msgstr "%nombre de actor%"
+msgstr "%rolename%"
 
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% of %groupname%"
@@ -393,7 +393,7 @@ msgid "Bonita Portal"
 msgstr "Bonita BPM Portal"
 
 msgid "Browse your computer and select the business archive containing the process definition to install."
-msgstr "Browse your computer and select the business archive containing the process definition to install."
+msgstr "Examine su equipo y seleccione el business archive (.bar) que contiene la definición del proceso a instalar."
 
 msgid "Business archive"
 msgstr "Business Archive (*.bar)"
@@ -627,7 +627,7 @@ msgid "Delete selected groups"
 msgstr "Eliminar grupos seleccionados"
 
 msgid "Delete selected processes"
-msgstr "Delete selected processes"
+msgstr "Eliminar los procesos seleccionados"
 
 msgid "Delete selected roles"
 msgstr "Eliminar las funciones"
@@ -642,7 +642,7 @@ msgid "Delete this membership"
 msgstr "Eliminar esta membresía"
 
 msgid "Delete this process"
-msgstr "Delete this process"
+msgstr "Eliminar este proceso"
 
 msgid "Description"
 msgstr "Descripción"
@@ -660,25 +660,25 @@ msgid "Disable"
 msgstr "Desactivar"
 
 msgid "Disable selected processes"
-msgstr "Disable selected processes"
+msgstr "Deshabilitar los procesos seleccionados"
 
 msgid "Disable this process"
-msgstr "Disable this process"
+msgstr "Desactivar este proceso"
 
 msgid "Disabled"
 msgstr "Desactivado"
 
 msgid "Disabled processes"
-msgstr "Disabled processes"
+msgstr "Procesos deshabilitados"
 
 msgid "Discuss :"
 msgstr "Discutir :"
 
 msgid "Display a case form of process %app_name%"
-msgstr "Display a case form of process %app_name%"
+msgstr "Mostrar un formulario de instanciación del proceso %app_name%"
 
 msgid "Display a summary of all processes"
-msgstr "Display a summary of all processes"
+msgstr "Mostrar un resumen de todos los procesos"
 
 msgid "Display name"
 msgstr "Título dinámico"
@@ -759,19 +759,19 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr "Activado"
+msgstr "Activar"
 
 msgid "Enable selected processes"
-msgstr "Enable selected processes"
+msgstr "Activar procesos seleccionados"
 
 msgid "Enable this process"
-msgstr "Enable this process"
+msgstr "Activar este proceso"
 
 msgid "Enabled"
 msgstr "Activado"
 
 msgid "Enabled processes"
-msgstr "Enabled processes"
+msgstr "Procesos habilitados"
 
 msgid "Enter a category name"
 msgstr "Ingrese un nombre de categoría"
@@ -1029,7 +1029,7 @@ msgid "Install"
 msgstr "Instalar"
 
 msgid "Install a process"
-msgstr "Install a process"
+msgstr "Instalar un proceso"
 
 msgid "Installed by"
 msgstr "Instalado por"
@@ -1299,7 +1299,7 @@ msgid "Opens a popup to create a user"
 msgstr "Se abre una ventana emergente para crear un usuario"
 
 msgid "Opens a popup to install a process"
-msgstr "Opens a popup to install a process"
+msgstr "Abre una ventana emergente para instalar un proceso"
 
 msgid "Organisation file"
 msgstr "Archivo de la organización"
@@ -1425,7 +1425,7 @@ msgid "Process name"
 msgstr "Nombre de Proceso"
 
 msgid "Process version"
-msgstr "Process version"
+msgstr "Versión de proceso"
 
 msgid "Processes"
 msgstr "Procesos"
@@ -1461,7 +1461,7 @@ msgid "Resolved"
 msgstr "Resuelto"
 
 msgid "Resolved processes"
-msgstr "Resolved processes"
+msgstr "Procesos resueltos"
 
 msgid "Retrieve"
 msgstr "recuperar"
@@ -1518,7 +1518,7 @@ msgid "Select a group to set to this user"
 msgstr "Seleccione un grupo para establecer a este usuario"
 
 msgid "Select a process in the list below to display the available tasks"
-msgstr "Select a process in the list below to display the available tasks"
+msgstr "Seleccione un proceso en la lista de abajo para mostrar las tareas disponibles"
 
 msgid "Select a role"
 msgstr "Seleccione un rol"
@@ -1536,7 +1536,7 @@ msgid "Select a user to be added to actor"
 msgstr "Selecciona un usuario para añadirlo al actor"
 
 msgid "Select a user to start process %app_name% %app_version%"
-msgstr "Select a user to start process %app_name% %app_version%"
+msgstr "Seleccione un usuario para iniciar el proceso %app_name% %app_version%"
 
 msgid "Select an avatar for this group"
 msgstr "Elige un avatar para este grupo"
@@ -1557,7 +1557,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en el proceso."
 
 msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
+msgstr "Seleccione el responsable de este usuario"
 
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
@@ -1629,7 +1629,7 @@ msgid "Start"
 msgstr "Inicio"
 
 msgid "Start a process on behalf of another user"
-msgstr "Start a process on behalf of another user"
+msgstr "Iniciar un proceso como otro usuario"
 
 msgid "Start an instance of process %app_name%"
 msgstr "Iniciar una instancia del proceso %app_name%"
@@ -1638,10 +1638,10 @@ msgid "Start date"
 msgstr "Fecha de inicio"
 
 msgid "Start this process"
-msgstr "Start this process"
+msgstr "Iniciar este proceso"
 
 msgid "Start this process on behalf of selected user"
-msgstr "Start this process on behalf of selected user"
+msgstr "Iniciar este proceso como el usuario seleccionado"
 
 msgid "Started by"
 msgstr "Iniciado por"
@@ -1830,7 +1830,7 @@ msgid "The priority of the task"
 msgstr "La prioridad de la tarea"
 
 msgid "The process responsible for the creation of this task"
-msgstr "The process responsible for the creation of this task"
+msgstr "El proceso responsable para la creación de esta tarea"
 
 msgid "The server is not available"
 msgstr "El servidor no está disponible"
@@ -1869,7 +1869,7 @@ msgid "The version of the process"
 msgstr "La versión del proceso"
 
 msgid "The version of the process that created this case"
-msgstr "The version of the process that created this case"
+msgstr "La versión del proceso que creó este caso"
 
 msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Estos %item_name_plural% serán definitivamente eliminados."
@@ -1980,7 +1980,7 @@ msgid "Unresolved"
 msgstr "no resuelto"
 
 msgid "Unresolved processes"
-msgstr "Unresolved processes"
+msgstr "Procesos no resueltos"
 
 msgid "Unsupported file."
 msgstr "Archivo no compatible."
@@ -2034,10 +2034,10 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 msgid "Version of the process"
-msgstr "Version of the process"
+msgstr "Versión del proceso"
 
 msgid "Warning"
 msgstr "Advertencia"

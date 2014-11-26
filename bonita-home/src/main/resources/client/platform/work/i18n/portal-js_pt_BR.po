@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-25 13:23-0500\n"
+"PO-Revision-Date: 2014-11-26 09:48-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -17,20 +17,65 @@ msgstr ""
 msgid "Columns"
 msgstr "Colunas"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "O caso será permanentemente excluído e não será armazenado nos arquivos."
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Estes casos serão permanentemente excluídos e não serão armazenado nos arquivos."
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "O caso será excluído dos arquivos permanentemente."
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "Estes casos serão excluídos dos arquivos permanentemente."
+
+msgid "Failed Flow Nodes"
+msgstr "Etapas em erro"
+
+msgid "Pending Flow Nodes"
+msgstr "Etapas pendentes"
+
+msgid "No cases to display"
+msgstr "Nenhum caso para exibir"
+
+msgid "Case list"
+msgstr "Case list"
+
+msgid "End date"
+msgstr "Data de Fim"
+
+msgid "Confirm delete?"
+msgstr "Confirmar exclusão?"
 
 msgid "Filters"
 msgstr "Filtros"
 
-msgid "All versions"
-msgstr "Todas as versões"
+msgid "Healthy"
+msgstr "Sem erros"
 
-msgid "All apps"
-msgstr "Todos os aplicativos"
+msgid "With Failures"
+msgstr "Com erros"
 
-msgid "Monitor active cases"
-msgstr "Monitorar casos ativos"
+msgid "items per page"
+msgstr "items per page"
+
+msgid "columns selection"
+msgstr "columns selection"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} casos excluídos com sucesso"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} casos excluídos com sucesso"
+
+msgid "One or more connectors on case start or case end failed"
+msgstr "One or more connectors on case start or case end failed"
+
+msgid "Monitor open cases"
+msgstr "Monitorar casos abertos"
 
 msgid "Open cases"
 msgstr "Casos abertos"
@@ -81,20 +126,26 @@ msgstr "Todos "
 msgid "Never"
 msgstr "Nunca"
 
-msgid "30 s."
-msgstr "30 s."
-
 msgid "1 min."
 msgstr "1 min."
+
+msgid "5 min."
+msgstr "5 min."
 
 msgid "10 min."
 msgstr "10 min."
 
+msgid "30 min."
+msgstr "30 min."
+
+msgid "1 h."
+msgstr "1 h."
+
 msgid "Technical error."
 msgstr "Erro técnico."
 
-msgid "Process state"
-msgstr "Estado do processo"
+msgid "State"
+msgstr "Estado"
 
 msgid "Show"
 msgstr "Mostar"
@@ -114,30 +165,36 @@ msgstr "Estado do caso"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
-msgid "Disabled, no new instance can be started"
-msgstr "Disabled, no new instance can be started"
+msgid "Disabled, no new case can be started"
+msgstr "Desativado, nenhum novo caso pode ser iniciado"
 
 msgid "Process enabled"
-msgstr "Process enabled"
+msgstr "Processo ativado"
 
 msgid "View case list"
-msgstr "View case list"
+msgstr "Ver lista de caso"
 
-msgid "View diagram"
-msgstr "View diagram"
+msgid "View process"
+msgstr "View process"
 
 msgid "Drawing diagram ..."
-msgstr "Drawing diagram ..."
+msgstr "Desenhando o diagrama..."
 
 msgid "Error on drawing diagram !"
-msgstr "Error on drawing diagram !"
+msgstr "Erro ao desenhar o diagrama!"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "DEFAULT ZOOM LEVEL"
+msgstr "NÍVEL DE ZOOM PADRÃO"
 
 msgid "MIN"
 msgstr "MIN"
 
 msgid "MAX"
 msgstr "MAX"
+
+msgid "Version"
+msgstr "Versão"
+
+msgid "Loading..."
+msgstr "Loading..."
 

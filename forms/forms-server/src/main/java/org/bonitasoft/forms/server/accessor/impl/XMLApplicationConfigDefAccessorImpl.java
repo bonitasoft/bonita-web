@@ -5,18 +5,20 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.forms.server.accessor.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,10 +32,11 @@ import org.bonitasoft.forms.server.constants.XMLForms;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Haojie Yuan, Anthony Birembaut
- * 
+ *
  */
 public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IApplicationConfigDefAccessor {
 
@@ -64,7 +67,7 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
 
     /**
      * Constructor
-     * 
+     *
      * @param tenantID
      * @param document
      */
@@ -323,5 +326,34 @@ public class XMLApplicationConfigDefAccessorImpl extends XPathUtil implements IA
             productVersion = getStringByXpath(formsDefinitionNode, "@" + XMLForms.PRODUCT_VERSION);
         }
         return productVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<String> getApplicationFormsList() {
+
+        final String xpath = "//" + XMLForms.APPLICATION;
+
+        final Node applicationNode = getNodeByXpath(document, xpath);
+        if (applicationNode == null) {
+            return Collections.emptyList();
+        } else {
+            final StringBuilder formXpathBuilder = new StringBuilder();
+            formXpathBuilder.append(XMLForms.FORMS);
+            formXpathBuilder.append("/");
+            formXpathBuilder.append(XMLForms.FORM);
+
+            final NodeList formNodes = getNodeListByXpath(applicationNode, formXpathBuilder.toString());
+            final List<String> forms = new ArrayList<String>();
+            if (formNodes != null) {
+                for (int i = 0; i < formNodes.getLength(); i++) {
+                    final String id = getStringByXpath(formNodes.item(i), "@" + XMLForms.ID);
+                    forms.add(unescapeSingleQuote(id));
+                }
+            }
+            return forms;
+        }
     }
 }

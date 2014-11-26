@@ -14,7 +14,7 @@ import org.junit.Test;
  * 
  *         Test user creation (as well as platform and default tenant)
  */
-public class TestUserValidation extends EngineSetup {
+public class UserValidationTest extends EngineSetup {
 
 
     @After

@@ -34,7 +34,7 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
      */
     @Override
     public void consoleTestSetUp() throws Exception {
-        this.testHumanTask = TestProcessFactory.getDefaultHumanTaskProcess()
+        testHumanTask = TestProcessFactory.getDefaultHumanTaskProcess()
                 .addActor(TestUserFactory.getJohnCarpenter())
                 .startCase()
                 .getNextHumanTask();
@@ -52,7 +52,7 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testGetDatastore() {
-        assertNotNull("Is not possible to retrieve the dataStore", this.apiHumanTask.getDefaultDatastore());
+        assertNotNull("Is not possible to retrieve the dataStore", apiHumanTask.getDefaultDatastore());
     }
 
     @Test
@@ -61,22 +61,22 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
         final ArrayList<String> deploys = new ArrayList<String>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
         final ArrayList<String> counters = new ArrayList<String>();
-        final APIID apiId = APIID.makeAPIID(this.testHumanTask.getId());
-        final HumanTaskItem humanTaskItem = this.apiHumanTask.runGet(apiId, deploys, counters);
-        assertEquals("Not possible to get the APIHUmanTaskItem ", humanTaskItem.getName(), this.testHumanTask.getName());
-        assertEquals("Not possible to get the APIHUmanTaskItem ", humanTaskItem.getDescription(), this.testHumanTask.getDescription());
+        final APIID apiId = APIID.makeAPIID(testHumanTask.getId());
+        final HumanTaskItem humanTaskItem = apiHumanTask.runGet(apiId, deploys, counters);
+        assertEquals("Not possible to get the APIHUmanTaskItem ", humanTaskItem.getName(), testHumanTask.getName());
+        assertEquals("Not possible to get the APIHUmanTaskItem ", humanTaskItem.getDescription(), testHumanTask.getDescription());
     }
 
     @Test
     public void testUpdateHumanTaskItem() throws Exception {
 
-        final APIID apiId = APIID.makeAPIID(this.testHumanTask.getId());
+        final APIID apiId = APIID.makeAPIID(testHumanTask.getId());
 
         // Update the humanTaskItem attributes
         final HashMap<String, String> attributes = new HashMap<String, String>();
         attributes.put(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID,
                 String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
-        final HumanTaskItem updateHumanTaskItem = this.apiHumanTask.update(apiId, attributes);
+        final HumanTaskItem updateHumanTaskItem = apiHumanTask.update(apiId, attributes);
         assertNotSame("Attributes are not update", updateHumanTaskItem.getAssignedId(),
                 TestUserFactory.getJohnCarpenter().getId());
 
@@ -86,14 +86,14 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
     public void testSearch() throws Exception {
         // Set the filters
         final HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(HumanTaskItem.ATTRIBUTE_ID, String.valueOf(this.testHumanTask.getId()));
+        filters.put(HumanTaskItem.ATTRIBUTE_ID, String.valueOf(testHumanTask.getId()));
 
         // Search the humanTaskItem
         final ArrayList<String> deploys = new ArrayList<String>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
         final ArrayList<String> counters = new ArrayList<String>();
-        final HumanTaskItem foundHumanTaskItem = this.apiHumanTask.runSearch(0, 1, null, null, filters, deploys, counters).getResults().get(0);
-        assertEquals("Can't search the humanTaskItem", this.testHumanTask.getName(), foundHumanTaskItem.getName());
+        final HumanTaskItem foundHumanTaskItem = apiHumanTask.runSearch(0, 1, null, null, filters, deploys, counters).getResults().get(0);
+        assertEquals("Can't search the humanTaskItem", testHumanTask.getName(), foundHumanTaskItem.getName());
     }
 
     @Test
@@ -111,10 +111,10 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
 
         final HashMap<String, String> filters = new HashMap<String, String>();
         filters.put(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_FAILED);
-        filters.put(HumanTaskItem.ATTRIBUTE_CASE_ID, String.valueOf(failedTestCase.getId()));
+        filters.put(HumanTaskItem.ATTRIBUTE_ROOT_CASE_ID, String.valueOf(failedTestCase.getId()));
 
         assertEquals("No Failed tasks" + failedTestHumanTask.getHumanTaskInstance().getState(), 1,
-                this.apiHumanTask.runSearch(0, 1, null, null, filters, new ArrayList<String>(), new ArrayList<String>()).getResults().size());
+                apiHumanTask.runSearch(0, 1, null, null, filters, new ArrayList<String>(), new ArrayList<String>()).getResults().size());
     }
 
     @Test
@@ -138,8 +138,8 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
         // this.apiHumanTask.setCaller(caller);
 
         // Search for page 2 (1 in zero based)
-        final ItemSearchResult<HumanTaskItem> search = this.apiHumanTask.runSearch(1, 10, null,
-                this.apiHumanTask.defineDefaultSearchOrder(),
+        final ItemSearchResult<HumanTaskItem> search = apiHumanTask.runSearch(1, 10, null,
+                apiHumanTask.defineDefaultSearchOrder(),
                 new HashMap<String, String>(),
                 new ArrayList<String>(), new ArrayList<String>());
 
@@ -150,10 +150,10 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
     @Test
     /**
      * Check when assigned a task to me this task is in available list
-     * @throws Exception 
+     * @throws Exception
      */
     public void testAssignedTaskInAvailable() throws Exception {
-        this.testHumanTask.assignTo(TestUserFactory.getJohnCarpenter());
+        testHumanTask.assignTo(TestUserFactory.getJohnCarpenter());
 
         final ArrayList<String> deploys = new ArrayList<String>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
@@ -162,18 +162,18 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
         filters.put(HumanTaskItem.FILTER_USER_ID,
                 String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
 
-        final List<HumanTaskItem> listHumanTaskItem = this.apiHumanTask.runSearch(0, 1, null, null, filters, deploys, counters).getResults();
+        final List<HumanTaskItem> listHumanTaskItem = apiHumanTask.runSearch(0, 1, null, null, filters, deploys, counters).getResults();
         assertEquals("HumanTask assigned to me not in available list", 1, listHumanTaskItem.size());
     }
 
     /**
      * Initialize APIHumanTask
-     * 
+     *
      * @throws Exception
      */
     private void createAPIHumanTask() throws Exception {
-        this.apiHumanTask = new APIHumanTask();
-        this.apiHumanTask.setCaller(getAPICaller(TestUserFactory.getJohnCarpenter().getSession(),
+        apiHumanTask = new APIHumanTask();
+        apiHumanTask.setCaller(getAPICaller(TestUserFactory.getJohnCarpenter().getSession(),
                 "API/bpm/humanTask"));
     }
 

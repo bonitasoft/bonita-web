@@ -20,22 +20,72 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr ""
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr ""
+
+msgid "Failed Flow Nodes"
+msgstr ""
+
+msgid "Pending Flow Nodes"
+msgstr ""
+
+msgid "No cases to display"
+msgstr ""
+
+msgid "Case list"
+msgstr ""
+
+msgid "End date"
+msgstr ""
+
+msgid "Confirm delete?"
 msgstr ""
 
 msgid "Filters"
 msgstr ""
 
-msgid "All versions"
+msgid "Archived cases"
 msgstr ""
 
-msgid "All apps"
+msgid "With failures"
 msgstr ""
 
+msgid "items per page"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Case details"
+msgstr ""
+
+msgid "columns selection"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr ""
+
+msgid "One or more connectors on case start or case end failed"
+msgstr ""
 
 # processMonitoring
 
-msgid  "Monitor active cases"
+msgid  "Monitor open cases"
 msgstr ""
 
 msgid "Open cases"
@@ -87,19 +137,25 @@ msgstr ""
 msgid  "Never"
 msgstr ""
 
-msgid  "30 s."
+msgid  "1 min."
 msgstr ""
 
-msgid  "1 min."
+msgid  "5 min."
 msgstr ""
 
 msgid  "10 min."
 msgstr ""
 
+msgid  "30 min."
+msgstr ""
+
+msgid  "1 h."
+msgstr ""
+
 msgid  "Technical error."
 msgstr ""
 
-msgid  "Process state"
+msgid  "State"
 msgstr ""
 
 msgid  "Show"
@@ -120,7 +176,7 @@ msgstr ""
 msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
 
-msgid  "Disabled, no new instance can be started"
+msgid  "Disabled, no new case can be started"
 msgstr ""
 
 msgid  "Process enabled"
@@ -129,13 +185,13 @@ msgstr ""
 msgid  "View case list"
 msgstr ""
 
-msgid  "View diagram"
+msgid  "View process"
 msgstr ""
 
-msgid  "Drawing diagram ..."
+msgid  "Drawing process..."
 msgstr ""
 
-msgid  "Error on drawing diagram !"
+msgid  "Error on drawing process!"
 msgstr ""
 
 msgid  "DEFAULT ZOOM LEVEL"
@@ -145,4 +201,10 @@ msgid  "MIN"
 msgstr ""
 
 msgid  "MAX"
+msgstr ""
+
+msgid  "Version"
+msgstr ""
+
+msgid  "Loading..."
 msgstr ""

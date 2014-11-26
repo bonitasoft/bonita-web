@@ -365,7 +365,7 @@ public class APICaseTest {
 
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(FlowNodeItem.ATTRIBUTE_STATE, FlowNodeItem.VALUE_STATE_FAILED);
-        filters.put(FlowNodeItem.ATTRIBUTE_CASE_ID, String.valueOf(id.toLong()));
+        filters.put(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, String.valueOf(id.toLong()));
         final long numberOfFailedFlowNodes = 2L;
         doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, null, filters);
 
@@ -407,7 +407,7 @@ public class APICaseTest {
         final List<String> counters = Arrays.asList(CaseItem.COUNTER_ACTIVE_FLOW_NODES);
 
         final Map<String, String> filters = new HashMap<String, String>();
-        filters.put(FlowNodeItem.ATTRIBUTE_CASE_ID, String.valueOf(id.toLong()));
+        filters.put(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, String.valueOf(id.toLong()));
         final long numberOfFailedFlowNodes = 2L;
         doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, null, filters);
 

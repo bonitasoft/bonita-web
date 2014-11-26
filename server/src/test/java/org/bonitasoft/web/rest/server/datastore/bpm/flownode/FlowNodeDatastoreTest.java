@@ -78,7 +78,7 @@ public class FlowNodeDatastoreTest {
     @Test
     public final void count_should_return_number_of_flow_nodes_on_Engine() throws SearchException {
         final String search = "plop";
-        final String orders = FlowNodeItem.ATTRIBUTE_CASE_ID;
+        final String orders = FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID;
         final Map<String, String> filters = Collections.emptyMap();
         final List<FlowNodeInstance> flowNodeInstances = Arrays.asList((FlowNodeInstance) new UserTaskInstanceImpl("name", 9L, 18L));
         final SearchResult<FlowNodeInstance> searchResult = new SearchResultImpl<FlowNodeInstance>(1L, flowNodeInstances);

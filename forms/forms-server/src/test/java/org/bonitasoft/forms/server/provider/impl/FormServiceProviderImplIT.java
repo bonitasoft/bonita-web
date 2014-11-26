@@ -68,11 +68,7 @@ import org.w3c.dom.Document;
 /**
  * @author QiXiang Zhang, Yongtao Guo
  */
-public class TestFormServiceProviderImpl extends FormsTestCase {
-
-    // protected static final String USERNAME = "dwight";
-    //
-    // protected static final String PASSWORD = "Schrute";
+public class FormServiceProviderImplIT extends FormsTestCase {
 
     protected ProcessDefinition processDefinition;
 
@@ -91,7 +87,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
                 "application",
                 String.class.getName(),
                 expressionBuilder.createNewInstance("word").setContent("Word").setExpressionType(ExpressionType.TYPE_CONSTANT.name())
-                .setReturnType(String.class.getName()).done());
+                        .setReturnType(String.class.getName()).done());
         processBuilder.addDocumentDefinition("doc1").addUrl("www.bonitasoft.org");
         processBuilder.addDocumentDefinition("doc2").addContentFileName("filename.txt").addFile("barFilename.txt");
         processBuilder.addActor("myActor");
@@ -290,7 +286,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormServiceProviderImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
@@ -408,7 +404,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormServiceProviderImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
@@ -418,7 +414,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+                return processAPI.getPendingHumanTaskInstances(FormServiceProviderImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
             }
         }.waitUntil());
         activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
@@ -440,7 +436,7 @@ public class TestFormServiceProviderImpl extends FormsTestCase {
 
             @Override
             protected boolean check() throws Exception {
-                return processAPI.getPendingHumanTaskInstances(TestFormServiceProviderImpl.this.getSession().getUserId(), 0, 10,
+                return processAPI.getPendingHumanTaskInstances(FormServiceProviderImplIT.this.getSession().getUserId(), 0, 10,
                         null).size() >= 1;
             }
         }.waitUntil());
