@@ -30,7 +30,7 @@ import org.junit.Test;
  * @author Paul AMAR
  * 
  */
-public class TestDateFormatModifier {
+public class DateFormatModifierTest {
 
     @Before
     public void setUp() {

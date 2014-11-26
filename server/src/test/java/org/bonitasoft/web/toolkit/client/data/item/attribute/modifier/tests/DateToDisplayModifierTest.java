@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
  * @author Paul AMAR
  * 
  */
-public class TestDateToDisplayModifier {
+public class DateToDisplayModifierTest {
 
     @Before
     public void setUp() {
