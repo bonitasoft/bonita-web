@@ -170,7 +170,7 @@ msgstr ""
 msgid  "View case list"
 msgstr ""
 
-msgid  "View diagram"
+msgid  "View process"
 msgstr ""
 
 msgid  "Drawing diagram ..."
