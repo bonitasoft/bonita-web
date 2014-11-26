@@ -70,7 +70,7 @@ msgstr ""
 
 # processMonitoring
 
-msgid  "Monitor active cases"
+msgid  "Monitor open cases"
 msgstr ""
 
 msgid "Open cases"
