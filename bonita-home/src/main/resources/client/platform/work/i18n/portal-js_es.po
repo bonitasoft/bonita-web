@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-26 08:34-0500\n"
+"PO-Revision-Date: 2014-11-26 09:51-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -17,8 +17,8 @@ msgstr ""
 msgid "Columns"
 msgstr "Columnas"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Resultados: {{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "El caso eliminado se eliminará permanentemente y no se archivará."
@@ -41,7 +41,7 @@ msgstr "Flow Nodes pendientes"
 msgid "No cases to display"
 msgstr "No hay casos para mostrar"
 
-msgid "Cases list"
+msgid "Case list"
 msgstr "Lista de casos"
 
 msgid "End date"
@@ -59,14 +59,23 @@ msgstr "Sin error"
 msgid "With Failures"
 msgstr "Con fallos"
 
-msgid "All versions"
-msgstr "Todas las versiones"
+msgid "items per page"
+msgstr "elementos por página"
 
-msgid "All apps"
-msgstr "Todas las aplicaciones"
+msgid "columns selection"
+msgstr "selección de columnas"
 
-msgid "Monitor active cases"
-msgstr "Monitorización casos activos"
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} caso eliminado satisfactoriamente"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} casos eliminados satisfactoriamente"
+
+msgid "One or more connectors on case start or case end failed"
+msgstr "Uno o más conectores al inicio o al final del caso han fallado"
+
+msgid "Monitor open cases"
+msgstr "Monitorizar casos abiertos"
 
 msgid "Open cases"
 msgstr "Casos abiertos"
@@ -145,7 +154,7 @@ msgid "Healthy cases"
 msgstr "Casos activos"
 
 msgid "Open"
-msgstr "Abiertos"
+msgstr "Abrir"
 
 msgid "Process version"
 msgstr "Versión de proceso"
@@ -165,8 +174,8 @@ msgstr "Proceso activado"
 msgid "View case list"
 msgstr "Ver lista de casos"
 
-msgid "View diagram"
-msgstr "Ver diagrama"
+msgid "View process"
+msgstr "Ver proceso"
 
 msgid "Drawing diagram ..."
 msgstr "Dibujando el diagrama ..."
@@ -186,6 +195,6 @@ msgstr "MÁX"
 msgid "Version"
 msgstr "Versión"
 
-msgid "Diagram is currently downloading."
-msgstr "El diagrama se está descargando actualmente."
+msgid "Loading..."
+msgstr "Cargando…"
 
