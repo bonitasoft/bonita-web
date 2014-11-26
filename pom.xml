@@ -697,6 +697,11 @@
                             <excludes>
                                 <exclude>org.bonitasoft.console.client.*</exclude>
                                 <exclude>com.bonitasoft.console.client.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.view.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.view.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.i18n.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.i18n.*</exclude>
+ 
                             </excludes>
                         </configuration>
                         <executions>
@@ -739,6 +744,7 @@
                             </properties>
                         </configuration>
                     </plugin>
+                    <!-- declare the failsafe plugin again in the sonar profile, because just overriding the argline here doesn't work -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
