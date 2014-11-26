@@ -20,7 +20,7 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr ""
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
@@ -44,7 +44,7 @@ msgstr ""
 msgid "No cases to display"
 msgstr ""
 
-msgid "Cases list"
+msgid "Case list"
 msgstr ""
 
 msgid "End date"
@@ -62,15 +62,24 @@ msgstr ""
 msgid "With Failures"
 msgstr ""
 
-msgid "All versions"
+msgid "items per page"
 msgstr ""
 
-msgid "All apps"
+msgid "columns selection"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr ""
+
+msgid "One or more connectors on case start or case end failed"
 msgstr ""
 
 # processMonitoring
 
-msgid  "Monitor active cases"
+msgid  "Monitor open cases"
 msgstr ""
 
 msgid "Open cases"
@@ -191,5 +200,5 @@ msgstr ""
 msgid  "Version"
 msgstr ""
 
-msgid  "Diagram is currently downloading."
+msgid  "Loading..."
 msgstr ""
