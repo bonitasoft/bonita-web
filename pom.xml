@@ -697,6 +697,8 @@
                             <excludes>
                                 <exclude>org.bonitasoft.console.client.*</exclude>
                                 <exclude>com.bonitasoft.console.client.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.*</exclude>
                             </excludes>
                         </configuration>
                         <executions>
