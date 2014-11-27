@@ -17,65 +17,20 @@ msgstr ""
 msgid "Columns"
 msgstr "Colonne"
 
-msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "da {{currentFirstResultIndex}} a {{currentLastResultIndex}} di {{pagination.total}}"
-
-msgid "The deleted case will be permanently deleted and will not be stored in the archives."
-msgstr "Il caso eliminato verrà definitivamente cancellato e non sarà conservato negli archivi."
-
-msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
-msgstr "I casi eliminato verranno definitivamente cancellati e non saranno conservati negli archivi."
-
-msgid "The deleted case will be permanently deleted from the archives."
-msgstr "Il caso eliminato verrà eliminato definitivamente dagli archivi."
-
-msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "I caso verranno eliminati definitivamente dagli archivi."
-
-msgid "Failed Flow Nodes"
-msgstr "Flow Node falliti"
-
-msgid "Pending Flow Nodes"
-msgstr "Flow Node in sospeso"
-
-msgid "No cases to display"
-msgstr "Nessun caso da visualizzare"
-
-msgid "Case list"
-msgstr "Case list"
-
-msgid "End date"
-msgstr "Data di fine"
-
-msgid "Confirm delete?"
-msgstr "Vuoi davvero eliminare?"
+msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgstr "Risultati: da {{currentFirstResultIndex}} a {{currentLastResultIndex}} su {{total}}"
 
 msgid "Filters"
 msgstr "Filtri"
 
-msgid "Healthy"
-msgstr "Sano"
+msgid "All versions"
+msgstr "Tutte le versioni"
 
-msgid "With Failures"
-msgstr "Con errori"
+msgid "All apps"
+msgstr "Tutte le apps"
 
-msgid "items per page"
-msgstr "items per page"
-
-msgid "columns selection"
-msgstr "columns selection"
-
-msgid "{{nbOfDeletedCases}} case deleted successfully"
-msgstr "{{nbOfDeletedCases}} caso eliminato con successo"
-
-msgid "{{nbOfDeletedCases}} cases deleted successfully"
-msgstr "{{nbOfDeletedCases}} caso eliminato con successo"
-
-msgid "One or more connectors on case start or case end failed"
-msgstr "One or more connectors on case start or case end failed"
-
-msgid "Monitor open cases"
-msgstr "Monitor i casi aperti"
+msgid "Monitor active cases"
+msgstr "Monitor i casi attivi"
 
 msgid "Open cases"
 msgstr "Casi aperti"
@@ -126,26 +81,20 @@ msgstr "Tutti"
 msgid "Never"
 msgstr "Mai"
 
+msgid "30 s."
+msgstr "30 sec."
+
 msgid "1 min."
 msgstr "1 min."
-
-msgid "5 min."
-msgstr "5 min."
 
 msgid "10 min."
 msgstr "10 min."
 
-msgid "30 min."
-msgstr "30 min."
-
-msgid "1 h."
-msgstr "1 h."
-
 msgid "Technical error."
 msgstr "Errore tecnico."
 
-msgid "State"
-msgstr "Stato"
+msgid "Process state"
+msgstr "Stato del processo"
 
 msgid "Show"
 msgstr "Visualizza"
@@ -165,8 +114,8 @@ msgstr "Stato del caso"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
-msgid "Disabled, no new case can be started"
-msgstr "Disabilitato, nessun nuovo caso può essere avviato"
+msgid "Disabled, no new instance can be started"
+msgstr "Disabilitato, nessuna nuova istanza può essere avviata"
 
 msgid "Process enabled"
 msgstr "Processo attivato"
@@ -174,8 +123,8 @@ msgstr "Processo attivato"
 msgid "View case list"
 msgstr "Visualizza la lista dei casi"
 
-msgid "View process"
-msgstr "View process"
+msgid "View diagram"
+msgstr "Visualizza il diagramma"
 
 msgid "Drawing diagram ..."
 msgstr "Creazione del diagramma ..."
@@ -191,10 +140,4 @@ msgstr "MIN"
 
 msgid "MAX"
 msgstr "MAX"
-
-msgid "Version"
-msgstr "Versione"
-
-msgid "Loading..."
-msgstr "Loading..."
 
