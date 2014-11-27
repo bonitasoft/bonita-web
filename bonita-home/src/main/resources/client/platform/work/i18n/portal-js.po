@@ -208,3 +208,6 @@ msgstr ""
 
 msgid  "Loading..."
 msgstr ""
+
+msgid  "Totals"
+msgstr ""
