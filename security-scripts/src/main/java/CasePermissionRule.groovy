@@ -14,7 +14,7 @@
  **/
 
 
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
@@ -55,13 +55,15 @@ class CasePermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSON()
 
-        def string = body.optString("processDefinitionId")
-        if (string == null || string.isEmpty()) {
+        ObjectMapper mapper = new ObjectMapper();
+        def map = mapper.readValue(apiCallContext.getBody(), Map.class)
+
+        def string = map.get("processDefinitionId")
+        if (string == null || string.toString().isEmpty()) {
             return true;
         }
-        def processDefinitionId = Long.valueOf(string)
+        def processDefinitionId = Long.valueOf(string.toString())
         if (processDefinitionId <= 0) {
             return true;
         }

@@ -26,7 +26,6 @@ import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ProcessInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONObject
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -126,12 +125,12 @@ public class DocumentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_true() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processInstanceId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
 
 
@@ -145,12 +144,12 @@ public class DocumentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_false() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processInstanceId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(false).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
 
         //when
@@ -162,12 +161,12 @@ public class DocumentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_with_bad_body_is_true() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "unknown":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
 
         //when

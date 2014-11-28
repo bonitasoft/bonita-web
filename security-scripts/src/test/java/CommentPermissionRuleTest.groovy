@@ -23,14 +23,12 @@ import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.bpm.process.ProcessInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONObject
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
-import static org.assertj.core.api.Assertions.assertThat
 import static org.mockito.Mockito.*
 
 @RunWith(MockitoJUnitRunner.class)
@@ -136,12 +134,12 @@ public class CommentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_true() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processInstanceId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
 
 
@@ -155,12 +153,12 @@ public class CommentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_false() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processInstanceId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         def processInstance = mock(ProcessInstance.class)
         doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(processInstance).when(processAPI).getProcessInstance(154l)
@@ -176,12 +174,12 @@ public class CommentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_false_but_is_supervisor() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processInstanceId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         def processInstance = mock(ProcessInstance.class)
         doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(processInstance).when(processAPI).getProcessInstance(154l)
@@ -197,12 +195,12 @@ public class CommentPermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_with_bad_body_is_false() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "unknown":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
 
         //when

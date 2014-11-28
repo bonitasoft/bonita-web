@@ -14,8 +14,7 @@
  **/
 
 
-
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
@@ -56,10 +55,18 @@ class ActorMemberPermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSONArray()
-        for (int i = 0; i < body.length(); i++) {
-            def object = body.getJSONObject(i)
-            def actorId = Long.valueOf(object.optString((ACTOR_ID)))
+
+        ObjectMapper mapper = new ObjectMapper();
+        def list = mapper.readValue(apiCallContext.getBody(), List.class)
+
+        for (int i = 0; i < list.size(); i++) {
+            def object = list.get(i)
+
+            def get = object.get(ACTOR_ID)
+            if(get == null){
+                continue
+            }
+            def actorId = Long.valueOf(get.toString())
             if (actorId <= 0) {
                 continue
             }
