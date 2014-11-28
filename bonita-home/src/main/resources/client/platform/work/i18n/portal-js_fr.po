@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-26 09:33-0500\n"
+"PO-Revision-Date: 2014-11-27 12:18-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -30,7 +30,7 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "Ces cas supprimés le seront définitivement des archives."
+msgstr "Ces cas supprimés disparaîtront définitivement des archives."
 
 msgid "Failed Flow Nodes"
 msgstr "Flow nodes en erreur"
@@ -53,17 +53,23 @@ msgstr "Confirmer la suppression ?"
 msgid "Filters"
 msgstr "Filtres"
 
-msgid "Healthy"
-msgstr "Sans erreur"
+msgid "Archived cases"
+msgstr "Cas archivés"
 
-msgid "With Failures"
+msgid "With failures"
 msgstr "Avec erreurs"
 
 msgid "items per page"
 msgstr "éléments par page"
 
+msgid "Loading"
+msgstr "Chargement…"
+
+msgid "Case details"
+msgstr "Détails du cas"
+
 msgid "columns selection"
-msgstr "sélection de colonnes"
+msgstr "sélection des colonnes"
 
 msgid "{{nbOfDeletedCases}} case deleted successfully"
 msgstr "{{nbOfDeletedCases}} cas supprimé avec succès"
@@ -72,7 +78,7 @@ msgid "{{nbOfDeletedCases}} cases deleted successfully"
 msgstr "{{nbOfDeletedCases}} cas supprimés avec succès"
 
 msgid "One or more connectors on case start or case end failed"
-msgstr "Un ou plusieurs connecteurs sur le démarrage ou la fin du cas en erreur"
+msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
 
 msgid "Monitor open cases"
 msgstr "Monitoring des cas en cours"
@@ -148,7 +154,7 @@ msgid "State"
 msgstr "Etat"
 
 msgid "Show"
-msgstr "Voir"
+msgstr "Afficher"
 
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
@@ -166,25 +172,25 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
-msgstr "Disabled, no new case can be started"
+msgstr "Désactivé, aucun nouveau cas peut être démarré"
 
 msgid "Process enabled"
-msgstr "Process enabled"
+msgstr "Processus activé"
 
 msgid "View case list"
 msgstr "Voir la liste des cas"
 
 msgid "View process"
-msgstr "Voir le process"
+msgstr "Voir le processus"
 
-msgid "Drawing diagram ..."
-msgstr "Dessin du diagramme..."
+msgid "Drawing process..."
+msgstr "Dessin du processus ..."
 
-msgid "Error on drawing diagram !"
-msgstr "Error lors du dessin du diagramme !"
+msgid "Error on drawing process!"
+msgstr "Erreur lors du dessin de processus !"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "Niveau de zoom par défaut"
+msgstr "NIVEAU DE ZOOM PAR DEFAUT"
 
 msgid "MIN"
 msgstr "MIN"
@@ -197,4 +203,8 @@ msgstr "Version"
 
 msgid "Loading..."
 msgstr "Chargement..."
+
+msgid "Totals"
+msgstr "Totaux\n"
+""
 

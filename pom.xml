@@ -697,8 +697,10 @@
                             <excludes>
                                 <exclude>org.bonitasoft.console.client.*</exclude>
                                 <exclude>com.bonitasoft.console.client.*</exclude>
-                                <exclude>org.bonitasoft.forms.client.*</exclude>
-                                <exclude>com.bonitasoft.forms.client.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.view.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.view.*</exclude>
+                                <exclude>org.bonitasoft.forms.client.i18n.*</exclude>
+                                <exclude>com.bonitasoft.forms.client.i18n.*</exclude>
                             </excludes>
                         </configuration>
                         <executions>
