@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-15 14:43+0100\n"
-"PO-Revision-Date: 2014-11-26 09:36-0500\n"
+"PO-Revision-Date: 2014-11-28 03:09-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -336,13 +336,13 @@ msgid "Archives"
 msgstr "Archive"
 
 msgid "Are you sur you want to remove selected actor members from the process ?"
-msgstr "Are you sur you want to remove selected actor members from the process ?"
+msgstr "Sind Sie sicher, Sie wollen die ausgewählten Actor-Mitglieder aus dem Prozess entfernen?"
 
 msgid "Are you sure you want to delete this membership ?"
 msgstr "Möchten Sie diese Zugehörigkeit wirklich löschen?"
 
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
-msgstr "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
+msgstr "Sind Sie sicher, dass Sie die Kategorie '%categoryName%' vom Prozess '%appName%' entfernen wollen?"
 
 msgid "Assign"
 msgstr "Zuweisen"
@@ -546,7 +546,7 @@ msgid "Connector definitions"
 msgstr "Konnektor-Definitionen"
 
 msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "Connector definitions must be resolved before enabling the Process."
+msgstr "Konnektor-Definitionen müssen vor dem Aktivieren des Prozesses gelöst werden."
 
 msgid "Connectors"
 msgstr "Konnektoren"
@@ -633,7 +633,7 @@ msgid "Delete selected roles"
 msgstr "Gewählte Rollen löschen"
 
 msgid "Delete the process %app_name%?"
-msgstr "Delete the process %app_name%?"
+msgstr "Löschen Sie den Prozess %app_name%?"
 
 msgid "Delete this member"
 msgstr "Mitglied löschen"
@@ -675,7 +675,7 @@ msgid "Discuss :"
 msgstr "Besprechen:"
 
 msgid "Display a case form of process %app_name%"
-msgstr "Display a case form of process %app_name%"
+msgstr "Anzeige eines Fallformulars des Prozesses %app_name%"
 
 msgid "Display a summary of all processes"
 msgstr "Anzeige einer Zusammenfassung aller Prozesse"
@@ -843,7 +843,7 @@ msgid "Enter the zip code of this user"
 msgstr "Geben Sie die Postleitzahl des Benutzers ein"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "Entity Mapping must be resolved before enabling the Process."
+msgstr "Entitätsmapping muss vor dem Aktivieren des Prozesses gelöst werden."
 
 msgid "Error"
 msgstr "Fehler"
@@ -1140,19 +1140,19 @@ msgid "Manage applications"
 msgstr "Verwalten von Anwendungen"
 
 msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "Manage cases of processes that an entity with this profile can supervise as PM."
+msgstr "Verwalten von Fällen der Prozesse, die eine Entität mit diesem Profil als Prozessmanager überwachen kann."
 
 msgid "Manage custom pages"
 msgstr "Verwalten von benutzerdefinierten Seiten"
 
 msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "Manage processes that an entity with this profile can supervise as PM."
+msgstr "Verwalten von Prozessen, die eine Entität mit diesem Profil als Prozessmanager überwachen kann."
 
 msgid "Manage profiles"
 msgstr "Profile verwalten"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "Manage tasks of processes that an entity with this profile can supervise as PM."
+msgstr "Verwalten von Aufgaben der Prozesse, die eine Entität mit diesem Profil als Prozessmanager überwachen kann."
 
 msgid "Manager"
 msgstr "Manager"
@@ -1323,7 +1323,7 @@ msgid "Overview"
 msgstr "Übersicht"
 
 msgid "Parameters must be resolved before enabling the Process."
-msgstr "Parameters must be resolved before enabling the Process."
+msgstr "Parameter müssen vor dem Aktivieren des Prozesses gelöst werden."
 
 msgid "Parent Group"
 msgstr "Übergeordnete Gruppe"
@@ -1416,7 +1416,7 @@ msgid "Process definition not found for id %processId%"
 msgstr "Prozessdefinition wurde nicht gefunden für id %processId%"
 
 msgid "Process management"
-msgstr "Process management"
+msgstr "Prozessmanagement"
 
 msgid "Process manager"
 msgstr "Prozessmanager"
@@ -1425,7 +1425,7 @@ msgid "Process name"
 msgstr "Prozessname"
 
 msgid "Process version"
-msgstr "Process version"
+msgstr "Prozessversion"
 
 msgid "Processes"
 msgstr "Prozesse"
@@ -1461,7 +1461,7 @@ msgid "Resolved"
 msgstr "Gelöst"
 
 msgid "Resolved processes"
-msgstr "Resolved processes"
+msgstr "Gelöste Prozesse"
 
 msgid "Retrieve"
 msgstr "Abrufen"
@@ -1551,10 +1551,10 @@ msgid "Select profile"
 msgstr "Wählen Sie ein Profil"
 
 msgid "Select the category which the process will be linked to"
-msgstr "Select the category which the process will be linked to"
+msgstr "Wählen Sie die Kategorie, mit der der Prozess verknüpft werden soll"
 
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
-msgstr "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "Wählen Sie die Entitäten (Benutzer, Gruppen, Rollen, Mitgliedschaften), um sie den Akteuren zuzuordnen. Diese Entitäten werden die menschlichen Aufgaben im Prozess machen."
 
 msgid "Select the manager of this user"
 msgstr "Wählen Sie den Manager des Benutzers"
@@ -1632,7 +1632,7 @@ msgid "Start a process on behalf of another user"
 msgstr "Starten Sie einen Prozess im Namen eines anderen Benutzers"
 
 msgid "Start an instance of process %app_name%"
-msgstr "Start an instance of process %app_name%"
+msgstr "Starten einer Instanz von Prozess-%app_name%"
 
 msgid "Start date"
 msgstr "Startdatum"
@@ -1722,7 +1722,7 @@ msgid "Th"
 msgstr "Do"
 
 msgid "The Process cannot be enabled"
-msgstr "The Process cannot be enabled"
+msgstr "Der Prozess kann nicht aktiviert werden"
 
 msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
 msgstr "Der Prozessmanager kann bestimmte Prozesse überwachen und kann Fälle und Aufgaben dieser Prozesse verwalten."
@@ -1737,7 +1737,7 @@ msgid "The application encountered an unexpected error. Please try again.\nIf th
 msgstr "In der Anwendung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.\nWenn der Fehler weiterhin auftritt, kontaktieren Sie bitte den Bonitasoft Support"
 
 msgid "The configuration state of the process"
-msgstr "The configuration state of the process"
+msgstr "Den Konfigurationsstatus des Prozesses"
 
 msgid "The current state of the case"
 msgstr "Aktueller Status des Falls"
@@ -1767,7 +1767,7 @@ msgid "The date when the case was updated"
 msgstr "Datum des letzten Fall-Updates"
 
 msgid "The date when the process was updated"
-msgstr "The date when the process was updated"
+msgstr "Das Datum, an dem der Prozess aktualisiert wurde"
 
 msgid "The date when the task must be finished"
 msgstr "Das Datum, an dem die Aufgabe beendet sein muss"
@@ -1776,7 +1776,7 @@ msgid "The date when the task was assigned"
 msgstr "Das Datum der Zuweisung der Aufgabe"
 
 msgid "The date when this process has been installed"
-msgstr "The date when this process has been installed"
+msgstr "Das Datum, an dem dieser Prozess installiert wurde"
 
 msgid "The date while the case has been started"
 msgstr "Das Datum, an dem mit dem Fall begonnen wurde"
@@ -1839,7 +1839,7 @@ msgid "The state of the case"
 msgstr "Der Zustand des Falls"
 
 msgid "The state of the process"
-msgstr "The state of the process"
+msgstr "Der Zustand des Prozesses"
 
 msgid "The state of the task"
 msgstr "Der Zustand der Aufgabe"
@@ -1866,10 +1866,10 @@ msgid "The username to which the task is assigned."
 msgstr "Der Benutzername des Benutzers, dem die Aufgabe zugewiesen ist"
 
 msgid "The version of the process"
-msgstr "The version of the process"
+msgstr "Die Version des Prozesses"
 
 msgid "The version of the process that created this case"
-msgstr "The version of the process that created this case"
+msgstr "Die Version des Prozesses, der diesen Fall erstellt hat"
 
 msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Diese %item_name_plural% werden endgültig gelöscht."
@@ -1980,7 +1980,7 @@ msgid "Unresolved"
 msgstr "Ungelöst"
 
 msgid "Unresolved processes"
-msgstr "Unresolved processes"
+msgstr "Ungelöste Prozesse"
 
 msgid "Unsupported file."
 msgstr "Nicht unterstützte Datei."
@@ -2064,7 +2064,7 @@ msgid "Yes"
 msgstr "Ja"
 
 msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
+msgstr "Sie riskieren, eine oder mehrere Prozesse zu unterbrechen.\n\nWenn Sie den einzigen Benutzer deaktivieren, der eine Aufgabe(n) ausführen kann, führt dies zur Unterbrechung des Prozesses.\n\nBevor Sie dies durchführen, möchten Sie vielleicht zur Seite \"Mehr\" des Prozesses gehen und das Actor Mapping überprüfen.\n\nSind Sie sicher, dass Sie diesen Benutzer jetzt deaktivieren möchten ?"
 
 msgid "You will be rediected"
 msgstr "Sie werden umgeleitet"
