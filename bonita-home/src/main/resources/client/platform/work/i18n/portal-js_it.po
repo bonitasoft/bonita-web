@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-28 03:14-0500\n"
+"PO-Revision-Date: 2014-11-28 03:15-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -203,4 +203,7 @@ msgstr "Versione"
 
 msgid "Loading..."
 msgstr "Caricamento..."
+
+msgid "Totals"
+msgstr "Totale"
 

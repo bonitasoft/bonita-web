@@ -84,7 +84,7 @@ msgid "Monitor open cases"
 msgstr "Monitoring des cas en cours"
 
 msgid "Open cases"
-msgstr "Cas en cours"
+msgstr "Cas démarrés"
 
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
@@ -203,4 +203,8 @@ msgstr "Version"
 
 msgid "Loading..."
 msgstr "Chargement..."
+
+msgid "Totals"
+msgstr "Totaux\n"
+""
 
