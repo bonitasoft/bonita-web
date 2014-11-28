@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-26 09:40-0500\n"
+"PO-Revision-Date: 2014-11-27 12:25-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -53,14 +53,20 @@ msgstr "Vuoi davvero eliminare?"
 msgid "Filters"
 msgstr "Filtri"
 
-msgid "Healthy"
-msgstr "Sano"
+msgid "Archived cases"
+msgstr "Archived cases"
 
-msgid "With Failures"
+msgid "With failures"
 msgstr "Con errori"
 
 msgid "items per page"
 msgstr "items per page"
+
+msgid "Loading"
+msgstr "Caricamento"
+
+msgid "Case details"
+msgstr "Case details"
 
 msgid "columns selection"
 msgstr "columns selection"
@@ -177,11 +183,11 @@ msgstr "Visualizza la lista dei casi"
 msgid "View process"
 msgstr "View process"
 
-msgid "Drawing diagram ..."
-msgstr "Creazione del diagramma ..."
+msgid "Drawing process..."
+msgstr "Drawing process..."
 
-msgid "Error on drawing diagram !"
-msgstr "Errore nella creazione del diagramma!"
+msgid "Error on drawing process!"
+msgstr "Error on drawing process!"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "LIVELLO DI ZOOM PREDEFINITO"
@@ -197,4 +203,7 @@ msgstr "Versione"
 
 msgid "Loading..."
 msgstr "Loading..."
+
+msgid "Totals"
+msgstr "Totals"
 

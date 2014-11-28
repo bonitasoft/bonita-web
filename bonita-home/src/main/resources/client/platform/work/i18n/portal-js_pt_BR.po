@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-26 09:48-0500\n"
+"PO-Revision-Date: 2014-11-27 12:28-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -42,7 +42,7 @@ msgid "No cases to display"
 msgstr "Nenhum caso para exibir"
 
 msgid "Case list"
-msgstr "Case list"
+msgstr "Lista de casos"
 
 msgid "End date"
 msgstr "Data de Fim"
@@ -53,17 +53,23 @@ msgstr "Confirmar exclusão?"
 msgid "Filters"
 msgstr "Filtros"
 
-msgid "Healthy"
-msgstr "Sem erros"
+msgid "Archived cases"
+msgstr "Casos arquivados"
 
-msgid "With Failures"
+msgid "With failures"
 msgstr "Com erros"
 
 msgid "items per page"
-msgstr "items per page"
+msgstr "itens por página"
+
+msgid "Loading"
+msgstr "Carregando"
+
+msgid "Case details"
+msgstr "Detalhes do caso"
 
 msgid "columns selection"
-msgstr "columns selection"
+msgstr "seleção de colunas"
 
 msgid "{{nbOfDeletedCases}} case deleted successfully"
 msgstr "{{nbOfDeletedCases}} casos excluídos com sucesso"
@@ -72,7 +78,7 @@ msgid "{{nbOfDeletedCases}} cases deleted successfully"
 msgstr "{{nbOfDeletedCases}} casos excluídos com sucesso"
 
 msgid "One or more connectors on case start or case end failed"
-msgstr "One or more connectors on case start or case end failed"
+msgstr "Um ou mais conectores de início ou fim de caso falharam"
 
 msgid "Monitor open cases"
 msgstr "Monitorar casos abertos"
@@ -175,13 +181,13 @@ msgid "View case list"
 msgstr "Ver lista de caso"
 
 msgid "View process"
-msgstr "View process"
+msgstr "Visualizar processo"
 
-msgid "Drawing diagram ..."
-msgstr "Desenhando o diagrama..."
+msgid "Drawing process..."
+msgstr "Desenhando processo..."
 
-msgid "Error on drawing diagram !"
-msgstr "Erro ao desenhar o diagrama!"
+msgid "Error on drawing process!"
+msgstr "Erro ao desenhar o processo!"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "NÍVEL DE ZOOM PADRÃO"
@@ -196,5 +202,8 @@ msgid "Version"
 msgstr "Versão"
 
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Carregando..."
+
+msgid "Totals"
+msgstr "Totais"
 

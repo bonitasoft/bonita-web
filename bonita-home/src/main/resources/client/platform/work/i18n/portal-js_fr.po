@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-26 11:59-0500\n"
+"PO-Revision-Date: 2014-11-27 12:18-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -53,14 +53,20 @@ msgstr "Confirmer la suppression ?"
 msgid "Filters"
 msgstr "Filtres"
 
-msgid "Healthy"
-msgstr "Sans erreur"
+msgid "Archived cases"
+msgstr "Cas archivés"
 
-msgid "With Failures"
+msgid "With failures"
 msgstr "Avec erreurs"
 
 msgid "items per page"
 msgstr "éléments par page"
+
+msgid "Loading"
+msgstr "Chargement…"
+
+msgid "Case details"
+msgstr "Détails du cas"
 
 msgid "columns selection"
 msgstr "sélection des colonnes"
@@ -148,7 +154,7 @@ msgid "State"
 msgstr "Etat"
 
 msgid "Show"
-msgstr "Voir"
+msgstr "Afficher"
 
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
@@ -177,11 +183,11 @@ msgstr "Voir la liste des cas"
 msgid "View process"
 msgstr "Voir le processus"
 
-msgid "Drawing diagram ..."
-msgstr "Dessin du diagramme..."
+msgid "Drawing process..."
+msgstr "Dessin du processus ..."
 
-msgid "Error on drawing diagram !"
-msgstr "Error lors du dessin du diagramme !"
+msgid "Error on drawing process!"
+msgstr "Erreur lors du dessin de processus !"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "NIVEAU DE ZOOM PAR DEFAUT"
@@ -197,4 +203,8 @@ msgstr "Version"
 
 msgid "Loading..."
 msgstr "Chargement..."
+
+msgid "Totals"
+msgstr "Totaux\n"
+""
 

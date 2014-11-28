@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-26 09:36-0500\n"
+"PO-Revision-Date: 2014-11-27 12:22-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -21,16 +21,16 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
-msgstr "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Der gelöschte Fall dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
 
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
-msgstr "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Der gelöschte Fall wird dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
 
 msgid "The deleted case will be permanently deleted from the archives."
-msgstr "The deleted case will be permanently deleted from the archives."
+msgstr "Der gelöschte Fall wird dauerhaft aus den Archiven gelöscht."
 
 msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "These deleted cases will be permanently deleted from the archives."
+msgstr "Diese gelöschten Fälle werden dauerhaft aus den Archiven gelöscht."
 
 msgid "Failed Flow Nodes"
 msgstr "Failed Flow Nodes"
@@ -42,7 +42,7 @@ msgid "No cases to display"
 msgstr "Keine Fälle, die angezeigt werden können"
 
 msgid "Case list"
-msgstr "Case list"
+msgstr "Fall-Liste"
 
 msgid "End date"
 msgstr "End-Datum"
@@ -53,17 +53,23 @@ msgstr "Löschen bestätigen?"
 msgid "Filters"
 msgstr "Filter"
 
-msgid "Healthy"
-msgstr "Fehlerfrei"
+msgid "Archived cases"
+msgstr "Archivierte Fälle"
 
-msgid "With Failures"
-msgstr "With Failures"
+msgid "With failures"
+msgstr "Mit Fehlschlägen"
 
 msgid "items per page"
-msgstr "items per page"
+msgstr "Elemente pro Seite"
+
+msgid "Loading"
+msgstr "Laden"
+
+msgid "Case details"
+msgstr "Fall-Einzelheiten"
 
 msgid "columns selection"
-msgstr "columns selection"
+msgstr "Spalten-Auswahl"
 
 msgid "{{nbOfDeletedCases}} case deleted successfully"
 msgstr "{{nbOfDeletedCases}} Fall erfolgreich gelöscht"
@@ -72,7 +78,7 @@ msgid "{{nbOfDeletedCases}} cases deleted successfully"
 msgstr "{{nbOfDeletedCases}} Fälle erfolgreich gelöscht"
 
 msgid "One or more connectors on case start or case end failed"
-msgstr "One or more connectors on case start or case end failed"
+msgstr "Ein oder mehrere Konnektor(en) am Fallbeginn oder am Fallende fehlgeschlagen"
 
 msgid "Monitor open cases"
 msgstr "Monitoring der offenen Fälle"
@@ -130,13 +136,13 @@ msgid "1 min."
 msgstr "1 min."
 
 msgid "5 min."
-msgstr "5 min."
+msgstr "5 Min."
 
 msgid "10 min."
 msgstr "10 min."
 
 msgid "30 min."
-msgstr "30 min."
+msgstr "30 Min."
 
 msgid "1 h."
 msgstr "1 h."
@@ -166,7 +172,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
-msgstr "Disabled, no new case can be started"
+msgstr "Deaktiviert, kein neuer Fall kann gestartet werden"
 
 msgid "Process enabled"
 msgstr "Prozess aktiviert"
@@ -175,13 +181,13 @@ msgid "View case list"
 msgstr "Liste der Fälle anzeigen"
 
 msgid "View process"
-msgstr "View process"
+msgstr "Prozess ansehen"
 
-msgid "Drawing diagram ..."
-msgstr "Diagramm zeichnen..."
+msgid "Drawing process..."
+msgstr "Prozess zeichnen..."
 
-msgid "Error on drawing diagram !"
-msgstr "Fehler beim Zeichnen des Diagramms!"
+msgid "Error on drawing process!"
+msgstr "Fehler beim Zeichnen des Prozesses!"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "STANDARD-ZOOM-NIVEAU"
@@ -196,5 +202,8 @@ msgid "Version"
 msgstr "Version"
 
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Laden …"
+
+msgid "Totals"
+msgstr "Gesamtzahlen"
 
