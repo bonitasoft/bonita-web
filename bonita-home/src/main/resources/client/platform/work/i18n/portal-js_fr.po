@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-27 12:18-0500\n"
+"PO-Revision-Date: 2014-11-28 09:19-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -84,7 +84,7 @@ msgid "Monitor open cases"
 msgstr "Monitoring des cas en cours"
 
 msgid "Open cases"
-msgstr "Cas démarrés"
+msgstr "Cas en cours"
 
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
@@ -203,8 +203,4 @@ msgstr "Version"
 
 msgid "Loading..."
 msgstr "Chargement..."
-
-msgid "Totals"
-msgstr "Totaux\n"
-""
 
