@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-27 12:25-0500\n"
+"PO-Revision-Date: 2014-11-28 03:15-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -42,7 +42,7 @@ msgid "No cases to display"
 msgstr "Nessun caso da visualizzare"
 
 msgid "Case list"
-msgstr "Case list"
+msgstr "Elenco dei casi"
 
 msgid "End date"
 msgstr "Data di fine"
@@ -54,22 +54,22 @@ msgid "Filters"
 msgstr "Filtri"
 
 msgid "Archived cases"
-msgstr "Archived cases"
+msgstr "Casi archiviati"
 
 msgid "With failures"
 msgstr "Con errori"
 
 msgid "items per page"
-msgstr "items per page"
+msgstr "Elementi per pagina"
 
 msgid "Loading"
 msgstr "Caricamento"
 
 msgid "Case details"
-msgstr "Case details"
+msgstr "Dettagli sui casi"
 
 msgid "columns selection"
-msgstr "columns selection"
+msgstr "selezione delle colonne"
 
 msgid "{{nbOfDeletedCases}} case deleted successfully"
 msgstr "{{nbOfDeletedCases}} caso eliminato con successo"
@@ -78,7 +78,7 @@ msgid "{{nbOfDeletedCases}} cases deleted successfully"
 msgstr "{{nbOfDeletedCases}} caso eliminato con successo"
 
 msgid "One or more connectors on case start or case end failed"
-msgstr "One or more connectors on case start or case end failed"
+msgstr "Uno o più connettori sono falliti all'inizio o alla fine del caso"
 
 msgid "Monitor open cases"
 msgstr "Monitor i casi aperti"
@@ -181,13 +181,13 @@ msgid "View case list"
 msgstr "Visualizza la lista dei casi"
 
 msgid "View process"
-msgstr "View process"
+msgstr "Vusualizza il processo"
 
 msgid "Drawing process..."
-msgstr "Drawing process..."
+msgstr "Creazione del diagramma del processo in corso..."
 
 msgid "Error on drawing process!"
-msgstr "Error on drawing process!"
+msgstr "Errore durante la creazione del diagramma del processo!"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "LIVELLO DI ZOOM PREDEFINITO"
@@ -202,8 +202,8 @@ msgid "Version"
 msgstr "Versione"
 
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Caricamento..."
 
 msgid "Totals"
-msgstr "Totals"
+msgstr "Totale"
 
