@@ -1,4 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2014 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation
+ * version 2.1 of the License.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+ * Floor, Boston, MA 02110-1301, USA.
+ ******************************************************************************/
 package org.bonitasoft.console.client.angular;
+
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -38,19 +53,18 @@ public class AngularIFrameView extends RawView {
             public void onMenuClick(final MenuClickEvent menuClickEvent) {
                 // remove angular parameters from url
                 final AngularParameterCleaner angularParameterCleaner = new AngularParameterCleaner(menuClickEvent.getToken(), getHash());
-
                 updateHash(angularParameterCleaner.getHashWithoutAngularParameters());
             }
         });
     }
 
     public native String getHash() /*-{
-                                   return $wnd.location.hash;
-                                   }-*/;
+        return $wnd.location.hash;
+    }-*/;
 
     public native void updateHash(String hash) /*-{
-                                               $wnd.location.hash = hash;
-                                               }-*/;
+        $wnd.location.hash = hash;
+    }-*/;
 
     @Override
     public String defineToken() {
@@ -81,15 +95,6 @@ public class AngularIFrameView extends RawView {
     }
 
     /**
-     * @see org.bonitasoft.web.toolkit.client.ui.Callable#setParameters(org.bonitasoft.web.toolkit.client.common.TreeIndexed)
-     */
-    @Override
-    public void setParameters(final TreeIndexed<String> params) {
-        super.setParameters(params);
-        iframe.setUrl(buildAngularUrl(url, token, UrlSerializer.serialize(getParameters())));
-    }
-
-    /**
      * build angular Url
      *
      * @param url
@@ -104,7 +109,7 @@ public class AngularIFrameView extends RawView {
         return new AngularUrlBuilder(url)
                 .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
                 .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash())
-                .build() + '?' + (queryString != null ? queryString.replaceAll(token + '_', "") : "");
+                .build() + (isBlank(queryString) ? "" : "?" + queryString.replaceAll(token + '_', ""));
     }
 
     /**
@@ -115,4 +120,7 @@ public class AngularIFrameView extends RawView {
         return token;
     }
 
+    public void display(TreeIndexed<String> params) {
+        iframe.setLocation(buildAngularUrl(url, token, UrlSerializer.serialize(params)));
+    }
 }

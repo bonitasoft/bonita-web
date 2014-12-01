@@ -44,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.Menu;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableLoadedHandler;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 import org.bonitasoft.web.toolkit.client.ui.component.table.TableColumn;
 import org.bonitasoft.web.toolkit.client.ui.html.HTML;
@@ -84,6 +85,8 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      * The search form for all tables.
      */
     protected final Form tablesSearch = new Form(new JsId("search"));
+
+    private ChangeFilterAction firstFilterAction;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
@@ -201,7 +204,9 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     }
 
     void selectFirstFilter() {
-        $(ItemListingPage.this.filtersLinks.values().iterator().next().getElement()).click();
+        if (firstFilterAction != null) {
+            firstFilterAction.execute(true);
+        }
     }
 
     /**
@@ -337,6 +342,9 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
             Link link = createLinkFilter(filter, action);
             section.addBody(link);
             filtersLinks.put(filter.getName(), link);
+            if (firstFilterAction == null) {
+                firstFilterAction = action;
+            }
         }
     }
 
@@ -392,8 +400,12 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     }
 
     void selectFilter(final String filterId) {
-        final Link defaultFilterLink = this.filtersLinks.get(filterId);
-        $(defaultFilterLink.getElement()).click();
+        if(filtersLinks.containsKey(filterId)) {
+            Action action = filtersLinks.get(filterId).getAction();
+            if(action instanceof ItemListingPage<?>.ChangeFilterAction) {
+                ((ChangeFilterAction) action).execute(true);
+            }
+        }
     }
 
     /**
@@ -471,13 +483,20 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
          */
         @Override
         public void execute() {
+            execute(false);
+        }
+
+        public void execute(boolean quiet) {
             $(ItemListingPage.this.detailsPanel.getElement()).empty();
 
             // URL update
             ClientApplicationURL.removeAttribute(UrlOption.RESOURCE_FILTER);
             ClientApplicationURL.removeAttribute(UrlOption.FILTER);
             ClientApplicationURL.addAttribute(this.filter.isResourceFilter() ? UrlOption.RESOURCE_FILTER : UrlOption.FILTER, this.filter.getName());
-            ClientApplicationURL.refreshUrl(false);
+
+            if (!quiet) {
+                ClientApplicationURL.refreshUrl(false);
+            }
 
             ItemListingPage.this.currentFilter = this.filter;
 
@@ -657,7 +676,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         menuSorts.addJsOption("selectMode", true).addJsOption("align", "right");
         tablesPanel.addHeader(sortMenu);
 
-        for (ItemListingTable itemListingTable : defineTables()) {
+        for (final ItemListingTable itemListingTable : defineTables()) {
 
             itemListingTable.getItemTable().setFillOnRefresh(false);
             itemListingTable.getItemTable().setFillOnLoad(false);
@@ -676,6 +695,29 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
             // Add quickDetailsAction
             table.setDefaultAction(new UpdateQuickDetailsAction<T>(this, itemListingTable));
+
+            itemListingTable.getItemTable().addItemTableLoadedHandler(new ItemTableLoadedHandler() {
+
+                @Override
+                public void onItemsLoaded(List<IItem> items) {
+                    if (items.size() > 0) {
+                        int itemRowIndex = 0;
+                        ItemTable table = itemListingTable.getItemTable();
+                        if(table.getDefaultSelectedId() != null) {
+                            for (IItem item : items) {
+                                if(table.getDefaultSelectedId().equals(item.getId())) {
+                                    break;
+                                }
+                                itemRowIndex++;
+                            }
+                        }
+                        updateQuickDetailPanel(itemListingTable.getQuickDetailsPage(), String.valueOf(items.get(itemRowIndex).getId()), true);
+                        // My heart bleed while writing thus lines :'(
+                        $(".tr", table.getElement()).removeClass("current");
+                        $(".tr_" + String.valueOf(itemRowIndex + 1), table.getElement()).addClass("current");
+                    }
+                }
+            });
         }
 
         // add the table Search
@@ -707,12 +749,14 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     protected abstract LinkedList<ItemListingTable> defineTables();
 
-    public void updateQuickDetailPanel(ItemQuickDetailsPage<?> itemQuickDetailsPage, String itemId) {
+    public void updateQuickDetailPanel(ItemQuickDetailsPage<?> itemQuickDetailsPage, String itemId, boolean quiet) {
         final TreeIndexed<String> params = itemQuickDetailsPage.getParameters();
         params.addValue("id", itemId);
 
         ClientApplicationURL.addAttribute("_id", itemId);
-        ClientApplicationURL.refreshUrl(false);
+        if (!quiet) {
+            ClientApplicationURL.refreshUrl(false);
+        }
         ViewController.showView(itemQuickDetailsPage.getToken(), detailsPanel.getElement(), params);
     }
 
@@ -739,13 +783,13 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         // Refresh middle tables
 
         for (final String tableName : this.getCurrentFilter().getTablesToDisplay()) {
-            final ItemTable table = this.tables.get(tableName).getItemTable();
+            final ItemListingTable table = this.tables.get(tableName);
 
             final String idInUrl = ClientApplicationURL.getPageAttributes().getValue("_id");
             if (idInUrl != null) {
-                table.setDefaultSelectedId(APIID.makeAPIID(idInUrl));
+                table.getItemTable().setDefaultSelectedId(APIID.makeAPIID(idInUrl));
             }
-            table.refresh();
+            table.getItemTable().refresh();
         }
 
         // Refresh details panel if necessary

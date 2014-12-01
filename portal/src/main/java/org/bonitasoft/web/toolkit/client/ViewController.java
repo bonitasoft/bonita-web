@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.core.client.GWT;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
@@ -36,7 +37,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -63,11 +63,7 @@ public class ViewController {
 
     protected static final ViewController INSTANCE = new ViewController();
 
-    private RootPanel centralPanelContainer;
-
     private String currentPageToken = null;
-
-    private final boolean disableUpdateAppView = false;
 
     private static boolean isAngularFrameDisplayed = false;
 
@@ -98,15 +94,6 @@ public class ViewController {
 
     private RawView currentPage = null;
 
-    private static String readToken(final String token) {
-        if (token == null || token.length() == 0) {
-            return token;
-        }
-
-        final String[] tokenParts = token.split("\\?");
-        return tokenParts[0];
-    }
-
     public String getCurrentPageToken() {
         return currentPageToken;
     }
@@ -124,7 +111,7 @@ public class ViewController {
     }
 
     public static RawView showView(final String token, final Map<String, String> params) {
-        return showView(token, (String) null, params);
+        return showView(token, null, params);
     }
 
     public static RawView showView(final String token, final TreeIndexed<String> params) {
@@ -152,7 +139,7 @@ public class ViewController {
     }
 
     public static RawView showView(final String token, final String parentId, final TreeIndexed<String> params) {
-        Element rootElement = null;
+        Element rootElement;
 
         if (parentId == null) {
             rootElement = DOM.getElementById("body");
@@ -196,7 +183,7 @@ public class ViewController {
 
         if (ViewController.ROOT_DIV_ID.equals(rootElement.getId())) {
 
-            // Reset unseless elements
+            // Reset useless elements
             ViewController.closePopup();
             // getInstance().componentsWaitingForRefresh.clear();
             getInstance().currentPage = view;
@@ -216,7 +203,9 @@ public class ViewController {
         if (view instanceof AngularIFrameView) {
             if (!isAngularFrameDisplayed) {
                 $(rootElement).empty();
+                rootElement.appendChild(widgetElement);
             }
+            ((AngularIFrameView) view).display(params);
             isAngularFrameDisplayed = true;
         } else {
             isAngularFrameDisplayed = false;
@@ -225,9 +214,9 @@ public class ViewController {
             } else {
                 $(rootElement).empty();
             }
+            rootElement.appendChild(widgetElement);
         }
 
-        rootElement.appendChild(widgetElement);
         ViewController.updateUI(rootElement, true);
         widget.onLoad();
 
@@ -261,16 +250,8 @@ public class ViewController {
         popupHeader.appendChild(new Link(new JsId("close_popup"), "Close popup", "Close this popup", view.getClosePopupAction()).getElement());
     }
 
-    private RawView createView(final String token) {
-        return this.createView(token, new TreeIndexed<String>());
-    }
-
-    private RawView createView(final String token, final Map<String, String> params) {
-        return this.createView(token, new TreeIndexed<String>(params));
-    }
-
     private RawView createView(final String token, final TreeIndexed<String> params) {
-        RawView page = null;
+        RawView page;
 
         if (token == ClientApplicationURL.TOKEN_ADD) {
             page = new EditItemPage();
@@ -295,10 +276,6 @@ public class ViewController {
     public static native void openPopup() /*-{
                                              $wnd.$.popup.open();
                                              }-*/;
-
-    protected static native void updatePopup() /*-{
-                                               $wnd.$.popup.update();
-                                               }-*/;
 
     public static native void closePopup() /*-{
                                               $wnd.$.popup.close();
