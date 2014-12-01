@@ -79,7 +79,7 @@ public class LoginServlet extends HttpServlet {
         final long tenantId = getTenantId(request, response);
         String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
         if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + dropPassword(request.getQueryString()) + ")");
+            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL);
         }
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = LoginManager.DEFAULT_DIRECT_URL;
