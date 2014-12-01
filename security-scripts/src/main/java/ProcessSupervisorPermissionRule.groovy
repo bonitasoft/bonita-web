@@ -14,6 +14,7 @@
  **/
 
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
@@ -43,7 +44,7 @@ class ProcessSupervisorPermissionRule implements PermissionRule {
             return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
         } else if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId, logger)
-        } else if(apiCallContext.isDELETE()) {
+        } else if (apiCallContext.isDELETE()) {
             return checkDeleteMethod(apiCallContext, apiAccessor, currentUserId, logger)
         }
         //it's ok to read
@@ -51,15 +52,22 @@ class ProcessSupervisorPermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSONArray()
+
+        ObjectMapper mapper = new ObjectMapper();
+        def list = mapper.readValue(apiCallContext.getBody(), List.class)
+
         def processAPI = apiAccessor.getProcessAPI()
-        for (int i = 0 ; i < body.length(); i++){
-            def object = body.getJSONObject(i)
-            def processId = Long.valueOf(object.optString(PROCESS_ID))
+        for (int i = 0; i < list.size(); i++) {
+            def object = list.get(i)
+            def get = object.get(PROCESS_ID)
+            if (get == null) {
+                continue
+            }
+            def processId = Long.valueOf(get.toString())
             if (processId <= 0) {
                 continue
             }
-            if(!processAPI.isUserProcessSupervisor(processId,currentUserId)){
+            if (!processAPI.isUserProcessSupervisor(processId, currentUserId)) {
                 return false
             }
         }
@@ -70,7 +78,7 @@ class ProcessSupervisorPermissionRule implements PermissionRule {
         def filters = apiCallContext.getFilters()
         if (filters.containsKey(PROCESS_ID)) {
             def processAPI = apiAccessor.getProcessAPI()
-            return processAPI.isUserProcessSupervisor(Long.parseLong(filters.get(PROCESS_ID)),currentUserId)
+            return processAPI.isUserProcessSupervisor(Long.parseLong(filters.get(PROCESS_ID)), currentUserId)
         }
         return true
     }
@@ -79,7 +87,7 @@ class ProcessSupervisorPermissionRule implements PermissionRule {
         def resourceIds = apiCallContext.getCompoundResourceId()
         if (!resourceIds.isEmpty()) {
             def processAPI = apiAccessor.getProcessAPI()
-            return processAPI.isUserProcessSupervisor(Long.parseLong(resourceIds.get(0)),currentUserId)
+            return processAPI.isUserProcessSupervisor(Long.parseLong(resourceIds.get(0)), currentUserId)
         }
         return true
     }

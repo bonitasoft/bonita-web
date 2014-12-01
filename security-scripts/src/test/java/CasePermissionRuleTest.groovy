@@ -27,14 +27,12 @@ import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
 import org.bonitasoft.engine.search.impl.SearchResultImpl
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONObject
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
-import static org.assertj.core.api.Assertions.assertThat
 import static org.mockito.Matchers.any
 import static org.mockito.Matchers.eq
 import static org.mockito.Mockito.*
@@ -207,12 +205,12 @@ public class CasePermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_true() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processDefinitionId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(new SearchResultImpl<User>(1, [user])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(154l), any(SearchOptions.class));
 
         //when
@@ -225,12 +223,12 @@ public class CasePermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_is_false() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "processDefinitionId":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(new SearchResultImpl<User>(0, [])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(154l), any(SearchOptions.class));
 
         //when
@@ -242,12 +240,12 @@ public class CasePermissionRuleTest {
     @Test
     public void should_check_verify_can_start_on_post_with_bad_body_is_true() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONObject('''
+        doReturn('''
             {
                 "unknown":"154",
                 "other":"sample"
             }
-        ''')).when(apiCallContext).getBodyAsJSON()
+        ''').when(apiCallContext).getBody()
         doReturn(new SearchResultImpl<User>(1, [user])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(154l), any(SearchOptions.class));
 
         //when

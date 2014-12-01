@@ -28,7 +28,6 @@ import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.actor.ActorInstance
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -70,12 +69,12 @@ public class ActorMemberPermissionRuleTest {
     @Test
     public void should_check_verify_post_is_true_when_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONArray('''
+        doReturn('''
             [{
                 "actor_id":"547",
                 "other":"sample"
             }]
-        ''')).when(apiCallContext).getBodyAsJSONArray()
+        ''').when(apiCallContext).getBody()
         def actor = mock(ActorInstance.class)
         doReturn(154l).when(actor).getProcessDefinitionId()
         doReturn(actor).when(processAPI).getActor(547l);
@@ -91,12 +90,12 @@ public class ActorMemberPermissionRuleTest {
     @Test
     public void should_check_verify_post_is_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONArray('''
+        doReturn('''
             [{
                 "actor_id":"547",
                 "other":"sample"
             }]
-        ''')).when(apiCallContext).getBodyAsJSONArray()
+        ''').when(apiCallContext).getBody()
 
         def actor = mock(ActorInstance.class)
         doReturn(154l).when(actor).getProcessDefinitionId()

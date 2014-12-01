@@ -22,7 +22,6 @@ import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
-import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -62,12 +61,12 @@ public class ProcessSupervisorPermissionRuleTest {
     @Test
     public void should_check_verify_post_is_true_when_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONArray('''
+        doReturn('''
             [{
                 "process_id":"154",
                 "other":"sample"
             }]
-        ''')).when(apiCallContext).getBodyAsJSONArray()
+        ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
 
@@ -80,12 +79,12 @@ public class ProcessSupervisorPermissionRuleTest {
     @Test
     public void should_check_verify_post_is_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
-        doReturn(new JSONArray('''
+        doReturn('''
             [{
                 "process_id":"154",
                 "other":"sample"
             }]
-        ''')).when(apiCallContext).getBodyAsJSONArray()
+        ''').when(apiCallContext).getBody()
         doReturn(false).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
 

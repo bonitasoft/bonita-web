@@ -13,9 +13,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-
-
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.permission.APICallContext
@@ -55,12 +53,15 @@ class DocumentPermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSON()
-        def string = body.optString((PROCESS_INSTANCE_ID))
-        if (string == null || string.isEmpty()) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        def map = mapper.readValue(apiCallContext.getBody(), Map.class)
+
+        def string = map.get((PROCESS_INSTANCE_ID))
+        if (string == null || string.toString().isEmpty()) {
             return true;
         }
-        def processInstanceId = Long.valueOf(string)
+        def processInstanceId = Long.valueOf(string.toString())
         if (processInstanceId <= 0) {
             return true;
         }

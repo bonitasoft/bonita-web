@@ -13,9 +13,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-
-
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
@@ -54,13 +52,15 @@ class CommentPermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
-        def body = apiCallContext.getBodyAsJSON()
 
-        def string = body.optString("processInstanceId")
-        if(string == null || string.isEmpty()){
+        ObjectMapper mapper = new ObjectMapper();
+        def map = mapper.readValue(apiCallContext.getBody(), Map.class)
+
+        def string = map.get("processInstanceId")
+        if (string == null || string.toString().isEmpty()) {
             return true;
         }
-        def processInstanceId = Long.valueOf(string)
+        def processInstanceId = Long.valueOf(string.toString())
         if (processInstanceId <= 0) {
             return true;
         }
@@ -84,9 +84,9 @@ class CommentPermissionRule implements PermissionRule {
     }
 
     private boolean isInvolved(ProcessAPI processAPI, long currentUserId, long processInstanceId) {
-        try{
+        try {
             return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             //check for archived
             final SearchOptionsBuilder opts = new SearchOptionsBuilder(0, 1);
             opts.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
