@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-28 11:15-0500\n"
+"PO-Revision-Date: 2014-11-28 12:38-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -61,6 +61,9 @@ msgstr "Con errori"
 
 msgid "items per page"
 msgstr "Elementi per pagina"
+
+msgid "Loading"
+msgstr "Caricamento"
 
 msgid "Case details"
 msgstr "Dettagli sui casi"
@@ -197,9 +200,6 @@ msgstr "MAX"
 
 msgid "Version"
 msgstr "Versione"
-
-msgid "Totals"
-msgstr "Totale"
 
 msgid "Loading..."
 msgstr "Caricamento..."
