@@ -39,7 +39,6 @@ public class TimerEventTriggerResource extends CommonResource {
         try {
             final Long caseId = getLongParameter("caseId", true);
             final List<TimerEventTriggerInstance> triggers = runEngineSearch(caseId, buildSearchOptions());
-            //            System.out.println("List of triggers IDs: " + triggers);
             return triggers;
         } catch (final Exception e) {
             throw new APIException(e);
