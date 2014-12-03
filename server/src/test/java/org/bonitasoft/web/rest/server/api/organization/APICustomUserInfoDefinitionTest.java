@@ -16,6 +16,12 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,12 +31,13 @@ import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.rest.server.framework.utils.converter.typed.StringConverter;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
@@ -38,15 +45,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author Vincent Elcrin
@@ -72,15 +72,16 @@ public class APICustomUserInfoDefinitionTest {
     @Mock
     private IdentityAPI identityApi;
 
-    @InjectMocks
     private APICustomUserInfoDefinition api;
 
     @Before
     public void setUp() throws Exception {
-        api.setCaller(caller);
         given(caller.getHttpSession()).willReturn(httpSession);
         given(httpSession.getAttribute("apiSession")).willReturn(apiSession);
         given(engineClientCreator.create(apiSession)).willReturn(engine);
+        ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
+        api = new APICustomUserInfoDefinition(engineClientCreator);
+        api.setCaller(caller);
     }
 
     @Test
