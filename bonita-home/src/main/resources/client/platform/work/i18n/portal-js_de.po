@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-12-03 08:39-0500\n"
+"PO-Revision-Date: 2014-12-04 03:16-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -15,179 +15,179 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Columns"
+msgstr "Spalten"
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
-msgstr "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Der gelöschte Fall dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
 
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
-msgstr "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Der gelöschte Fall wird dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
 
 msgid "The deleted case will be permanently deleted from the archives."
-msgstr "The deleted case will be permanently deleted from the archives."
+msgstr "Der gelöschte Fall wird dauerhaft aus den Archiven gelöscht."
 
 msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "These deleted cases will be permanently deleted from the archives."
+msgstr "Diese gelöschten Fälle werden dauerhaft aus den Archiven gelöscht."
 
 msgid "Failed Flow Nodes"
-msgstr "Failed Flow Nodes"
+msgstr "Fehlgeschlagene Flow Nodes"
 
 msgid "Pending Flow Nodes"
-msgstr "Pending Flow Nodes"
+msgstr "Ausstehende Flow Nodes"
 
 msgid "No cases to display"
-msgstr "No cases to display"
+msgstr "Keine Fälle, die angezeigt werden können"
 
 msgid "Case list"
-msgstr "Case list"
+msgstr "Fall-Liste"
 
 msgid "End date"
-msgstr "End date"
+msgstr "End-Datum"
 
 msgid "Confirm delete?"
-msgstr "Confirm delete?"
+msgstr "Löschen bestätigen?"
 
 msgid "Filters"
-msgstr "Filters"
+msgstr "Filter"
 
 msgid "Archived cases"
-msgstr "Archived cases"
+msgstr "Archivierte Fälle"
 
 msgid "With failures"
-msgstr "With failures"
+msgstr "Mit Fehlschlägen"
 
 msgid "items per page"
-msgstr "items per page"
+msgstr "Elemente pro Seite"
 
 msgid "Case details"
-msgstr "Case details"
+msgstr "Fall-Einzelheiten"
 
 msgid "columns selection"
-msgstr "columns selection"
+msgstr "Spalten-Auswahl"
 
 msgid "{{nbOfDeletedCases}} case deleted successfully"
-msgstr "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} Fall erfolgreich gelöscht"
 
 msgid "{{nbOfDeletedCases}} cases deleted successfully"
-msgstr "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} Fälle erfolgreich gelöscht"
 
 msgid "One or more connectors on case start or case end failed"
-msgstr "One or more connectors on case start or case end failed"
+msgstr "Ein oder mehrere Konnektor(en) am Fallbeginn oder am Fallende fehlgeschlagen"
 
 msgid "Monitor open cases"
-msgstr "Monitor open cases"
+msgstr "Monitoring der offenen Fälle"
 
 msgid "Open cases"
-msgstr "Open cases"
+msgstr "Offene Fälle"
 
 msgid "Healthy cases"
-msgstr "Healthy cases"
+msgstr "Fehlerfreie Fälle"
 
 msgid "Cases with failures"
-msgstr "Cases with failures"
+msgstr "Fällen mit Fehlschlägen"
 
 msgid "Filter on process"
-msgstr "Filter on process"
+msgstr "Filtern nach Prozess"
 
 msgid "Process list"
-msgstr "Process list"
+msgstr "Prozessliste"
 
 msgid "Refresh"
-msgstr "Refresh"
+msgstr "Aktualisieren"
 
 msgid "Process name"
-msgstr "Process name"
+msgstr "Prozessname"
 
 msgid "Failed"
-msgstr "Failed"
+msgstr "Fehlgeschlagen"
 
 msgid "Actions"
-msgstr "Actions"
+msgstr "Aktionen"
 
 msgid "Wait ..."
-msgstr "Wait ..."
+msgstr "Warten ..."
 
 # Pagination label: "1 - 10 of 300"
 msgid "of"
-msgstr "of"
+msgstr "von"
 
 msgid "No data"
-msgstr "No data"
+msgstr "Keine Daten"
 
 msgid "Error!"
-msgstr "Error!"
+msgstr "Fehler!"
 
 msgid "Started"
-msgstr "Started"
+msgstr "Gestartet"
 
 msgid "All"
-msgstr "All"
+msgstr "Alle"
 
 msgid "Never"
-msgstr "Never"
+msgstr "Niemals"
 
 msgid "1 min."
 msgstr "1 min."
 
 msgid "5 min."
-msgstr "5 min."
+msgstr "5 Min."
 
 msgid "10 min."
 msgstr "10 min."
 
 msgid "30 min."
-msgstr "30 min."
+msgstr "30 Min."
 
 msgid "1 h."
 msgstr "1 h."
 
 msgid "Technical error."
-msgstr "Technical error."
+msgstr "Technischer Fehler."
 
 msgid "State"
-msgstr "State"
+msgstr "Status"
 
 msgid "Show"
-msgstr "Show"
+msgstr "Anzeigen"
 
 msgid "Healthy cases"
-msgstr "Healthy cases"
+msgstr "Fehlerfreie Fälle"
 
 msgid "Open"
-msgstr "Open"
+msgstr "Öffnen"
 
 msgid "Process version"
-msgstr "Process version"
+msgstr "Prozessversion"
 
 msgid "Case state"
-msgstr "Case state"
+msgstr "Zustand des Falls"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
-msgstr "Disabled, no new case can be started"
+msgstr "Deaktiviert, kein neuer Fall kann gestartet werden"
 
 msgid "Process enabled"
-msgstr "Process enabled"
+msgstr "Prozess aktiviert"
 
 msgid "View case list"
-msgstr "View case list"
+msgstr "Liste der Fälle anzeigen"
 
 msgid "View process"
-msgstr "View process"
+msgstr "Prozess ansehen"
 
 msgid "Drawing process..."
-msgstr "Drawing process..."
+msgstr "Prozess zeichnen..."
 
 msgid "Error on drawing process!"
-msgstr "Error on drawing process!"
+msgstr "Fehler beim Zeichnen des Prozesses!"
 
 msgid "DEFAULT ZOOM LEVEL"
-msgstr "DEFAULT ZOOM LEVEL"
+msgstr "STANDARD-ZOOM-NIVEAU"
 
 msgid "MIN"
 msgstr "MIN"
@@ -199,11 +199,11 @@ msgid "Version"
 msgstr "Version"
 
 msgid "Totals"
-msgstr "Totals"
+msgstr "Gesamtzahlen"
 
 msgid "Loading..."
-msgstr "Loading..."
+msgstr "Laden …"
 
 msgid "Totals"
-msgstr "Totals"
+msgstr "Gesamtzahlen"
 
