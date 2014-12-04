@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-12-02 08:31-0500\n"
+"PO-Revision-Date: 2014-12-03 08:40-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 
 msgid "Columns"
-msgstr "Spalten"
+msgstr "Columns"
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"
@@ -51,7 +51,7 @@ msgid "Confirm delete?"
 msgstr "Löschen bestätigen?"
 
 msgid "Filters"
-msgstr "Filter"
+msgstr "Filters"
 
 msgid "Archived cases"
 msgstr "Archivierte Fälle"
@@ -78,37 +78,37 @@ msgid "One or more connectors on case start or case end failed"
 msgstr "Ein oder mehrere Konnektor(en) am Fallbeginn oder am Fallende fehlgeschlagen"
 
 msgid "Monitor open cases"
-msgstr "Monitoring der offenen Fälle"
+msgstr "Monitor open cases"
 
 msgid "Open cases"
-msgstr "Offene Fälle"
+msgstr "Open cases"
 
 msgid "Healthy cases"
-msgstr "Fehlerfreie Fälle"
+msgstr "Healthy cases"
 
 msgid "Cases with failures"
-msgstr "Fällen mit Fehlschlägen"
+msgstr "Cases with failures"
 
 msgid "Filter on process"
-msgstr "Filtern nach Prozess"
+msgstr "Filter on process"
 
 msgid "Process list"
-msgstr "Prozessliste"
+msgstr "Process list"
 
 msgid "Refresh"
 msgstr "Aktualisieren"
 
 msgid "Process name"
-msgstr "Prozessname"
+msgstr "Process name"
 
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
 msgid "Actions"
-msgstr "Aktionen"
+msgstr "Actions"
 
 msgid "Wait ..."
-msgstr "Warten ..."
+msgstr "Wait ..."
 
 # Pagination label: "1 - 10 of 300"
 msgid "of"
@@ -127,7 +127,7 @@ msgid "All"
 msgstr "Alle"
 
 msgid "Never"
-msgstr "Niemals"
+msgstr "Never"
 
 msgid "1 min."
 msgstr "1 min."
@@ -145,28 +145,28 @@ msgid "1 h."
 msgstr "1 h."
 
 msgid "Technical error."
-msgstr "Technischer Fehler."
+msgstr "Technical error."
 
 msgid "State"
-msgstr "Status"
+msgstr "State"
 
 msgid "Show"
-msgstr "Anzeigen"
+msgstr "Show"
 
 msgid "Healthy cases"
-msgstr "Fehlerfreie Fälle"
+msgstr "Healthy cases"
 
 msgid "Open"
-msgstr "Öffnen"
+msgstr "Open"
 
 msgid "Process version"
-msgstr "Prozessversion"
+msgstr "Process version"
 
 msgid "Case state"
-msgstr "Zustand des Falls"
+msgstr "Case state"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
 msgstr "Deaktiviert, kein neuer Fall kann gestartet werden"
