@@ -35,6 +35,8 @@ public class LocaleUtil {
     }
 
     /**
+     * @param request
+     *      the request to get the locale from
      * @return the user's locale as a String
      */
     public String getLocale(final HttpServletRequest request) {

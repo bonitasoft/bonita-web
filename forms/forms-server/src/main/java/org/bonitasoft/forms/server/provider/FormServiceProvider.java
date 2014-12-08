@@ -58,29 +58,29 @@ import org.bonitasoft.web.rest.model.user.User;
 import org.w3c.dom.Document;
 
 /**
- * This interface can be implemented by anyone willing to use the forms in a different context than the one of the BPM engine.<br/>
+ * This interface can be implemented by anyone willing to use the forms in a different context than the one of the BPM engine.<br>
  *
- * The context variable used in the interface described below contains the URL parameters, the username, the values of the form fields (when necessary)...<br/>
- * Context specific keys:<br/>
+ * The context variable used in the interface described below contains the URL parameters, the username, the values of the form fields (when necessary)...<br>
+ * Context specific keys:<br>
  * user : the user as a {@link User} object
  * locale : the locale of the client as a {@link Locale} object
- * urlContext : map of the URL parameters (Map<String, String>)
- * fieldValues : map of the form field values (Map<String, {@link FormFieldValue}>). The keys of the map are the Ids of the field.
- * transientDataContext : the context of transient data (Map<String, Object>). The keys of the map are the names of the data.
+ * urlContext : map of the URL parameters (Map&gt;String, String&gt;)
+ * fieldValues : map of the form field values (Map&lt;String, {@link FormFieldValue}&gt;). The keys of the map are the Ids of the field.
+ * transientDataContext : the context of transient data (Map&lt;String, Object&gt;). The keys of the map are the names of the data.
  *
- * The implementation of FormServiceProvider to use can be configured in the file:<br/>
- * BONITA_HOME/client/web/forms/conf/forms-config.properties<br/>
- * with the property form.service.provider<br/>
+ * The implementation of FormServiceProvider to use can be configured in the file:<br>
+ * BONITA_HOME/client/web/forms/conf/forms-config.properties<br>
+ * with the property form.service.provider<br>
  * If the default implementation of FormServiceProvider is not used, the deployment descriptor (web.xml) of the webapps (both user XP and process applications)
  * needs to be modified in order to remove the filter BPMURLFilter. This filter is used to add the form ID in the URL if it is not present (in order to support
- * the old URL format).<br/>
+ * the old URL format).<br>
  *
  * @author Anthony Birembaut
  */
 public interface FormServiceProvider {
 
     /**
-     * Retrieve the Document containing the definition of the forms application.<br/>
+     * Retrieve the Document containing the definition of the forms application.<br>
      * If you use a dedicated web archive (.war) for each forms application, the forms.xml file will be in the classpath (in WEB-INF/classes), so you can read
      * it from there.
      *
@@ -188,8 +188,6 @@ public interface FormServiceProvider {
      *             if the form cannot be found
      * @throws SessionTimeoutException
      * @throws IOException
-     * @throws Exception
-     *             if any other kind of exception occurs
      */
     Map<String, Object> executeActions(List<FormAction> actions, Map<String, Object> context) throws FileTooBigException, FormNotFoundException,
             FormAlreadySubmittedException, FormSubmissionException, SessionTimeoutException, IOException;
@@ -272,7 +270,7 @@ public interface FormServiceProvider {
             throws FormValidationException, FormNotFoundException, SessionTimeoutException, FileTooBigException, IOException, BPMExpressionEvaluationException;
 
     /**
-     * Get the date at which the form application was deployed (this is used to clear the form definition cache in case a new application is deployed).<br/>
+     * Get the date at which the form application was deployed (this is used to clear the form definition cache in case a new application is deployed).<br>
      * The implementation of this method can return null but the cache directory in BONITA_HOME will have to be cleared manually and the server restarted in
      * case a new version of the application is deployed
      *
@@ -287,7 +285,7 @@ public interface FormServiceProvider {
     Date getDeployementDate(Map<String, Object> context) throws FormNotFoundException, IOException, SessionTimeoutException;
 
     /**
-     * Get an application form definition accessor object (reader to access a form definition for a specific form ID).<br/>
+     * Get an application form definition accessor object (reader to access a form definition for a specific form ID).<br>
      * In case the form definition is only based on a forms.xml file (valid with the forms.xsd) this method can just return:
      * FormDefAccessorFactory.getXMLApplicationFormDefAccessor(formId, formDefinitionDocument, applicationDeploymentDate)
      *
@@ -308,7 +306,7 @@ public interface FormServiceProvider {
             throws ApplicationFormDefinitionNotFoundException, InvalidFormDefinitionException, SessionTimeoutException;
 
     /**
-     * Get an application configuration definition accessor object (reader to access the forms application configuration).<br/>
+     * Get an application configuration definition accessor object (reader to access the forms application configuration).<br>
      * In case the form definition is only based on an xml file (valid with the forms.xsd) this method can just return: new
      * XMLApplicationConfigDefAccessorImpl(formDefinitionDocument)
      *
@@ -337,9 +335,9 @@ public interface FormServiceProvider {
             FileTooBigException, FormInitializationException;
 
     /**
-     * Check if a specific form is in edit mode (entry form) or not (view form).<br/>
+     * Check if a specific form is in edit mode (entry form) or not (view form).<br>
      * This method is used mostly to add an attribute in the context Map passed to the the expression resolution and connector execution methods (because you
-     * might need this information at this point).<br/>
+     * might need this information at this point).<br>
      * This method is required because if you don't use an XML definition for a form (like we do for the automatic form generation), you need to access your
      * back-end to know if the the form displayed is in edit or view mode.
      *
@@ -355,9 +353,9 @@ public interface FormServiceProvider {
     boolean isEditMode(final String formID, final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
 
     /**
-     * Check if the values to display in a specific form should be the current values or previous values (for view forms based on an history for example).<br/>
+     * Check if the values to display in a specific form should be the current values or previous values (for view forms based on an history for example).<br>
      * This method is used mostly to add an attribute in the context map passed to the the expression resolution and connector execution methods (because you
-     * might need this information at this point).<br/>
+     * might need this information at this point).<br>
      * This method is required because if you don't use an XML definition for a form (like we do for the automatic form generation), you need to access your
      * back-end to know if the the form displayed needs to use current values or previous values.
      *
@@ -371,10 +369,10 @@ public interface FormServiceProvider {
     boolean isCurrentValue(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
 
     /**
-     * Skip a form.<br/>
-     * If the method getFirstPage of the implementation of IApplicationFormDefAccessor used returns null, it means the form needs to be skipped.<br/>
-     * This methods should perform any operation required when a form is skipped (in the default BPM implementation, we just execute the task).<br/>
-     * The map returned should contain the new URL parameters that will be set client-side.<br/>
+     * Skip a form.<br>
+     * If the method getFirstPage of the implementation of IApplicationFormDefAccessor used returns null, it means the form needs to be skipped.<br>
+     * This methods should perform any operation required when a form is skipped (in the default BPM implementation, we just execute the task).<br>
+     * The map returned should contain the new URL parameters that will be set client-side.<br>
      * This method is used in a very specific use case. If you don't need this feature, you can just return an empty map in your implementation of
      * {@link FormServiceProvider}.
      *
@@ -394,8 +392,8 @@ public interface FormServiceProvider {
             IllegalActivityTypeException, FormSubmissionException, SessionTimeoutException;
 
     /**
-     * Get any form from a to do list.<br/>
-     * If there is no form ID in the URL this method is used to try to retrieve a form to display.<br/>
+     * Get any form from a to do list.<br>
+     * If there is no form ID in the URL this method is used to try to retrieve a form to display.<br>
      * The map returned should contain the new URL parameters that will be set client-side (including or not a form ID).
      *
      * @param context
@@ -407,7 +405,7 @@ public interface FormServiceProvider {
     Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
 
     /**
-     * Get the directory in which the application resources (like process layout, CSS...) are deployed.<br/>
+     * Get the directory in which the application resources (like process layout, CSS...) are deployed.<br>
      * This is not required if you use a dedicated web archive (.war) for each forms application. In this case the HTML files will be loaded from the classpath
      * and the CSS and other web resources in the application directory of the web archive.
      *
@@ -473,7 +471,6 @@ public interface FormServiceProvider {
      *            key for the session entry
      * @param context
      *            Map of context (containing the URL parameters and other data)
-     * @return the transient data context to use
      */
     void removeFormTransientDataContext(HttpSession session, String storageKey, Map<String, Object> context);
 }

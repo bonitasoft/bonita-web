@@ -277,7 +277,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * @return the value of the field as an Serializable
      * @throws FileTooBigException
      * @throws IOException
-     * @throws BPMExpressionEvaluationException
      * @throws InvalidSessionException
      */
     protected Serializable evaluateFieldValueActionExpression(final APISession session, final String fieldId, final Map<String, FormFieldValue> fieldValues,
@@ -302,10 +301,9 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * @param session
      * @param fieldValue
      * @param deleteDocument
-     * @return
+     * @return the document value
      * @throws FileTooBigException
      * @throws IOException
-     * @throws BPMExpressionEvaluationException
      * @throws InvalidSessionException
      */
     protected DocumentValue getDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument)
@@ -422,7 +420,6 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
      * @return the context
      * @throws IOException
      * @throws FileTooBigException
-     * @throws BPMExpressionEvaluationException
      * @throws InvalidSessionException
      */
     @Override

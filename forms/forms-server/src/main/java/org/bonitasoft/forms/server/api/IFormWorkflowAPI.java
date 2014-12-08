@@ -62,7 +62,6 @@ public interface IFormWorkflowAPI {
      * @param processInstanceId
      *            the UUID of the current process instance
      * @return the next task UUID or null there is no next task or if the next task is not in the user todolist
-     * @throws ProcessInstanceNotFoundException
      * @throws BPMEngineException
      * @throws UserNotFoundException
      * @throws ProcessDefinitionNotFoundException
@@ -814,8 +813,6 @@ public interface IFormWorkflowAPI {
      *            the activity instance ID
      * @return the process instance ID
      * @throws BPMEngineException
-     * @throws ProcessInstanceNotFoundException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     long getProcessInstanceIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
     ActivityInstanceNotFoundException;
@@ -877,8 +874,6 @@ public interface IFormWorkflowAPI {
      * @throws InvalidSessionException
      * @throws ActivityInstanceNotFoundException
      * @throws ProcessDefinitionNotFoundException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
-     * @throws ProcessDefinitionReadException
      */
     String getActivityDefinitionUUIDFromActivityInstanceID(APISession session, long activityInstanceID) throws BPMEngineException, InvalidSessionException,
     ActivityInstanceNotFoundException, RetrieveException, ProcessDefinitionNotFoundException;
@@ -893,7 +888,6 @@ public interface IFormWorkflowAPI {
      * @return true if the process is enabled
      * @throws BPMEngineException
      * @throws InvalidSessionException
-     * @throws ProcessDefinitionReadException
      * @throws ProcessDefinitionNotFoundException
      */
     boolean isProcessEnabled(APISession session, long processDefinitionID) throws InvalidSessionException, BPMEngineException,
@@ -908,7 +902,6 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      * @throws InvalidSessionException
      * @throws ActivityInstanceNotFoundException
-     * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     String getActivityName(APISession session, long activityInstanceID) throws InvalidSessionException, BPMEngineException, ActivityInstanceNotFoundException,
     RetrieveException;

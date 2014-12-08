@@ -129,14 +129,13 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     /**
      * Constructor
      *
-     * @param tenant ID
+     * @param tenantID
      * @param document
      * @param formCacheUtil
-     * @param applicationDeployementDate
+     * @param applicationDeploymentDate
      *        the deployment date of the application
      * @param locale
      *        the user's locale as a String
-     * @return the FormDefinitionAPIImpl instance
      * @throws InvalidFormDefinitionException
      */
     public FormDefinitionAPIImpl(final long tenantID, final Document document, final FormCacheUtil formCacheUtil, final Date applicationDeploymentDate,
@@ -156,7 +155,6 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * @return an instance of {@link IApplicationConfigDefAccessor}
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
-     * @throws ApplicationFormDefinitionNotFoundException
      */
     protected IApplicationConfigDefAccessor getApplicationConfigDefinition(final Map<String, Object> context) throws FormServiceProviderNotFoundException,
             SessionTimeoutException {
@@ -708,7 +706,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     /**
      * get a layout
      *
-     * @param layoutLocation
+     * @param layoutPath
      *        The location of the layout
      * @param layoutTypeName
      *        The type of the layout
@@ -724,20 +722,20 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException
      */
-    protected HtmlTemplate getLayout(final String layoutpath, final String layoutTypeName, final Date applicationDeploymentDate,
+    protected HtmlTemplate getLayout(final String layoutPath, final String layoutTypeName, final Date applicationDeploymentDate,
             final Map<String, Object> context) throws FileNotFoundException, InvalidFormTemplateException, InvalidFormDefinitionException,
             ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException, SessionTimeoutException {
 
         InputStream htmlFileStream = null;
         try {
-            if (layoutpath == null) {
+            if (layoutPath == null) {
                 throw new IOException();
             }
-            htmlFileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(layoutpath);
+            htmlFileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(layoutPath);
             if (htmlFileStream == null) {
                 final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
                 final File dir = formServiceProvider.getApplicationResourceDir(applicationDeploymentDate, context);
-                final File htmlFile = new File(dir, layoutpath);
+                final File htmlFile = new File(dir, layoutPath);
                 if (htmlFile.exists()) {
                     htmlFileStream = new FileInputStream(htmlFile);
                 } else {
@@ -797,7 +795,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             }
             return new HtmlTemplate(body, bodyAttributes, headNodes);
         } catch (final IOException e) {
-            final String message = layoutTypeName + "  template file " + layoutpath + " could not be found";
+            final String message = layoutTypeName + "  template file " + layoutPath + " could not be found";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
@@ -808,7 +806,7 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
                     htmlFileStream.close();
                 } catch (final IOException e) {
                     if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "unable to close input stream for template " + layoutpath, e);
+                        LOGGER.log(Level.SEVERE, "unable to close input stream for template " + layoutPath, e);
                     }
                 }
             }
