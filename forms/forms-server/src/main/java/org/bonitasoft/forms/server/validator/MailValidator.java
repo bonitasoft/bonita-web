@@ -34,7 +34,7 @@ public class MailValidator implements IFormFieldValidator {
         if (fieldInput.getValue() instanceof String) {
             final String fieldValue = (String)fieldInput.getValue();
             if (fieldValue != null && fieldValue.length() > 0) {
-    	        return fieldValue.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$");
+    	        return fieldValue.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
     	    } else {
     	        return true;
     	    }

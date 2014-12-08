@@ -35,7 +35,7 @@ import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Anthony Birembaut, Ruiheng Fan, Chong Zhao, Haojie Yuan
- * 
+ *
  */
 public class LoginServlet extends HttpServlet {
 
@@ -64,6 +64,9 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        if (LOGGER.isLoggable(Level.FINEST)) {
+            LOGGER.log(Level.FINEST, "query string : " + dropPassword(req.getQueryString()));
+        }
         doPost(req, resp);
     }
 
@@ -79,13 +82,13 @@ public class LoginServlet extends HttpServlet {
         final long tenantId = getTenantId(request, response);
         String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
         if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL + " (" + dropPassword(request.getQueryString()) + ")");
+            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL);
         }
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = LoginManager.DEFAULT_DIRECT_URL;
         } else {
             if (redirectURL != null) {
-                redirectURL = new URLProtector().protectRedirectUrl(redirectURL);    
+                redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
             }
         }
         try {
@@ -165,7 +168,7 @@ public class LoginServlet extends HttpServlet {
 
     public String dropPassword(final String content) {
         String tmp = content;
-        if (content.contains("password")) {
+        if (content != null && content.contains("password")) {
             tmp = tmp.replaceAll("[&]?password=([^&|#]*)?", "");
         }
         return tmp;
