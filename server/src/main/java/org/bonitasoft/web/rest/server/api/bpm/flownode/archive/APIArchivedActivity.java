@@ -48,7 +48,6 @@ public class APIArchivedActivity extends AbstractAPIActivity<ArchivedActivityIte
 
     @Override
     public String defineDefaultSearchOrder() {
-
-        return ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE + ISearchDirection.SORT_ORDER_ASCENDING;
+        return ArchivedActivityItem.ATTRIBUTE_REACHED_STATE_DATE + ISearchDirection.SORT_ORDER_ASCENDING;
     }
 }
