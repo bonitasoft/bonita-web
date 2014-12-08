@@ -21,8 +21,8 @@ import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 public class CaseItemConverter extends ItemConverter<CaseItem, ProcessInstance> {
 
     @Override
-    public CaseItem convert(ProcessInstance process) {
-        CaseItem item = new CaseItem();
+    public CaseItem convert(final ProcessInstance process) {
+        final CaseItem item = new CaseItem();
         item.setId(process.getId());
         item.setLastUpdateDate(process.getLastUpdate());
         item.setState(process.getState());
@@ -32,14 +32,6 @@ public class CaseItemConverter extends ItemConverter<CaseItem, ProcessInstance> 
         item.setRootCaseId(process.getRootProcessInstanceId());
         item.setStartedByUserId(process.getStartedBy());
         item.setStartedBySubstituteUserId(process.getStartedBySubstitute());
-        for (int i = 1; i <= 5; i++) {
-            item.setSearchIndexLabel(i, process.getStringIndexLabel(i));
-        }
-        item.setSearchIndexValue(1, process.getStringIndex1());
-        item.setSearchIndexValue(2, process.getStringIndex2());
-        item.setSearchIndexValue(3, process.getStringIndex3());
-        item.setSearchIndexValue(4, process.getStringIndex4());
-        item.setSearchIndexValue(5, process.getStringIndex5());
         return item;
     }
 

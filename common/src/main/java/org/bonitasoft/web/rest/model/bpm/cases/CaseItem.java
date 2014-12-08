@@ -51,26 +51,6 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String ATTRIBUTE_END_DATE = "end_date";
 
-    public static final String ATTRIBUTE_SEARCH_INDEX_1_LABEL = "search_index_1_label";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_1_VALUE = "search_index_1_value";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_2_LABEL = "search_index_2_label";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_2_VALUE = "search_index_2_value";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_3_LABEL = "search_index_3_label";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_3_VALUE = "search_index_3_value";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_4_LABEL = "search_index_4_label";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_4_VALUE = "search_index_4_value";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_5_LABEL = "search_index_5_label";
-
-    public static final String ATTRIBUTE_SEARCH_INDEX_5_VALUE = "search_index_5_value";
-
     public static final String COUNTER_FAILED_FLOW_NODES = "failedFlowNodes";
 
     public static final String COUNTER_ACTIVE_FLOW_NODES = "activeFlowNodes";
@@ -262,53 +242,7 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
         setAttribute(ATTRIBUTE_ROOT_CASE_ID, rootCaseId);
     }
 
-    public void setSearchIndexLabel(int index, final String label) {
-        String attribute;
-        switch (index) {
-            case 1:
-                attribute = ATTRIBUTE_SEARCH_INDEX_1_LABEL;
-                break;
-            case 2:
-                attribute = ATTRIBUTE_SEARCH_INDEX_2_LABEL;
-                break;
-            case 3:
-                attribute = ATTRIBUTE_SEARCH_INDEX_3_LABEL;
-                break;
-            case 4:
-                attribute = ATTRIBUTE_SEARCH_INDEX_4_LABEL;
-                break;
-            case 5:
-                attribute = ATTRIBUTE_SEARCH_INDEX_5_LABEL;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid search index value " + index + ". Should be 1, 2, 3, 4, 5.");
-        }
-        setAttribute(attribute, label);
-    }
 
-    public void setSearchIndexValue(int i, String value) {
-        String attribute;
-        switch (i) {
-            case 1:
-                attribute = ATTRIBUTE_SEARCH_INDEX_1_VALUE;
-                break;
-            case 2:
-                attribute = ATTRIBUTE_SEARCH_INDEX_2_VALUE;
-                break;
-            case 3:
-                attribute = ATTRIBUTE_SEARCH_INDEX_3_VALUE;
-                break;
-            case 4:
-                attribute = ATTRIBUTE_SEARCH_INDEX_4_VALUE;
-                break;
-            case 5:
-                attribute = ATTRIBUTE_SEARCH_INDEX_5_VALUE;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid search index value " + i + ". Should be 1, 2, 3, 4, 5.");
-        }
-        setAttribute(attribute, value);
-    }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UTILS
