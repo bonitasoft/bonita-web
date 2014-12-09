@@ -27,7 +27,7 @@ import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 
 /**
  * Form definition builder
- * 
+ *
  * @author Aurelien Pupier, Anthony Birembaut, Chong Zhao, Zhiheng Yang
  */
 public interface IFormBuilder {
@@ -36,7 +36,7 @@ public interface IFormBuilder {
      * Build a XML form definition file.
      * This is the last method to call once the form has been built.
      * It perform the XSD validation and generates the XML file
-     * 
+     *
      * @return a {@link File}
      * @throws InvalidFormDefinitionException
      *             if the generated document is not valid
@@ -46,14 +46,14 @@ public interface IFormBuilder {
 
     /**
      * Initiate the form definition
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      */
     IFormBuilder createFormDefinition();
 
     /**
      * Add an application
-     * 
+     *
      * @param applicationName
      *            the name of the application
      * @param applicationVersion
@@ -65,7 +65,7 @@ public interface IFormBuilder {
 
     /**
      * Add a label on an application, page or widget
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -79,7 +79,7 @@ public interface IFormBuilder {
 
     /**
      * Add a layout on an application or a page
-     * 
+     *
      * @param layoutUri
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -88,7 +88,7 @@ public interface IFormBuilder {
 
     /**
      * Add a mandatory field symbol on an application
-     * 
+     *
      * @param symbol
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -98,7 +98,7 @@ public interface IFormBuilder {
 
     /**
      * Add a mandatory field label expession on an application
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -112,7 +112,7 @@ public interface IFormBuilder {
 
     /**
      * Add a mandatory field label and symbol style (css class names) on an application
-     * 
+     *
      * @param label
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -121,7 +121,7 @@ public interface IFormBuilder {
 
     /**
      * Add a confirmation layout on an application
-     * 
+     *
      * @param layoutUri
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -130,7 +130,7 @@ public interface IFormBuilder {
 
     /**
      * Add a confirmation message on an application
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -144,7 +144,7 @@ public interface IFormBuilder {
 
     /**
      * Add an error template on an application
-     * 
+     *
      * @param templateUri
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -156,7 +156,7 @@ public interface IFormBuilder {
      * If an application has no entry form, it means that it hasn't been defined,
      * and the form for the application will be automatically generated.
      * Whereas if it has an empty entry form, the application will be automatically instantiated.
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -166,7 +166,7 @@ public interface IFormBuilder {
      * Add a view form on an application
      * If an application has no form, it means that it hasn't been defined,
      * and the form for the application will be automatically generated.
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -174,7 +174,7 @@ public interface IFormBuilder {
 
     /**
      * Add a page in the edition page flows and create the form if it doesn't exist yet
-     * 
+     *
      * @param pageId
      * @return
      * @throws InvalidFormDefinitionException
@@ -183,7 +183,7 @@ public interface IFormBuilder {
 
     /**
      * Add a widget on pages
-     * 
+     *
      * @param widgetId
      * @param widgetType
      * @return an implementation of {@link IFormBuilder}
@@ -193,7 +193,7 @@ public interface IFormBuilder {
 
     /**
      * Add a max length number of characters property to a widget for textbox and textarea widgets
-     * 
+     *
      * @param maxLength
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -202,7 +202,7 @@ public interface IFormBuilder {
 
     /**
      * Add a max height number of characters property to a widget for textarea and multiple listbox widgets
-     * 
+     *
      * @param maxHeight
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -211,7 +211,7 @@ public interface IFormBuilder {
 
     /**
      * Add a title (tooltip) to a widget field
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -225,7 +225,7 @@ public interface IFormBuilder {
 
     /**
      * Add CSS classes names to a widget
-     * 
+     *
      * @param cssClasses
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -234,7 +234,7 @@ public interface IFormBuilder {
 
     /**
      * Add an initial value to a widget (can be a groovy expression)
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -248,7 +248,7 @@ public interface IFormBuilder {
 
     /**
      * Add CSS class names to a widget label
-     * 
+     *
      * @param cssClasses
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -257,7 +257,7 @@ public interface IFormBuilder {
 
     /**
      * Specify the position of a widget label
-     * 
+     *
      * @param labelPosition
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -266,7 +266,7 @@ public interface IFormBuilder {
 
     /**
      * Add a mandatory property to a widget
-     * 
+     *
      * @param isMandatory
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -276,7 +276,7 @@ public interface IFormBuilder {
     /**
      * Add an available value to a widget and create the list of available values if it doesn't exist yet
      * (for radiobutton group, simple and multiple selectbox, checkbox group).
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -285,7 +285,7 @@ public interface IFormBuilder {
     /**
      * Add available values array to a widget and create the array of available values if it doesn't exist yet
      * (for table widget).
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -294,7 +294,7 @@ public interface IFormBuilder {
     /**
      * Add initial values array to a widget and create the array if it doesn't exist yet
      * (for grid widget).
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -303,7 +303,7 @@ public interface IFormBuilder {
     /**
      * Add a row to an available values array or to an initial value array
      * (for table widget and grid widget).
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -311,7 +311,7 @@ public interface IFormBuilder {
 
     /**
      * Add an available values expression property to a widget
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -325,7 +325,7 @@ public interface IFormBuilder {
 
     /**
      * Add CSS class names to the items of a radiobutton or checkbox group widget
-     * 
+     *
      * @param cssClasses
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -334,7 +334,7 @@ public interface IFormBuilder {
 
     /**
      * Indicates that the button should be displayed as a label instead of an html button
-     * 
+     *
      * @param isLabelButton
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -343,7 +343,7 @@ public interface IFormBuilder {
 
     /**
      * Add a validator on a page or a widget and create the list of validators if it doesn't exist yet
-     * 
+     *
      * @param validatorId
      *            the validator Id
      * @param className
@@ -359,7 +359,7 @@ public interface IFormBuilder {
 
     /**
      * Add an action on an application and create the list of actions if it doesn't exist yet
-     * 
+     *
      * @param actionType
      *            the action type
      * @param variableName
@@ -381,7 +381,7 @@ public interface IFormBuilder {
 
     /**
      * Add a display format pattern for the display value of date widgets
-     * 
+     *
      * @param displayFormat
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -390,7 +390,7 @@ public interface IFormBuilder {
 
     /**
      * Add an attachement image behavior for the display of image previews on file download widgets or the display of attachments in image widgets
-     * 
+     *
      * @param attachmentImage
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -399,7 +399,7 @@ public interface IFormBuilder {
 
     /**
      * Add allow HTML in label behavior
-     * 
+     *
      * @param allowHTMLInLabel
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -408,7 +408,7 @@ public interface IFormBuilder {
 
     /**
      * Add allow HTML in field behavior
-     * 
+     *
      * @param allowHTMLInField
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -417,7 +417,7 @@ public interface IFormBuilder {
 
     /**
      * Add a Html attribute to a widget
-     * 
+     *
      * @param name
      *            the name of the attribute
      * @param value
@@ -429,7 +429,7 @@ public interface IFormBuilder {
 
     /**
      * Add table style for table widgets
-     * 
+     *
      * @param cssClasses
      *            the CSS classes for the table
      * @return an implementation of {@link IFormBuilder}
@@ -439,7 +439,7 @@ public interface IFormBuilder {
 
     /**
      * Add image style for image widgets
-     * 
+     *
      * @param cssClasses
      *            the CSS classes for the image
      * @return an implementation of {@link IFormBuilder}
@@ -449,7 +449,7 @@ public interface IFormBuilder {
 
     /**
      * Add cells style for table widgets
-     * 
+     *
      * @param cssClasses
      *            the CSS classes for the cells
      * @return an implementation of {@link IFormBuilder}
@@ -459,7 +459,7 @@ public interface IFormBuilder {
 
     /**
      * Add headings style for table widgets
-     * 
+     *
      * @param cssClasses
      *            the CSS classes for the headings
      * @param leftHeadings
@@ -478,7 +478,7 @@ public interface IFormBuilder {
 
     /**
      * Add a vertical header list of expressions
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -486,7 +486,7 @@ public interface IFormBuilder {
 
     /**
      * Add a vertical header under the form of an expression or add a vertical header cell expression if called after addVerticalHeaderExpressionList
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -500,7 +500,7 @@ public interface IFormBuilder {
 
     /**
      * Add a horizontal header list of expressions
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -508,7 +508,7 @@ public interface IFormBuilder {
 
     /**
      * Add an horizontal header under the form of an expression
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -522,7 +522,7 @@ public interface IFormBuilder {
 
     /**
      * Add a selection mode to a widget (for table widgets for example)
-     * 
+     *
      * @param selectMode
      *            the selection mode. {@link SelectMode#NONE} if the selection should be disabled
      * @return an implementation of {@link IFormBuilder}
@@ -532,7 +532,7 @@ public interface IFormBuilder {
 
     /**
      * Add a selected items style to a widget (for table widgets for example)
-     * 
+     *
      * @param selectedItemsStyle
      *            the selection mode. {@link SelectMode#NONE} if the selection should be disabled
      * @return an implementation of {@link IFormBuilder}
@@ -542,7 +542,7 @@ public interface IFormBuilder {
 
     /**
      * add a minimum number of rows to a widget (for editable tables)
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -556,7 +556,7 @@ public interface IFormBuilder {
 
     /**
      * add a maximum number of rows to a widget (for tables)
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -570,7 +570,7 @@ public interface IFormBuilder {
 
     /**
      * add a variable rows number behavior (for editable tables)
-     * 
+     *
      * @param variableRowsNumber
      *            the variable rows number
      * @return an implementation of {@link IFormBuilder}
@@ -580,7 +580,7 @@ public interface IFormBuilder {
 
     /**
      * add a minimum number of columns to a widget (for editable tables)
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -594,7 +594,7 @@ public interface IFormBuilder {
 
     /**
      * add a maximum number of columns to a widget (for editable tables)
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -608,7 +608,7 @@ public interface IFormBuilder {
 
     /**
      * add a variable columns number behavior (for editable tables)
-     * 
+     *
      * @param variableColumnsNumber
      *            the variable columns number
      * @return an implementation of {@link IFormBuilder}
@@ -618,7 +618,7 @@ public interface IFormBuilder {
 
     /**
      * specify the index of column which is used as the value of the selected row(s)
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -632,7 +632,7 @@ public interface IFormBuilder {
 
     /**
      * Add a readonly property to a widget
-     * 
+     *
      * @param isReadOnly
      *            the readonly behavior
      * @return an implementation of {@link IFormBuilder}
@@ -642,7 +642,7 @@ public interface IFormBuilder {
 
     /**
      * Add a max items property to a widget for suggestbox widgets
-     * 
+     *
      * @param maxItems
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -651,7 +651,7 @@ public interface IFormBuilder {
 
     /**
      * Add a transient data on a page flow
-     * 
+     *
      * @param name
      *            name of the transient data
      * @param className
@@ -663,7 +663,7 @@ public interface IFormBuilder {
 
     /**
      * Add a first page Id on a page flow
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -677,7 +677,7 @@ public interface IFormBuilder {
 
     /**
      * Add a next page id on a page flow
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -691,7 +691,7 @@ public interface IFormBuilder {
 
     /**
      * Add a display condition expression to display or not a widget
-     * 
+     *
      * @param displayConditionExpression
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -701,7 +701,7 @@ public interface IFormBuilder {
 
     /**
      * Add a delay millisecond property to a widget for asynchronous suggestbox widgets
-     * 
+     *
      * @param delayMillis
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -710,7 +710,7 @@ public interface IFormBuilder {
 
     /**
      * Add a sub title property to a widget to accept an "example" parameter
-     * 
+     *
      * @param position
      *            sub title position
      * @return an implementation of {@link IFormBuilder}
@@ -721,7 +721,7 @@ public interface IFormBuilder {
     /**
      * Add a popup tooltip, that will be displayed to help the user when he clicks on the
      * bulb icon that is placed beside of a widget.
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -735,7 +735,7 @@ public interface IFormBuilder {
 
     /**
      * Add permissions, that will be decide whether a user has right to view/submit the form.
-     * 
+     *
      * @param example
      *            The permissions
      * @return an implementation of {@link IFormBuilder}
@@ -745,7 +745,7 @@ public interface IFormBuilder {
 
     /**
      * Add migration product version, that will be generated with the current version of the product used.
-     * 
+     *
      * @param example
      *            The migrationProductVersion
      * @return an implementation of {@link IFormBuilder}
@@ -756,7 +756,7 @@ public interface IFormBuilder {
 
     /**
      * Add a next form id on entry form or view form.
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -770,7 +770,7 @@ public interface IFormBuilder {
 
     /**
      * Add dependent expressions
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -784,7 +784,7 @@ public interface IFormBuilder {
 
     /**
      * Add dependent expressions
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -799,7 +799,7 @@ public interface IFormBuilder {
 
     /**
      * End an expression dependencies group
-     * 
+     *
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -807,7 +807,7 @@ public interface IFormBuilder {
 
     /**
      * Add parameter expression
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -821,7 +821,7 @@ public interface IFormBuilder {
 
     /**
      * Add action expression
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -834,8 +834,22 @@ public interface IFormBuilder {
             throws InvalidFormDefinitionException;
 
     /**
-     * Add transient data expression
+     * Add action condition expression
      * 
+     * @param name
+     * @param content
+     * @param expressionType
+     * @param returnType
+     * @param interpreter
+     * @return
+     * @throws InvalidFormDefinitionException
+     */
+    IFormBuilder addConditionExpression(String name, String content, String expressionType, String returnType, String interpreter)
+            throws InvalidFormDefinitionException;
+
+    /**
+     * Add transient data expression
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -849,7 +863,7 @@ public interface IFormBuilder {
 
     /**
      * Add value expression
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
@@ -863,7 +877,7 @@ public interface IFormBuilder {
 
     /**
      * Add initial value Resource for file widgets on instantiation form
-     * 
+     *
      * @param resourcePath
      * @return
      * @throws InvalidFormDefinitionException
@@ -872,7 +886,7 @@ public interface IFormBuilder {
 
     /**
      * Add an input type to a file widget
-     * 
+     *
      * @param fileWidgetInputType
      * @return
      * @throws InvalidFormDefinitionException
@@ -881,7 +895,7 @@ public interface IFormBuilder {
 
     /**
      * Add field output type to convert when form is submitted
-     * 
+     *
      * @param fieldOutputType
      * @return
      */
@@ -889,7 +903,7 @@ public interface IFormBuilder {
 
     /**
      * Add CSS classes names to a widget input
-     * 
+     *
      * @param cssClasses
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
