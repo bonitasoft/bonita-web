@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.action.TaskSkipAction;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
@@ -44,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APIUpdateCallback;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
@@ -68,7 +69,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
 
     static {
         PRIVILEGES.add(TaskListingAdminPage.TOKEN);
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
     }
@@ -154,10 +155,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         });
     }
 
-    protected ItemListingPage<CaseItem>  getTaskListingPage() {
+    protected ItemListingPage<CaseItem> getTaskListingPage() {
         return new TaskListingAdminPage();
     }
-
 
     protected void showFailedTaskListingPage() {
         ViewController.showView(TaskListingAdminPage.TOKEN, Collections.singletonMap(UrlOption.FILTER, TaskListingAdminPage.FILTER_PRIMARY_FAILED));
@@ -185,7 +185,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         final MetadataTaskBuilder metadatas = new MetadataTaskBuilder();
         metadatas.addAppsName();
         metadatas.addAppsVersion();
-        metadatas.addCaseId(task,  CaseMoreDetailsAdminPage.TOKEN , ArchivedCaseMoreDetailsAdminPage.TOKEN);
+        metadatas.addCaseId(task, CaseMoreDetailsAdminPage.TOKEN, ArchivedCaseMoreDetailsAdminPage.TOKEN);
         metadatas.addType();
         metadatas.addState();
         metadatas.addPriority();
@@ -195,7 +195,7 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
                 metadatas.addExecutedBy();
             }
         }
-        if (!(task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName()))){
+        if (!task.getRootContainerProcess().ensureName().equals(task.getProcess().ensureName())) {
             metadatas.AddSubAppsName();
             metadatas.AddSubAppsVersion();
         }
@@ -227,7 +227,9 @@ public class TaskMoreDetailsAdminPage extends ArchivableItemDetailsPage<IFlowNod
         if (item.isArchived()) {
             return new ArchivedConnectorInstanceSectionSnippet(item).setNbLinesByPage(10).build();
         } else {
-            return new Section(_("Connectors")).addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
+            final Section connectorSection = new Section(_("Connectors"));
+            connectorSection.setId(CssId.MD_SECTION_CONNECTORS);
+            return connectorSection.addBody(createConnectorInstanceTable(item).setNbLinesByPage(10));
         }
     }
 

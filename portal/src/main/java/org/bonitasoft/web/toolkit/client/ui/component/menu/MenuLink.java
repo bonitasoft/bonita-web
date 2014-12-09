@@ -32,6 +32,8 @@ public class MenuLink extends Component implements MenuItem {
 
     private Clickable link = null;
 
+    private String linkId = null;
+
     public MenuLink(final JsId jsid, final String label, final String tooltip, final Action action) {
         this.link = new Link(jsid, label, tooltip, action);
     }
@@ -48,16 +50,23 @@ public class MenuLink extends Component implements MenuItem {
         this(null, label, tooltip, token);
     }
 
+    public void setLinkId(String id) {
+        this.linkId = id;
+    }
+
     @Override
     protected Element makeElement() {
         final Element rootElement = DOM.createElement("li");
-
-        rootElement.appendChild(this.link.getElement());
+        if (linkId != null) {
+            link.setId(this.linkId);
+        }
+        Element linkElement = this.link.getElement();
+        linkElement.setAttribute("href", "#");
+        rootElement.appendChild(linkElement);
         if (this.link.getJsId() != null) {
             rootElement.addClassName(this.link.getJsId().toString());
         }
 
         return rootElement;
     }
-
 }

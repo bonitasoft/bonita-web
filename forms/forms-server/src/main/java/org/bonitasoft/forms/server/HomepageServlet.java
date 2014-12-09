@@ -5,15 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
  */
 package org.bonitasoft.forms.server;
 
@@ -34,17 +31,16 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.themes.ThemeDatastore;
-import org.bonitasoft.console.common.server.themes.ThemeManager;
+import org.bonitasoft.console.common.server.themes.CompilableFile;
+import org.bonitasoft.console.common.server.themes.ThemeArchive;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
-import org.bonitasoft.console.common.server.themes.ThemeStructureException;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.ThemeAPI;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.theme.Theme;
 import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -144,21 +140,16 @@ public class HomepageServlet extends ThemeResourceServlet {
             final File themesParentFolder = getResourcesParentFolder(request);
             final File themeFolder = new File(themesParentFolder, PORTAL_THEME_NAME);
             final APISession apiSession = getEngineSession(request);
-            if (themeFolder.exists()) {
-                final File timestampFile = new File(themeFolder, LASTUPDATE_FILENAME);
-                final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
-                if (timestampFile.exists()) {
-                    final String timestampString = FileUtils.readFileToString(timestampFile);
-                    final long timestamp = Long.parseLong(timestampString);
-                    if (lastUpdateTimestamp != timestamp) {
-                        updateThemeFromEngine(apiSession, themeFolder);
-                        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
-                    }
-                } else {
-                    FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+            final File timestampFile = new File(themeFolder, LASTUPDATE_FILENAME);
+            final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
+            if (themeFolder.exists() && timestampFile.exists()) {
+                final String timestampString = FileUtils.readFileToString(timestampFile);
+                final long timestamp = Long.parseLong(timestampString);
+                if (lastUpdateTimestamp != timestamp) {
+                    updateThemeFromEngine(apiSession, themeFolder, timestampFile, lastUpdateTimestamp);
                 }
             } else {
-                updateThemeFromEngine(apiSession, themeFolder);
+                updateThemeFromEngine(apiSession, themeFolder, timestampFile, lastUpdateTimestamp);
             }
             getResourceFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
@@ -173,13 +164,15 @@ public class HomepageServlet extends ThemeResourceServlet {
         return themeAPI.getLastUpdateDate(ThemeType.PORTAL).getTime();
     }
 
-    protected void updateThemeFromEngine(final APISession apiSession, final File themeDestinationDirectory) throws BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException, IOException, ThemeStructureException {
-        final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
-        final ThemeManager themeManager = new ThemeManager(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()));
-        final ThemeDatastore themeDataStore = new ThemeDatastore(themeAPI, themeManager);
-        themeDataStore.updateCurrentThemeFromEngine();
-
+    protected void updateThemeFromEngine(final APISession apiSession, final File portalThemeDirectory, final File timestampFile, final long lastUpdateTimestamp)
+            throws BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException, IOException {
+        Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
+        new ThemeArchive(theme.getContent())
+                .extract(portalThemeDirectory)
+                .compile(CompilableFile.ALWAYS_COMPILED_FILES)
+                .add("bonita.css", theme.getCssContent());
+        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
     }
 
     protected String getFileName(final boolean isForm) {

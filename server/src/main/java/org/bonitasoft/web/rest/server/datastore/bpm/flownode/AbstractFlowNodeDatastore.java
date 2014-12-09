@@ -1,16 +1,14 @@
 /**
- * Copyright (C) 2013 BonitaSoft S.A.
+ * Copyright (C) 2013, 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +26,6 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -42,14 +39,13 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
- * 
+ * @author Celine Souchet
  */
 public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE_ITEM extends FlowNodeInstance>
         extends CommonDatastore<CONSOLE_ITEM, ENGINE_ITEM>
         implements DatastoreHasSearch<CONSOLE_ITEM>,
         DatastoreHasGet<CONSOLE_ITEM>,
-        DatastoreHasUpdate<CONSOLE_ITEM>
-{
+        DatastoreHasUpdate<CONSOLE_ITEM> {
 
     private DatastoreHasUpdate<FlowNodeItem> updateHelper;
 
@@ -59,22 +55,22 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
 
     /**
      * Fill a console item using the engine item passed.
-     * 
+     *
      * @param result
-     *            The console item to fill
+     *        The console item to fill
      * @param item
-     *            The engine item to use for filling
+     *        The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
     protected static FlowNodeItem fillConsoleItem(final FlowNodeItem result, final FlowNodeInstance item) {
-
         result.setId(item.getId());
         result.setName(item.getName());
         result.setDisplayName(item.getDisplayName());
         result.setDescription(item.getDescription());
         result.setDisplayDescription(item.getDisplayDescription());
         result.setExecutedByUserId(item.getExecutedBy());
-        result.setCaseId(item.getRootContainerId());
+        result.setRootCaseId(item.getRootContainerId());
+        result.setParentCaseId(item.getParentProcessInstanceId());
         result.setProcessId(item.getProcessDefinitionId());
         result.setState(item.getState());
         result.setType(item.getType().name());
@@ -83,7 +79,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         return result;
     }
 
-    protected final ProcessAPI getProcessAPI() {
+    protected ProcessAPI getProcessAPI() {
         try {
             return TenantAPIAccessor.getProcessAPI(getEngineSession());
         } catch (final Exception e) {
@@ -91,13 +87,10 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected CONSOLE_ITEM convertEngineToConsoleItem(final ENGINE_ITEM item) {
-
-        @SuppressWarnings("unchecked")
-        final CONSOLE_ITEM result = (CONSOLE_ITEM) FlowNodeConverter.convertEngineToConsoleItem(item);
-
-        return result;
+        return (CONSOLE_ITEM) FlowNodeConverter.convertEngineToConsoleItem(item);
     }
 
     public long count(final String search, final String orders, final Map<String, String> filters) {
@@ -120,35 +113,20 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
     @Override
     public ItemSearchResult<CONSOLE_ITEM> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        try {
-            final SearchOptionsBuilder builder = makeSearchOptionBuilder(page, resultsByPage, search, orders, filters);
+        final SearchOptionsBuilder builder = makeSearchOptionBuilder(page, resultsByPage, search, orders, filters);
+        final SearchResult<ENGINE_ITEM> results = runSearch(builder, filters);
 
-            final SearchResult<ENGINE_ITEM> results = runSearch(builder, filters);
-
-            return new ItemSearchResult<CONSOLE_ITEM>(
-                    page,
-                    resultsByPage,
-                    results.getCount(),
-                    convertEngineToConsoleItemsList(results.getResult()));
-
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
+        return new ItemSearchResult<CONSOLE_ITEM>(
+                page,
+                resultsByPage,
+                results.getCount(),
+                convertEngineToConsoleItemsList(results.getResult()));
     }
 
     @SuppressWarnings("unchecked")
     protected SearchResult<ENGINE_ITEM> runSearch(final SearchOptionsBuilder builder, final Map<String, String> filters) {
         try {
-            final SearchResult<ENGINE_ITEM> result;
-            if (filters.containsKey(HumanTaskItem.ATTRIBUTE_PROCESS_ID)) {
-                result = (SearchResult<ENGINE_ITEM>) getProcessAPI()
-                        .searchAssignedAndPendingHumanTasks(APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_PROCESS_ID)).toLong(),
-                                builder.done());
-            } else {
-                result = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchFlowNodeInstances(
-                    builder.done());
-            }
-            return result;
+            return (SearchResult<ENGINE_ITEM>) getProcessAPI().searchFlowNodeInstances(builder.done());
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -156,24 +134,27 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
 
     protected SearchOptionsBuilder makeSearchOptionBuilder(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-
-        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
-        // addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
-        addFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
-
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, FlowNodeInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_STATE, FlowNodeInstanceSearchDescriptor.STATE_NAME);
+        addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
+        addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_NAME, FlowNodeInstanceSearchDescriptor.NAME);
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "aborted");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "cancelled");
+        builder.differentFrom(FlowNodeInstanceSearchDescriptor.STATE_NAME, "completed");
         return builder;
     }
 
-    public AbstractFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM> setUpdateHelper(DatastoreHasUpdate<FlowNodeItem> updateHelper) {
+    public AbstractFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM> setUpdateHelper(final DatastoreHasUpdate<FlowNodeItem> updateHelper) {
         this.updateHelper = updateHelper;
         return this;
     }
 
     @Override
-    public CONSOLE_ITEM update(APIID id, Map<String, String> attributes) {
+    public CONSOLE_ITEM update(final APIID id, final Map<String, String> attributes) {
         if (updateHelper != null) {
             /*
              * Generics are useless in this class.

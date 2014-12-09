@@ -211,7 +211,17 @@ $(function() {
 	 */
 	$.uiManager.addMaker(function(context) {
 		if (context.is("#popup")) {
-			$('form :input:first', context).focus();
+			var firstInput = $('form :input:visible', context);
+			var focused = false
+			var i = 0;
+			while(i<firstInput.length && !focused){
+				var currentElement = $(firstInput.get(i));
+				if(currentElement.attr("type") == "text" || currentElement.attr("type") == "textarea" || currentElement.attr("password") == "text"){
+					currentElement.focus();
+					focused = true;
+				}
+				i++;
+			}
 		}
 	});
 

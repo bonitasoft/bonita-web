@@ -22,6 +22,8 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -34,6 +36,8 @@ public class CasesSection extends Section {
 
     public CasesSection(ProcessItem process) {
         super(new JsId("cases"), _("Cases"));
+        setId(CssId.MD_SECTION_PROCESS_CASES);
+        addCssCaseType();
         addBody(caseTable(process));
     }
 
@@ -45,9 +49,9 @@ public class CasesSection extends Section {
         return casesTable;
     }
 
-	protected ShowCaseMoreDetailAction getShowCaseMoreDetailAction() {
-		return new ShowCaseMoreDetailAction();
-	}
+    protected ShowCaseMoreDetailAction getShowCaseMoreDetailAction() {
+        return new ShowCaseMoreDetailAction();
+    }
 
     private ItemTable buildCaseItemTable(ProcessItem process) {
         ItemTable casesTable = new ItemTable(CaseDefinition.get())

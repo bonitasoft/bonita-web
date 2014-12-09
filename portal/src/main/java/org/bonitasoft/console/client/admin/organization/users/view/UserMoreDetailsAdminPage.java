@@ -33,6 +33,7 @@ import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
@@ -135,12 +136,13 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     @Override
     protected Section membershipSection(final UserItem user) {
-        final Section section = new Section(new JsId("membershipSection"), _("Membership"));
-        section.addBody(membershipTable(user));
+        final Section membershipSection = new Section(new JsId("membershipSection"), _("Membership"));
+        membershipSection.setId(CssId.MD_SECTION_USER_MEMBERSHIP_SECTION);
+        membershipSection.addBody(membershipTable(user));
         if (user.isEnabled()) {
-            section.addBody(addMembershipLink());
+            membershipSection.addBody(addMembershipLink());
         }
-        return section;
+        return membershipSection;
     }
 
     protected Link addMembershipLink() {
@@ -167,6 +169,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     private Section businessCardSection(final ProfessionalContactDataItem professionalData) {
         final Section businessCardSection = new Section(new JsId("businessCardSection"), _("Business card"));
+        businessCardSection.setId(CssId.MD_SECTION_BUSINESS_USER_DATA);
         final ContainerStyled<Definition> definitions = new ContainerStyled<Definition>(new JsId("definitions"));
         definitions.append(new Definition(_("Address") + ": ", _("the company address of the user"), professionalData.getAddress()));
         definitions.append(new Definition(_("City") + ": ", _("the city"), professionalData.getCity()));
@@ -182,6 +185,7 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
 
     private Section personalInformationSection(final PersonalContactDataItem item) {
         final Section personalInformationSection = new Section(new JsId("personalInformationSection"), _("Personal information"));
+        personalInformationSection.setId(CssId.MD_SECTION_PERSONNAL_USER_DATA);
         final ContainerStyled<Definition> definitions = new ContainerStyled<Definition>(new JsId("definitions"));
         definitions.append(new Definition(_("Address") + ": ", _("the address of the user"), item.getAddress()));
         definitions.append(new Definition(_("City") + ": ", _("the city"), item.getCity()));
@@ -197,10 +201,12 @@ public class UserMoreDetailsAdminPage extends UserQuickDetailsAdminPage {
     private void addCustomInformationSection(UserItem user) {
         final CustomUserInformationModel model = new CustomUserInformationModel(new RequestFactory(), user.getId().toString());
         model.search(0, 0, new CustomUserInformationModel.Callback() {
+
             @Override
             void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
                 if (total > 0) {
                     Section customInformationSection = new Section(new JsId("otherSection"), _("Other"));
+                    customInformationSection.setId(CssId.MD_SECTION_CUSTOM_USER_DATA);
                     ContainerStyled<UiComponent> definitions = new ContainerStyled<UiComponent>(new JsId("definitions"));
                     definitions.append(new UiComponent(new CustomUserInformationView(model)));
                     addBody(customInformationSection.addBody(definitions));

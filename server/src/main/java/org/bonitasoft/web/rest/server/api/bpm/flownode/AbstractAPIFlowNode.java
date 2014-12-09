@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,11 +29,11 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.GenericDeployer;
-import org.bonitasoft.web.rest.server.datastore.bpm.flownode.TaskFinder;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.TaskDatastore;
+import org.bonitasoft.web.rest.server.datastore.bpm.flownode.TaskFinder;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.ArchivedTaskDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ActorDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
@@ -52,7 +50,7 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * Contains all the implementation for a APIFlowNode and inherited APIs
- * 
+ *
  * @author Séverin Moussel
  */
 public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<ITEM> implements
@@ -117,13 +115,20 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
                     new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
         }
 
-        if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
-                    new CaseDatastore(getEngineSession()).get(item.getCaseId()));
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item) || isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, deploys, item)) {
+            final CaseItem item2 = new CaseDatastore(getEngineSession()).get(item.getCaseId());
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, item2);
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, item2);
+        }
+
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, deploys, item)) {
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
+                    new CaseDatastore(getEngineSession()).get(item.getParentCaseId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
-            CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
+            CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item
+                    .getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             if (rootContainerCase == null) {
                 rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             }
@@ -155,7 +160,7 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         addDeployer(new GenericDeployer<IItem>(new DatastoreHasGet<IItem>() {
 
             @Override
-            public IItem get(APIID id) {
+            public IItem get(final APIID id) {
                 return new TaskFinder(
                         new TaskDatastore(getEngineSession()),
                         new ArchivedTaskDatastore(getEngineSession())).find(id);
@@ -165,8 +170,8 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         super.fillDeploys(item, deploys);
     }
 
-    private CaseItem getArchivedCase(String id) {
-        List<ArchivedCaseItem> result = new ArchivedCaseDatastore(getEngineSession()).search(
+    private CaseItem getArchivedCase(final String id) {
+        final List<ArchivedCaseItem> result = new ArchivedCaseDatastore(getEngineSession()).search(
                 0, 1,
                 null,
                 null,
@@ -182,6 +187,8 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         final List<String> attributes = new ArrayList<String>();
 
         attributes.add(FlowNodeItem.ATTRIBUTE_CASE_ID);
+        attributes.add(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID);
+        attributes.add(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_PROCESS_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_DESCRIPTION);
         attributes.add(FlowNodeItem.ATTRIBUTE_NAME);

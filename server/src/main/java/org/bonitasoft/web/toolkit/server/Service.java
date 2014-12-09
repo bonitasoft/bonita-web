@@ -5,29 +5,29 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.toolkit.server;
 
-import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
-
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
+import javax.servlet.http.HttpSession;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 /**
  * This class represent a service.<br />
  * It must define a public final static String TOKEN.
- * 
+ *
  * @author Séverin Moussel
  */
 public abstract class Service {
@@ -39,7 +39,7 @@ public abstract class Service {
 
     /**
      * Set the caller.
-     * 
+     *
      * @param caller
      *            The ServletCall responsible of this service.
      */
@@ -51,7 +51,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getHttpSession()
      */
     protected final HttpSession getHttpSession() {
-        return this.caller.getHttpSession();
+        return caller.getHttpSession();
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ public abstract class Service {
      * <li>If the object is a list or a map, the response will be a json String.</li>
      * <li>Otherwise, the response content will be the object.toString().</li>
      * </ul>
-     * 
+     *
      * @return This method returns the output to respond.
      */
     public abstract Object run();
@@ -81,7 +81,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getRequestURL()
      */
     public final String getRequestURL() {
-        return this.caller.getRequestURL();
+        return caller.getRequestURL();
     }
 
     /**
@@ -89,7 +89,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getInputStream()
      */
     public final String getInputStream() {
-        return this.caller.getInputStream();
+        return caller.getInputStream();
     }
 
     /**
@@ -97,7 +97,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#countParameters()
      */
     public final int countParameters() {
-        return this.caller.countParameters();
+        return caller.countParameters();
     }
 
     /**
@@ -106,7 +106,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameterAsList(java.lang.String)
      */
     public final List<String> getParameterAsList(final String name) {
-        return this.caller.getParameterAsList(name);
+        return caller.getParameterAsList(name);
     }
 
     /**
@@ -116,7 +116,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameterAsList(java.lang.String, java.lang.String)
      */
     public final List<String> getParameterAsList(final String name, final String defaultValue) {
-        return this.caller.getParameterAsList(name, defaultValue);
+        return caller.getParameterAsList(name, defaultValue);
     }
 
     /**
@@ -125,7 +125,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameter(java.lang.String)
      */
     public final String getParameter(final String name) {
-        return this.caller.getParameter(name);
+        return caller.getParameter(name);
     }
 
     /**
@@ -135,7 +135,7 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameter(java.lang.String, java.lang.String)
      */
     public final String getParameter(final String name, final String defaultValue) {
-        return this.caller.getParameter(name, defaultValue);
+        return caller.getParameter(name, defaultValue);
     }
 
     /**
@@ -143,13 +143,13 @@ public abstract class Service {
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameters()
      */
     public final Map<String, String[]> getParameters() {
-        return this.caller.getParameters();
+        return caller.getParameters();
     }
 
-    public final LOCALE getLocale() {
+    public LOCALE getLocale() {
         try {
             return LOCALE.valueOf(caller.getLocale());
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             return AbstractI18n.getDefaultLocale();
         }
     }

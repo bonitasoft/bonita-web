@@ -70,7 +70,7 @@ public class StartProcessOnBehalfPage extends SelectMembershipAndDoPageOnItem<Pr
 
     @Override
     protected void defineTitle(final ProcessItem item) {
-        this.setTitle(_("Start a app on behalf of another user"));
+        this.setTitle(_("Start a process on behalf of another user"));
     }
 
     @Override
@@ -80,13 +80,13 @@ public class StartProcessOnBehalfPage extends SelectMembershipAndDoPageOnItem<Pr
 
     @Override
     protected String defineSubmitButtonTooltip(final ProcessItem item) {
-        return _("Start this app on behalf of selected user");
+        return _("Start this process on behalf of selected user");
     }
 
     @Override
     protected void buildBefore(final ProcessItem item) {
         addBody(new Paragraph(
-                _("Select a user to start app %app_name% %app_version%",
+                _("Select a user to start process %app_name% %app_version%",
                         new Arg("app_name", item.getDisplayName()),
                         new Arg("app_version", item.getVersion()))));
 

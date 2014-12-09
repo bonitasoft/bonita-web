@@ -8,9 +8,9 @@
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level \(%file:%line\) %method - %msg%n</pattern>
     </encoder>
   </appender>
-  
-  <root level="debug">
+
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
-  
+
 </configuration>

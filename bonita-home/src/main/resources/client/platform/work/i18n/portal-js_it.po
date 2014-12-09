@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: 2014-11-28 11:15-0500\n"
+"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+
+msgid "Columns"
+msgstr "Colonne"
+
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "da {{currentFirstResultIndex}} a {{currentLastResultIndex}} di {{pagination.total}}"
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Il caso eliminato verrà definitivamente cancellato e non sarà conservato negli archivi."
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "I casi eliminato verranno definitivamente cancellati e non saranno conservati negli archivi."
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "Il caso eliminato verrà eliminato definitivamente dagli archivi."
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "I caso verranno eliminati definitivamente dagli archivi."
+
+msgid "Failed Flow Nodes"
+msgstr "Flow Node falliti"
+
+msgid "Pending Flow Nodes"
+msgstr "Flow Node in sospeso"
+
+msgid "No cases to display"
+msgstr "Nessun caso da visualizzare"
+
+msgid "Case list"
+msgstr "Elenco dei casi"
+
+msgid "End date"
+msgstr "Data di fine"
+
+msgid "Confirm delete?"
+msgstr "Vuoi davvero eliminare?"
+
+msgid "Filters"
+msgstr "Filtri"
+
+msgid "Archived cases"
+msgstr "Casi archiviati"
+
+msgid "With failures"
+msgstr "Con errori"
+
+msgid "items per page"
+msgstr "Elementi per pagina"
+
+msgid "Case details"
+msgstr "Dettagli sui casi"
+
+msgid "columns selection"
+msgstr "selezione delle colonne"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} caso eliminato con successo"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} caso eliminato con successo"
+
+msgid "One or more connectors on case start or case end failed"
+msgstr "Uno o più connettori sono falliti all'inizio o alla fine del caso"
+
+msgid "Monitor open cases"
+msgstr "Monitor i casi aperti"
+
+msgid "Open cases"
+msgstr "Casi aperti"
+
+msgid "Healthy cases"
+msgstr "Casi sani"
+
+msgid "Cases with failures"
+msgstr "Casi con errori"
+
+msgid "Filter on process"
+msgstr "Filtrare sul processo"
+
+msgid "Process list"
+msgstr "Lista dei processi"
+
+msgid "Refresh"
+msgstr "Aggiorna"
+
+msgid "Process name"
+msgstr "Nome del processo"
+
+msgid "Failed"
+msgstr "Fallito"
+
+msgid "Actions"
+msgstr "azioni"
+
+msgid "Wait ..."
+msgstr "Attendere ..."
+
+# Pagination label: "1 - 10 of 300"
+msgid "of"
+msgstr "di"
+
+msgid "No data"
+msgstr "Nessun dato"
+
+msgid "Error!"
+msgstr "Errore!"
+
+msgid "Started"
+msgstr "Iniziato"
+
+msgid "All"
+msgstr "Tutti"
+
+msgid "Never"
+msgstr "Mai"
+
+msgid "1 min."
+msgstr "1 min."
+
+msgid "5 min."
+msgstr "5 min."
+
+msgid "10 min."
+msgstr "10 min."
+
+msgid "30 min."
+msgstr "30 min."
+
+msgid "1 h."
+msgstr "1 h."
+
+msgid "Technical error."
+msgstr "Errore tecnico."
+
+msgid "State"
+msgstr "Stato"
+
+msgid "Show"
+msgstr "Visualizza"
+
+msgid "Healthy cases"
+msgstr "Casi sani"
+
+msgid "Open"
+msgstr "Apri"
+
+msgid "Process version"
+msgstr "Versione del processo"
+
+msgid "Case state"
+msgstr "Stato del caso"
+
+msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
+
+msgid "Disabled, no new case can be started"
+msgstr "Disabilitato, nessun nuovo caso può essere avviato"
+
+msgid "Process enabled"
+msgstr "Processo attivato"
+
+msgid "View case list"
+msgstr "Visualizza la lista dei casi"
+
+msgid "View process"
+msgstr "Vusualizza il processo"
+
+msgid "Drawing process..."
+msgstr "Creazione del diagramma del processo in corso..."
+
+msgid "Error on drawing process!"
+msgstr "Errore durante la creazione del diagramma del processo!"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "LIVELLO DI ZOOM PREDEFINITO"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
+
+msgid "Version"
+msgstr "Versione"
+
+msgid "Totals"
+msgstr "Totale"
+
+msgid "Loading..."
+msgstr "Caricamento..."
+
+msgid "Totals"
+msgstr "Totale"
+

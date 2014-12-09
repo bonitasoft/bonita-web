@@ -24,6 +24,7 @@ import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
@@ -42,6 +43,7 @@ public class CategoriesSection extends Section {
 
     public CategoriesSection(final ProcessItem item) {
         super(new JsId("Categories"), _("Categories"));
+        setId(CssId.MD_SECTION_PROCESSCATEGORIES);
         addBody(newCategorieTable(item));
         addBody(newAddCategoryButton(item.getId(), item.getDisplayName()));
         addBody(newCreateCategoryButton(item.getId(), item.getDisplayName()));

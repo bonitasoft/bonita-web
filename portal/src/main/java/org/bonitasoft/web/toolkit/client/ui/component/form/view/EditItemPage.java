@@ -18,6 +18,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ItemAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
@@ -42,13 +43,15 @@ public class EditItemPage extends ItemPage {
 
     @Override
     public void buildView() {
-        addBody(new Section(
+        Section editItemSection = new Section(
                 new JsId(this.getParameter("id") != null ? "edititem" : "additem"),
                 this.getParameter("id") != null ? _("Edit") : _("Add"),
                 new ItemForm<Item>(
                         new JsId("edititem"),
                         Definitions.get(this.getParameter(ItemAction.PARAM_ITEM_DEFINITION_NAME)),
                         this.getParameter("id")
-                )));
+                ));
+        editItemSection.setId(CssId.SECTION_EDIT_ITEM);
+        addBody(editItemSection);
     }
 }

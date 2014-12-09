@@ -33,9 +33,14 @@
 				//padding: @header-login-profileLabel-padding;
 				.menuitem_userName,	.menuitem_profile{
 					>a{
-						.bg(@header-login-profileLink-bg, no-repeat, transparent, 90%, 50%);
-						color: @header-login-profileLink-textColor;
+						.bg(@header-login-profileLink-bg, no-repeat, transparent, right, center);
 						padding: @header-login-profileLink-padding;
+						margin:  @header-login-profileLink-margin;
+						color: @header-login-settings-link-textColor;
+						display: block;
+    					max-width: @header-login-usernameLink-maxWidth;
+    					overflow: hidden;
+    					text-overflow: ellipsis;
 					}
 				}
 				.menuitem_options{
@@ -144,11 +149,11 @@
 					.CSSPIE();// csspie hand over management
 					&.dropdownitem > a {
 						line-height: 1; //TODO check this rule
-						.bg("arrow-down-white.png", no-repeat, transparent, 90%, 50%);
+						.bg("arrow-down-white.png", no-repeat, transparent, right, center);
 					}
 					&.dropdownitem.current > a {
 						line-height:1; //TODO check this rule
-						.bg("arrow-down.png", no-repeat, transparent, 90%, 50%);
+						.bg("arrow-down.png", no-repeat, transparent, right, center);
 					}
 					// current item
 					&.current, &.current:hover{

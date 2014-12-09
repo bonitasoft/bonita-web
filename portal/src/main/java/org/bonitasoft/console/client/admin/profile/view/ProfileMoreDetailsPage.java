@@ -14,6 +14,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
@@ -78,7 +79,8 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     protected void buildBody(final ProfileItem item) {
         if (item.isDefault().equals("false")) {
             DoubleSection mappingSection = new DoubleSection(new JsId("Mapping"), _("Mapping"));
-            mappingSection.addDescription(_("This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."));
+            mappingSection
+                    .addDescription(_("This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."));
             mappingSection.addBody(createUsersSection(item), createGroupsSection(item), createRolesSection(item), createMembershipsSection(item));
             addBody(mappingSection);
         } else {
@@ -91,6 +93,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
         params.put(UserItem.FILTER_PROFILE_ID, profile.getId().toString());
 
         final Section userSection = new Section(new JsId("Users"), _("Users mapping"));
+        userSection.setId(CssId.MD_SECTION_PROFILE_USER_MAPPING);
         userSection.addBody(createUserTable(profile));
         userSection.addBody(createAddUserButton(profile));
         return userSection;
@@ -109,6 +112,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
 
     private ItemTableActionSet<ProfileMemberItem> userDeleteAction(final ProfileItem profile) {
         return new ItemTableActionSet<ProfileMemberItem>() {
+
             @Override
             public void defineActions(final ProfileMemberItem profileMember) {
                 this.addAction(new ItemTableAction(_("remove"), _("Delete this member"),
@@ -124,6 +128,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
 
     private Section createGroupsSection(final ProfileItem profile) {
         Section groupSection = new Section(new JsId("Groups"), _("Groups mapping"), createGroupTable(profile));
+        groupSection.setId(CssId.MD_SECTION_PROFILE_GROUP_MAPPING);
         groupSection.addBody(createAddGroupButton(profile));
         return groupSection;
     }
@@ -134,6 +139,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
                 .addHiddenFilter(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_GROUP)
                 .addColumn(new MemberAttributeReader(ProfileMemberItem.VALUE_MEMBER_TYPE_GROUP), _("Member"))
                 .addActions(new ItemTableActionSet<ProfileMemberItem>() {
+
                     @Override
                     public void defineActions(final ProfileMemberItem profileMember) {
                         this.addAction(deleteMemberAction(profile, profileMember));
@@ -157,6 +163,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
 
     private Section createRolesSection(final ProfileItem profile) {
         Section roleSection = new Section(new JsId("Roles"), _("Roles mapping"), createRoleTable(profile));
+        roleSection.setId(CssId.MD_SECTION_PROFILE_ROLE_MAPPING);
         roleSection.addBody(createAddRoleButton(profile));
         return roleSection;
 
@@ -168,6 +175,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
                 .addHiddenFilter(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_ROLE)
                 .addColumn(new MemberAttributeReader(ProfileMemberItem.VALUE_MEMBER_TYPE_ROLE), _("Member"))
                 .addActions(new ItemTableActionSet<ProfileMemberItem>() {
+
                     @Override
                     public void defineActions(final ProfileMemberItem profileMember) {
                         this.addAction(deleteMemberAction(profile, profileMember));
@@ -184,8 +192,9 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
     }
 
     private Section createMembershipsSection(final ProfileItem profile) {
-        return new Section(new JsId("Memberships"), _("Memberships mapping"),createMembershipTable(profile))
-                .addBody(createAddMembershipButton(profile));
+        Section membershipMappingSection = new Section(new JsId("Memberships"), _("Memberships mapping"), createMembershipTable(profile));
+        membershipMappingSection.setId(CssId.MD_SECTION_PROFILE_MEMBERSHIP_MAPPING);
+        return membershipMappingSection.addBody(createAddMembershipButton(profile));
     }
 
     private ItemTable createMembershipTable(final ProfileItem profile) {
@@ -194,6 +203,7 @@ public class ProfileMoreDetailsPage extends AbstractProfileDetailsPage {
                 .addHiddenFilter(ProfileMemberItem.FILTER_MEMBER_TYPE, ProfileMemberItem.VALUE_MEMBER_TYPE_MEMBERSHIP)
                 .addColumn(new MemberAttributeReader(ProfileMemberItem.VALUE_MEMBER_TYPE_MEMBERSHIP), _("Member"))
                 .addActions(new ItemTableActionSet<ProfileMemberItem>() {
+
                     @Override
                     public void defineActions(final ProfileMemberItem profileMember) {
                         this.addAction(deleteMemberAction(profile, profileMember));

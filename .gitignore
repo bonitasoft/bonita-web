@@ -7,9 +7,13 @@ target/
 # intellij settings
 *.iml
 **/.idea/**
+.idea
 
 btm1.tlog
 btm2.tlog
 
 *.class
 /en.po
+
+*.orig
+*.tmp

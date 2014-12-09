@@ -1,0 +1,213 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-10 02:03+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Columns"
+msgstr ""
+
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr ""
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr ""
+
+msgid "Failed Flow Nodes"
+msgstr ""
+
+msgid "Pending Flow Nodes"
+msgstr ""
+
+msgid "No cases to display"
+msgstr ""
+
+msgid "Case list"
+msgstr ""
+
+msgid "End date"
+msgstr ""
+
+msgid "Confirm delete?"
+msgstr ""
+
+msgid "Filters"
+msgstr ""
+
+msgid "Archived cases"
+msgstr ""
+
+msgid "With failures"
+msgstr ""
+
+msgid "items per page"
+msgstr ""
+
+msgid "Case details"
+msgstr ""
+
+msgid "columns selection"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr ""
+
+msgid "One or more connectors on case start or case end failed"
+msgstr ""
+
+# processMonitoring
+
+msgid  "Monitor open cases"
+msgstr ""
+
+msgid "Open cases"
+msgstr ""
+
+msgid  "Healthy cases"
+msgstr ""
+
+msgid  "Cases with failures"
+msgstr ""
+
+msgid  "Filter on process"
+msgstr ""
+
+msgid  "Process list"
+msgstr ""
+
+msgid  "Refresh"
+msgstr ""
+
+msgid  "Process name"
+msgstr ""
+
+msgid  "Failed"
+msgstr ""
+
+msgid  "Actions"
+msgstr ""
+
+msgid  "Wait ..."
+msgstr ""
+
+# Pagination label: "1 - 10 of 300"
+msgid  "of"
+msgstr ""
+
+msgid  "No data"
+msgstr ""
+
+msgid  "Error!"
+msgstr ""
+
+msgid  "Started"
+msgstr ""
+
+msgid  "All"
+msgstr ""
+
+msgid  "Never"
+msgstr ""
+
+msgid  "1 min."
+msgstr ""
+
+msgid  "5 min."
+msgstr ""
+
+msgid  "10 min."
+msgstr ""
+
+msgid  "30 min."
+msgstr ""
+
+msgid  "1 h."
+msgstr ""
+
+msgid  "Technical error."
+msgstr ""
+
+msgid  "State"
+msgstr ""
+
+msgid  "Show"
+msgstr ""
+
+msgid  "Healthy cases"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Process version"
+msgstr ""
+
+msgid  "Case state"
+msgstr ""
+
+msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr ""
+
+msgid  "Disabled, no new case can be started"
+msgstr ""
+
+msgid  "Process enabled"
+msgstr ""
+
+msgid  "View case list"
+msgstr ""
+
+msgid  "View process"
+msgstr ""
+
+msgid  "Drawing process..."
+msgstr ""
+
+msgid  "Error on drawing process!"
+msgstr ""
+
+msgid  "DEFAULT ZOOM LEVEL"
+msgstr ""
+
+msgid  "MIN"
+msgstr ""
+
+msgid  "MAX"
+msgstr ""
+
+msgid  "Version"
+msgstr ""
+
+msgid  "Totals"
+msgstr ""
+
+msgid  "Loading..."
+msgstr ""
+
+msgid  "Totals"
+msgstr ""

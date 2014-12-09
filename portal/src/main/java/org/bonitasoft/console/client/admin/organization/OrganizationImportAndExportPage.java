@@ -25,6 +25,7 @@ import org.bonitasoft.console.client.common.component.section.WarningCell;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
@@ -47,9 +48,9 @@ import com.google.gwt.core.client.GWT;
 public class OrganizationImportAndExportPage extends Page {
 
     public static final String TOKEN = "importexportorganization";
-    
+
     public static final List<String> PRIVILEGES = new ArrayList<String>();
-    
+
     static {
         PRIVILEGES.add(OrganizationImportAndExportPage.TOKEN);
     }
@@ -57,7 +58,7 @@ public class OrganizationImportAndExportPage extends Page {
     public OrganizationImportAndExportPage() {
         addClass(CssClass.NO_FILTER_PAGE);
     }
-    
+
     @Override
     public void defineTitle() {
         this.setTitle(_("Import / Export"));
@@ -70,51 +71,53 @@ public class OrganizationImportAndExportPage extends Page {
     }
 
     private Section importSection() {
-        final Section section = new Section(new JsId("import"), _("Import an existing organization"));
-        section.addBody(new WarningCell());
-        section.addBody(importContainer());
-        return section;
+        final Section importSection = new Section(new JsId("import"), _("Import an existing organization"));
+        importSection.setId(CssId.SECTION_IMPORT_ORGANIZATION);
+        importSection.addBody(new WarningCell());
+        importSection.addBody(importContainer());
+        return importSection;
     }
 
     private ContainerStyled<Component> importContainer() {
-        final ContainerStyled<Component> container = new ContainerStyled<Component>();
-        container.addClass(CssClass.CELL);
-        container.append(new Paragraph(_("This will import a file containing your whole organization data.")));
-        container.append(new Paragraph(_("Be careful, your organization will be merged with existing data.")));
-        container.append(new Paragraph(_("In case of conflict, priority is given to the imported file")));
-        container.append(uploadForm());
-        return container;
+        final ContainerStyled<Component> importContainer = new ContainerStyled<Component>();
+        importContainer.addClass(CssClass.CELL);
+        importContainer.append(new Paragraph(_("This will import a file containing your whole organization data.")));
+        importContainer.append(new Paragraph(_("Be careful, your organization will be merged with existing data.")));
+        importContainer.append(new Paragraph(_("In case of conflict, priority is given to the imported file")));
+        importContainer.append(uploadForm());
+        return importContainer;
     }
 
     private Form uploadForm() {
         Form uploadForm = new Form(new JsId("identityImportForm"));
         JsId fileJsId = new JsId("organizationDataUpload");
-        uploadForm.addFileEntry(fileJsId, _("Organisation file"), _("Please choose a file to import"), 
+        uploadForm.addFileEntry(fileJsId, _("Organisation file"), _("Please choose a file to import"),
                 GWT.getModuleBaseURL() + "organizationUpload");
-        
+
         ((FileUpload) uploadForm.getEntry(fileJsId)).addFilter(new XmlUploadFilter());
         uploadForm.getEntry(fileJsId).addValidator(new MandatoryValidator(_("Please select a file first")));
         uploadForm.getEntry(fileJsId).addValidator(new FileExtensionAllowedValidator("xml"));
-                       
+
         uploadForm.addButton(new JsId("uploadData"), _("Import"), _("Import"), new OrganisationImportAction());
-        
+
         return uploadForm;
     }
 
     private Section exportSection() {
-        final Section section = new Section(new JsId("export"), _("Export the installed organization"));
-        section.addBody(new WarningCell());
-        section.addBody(exportContainer());
-        return section;
+        final Section exportSection = new Section(new JsId("export"), _("Export the installed organization"));
+        exportSection.setId(CssId.SECTION_EXPORT_ORGANIZATION);
+        exportSection.addBody(new WarningCell());
+        exportSection.addBody(exportContainer());
+        return exportSection;
     }
 
     private ContainerStyled<Component> exportContainer() {
-        final ContainerStyled<Component> container = new ContainerStyled<Component>();
-        container.addClass(CssClass.CELL);
-        container.append(new Paragraph(_("This will export a file containing your whole organization data. ")));
-        container.append(new Paragraph(_("Data included are : Users, groups and roles")));
-        container.append(exportButton());
-        return container;
+        final ContainerStyled<Component> exportContainer = new ContainerStyled<Component>();
+        exportContainer.addClass(CssClass.CELL);
+        exportContainer.append(new Paragraph(_("This will export a file containing your whole organization data. ")));
+        exportContainer.append(new Paragraph(_("Data included are : Users, groups and roles")));
+        exportContainer.append(exportButton());
+        return exportContainer;
     }
 
     private Clickable exportButton() {

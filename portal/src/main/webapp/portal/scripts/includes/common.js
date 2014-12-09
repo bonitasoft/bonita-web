@@ -15,16 +15,9 @@
  */
 
 $(function() {
-	$.uiManager.addMaker(function(c) {
-		$('code', c).each(function(i, e) {
-			hljs.highlightBlock(e, '    ')
-		});
-
-	}, 'first');
 
 	$(document).ready(function() {
 		$('#header').updateUI();
-		$('#socialbar').socialBar();
 	});
 
 

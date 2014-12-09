@@ -1,0 +1,105 @@
+.container-menubuilder .list-group-item {
+  border: 0;
+  border-radius: 0;
+}
+
+
+.menu-choice-container {padding: 0}
+
+.angular-ui-tree-node, .angular-ui-tree-placeholder {
+    display: block;
+    position: relative;
+    padding: .4em 1em;
+    list-style: none;
+}
+
+.angular-ui-tree-node, .list-group-item.angular-ui-tree-node {
+  border-top: 1px solid #ddd;
+}
+
+.angular-ui-tree-drag {
+    position: absolute;
+    list-style: none;
+    pointer-events: none;
+    z-index: 999;
+    opacity: .8;
+}
+
+.angular-ui-tree-placeholder {background-color: rgba(0,0,0,.1)}
+.angular-ui-tree-hidden {display: none}
+.angular-ui-tree-handle {
+  cursor: move;
+  cursor: -webkit-grab; /* Mac OS ... */
+  text-decoration: none;
+  font-weight: 700;
+
+}
+
+li.angular-ui-tree-handle {margin-bottom: .6em}
+
+.menucontainer-submenu-exist {
+  margin-top: .6em;
+  margin-right: -1em;
+  padding-left: 1em;
+}
+
+.angular-ui-tree-node {padding-left: 2em}
+
+.angular-ui-tree-node.menucontainer-has-submenu-items {
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  border-left: 0;
+  padding-bottom: 0;
+  margin-bottom: .6em;
+  padding-left: 2em;
+  position: relative;
+}
+
+.menucontainer-no-submenu-items::before,
+.menucontainer-has-submenu-items::before {
+  content: '';
+  display: block;
+  width: .8em;
+  height: .8em;
+  position: absolute;
+  background: #D5D5D5;
+  border-radius: 1em;
+  left: 0;
+  top: .85em;
+}
+
+.hidden-submenu + .menucontainer-submenu-exist {display: none}
+/*.menucontainer-submenu-exist li {padding-left: 1.6em}*/
+
+.menu-creator {
+  border-left: 1px dashed #ddd;
+  padding-right: 0
+}
+
+.container .menu-creator .jumbotron {padding: 2em}
+.menucontainer-submenu-exist .angular-ui-tree-node::before,
+.menucontainer-submenu-exist .angular-ui-tree-node:last-child::before  {
+  content: '';
+  display: block;
+  width: 15px;
+  height: 20px;
+  border-left: 1px solid #ddd;
+  float: left;
+  margin-left: -25px;
+  margin-right: 12px;
+}
+.menucontainer-submenu-exist .angular-ui-tree-node:last-child::before {
+  height: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.menucontainer-submenu:empty {
+  padding: 1em 0;
+  background: rgba(235, 235, 235, 0.6);
+  margin-top: 10px;
+  margin: 10px 0 0 2em;
+}
+
+.menucontainer-has-submenu-items .btn-action-toggle {visibility: visible}
+
+.form-menu-pages {margin-bottom: 0}
+.modal-menu-footer {margin-top: 0}

@@ -43,7 +43,7 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 
 /**
  * @author Anthony Birembaut
- * 
+ *
  */
 public class FormsResourcesUtils {
 
@@ -84,13 +84,13 @@ public class FormsResourcesUtils {
 
     /**
      * Retrieve the web resources from the business archive and store them in a local directory
-     * 
+     *
      * @param session
-     *            the engine API session
+     *        the engine API session
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param processDeployementDate
-     *            the process deployement date
+     *        the process deployement date
      * @throws java.io.IOException
      * @throws org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException
      * @throws org.bonitasoft.engine.session.InvalidSessionException
@@ -99,12 +99,12 @@ public class FormsResourcesUtils {
     public static synchronized void retrieveApplicationFiles(final APISession session, final long processDefinitionID, final Date processDeployementDate)
             throws IOException, ProcessDefinitionNotFoundException, InvalidSessionException, RetrieveException, BPMEngineException {
 
-        ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
+        final ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
         final File formsDir = getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
         if (!formsDir.exists()) {
             formsDir.mkdirs();
         }
-        Map<String, byte[]> formsResources = process.getResources(processDefinitionID, FORMS_DIRECTORY_IN_BAR + "/.*");
+        final Map<String, byte[]> formsResources = process.getResources(processDefinitionID, FORMS_DIRECTORY_IN_BAR + "/.*");
         for (final Entry<String, byte[]> formResource : formsResources.entrySet()) {
             final String filePath = formResource.getKey().substring(FORMS_DIRECTORY_IN_BAR.length() + 1);
             final byte[] fileContent = formResource.getValue();
@@ -133,7 +133,7 @@ public class FormsResourcesUtils {
             }
         }
 
-        ProcessDefinition definition = process.getDefinition(processDefinitionID);
+        final ProcessDefinition definition = process.getDefinition(processDefinitionID);
         SecurityProperties.cleanProcessConfig(session.getTenantId(),
                 new ProcessIdentifier(definition.getName(), definition.getVersion()));
 
@@ -146,9 +146,9 @@ public class FormsResourcesUtils {
      * Create a classloader for the process
      *
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param processApplicationsResourcesDir
-     *            the process application resources directory
+     *        the process application resources directory
      * @return a Classloader
      * @throws java.io.IOException
      */
@@ -163,7 +163,7 @@ public class FormsResourcesUtils {
                 processClassLoader = new URLClassLoader(librariesURLs, Thread.currentThread().getContextClassLoader());
             }
         } catch (final IOException e) {
-            final String message = "Unable to create the class loader for the application's libraries";
+            final String message = "Unable to create the class loader for the process's libraries";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, message, e);
             }
@@ -176,7 +176,7 @@ public class FormsResourcesUtils {
      * Get the URLs of the validators' jar and their dependencies
      *
      * @param processApplicationsResourcesDir
-     *            the process application resources directory
+     *        the process application resources directory
      * @return an array of URL
      * @throws java.io.IOException
      */
@@ -186,14 +186,14 @@ public class FormsResourcesUtils {
         if (libDirectory.exists()) {
             final File[] libFiles = libDirectory.listFiles();
             for (int i = 0; i < libFiles.length; i++) {
-                urls.add(libFiles[i].toURL());
+                urls.add(libFiles[i].toURI().toURL());
             }
         }
         final File validatorsDirectory = new File(processApplicationsResourcesDir, FormsResourcesUtils.VALIDATORS_DIRECTORY_IN_BAR + File.separator);
         if (validatorsDirectory.exists()) {
             final File[] validatorsFiles = validatorsDirectory.listFiles();
             for (int i = 0; i < validatorsFiles.length; i++) {
-                urls.add(validatorsFiles[i].toURL());
+                urls.add(validatorsFiles[i].toURI().toURL());
             }
         } else {
             if (LOGGER.isLoggable(Level.FINE)) {
@@ -209,69 +209,88 @@ public class FormsResourcesUtils {
      * Retrieve the class loader associated with the process or create it if there is no classloader associated with this process yet
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @return a {@link ClassLoader}, null if the process classloader doesn't exists and couldn't be created
      */
-    public static synchronized ClassLoader getProcessClassLoader(final APISession session, final long processDefinitionID) {
+    public ClassLoader getProcessClassLoader(final APISession session, final long processDefinitionID) {
 
         ClassLoader processClassLoader = null;
         if (PROCESS_CLASSLOADERS.containsKey(processDefinitionID)) {
             processClassLoader = PROCESS_CLASSLOADERS.get(processDefinitionID);
         } else {
-            try {
-                final File processDir = new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder(),
-                        String.valueOf(processDefinitionID));
-                if (processDir.exists()) {
-                    final File[] directories = processDir.listFiles(new FileFilter() {
-
-                        public boolean accept(final File pathname) {
-                            return pathname.isDirectory();
-                        }
-                    });
-                    long lastDeployementDate = 0L;
-                    for (final File directory : directories) {
-                        try {
-                            final long deployementDate = Long.parseLong(directory.getName());
-                            if (deployementDate > lastDeployementDate) {
-                                lastDeployementDate = deployementDate;
-                            }
-                        } catch (final Exception e) {
-                            if (LOGGER.isLoggable(Level.WARNING)) {
-                                LOGGER.log(Level.WARNING,
-                                        "Process application resources deployment folder contains a directory that does not match a process deployement timestamp: "
-                                                + directory.getName(), e);
-                            }
-                        }
-                    }
-                    if (lastDeployementDate == 0L) {
-                        if (LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.log(Level.WARNING,
-                                    "Process application resources deployment folder contains no directory that match a process deployement timestamp.");
-                        }
-                    }
-                    final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastDeployementDate));
-                    processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
-                }
-            } catch (final IOException e) {
-                final String message = "Unable to create the class loader for the application's libraries";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, message, e);
-                }
-            }
-            PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
+            processClassLoader = FormsResourcesUtils.createAndSaveProcessClassloader(session, processDefinitionID);
         }
         return processClassLoader;
+    }
+
+    protected static synchronized ClassLoader createAndSaveProcessClassloader(final APISession session, final long processDefinitionID) {
+        final ClassLoader processClassLoader = createProcessClassloader(session, processDefinitionID);
+        PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
+        return processClassLoader;
+    }
+
+    protected static ClassLoader createProcessClassloader(final APISession session, final long processDefinitionID) {
+        ClassLoader processClassLoader = null;
+        try {
+            final ProcessDefinition processDefinition = bpmEngineAPIUtil.getProcessAPI(session).getProcessDefinition(processDefinitionID);
+
+            final String processPath = WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder() + File.separator;
+            final File processDir = new File(processPath, processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion());
+            if (processDir.exists()) {
+                final long lastDeployementDate = getLastDeployementDate(processDir);
+                final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastDeployementDate));
+                processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
+            }
+        } catch (final Exception e) {
+            final String message = "Unable to create the class loader for the libraries of process " + processDefinitionID;
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, message, e);
+            }
+        }
+        return processClassLoader;
+    }
+
+    private static long getLastDeployementDate(final File processDir) {
+        final File[] directories = processDir.listFiles(new FileFilter() {
+
+            @Override
+            public boolean accept(final File pathname) {
+                return pathname.isDirectory();
+            }
+        });
+        long lastDeployementDate = 0L;
+        for (final File directory : directories) {
+            try {
+                final long deployementDate = Long.parseLong(directory.getName());
+                if (deployementDate > lastDeployementDate) {
+                    lastDeployementDate = deployementDate;
+                }
+            } catch (final Exception e) {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING,
+                            "Process application resources deployment folder contains a directory that does not match a process deployement timestamp: "
+                                    + directory.getName(), e);
+                }
+            }
+        }
+        if (lastDeployementDate == 0L) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING,
+                        "Process application resources deployment folder contains no directory that match a process deployement timestamp.");
+            }
+        }
+        return lastDeployementDate;
     }
 
     /**
      * Delete the the web resources directory if it exists
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      */
     public static synchronized void removeApplicationFiles(final APISession session, final long processDefinitionID) {
 
@@ -296,10 +315,10 @@ public class FormsResourcesUtils {
     }
 
     /**
-     * Get the application resource directory
+     * Get the process resource directory
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processDefinitionID
      * @param processDeployementDate
      * @return
@@ -319,9 +338,9 @@ public class FormsResourcesUtils {
 
     /**
      * Delete a directory and its content
-     * 
+     *
      * @param directory
-     *            the directory to delete
+     *        the directory to delete
      * @return return true if the directory and its content were deleted successfully, false otherwise
      */
     private static boolean deleteDirectory(final File directory) {

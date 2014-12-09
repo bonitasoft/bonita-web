@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -50,7 +50,6 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -58,7 +57,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Controller dealing with Task form controls before display
- * 
+ *
  * @author Ruiheng Fan
  */
 public class PageflowViewController {
@@ -132,7 +131,7 @@ public class PageflowViewController {
 
     /**
      * Constructor
-     * 
+     *
      * @param formID
      * @param urlContext
      * @param user
@@ -205,16 +204,16 @@ public class PageflowViewController {
                 if (processUUIDStr != null) {
                     final String autoInstantiate = (String) urlContext.get(URLUtils.AUTO_INSTANTIATE);
                     // retrieve the already started cookie value
-                    String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
-                    ArrayList<String> processIdArray = new ArrayList<String>();
+                    final String processIdArrayAsString = Cookies.getCookie(ALREADY_STARTED_ARRAY_COOKIE_KEY);
+                    final ArrayList<String> processIdArray = new ArrayList<String>();
                     boolean processIdIsInCookie = false;
                     // build the new array to set in the cookie after consuming
                     if (processIdArrayAsString != null) {
-                        JSONValue jsonValue = JSONParser.parseStrict(processIdArrayAsString);
-                        JSONArray jsonArray = jsonValue.isArray();
+                        final JSONValue jsonValue = JSONParser.parseStrict(processIdArrayAsString);
+                        final JSONArray jsonArray = jsonValue.isArray();
                         if (jsonArray != null) {
                             for (int i = 0; i < jsonArray.size(); i++) {
-                                String cookieValue = jsonArray.get(i).isString().stringValue();
+                                final String cookieValue = jsonArray.get(i).isString().stringValue();
                                 if (!processUUIDStr.equals(cookieValue)) {
                                     processIdArray.add(cookieValue);
                                 } else {
@@ -330,8 +329,13 @@ public class PageflowViewController {
          */
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
-            urlContext.putAll(newContext);
-            redirectToConfirmationPage(getConfirmationPageHandler());
+            if (domUtils.isPageInFrame()) {
+                domUtils.notifyParentFrame(null, false);
+            }
+            if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                urlContext.putAll(newContext);
+                redirectToConfirmationPage(getConfirmationPageHandler());
+            }
         }
 
         /**
@@ -355,47 +359,31 @@ public class PageflowViewController {
                 throw caught;
             } catch (final IllegalActivityTypeException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskFormSkippedError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, elementId));
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame("taskFormSkippedError", true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
+                            elementId));
+                }
             } catch (final FormAlreadySubmittedException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, elementId));
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
+                            elementId));
+                }
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskExecutionError();
-                formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
+                if (domUtils.isPageInFrame()) {
+                    domUtils.notifyParentFrame("taskExecutionError", true);
+                }
+                if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
+                    formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,
                         new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage, t, elementId));
-            }
-        }
-    }
-
-    protected class GetTokenAsyncCallback implements AsyncCallback<String> {
-
-        protected String applicationURL;
-
-        protected Map<String, Object> urlContext;
-
-        public GetTokenAsyncCallback(final String applicationURL, final Map<String, Object> urlContext) {
-            this.applicationURL = applicationURL;
-            this.urlContext = urlContext;
-        }
-
-        @Override
-        public void onSuccess(final String temporaryToken) {
-            urlContext.put(URLUtils.USER_CREDENTIALS_PARAM, temporaryToken);
-            final String url = urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowRedirect(url);
-            }
-        }
-
-        @Override
-        public void onFailure(final Throwable t) {
-            final String url = urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowRedirect(url);
+                }
             }
         }
     }

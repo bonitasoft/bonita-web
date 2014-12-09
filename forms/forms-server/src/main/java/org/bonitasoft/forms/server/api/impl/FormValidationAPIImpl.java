@@ -34,7 +34,6 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundExcept
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.expression.ExpressionEvaluationException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.Expression;
@@ -66,26 +65,26 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * Validate a form field value using the validator whose name is provided
      * 
      * @param session
-     *            the API session
+     *        the API session
      * @param activityInstanceID
-     *            the activity instance ID
+     *        the activity instance ID
      * @param processInstanceID
-     *            the process instance ID
+     *        the process instance ID
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param validatorClassName
-     *            class name of the validator to use
+     *        class name of the validator to use
      * @param fieldID
-     *            the ID of the field
+     *        the ID of the field
      * @param value
-     *            to validate
+     *        to validate
      * @param submitButtonId
-     *            the submit button id
+     *        the submit button id
      * @param locale
-     *            the user's locale
+     *        the user's locale
      * @param transientDataContext
      * @param parameter
-     *            expression passed to the validator
+     *        expression passed to the validator
      * @return true if the field value comply with the validation. false otherwise
      * @throws FormValidationException
      */
@@ -95,7 +94,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
 
         boolean valid = true;
         try {
-            final ClassLoader processClassLoader = FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            final ClassLoader processClassLoader = new FormsResourcesUtils().getProcessClassLoader(session, processDefinitionID);
             Class<?> validatorClass;
             if (processClassLoader != null) {
                 validatorClass = Class.forName(validatorClassName, true, processClassLoader);
@@ -144,24 +143,24 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * Validate a form page using the validator whose name is provided
      * 
      * @param session
-     *            the API session
+     *        the API session
      * @param activityInstanceID
-     *            the activity instance ID
+     *        the activity instance ID
      * @param processInstanceID
-     *            the process instance ID
+     *        the process instance ID
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param validatorClassName
-     *            class name of the validator to use
+     *        class name of the validator to use
      * @param fields
-     *            a map of the fields ids and values
+     *        a map of the fields ids and values
      * @param submitButtonId
-     *            the submit button id
+     *        the submit button id
      * @param locale
-     *            the user's locale
+     *        the user's locale
      * @param transientDataContext
      * @param parameter
-     *            expression passed as a parameter
+     *        expression passed as a parameter
      * @return true if the page's fields values comply with the validation. false otherwise
      * @throws FormValidationException
      */
@@ -171,7 +170,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
 
         boolean valid = true;
         try {
-            final ClassLoader processClassLoader = FormsResourcesUtils.getProcessClassLoader(session, processDefinitionID);
+            final ClassLoader processClassLoader = new FormsResourcesUtils().getProcessClassLoader(session, processDefinitionID);
             Class<?> validatorClass;
             if (processClassLoader != null) {
                 validatorClass = Class.forName(validatorClassName, true, processClassLoader);
@@ -217,23 +216,23 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * Validate a form field value using the validators whose name is provided
      * 
      * @param session
-     *            the API session
+     *        the API session
      * @param activityInstanceID
-     *            the activity instance ID
+     *        the activity instance ID
      * @param processInstanceID
-     *            the process instance ID
+     *        the process instance ID
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param validators
-     *            the list of validators
+     *        the list of validators
      * @param fieldId
-     *            the ID of the field
+     *        the ID of the field
      * @param value
-     *            the form field value
+     *        the form field value
      * @param submitButtonId
-     *            the submit button id
+     *        the submit button id
      * @param userLocale
-     *            the user's locale
+     *        the user's locale
      * @param transientDataContext
      * @return a list of the validators for which the field value does not comply with the validation
      * @throws FormValidationException
@@ -244,7 +243,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws BPMExpressionEvaluationException  
+     * @throws BPMExpressionEvaluationException
      */
     protected List<FormValidator> validateField(final APISession session, final long processDefinitionID, final long processInstanceID,
             final long activityInstanceID, final List<FormValidator> validators, final String fieldId, final FormFieldValue value, final String submitButtonId,
@@ -279,21 +278,21 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * Validate a form page using the validators whose name is provided
      * 
      * @param session
-     *            the API session
+     *        the API session
      * @param activityInstanceID
-     *            the activity instance ID
+     *        the activity instance ID
      * @param processInstanceID
-     *            the process instance ID
+     *        the process instance ID
      * @param processDefinitionID
-     *            the process definition ID
+     *        the process definition ID
      * @param validators
-     *            the list of validators
+     *        the list of validators
      * @param fields
-     *            the form field value
+     *        the form field value
      * @param submitButtonId
-     *            the submit button id
+     *        the submit button id
      * @param userLocale
-     *            the user's locale
+     *        the user's locale
      * @param transientDataContext
      * @return a list of the validators for which the field value does not comply with the validation
      * @throws FormValidationException
@@ -304,7 +303,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * @throws InvalidSessionException
      * @throws IOException
      * @throws FileTooBigException
-     * @throws BPMExpressionEvaluationException 
+     * @throws BPMExpressionEvaluationException
      */
     protected List<FormValidator> validatePage(final APISession session, final long processDefinitionID, final long processInstanceID,
             final long activityInstanceID, final List<FormValidator> validators, final Map<String, FormFieldValue> fields, final String submitButtonId,
@@ -337,7 +336,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * {@inheritDoc}
      * 
      * @throws ArchivedFlowNodeInstanceNotFoundException
-     * @throws BPMExpressionEvaluationException 
+     * @throws BPMExpressionEvaluationException
      */
     @Override
     public List<FormValidator> validateActivityField(final APISession session, final long activityInstanceID, final List<FormValidator> validators,
@@ -356,7 +355,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * {@inheritDoc}
      * 
      * @throws ArchivedProcessInstanceNotFoundException
-     * @throws BPMExpressionEvaluationException 
+     * @throws BPMExpressionEvaluationException
      */
     @Override
     public List<FormValidator> validateInstanceField(final APISession session, final long processInstanceID, final List<FormValidator> validators,
@@ -384,7 +383,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * 
      * @throws ArchivedProcessInstanceNotFoundException
      * @throws ArchivedFlowNodeInstanceNotFoundException
-     * @throws BPMExpressionEvaluationException 
+     * @throws BPMExpressionEvaluationException
      */
     @Override
     public List<FormValidator> validateActivityPage(final APISession session, final long activityInstanceID, final List<FormValidator> validators,
@@ -403,7 +402,7 @@ public class FormValidationAPIImpl implements IFormValidationAPI {
      * {@inheritDoc}
      * 
      * @throws ArchivedProcessInstanceNotFoundException
-     * @throws BPMExpressionEvaluationException 
+     * @throws BPMExpressionEvaluationException
      */
     @Override
     public List<FormValidator> validateInstancePage(final APISession session, final long processInstanceID, final List<FormValidator> validators,

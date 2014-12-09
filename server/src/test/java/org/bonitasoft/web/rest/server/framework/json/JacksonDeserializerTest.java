@@ -31,7 +31,6 @@ import org.bonitasoft.web.rest.server.framework.json.model.Address;
 import org.bonitasoft.web.rest.server.framework.json.model.User;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /** extends APITestWithMock to avoid nullpointerException on I18n */
@@ -68,8 +67,8 @@ public class JacksonDeserializerTest extends APITestWithMock {
 
     @Test
     public void deserialize_can_deserialize_complex_types() throws Exception {
-        User expectedUser = new User(1, "Colin", "Puy", new Date(428558400000L), new Address("310 La Gouterie", "Charnècles"));
-        String json = "{\"address\":{\"street\":\"310 La Gouterie\",\"city\":\"Charnècles\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}";
+        User expectedUser = new User(1, "Colin", "Puy", new Date(428558400000L), new Address("310 La Gouterie", "Charnecles"));
+        String json = "{\"address\":{\"street\":\"310 La Gouterie\",\"city\":\"Charnecles\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}";
 
         User deserializedUser = jacksonDeserializer.deserialize(json, User.class);
 
@@ -78,7 +77,7 @@ public class JacksonDeserializerTest extends APITestWithMock {
 
     @Test(expected = APIException.class)
     public void deserializeList_throw_exception_if_json_is_not_a_list() throws Exception {
-        String json = "{\"address\":{\"street\":\"310 La Gouterie\",\"city\":\"Charnècles\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}";
+        String json = "{\"address\":{\"street\":\"310 La Gouterie\",\"city\":\"Charnecles\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}";
 
         jacksonDeserializer.deserializeList(json, User.class);
     }
@@ -93,11 +92,14 @@ public class JacksonDeserializerTest extends APITestWithMock {
 
     @Test
     public void deserializeList_can_deserialize_list_of_complex_type() throws Exception {
-        User expectedUser1 = new User(1, "Colin", "Puy", new Date(428558400000L), new Address("310 La Gouterie", "Charnècles"));
+        User expectedUser1 = new User(1, "Colin", "Puy", new Date(428558400000L), new Address("310 La Gouterie", "Charnecles"));
         User expectedUser2 = new User(2, "Clara", "Morgan", new Date(349246800000L), new Address("somewhere i don't know", "Paris"));
-        String json = "[" +
-                "{\"address\":{\"city\":\"Charnècles\",\"street\":\"310 La Gouterie\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}," +
-                "{\"address\":{\"city\":\"Paris\",\"street\":\"somewhere i don't know\"},\"id\":2,\"firstName\":\"Clara\",\"lastName\":\"Morgan\",\"birthday\":349246800000}" +
+        String json = "["
+                +
+                "{\"address\":{\"city\":\"Charnecles\",\"street\":\"310 La Gouterie\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000},"
+                +
+                "{\"address\":{\"city\":\"Paris\",\"street\":\"somewhere i don't know\"},\"id\":2,\"firstName\":\"Clara\",\"lastName\":\"Morgan\",\"birthday\":349246800000}"
+                +
                 "]";
 
         List<User> users = jacksonDeserializer.deserializeList(json, User.class);

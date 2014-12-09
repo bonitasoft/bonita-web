@@ -89,8 +89,8 @@ public class ArchivedConnectorInstanceDatastore extends CommonDatastore<Archived
     protected SearchOptions buildSearchOptions(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
-        addFilterToSearchBuilder(filters, builder, ConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID, ConnectorInstancesSearchDescriptor.CONTAINER_ID);
-        addFilterToSearchBuilder(filters, builder, ConnectorInstanceItem.ATTRIBUTE_STATE, ConnectorInstancesSearchDescriptor.STATE);
+        addStringFilterToSearchBuilder(filters, builder, ConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID, ConnectorInstancesSearchDescriptor.CONTAINER_ID);
+        addStringFilterToSearchBuilder(filters, builder, ConnectorInstanceItem.ATTRIBUTE_STATE, ConnectorInstancesSearchDescriptor.STATE);
         return builder.done();
     }
 

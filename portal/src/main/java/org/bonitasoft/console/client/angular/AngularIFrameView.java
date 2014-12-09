@@ -1,35 +1,56 @@
 package org.bonitasoft.console.client.angular;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeUri;
-import com.google.gwt.safehtml.shared.UriUtils;
-import com.google.gwt.user.client.ui.HTML;
+import org.bonitasoft.console.client.user.cases.view.IFrameView;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
+import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
+import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickEvent;
+import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickHandler;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
+import com.google.gwt.user.client.ui.SimplePanel;
+
 /**
  * @author Vincent Elcrin
+ * @author Julien Reboul
  */
 public class AngularIFrameView extends RawView {
 
+    public static final String CASE_LISTING_ADMIN_TOKEN = "caselistingadmin";
+
+    public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
+
+    public static final String CASE_LISTING_TAB_TOKEN = "_tab";
+
+    public static final String CASE_LISTING_PROCESS_ID_TOKEN = "processId";
+
+    private final IFrameView iframe = new IFrameView();
+
     private String url;
 
-    public interface Template extends SafeHtmlTemplates {
+    private String token;
 
-        @Template("<iframe src='{0}' id='bonitaframe'></iframe>")
-        public SafeHtml iFrame(SafeUri src);
+    public AngularIFrameView() {
+        MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
+
+            @Override
+            public void onMenuClick(final MenuClickEvent menuClickEvent) {
+                // remove angular parameters from url
+                final AngularParameterCleaner angularParameterCleaner = new AngularParameterCleaner(menuClickEvent.getToken(), getHash());
+
+                updateHash(angularParameterCleaner.getHashWithoutAngularParameters());
+            }
+        });
     }
 
-    private static final Template TEMPLATE = GWT.create(Template.class);
+    public native String getHash() /*-{
+                                   return $wnd.location.hash;
+                                   }-*/;
 
-    private static final AngularResourceRoot ROOT = GWT.create(AngularResourceRoot.class);
-
-    public AngularIFrameView(String token, String url) {
-        setToken(token);
-        this.url = url;
-    }
+    public native void updateHash(String hash) /*-{
+                                               $wnd.location.hash = hash;
+                                               }-*/;
 
     @Override
     public String defineToken() {
@@ -38,13 +59,60 @@ public class AngularIFrameView extends RawView {
 
     @Override
     public void buildView() {
-        HTML frame = new HTML(TEMPLATE.iFrame(UriUtils.fromSafeConstant(ROOT.contextualize(url))));
-        frame.setStyleName("body");
-        addBody(new UiComponent(frame));
-        addClass("page");
+        final SimplePanel panel = new SimplePanel();
+        panel.setStyleName("body");
+        panel.add(iframe);
+        addBody(new UiComponent(panel));
+        addClass("page page_custompage_");
     }
 
     @Override
     protected void refreshAll() {
     }
+
+    /**
+     * @param url
+     *        Iframe url to set
+     */
+    public void setUrl(final String url, final String token) {
+        setToken(token);
+        this.url = url;
+        this.token = token;
+    }
+
+    /**
+     * @see org.bonitasoft.web.toolkit.client.ui.Callable#setParameters(org.bonitasoft.web.toolkit.client.common.TreeIndexed)
+     */
+    @Override
+    public void setParameters(final TreeIndexed<String> params) {
+        super.setParameters(params);
+        iframe.setUrl(buildAngularUrl(url, token, UrlSerializer.serialize(getParameters())));
+    }
+
+    /**
+     * build angular Url
+     *
+     * @param url
+     *        the angular base path
+     * @param token
+     *        the current page token
+     * @param queryString
+     *        the URL query to set
+     * @return the angular url to access for the given token
+     */
+    protected String buildAngularUrl(final String url, final String token, final String queryString) {
+        return new AngularUrlBuilder(url)
+                .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
+                .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash())
+                .build() + '?' + (queryString != null ? queryString.replaceAll(token + '_', "") : "");
+    }
+
+    /**
+     * @return the token
+     */
+    @Override
+    public String getToken() {
+        return token;
+    }
+
 }

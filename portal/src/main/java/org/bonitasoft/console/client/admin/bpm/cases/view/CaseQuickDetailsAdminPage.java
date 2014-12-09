@@ -16,11 +16,12 @@
  */
 package org.bonitasoft.console.client.admin.bpm.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -43,7 +44,7 @@ public class CaseQuickDetailsAdminPage extends AbstractCaseQuickDetailsAdminPage
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
-        PRIVILEGES.add(CaseListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
     }
 
     public CaseQuickDetailsAdminPage() {
@@ -61,9 +62,9 @@ public class CaseQuickDetailsAdminPage extends AbstractCaseQuickDetailsAdminPage
         return new CheckValidSessionBeforeAction(new ActionShowView(getCaseMoreDetailsPage(item)));
     }
 
-	protected ItemQuickDetailsPage<CaseItem> getCaseMoreDetailsPage(final CaseItem item) {
-		return new CaseMoreDetailsAdminPage(item.getId());
-	}
+    protected ItemQuickDetailsPage<CaseItem> getCaseMoreDetailsPage(final CaseItem item) {
+        return new CaseMoreDetailsAdminPage(item.getId());
+    }
 
     @Override
     public String defineToken() {

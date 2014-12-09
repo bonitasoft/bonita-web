@@ -107,7 +107,7 @@ public class ArchivedCommentDatastore extends CommonDatastore<ArchivedCommentIte
      * @param builder
      */
     private void adjustSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder) {
-        addFilterToSearchBuilder(filters, builder, ArchivedCommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, ArchivedCommentsSearchDescriptor.PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, ArchivedCommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, ArchivedCommentsSearchDescriptor.PROCESS_INSTANCE_ID);
     }
 
     /*

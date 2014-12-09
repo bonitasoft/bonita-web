@@ -28,6 +28,7 @@ import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
+import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
@@ -74,9 +75,10 @@ public class ArchivedCaseWorkedOnSnippet implements SectionSnippet {
         caseTable.addColumn(new DeployedUserReader(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID), _("Started by"));
         caseTable.addCellFormatter(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID + "_" + CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, new SpanPrepender(_("Started by:")));
 
-
         final Section section = new Section(_("Archives"));
         section.addClass("cases");
+        section.setId(CssId.QD_SECTION_CASE_WORKED_ON);
+        section.addCssCaseType();
         section.addBody(caseTable.setView(VIEW_TYPE.VIEW_LIST));
 
         return section;
@@ -99,7 +101,7 @@ public class ArchivedCaseWorkedOnSnippet implements SectionSnippet {
 
     /**
      * @param nbLinesByPage
-     *            the nbLinesByPage to set
+     *        the nbLinesByPage to set
      */
     public ArchivedCaseWorkedOnSnippet setNbLinesByPage(final int nbLinesByPage) {
         this.nbLinesByPage = nbLinesByPage;

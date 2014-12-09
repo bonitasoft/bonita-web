@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,19 +22,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
+import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
 import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.rest.server.framework.utils.RestRequestParser;
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeLeaf;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemWriter;
@@ -48,23 +56,24 @@ import org.bonitasoft.web.toolkit.server.ServletCall;
 
 /**
  * @author Séverin Moussel
- *
+ * @author Baptiste Mesta
+ * @author Fabio Lombardi
  */
 public class APIServletCall extends ServletCall {
 
-    private static final String PARAMETER_COUNTER = "n";
+    public static final String PARAMETER_COUNTER = "n";
 
-    private static final String PARAMETER_DEPLOY = "d";
+    public static final String PARAMETER_DEPLOY = "d";
 
-    private static final String PARAMETER_FILTER = "f";
+    public static final String PARAMETER_FILTER = "f";
 
-    private static final String PARAMETER_SEARCH = "s";
+    public static final String PARAMETER_SEARCH = "s";
 
-    private static final String PARAMETER_ORDER = "o";
+    public static final String PARAMETER_ORDER = "o";
 
-    private static final String PARAMETER_LIMIT = "c";
+    public static final String PARAMETER_LIMIT = "c";
 
-    private static final String PARAMETER_PAGE = "p";
+    public static final String PARAMETER_PAGE = "p";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // REQUEST PARSING
@@ -78,9 +87,10 @@ public class APIServletCall extends ServletCall {
 
     private APIID id;
 
+    private static Logger LOGGER = Logger.getLogger(APIServletCall.class.getName());
+
     public APIServletCall(final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);
-
         final Date expdate = new Date();
         expdate.setTime(expdate.getTime() - 3600000 * 24);
         final SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy kk:mm:ss z");
@@ -90,6 +100,26 @@ public class APIServletCall extends ServletCall {
         head("Cache-Control", "no-cache,no-store,no-transform,max-age=0");
         head("Expires", df.format(expdate));
 
+    }
+
+    /**
+     * Constructor for tests
+     */
+    public APIServletCall() {
+        super();
+
+    }
+
+    public String getApiName() {
+        return apiName;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public APIID getId() {
+        return id;
     }
 
     /**
@@ -112,19 +142,12 @@ public class APIServletCall extends ServletCall {
      * </ul>
      *
      * @param request
+     * @param response
      */
     @Override
-    protected final void parseRequest(final HttpServletRequest request) {
+    protected final void parseRequest(final HttpServletRequest request, HttpServletResponse response) {
 
-        final String[] path = request.getPathInfo().split("/");
-
-        // Read API tokens
-        if (path.length < 3) {
-            throw new APIMalformedUrlException("Missing API or resource name [" + request.getRequestURL() + "]");
-        }
-
-        apiName = path[1];
-        resourceName = path[2];
+        parsePath(request);
 
         // Fixes BS-400. This is ugly.
         I18n.getInstance();
@@ -132,15 +155,15 @@ public class APIServletCall extends ServletCall {
         api = APIs.get(apiName, resourceName);
         api.setCaller(this);
 
-        // Read id (if defined)
-        if (path.length > 3) {
-            final List<String> pathList = Arrays.asList(path);
-            id = APIID.makeAPIID(pathList.subList(3, pathList.size()));
-        } else {
-            id = null;
+        super.parseRequest(request, response);
+
         }
 
-        super.parseRequest(request);
+    void parsePath(HttpServletRequest request) {
+        RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
+        id = restRequestParser.getId();
+        apiName = restRequestParser.getApiName();
+        resourceName = restRequestParser.getResourceName();
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +236,7 @@ public class APIServletCall extends ServletCall {
             }
 
             Item.setApplyValidatorMandatoryByDefault(false);
-            IItem item = getJSonStreamAsItem();
+            final IItem item = getJSonStreamAsItem();
             api.runUpdate(id, getAttributesWithDeploysAsJsonString(item));
         } catch (final APIException e) {
             e.setApi(apiName);
@@ -225,14 +248,13 @@ public class APIServletCall extends ServletCall {
 
     /**
      * Get deploys and add them in json representation in map<String, String>
-     *
      * Workaround to be able to have included json objects in main object in PUT request
      * You have to unserialize them to be able to use them in java representation 
      */
-    private HashMap<String, String> getAttributesWithDeploysAsJsonString(IItem item) {
-        HashMap<String, String> map = new HashMap<String, String>();
+    private HashMap<String, String> getAttributesWithDeploysAsJsonString(final IItem item) {
+        final HashMap<String, String> map = new HashMap<String, String>();
         map.putAll(item.getAttributes());
-        for (Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
+        for (final Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
             map.put(deploy.getKey(), deploy.getValue().toJson());
         }
         return map;

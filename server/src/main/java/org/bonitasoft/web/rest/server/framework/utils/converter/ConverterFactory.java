@@ -16,7 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.framework.utils.converter;
 
+import java.util.Date;
+
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.BooleanConverter;
+import org.bonitasoft.web.rest.server.framework.utils.converter.typed.DateConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.DoubleConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.IntegerConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.LongConverter;
@@ -31,14 +34,13 @@ public class ConverterFactory {
     public Converter<?> createConverter(String className) {
         if (isClass(String.class, className)) {
             return new StringConverter();
-        // FIXME uncomment when ENGINE-1099 resolved and DateConverter is implemented
-//        } else if (isClass(Date.class, className)) {
-//            return new DateConverter();
+        } else if (isClass(Date.class, className)) {
+            return new DateConverter();
         } else if (isClass(Double.class, className)) {
             return new DoubleConverter();
         } else if (isClass(Long.class, className)) {
             return new LongConverter();
-        }  else if (isClass(Boolean.class, className)) {
+        } else if (isClass(Boolean.class, className)) {
             return new BooleanConverter();
         } else if (isClass(Integer.class, className)) {
             return new IntegerConverter();
