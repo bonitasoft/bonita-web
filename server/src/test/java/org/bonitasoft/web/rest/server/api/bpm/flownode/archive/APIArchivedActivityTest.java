@@ -13,6 +13,6 @@ public class APIArchivedActivityTest extends APITestWithMock {
 
         final String defineDefaultSearchOrder = apiActivity.defineDefaultSearchOrder();
 
-        assertThat(defineDefaultSearchOrder).as("sould have a default search order").isEqualTo("archivedDate ASC");
+        assertThat(defineDefaultSearchOrder).as("sould have a default search order").isEqualTo("reached_state_date ASC");
     }
 }
