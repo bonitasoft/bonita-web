@@ -14,9 +14,6 @@
  */
 package org.bonitasoft.forms.server.accessor;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.forms.server.provider.impl.FormServiceProviderImpl;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,9 +22,12 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.forms.server.provider.impl.FormServiceProviderImpl;
+
 /**
  * Utility class for default properties access (read in a properties file)
- * 
+ *
  * @author Anthony Birembaut
  */
 public class DefaultFormsProperties {
@@ -89,7 +89,7 @@ public class DefaultFormsProperties {
 
     /**
      * Private contructor to prevent instantiation
-     * 
+     *
      * @param tenantId
      *            the tenant Id
      */
@@ -232,5 +232,15 @@ public class DefaultFormsProperties {
             return false;
         }
         return Boolean.valueOf(autoGenerateForms);
+    }
+
+    public boolean enableFormsActionConditions() {
+        final String actionConditionEnabled = defaultProperties.getProperty("form.action.condition.enabled");
+        if (!Boolean.FALSE.toString().equals(actionConditionEnabled) && !Boolean.TRUE.toString().equals(actionConditionEnabled)) {
+            LOGGER.log(Level.INFO,
+                    "the property for enabling action conditions is not defined or incorrectly defined. using the value : true");
+            return true;
+        }
+        return Boolean.valueOf(actionConditionEnabled);
     }
 }

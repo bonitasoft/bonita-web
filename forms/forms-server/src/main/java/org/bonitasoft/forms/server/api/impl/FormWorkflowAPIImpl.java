@@ -77,6 +77,8 @@ import org.bonitasoft.forms.client.model.ActivityEditState;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.server.accessor.DefaultFormsProperties;
+import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
@@ -275,8 +277,26 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         final List<Operation> operations = new ArrayList<Operation>();
         final FormActionAdapter formActionAdapter = new FormActionAdapter();
         final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
-        final List<Expression> conditionsList = new ArrayList();
-        Map<String, Serializable> evaluateConditionExpressions = null;
+        final Map<String, Serializable> evaluateConditionExpressions = getEvaluateConditionExpressions(session, actions, locale, context, processDefinitionID,
+                activityInstanceID, formExpressionsAPI);
+
+        for (Integer i = 0; i < actions.size(); i++) {
+            final FormAction action = actions.get(i);
+            if (!action.getType().name().equals(ActionType.EXECUTE_CONNECTOR.name())) {
+                final Expression conditionExpression = action.getConditionExpression();
+                if (isActionConditionVerified(session, conditionExpression, (Boolean) evaluateConditionExpressions.get(FORM_ACTION + i))) {
+                    operations.add(formActionAdapter.getEngineOperation(action));
+                }
+            }
+        }
+        return operations;
+    }
+
+    private Map<String, Serializable> getEvaluateConditionExpressions(final APISession session, final List<FormAction> actions, final Locale locale,
+            final Map<String, Serializable> context, final long processDefinitionID, final long activityInstanceID, final IFormExpressionsAPI formExpressionsAPI)
+            throws BPMExpressionEvaluationException, BPMEngineException {
+        Map<String, Serializable> evaluateConditionExpressions;
+        final List<Expression> conditionsList = new ArrayList<Expression>();
 
         for (Integer i = 0; i < actions.size(); i++) {
             final FormAction action = actions.get(i);
@@ -293,18 +313,15 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         } else if (processDefinitionID != -1) {
             evaluateConditionExpressions = formExpressionsAPI.evaluateProcessInitialExpressions(session, processDefinitionID, conditionsList, locale,
                     context);
+        } else {
+            evaluateConditionExpressions = new HashMap<String, Serializable>();
         }
+        return evaluateConditionExpressions;
+    }
 
-        for (Integer i = 0; i < actions.size(); i++) {
-            final FormAction action = actions.get(i);
-            if (!action.getType().name().equals(ActionType.EXECUTE_CONNECTOR.name())) {
-                final Expression conditionExpression = action.getConditionExpression();
-                if (conditionExpression == null || (Boolean) evaluateConditionExpressions.get(FORM_ACTION + i)) {
-                    operations.add(formActionAdapter.getEngineOperation(action));
-                }
-            }
-        }
-        return operations;
+    private boolean isActionConditionVerified(final APISession session, final Expression conditionExpression, final Boolean evaluatedCondition) {
+        final DefaultFormsProperties defaultFormProperties = DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId());
+        return !defaultFormProperties.enableFormsActionConditions() || conditionExpression == null || evaluatedCondition;
     }
 
     /**
