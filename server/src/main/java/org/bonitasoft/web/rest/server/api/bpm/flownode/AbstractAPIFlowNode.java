@@ -170,7 +170,7 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         super.fillDeploys(item, deploys);
     }
 
-    protected CaseDatastore getCaseDatastore() {
+    private CaseDatastore getCaseDatastore() {
         return new CaseDatastore(getEngineSession());
     }
 
