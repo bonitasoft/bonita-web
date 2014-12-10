@@ -170,12 +170,13 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         super.fillDeploys(item, deploys);
     }
 
-    private CaseDatastore getCaseDatastore() {
+    protected CaseDatastore getCaseDatastore() {
         return new CaseDatastore(getEngineSession());
     }
 
     private CaseItem getArchivedCase(final String id) {
-        final List<ArchivedCaseItem> result = new ArchivedCaseDatastore(getEngineSession()).search(
+        final List<ArchivedCaseItem> result = getArchivedCaseDatastore
+                ().search(
                 0, 1,
                 null,
                 null,
@@ -184,6 +185,10 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
             return result.get(0);
         }
         return null;
+    }
+
+    protected ArchivedCaseDatastore getArchivedCaseDatastore() {
+        return new ArchivedCaseDatastore(getEngineSession());
     }
 
     @Override
