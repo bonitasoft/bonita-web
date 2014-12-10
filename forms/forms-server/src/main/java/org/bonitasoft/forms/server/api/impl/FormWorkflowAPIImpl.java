@@ -289,7 +289,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
         if (activityInstanceID != -1) {
             evaluateConditionExpressions = formExpressionsAPI.evaluateActivityInitialExpressions(session, activityInstanceID, conditionsList, locale,
-                    false, context);
+                    true, context);
         } else if (processDefinitionID != -1) {
             evaluateConditionExpressions = formExpressionsAPI.evaluateProcessInitialExpressions(session, processDefinitionID, conditionsList, locale,
                     context);
