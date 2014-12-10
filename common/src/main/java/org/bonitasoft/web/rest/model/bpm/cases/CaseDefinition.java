@@ -29,7 +29,7 @@ public class CaseDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final CaseDefinition get() {
+    public static CaseDefinition get() {
         return (CaseDefinition) Definitions.get(TOKEN);
     }
 
