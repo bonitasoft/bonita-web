@@ -94,6 +94,11 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
+     *
+     */
+    private static final String FORM_ACTION = "FormAction_";
+
+    /**
      * Value returned when no activity has been found
      */
     private static final long NOT_FOUND = -1L;
@@ -263,12 +268,40 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return formExpressionsAPI.evaluateInstanceExpression(session, processInstanceID, expression, fieldValues, locale, isCurrentValue, context);
     }
 
-    protected List<Operation> buildOperations(final List<FormAction> actions) {
+    protected List<Operation> buildOperations(final APISession session, final List<FormAction> actions, final Locale locale,
+            final Map<String, Serializable> context, final long processDefinitionID, final long activityInstanceID) throws InvalidSessionException,
+            BPMExpressionEvaluationException, BPMEngineException {
+
         final List<Operation> operations = new ArrayList<Operation>();
         final FormActionAdapter formActionAdapter = new FormActionAdapter();
-        for (final FormAction action : actions) {
+        final IFormExpressionsAPI formExpressionsAPI = FormAPIFactory.getFormExpressionsAPI();
+        final List<Expression> conditionsList = new ArrayList();
+        Map<String, Serializable> evaluateConditionExpressions = null;
+
+        for (Integer i = 0; i < actions.size(); i++) {
+            final FormAction action = actions.get(i);
+            final Expression conditionExpression = action.getConditionExpression();
+            if (conditionExpression != null) {
+                conditionExpression.setName(FORM_ACTION + i);
+                conditionsList.add(conditionExpression);
+            }
+        }
+
+        if (activityInstanceID != -1) {
+            evaluateConditionExpressions = formExpressionsAPI.evaluateActivityInitialExpressions(session, activityInstanceID, conditionsList, locale,
+                    true, context);
+        } else if (processDefinitionID != -1) {
+            evaluateConditionExpressions = formExpressionsAPI.evaluateProcessInitialExpressions(session, processDefinitionID, conditionsList, locale,
+                    context);
+        }
+
+        for (Integer i = 0; i < actions.size(); i++) {
+            final FormAction action = actions.get(i);
             if (!action.getType().name().equals(ActionType.EXECUTE_CONNECTOR.name())) {
-                operations.add(formActionAdapter.getEngineOperation(action));
+                final Expression conditionExpression = action.getConditionExpression();
+                if (conditionExpression == null || (Boolean) evaluateConditionExpressions.get(FORM_ACTION + i)) {
+                    operations.add(formActionAdapter.getEngineOperation(action));
+                }
             }
         }
         return operations;
@@ -297,7 +330,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             }
         }
         try {
-            ProcessInstance = processAPI.startProcess(userId, processDefinitionID, buildOperations(actionsToExecute), evalContext).getId();
+            ProcessInstance = processAPI.startProcess(userId, processDefinitionID,
+                    buildOperations(session, actionsToExecute, locale, evalContext, processDefinitionID, -1), evalContext).getId();
         } catch (final ProcessDefinitionNotFoundException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, " ProcessDefinitionNotFoundException of processDefinitionID : " + processDefinitionID);
@@ -346,7 +380,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             evalContext.putAll(context);
         }
         excuteParameters.put(FormWorkflowUtil.ACTIVITY_INSTANCE_ID_KEY, activityInstanceID);
-        excuteParameters.put(FormWorkflowUtil.OPERATIONS_LIST_KEY, (Serializable) buildOperations(actionsToExecute));
+        excuteParameters.put(FormWorkflowUtil.OPERATIONS_LIST_KEY,
+                (Serializable) buildOperations(session, actionsToExecute, locale, evalContext, -1, activityInstanceID));
         excuteParameters.put(FormWorkflowUtil.OPERATIONS_INPUT_KEY, (Serializable) evalContext);
         excuteParameters.put(FormWorkflowUtil.USER_ID_KEY, userID);
         getBpmEngineAPIUtil().executeCommand(commandAPI, FormWorkflowUtil.EXECUTE_ACTION_AND_TERMINATE, excuteParameters);
