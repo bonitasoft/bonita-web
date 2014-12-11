@@ -292,7 +292,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return operations;
     }
 
-    private Map<String, Serializable> getEvaluateConditionExpressions(final APISession session, final List<FormAction> actions, final Locale locale,
+    protected Map<String, Serializable> getEvaluateConditionExpressions(final APISession session, final List<FormAction> actions, final Locale locale,
             final Map<String, Serializable> context, final long processDefinitionID, final long activityInstanceID, final IFormExpressionsAPI formExpressionsAPI)
             throws BPMExpressionEvaluationException, BPMEngineException {
         Map<String, Serializable> evaluateConditionExpressions;
@@ -319,7 +319,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return evaluateConditionExpressions;
     }
 
-    private boolean isActionConditionVerified(final APISession session, final Expression conditionExpression, final Boolean evaluatedCondition) {
+    protected boolean isActionConditionVerified(final APISession session, final Expression conditionExpression, final Boolean evaluatedCondition) {
         final DefaultFormsProperties defaultFormProperties = DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId());
         return !defaultFormProperties.enableFormsActionConditions() || conditionExpression == null || evaluatedCondition;
     }
