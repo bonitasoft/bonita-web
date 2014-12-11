@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
@@ -99,8 +100,9 @@ public class FormLayoutDownloadServlet extends HttpServlet {
             if (bodyContent == null) {
                 response.setContentLength(0);
             } else {
-                response.setContentLength(bodyContent.getBytes().length);
-                out.write(bodyContent.getBytes());
+                byte[] bodyContentbytes = bodyContent.getBytes(CharEncoding.UTF_8);
+                response.setContentLength(bodyContentbytes.length);
+                out.write(bodyContentbytes);
             }
             out.close();
         } catch (final IOException e) {
