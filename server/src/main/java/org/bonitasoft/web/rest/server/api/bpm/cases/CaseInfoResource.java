@@ -2,7 +2,6 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 
 import java.util.Map;
 
-import org.bonitasoft.engine.api.FlownodeCounters;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseInfo;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
@@ -27,7 +26,7 @@ public class CaseInfoResource extends CommonResource {
     }
 
 
-    protected Map<String, FlownodeCounters> getFlownodeCounters(final Long caseId) throws DataNotFoundException {
+    protected Map<String, Map<String, Long>> getFlownodeCounters(final Long caseId) throws DataNotFoundException {
         return getEngineProcessAPI().getFlownodeStateCounters(caseId);
     }
 }
