@@ -5,8 +5,8 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
-import org.bonitasoft.engine.api.FlownodeCounters;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseInfo;
@@ -51,7 +51,7 @@ public class CaseInfoResourceTest {
         //given
         final long id = 123;
         doReturn(String.valueOf(id)).when(caseInfoResource).getAttribute(CaseInfoResource.CASE_ID);
-        final HashMap<String, FlownodeCounters> taskWithCounters = new HashMap<String, FlownodeCounters>();
+        final HashMap<String, Map<String, Long>> taskWithCounters = new HashMap<String, Map<String, Long>>();
         when(processAPI.getFlownodeStateCounters(anyLong())).thenReturn(taskWithCounters);
 
         //when
