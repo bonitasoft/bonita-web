@@ -41,8 +41,10 @@
 
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
-        <!-- Exclude GWT based classes from sonar (not covered by unit tests). This property was replaced by sonar.coverage.exclusions for sonar 4.5.1 and newer -->
-        <sonar.jacoco.excludes>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*</sonar.jacoco.excludes> 
+        <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
+        <sonar.jacoco.excludes>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*</sonar.jacoco.excludes>
+        <!-- sonar.jacoco.excludes was replaced by sonar.coverage.exclusions for sonar 4.5.1 and newer -->
+        <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*</sonar.coverage.exclusions> 
     </properties>
 
     <dependencyManagement>
