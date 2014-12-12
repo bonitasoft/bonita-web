@@ -1,13 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode.archive;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -20,28 +13,21 @@ import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.WaitUntil;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * FIXME to be refactored using much more test-toolkit
- */
-public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
+public class APIArchivedActivityIT extends AbstractConsoleTest {
 
-    private APIArchivedHumanTask apiArchivedHumanTask;
+    private APIArchivedActivity apiArchivedActivity;
 
     @Override
     public void consoleTestSetUp() throws Exception {
-        apiArchivedHumanTask = new APIArchivedHumanTask();
-        apiArchivedHumanTask.setCaller(getAPICaller(getInitiator().getSession(), "API/bpm/archivedHumanTask"));
+        apiArchivedActivity = new APIArchivedActivity();
+        apiArchivedActivity.setCaller(getAPICaller(getInitiator().getSession(), "API/bpm/archivedActivity"));
     }
 
     @Override
@@ -71,22 +57,6 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
 
     private ProcessAPI getProcessAPI() throws Exception {
         return TenantAPIAccessor.getProcessAPI(getInitiator().getSession());
-    }
-
-    private ArrayList<String> getProcessIdDeploy() {
-        final ArrayList<String> deploys = new ArrayList<String>();
-        deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
-        return deploys;
-    }
-
-    private HashMap<String, String> getNameFilter(final HumanTaskInstance humanTaskInstance) {
-        final HashMap<String, String> filters = new HashMap<String, String>();
-        filters.put(ArchivedHumanTaskItem.ATTRIBUTE_NAME, humanTaskInstance.getName());
-        return filters;
-    }
-
-    private Map<String, String> buildArchivedHumanTaskStateCompletedForCaseIdFilter(final APIID caseId) {
-        return MapUtil.asMap(new Arg(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, caseId));
     }
 
     /**
@@ -129,52 +99,22 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     }
 
     @Test
-    public void testGetArchivedHumanTask() throws Exception {
-        final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
-        final ArrayList<String> deploys = getProcessIdDeploy();
-
-        final ArchivedHumanTaskItem archivedHumanTaskItem =
-                apiArchivedHumanTask.runGet(makeAPIID(humanTaskInstance.getId()), deploys, new ArrayList<String>());
-
-        assertEquals("Can't get the good archivedTaskItem", archivedHumanTaskItem.getName(), humanTaskInstance.getName());
-    }
-
-    @Test
-    public void testSearchArchivedHumanTask() throws Exception {
-        final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
-        final ArrayList<String> deploys = getProcessIdDeploy();
-        final HashMap<String, String> filters = getNameFilter(humanTaskInstance);
-
-        final ArchivedHumanTaskItem archivedHumanTaskItem = apiArchivedHumanTask.runSearch(0, 1, null, null,
-                filters, deploys, new ArrayList<String>()).getResults().get(0);
-
-        assertNotNull("Can't find the good archivedTaskItem", archivedHumanTaskItem);
-    }
-
-    @Test
-    public void testGetDatastore() {
-        assertNotNull("Can't get the Datastore", apiArchivedHumanTask.getDefaultDatastore());
-    }
-
-    @Test
-    public void archivedHumanTasksCanBeSortedByReachedStateDate() throws Exception {
-        shouldSearchArchivedHumaTaskWithOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE + " DESC");
-    }
-
-    @Test
     public void testSearchWithDefaultOrder() throws Exception {
-        shouldSearchArchivedHumaTaskWithOrder(apiArchivedHumanTask.defineDefaultSearchOrder());
+        verifySearhWithOrder(apiArchivedActivity.defineDefaultSearchOrder());
+    }
+
+    @Test
+    public void testSearchWithNoOrder() throws Exception {
+        verifySearhWithOrder(null);
 
     }
 
-    private void shouldSearchArchivedHumaTaskWithOrder(final String orders) throws Exception {
+    private void verifySearhWithOrder(final String order) throws Exception {
         //given
-        final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
-        final ArrayList<String> deploys = getProcessIdDeploy();
-        final HashMap<String, String> filters = getNameFilter(humanTaskInstance);
+        initArchivedHumanTaskInstance();
 
         //when
-        final ItemSearchResult<ArchivedHumanTaskItem> search = apiArchivedHumanTask.runSearch(0, 1, null, orders, filters, null, null);
+        final ItemSearchResult<ArchivedActivityItem> search = apiArchivedActivity.runSearch(0, 1, null, order, null, null, null);
 
         //then
         assertThat(search.getResults()).as("should get results").isNotEmpty();
