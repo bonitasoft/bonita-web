@@ -62,6 +62,10 @@
         <to>/APIToolkit/bpm/caseDocument$1</to>
     </rule>
     <rule>
+        <from>^/API/bpm/archivedCaseDocument([\?/]|$)</from>
+        <to>/APIToolkit/bpm/archivedCaseDocument$1</to>
+    </rule> 
+    <rule>
         <from>^/API/bpm/caseVariable([\?/]|$)</from>
         <to>/APIToolkit/bpm/caseVariable$1</to>
     </rule>

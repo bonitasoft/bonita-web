@@ -348,22 +348,6 @@ public abstract class API<ITEM extends IItem> {
     }
 
     /**
-     * Upload the file to the defined directory.<br>
-     * The original filename will be kept.
-     *
-     * @param attributeName
-     *        The name of the attribute representing the file.
-     * @param attributeValue
-     *        The value of the attribute representing the file.
-     * @param newDirectory
-     *        The destination directory path.
-     * @return This method return the file in the destination directory.
-     */
-    protected final File upload(final String attributeName, final String attributeValue, final String newDirectory) {
-        return upload(attributeName, attributeValue, newDirectory, null);
-    }
-
-    /**
      * Upload the file to the defined directory and rename it to make sure its filename is unique.<br>
      * The original filename will be kept.
      *
@@ -661,7 +645,7 @@ public abstract class API<ITEM extends IItem> {
      * @param attributeName
      * @param item
      * @param targetPath
-     * @param subFolder
+     * @param prefix
      */
     private void deleteFile(final String attributeName, final IItem item, final String targetPath, final String prefix) {
         if (item == null || item.getAttributeValue(attributeName) == null || item.getAttributeValue(attributeName).isEmpty()) {
