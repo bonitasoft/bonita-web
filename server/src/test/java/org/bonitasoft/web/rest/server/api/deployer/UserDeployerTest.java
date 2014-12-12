@@ -25,6 +25,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
+import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -36,7 +37,7 @@ import org.mockito.Mock;
  * @author Vincent Elcrin
  * 
  */
-public class UserDeployerTest {
+public class UserDeployerTest extends APITestWithMock {
 
     @Mock
     private DatastoreHasGet<UserItem> getter;

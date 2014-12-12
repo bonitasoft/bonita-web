@@ -70,7 +70,7 @@ public class FormsResourcesUtils {
     /**
      * A map used to store the classloaders that are used to load some libraries extracted from the business archive
      */
-    protected final static Map<Long, ClassLoader> PROCESS_CLASSLOADERS = new HashMap<Long, ClassLoader>();
+    private final static Map<Long, ClassLoader> PROCESS_CLASSLOADERS = new HashMap<Long, ClassLoader>();
 
     /**
      * Logger
