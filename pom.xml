@@ -41,8 +41,6 @@
 
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
-        <!-- Exclude GWT based classes from sonar (not covered by unit tests). This property was replaced by sonar.coverage.exclusions for sonar 4.5.1 and newer -->
-        <sonar.jacoco.excludes>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*</sonar.jacoco.excludes> 
     </properties>
 
     <dependencyManagement>
@@ -684,6 +682,8 @@
                 <jacoco.out.it.file>jacoco-web-it.exec</jacoco.out.it.file>
                 <!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
                 <sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
+                <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
+                <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*,**/org/bonitasoft/forms/client/FormsApplicationLoader</sonar.coverage.exclusions>
             </properties>
 
             <build>
