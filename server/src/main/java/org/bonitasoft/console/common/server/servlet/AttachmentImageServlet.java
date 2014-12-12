@@ -28,9 +28,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.utils.TenantFolder;
+
 /**
  * Servlet allowing to download process instances attachments
- * 
+ *
  * @author Julien Mege
  */
 public abstract class AttachmentImageServlet extends AttachmentDownloadServlet {
@@ -68,19 +70,12 @@ public abstract class AttachmentImageServlet extends AttachmentDownloadServlet {
         byte[] attachment = null;
 
         if (srcStr != null) {
-            final File iconDir = new File(this.directoryPath);
+            final File iconDir = new File(directoryPath);
             final File file = new File(iconDir, srcStr);
-                        
-            try {
-                if (!file.getCanonicalPath().startsWith(iconDir.getCanonicalPath())) {
-                    throw new IOException();
-                }
-            } catch (final IOException e) {
-                final String errorMessage = "Error while getting the resource " + srcStr + " For security reasons, access to paths other than " + iconDir.getName() + " is restricted";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
-                }
-                throw new ServletException(errorMessage);
+
+            final TenantFolder tenantFolder = new TenantFolder();
+            if (!tenantFolder.isInFolder(file, iconDir)) {
+                throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
             }
 
             int fileLength = 0;

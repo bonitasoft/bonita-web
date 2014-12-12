@@ -13,10 +13,6 @@
  **/
 package org.bonitasoft.forms.server;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,10 +24,15 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.Document;
@@ -42,7 +43,7 @@ import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
 
 /**
  * Servlet allowing to download process instances attachments
- * 
+ *
  * @author Anthony Birembaut
  */
 public class DocumentDownloadServlet extends HttpServlet {
@@ -130,19 +131,9 @@ public class DocumentDownloadServlet extends HttpServlet {
                 LOGGER.log(Level.FINE, "attachmentPath: " + filePath);
             }
             final File file = new File(filePath);
-            try {
-                final File tmpDir = WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getTempFolder();
-                if (!file.getCanonicalPath().startsWith(tmpDir.getCanonicalPath())) {
-                    throw new IOException();
-                }
-            } catch (final IOException e) {
-                final String errorMessage = "Error while getting the file " + filePath + " For security reasons, access to paths other than "
-                        + WebBonitaConstants.BONITA_HOME + "/" + WebBonitaConstants.clientFolderPath + "/" + WebBonitaConstants.tmpFolderName
-                        + " is restricted";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
-                }
-                throw new ServletException(errorMessage);
+            final TenantFolder tenantFolder = new TenantFolder();
+            if (!tenantFolder.isInTempFolder(file, WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()))) {
+                throw new ServletException("For security reasons, access to this file paths" + filePath + " is restricted.");
             }
             if (fileName == null) {
                 fileName = file.getName();
@@ -151,7 +142,7 @@ public class DocumentDownloadServlet extends HttpServlet {
         } else if (fileName != null && contentStorageId != null) {
             try {
                 fileContent = bpmEngineAPIUtil.getProcessAPI(apiSession).getDocumentContent(contentStorageId);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 final String errorMessage = "Error while retrieving the document  with content storage ID " + contentStorageId + " from the engine.";
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE, errorMessage, e);
