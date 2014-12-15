@@ -72,25 +72,10 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-
-        boolean redirectAfterLogin = true;
-        final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
-        if (redirectAfterLoginStr != null && Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
-            redirectAfterLogin = false;
-        }
-        final long tenantId = getTenantId(request, response);
-        String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL);
-        }
-        if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
-            redirectURL = LoginManager.DEFAULT_DIRECT_URL;
-        } else {
-            if (redirectURL != null) {
-                redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
-            }
-        }
+        
+        boolean redirectAfterLogin = hasRedirection(request);
+        final long tenantId = getTenantId();
+        String redirectURL = getRedirectUrl(request, redirectAfterLogin);
         try {
             doLogin(request, tenantId);
             final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
@@ -104,35 +89,63 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         } catch (final LoginFailedException e) {
-            // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
-            if (redirectAfterLogin) {
-                try {
-                    request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
-                    String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
-                    if (loginURL == null) {
-                        loginURL = LoginManager.LOGIN_PAGE;
-                        getServletContext().getRequestDispatcher(loginURL).forward(request, response);
-                    } else {
-                        getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL)).forward(request, response);
-                    }
-                } catch (final Exception e1) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, e1.getMessage());
-                    }
-                    throw new ServletException(e1);
-                }
-            } else {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, e.getMessage());
-                }
-                throw new ServletException(e);
-            }
+            handleLoginFailedException(request, response, redirectAfterLogin, e);
         } catch (final Exception e) {
+            LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
+            throw new ServletException(e);
+        }
+    }
+
+    private void handleLoginFailedException(final HttpServletRequest request, final HttpServletResponse response, boolean redirectAfterLogin,
+            final LoginFailedException e) throws ServletException {
+        // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
+        if (redirectAfterLogin) {
+            try {
+                request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
+                String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
+                if (loginURL == null) {
+                    loginURL = LoginManager.LOGIN_PAGE;
+                    getServletContext().getRequestDispatcher(loginURL).forward(request, response);
+                } else {
+                    getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL)).forward(request, response);
+                }
+            } catch (final Exception e1) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, e1.getMessage());
+                }
+                throw new ServletException(e1);
+            }
+        } else {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
+                LOGGER.log(Level.SEVERE, e.getMessage());
             }
             throw new ServletException(e);
         }
+    }
+
+    private String getRedirectUrl(final HttpServletRequest request, boolean redirectAfterLogin) {
+        String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL);
+        }
+        if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
+            redirectURL = LoginManager.DEFAULT_DIRECT_URL;
+        } else {
+            if (redirectURL != null) {
+                redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
+            }
+        }
+        return redirectURL;
+    }
+
+    private boolean hasRedirection(final HttpServletRequest request) {
+        boolean redirectAfterLogin = true;
+        final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
+        if (redirectAfterLoginStr != null && Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
+            redirectAfterLogin = false;
+        }
+        return redirectAfterLogin;
     }
 
     private String createRedirectUrl(final HttpServletRequest request, final String redirectURL) {
@@ -152,7 +165,7 @@ public class LoginServlet extends HttpServlet {
         return LoginManagerFactory.getLoginManager(tenantId);
     }
 
-    protected long getTenantId(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+    protected long getTenantId() throws ServletException {
         long tenantId = -1L;
         try {
             final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
