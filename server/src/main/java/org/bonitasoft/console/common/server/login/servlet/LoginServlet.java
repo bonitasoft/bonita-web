@@ -14,6 +14,7 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
@@ -73,11 +75,18 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         
+        // force post request body to UTF-8
+        try {
+            request.setCharacterEncoding(CharEncoding.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            // should never appear
+            throw new ServletException(e);
+        }
+        
         boolean redirectAfterLogin = hasRedirection(request);
-        final long tenantId = getTenantId();
         String redirectURL = getRedirectUrl(request, redirectAfterLogin);
         try {
-            doLogin(request, tenantId);
+            doLogin(request);
             final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
@@ -152,7 +161,11 @@ public class LoginServlet extends HttpServlet {
         return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }
 
-    protected void doLogin(final HttpServletRequest request, final long tenantId) throws LoginManagerNotFoundException, LoginFailedException {
+    /*
+     * Overriden in SP 
+     */
+    protected void doLogin(final HttpServletRequest request) throws LoginManagerNotFoundException, LoginFailedException, ServletException {
+        final long tenantId = getTenantId();
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
         getLoginManager(tenantId).login(requestAccessor, createUserCredentials(tenantId, requestAccessor));
     }
@@ -165,6 +178,9 @@ public class LoginServlet extends HttpServlet {
         return LoginManagerFactory.getLoginManager(tenantId);
     }
 
+    /*
+     * protected for testing
+     */
     protected long getTenantId() throws ServletException {
         long tenantId = -1L;
         try {
