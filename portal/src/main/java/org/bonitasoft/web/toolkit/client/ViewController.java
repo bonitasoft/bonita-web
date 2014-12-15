@@ -14,14 +14,13 @@
  */
 package org.bonitasoft.web.toolkit.client;
 
-import static com.google.gwt.query.client.GQuery.$;
+import static com.google.gwt.query.client.GQuery.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
@@ -37,9 +36,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.EditItemPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * This Class defines the main controller of the entire GWT application. It is responsible for the interaction between the
@@ -208,7 +207,9 @@ public class ViewController {
             ((AngularIFrameView) view).display(params);
             isAngularFrameDisplayed = true;
         } else {
-            isAngularFrameDisplayed = false;
+            if (view.getToken() != null && !view.getToken().trim().equals("")) {
+                isAngularFrameDisplayed = false;
+            }
             if (view instanceof PageOnItem<?>) {
                 $(widgetElement).hide();
             } else {

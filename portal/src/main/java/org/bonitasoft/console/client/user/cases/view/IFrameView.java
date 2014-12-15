@@ -53,15 +53,15 @@ public class IFrameView extends Composite {
         frame.setSrc(url);
     }
 
-    public void setLocation(String location) {
-        setLocation(frame, location);
+    public void setLocation(final String urlLocation) {
+        setLocation(frame, urlLocation);
     }
 
-    private native void setLocation(IFrameElement iframe, String location) /*-{
+    private native void setLocation(IFrameElement iframe, String urlLocation) /*-{
         if(iframe.contentWindow) {
-            iframe.contentWindow.location.replace(location);
+            iframe.contentWindow.location.replace(urlLocation);
         } else {
-            iframe.src = location;
+            iframe.src = urlLocation;
         }
     }-*/;
 
