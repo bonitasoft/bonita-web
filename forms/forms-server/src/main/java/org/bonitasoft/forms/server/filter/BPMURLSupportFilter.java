@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
@@ -233,7 +234,7 @@ public class BPMURLSupportFilter implements Filter {
                 final String encodeRedirectURL = httpServletResponse.encodeRedirectURL(redirectionURL.toString());
                 httpServletResponse.sendRedirect(encodeRedirectURL);
             } else {
-                response.setContentType("UTF-8");
+                response.setContentType(CharEncoding.UTF_8);
                 filterChain.doFilter(request, response);
             }
         } catch (final Exception e) {
@@ -249,14 +250,14 @@ public class BPMURLSupportFilter implements Filter {
         queryString.append(key);
         queryString.append("=");
         if (values.length == 1) {
-            queryString.append(URLEncoder.encode(values[0], "UTF-8"));
+            queryString.append(URLEncoder.encode(values[0], CharEncoding.UTF_8));
         } else if (values.length > 1) {
             final StringBuilder valuesList = new StringBuilder();
             for (final String value : values) {
                 if (valuesList.length() > 0) {
                     valuesList.append(",");
                 }
-                valuesList.append(URLEncoder.encode(value, "UTF-8"));
+                valuesList.append(URLEncoder.encode(value, CharEncoding.UTF_8));
             }
             queryString.append(valuesList);
         }
