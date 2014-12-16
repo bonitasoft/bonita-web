@@ -217,11 +217,7 @@ public class BPMURLSupportFilter implements Filter {
                     if (supportedParameterKeysList.contains(key)) {
                         buildQueryString(queryString, key, values);
                     } else {
-                        if (key.startsWith("form")) {
-                            buildQueryString(hashString, key, values);
-                        } else {
-                            buildQueryString(hashString, key, values);
-                        }
+                        buildQueryString(hashString, key, values);
                     }
                 }
                 final StringBuilder redirectionURL = new StringBuilder();
