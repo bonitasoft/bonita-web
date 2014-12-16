@@ -96,9 +96,9 @@ import org.bonitasoft.forms.server.exception.TaskAssignationException;
 public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
-     *
+     * Prefix for forms actions conditions expressions
      */
-    private static final String FORM_ACTION = "FormAction_";
+    private static final String FORM_ACTION_CONDITION = "FormActionCondition_";
 
     /**
      * Value returned when no activity has been found
@@ -284,7 +284,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final FormAction action = actions.get(i);
             if (!action.getType().name().equals(ActionType.EXECUTE_CONNECTOR.name())) {
                 final Expression conditionExpression = action.getConditionExpression();
-                if (isActionConditionVerified(session, conditionExpression, (Boolean) evaluateConditionExpressions.get(FORM_ACTION + i))) {
+                if (isActionConditionVerified(session, conditionExpression, (Boolean) evaluateConditionExpressions.get(FORM_ACTION_CONDITION + i))) {
                     operations.add(formActionAdapter.getEngineOperation(action));
                 }
             }
@@ -302,7 +302,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final FormAction action = actions.get(i);
             final Expression conditionExpression = action.getConditionExpression();
             if (conditionExpression != null) {
-                conditionExpression.setName(FORM_ACTION + i);
+                conditionExpression.setName(FORM_ACTION_CONDITION + i);
                 conditionsList.add(conditionExpression);
             }
         }
