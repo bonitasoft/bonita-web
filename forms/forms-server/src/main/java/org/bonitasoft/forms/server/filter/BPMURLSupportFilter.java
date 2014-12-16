@@ -5,21 +5,23 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 package org.bonitasoft.forms.server.filter;
 
 import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
@@ -55,7 +58,7 @@ import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 
 /**
  * This filter transform the regular URL parameters into Hash parameters, with a generated formID.
- * 
+ *
  * @author Chong Zhao
  */
 public class BPMURLSupportFilter implements Filter {
@@ -228,8 +231,10 @@ public class BPMURLSupportFilter implements Filter {
                     redirectionURL.append("#");
                     redirectionURL.append(hashString);
                 }
-                httpServletResponse.sendRedirect(redirectionURL.toString());
+                final String encodeRedirectURL = httpServletResponse.encodeRedirectURL(redirectionURL.toString());
+                httpServletResponse.sendRedirect(encodeRedirectURL);
             } else {
+                response.setContentType(CharEncoding.UTF_8);
                 filterChain.doFilter(request, response);
             }
         } catch (final Exception e) {
@@ -238,21 +243,21 @@ public class BPMURLSupportFilter implements Filter {
         }
     }
 
-    protected void buildQueryString(final StringBuilder queryString, final String key, final String[] values) {
+    protected void buildQueryString(final StringBuilder queryString, final String key, final String[] values) throws UnsupportedEncodingException {
         if (queryString.length() > 0) {
             queryString.append("&");
         }
         queryString.append(key);
         queryString.append("=");
         if (values.length == 1) {
-            queryString.append(values[0]);
+            queryString.append(URLEncoder.encode(values[0], CharEncoding.UTF_8));
         } else if (values.length > 1) {
             final StringBuilder valuesList = new StringBuilder();
             for (final String value : values) {
                 if (valuesList.length() > 0) {
                     valuesList.append(",");
                 }
-                valuesList.append(value);
+                valuesList.append(URLEncoder.encode(value, CharEncoding.UTF_8));
             }
             queryString.append(valuesList);
         }
@@ -260,7 +265,7 @@ public class BPMURLSupportFilter implements Filter {
 
     /**
      * Get the form id for any form.
-     * 
+     *
      * @param parameters
      *            The regular parameters of current URL.
      * @param request
@@ -329,7 +334,7 @@ public class BPMURLSupportFilter implements Filter {
 
     /**
      * Get the latest version of a given process name.
-     * 
+     *
      * @param processName
      *            A regular URL parameter
      * @param request
@@ -367,7 +372,7 @@ public class BPMURLSupportFilter implements Filter {
 
     /**
      * Is console view mode
-     * 
+     *
      * @param request
      * @return isConsole flag
      */
@@ -378,7 +383,7 @@ public class BPMURLSupportFilter implements Filter {
 
     /**
      * Retrieve the API session from the HTTP session
-     * 
+     *
      * @param request
      *            the HTTP request
      * @return the tenantID
@@ -400,7 +405,7 @@ public class BPMURLSupportFilter implements Filter {
 
     /**
      * build SearchOptionsBuilder
-     * 
+     *
      * @param pageIndex
      * @param numberOfResults
      * @param sort
