@@ -42,9 +42,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
  */
 public class MenuListCreator {
 
-    private final LinkedHashMap<APIID, List<ProfileEntryItem>> orphelineEntries = new LinkedHashMap<APIID, List<ProfileEntryItem>>();;
+    private final LinkedHashMap<APIID, List<ProfileEntryItem>> orphanEntries = new LinkedHashMap<APIID, List<ProfileEntryItem>>();;
 
-    public LinkedList<MenuItem> asList(final List<ProfileEntryItem> profiles) {
+    public LinkedList<MenuItem> createMenuItemList(final List<ProfileEntryItem> profiles) {
         final LinkedHashMap<APIID, MenuItem> menu = new LinkedHashMap<APIID, MenuItem>();
         for (final ProfileEntryItem profile : profiles) {
             addProfileEntry(menu, profile);
@@ -58,7 +58,7 @@ public class MenuListCreator {
         } else if (parentExist(menu, entry)) {
             getParent(menu, entry).addLink(createLink(entry));
         } else {
-            saveOrphelineEntry(entry);
+            saveOrphanEntry(entry);
         }
     }
 
@@ -98,7 +98,7 @@ public class MenuListCreator {
                     public void execute() {
                         MainEventBus.getInstance().fireEvent(new MenuClickEvent(token));
                         super.execute();
-                    };
+                    }
                 });
     }
 
@@ -112,7 +112,7 @@ public class MenuListCreator {
 
     private MenuItem createFolder(final ProfileEntryItem entry) {
         final MenuFolder folder = new MenuFolder(new JsId(entry.getName()), _(entry.getName()));
-        adoptOrphelineEntries(folder, entry);
+        adoptOrphanEntries(folder, entry);
         return folder;
     }
 
@@ -122,17 +122,17 @@ public class MenuListCreator {
         }
     }
 
-    private void saveOrphelineEntry(final ProfileEntryItem entry) {
-        if (!orphelineEntries.containsKey(entry.getParentId())) {
-            orphelineEntries.put(entry.getParentId(), new LinkedList<ProfileEntryItem>());
+    private void saveOrphanEntry(final ProfileEntryItem entry) {
+        if (!orphanEntries.containsKey(entry.getParentId())) {
+            orphanEntries.put(entry.getParentId(), new LinkedList<ProfileEntryItem>());
         }
-        orphelineEntries.get(entry.getParentId()).add(entry);
+        orphanEntries.get(entry.getParentId()).add(entry);
     }
 
-    private void adoptOrphelineEntries(final MenuFolder folder, final ProfileEntryItem entry) {
-        if (orphelineEntries.containsKey(entry.getId())) {
-            for (final ProfileEntryItem orphelineProfileEntry : orphelineEntries.remove(entry.getId())) {
-                folder.addLink(createLink(orphelineProfileEntry));
+    private void adoptOrphanEntries(final MenuFolder folder, final ProfileEntryItem entry) {
+        if (orphanEntries.containsKey(entry.getId())) {
+            for (final ProfileEntryItem orphanProfileEntry : orphanEntries.remove(entry.getId())) {
+                folder.addLink(createLink(orphanProfileEntry));
             }
         }
     }

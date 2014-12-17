@@ -1,13 +1,13 @@
 $(function() {
 
-	var PLUGIN_UPLOADER = 'plugin.uploader'
+	var PLUGIN_UPLOADER = 'plugin.uploader';
 
 	/**
 	 * Override val function
 	 */
 	var super_val = $.fn.val;
 	$.fn.val = function(value) {
-		var inputUploader = $(this).data(PLUGIN_UPLOADER)
+		var inputUploader = $(this).data(PLUGIN_UPLOADER);
 		if ($.isDefined(inputUploader)) {
 			if(value === null) {
                 inputUploader.reset();
@@ -73,12 +73,12 @@ $(function() {
 	// Auto uploader object definition
 	// /////////////////////////////////////////////////////////
 	function AutoUploader(fileInput) {
-		var __set__ = {}
+		var __set__ = {};
 
-		var input = fileInput
+		var input = fileInput;
 
 		var uploaderEl = $('<div class="uploader" id="uploader_'+input.attr("name")+'"><a id="' + input.attr("name")
-				+ '"></a></div>')
+				+ '"></a></div>');
 
 		var pluploader = new plupload.Uploader({
 			runtimes : 'gears,html5,html4,flash,silverlight,browserplus',
@@ -89,7 +89,7 @@ $(function() {
 			flash_swf_url : 'scripts/ext/plupload.flash.swf',
 			silverlight_xap_url : 'scripts/ext/plupload.silverlight.xap',
 			filters : input.getOption('filters')
-		})
+		});
 
 		// /////////////////////////////////////////////////////////
 		// private
@@ -105,15 +105,15 @@ $(function() {
 		// object initialization
 		var init = function() {
 
-			input.after(uploaderEl).hide()
+			input.after(uploaderEl).hide();
 
-			pluploader.bind('QueueChanged', onQueueChanged)
-			pluploader.bind('FileUploaded', onFileUploaded)
-			pluploader.bind('Error', onError)
-			pluploader.init()
+			pluploader.bind('QueueChanged', onQueueChanged);
+			pluploader.bind('FileUploaded', onFileUploaded);
+			pluploader.bind('Error', onError);
+			pluploader.init();
 
 			updateUploaderState(false, "", CSS_IS_READY, input
-					.getOption('text.filepicker'))
+					.getOption('text.filepicker'));
 		}
 
 		/**
@@ -150,10 +150,14 @@ $(function() {
 		 */
 		var onFileUploaded = function(pluploader, file, response) {
 			$('div.alert_message.ERROR').remove();
-			pluploader.removeFile(file)
+			pluploader.removeFile(file);
 			$("a.installUpload").removeClass("disabled");
 			$("#uploadCache_"+input.attr("name")).remove();
-			updateUploaderState(false, response.response, CSS_IS_DONE)
+			//fix IE9 bug : pre tag is added to the response
+			//may be fixed in the latest version but autouploader.js does not works with the latest version
+			var resp = response.response;
+			if(resp) resp = resp.replace(/<\/?pre>/gi,'');
+			updateUploaderState(false, resp, CSS_IS_DONE);
 		}
 
 		var addError = function(message) {
@@ -180,10 +184,9 @@ $(function() {
 		/**
 		 * Update object status, values, style as well as message
 		 */
-		var updateUploaderState = function(isUploading, value, cssClass,
-				message) {
-			cleanAllCssClasses()
-			uploaderEl.addClass(cssClass)
+		var updateUploaderState = function(isUploading, value, cssClass, message) {
+			cleanAllCssClasses();
+			uploaderEl.addClass(cssClass);
 
 			if ($.isDefined(message)) {
 				$(uploaderEl.children()[0], uploaderEl).text(message)
@@ -205,11 +208,11 @@ $(function() {
 		// /////////////////////////////////////////////////////////
 
 		__set__.isUploading = function() {
-			return input.data(UPLOADING_STATUS)
+			return input.data(UPLOADING_STATUS);
 		}
 
 		__set__.val = function() {
-			return input.data(UPLOADER_VALUE)
+			return input.data(UPLOADER_VALUE);
 		}
 
 		__set__.reset = function () {
@@ -221,9 +224,9 @@ $(function() {
 		// constructor
 		// /////////////////////////////////////////////////////////
 
-		init()
+		init();
 
-		return __set__
+		return __set__;
 	}
 
 });
