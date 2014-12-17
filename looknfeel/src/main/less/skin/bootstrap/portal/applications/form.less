@@ -20,5 +20,8 @@ bootstrap-form-control label::after {
   right: 1px;
   width: 65px;
   height: 32px;
-  background: white url("themeResource?theme=portal&location=skin/images/form-select.png") no-repeat right center
+  border: 0;
+  background: transparent url("themeResource?theme=portal&location=skin/images/form-select.png") no-repeat right center
 }
+
+.isBrowser-ie .select-form-container label::after{background-color: white}
