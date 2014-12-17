@@ -14,13 +14,11 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.table;
 
-import static com.google.gwt.query.client.GQuery.$;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +43,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.FormNode;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.DefaultItemTableCellFormatter;
 import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.ItemTableCellFormatter;
-import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Element;
@@ -70,8 +67,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     private APIID defaultSelectedId = null;
 
     private Integer defaultSelectedLine = null;
-
-    private boolean registerRefresh = true;
 
     private HashMap<String, String> attributesForGroupedActions = new HashMap<String, String>();
 
@@ -109,11 +104,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
         return addHandler(handler, ItemTableLoadedEvent.TYPE);
     }
 
-    public ItemTable setRegisterRefresh(final boolean register) {
-        this.registerRefresh = register;
-        return this;
-    }
-
     /**
      * Define the line to select by default.
      * 
@@ -123,10 +113,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     public ItemTable setDefaultSelectedLine(final Integer line) {
         this.defaultSelectedLine = line;
         return this;
-    }
-
-    public Integer getDefaultSelectedLine() {
-        return this.defaultSelectedLine;
     }
 
     public void setDefaultSelectedId(final APIID id) {
@@ -161,21 +147,10 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
             this.table.clearSelectedIds();
         }
 
-        int i = 1; // index of the first line of the table
-        int selectedIndex = -1;
         for (final IItem item : items) {
             this.addItem(item);
-            if (this.defaultSelectedId != null && this.defaultSelectedId.equals(item.getId())) {
-                selectedIndex = i;
-            } else if (this.defaultSelectedLine != null && this.defaultSelectedLine == i - 1) {
-                selectedIndex = i;
-            }
-            i++;
         }
         this.table.updateHtml();
-        if (selectedIndex > -1) {
-            $(".tr_" + selectedIndex, getElement()).click();
-        }
 
         return this;
     }
@@ -314,42 +289,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     // FILTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public ItemTable resetFilters() {
-        this.table.resetFilters();
-        return this;
-    }
-
-    public final ItemTable addTextFilter(final String label, final String tooltip, final String name) {
-        this.table.addTextFilter(label, tooltip, name);
-        return this;
-    }
-
-    public final ItemTable addTextFilter(final String label, final String tooltip, final String name, final String defaultValue) {
-        this.table.addTextFilter(label, tooltip, name, defaultValue);
-        return this;
-    }
-
-    public final ItemTable addSelectFilter(final String label, final String tooltip, final String name, final Map<String, String> values) {
-        this.table.addSelectFilter(label, tooltip, name, values);
-        return this;
-    }
-
-    public final ItemTable addSelectFilter(final String label, final String tooltip, final String name, final LinkedHashMap<String, String> values,
-            final String defaultValue) {
-        this.table.addSelectFilter(label, tooltip, name, values, defaultValue);
-        return this;
-    }
-
-    public final ItemTable addSelectFilter(final String label, final String tooltip, final String name, final Filler<?> filler) {
-        this.table.addSelectFilter(label, tooltip, name, filler);
-        return this;
-    }
-
-    public final ItemTable addSelectFilter(final String label, final String tooltip, final String name, final Filler<?> filler, final String defaultValue) {
-        this.table.addSelectFilter(label, tooltip, name, filler, defaultValue);
-        return this;
-    }
-
     public final ItemTable addHiddenFilter(final String name, final String value) {
         this.table.addHiddenFilter(name, value);
         return this;
@@ -379,10 +318,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
 
     public final Map<String, String> getFilters() {
         return this.table.getFilters();
-    }
-
-    public final Map<String, String> getHiddenFilters() {
-        return this.table.getHiddenFilters();
     }
 
     public final List<String> getDeploys() {
@@ -489,33 +424,10 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     }
 
     /**
-     * @param jsid
-     * @see org.bonitasoft.web.toolkit.client.ui.component.table.Table#getColumn(org.bonitasoft.web.toolkit.client.ui.JsId)
-     */
-    public TableColumn getColumn(final JsId jsid) {
-        return this.table.getColumn(jsid);
-    }
-
-    /**
      * @see org.bonitasoft.web.toolkit.client.ui.component.table.Table#getColumns()
      */
     public List<TableColumn> getColumns() {
         return this.table.getColumns();
-    }
-
-    /**
-     * @see org.bonitasoft.web.toolkit.client.ui.component.table.Table#getLastColumn()
-     */
-    public TableColumn getLastColumn() {
-        return this.table.getLastColumn();
-    }
-
-    public final ArrayList<String> getColumnsName() {
-        final ArrayList<String> results = new ArrayList<String>();
-        for (final AbstractAttributeReader attribute : this.columns) {
-            results.add(attribute.getLeadAttribute());
-        }
-        return results;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -573,13 +485,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     }
 
     /**
-     * @see org.bonitasoft.web.toolkit.client.ui.component.table.Table#getGroupedActions()
-     */
-    public List<Link> getGroupedActions() {
-        return this.table.getGroupedActions();
-    }
-
-    /**
      * 
      * @param link
      * @param force
@@ -605,11 +510,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
      */
     public final ItemTable addGroupedAction(final JsId id, final String label, final String tooltip, final Action action, final boolean force) {
         this.table.addGroupedAction(id, label, tooltip, action, force);
-        return this;
-    }
-
-    public final ItemTable addGroupedDeleteAction(final String tooltip, final ItemDefinition definition) {
-        this.table.addGroupedAction(new JsId("delete"), _("Delete"), tooltip, new ItemDeletePopupAction(definition));
         return this;
     }
 
@@ -643,16 +543,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
 
     public final ItemTable setView(final VIEW_TYPE view) {
         this.table.setView(view);
-        return this;
-    }
-
-    public final ItemTable saveCheckboxes(final boolean save) {
-        this.table.saveCheckboxes(save);
-        return this;
-    }
-
-    public final ItemTable setRefreshEvery(final int milliseconds) {
-        this.table.setRefreshEvery(milliseconds);
         return this;
     }
 
@@ -706,10 +596,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
         return this;
     }
 
-    public final int getNbPages() {
-        return this.table.getNbPages();
-    }
-
     public final int getNbLinesByPage() {
         return this.table.getNbLinesByPage();
     }
@@ -759,10 +645,6 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
         return this;
     }
 
-    public final void changePage(final int page) {
-        this.table.changePage(page);
-    }
-
     @Override
     public final String toString() {
         return this.table.toString();
@@ -789,5 +671,4 @@ public class ItemTable extends AbstractTable implements Refreshable, FormNode {
     public IItem getItem(String itemId) {
         return loadedItems.get(itemId);
     }
-
 }
