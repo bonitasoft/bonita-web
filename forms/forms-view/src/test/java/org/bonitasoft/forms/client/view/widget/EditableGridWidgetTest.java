@@ -1,7 +1,6 @@
 package org.bonitasoft.forms.client.view.widget;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -40,12 +39,10 @@ public class EditableGridWidgetTest {
     @Test
     public void should_setValue_update_cell_values() throws Exception {
 
-        when(flexTable.getCellCount(anyInt())).thenReturn(1);
         when(flexTable.getFlexCellFormatter()).thenReturn(flexCellFormatter);
-
         when(formWidget.getMaxRows()).thenReturn(-1);
         when(formWidget.getMaxColumns()).thenReturn(-1);
-        when(formWidget.allowHTMLInField()).thenReturn(true);
+
         editableGrid = new EditableGridWidget("formId", formWidget, getCellsValue("cellValue1", "cellValue2"));
 
         final List<List<String>> newValue = getCellsValue("newCellValue1", "newCellValue2");
