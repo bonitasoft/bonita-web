@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -74,9 +74,9 @@ import org.mockito.Mockito;
 
 /**
  * Unit test for the implementation of the form workflow API
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public class FormWorkflowAPIImplIT extends FormsTestCase {
 
@@ -186,7 +186,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), String.class.getName(), null,
                 new ArrayList<Expression>());
-        formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", LeftOperand.TYPE_DATA, "=", null, fieldExpression, "submitButtonId"));
+        formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", LeftOperand.TYPE_DATA, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         formWorkflowApi.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
@@ -224,7 +224,8 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
                 new ArrayList<Expression>());
-        formActions.add(new FormAction(ActionType.ASSIGNMENT, "DocumentToCreate", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId"));
+        formActions
+                .add(new FormAction(ActionType.ASSIGNMENT, "DocumentToCreate", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
@@ -280,7 +281,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
                 new ArrayList<Expression>());
-        formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId"));
+        formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
@@ -342,7 +343,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
                 new ArrayList<Expression>());
-        formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId"));
+        formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
@@ -395,7 +396,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final Expression fieldExpression = new Expression(null,
                 "apiAccessor.getProcessAPI().getProcessDataInstance(\"Application\", processInstanceId).getValue().toString()",
                 ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), "GROOVY", dependencyExpressions);
-        formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", LeftOperand.TYPE_DATA, "=", null, fieldExpression, "submitButtonId"));
+        formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", LeftOperand.TYPE_DATA, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
@@ -423,7 +424,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final List<FormAction> formActions = new ArrayList<FormAction>();
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), String.class.getName(), null,
                 new ArrayList<Expression>());
-        formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", LeftOperand.TYPE_DATA, "=", null, fieldExpression, "submitButtonId"));
+        formActions.add(new FormAction(ActionType.ASSIGNMENT, "Application", LeftOperand.TYPE_DATA, "=", null, fieldExpression, "submitButtonId", null));
         final long newProcessInstanceID = formWorkflowApi.executeActionsAndStartInstance(getSession(), 1l, bonitaProcess.getId(), fieldValues, formActions,
                 Locale.ENGLISH, "submitButtonId", new HashMap<String, Serializable>());
         final DataInstance dataInstance = processAPI.getProcessDataInstance("Application", newProcessInstanceID);

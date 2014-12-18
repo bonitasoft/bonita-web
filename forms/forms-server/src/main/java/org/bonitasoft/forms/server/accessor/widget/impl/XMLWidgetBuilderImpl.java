@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,7 +46,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * Accessor used to read the page nodes in the XML definition file and retrieve the widgets and validators
- * 
+ *
  * @author Anthony Birembaut
  */
 public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder {
@@ -85,7 +85,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Read a page node and return the list of {@link FormValidator} it contains
-     * 
+     *
      * @param pageNode
      *        the page node
      * @return a {@link List} of {@link FormValidator} Object
@@ -129,7 +129,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Read a page node and return the list of {@link FormWidget} it contains
-     * 
+     *
      * @param pageNode
      *        the page node
      * @param isEditMode
@@ -173,7 +173,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Read a widget and return a {@link FormWidget}
-     * 
+     *
      * @param widgetNode
      *        the widget node
      * @param isEditMode
@@ -397,7 +397,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Retrieve the available values from an available values list node
-     * 
+     *
      * @param availableValuesListNode
      * @return a List of {@link FormFieldAvailableValue}
      * @throws InvalidFormDefinitionException
@@ -417,7 +417,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Read a node and return the list of {@link FormAction} it contains
-     * 
+     *
      * @param parentNode
      *        the parent node of the actions
      * @param pageId
@@ -448,7 +448,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Get the XPath query for the actions of a page
-     * 
+     *
      * @param pageId
      *        the page ID
      * @return the XPath query
@@ -471,7 +471,7 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
 
     /**
      * Read an action node and return an action
-     * 
+     *
      * @param actionNode
      *        an action node
      * @return a {@link FormAction}
@@ -484,8 +484,18 @@ public class XMLWidgetBuilderImpl extends XPathUtil implements IXMLWidgetBuilder
         final String operator = getStringByXpath(actionNode, XMLForms.OPERATOR);
         final String inputType = getStringByXpath(actionNode, XMLForms.INPUT_TYPE);
         final Expression expression = xmlExpressionsUtil.parseExpression(actionNode);
+        final Expression conditionExpression = getConditionExpression(actionNode);
         final String submitButtonId = getStringByXpath(actionNode, XMLForms.SUBMIT_BUTTON);
-        return new FormAction(actionType, variableId, variableType, operator, inputType, expression, submitButtonId);
+        return new FormAction(actionType, variableId, variableType, operator, inputType, expression, submitButtonId, conditionExpression);
+    }
+
+    protected Expression getConditionExpression(final Node actionNode) throws InvalidFormDefinitionException {
+        final Node conditionNode = getNodeByXpath(actionNode, XMLForms.CONDITION);
+        if (conditionNode != null) {
+            return xmlExpressionsUtil.parseExpression(conditionNode);
+        } else {
+            return null;
+        }
     }
 
     protected ItemPosition getItemPositionValue(final Node node) throws InvalidFormDefinitionException {

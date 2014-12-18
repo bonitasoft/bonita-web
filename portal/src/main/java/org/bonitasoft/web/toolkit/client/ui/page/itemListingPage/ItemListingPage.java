@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.page.itemListingPage;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static com.google.gwt.query.client.GQuery.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -44,6 +44,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.Menu;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
+import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTableLoadedHandler;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
 import org.bonitasoft.web.toolkit.client.ui.component.table.TableColumn;
 import org.bonitasoft.web.toolkit.client.ui.html.HTML;
@@ -84,6 +85,8 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      * The search form for all tables.
      */
     protected final Form tablesSearch = new Form(new JsId("search"));
+
+    private ChangeFilterAction firstFilterAction;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR
@@ -201,7 +204,9 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     }
 
     void selectFirstFilter() {
-        $(ItemListingPage.this.filtersLinks.values().iterator().next().getElement()).click();
+        if (firstFilterAction != null) {
+            firstFilterAction.execute(true);
+        }
     }
 
     /**
@@ -303,7 +308,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         this.resourceFilters = new Section(new JsId("resource_filters"));
         this.filtersPanel.addBody(this.resourceFilters);
 
-        ResourceFilterFiller<T> filler = new ResourceFilterFiller<T>(this, filter);
+        final ResourceFilterFiller<T> filler = new ResourceFilterFiller<T>(this, filter);
         this.resourceFilters.addFiller(filler);
     }
 
@@ -333,10 +338,13 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     private void addLinkFilters(final List<ItemListingFilter> filters, final Section section) {
         for (final ItemListingFilter filter : filters) {
-            ChangeFilterAction action = new ChangeFilterAction(filter);
-            Link link = createLinkFilter(filter, action);
+            final ChangeFilterAction action = new ChangeFilterAction(filter);
+            final Link link = createLinkFilter(filter, action);
             section.addBody(link);
             filtersLinks.put(filter.getName(), link);
+            if (firstFilterAction == null) {
+                firstFilterAction = action;
+            }
         }
     }
 
@@ -352,7 +360,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         filter.setLink(link);
 
         if (filter.hasAdditionnalInfo()) {
-            Element span = DOM.createSpan();
+            final Element span = DOM.createSpan();
             span.setInnerText(filter.getAdditionnalInfo());
             HTML.append(link.getElement(), span);
         }
@@ -392,8 +400,12 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     }
 
     void selectFilter(final String filterId) {
-        final Link defaultFilterLink = this.filtersLinks.get(filterId);
-        $(defaultFilterLink.getElement()).click();
+        if(filtersLinks.containsKey(filterId)) {
+            final Action action = filtersLinks.get(filterId).getAction();
+            if(action instanceof ItemListingPage<?>.ChangeFilterAction) {
+                ((ChangeFilterAction) action).execute(true);
+            }
+        }
     }
 
     /**
@@ -471,13 +483,20 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
          */
         @Override
         public void execute() {
+            execute(false);
+        }
+
+        public void execute(final boolean quiet) {
             $(ItemListingPage.this.detailsPanel.getElement()).empty();
 
             // URL update
             ClientApplicationURL.removeAttribute(UrlOption.RESOURCE_FILTER);
             ClientApplicationURL.removeAttribute(UrlOption.FILTER);
             ClientApplicationURL.addAttribute(this.filter.isResourceFilter() ? UrlOption.RESOURCE_FILTER : UrlOption.FILTER, this.filter.getName());
-            ClientApplicationURL.refreshUrl(false);
+
+            if (!quiet) {
+                ClientApplicationURL.refreshUrl(false);
+            }
 
             ItemListingPage.this.currentFilter = this.filter;
 
@@ -553,11 +572,11 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
                 // Reset
                 itemTable
-                        .resetLines()
-                        .resetHiddenFilters()
-                        .addHiddenFilters(ItemListingPage.this.tables.get(tableName).getDefaultHiddenFilters())
-                        .addHiddenFilters(this.filter.getAdditionalFilters())
-                        .setPage(0);
+                .resetLines()
+                .resetHiddenFilters()
+                .addHiddenFilters(ItemListingPage.this.tables.get(tableName).getDefaultHiddenFilters())
+                .addHiddenFilters(this.filter.getAdditionalFilters())
+                .setPage(0);
 
                 // Default selected line
                 itemTable.setDefaultSelectedLine(0);
@@ -632,19 +651,19 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         if (this.showSearchBar) {
 
             this.tablesSearch
-                    .addTextEntryWithPlaceholder(new JsId("query"), "", _("Enter the text to search for"), _("Search..."))
-                    .addButton(new JsId("search"), _("Search"), _("Update this page using the defined search query"), new FormAction() {
+            .addTextEntryWithPlaceholder(new JsId("query"), "", _("Enter the text to search for"), _("Search..."))
+            .addButton(new JsId("search"), _("Search"), _("Update this page using the defined search query"), new FormAction() {
 
-                        @Override
-                        public void execute() {
-                            for (final String tableName : ItemListingPage.this.currentFilter.getTablesToDisplay()) {
-                                final ItemTable table = ItemListingPage.this.tables.get(tableName).getItemTable();
-                                table.setSearch(this.getParameter("query"));
-                                table.setPage(0);
-                                table.refresh();
-                            }
-                        }
-                    });
+                @Override
+                public void execute() {
+                    for (final String tableName : ItemListingPage.this.currentFilter.getTablesToDisplay()) {
+                        final ItemTable table = ItemListingPage.this.tables.get(tableName).getItemTable();
+                        table.setSearch(this.getParameter("query"));
+                        table.setPage(0);
+                        table.refresh();
+                    }
+                }
+            });
         }
 
     }
@@ -657,7 +676,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         menuSorts.addJsOption("selectMode", true).addJsOption("align", "right");
         tablesPanel.addHeader(sortMenu);
 
-        for (ItemListingTable itemListingTable : defineTables()) {
+        for (final ItemListingTable itemListingTable : defineTables()) {
 
             itemListingTable.getItemTable().setFillOnRefresh(false);
             itemListingTable.getItemTable().setFillOnLoad(false);
@@ -676,6 +695,31 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
 
             // Add quickDetailsAction
             table.setDefaultAction(new UpdateQuickDetailsAction<T>(this, itemListingTable));
+
+            itemListingTable.getItemTable().addItemTableLoadedHandler(new ItemTableLoadedHandler() {
+
+                @Override
+                public void onItemsLoaded(final List<IItem> items) {
+                    if (items.size() > 0) {
+                        int itemRowIndex = 0;
+                        final ItemTable table = itemListingTable.getItemTable();
+                        if(table.getDefaultSelectedId() != null) {
+                            for (; itemRowIndex < items.size(); itemRowIndex++) {
+                                if (table.getDefaultSelectedId().equals(items.get(itemRowIndex).getId())) {
+                                    break;
+                                }
+                            }
+                            if (itemRowIndex == items.size()) {
+                                itemRowIndex = 0;
+                            }
+                        }
+                        updateQuickDetailPanel(itemListingTable.getQuickDetailsPage(), String.valueOf(items.get(itemRowIndex).getId()), true);
+                        // My heart bleed while writing thus lines :'(
+                        $(".tr", table.getElement()).removeClass("current");
+                        $(".tr_" + String.valueOf(itemRowIndex + 1), table.getElement()).addClass("current");
+                    }
+                }
+            });
         }
 
         // add the table Search
@@ -683,7 +727,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         this.tablesPanel.addHeader(this.tablesSearch);
     }
 
-    private void sortTable(final ItemTable table, ItemListingSort itemListingSort) {
+    private void sortTable(final ItemTable table, final ItemListingSort itemListingSort) {
         if (table.getOrder() == null && itemListingSort != null) {
             table.setOrder(itemListingSort.getSortName(), itemListingSort.isSortAscending());
         }
@@ -707,12 +751,14 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
      */
     protected abstract LinkedList<ItemListingTable> defineTables();
 
-    public void updateQuickDetailPanel(ItemQuickDetailsPage<?> itemQuickDetailsPage, String itemId) {
+    public void updateQuickDetailPanel(final ItemQuickDetailsPage<?> itemQuickDetailsPage, final String itemId, final boolean quiet) {
         final TreeIndexed<String> params = itemQuickDetailsPage.getParameters();
         params.addValue("id", itemId);
 
         ClientApplicationURL.addAttribute("_id", itemId);
-        ClientApplicationURL.refreshUrl(false);
+        if (!quiet) {
+            ClientApplicationURL.refreshUrl(false);
+        }
         ViewController.showView(itemQuickDetailsPage.getToken(), detailsPanel.getElement(), params);
     }
 
@@ -739,13 +785,13 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         // Refresh middle tables
 
         for (final String tableName : this.getCurrentFilter().getTablesToDisplay()) {
-            final ItemTable table = this.tables.get(tableName).getItemTable();
+            final ItemListingTable table = this.tables.get(tableName);
 
             final String idInUrl = ClientApplicationURL.getPageAttributes().getValue("_id");
             if (idInUrl != null) {
-                table.setDefaultSelectedId(APIID.makeAPIID(idInUrl));
+                table.getItemTable().setDefaultSelectedId(APIID.makeAPIID(idInUrl));
             }
-            table.refresh();
+            table.getItemTable().refresh();
         }
 
         // Refresh details panel if necessary

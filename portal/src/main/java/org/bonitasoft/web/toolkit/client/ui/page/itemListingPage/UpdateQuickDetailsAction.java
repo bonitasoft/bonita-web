@@ -26,6 +26,6 @@ final class UpdateQuickDetailsAction<T extends IItem> extends Action {
         $(".tr", this.table.getElement()).removeClass("current");
         $(".tr_" + getParameter("cell_index"), this.table.getElement()).addClass("current");
 
-        itemListingPage.updateQuickDetailPanel(table.getQuickDetailsPage(), getParameter("id"));
+        itemListingPage.updateQuickDetailPanel(table.getQuickDetailsPage(), getParameter("id"), false);
     }
 }

@@ -41,10 +41,6 @@ public final class ChangeProfileAction extends Action {
 
     private MenuListCreator menuListCreator;
 
-    public ChangeProfileAction(final String profileId) {
-        this.profileId = profileId;
-    }
-
     public ChangeProfileAction(final IItem profileItem, final MenuFolder menu, MenuListCreator menuListCreator) {
         this.profileItem = profileItem;
         this.menuListCreator = menuListCreator;
@@ -58,7 +54,7 @@ public final class ChangeProfileAction extends Action {
             this.menu.setLabel(_(this.profileItem.getAttributeValue(ProfileItem.ATTRIBUTE_NAME)));
         }
 
-        ClientApplicationURL.setProfileId(this.profileId, false);
+        ClientApplicationURL.setProfileId(this.profileId);
         // to use the default Token
         ClientApplicationURL.setPageToken(null, false);
         showMenuView();
