@@ -129,6 +129,7 @@ public class FormBuilderImplTest {
 
         formBuilder.addAction(ActionType.ASSIGNMENT, "variable1", LeftOperand.TYPE_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget1", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
+        formBuilder.addConditionExpression(null, "false", ExpressionType.TYPE_CONSTANT.name(), Boolean.class.getName(), null);
         formBuilder.addAction(ActionType.ASSIGNMENT, "variable2", LeftOperand.TYPE_TRANSIENT_DATA, "=", null, "button1");
         formBuilder.addActionExpression(null, "field_processpage1widget2", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), GROOVY);
         formBuilder.addAction(ActionType.EXECUTE_CONNECTOR, "variable2", LeftOperand.TYPE_DATA, "=", null, "button1");
@@ -276,11 +277,13 @@ public class FormBuilderImplTest {
         Assert.assertEquals(LeftOperand.TYPE_DATA, action.getVariableType());
         Assert.assertEquals("=", action.getOperator());
         Assert.assertEquals("field_processpage1widget1", action.getExpression().getContent());
+        Assert.assertEquals("false", action.getConditionExpression().getContent());
         final FormAction action2 = applicationFormDefAccessor.getActions("processPage2").get(1);
         Assert.assertEquals(ActionType.ASSIGNMENT, action2.getType());
         Assert.assertEquals("variable2", action2.getVariableName());
         Assert.assertEquals(LeftOperand.TYPE_TRANSIENT_DATA, action2.getVariableType());
         Assert.assertEquals(2, applicationFormDefAccessor.getPageValidators("processPage2").size());
+        Assert.assertNull(action2.getConditionExpression());
         final FormValidator validator = applicationFormDefAccessor.getPageValidators("processPage2").get(0);
         Assert.assertEquals("processpage2validator1", validator.getId());
         Assert.assertEquals("invalid page fields", validator.getLabelExpression().getContent());

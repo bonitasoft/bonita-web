@@ -409,6 +409,7 @@
 						<xsd:element name="expression" type="Expression" minOccurs="0" />
 						<xsd:element name="submit-button" type="xsd:string" minOccurs="0" />
 						<xsd:element name="connector" type="Connector" minOccurs="0" />
+                        <xsd:element name="condition" type="ExpressionContainer" minOccurs="0" />
 					</xsd:all>
 					<xsd:attribute name="type" type="ActionType" use="required" />
 				</xsd:complexType>

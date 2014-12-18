@@ -43,6 +43,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.search.ISearchDirection;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -54,9 +55,9 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  * @author Séverin Moussel
  */
 public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<ITEM> implements
-        APIHasUpdate<ITEM>,
-        APIHasGet<ITEM>,
-        APIHasSearch<ITEM> {
+APIHasUpdate<ITEM>,
+APIHasGet<ITEM>,
+APIHasSearch<ITEM> {
 
     @Override
     protected FlowNodeDefinition defineItemDefinition() {
@@ -65,7 +66,7 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
 
     @Override
     public String defineDefaultSearchOrder() {
-        return FlowNodeInstanceSearchDescriptor.DISPLAY_NAME;
+        return FlowNodeInstanceSearchDescriptor.DISPLAY_NAME + ISearchDirection.SORT_ORDER_ASCENDING;
     }
 
     @Override
