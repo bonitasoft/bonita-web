@@ -132,9 +132,14 @@ public class DocumentDownloadServlet extends HttpServlet {
             }
             final File file = new File(filePath);
             final TenantFolder tenantFolder = new TenantFolder();
-            if (!tenantFolder.isInTempFolder(file, WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()))) {
-                throw new ServletException("For security reasons, access to this file paths" + filePath + " is restricted.");
+            try {
+                if (!tenantFolder.isInTempFolder(file, WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()))) {
+                    throw new ServletException("For security reasons, access to this file paths" + filePath + " is restricted.");
+                }
+            } catch (final IOException e) {
+                throw new ServletException(e);
             }
+
             if (fileName == null) {
                 fileName = file.getName();
             }

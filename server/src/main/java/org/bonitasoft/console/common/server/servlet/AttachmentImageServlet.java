@@ -74,8 +74,12 @@ public abstract class AttachmentImageServlet extends AttachmentDownloadServlet {
             final File file = new File(iconDir, srcStr);
 
             final TenantFolder tenantFolder = new TenantFolder();
-            if (!tenantFolder.isInFolder(file, iconDir)) {
-                throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
+            try {
+                if (!tenantFolder.isInFolder(file, iconDir)) {
+                    throw new ServletException("For security reasons, access to this file paths" + file.getPath() + " is restricted.");
+                }
+            } catch (final IOException e) {
+                throw new ServletException(e);
             }
 
             int fileLength = 0;

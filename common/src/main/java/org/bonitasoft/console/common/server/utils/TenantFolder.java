@@ -17,27 +17,63 @@ public class TenantFolder {
     public TenantFolder() {
     }
 
-    public boolean isInTempFolder(final File file, final WebBonitaConstantsUtils webBonitaConstantsUtils) {
+    public File getTempFile(final String filePath, final Long tenantId) throws IOException {
+        return new File(getCompleteTempFilePath(filePath, tenantId));
+    }
+
+    public String getCompleteTempFilePath(final String filePath) throws IOException {
+        return getCompleteTempFilePath(filePath, null);
+    }
+
+    public String getCompleteTempFilePath(final String filePath, final Long tenantId) throws IOException {
+        String tempFilePath = filePath;
+        final File tempFolder = getBonitaConstantUtil(tenantId).getTempFolder();
+
+        if (!tempFilePath.contains(File.separator)) {
+            return tempFilePath = tempFolder.getAbsolutePath() + File.separator + tempFilePath;
+        } else {
+            verifyFolderAuthorization(new File(filePath), tempFolder);
+        }
+
+        return tempFilePath;
+    }
+
+    public WebBonitaConstantsUtils getBonitaConstantUtil(final Long tenantId) {
+        if (tenantId != null) {
+            return WebBonitaConstantsUtils.getInstance(tenantId);
+        } else {
+            return WebBonitaConstantsUtils.getInstance();
+        }
+    }
+
+    public boolean isInTempFolder(final File file, final WebBonitaConstantsUtils webBonitaConstantsUtils) throws IOException {
         return isInFolder(file, webBonitaConstantsUtils.getTempFolder());
     }
 
-    public boolean isInFolder(final File file, final File parentFolder) {
+    public boolean isInFolder(final File file, final File parentFolder) throws IOException {
+        try {
+            verifyFolderAuthorization(file, parentFolder);
+        } catch (final UnauthorizedFolderException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void verifyFolderAuthorization(final File file, final File parentFolder) throws IOException {
         try {
             if (!file.getCanonicalPath().startsWith(parentFolder.getCanonicalPath())) {
-                throw new IOException();
+                throw new UnauthorizedFolderException("Unauthorized access to the file" + file.getPath());
             }
-        } catch (final IOException e) {
-            final String errorMessage = "Error when verifying the target path of the file " + file.getAbsolutePath()
+        } catch (final UnauthorizedFolderException e) {
+            final String errorMessage = "Unauthorized access to the file " + file.getAbsolutePath()
                     + ". For security reasons, access to paths other than "
                     + parentFolder.getAbsolutePath()
                     + " is restricted.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, errorMessage, e);
             }
-            return false;
+            throw e;
         }
-
-        return true;
     }
 
 }
