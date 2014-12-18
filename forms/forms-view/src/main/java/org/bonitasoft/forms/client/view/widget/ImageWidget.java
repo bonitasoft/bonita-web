@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 
@@ -36,7 +37,7 @@ import com.google.gwt.user.client.ui.Image;
 
 /**
  * Widget displaying an image
- * 
+ *
  * @author Anthony Birembaut
  */
 public class ImageWidget extends Composite implements HasClickHandlers, ClickHandler {
@@ -67,8 +68,13 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
     protected List<ClickHandler> clickHandlers;
 
     /**
+     * the document value type
+     */
+    private final String valueType;
+
+    /**
      * Constructor
-     * 
+     *
      * @param formID
      * @param contextMap
      * @param isArchived
@@ -76,18 +82,20 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
      * @param ImageStyle
      * @param displayAttachmentImage
      */
-    public ImageWidget(final String formID, final Map<String, Object> contextMap, final long documentId, final String value, final String imageStyle,
+    public ImageWidget(final String formID, final Map<String, Object> contextMap, final String valueType, final long documentId, final String value,
+            final String imageStyle,
             final boolean displayAttachmentImage) {
 
         this.formID = formID;
         this.contextMap = contextMap;
         this.displayAttachmentImage = displayAttachmentImage;
+        this.valueType = valueType;
 
         final FlowPanel flowPanel = new FlowPanel();
 
         image = new Image();
         if (value != null) {
-            if (displayAttachmentImage) {
+            if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
                 final String imageServletURL = RpcFormsServices.getAttachmentImageURL();
                 final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, documentId, value);
                 image.setUrl(imageURL);
@@ -114,7 +122,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
 
     /**
      * Set the value of the widget
-     * 
+     *
      * @param documentId
      * @param value
      *            the URL of the image or the attachment name
@@ -122,7 +130,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
      */
     public void setValue(final long documentId, final String value, final boolean fireEvents) {
         if (value != null) {
-            if (displayAttachmentImage) {
+            if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
                 final String imageServletURL = RpcFormsServices.getAttachmentImageURL();
                 final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, documentId, value);
                 image.setUrl(imageURL);

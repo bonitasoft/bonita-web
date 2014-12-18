@@ -665,16 +665,13 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
      */
     protected ImageWidget createImage(final ReducedFormWidget widgetData, final FormFieldValue fieldValue, final boolean displayAttachmentImage) {
         String value = null;
-        long documentId = -1;
-        if (fieldValue != null) {
-            if (displayAttachmentImage) {
-                value = fieldValue.getDocumentName();
-                documentId = fieldValue.getDocumentId();
-            } else {
-                value = getStringValue(fieldValue);
-            }
+        if (displayAttachmentImage && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(fieldValue.getValueType())) {
+            value = fieldValue.getDocumentName();
+        } else {
+            value = getStringValue(fieldValue);
         }
-        return new ImageWidget(formID, contextMap, documentId, value, widgetData.getImageStyle(), displayAttachmentImage);
+        return new ImageWidget(formID, contextMap, fieldValue.getValueType(), fieldValue.getDocumentId(), value, widgetData.getImageStyle(),
+                displayAttachmentImage);
     }
 
     /**
