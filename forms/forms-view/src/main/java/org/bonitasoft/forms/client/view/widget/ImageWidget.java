@@ -95,7 +95,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
 
         image = new Image();
         if (value != null) {
-            if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
+            if (displayAttachmentImage && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
                 final String imageServletURL = RpcFormsServices.getAttachmentImageURL();
                 final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, documentId, value);
                 image.setUrl(imageURL);
@@ -130,7 +130,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
      */
     public void setValue(final long documentId, final String value, final boolean fireEvents) {
         if (value != null) {
-            if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
+            if (displayAttachmentImage && SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
                 final String imageServletURL = RpcFormsServices.getAttachmentImageURL();
                 final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, documentId, value);
                 image.setUrl(imageURL);
