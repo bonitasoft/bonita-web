@@ -117,18 +117,18 @@ APIHasSearch<ITEM> {
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item) || isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, deploys, item)) {
-            final CaseItem item2 = new CaseDatastore(getEngineSession()).get(item.getCaseId());
+            final CaseItem item2 = getCaseDatastore().get(item.getCaseId());
             item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, item2);
             item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, item2);
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, deploys, item)) {
             item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
-                    new CaseDatastore(getEngineSession()).get(item.getParentCaseId()));
+                    getCaseDatastore().get(item.getParentCaseId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
-            CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item
+            CaseItem rootContainerCase = getCaseDatastore().get(item
                     .getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             if (rootContainerCase == null) {
                 rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
@@ -171,8 +171,13 @@ APIHasSearch<ITEM> {
         super.fillDeploys(item, deploys);
     }
 
+    protected CaseDatastore getCaseDatastore() {
+        return new CaseDatastore(getEngineSession());
+    }
+
     private CaseItem getArchivedCase(final String id) {
-        final List<ArchivedCaseItem> result = new ArchivedCaseDatastore(getEngineSession()).search(
+        final List<ArchivedCaseItem> result = getArchivedCaseDatastore
+                ().search(
                 0, 1,
                 null,
                 null,
@@ -181,6 +186,10 @@ APIHasSearch<ITEM> {
             return result.get(0);
         }
         return null;
+    }
+
+    protected ArchivedCaseDatastore getArchivedCaseDatastore() {
+        return new ArchivedCaseDatastore(getEngineSession());
     }
 
     @Override
