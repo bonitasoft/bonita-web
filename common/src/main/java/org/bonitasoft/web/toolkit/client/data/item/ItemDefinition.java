@@ -119,7 +119,7 @@ public abstract class ItemDefinition<E extends IItem> {
      *            The type of the attribute. Must be one of ItemAttribute.TYPE.xxx
      * @return This function returns the Attribute created to allow to add other details on it.
      */
-    protected final ItemAttribute createAttribute(final String name, final ItemAttribute.TYPE type) {
+    public ItemAttribute createAttribute(final String name, final ItemAttribute.TYPE type) {
         final ItemAttribute attribute = new ItemAttribute(name, type);
         this.attributes.put(name, attribute);
         return attribute;
