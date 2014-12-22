@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
@@ -51,7 +52,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         // upload process archive
         final BusinessArchive businessArchive = new BusinessArchiveBuilder().createNewBusinessArchive()
                 .setProcessDefinition(new ProcessDefinitionBuilder().createNewInstance("Test process", "1.0").done()).done();
-        final File file = writeBarToFolder("addProcessTest", businessArchive);
+        final File file = writeBarToFolder("addProcessTest", businessArchive, TestUserFactory.getJohnCarpenter().getSession().getTenantId());
 
         // use api to deploy process uploaded
         final ProcessItem item = new ProcessItem();
@@ -146,10 +147,10 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
      * @param BusinessArchive
      * businessArchive write in the temporary file
      */
-    private static File writeBarToFolder(final String barName, final BusinessArchive businessArchive) {
+    private static File writeBarToFolder(final String barName, final BusinessArchive businessArchive, final Long tenantId) {
         File tempFile = null;
         try {
-            tempFile = File.createTempFile(barName, ".bar");
+            tempFile = File.createTempFile(barName, ".bar", WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder());
             tempFile.delete();
             BusinessArchiveFactory.writeBusinessArchiveToFile(businessArchive, tempFile);
         } catch (final IOException e) {
