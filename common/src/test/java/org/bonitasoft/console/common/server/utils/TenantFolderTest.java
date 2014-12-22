@@ -82,11 +82,12 @@ public class TenantFolderTest {
         final String fileName = "fileName.txt";
 
         given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
 
         final String completedPath = tenantFolder.getCompleteTempFilePath(fileName, 1L);
 
-        assertThat(completedPath).isEqualTo("c:" + File.separator + "tempFolder" + File.separator + "fileName.txt");
+        assertThat(new File(completedPath).getCanonicalPath()).isEqualTo(
+                new File("." + File.separator + "tempFolder" + File.separator + "fileName.txt").getCanonicalPath());
     }
 
     @Test
@@ -116,10 +117,11 @@ public class TenantFolderTest {
         final String fileName = "fileName.txt";
 
         given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
 
         final File completedFile = tenantFolder.getTempFile(fileName, 1L);
 
-        assertThat(completedFile.getPath()).isEqualTo("c:" + File.separator + "tempFolder" + File.separator + "fileName.txt");
+        assertThat(completedFile.getCanonicalPath()).isEqualTo(
+                new File("." + File.separator + "tempFolder" + File.separator + "fileName.txt").getCanonicalPath());
     }
 }
