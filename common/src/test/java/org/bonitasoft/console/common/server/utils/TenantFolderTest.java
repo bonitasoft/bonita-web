@@ -31,9 +31,10 @@ public class TenantFolderTest {
 
     @Test
     public void should_authorized_a_file_in_temp_folder() throws Exception {
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File(".\\tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
 
-        final File file = new File(webBonitaConstantsUtils.getTempFolder().getAbsolutePath(), "\\..\\tempFolder\\fileName.txt");
+        final File file = new File(webBonitaConstantsUtils.getTempFolder().getAbsolutePath(), "" + File.separator + ".." + File.separator + "tempFolder"
+                + File.separator + "fileName.txt");
 
         final boolean isInTempFolder = tenantFolder.isInTempFolder(file, webBonitaConstantsUtils);
 
@@ -42,9 +43,10 @@ public class TenantFolderTest {
 
     @Test
     public void should_unauthorized_a_file_not_in_temp_folder() throws Exception {
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File(".\\tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
 
-        final File file = new File(webBonitaConstantsUtils.getTempFolder().getAbsolutePath(), "\\..\\..\\..\\fileName.txt");
+        final File file = new File(webBonitaConstantsUtils.getTempFolder().getAbsolutePath(), "" + File.separator + ".." + File.separator + ".."
+                + File.separator + ".." + File.separator + "fileName.txt");
 
         final boolean isInTempFolder = tenantFolder.isInTempFolder(file, webBonitaConstantsUtils);
 
@@ -54,9 +56,9 @@ public class TenantFolderTest {
     @Test
     public void should_authorized_a_file_in_a_specific_folder() throws Exception {
 
-        final File folder = new File(".\\anyFolder");
+        final File folder = new File("." + File.separator + "anyFolder");
 
-        final File file = new File(".\\anyFolder\\..\\anyFolder\\fileName.txt");
+        final File file = new File("." + File.separator + "anyFolder" + File.separator + ".." + File.separator + "anyFolder" + File.separator + "fileName.txt");
 
         final boolean isInTempFolder = tenantFolder.isInFolder(file, folder);
 
@@ -66,9 +68,9 @@ public class TenantFolderTest {
     @Test
     public void should_unauthorized_a_file_not_in_a_specific_folder() throws Exception {
 
-        final File folder = new File(".\\anyFolder");
+        final File folder = new File("." + File.separator + "anyFolder");
 
-        final File file = new File(".\\anyFolder\\..\\..\\fileName.txt");
+        final File file = new File("." + File.separator + "anyFolder" + File.separator + ".." + File.separator + ".." + File.separator + "fileName.txt");
 
         final boolean isInTempFolder = tenantFolder.isInFolder(file, folder);
 
@@ -80,31 +82,31 @@ public class TenantFolderTest {
         final String fileName = "fileName.txt";
 
         given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:\\tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
 
         final String completedPath = tenantFolder.getCompleteTempFilePath(fileName, 1L);
 
-        assertThat(completedPath).isEqualTo("c:\\tempFolder\\fileName.txt");
+        assertThat(completedPath).isEqualTo("c:" + File.separator + "tempFolder" + File.separator + "fileName.txt");
     }
 
     @Test
     public void should_verifyAuthorization_file_path() throws Exception {
-        final String fileName = "c:\\tempFolder\\fileName.txt";
+        final String fileName = "c:" + File.separator + "tempFolder" + File.separator + "fileName.txt";
 
         given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:\\tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
 
         final String completedPath = tenantFolder.getCompleteTempFilePath(fileName, 1L);
 
-        assertThat(completedPath).isEqualTo("c:\\tempFolder\\fileName.txt");
+        assertThat(completedPath).isEqualTo("c:" + File.separator + "tempFolder" + File.separator + "fileName.txt");
     }
 
     @Test(expected = UnauthorizedFolderException.class)
     public void should_UnauthorizedFolder() throws Exception {
-        final String fileName = "c:\\UnauthorizedFolder\\tempFolder\\fileName.txt";
+        final String fileName = "c:" + File.separator + "UnauthorizedFolder" + File.separator + "tempFolder" + File.separator + "fileName.txt";
 
         given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:\\tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
 
         tenantFolder.getCompleteTempFilePath(fileName, 1L);
     }
@@ -114,10 +116,10 @@ public class TenantFolderTest {
         final String fileName = "fileName.txt";
 
         given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
-        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:\\tempFolder"));
+        given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
 
         final File completedFile = tenantFolder.getTempFile(fileName, 1L);
 
-        assertThat(completedFile.getPath()).isEqualTo("c:\\tempFolder\\fileName.txt");
+        assertThat(completedFile.getPath()).isEqualTo("c:" + File.separator + "tempFolder" + File.separator + "fileName.txt");
     }
 }
