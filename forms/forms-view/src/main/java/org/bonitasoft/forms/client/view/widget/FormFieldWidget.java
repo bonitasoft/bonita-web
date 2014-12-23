@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ import com.google.gwt.user.datepicker.client.DateBox.Format;
  */
 @SuppressWarnings("rawtypes")
 public class FormFieldWidget extends Composite implements HasChangeHandlers, ChangeHandler, HasClickHandlers, ClickHandler, HasValueChangeHandlers,
-        ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestion> {
+ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestion> {
 
     /**
      * the flow panel used to display the data field and its decorations
@@ -174,7 +175,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     /**
      * value change handlers registered for the widget
      */
-    protected List<ValueChangeHandler<Serializable>> valueChangeHandlers;
+    protected Map<String, ValueChangeHandler<Serializable>> valueChangeHandlers;
 
     /**
      * selection handlers registered for the widget
@@ -1575,10 +1576,14 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     @SuppressWarnings("unchecked")
     public HandlerRegistration addValueChangeHandler(final ValueChangeHandler valueChangeHandler) {
         if (valueChangeHandlers == null) {
-            valueChangeHandlers = new ArrayList<ValueChangeHandler<Serializable>>();
+            valueChangeHandlers = new HashMap<String, ValueChangeHandler<Serializable>>();
         }
-        valueChangeHandlers.add(valueChangeHandler);
-        return new EventHandlerRegistration(valueChangeHandler);
+        if (valueChangeHandler != null) {
+            valueChangeHandlers.put(String.valueOf(valueChangeHandler.hashCode()), valueChangeHandler);
+            return new EventHandlerRegistration(valueChangeHandler);
+        } else {
+            throw new NullPointerException("the given ValueChangeHandler is not defined");
+        }
     }
 
     @Override
@@ -1621,7 +1626,7 @@ public class FormFieldWidget extends Composite implements HasChangeHandlers, Cha
     @SuppressWarnings("unchecked")
     public void onValueChange(final ValueChangeEvent valueChangeEvent) {
         if (valueChangeHandlers != null) {
-            for (final ValueChangeHandler valueChangeHandler : valueChangeHandlers) {
+            for (final ValueChangeHandler valueChangeHandler : valueChangeHandlers.values()) {
                 valueChangeHandler.onValueChange(valueChangeEvent);
             }
         }
