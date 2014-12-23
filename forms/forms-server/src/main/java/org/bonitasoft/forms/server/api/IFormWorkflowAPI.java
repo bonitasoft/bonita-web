@@ -516,8 +516,6 @@ public interface IFormWorkflowAPI {
      *
      * @param session
      *            the API session
-     * @param isInvolvedInProcessInstance
-     *            true if the user is involved in the process instance; otherwise false
      * @param processInstanceID
      *            the process instance UUID
      * @return true if the user is involved in the process instance. False otherwise
@@ -526,7 +524,7 @@ public interface IFormWorkflowAPI {
      * @throws UserNotFoundException
      * @throws ProcessDefinitionNotFoundException
      */
-    boolean canUserSeeProcessInstance(APISession session, boolean isInvolvedInProcessInstance, long processInstanceID)
+    boolean canUserSeeProcessInstance(APISession session, long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException, UserNotFoundException,
             ProcessDefinitionNotFoundException;
 
