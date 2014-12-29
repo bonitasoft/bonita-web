@@ -87,4 +87,15 @@ public class APICaseVariableAttributeCheckerTest {
 
         attributeChecker.checkSearchFilters(filters);
     }
+    
+    @Test(expected = APIException.class)
+    public void should_throw_exception_when_filters_are_null() throws Exception {
+        attributeChecker.checkSearchFilters(null);
+    }
+    
+    @Test(expected = APIException.class)
+    public void should_throw_exception_when_attributes_are_null() throws Exception {
+        attributeChecker.checkUpdateAttributes(null);
+    }
 }
+
