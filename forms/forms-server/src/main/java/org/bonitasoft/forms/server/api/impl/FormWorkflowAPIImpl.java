@@ -960,12 +960,12 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceID);
             return processInstance.getProcessDefinitionId();
         } catch (final ProcessInstanceNotFoundException e) {
-            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
             searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceID);
             searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.ASC);
             SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
             try {
-                searchArchivedProcessInstances = processAPI.searchArchivedProcessInstances(searchOptionsBuilder.done());
+                searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
             } catch (final SearchException se) {
                 throw new ArchivedProcessInstanceNotFoundException(se);
             }
