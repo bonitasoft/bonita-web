@@ -181,9 +181,6 @@ public class LoginBox extends RawView {
     private void ensureProfileId(final ProfileItem profile) {
         if (ClientApplicationURL.getProfileId() == null) {
             ClientApplicationURL.setProfileId(profile.getId().toString());
-        } else {
-            // TODO add an entry to the browser history.. wtf?
-            ClientApplicationURL.refreshUrl(false);
         }
     }
 

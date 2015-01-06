@@ -101,7 +101,7 @@ public class ClientApplicationURL {
 
         // If Token or profile disappeared, keep the previous one
         if (token != null && _getPageToken() == null) {
-            this._setPageToken(token);
+            this._setPageToken(token, false);
         }
         if (profileId != null && _getProfileId() == null) {
             this._setProfileId(profileId);
@@ -128,10 +128,6 @@ public class ClientApplicationURL {
         return Window.Location.getParameter(ATTRIBUTE_TENANT);
     }
 
-    private void _setPageToken(final String pageToken) {
-        this._setPageToken(pageToken, false);
-    }
-
     private void _setPageToken(final String pageToken, final boolean refresh) {
         if (pageToken == null) {
             attributes.removeNode(ATTRIBUTE_TOKEN);
@@ -140,23 +136,15 @@ public class ClientApplicationURL {
         }
 
         if (refresh) {
-            this._refreshUrl();
+            this._refreshUrl(true);
         }
     }
 
     private void _setProfileId(final String profileId) {
-        this._setProfileId(profileId, false);
-    }
-
-    private void _setProfileId(final String profileId, final boolean refresh) {
         if (profileId == null) {
             attributes.removeNode(ATTRIBUTE_PROFILE);
         } else {
             attributes.addValue(ATTRIBUTE_PROFILE, profileId);
-        }
-
-        if (refresh) {
-            this._refreshUrl();
         }
     }
 
@@ -172,7 +160,7 @@ public class ClientApplicationURL {
         return result;
     }
 
-    private void _setPageAttributes(final TreeIndexed<String> attributes, final boolean refresh) {
+    private void _setPageAttributes(final TreeIndexed<String> attributes) {
         final String token = _getPageToken();
         final String profileId = _getProfileId();
 
@@ -182,16 +170,8 @@ public class ClientApplicationURL {
             this._setPageToken(token, false);
         }
         if (profileId != null) {
-            this._setProfileId(profileId, false);
+            this._setProfileId(profileId);
         }
-
-        if (refresh) {
-            this._refreshUrl();
-        }
-    }
-
-    private void _addAttribute(final String key, final Tree<String> values) {
-        self.attributes.addNode(key, values);
     }
 
     private void _addAttribute(final String key, final String... value) {
@@ -222,20 +202,12 @@ public class ClientApplicationURL {
         return self._getTenantId();
     }
 
-    public static void setPageToken(final String pageToken) {
-        self._setPageToken(pageToken, false);
-    }
-
     public static void setPageToken(final String pageToken, final boolean refresh) {
         self._setPageToken(pageToken, refresh);
     }
 
     public static void setPageAttributes(final TreeIndexed<String> params) {
-        self._setPageAttributes(params, false);
-    }
-
-    public static void setPageAttributes(final TreeIndexed<String> params, final boolean refresh) {
-        self._setPageAttributes(params, refresh);
+        self._setPageAttributes(params);
     }
 
     public static void setLang(final LOCALE lang) {
@@ -255,19 +227,10 @@ public class ClientApplicationURL {
     }
 
     public static void setProfileId(final String profileId) {
-        self._setProfileId(profileId, false);
-    }
-
-    public static void setProfileId(final String profileId, final boolean refresh) {
-        self._setProfileId(profileId, refresh);
-    }
-
-    private void _refreshUrl() {
-        this._refreshUrl(true);
+        self._setProfileId(profileId);
     }
 
     private void _refreshUrl(final boolean refreshView) {
-
         if (parseToken().equals(attributes)) {
             // Same URL attributes, do nothing
             return;
@@ -284,20 +247,12 @@ public class ClientApplicationURL {
         refreshView();
     }
 
-    public static void refreshUrl() {
-        self._refreshUrl();
-    }
-
     public static void refreshUrl(final boolean refreshView) {
         self._refreshUrl(refreshView);
     }
 
     public static void refresh() {
         self._refresh();
-    }
-
-    public static void addAttribute(final String key, final Tree<String> value) {
-        self._addAttribute(key, value);
     }
 
     public static void addAttribute(final String key, final String... value) {
@@ -387,3 +342,4 @@ public class ClientApplicationURL {
         }
     }
 }
+

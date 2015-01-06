@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
@@ -70,23 +71,60 @@ public class FormLayoutDownloadServlet extends HttpServlet {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 
         final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         final String bodyContentId = request.getParameter(BODY_CONTENT_ID);
-        String bodyContent = null;
-        final Map<String, Object> urlContext = new HashMap<String, Object>();
-        for (final Map.Entry<String, String[]> param : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
-            urlContext.put(param.getKey(), param.getValue()[0]);
-        }
-
+        
+        final Map<String, Object> urlContext = buildUrlContext(request);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(LoginManager.API_SESSION_PARAM_KEY, apiSession);
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, resolveLocale(getLocale(request)));
 
+        String bodyContent = getBodyContent(request, apiSession, bodyContentId, context);
+
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            final String encodedfileName = URLEncoder.encode("bodyContent", "UTF-8");
+            final String userAgent = request.getHeader("User-Agent");
+            if (userAgent != null && userAgent.contains("Firefox")) {
+                response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName.replace("+", "%20"));
+            } else {
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedfileName.replaceAll("\\+", " ") + "\"; filename*=UTF-8''"
+                        + encodedfileName.replace("+", "%20"));
+            }
+            final OutputStream out = response.getOutputStream();
+            if (bodyContent == null) {
+                response.setContentLength(0);
+            } else {
+                byte[] bodyContentbytes = bodyContent.getBytes(CharEncoding.UTF_8);
+                response.setContentLength(bodyContentbytes.length);
+                out.write(bodyContentbytes);
+            }
+            out.close();
+        } catch (final IOException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
+            }
+            throw new ServletException(e.getMessage(), e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> buildUrlContext(final HttpServletRequest request) {
+        final Map<String, Object> urlContext = new HashMap<String, Object>();
+        for (final Map.Entry<String, String[]> param : ((Map<String, String[]>) request.getParameterMap()).entrySet()) {
+            urlContext.put(param.getKey(), param.getValue()[0]);
+        }
+        return urlContext;
+    }
+
+    private String getBodyContent(final HttpServletRequest request, final APISession apiSession, final String bodyContentId,
+            final Map<String, Object> context) throws ServletException  {
+        String bodyContent = null;
         if (bodyContentId != null) {
             try {
                 String rawBodyContent = null;
@@ -117,32 +155,7 @@ public class FormLayoutDownloadServlet extends HttpServlet {
                 throw new ServletException(e.getMessage(), e);
             }
         }
-
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        try {
-            final String encodedfileName = URLEncoder.encode("bodyContent", "UTF-8");
-            final String userAgent = request.getHeader("User-Agent");
-            if (userAgent != null && userAgent.contains("Firefox")) {
-                response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName.replace("+", "%20"));
-            } else {
-                response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedfileName.replaceAll("\\+", " ") + "\"; filename*=UTF-8''"
-                        + encodedfileName.replace("+", "%20"));
-            }
-            final OutputStream out = response.getOutputStream();
-            if (bodyContent == null) {
-                response.setContentLength(0);
-            } else {
-                response.setContentLength(bodyContent.getBytes().length);
-                out.write(bodyContent.getBytes());
-            }
-            out.close();
-        } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
-            }
-            throw new ServletException(e.getMessage(), e);
-        }
+        return bodyContent;
     }
 
     /**

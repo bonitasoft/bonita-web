@@ -252,19 +252,7 @@
                 <version>${assertj.version}</version>
                 <scope>test</scope>
             </dependency>
-
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-junit4</artifactId>
-                <scope>test</scope>
-                <version>${powermock.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito</artifactId>
-                <scope>test</scope>
-                <version>${powermock.version}</version>
-            </dependency>
+          
             <dependency>
                 <groupId>com.google.gwt.gwtmockito</groupId>
                 <artifactId>gwtmockito</artifactId>
@@ -682,6 +670,8 @@
                 <jacoco.out.it.file>jacoco-web-it.exec</jacoco.out.it.file>
                 <!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
                 <sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
+                <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
+                <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*,**/org/bonitasoft/forms/client/FormsApplicationLoader</sonar.coverage.exclusions>
             </properties>
 
             <build>
@@ -694,14 +684,6 @@
                                 <include>org.bonitasoft.*</include>
                                 <include>com.bonitasoft.*</include>
                             </includes>
-                            <excludes>
-                                <exclude>org.bonitasoft.console.client.*</exclude>
-                                <exclude>com.bonitasoft.console.client.*</exclude>
-                                <exclude>org.bonitasoft.forms.client.view.*</exclude>
-                                <exclude>com.bonitasoft.forms.client.view.*</exclude>
-                                <exclude>org.bonitasoft.forms.client.i18n.*</exclude>
-                                <exclude>com.bonitasoft.forms.client.i18n.*</exclude>
-                            </excludes>
                         </configuration>
                         <executions>
                             <execution>

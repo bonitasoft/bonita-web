@@ -96,7 +96,6 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String FILTER_STATE = "state";
 
-
     public CaseItem() {
         super();
     }
@@ -185,8 +184,7 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     }
 
     /**
-     * @param date
-     *            Must be SQL formated date
+     * @param date Must be SQL formated date
      */
     public void setStartDate(final String date) {
         setAttribute(ATTRIBUTE_START_DATE, date);
@@ -243,6 +241,8 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
     public void setRootCaseId(final long rootCaseId) {
         setAttribute(ATTRIBUTE_ROOT_CASE_ID, rootCaseId);
     }
+
+
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UTILS

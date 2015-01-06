@@ -148,7 +148,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
         return new FlowNodeDatastore(getEngineSession());
     }
 
-    CaseDatastore getCaseDatastore() {
+    protected CaseDatastore getCaseDatastore() {
         return new CaseDatastore(getEngineSession());
     }
 

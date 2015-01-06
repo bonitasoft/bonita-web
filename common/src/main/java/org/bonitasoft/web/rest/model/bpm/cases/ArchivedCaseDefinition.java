@@ -30,7 +30,7 @@ public class ArchivedCaseDefinition extends ItemDefinition<ArchivedCaseItem> {
     /**
      * Singleton
      */
-    public static final ArchivedCaseDefinition get() {
+    public static ArchivedCaseDefinition get() {
         return (ArchivedCaseDefinition) Definitions.get(TOKEN);
     }
 

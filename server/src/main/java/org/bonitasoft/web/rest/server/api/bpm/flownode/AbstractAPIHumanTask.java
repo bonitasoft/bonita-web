@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,13 +25,14 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.HumanTaskDatastore;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
+import org.bonitasoft.web.rest.server.framework.search.ISearchDirection;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractAPITask<ITEM> {
 
@@ -47,8 +48,7 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
 
     @Override
     public String defineDefaultSearchOrder() {
-        // FIXME
-        return HumanTaskItem.ATTRIBUTE_PRIORITY + " DESC";
+        return HumanTaskItem.ATTRIBUTE_PRIORITY + ISearchDirection.SORT_ORDER_DESCENDING;
     }
 
     // // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,8 +59,8 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
     public ITEM update(final APIID id, final Map<String, String> attributes) {
         // Cant unassigned a manual task
         final String assignedUserId = attributes.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
-        if ((assignedUserId != null) && (assignedUserId.length() > 0)) {
-            ITEM humanTask = get(id);
+        if (assignedUserId != null && assignedUserId.length() > 0) {
+            final ITEM humanTask = get(id);
             if (humanTask.isManualTask() && StringUtil.isBlank(assignedUserId)) {
                 throw new APIForbiddenException("Can't unassigned a manual task.");
             }

@@ -100,7 +100,7 @@ public class NavigationMenuView extends RawView {
     }
 
     private void updateNavigationMenu(final List<ProfileEntryItem> items) {
-        navigationMenu.addItems(menuListCreator.asList(items));
+        navigationMenu.addItems(menuListCreator.createMenuItemList(items));
         listenViewChangeEvent(selectMenuOnChange());
         updateUI();
         navigationMenu.select(ViewController.getInstance().getCurrentPageToken());
