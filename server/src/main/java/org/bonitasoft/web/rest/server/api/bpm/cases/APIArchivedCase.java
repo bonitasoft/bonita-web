@@ -51,7 +51,7 @@ public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements API
 
     @Override
     public ArchivedCaseItem get(final APIID id) {
-        return new ArchivedCaseDatastore(getEngineSession()).get(id);
+        return getArchivedCaseDatastore().get(id);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements API
                     + ArchivedCaseItem.FILTER_SUPERVISOR_ID);
         }
 
-        return new ArchivedCaseDatastore(getEngineSession()).search(page, resultsByPage, search, orders, filters);
+        return getArchivedCaseDatastore().search(page, resultsByPage, search, orders, filters);
     }
 
     @Override
@@ -109,5 +109,9 @@ public class APIArchivedCase extends ConsoleAPI<ArchivedCaseItem> implements API
 
     @Override
     protected void fillCounters(final ArchivedCaseItem item, final List<String> counters) {
+    }
+
+    protected ArchivedCaseDatastore getArchivedCaseDatastore() {
+        return new ArchivedCaseDatastore(getEngineSession());
     }
 }
