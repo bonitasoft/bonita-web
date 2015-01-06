@@ -16,6 +16,6 @@ public class APITaskTest extends APITestWithMock {
         final String defineDefaultSearchOrder = apiActivity.defineDefaultSearchOrder();
 
         //then
-        assertThat(defineDefaultSearchOrder).as("sould have a default search order").isEqualTo("displayName ASC");
+        assertThat(defineDefaultSearchOrder).as("sould have a default search order").isEqualTo("last_update_date DESC");
     }
 }
