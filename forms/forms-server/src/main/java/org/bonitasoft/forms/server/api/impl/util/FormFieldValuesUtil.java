@@ -341,7 +341,7 @@ public class FormFieldValuesUtil {
      * @throws FormNotFoundException
      * @throws FormServiceProviderNotFoundException
      */
-    protected boolean getDisplayConditionStr(final Expression conditionExpression, final Object conditionObject) throws FormNotFoundException,
+    protected boolean getDisplayCondition(final Expression conditionExpression, final Object conditionObject) throws FormNotFoundException,
             FormServiceProviderNotFoundException {
 
         boolean condition = true;
@@ -588,7 +588,7 @@ public class FormFieldValuesUtil {
             formWidget.getSubtitle().setLabel(getStringValue(evaluatedExpressions.get(widgetId + EXPRESSION_KEY_SEPARATOR + WIDGET_SUBTITLE)));
         }
         formWidget.setPopupTooltip(getStringValue(evaluatedExpressions.get(widgetId + EXPRESSION_KEY_SEPARATOR + WIDGET_TOOLTIP)));
-        formWidget.setDisplayCondition(getDisplayConditionStr(formWidget.getDisplayConditionExpression(),
+        formWidget.setDisplayCondition(getDisplayCondition(formWidget.getDisplayConditionExpression(),
                 evaluatedExpressions.get(widgetId + EXPRESSION_KEY_SEPARATOR + WIDGET_DISPLAY_CONDITION)));
 
         final Object value = getFormWidgetInitialValues(formWidget, evaluatedExpressions);

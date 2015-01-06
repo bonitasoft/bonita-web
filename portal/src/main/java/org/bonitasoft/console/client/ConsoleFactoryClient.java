@@ -313,18 +313,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (ChangeLangPage.TOKEN.equals(token)) {
             return new ChangeLangPage();
 
+        } else if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
+            // No action is necessary as an unauthorized request will result in a page reload.
+            new CheckValidSessionBeforeAction(emptyAction).execute();
+            angularFrame.setUrl("#" + angularViewsMap.get(token), token);
+            return angularFrame;
         } else {
-
-            //currentAngularIFrameView = manageAngularIFrameView(token, getCurrentUserAccessRights());
-            if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
-                // we do not need to do anything. API callback will handle unauthorized request by reloading the page.
-                new CheckValidSessionBeforeAction(emptyAction).execute();
-                angularFrame.setUrl("#" + angularViewsMap.get(token), token);
-                return angularFrame;
-            } else {
-                //currentAngularIFrameView.setDisplayed(false);
-                return new BlankPage();
-            }
+            return new BlankPage();
         }
     }
 

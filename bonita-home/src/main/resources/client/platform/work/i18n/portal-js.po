@@ -65,7 +65,7 @@ msgstr ""
 msgid "items per page"
 msgstr ""
 
-msgid "Case details"
+msgid "View case details"
 msgstr ""
 
 msgid "columns selection"
@@ -210,4 +210,10 @@ msgid  "Loading..."
 msgstr ""
 
 msgid  "Totals"
+msgstr ""
+
+msgid  "View process design"
+msgstr ""
+
+msgid  "View case design"
 msgstr ""

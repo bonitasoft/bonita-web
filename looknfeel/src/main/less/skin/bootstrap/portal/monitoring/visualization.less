@@ -45,7 +45,7 @@
   }
 
   .back {
-    margin: 30px 0 0 5px;
+    margin: 0 0 0 5px;
   }
 
   svg {
@@ -72,8 +72,7 @@
     fill: none;
   }
 
-  .nbReadyText,
-  .nbFailedText {
+  .label-text {
     text-anchor: middle;
     font-size: 10px;
     font-weight: bold;
@@ -127,30 +126,28 @@
   }
 
   /* Styles for SVG element */
-  svg .label-danger {
-    fill: #d9534f;
+  svg .label-failed {
+    fill: red;
   }
 
-  svg .label-default {
-    fill: #5cb85c;
+  svg .label-ready {
+    fill: #267F00;
   }
 
-  svg .label-exec {
+  svg .label-open {
+    fill: #727272;
+  }
+
+  svg .label-executed {
     fill: #000000;
   }
 
-  svg .hasFailedCases .bordered-box {
-    stroke: #d9534f;
-    fill: #f2dede;
+  svg .label-inProgress {
+    fill: #2C6DA3;
   }
 
-  svg .isReady .bordered-box {
-    stroke: #5cb85c;
-    fill: #dff0d8;
-  }
-
-  svg .isDone .bordered-box {
-    stroke: black;
+  svg .label-cancelled {
+    fill: #515151;
   }
 
   svg .default-edge-strike {
@@ -160,5 +157,20 @@
   svg .conditional-diamond {
     fill: white;
     stroke: black;
+  }
+
+  &.diagram-only {
+    .back {
+      display: none;
+    }
+    h1 {
+      display: none;
+    }
+  }
+}
+
+.no-footer {
+  .footer {
+    display: none;
   }
 }

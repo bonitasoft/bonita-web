@@ -20,11 +20,11 @@ import java.io.Serializable;
 
 /**
  * An action to execute at form submission
- * 
+ *
  * @author Anthony Birembaut
  */
 public class FormAction implements Serializable {
-    
+
     /**
      * UID
      */
@@ -34,17 +34,17 @@ public class FormAction implements Serializable {
      * type of action
      */
     private ActionType type;
-    
+
     /**
      * Operation operator
      */
     private String operator;
-    
+
     /**
      * Operation operator input type (for java methods)
      */
     private String operatorInputType;
-    
+
     /**
      * Data Name
      */
@@ -54,7 +54,7 @@ public class FormAction implements Serializable {
      * expression
      */
     private Expression expression;
-    
+
     /**
      * if not null, the action has to be executed only if the button with the corresponding ID has been pressed
      */
@@ -65,11 +65,19 @@ public class FormAction implements Serializable {
      */
     private Connector connector;
 
+    /**
+     * Variable Type
+     */
     private String variableType;
 
     /**
+     * condition expression
+     */
+    private Expression conditionExpression;
+
+    /**
      * Constructor.
-     * 
+     *
      * @param type
      * @param dataName
      * @param operator
@@ -77,12 +85,12 @@ public class FormAction implements Serializable {
      */
     public FormAction(final ActionType type, final String dataName, final String variableType, final String operator,
             final String operatorInputType, final Expression expression) {
-        this(type, dataName, variableType, operator, operatorInputType, expression, null);
+        this(type, dataName, variableType, operator, operatorInputType, expression, null, null);
     }
 
     /**
      * Constructor.
-     * 
+     *
      * @param type
      * @param variableName
      * @param variableType
@@ -90,9 +98,10 @@ public class FormAction implements Serializable {
      * @param operatorInputType
      * @param expression
      * @param submitButtonId
+     * @param conditionExpression
      */
     public FormAction(final ActionType type, final String variableName, final String variableType, final String operator,
-            final String operatorInputType, final Expression expression, final String submitButtonId) {
+            final String operatorInputType, final Expression expression, final String submitButtonId, final Expression conditionExpression) {
         this.type = type;
         this.variableName = variableName;
         this.variableType = variableType;
@@ -100,8 +109,9 @@ public class FormAction implements Serializable {
         this.operatorInputType = operatorInputType;
         this.expression = expression;
         this.submitButtonId = submitButtonId;
+        this.conditionExpression = conditionExpression;
     }
-    
+
     /**
      * Default constructor
      */
@@ -123,7 +133,7 @@ public class FormAction implements Serializable {
     }
 
     public void setVariableName(final String dataName) {
-        this.variableName = dataName;
+        variableName = dataName;
     }
 
     public String getVariableType() {
@@ -174,4 +184,11 @@ public class FormAction implements Serializable {
         this.operatorInputType = operatorInputType;
     }
 
+    public Expression getConditionExpression() {
+        return conditionExpression;
+    }
+
+    public void setConditionExpression(final Expression conditionExpression) {
+        this.conditionExpression = conditionExpression;
+    }
 }

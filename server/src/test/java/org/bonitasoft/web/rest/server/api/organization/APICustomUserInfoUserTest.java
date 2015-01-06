@@ -25,10 +25,12 @@ import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.impl.CustomUserInfoValueImpl;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
+import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
@@ -67,11 +69,12 @@ public class APICustomUserInfoUserTest {
     @Mock
     private IdentityAPI identityApi;
 
-    @InjectMocks
     private APICustomUserInfoUser api;
 
     @Before
     public void setUp() throws Exception {
+        ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
+        api = new APICustomUserInfoUser(engineClientCreator);
         api.setCaller(caller);
         given(caller.getHttpSession()).willReturn(httpSession);
         given(httpSession.getAttribute("apiSession")).willReturn(apiSession);
