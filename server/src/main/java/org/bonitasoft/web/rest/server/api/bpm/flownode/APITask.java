@@ -30,7 +30,7 @@ public class APITask extends AbstractAPITask<TaskItem> {
 
     @Override
     public String defineDefaultSearchOrder() {
-        return TaskItem.ATTRIBUTE_DISPLAY_NAME + ISearchDirection.SORT_ORDER_ASCENDING;
+        return TaskItem.ATTRIBUTE_LAST_UPDATE_DATE + ISearchDirection.SORT_ORDER_DESCENDING;
     }
 
 }
