@@ -126,6 +126,7 @@ span.bonita_form_radio, .bonita_form_text {
 .bonita_form_field.list_container{
 	background: url(../images/form-select.png) no-repeat right center;
 	overflow: hidden;
+	width: 99%;
 }
 
 input.bonita_form_field, select.bonita_form_field, select.bonita_datetime_list_item, .bonita_form_field.list_container {

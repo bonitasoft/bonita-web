@@ -934,6 +934,11 @@ public class FormPagesViewController {
 
         final String submitButtonId = getSubmitButtonID();
 
+        //always clean page validators
+        if (!pageValidators.isEmpty()) {
+            cleanValidatorsMessages(pageValidators);
+        }
+
         // fields validation
         if (!formWidgetsToValidate.isEmpty()) {
             final Map<String, String> validators = new HashMap<String, String>();
@@ -948,7 +953,6 @@ public class FormPagesViewController {
                     actionAfterValidation, formPage.getPageValidators(), formPage.getPageValidatorsId()));
         } else if (isCurrentPageValid) {
             if (!pageValidators.isEmpty()) {
-                cleanValidatorsMessages(pageValidators);
                 formsServiceAsync.validateFormPage(formID, urlContext, formPage.getPageValidatorsId(), widgetValues, submitButtonId,
                         new FormPageValidatorHandler(actionAfterValidation));
             } else {
