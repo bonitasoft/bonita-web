@@ -46,7 +46,7 @@ import org.mockito.Spy;
  * Date: 28/08/13
  * Time: 17:52
  */
-public class AuthorizationFilterTest {
+public class AuthenticationFilterTest {
 
     @Mock
     private FilterChain chain;
@@ -67,7 +67,7 @@ public class AuthorizationFilterTest {
     private HttpSession httpSession;
 
     @Spy
-    AuthorizationFilter authorizationFilter;
+    AuthenticationFilter authorizationFilter;
 
     @Before
     public void setUp() throws Exception {
@@ -157,8 +157,8 @@ public class AuthorizationFilterTest {
         }
     }
 
-    private AuthorizationRule createPassingRule() {
-        return new AuthorizationRule() {
+    private AuthenticationRule createPassingRule() {
+        return new AuthenticationRule() {
 
             @Override
             public boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException {
@@ -167,8 +167,8 @@ public class AuthorizationFilterTest {
         };
     }
 
-    private AuthorizationRule createFailingRule() {
-        return new AuthorizationRule() {
+    private AuthenticationRule createFailingRule() {
+        return new AuthenticationRule() {
 
             @Override
             public boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException {
