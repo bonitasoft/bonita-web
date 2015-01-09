@@ -217,3 +217,25 @@ msgstr ""
 
 msgid  "View case design"
 msgstr ""
+
+# Case Visu - Show Key
+msgid  "Show key"
+msgstr ""
+
+msgid  "Task1"
+msgstr ""
+
+msgid  "Cancelled, skipped instances"
+msgstr ""
+
+msgid  "Completed instances"
+msgstr ""
+
+msgid  "Failed instances"
+msgstr ""
+
+msgid  "Executing, completing, initializing instances"
+msgstr ""
+
+msgid  "Ready, waiting instances"
+msgstr ""
