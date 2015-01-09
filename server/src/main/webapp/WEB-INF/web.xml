@@ -60,6 +60,17 @@
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.AuthenticationFilter</filter-class>
+        <!--
+            the AuthenticationFilter check credentials when access is requested
+            However, to ensure authentication redirect and/or error handling works properly,
+            we need to let a set of pages not securized :
+            portal/scripts & portal/themeResource : to enable the layout and JS handling on login.jsp
+            formService : to enable GWT RPC call directly by its servlet
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?(portal/themeResource$)|(portal/scripts)|(portal/formsService)</param-value>
+        </init-param -->
     </filter>
     <!-- Cache Filter -->
     <filter>

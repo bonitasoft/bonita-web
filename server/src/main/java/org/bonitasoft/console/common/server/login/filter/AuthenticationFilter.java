@@ -114,7 +114,7 @@ public class AuthenticationFilter implements Filter {
         if (matchExcludePatterns(url)) {
             chain.doFilter(request, response);
         } else {
-            doAuthorizationFiltering(requestAccessor,
+            doAuthenticationFiltering(requestAccessor,
                 new HttpServletResponseAccessor((HttpServletResponse) response),
                 createTenantAccessor(requestAccessor), chain);
         }
@@ -124,7 +124,7 @@ public class AuthenticationFilter implements Filter {
         return new TenantIdAccessor(requestAccessor);
     }
 
-    protected void doAuthorizationFiltering(final HttpServletRequestAccessor requestAccessor,
+    protected void doAuthenticationFiltering(final HttpServletRequestAccessor requestAccessor,
             final HttpServletResponseAccessor responseAccessor,
             final TenantIdAccessor tenantIdAccessor,
             final FilterChain chain) throws ServletException, IOException {
