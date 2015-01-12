@@ -214,21 +214,28 @@ public class WebBonitaConstantsUtils {
         return getFolder(getBonitaHomePath(), folderPath);
     }
 
-    private File getFolder(final String bonitaHomePath, final String folderPath) {
+    protected File getFolder(final String bonitaHomePath, final String folderPath) {
         final File folder = new File(bonitaHomePath, folderPath);
+        return getFolder(folder);
+    }
 
-        if (webBonitaConstants instanceof WebBonitaConstantsImpl) {
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-        } else {
-            final WebBonitaConstantsTenancyImpl webBonitaConstantsTenancyImpl = (WebBonitaConstantsTenancyImpl) webBonitaConstants;
-            final File tenantFolder = new File(webBonitaConstantsTenancyImpl.getTenantFolderPath());
-            if (tenantFolder.exists() && !folder.exists()) {
-                folder.mkdirs();
-            }
+    protected File getFolder(final File folder) {
+        if (!folder.exists()) {
+            createFolderIfNecessary(folder);
         }
         return folder;
+    }
+
+    protected void createFolderIfNecessary(final File folder) {
+        if (webBonitaConstants instanceof WebBonitaConstantsImpl || tenantFolderExists()) {
+            folder.mkdirs();
+        }
+    }
+
+    protected boolean tenantFolderExists() {
+        final WebBonitaConstantsTenancyImpl webBonitaConstantsTenancyImpl = (WebBonitaConstantsTenancyImpl) webBonitaConstants;
+        final File tenantFolder = new File(webBonitaConstantsTenancyImpl.getTenantFolderPath());
+        return tenantFolder.exists();
     }
 
 }
