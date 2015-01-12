@@ -56,7 +56,7 @@ public class WebBonitaConstantsUtils {
     /**
      * Get the folder where to write Tenant temporary files commons to all web
      * applications.
-     * 
+     *
      * @throws ConsoleException
      */
     public File getTempFolder() {
@@ -65,7 +65,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder where to get the Tenant conf files.
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConfFolder() {
@@ -74,7 +74,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of Tenant themes files (ie CSS files)
-     * 
+     *
      * @throws ConsoleException
      */
     public File getPortalThemeFolder() {
@@ -83,7 +83,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of the user Console default icons
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConsoleDefaultIconsFolder() {
@@ -92,7 +92,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of the user Console process icons
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConsoleProcessIconsFolder() {
@@ -101,7 +101,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * /** Get the folder of the user Console user icons
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConsoleUserIconsFolder() {
@@ -109,9 +109,9 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
-     * 
+     *
      * Get the folder of the user Console user icons
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConsoleRoleIconsFolder() {
@@ -120,7 +120,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of Tenant report files
-     * 
+     *
      * @throws ConsoleException
      */
     public File getReportFolder() {
@@ -129,7 +129,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of Tenant pages files
-     * 
+     *
      * @throws ConsoleException
      */
     public File getPagesFolder() {
@@ -138,7 +138,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the profile folder to store the report dashboard configuration.
-     * 
+     *
      * @throws ConsoleException
      */
     public File getProfileWorkFolder() {
@@ -147,7 +147,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the Tenant folder where to write Work files.
-     * 
+     *
      * @throws ConsoleException
      */
     public File getFormsWorkFolder() {
@@ -156,7 +156,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the Tenant folder where to write BDM work files.
-     * 
+     *
      * @throws ConsoleException
      */
     public File geBDMWorkFolder() {
@@ -165,7 +165,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of the tenants directories
-     * 
+     *
      * @throws ConsoleException
      */
     public File getTenantsFolder() {
@@ -174,7 +174,7 @@ public class WebBonitaConstantsUtils {
 
     /**
      * Get the folder of the tenant-template file structure
-     * 
+     *
      * @return
      */
     public File getTenantTemplateFolder() {
@@ -182,9 +182,9 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
-     * 
+     *
      * Get the folder of the Console group icons
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConsoleGroupIconsFolder() {
@@ -192,9 +192,9 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
-     * 
+     *
      * Get the folder of the Console profile icons
-     * 
+     *
      * @throws ConsoleException
      */
     public File getConsoleProfileIconsFolder() {
@@ -216,8 +216,17 @@ public class WebBonitaConstantsUtils {
 
     private File getFolder(final String bonitaHomePath, final String folderPath) {
         final File folder = new File(bonitaHomePath, folderPath);
-        if (!folder.exists()) {
-            folder.mkdirs();
+
+        if (webBonitaConstants instanceof WebBonitaConstantsImpl) {
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+        } else {
+            final WebBonitaConstantsTenancyImpl webBonitaConstantsTenancyImpl = (WebBonitaConstantsTenancyImpl) webBonitaConstants;
+            final File tenantFolder = new File(webBonitaConstantsTenancyImpl.getTenantFolderPath());
+            if (tenantFolder.exists() && !folder.exists()) {
+                folder.mkdirs();
+            }
         }
         return folder;
     }
