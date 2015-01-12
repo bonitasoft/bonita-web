@@ -30,6 +30,9 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 public class APICaseVariableAttributeChecker {
 
     public void checkUpdateAttributes(Map<String, String> attributes) {
+        if (attributes == null || attributes.isEmpty()) {
+            throw new APIException(format("Attributes '%s' and '%s' must be specified", CaseVariableItem.ATTRIBUTE_TYPE, CaseVariableItem.ATTRIBUTE_VALUE));
+        }
         if (!attributes.containsKey(CaseVariableItem.ATTRIBUTE_TYPE)) {
             throw new APIException(format("Attribute '%s' must be specified", CaseVariableItem.ATTRIBUTE_TYPE));
         }
@@ -37,9 +40,10 @@ public class APICaseVariableAttributeChecker {
             throw new APIException(format("Attribute '%s' must be specified", CaseVariableItem.ATTRIBUTE_VALUE));
         }
     }
-    
+
+    // filters could be null...
     public void checkSearchFilters(Map<String, String> filters) {
-        if (!filters.containsKey(CaseVariableItem.ATTRIBUTE_CASE_ID)) {
+        if (filters == null || !filters.containsKey(CaseVariableItem.ATTRIBUTE_CASE_ID)) {
             throw new APIException(format("Filter '%s' must be specified", CaseVariableItem.ATTRIBUTE_CASE_ID));
         }
     }
