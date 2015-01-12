@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
@@ -79,10 +78,10 @@ APIHasGet<UserItem>, APIHasSearch<UserItem> {
 
         // Finish the upload of the icon
         if (!StringUtil.isBlank(item.getIcon())) {
-            final TenantFolder tenantFolder = new TenantFolder();
+
             String tmpIconPath;
             try {
-                tmpIconPath = tenantFolder.getCompleteTempFilePath(item.getIcon(), getEngineSession().getTenantId());
+                tmpIconPath = getCompleteTempFilePath(item.getIcon());
             } catch (final UnauthorizedFolderException e) {
                 throw new APIForbiddenException(e.getMessage());
             } catch (final IOException e) {
@@ -140,10 +139,9 @@ APIHasGet<UserItem>, APIHasSearch<UserItem> {
             if (!MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_ICON)) {
 
                 deleteOldIconFileIfExists(id);
-                final TenantFolder tenantFolder = new TenantFolder();
                 String tmpIconPath;
                 try {
-                    tmpIconPath = tenantFolder.getCompleteTempFilePath(icon, getEngineSession().getTenantId());
+                    tmpIconPath = getCompleteTempFilePath(icon);
                 } catch (final UnauthorizedFolderException e) {
                     throw new APIForbiddenException(e.getMessage());
                 } catch (final IOException e) {

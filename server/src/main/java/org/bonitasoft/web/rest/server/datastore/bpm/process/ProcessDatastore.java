@@ -76,10 +76,9 @@ DatastoreHasDelete
     public ProcessItem add(final ProcessItem process) {
         final ProcessEngineClient engineClient = getProcessEngineClient();
 
-        final TenantFolder tenantFolder = new TenantFolder();
         File processFile;
         try {
-            processFile = tenantFolder.getTempFile(process.getAttributes().get(FILE_UPLOAD), getEngineSession().getTenantId());
+            processFile = getTenantFolder().getTempFile(process.getAttributes().get(FILE_UPLOAD), getEngineSession().getTenantId());
         } catch (final UnauthorizedFolderException e) {
             throw new APIForbiddenException(e.getMessage());
         } catch (final IOException e) {
@@ -104,6 +103,11 @@ DatastoreHasDelete
         }
 
         return convertEngineToConsoleItem(processDeploymentInfo);
+    }
+
+    protected TenantFolder getTenantFolder() {
+        final TenantFolder tenantFolder = new TenantFolder();
+        return tenantFolder;
     }
 
     /*
@@ -183,7 +187,7 @@ DatastoreHasDelete
         return null;
     }
 
-    private ProcessEngineClient getProcessEngineClient() {
+    protected ProcessEngineClient getProcessEngineClient() {
         return getEngineClientFactory().createProcessEngineClient();
     }
 

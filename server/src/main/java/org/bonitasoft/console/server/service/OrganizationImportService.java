@@ -46,8 +46,8 @@ public class OrganizationImportService extends ConsoleService {
         final TenantFolder tenantFolder = new TenantFolder();
         File xmlFile;
         try {
-            xmlFile = tenantFolder.getTempFile(getParameter(FILE_UPLOAD),
-                    getSession().getTenantId());
+            xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
+                    getTenantId());
         } catch (final IOException e) {
             throw new ServiceException(TOKEN, e);
         }
@@ -72,6 +72,14 @@ public class OrganizationImportService extends ConsoleService {
         }
 
         return "";
+    }
+
+    protected long getTenantId() {
+        return getSession().getTenantId();
+    }
+
+    protected String getFileUploadParameter() {
+        return getParameter(FILE_UPLOAD);
     }
 
 }

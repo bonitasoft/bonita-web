@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -175,10 +174,9 @@ APIHasDelete
     }
 
     String uploadIcon(final String iconTempPath) {
-        final TenantFolder tenantFolder = new TenantFolder();
         String completeIconTempPath;
         try {
-            completeIconTempPath = tenantFolder.getCompleteTempFilePath(iconTempPath, getEngineSession().getTenantId());
+            completeIconTempPath = getCompleteTempFilePath(iconTempPath);
         } catch (final UnauthorizedFolderException e) {
             throw new APIForbiddenException(e.getMessage());
         } catch (final IOException e) {

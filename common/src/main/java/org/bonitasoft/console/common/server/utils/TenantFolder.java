@@ -62,7 +62,7 @@ public class TenantFolder {
     private void verifyFolderAuthorization(final File file, final File parentFolder) throws IOException {
         try {
             if (!file.getCanonicalPath().startsWith(parentFolder.getCanonicalPath())) {
-                throw new UnauthorizedFolderException("Unauthorized access to the file" + file.getPath());
+                throw new UnauthorizedFolderException("Unauthorized access to the file " + file.getPath());
             }
         } catch (final UnauthorizedFolderException e) {
             final String errorMessage = "Unauthorized access to the file " + file.getAbsolutePath()

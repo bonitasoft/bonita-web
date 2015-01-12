@@ -39,17 +39,17 @@ public class ProcessActorImportService extends ConsoleService {
 
     @Override
     public Object run() {
-        final APISession apiSession = getSession();
         InputStream xmlStream = null;
         try {
             final TenantFolder tenantFolder = new TenantFolder();
-            final File xmlFile = tenantFolder.getTempFile(getParameter("file"),
-                    getSession().getTenantId());
+            final File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
+                    getTenantId());
 
             if (!xmlFile.exists()) {
-                throw new Exception("File: " + getParameter("file") + " does not exist.");
+                throw new Exception("File: " + getFileUploadParameter() + " does not exist.");
             }
 
+            final APISession apiSession = getSession();
             xmlStream = new FileInputStream(xmlFile);
             final byte[] actorsXmlContent = IOUtils.toByteArray(xmlStream);
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
@@ -58,9 +58,17 @@ public class ProcessActorImportService extends ConsoleService {
         } catch (final InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (final Exception e) {
-            throw new ServiceException(e.getMessage());
+            throw new ServiceException(TOKEN, e.getMessage());
         }
 
         return "";
+    }
+
+    protected String getFileUploadParameter() {
+        return getParameter("file");
+    }
+
+    protected long getTenantId() {
+        return getSession().getTenantId();
     }
 }

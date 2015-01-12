@@ -1,5 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
@@ -12,20 +13,27 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
+import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Rule;
@@ -45,6 +53,15 @@ public class APIProcessTest {
     private APIProcess apiProcess;
 
     @Mock
+    private APIServletCall caller;
+
+    @Mock
+    private HttpSession session;
+
+    @Mock
+    private APISession engineSession;
+
+    @Mock
     private ProcessDatastore processDatastore;
 
     @Mock
@@ -60,12 +77,19 @@ public class APIProcessTest {
     public void consoleTestSetUp() {
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
         org.bonitasoft.console.common.server.i18n.I18n.getInstance();
+        given(caller.getHttpSession()).willReturn(session);
+        given(session.getAttribute("apiSession")).willReturn(engineSession);
+        given(engineSession.getTenantId()).willReturn(1L);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, folderRule.getRoot().getPath());
+
         apiProcess = spy(new APIProcess());
+        apiProcess.setCaller(caller);
         doReturn(processDatastore).when(apiProcess).getProcessDatastore();
         doReturn(caseDatastore).when(apiProcess).getCaseDatastore();
         doReturn(webBonitaConstantsUtils).when(apiProcess).getWebBonitaConstantsUtils();
         doNothing().when(apiProcess).deleteOldIconFile(any(APIID.class));
-        doReturn(null).when(apiProcess).uploadIcon(anyString());
+        doReturn(null).when(apiProcess).uploadIcon("Non empty");
+        doReturn(null).when(apiProcess).uploadIcon("");
     }
 
     @Test
@@ -103,7 +127,7 @@ public class APIProcessTest {
         when(processDatastore.get(apiid)).thenReturn(processItem);
 
         final Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put(ProcessItem.ATTRIBUTE_ICON, "Non blank");
+        attributes.put(ProcessItem.ATTRIBUTE_ICON, "Non empty");
 
         // When
         apiProcess.update(apiid, attributes);
@@ -210,6 +234,27 @@ public class APIProcessTest {
         // Then
         verify(item, never()).setAttribute(anyString(), anyLong());
     }
+
+    @Test(expected = APIForbiddenException.class)
+    public void it_throws_an_exception_updating_icon_with_unauthorized_path() throws IOException {
+        // Given
+        final Map<String, String> attributes = new HashMap<String, String>();
+        attributes.put(ProcessItem.ATTRIBUTE_ICON, "C:\\doc.jpg");
+
+        // When
+        apiProcess.update(APIID.makeAPIID(""), attributes);
+    }
+
+    @Test(expected = APIForbiddenException.class)
+    public void it_throws_an_exception_adding_icon_with_unauthorized_path() throws IOException {
+        // Given
+        final ProcessItem processItem = mock(ProcessItem.class);
+        when(processItem.getIcon()).thenReturn("C:\\doc.jpg");
+
+        // When
+        apiProcess.add(processItem);
+    }
+
 
     // TODO finish this test by modifiying the process api to return a folder which can be mocked
     // @Test
