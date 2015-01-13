@@ -40,8 +40,9 @@ public abstract class ConsoleAPI<T extends IItem> extends API<T> {
         return this.sessionSingleton;
     }
 
+    /* this method is in visibility Public for testing purpose. */
     @Override
-    protected String getCompleteTempFilePath(final String path) throws IOException {
+    public String getCompleteTempFilePath(final String path) throws IOException {
         final TenantFolder tenantFolder = new TenantFolder();
         return tenantFolder.getCompleteTempFilePath(path, getEngineSession().getTenantId());
     }

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.web.rest.server.framework.api.APIHasFiles;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
@@ -37,6 +38,7 @@ import org.bonitasoft.web.rest.server.framework.exception.ForbiddenAttributesExc
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.FilePathBuilder;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
@@ -376,6 +378,8 @@ public abstract class API<ITEM extends IItem> {
 
             return upload(attributeName, attributeValue, newDirectory, destinationFilename);
 
+        } catch (final UnauthorizedFolderException e) {
+            throw new APIForbiddenException(e.getMessage());
         } catch (final IOException e) {
             throw new APIException(e);
         }
