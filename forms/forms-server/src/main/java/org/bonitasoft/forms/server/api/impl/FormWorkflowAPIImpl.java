@@ -435,7 +435,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             } else {
                 return NOT_FOUND;
             }
-        } catch (final ProcessInstanceNotFoundException e) {
+        } catch (final ArchivedProcessInstanceNotFoundException e) {
             return NOT_FOUND;
         }
 
@@ -452,10 +452,38 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * @throws BPMEngineException
      * @throws ProcessDefinitionNotFoundException
      */
-    private long getRootProcessInstanceId(final ProcessAPI processApi, final long processInstanceId) throws ProcessInstanceNotFoundException,
+    private long getRootProcessInstanceId(final ProcessAPI processApi, final long processInstanceId) throws ArchivedProcessInstanceNotFoundException,
     InvalidSessionException, BPMEngineException, ProcessDefinitionNotFoundException {
-        final ProcessInstance processInstance = processApi.getProcessInstance(processInstanceId);
-        return identifyRootProcessInstanceId(processInstanceId, processInstance.getRootProcessInstanceId());
+        long rootProcessInstanceId;
+        try {
+            final ProcessInstance processInstance = processApi.getProcessInstance(processInstanceId);
+            rootProcessInstanceId = processInstance.getRootProcessInstanceId();
+        } catch (final ProcessInstanceNotFoundException e) {
+            final ArchivedProcessInstance archivedProcessInstance = getLatestArchivedProcessInstance(processApi, processInstanceId);
+            rootProcessInstanceId = archivedProcessInstance.getRootProcessInstanceId();
+        }
+        return identifyRootProcessInstanceId(processInstanceId, rootProcessInstanceId);
+    }
+
+    private ArchivedProcessInstance getLatestArchivedProcessInstance(final ProcessAPI processApi, final long processInstanceId)
+            throws ArchivedProcessInstanceNotFoundException {
+        ArchivedProcessInstance archivedProcessInstance = null;
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
+        searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+        searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.DESC);
+        SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
+        try {
+            searchArchivedProcessInstances = processApi.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
+        } catch (final SearchException se) {
+            throw new ArchivedProcessInstanceNotFoundException(se);
+        }
+        if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
+            archivedProcessInstance = searchArchivedProcessInstances.getResult().get(0);
+        } else {
+            throw new ArchivedProcessInstanceNotFoundException(new Exception("Unable to find an archive process instance with source ID "
+                    + processInstanceId));
+        }
+        return archivedProcessInstance;
     }
 
     private long identifyRootProcessInstanceId(final long processInstanceId, final long rootProcessInstanceId) {
