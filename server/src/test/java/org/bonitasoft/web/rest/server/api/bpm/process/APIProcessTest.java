@@ -13,6 +13,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -239,7 +240,7 @@ public class APIProcessTest {
     public void it_throws_an_exception_updating_icon_with_unauthorized_path() throws IOException {
         // Given
         final Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put(ProcessItem.ATTRIBUTE_ICON, "C:\\doc.jpg");
+        attributes.put(ProcessItem.ATTRIBUTE_ICON, "." + File.separator + "doc.jpg");
 
         // When
         apiProcess.update(APIID.makeAPIID(""), attributes);
@@ -249,7 +250,7 @@ public class APIProcessTest {
     public void it_throws_an_exception_adding_icon_with_unauthorized_path() throws IOException {
         // Given
         final ProcessItem processItem = mock(ProcessItem.class);
-        when(processItem.getIcon()).thenReturn("C:\\doc.jpg");
+        when(processItem.getIcon()).thenReturn("." + File.separator + "doc.jpg");
 
         // When
         apiProcess.add(processItem);
