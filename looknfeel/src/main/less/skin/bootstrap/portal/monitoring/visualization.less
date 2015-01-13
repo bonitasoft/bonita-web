@@ -45,7 +45,7 @@
   }
 
   .back {
-    margin: 30px 0 0 5px;
+    margin: 0 0 0 5px;
   }
 
   svg {
@@ -72,8 +72,7 @@
     fill: none;
   }
 
-  .nbReadyText,
-  .nbFailedText {
+  .label-text {
     text-anchor: middle;
     font-size: 10px;
     font-weight: bold;
@@ -86,7 +85,14 @@
 
   /* Zoom plugin styles */
   .zoom-buttons {
-    margin: 5px auto;
+    margin: 0 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 130px;
+
+    .reset {
+      margin-left: 0;
+    }
   }
 
   .zoom-buttons button {
@@ -94,9 +100,9 @@
   }
 
   .zoom-range {
-    width: 250px !important;
-    display: inline-block !important;
-    margin: 0 5px;
+    width: 100% !important;
+    display: block;
+    margin: auto;
   }
 
   .zoom-buttons .reset {
@@ -127,30 +133,28 @@
   }
 
   /* Styles for SVG element */
-  svg .label-danger {
-    fill: #d9534f;
+  svg .label-failed {
+    fill: red;
   }
 
-  svg .label-default {
-    fill: #5cb85c;
+  svg .label-ready {
+    fill: #267F00;
   }
 
-  svg .label-exec {
+  svg .label-open {
+    fill: #727272;
+  }
+
+  svg .label-executed {
     fill: #000000;
   }
 
-  svg .hasFailedCases .bordered-box {
-    stroke: #d9534f;
-    fill: #f2dede;
+  svg .label-inProgress {
+    fill: #2C6DA3;
   }
 
-  svg .isReady .bordered-box {
-    stroke: #5cb85c;
-    fill: #dff0d8;
-  }
-
-  svg .isDone .bordered-box {
-    stroke: black;
+  svg .label-cancelled {
+    fill: #515151;
   }
 
   svg .default-edge-strike {
@@ -161,4 +165,87 @@
     fill: white;
     stroke: black;
   }
+
+  &.diagram-only {
+    .back {
+      display: none;
+    }
+    h1 {
+      display: none;
+    }
+  }
+
+  .collapse-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 3px 6px 0 0;
+    font-size: 130%;
+    cursor: pointer;
+  }
+  .collapsed-add.collapsed-add-active,
+  .expanded-add {
+    .transition(all, 300ms, linear);
+
+    width: 20px;
+    height: 20px;
+
+    * {
+      .transition(all, 300ms, linear);
+
+      opacity: 0;
+    }
+
+    .collapse-btn {
+      opacity: 1;
+    }
+  }
+
+  .expanded-add.expanded-add-active,
+  .collapsed-add {
+    .transition(all, 300ms, linear);
+
+    width: 130px;
+    height: auto;
+  }
+
+  .collapsed {
+    width: 20px;
+    height: 20px;
+    border: none;
+
+    * {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .collapse-btn {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .visu-key {
+    cursor: pointer;
+    font-size: 110%;
+    display: block;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 6px;
+  }
+
+  #key-modal .modal-content {
+    margin-top: 20%;
+  }
+}
+
+.no-footer {
+  .footer {
+    display: none;
+  }
+}
+
+[orient="vertical"] {
+  -webkit-appearance: slider-vertical;
+  writing-mode: bt-lr;
 }
