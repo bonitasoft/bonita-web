@@ -35,7 +35,9 @@ import org.bonitasoft.web.rest.server.datastore.bpm.process.ProcessDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,6 +76,8 @@ public class APIProcessTest {
     @Rule
     public TemporaryFolder folderRule = new TemporaryFolder();
 
+    private String savedBonitaHomeProperty;
+    
     @Before
     public void consoleTestSetUp() {
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
@@ -81,6 +85,7 @@ public class APIProcessTest {
         given(caller.getHttpSession()).willReturn(session);
         given(session.getAttribute("apiSession")).willReturn(engineSession);
         given(engineSession.getTenantId()).willReturn(1L);
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, folderRule.getRoot().getPath());
 
         apiProcess = spy(new APIProcess());
@@ -93,6 +98,15 @@ public class APIProcessTest {
         doReturn(null).when(apiProcess).uploadIcon("");
     }
 
+    @After
+    public void teardown() throws Exception {
+        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
+        }
+    }
+    
     @Test
     public void add_should_add_change_icon_path_when_specified() {
         // Given
