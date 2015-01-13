@@ -6,7 +6,10 @@ import static org.mockito.Mockito.spy;
 
 import java.io.File;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.server.ServiceException;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -16,13 +19,15 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class OrganizationImportServiceTest {
+    private String savedBonitaHomeProperty;
 
     @Test
     public void should_verify_authorisation_for_the_given_location_param() throws
     Exception {
 
         final OrganizationImportService organizationImportService = spy(new OrganizationImportService());
-        System.setProperty("bonita.home", "target/bonita-home/bonita");
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
         doReturn(".." + File.separator + ".." + File.separator + ".." + File.separator + "file.txt").when(organizationImportService).getFileUploadParameter();
 
         doReturn(1L).when(organizationImportService).getTenantId();
@@ -33,4 +38,14 @@ public class OrganizationImportServiceTest {
             assertTrue(e.getCause().getMessage().startsWith("Unauthorized access to the file"));
         }
     }
+
+    @After
+    public void teardown() throws Exception {
+        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
+        }
+    }
+
 }

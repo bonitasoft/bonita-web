@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
@@ -34,7 +35,9 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,14 +74,26 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
 
     private final CaseDocumentItem mockedDocumentItem = new CaseDocumentItem();
 
+    private String savedBonitaHomeProperty;
+
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        System.setProperty("bonita.home", "target/bonita-home/bonita");
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
         documentDatastore = spy(new CaseDocumentDatastore(engineSession, constantsValue, processAPI, tenantFolder));
+    }
+
+    @After
+    public void teardown() throws Exception {
+        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
+        }
     }
 
     // ---------- GET METHOD TESTS ------------------------------//

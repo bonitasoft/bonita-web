@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -33,12 +36,15 @@ public class DocumentImageServletTest {
     @Mock
     APISession session;
 
+    private String savedBonitaHomeProperty;
+
     @Test
     public void should_verify_authorisation_for_the_given_location_param() throws
     Exception {
 
         final DocumentImageServlet documentImageServlet = spy(new DocumentImageServlet());
-        System.setProperty("bonita.home", "target/bonita-home/bonita");
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
         when(req.getParameter(DocumentImageServlet.FILE_PATH_PARAM)).thenReturn("../../..");
         when(req.getParameter(DocumentImageServlet.FILE_NAME_PARAM)).thenReturn("file.txt");
         when(req.getParameter(DocumentImageServlet.RESOURCE_FILE_NAME_PARAM)).thenReturn("resources");
@@ -53,6 +59,15 @@ public class DocumentImageServletTest {
             documentImageServlet.doGet(req, res);
         } catch (final ServletException e) {
             assertTrue(e.getMessage().startsWith("For security reasons, access to this file paths"));
+        }
+    }
+
+    @After
+    public void teardown() throws Exception {
+        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
         }
     }
 }
