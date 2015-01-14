@@ -216,36 +216,3 @@ msgstr "View process design"
 msgid "View case design"
 msgstr "View case design"
 
-msgid  "Items per page"
-msgstr "Nombre d'élément par page"
-
-msgid  "Columns selection"
-msgstr "Selection des colonnes"
-
-msgid  "Table settings"
-msgstr "Paramètres de la table"
-
-msgid  "sort by ID ascendant"
-msgstr "trier par ID croissant"
-
-msgid  "sort by ID descendant"
-msgstr "trier par ID décroissant"
-
-msgid  "sort by Process name ascendant"
-msgstr "trier par Nom d'application croissant"
-
-msgid  "sort by Process name descendant"
-msgstr "trier par Nom d'application décroissant"
-
-msgid  "sort by Start date ascendant"
-msgstr "trier par date de début croissant"
-
-msgid  "sort by Start date descendant"
-msgstr "trier par date de début décroissant"
-
-msgid  "sort by End date ascendant"
-msgstr "trier par date de fin croissant"
-
-msgid  "sort by End date descendant"
-msgstr "trier par date de fin décroissant"
-
