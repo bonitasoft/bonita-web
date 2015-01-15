@@ -268,7 +268,8 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_update_a_document_calling_updateDocument_with_upload_Path() throws Exception {
         // Given
         final Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
+        final String uploadPath = getClass().getResource("/doc.jpg").getPath();
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, uploadPath);
 
         when(tenantFolder.getTempFile("C:\\doc.jpg", 1L)).thenReturn(new File("C:\\doc.jpg"));
 
@@ -276,7 +277,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         documentDatastore.update(APIID.makeAPIID(1L), attributes);
 
         // Then
-        verify(documentDatastore).buildDocumentValueFromUploadPath("C:\\doc.jpg", -1);
+        verify(documentDatastore).buildDocumentValueFromUploadPath(uploadPath, -1);
         verify(processAPI).updateDocument(eq(1L), any(DocumentValue.class));
     }
 

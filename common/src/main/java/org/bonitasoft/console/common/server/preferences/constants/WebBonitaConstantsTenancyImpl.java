@@ -92,7 +92,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param tenantId
      *            Tenant Id
      */
@@ -106,6 +106,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
             tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;;
         }
         return tenantsFolderPath;
+    }
+
+    public String getTenantFolderPath() {
+        return tenantFolderPath;
     }
 
     /**
