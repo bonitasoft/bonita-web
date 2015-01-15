@@ -144,7 +144,7 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, expectedDocument.getContentFileName());
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, expectedDocument.getContentMimeType());
 
-        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, File.createTempFile("thisismynewfile", ".doc").getPath());
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, new File(apiCaseDocument.getCompleteTempFilePath("thisismynewfile.doc")).getPath());
 
         apiCaseDocument.update(APIID.makeAPIID(expectedDocument.getId()), attributes);
     }
