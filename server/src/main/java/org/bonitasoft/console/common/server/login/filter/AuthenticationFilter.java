@@ -132,9 +132,7 @@ public class AuthenticationFilter implements Filter {
         if (!isAuthorized(requestAccessor, responseAccessor, tenantIdAccessor, chain)) {
 
             cleanHttpSession(requestAccessor.getHttpSession());
-            responseAccessor.redirect(createLoginUrl(requestAccessor.asHttpServletRequest(),
-                    makeRedirectUrl(requestAccessor).getUrl(),
-                    tenantIdAccessor.getRequestedTenantId()));
+            responseAccessor.redirect(createLoginUrl(requestAccessor, tenantIdAccessor));
         }
     }
 
@@ -164,9 +162,9 @@ public class AuthenticationFilter implements Filter {
     }
 
     // protected for test stubbing
-    protected LoginManager getLoginManager(final long tenantId) throws ServletException {
+    protected LoginManager getLoginManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return LoginManagerFactory.getLoginManager(tenantId);
+            return LoginManagerFactory.getLoginManager(tenantIdAccessor.ensureTenantId());
         } catch (final LoginManagerNotFoundException e) {
             throw new ServletException(e);
         }
@@ -205,11 +203,11 @@ public class AuthenticationFilter implements Filter {
         return builder.build();
     }
 
-    protected LoginUrl createLoginUrl(final HttpServletRequest request, final String redirectUrl, final long requestedTenantId) throws ServletException {
+    protected LoginUrl createLoginUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return new LoginUrl(getLoginManager(requestedTenantId),
-                    requestedTenantId,
-                    redirectUrl, request);
+            return new LoginUrl(getLoginManager(tenantIdAccessor),
+                    tenantIdAccessor.getRequestedTenantId(),
+                    makeRedirectUrl(requestAccessor).getUrl(), requestAccessor.asHttpServletRequest());
         } catch (final LoginUrlException e) {
             throw new ServletException(e);
         }

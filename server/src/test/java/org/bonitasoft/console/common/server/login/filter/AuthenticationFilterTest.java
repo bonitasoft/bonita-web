@@ -16,7 +16,6 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -90,7 +89,7 @@ public class AuthenticationFilterTest {
         initMocks(this);
         doReturn(httpSession).when(request).getHttpSession();
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
-        doReturn(new StandardLoginManagerImpl()).when(authenticationFilter).getLoginManager(anyLong());
+        doReturn(new StandardLoginManagerImpl()).when(authenticationFilter).getLoginManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
     }
 
