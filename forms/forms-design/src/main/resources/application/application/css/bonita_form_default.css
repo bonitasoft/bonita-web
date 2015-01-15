@@ -164,7 +164,7 @@ textarea.bonita_form_field, div.bonita_form_field div.bonita_rich_text {
 	font-size: 100%;
 	border: 1px solid #c2c2c2;
 	-moz-box-shadow: 0 0 0 #cccccc;
-	height:75px;
+	height:auto;
 }
 
 .bonita_form_label {
