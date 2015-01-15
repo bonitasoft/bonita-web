@@ -271,7 +271,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         final String uploadPath = getClass().getResource("/doc.jpg").getPath();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, uploadPath);
 
-        when(tenantFolder.getTempFile("C:\\doc.jpg", 1L)).thenReturn(new File("C:\\doc.jpg"));
+        when(tenantFolder.getTempFile(uploadPath, 1L)).thenReturn(new File(uploadPath));
 
         // When
         documentDatastore.update(APIID.makeAPIID(1L), attributes);
