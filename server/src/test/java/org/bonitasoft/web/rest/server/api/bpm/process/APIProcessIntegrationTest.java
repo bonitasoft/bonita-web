@@ -52,7 +52,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         // upload process archive
         final BusinessArchive businessArchive = new BusinessArchiveBuilder().createNewBusinessArchive()
                 .setProcessDefinition(new ProcessDefinitionBuilder().createNewInstance("Test process", "1.0").done()).done();
-        final File file = writeBarToFolder("addProcessTest", businessArchive, 1L);
+        final File file = writeBarToFolder("addProcessTest", businessArchive, TestUserFactory.getJohnCarpenter().getSession().getTenantId());
 
         // use api to deploy process uploaded
         final ProcessItem item = new ProcessItem();
