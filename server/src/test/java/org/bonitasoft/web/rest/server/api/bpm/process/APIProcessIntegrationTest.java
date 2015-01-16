@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -49,7 +50,12 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
      */
     @Test
     public void testAddProcessItem() throws Exception {
-        // upload process archive
+        //final upload process archive
+        final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator
+                + TestUserFactory.getJohnCarpenter().getSession().getTenantId();
+        final File tmpDir = new File(targetDirPath + File.separator + WebBonitaConstants.tmpFolderName);
+        tmpDir.mkdir();
+
         final BusinessArchive businessArchive = new BusinessArchiveBuilder().createNewBusinessArchive()
                 .setProcessDefinition(new ProcessDefinitionBuilder().createNewInstance("Test process", "1.0").done()).done();
         final File file = writeBarToFolder("addProcessTest", businessArchive, TestUserFactory.getJohnCarpenter().getSession().getTenantId());
