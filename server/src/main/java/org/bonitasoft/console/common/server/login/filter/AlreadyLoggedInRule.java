@@ -17,6 +17,7 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,10 +28,10 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
-public class AlreadyLoggedInRule implements AuthorizationRule {
+public class AlreadyLoggedInRule extends AuthenticationRule {
 
     @Override
-    public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) {
+    public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         if (isUserAlreadyLoggedIn(request, tenantIdAccessor)) {
             ensureUserSession(request.asHttpServletRequest(),
                     request.getHttpSession(),
@@ -43,7 +44,7 @@ public class AlreadyLoggedInRule implements AuthorizationRule {
     /**
      * Overridden is Subscription
      */
-    protected boolean isUserAlreadyLoggedIn(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) {
+    protected boolean isUserAlreadyLoggedIn(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         return request.getApiSession() != null;
     }
 
