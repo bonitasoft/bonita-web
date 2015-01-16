@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,20 +20,20 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.login.LoginManagerProperties;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
 /**
  * @author Ruiheng.Fan
- * 
+ *
  */
 public class LoginManagerPropertiesFactory {
-    
+
     /**
      * Default name of the form definition file
      */
     protected static final String LOGIN_CONFIG_FILE_NAME = "loginManager-config.properties";
-    
+
     private static final Map<Long, LoginManagerProperties> map = new HashMap<Long, LoginManagerProperties>();
 
     public LoginManagerProperties getProperties(final long tenantId) {
@@ -42,15 +42,14 @@ public class LoginManagerPropertiesFactory {
         }
         return map.get(tenantId);
     }
-    
-    private LoginManagerProperties createLoginManagerPropertiesForTenant(long tenantId) {
-        WebBonitaConstantsUtils webConstantsUtils = null;
+
+    private LoginManagerProperties createLoginManagerPropertiesForTenant(final long tenantId) {
+        long resolvedTenantId = tenantId;
         if (tenantId == -1L) {
-            webConstantsUtils = WebBonitaConstantsUtils.getInstance();
-        } else {
-            webConstantsUtils = WebBonitaConstantsUtils.getInstance(tenantId);
+            resolvedTenantId = TenantsManagementUtils.getDefaultTenantId();
         }
-        File propertiesFile = new File(webConstantsUtils.getConfFolder(), LOGIN_CONFIG_FILE_NAME);
+        final WebBonitaConstantsUtils webConstantsUtils = WebBonitaConstantsUtils.getInstance(resolvedTenantId);
+        final File propertiesFile = new File(webConstantsUtils.getConfFolder(), LOGIN_CONFIG_FILE_NAME);
         return new LoginManagerProperties(propertiesFile);
     }
 
