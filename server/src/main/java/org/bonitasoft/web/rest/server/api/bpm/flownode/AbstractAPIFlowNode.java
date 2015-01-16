@@ -43,6 +43,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.search.ISearchDirection;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -54,9 +55,9 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  * @author Séverin Moussel
  */
 public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<ITEM> implements
-        APIHasUpdate<ITEM>,
-        APIHasGet<ITEM>,
-        APIHasSearch<ITEM> {
+APIHasUpdate<ITEM>,
+APIHasGet<ITEM>,
+APIHasSearch<ITEM> {
 
     @Override
     protected FlowNodeDefinition defineItemDefinition() {
@@ -65,7 +66,7 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
 
     @Override
     public String defineDefaultSearchOrder() {
-        return FlowNodeInstanceSearchDescriptor.DISPLAY_NAME;
+        return FlowNodeInstanceSearchDescriptor.DISPLAY_NAME + ISearchDirection.SORT_ORDER_ASCENDING;
     }
 
     @Override
@@ -115,13 +116,19 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
                     new ProcessDatastore(getEngineSession()).get(item.getProcessId()));
         }
 
-        if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID,
-                    new CaseDatastore(getEngineSession()).get(item.getCaseId()));
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item) || isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, deploys, item)) {
+            final CaseItem item2 = getCaseDatastore().get(item.getCaseId());
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, item2);
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, item2);
+        }
+
+        if (isDeployable(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, deploys, item)) {
+            item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
+                    getCaseDatastore().get(item.getParentCaseId()));
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
-            CaseItem rootContainerCase = new CaseDatastore(getEngineSession()).get(item
+            CaseItem rootContainerCase = getCaseDatastore().get(item
                     .getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
             if (rootContainerCase == null) {
                 rootContainerCase = getArchivedCase(item.getAttributeValue(HumanTaskItem.ATTRIBUTE_ROOT_CONTAINER_ID));
@@ -164,8 +171,13 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         super.fillDeploys(item, deploys);
     }
 
+    protected CaseDatastore getCaseDatastore() {
+        return new CaseDatastore(getEngineSession());
+    }
+
     private CaseItem getArchivedCase(final String id) {
-        final List<ArchivedCaseItem> result = new ArchivedCaseDatastore(getEngineSession()).search(
+        final List<ArchivedCaseItem> result = getArchivedCaseDatastore
+                ().search(
                 0, 1,
                 null,
                 null,
@@ -176,11 +188,17 @@ public class AbstractAPIFlowNode<ITEM extends IFlowNodeItem> extends ConsoleAPI<
         return null;
     }
 
+    protected ArchivedCaseDatastore getArchivedCaseDatastore() {
+        return new ArchivedCaseDatastore(getEngineSession());
+    }
+
     @Override
     protected List<String> defineReadOnlyAttributes() {
         final List<String> attributes = new ArrayList<String>();
 
         attributes.add(FlowNodeItem.ATTRIBUTE_CASE_ID);
+        attributes.add(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID);
+        attributes.add(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_PROCESS_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_DESCRIPTION);
         attributes.add(FlowNodeItem.ATTRIBUTE_NAME);

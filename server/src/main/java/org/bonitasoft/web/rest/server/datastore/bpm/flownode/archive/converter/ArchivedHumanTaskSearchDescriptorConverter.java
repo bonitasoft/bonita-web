@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,6 +17,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
@@ -26,7 +25,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class ArchivedHumanTaskSearchDescriptorConverter extends ArchivedActivitySearchDescriptorConverter {
 
@@ -34,6 +32,8 @@ public class ArchivedHumanTaskSearchDescriptorConverter extends ArchivedActivity
 
     static {
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
+        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, ArchivedActivityInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_PROCESS_ID, ArchivedHumanTaskInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_STATE, ArchivedHumanTaskInstanceSearchDescriptor.STATE_NAME);
         mapping.put(ArchivedActivityItem.ATTRIBUTE_REACHED_STATE_DATE, ArchivedHumanTaskInstanceSearchDescriptor.REACHED_STATE_DATE);

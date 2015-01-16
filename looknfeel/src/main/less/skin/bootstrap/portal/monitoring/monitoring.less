@@ -3,8 +3,28 @@
 @titleColor: #b20706;
 
 .monitoring-page {
+  margin-top: -35px;
+
+  .table td {
+    padding: 5px 8px;
+  }
+
+  #total-panel {
+    margin-top: 20px;
+  }
+
+  .col-lg-offset-1_5 {
+    margin-left: 12.5%;
+  }
+
   .panel-default > .panel-heading {
     color: @panelHeaderBG;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .panel-body {
+    padding-bottom: 10px;
   }
 
   .center {
@@ -13,11 +33,6 @@
   }
 
   .totalMonitoring {
-    width: 20%;
-    min-width: 200px;
-    margin: 0px 2px 0px 2px;
-    padding: 5px 10px;
-    display: inline-block;
     font-size: 20px;
   }
 
@@ -63,7 +78,7 @@
 
   .refreshBlock {
     position: relative;
-    bottom: 40px;
+    bottom: 32px;
     right: 16px;
   }
 
@@ -72,7 +87,7 @@
     font-size: 10px;
   }
   .pagination-results {
-    margin: 18px 20px;
+    margin: 18px 20px 0;
   }
 
   .paginationBlock {
@@ -108,7 +123,7 @@
   }
 
   .center {
-    margin: 10px 0 20px;
+    margin: 10px 0 5px;
   }
 
   .table {
@@ -116,12 +131,13 @@
   }
 
   h1 {
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     color: @titleColor;
   }
 
   .pagination {
     margin-top: 10px;
+    margin-bottom: 0;
   }
 
   #process-list .panel-body {
@@ -161,25 +177,27 @@
     to { transform: scale(1) rotate(360deg);}
   }
 
-  #process-list .number-column,
-  #process-list .version-column {
+  .number-column {
     width: 150px;
   }
 
-  #process-list .icon-column {
+  .version-column,
+  .action-column {
+    width: 100px;
+  }
+
+  .icons-column {
     width: 1%;
     white-space: nowrap;
   }
 
-  #process-list .action-column {
-    width: 250px;
-  }
-
   .totals-panel .panel-heading {
     border-bottom: none;
+    position: relative;
 
     h4 {
       position: absolute;
+      top: 0;
       color: @panelHeaderBG;
     }
   }
@@ -193,4 +211,37 @@
     text-decoration: inherit;
   }
 
+  .clickable:focus {
+    outline: none;
+  }
+
+  .popover-error {
+    background-color: #f2dede;
+    color: #a94442;
+
+    &.top > .arrow:after {
+      border-top-color: #f2dede;
+    }
+    &.left > .arrow:after {
+      border-left-color: #f2dede;
+    }
+    &.right > .arrow:after {
+      border-right-color: #f2dede;
+    }
+    &.bottom > .arrow:after {
+      border-bottom-color: #f2dede;
+    }
+  }
+}
+
+@media (max-width: 1500px) and (min-width: 1199px) {
+  .monitoring-page {
+    .col-1500-10 {
+      width: 83.333333333%;
+    }
+    .col-1500-offset-1 {
+      margin-left: 8.3333333333%;
+    }
+
+  }
 }

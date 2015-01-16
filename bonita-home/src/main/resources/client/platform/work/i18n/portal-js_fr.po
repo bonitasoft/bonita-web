@@ -3,37 +3,86 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2014-11-18 10:58-0500\n"
+"PO-Revision-Date: 2014-12-30 04:38-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: crowdin.com\n"
+"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
 
 msgid "Columns"
 msgstr "Colonnes"
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
-msgstr "Résultats : {{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Ces cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "Le cas supprimé sera définitivement supprimé des archives."
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "Ces cas supprimés disparaîtront définitivement des archives."
+
+msgid "Failed Flow Nodes"
+msgstr "Flow nodes en erreur"
+
+msgid "Pending Flow Nodes"
+msgstr "Flow nodes en attente"
+
+msgid "No cases to display"
+msgstr "Aucun cas à afficher"
+
+msgid "Case list"
+msgstr "Liste des cas"
+
+msgid "End date"
+msgstr "Date de fin "
+
+msgid "Confirm delete?"
+msgstr "Confirmer la suppression ?"
 
 msgid "Filters"
 msgstr "Filtres"
 
-msgid "All versions"
-msgstr "Toutes les versions"
+msgid "Archived cases"
+msgstr "Cas archivés"
 
-msgid "All apps"
-msgstr "Tous les processus"
+msgid "With failures"
+msgstr "Avec erreurs"
 
-msgid "Monitor active cases"
-msgstr "Monitore les cas actifs"
+msgid "items per page"
+msgstr "éléments par page"
+
+msgid "View case details"
+msgstr "View case details"
+
+msgid "columns selection"
+msgstr "sélection des colonnes"
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr "{{nbOfDeletedCases}} cas supprimé avec succès"
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr "{{nbOfDeletedCases}} cas supprimés avec succès"
+
+msgid "One or more connectors on case start or case end failed"
+msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
+
+msgid "Monitor open cases"
+msgstr "Monitoring des cas en cours"
 
 msgid "Open cases"
-msgstr "Cas démarrés"
+msgstr "Cas en cours"
 
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
@@ -81,23 +130,29 @@ msgstr "Tous"
 msgid "Never"
 msgstr "Jamais"
 
-msgid "30 s."
-msgstr "30 sec."
-
 msgid "1 min."
 msgstr "1 min."
+
+msgid "5 min."
+msgstr "5 min."
 
 msgid "10 min."
 msgstr "10 min."
 
+msgid "30 min."
+msgstr "30 min."
+
+msgid "1 h."
+msgstr "1 h."
+
 msgid "Technical error."
 msgstr "Erreur technique."
 
-msgid "Process state"
-msgstr "État du processus"
+msgid "State"
+msgstr "Etat"
 
 msgid "Show"
-msgstr "Voir"
+msgstr "Afficher"
 
 msgid "Healthy cases"
 msgstr "Cas sans erreur"
@@ -113,4 +168,51 @@ msgstr "Etat du cas"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+
+msgid "Disabled, no new case can be started"
+msgstr "Désactivé, aucun nouveau cas peut être démarré"
+
+msgid "Process enabled"
+msgstr "Processus activé"
+
+msgid "View case list"
+msgstr "Voir la liste des cas"
+
+msgid "View process"
+msgstr "Voir le processus"
+
+msgid "Drawing process..."
+msgstr "Dessin du processus ..."
+
+msgid "Error on drawing process!"
+msgstr "Erreur lors du dessin de processus !"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "NIVEAU DE ZOOM PAR DEFAUT"
+
+msgid "MIN"
+msgstr "MIN"
+
+msgid "MAX"
+msgstr "MAX"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Totals"
+msgstr "Totaux\n"
+""
+
+msgid "Loading..."
+msgstr "Chargement..."
+
+msgid "Totals"
+msgstr "Totaux\n"
+""
+
+msgid "View process design"
+msgstr "View process design"
+
+msgid "View case design"
+msgstr "View case design"
 

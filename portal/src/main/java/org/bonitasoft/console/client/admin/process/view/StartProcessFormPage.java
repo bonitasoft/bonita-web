@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ import com.google.gwt.user.client.Element;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
- * 
+ *
  */
 public class StartProcessFormPage extends Page {
 
@@ -72,7 +72,7 @@ public class StartProcessFormPage extends Page {
     @Override
     public void buildView() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String decodedProcessName = URL.encodeQueryString(processName);
+        final String encodedProcessName = URL.encodeQueryString(processName);
         final String processVersion = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_VERSION));
         final String processId = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_ID));
 
@@ -82,21 +82,21 @@ public class StartProcessFormPage extends Page {
         if (userId == null) {
             userId = Session.getUserId().toString();
         }
-        this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", decodedProcessName)));
-        StringBuilder frameURL = new StringBuilder();
+        this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", processName)));
+        final StringBuilder frameURL = new StringBuilder();
 
         frameURL.append(GWT.getModuleBaseURL())
                 .append("homepage?ui=form&locale=")
                 .append(locale);
 
         // if tenant is filled in portal url add tenant parameter to IFrame url
-        String tenantId = ClientApplicationURL.getTenantId();
+        final String tenantId = ClientApplicationURL.getTenantId();
         if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenant=").append(tenantId);
         }
 
         frameURL.append("#form=")
-                .append(processName)
+                .append(encodedProcessName)
                 .append(UUID_SEPERATOR)
                 .append(processVersion)
                 .append("$entry&process=")

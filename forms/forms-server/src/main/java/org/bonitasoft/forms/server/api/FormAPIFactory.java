@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,6 +19,8 @@ package org.bonitasoft.forms.server.api;
 import java.util.Date;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
+import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.impl.FormDefinitionAPIImpl;
 import org.bonitasoft.forms.server.api.impl.FormExpressionsAPIImpl;
 import org.bonitasoft.forms.server.api.impl.FormValidationAPIImpl;
@@ -28,7 +30,7 @@ import org.w3c.dom.Document;
 
 /**
  * @author Anthony Birembaut
- * 
+ *
  */
 public class FormAPIFactory {
 
@@ -60,11 +62,12 @@ public class FormAPIFactory {
             throws InvalidFormDefinitionException {
         long tenantToUse = tenantID;
         if (tenantID == -1) {
-            String tenantIDStr = PropertiesFactory.getPlatformTenantConfigProperties().getDefaultTenantId();
+            final String tenantIDStr = PropertiesFactory.getPlatformTenantConfigProperties().getDefaultTenantId();
             if (tenantIDStr != null) {
                 tenantToUse = Long.parseLong(tenantIDStr);
             }
         }
-        return new FormDefinitionAPIImpl(tenantToUse, document, processDeployementDate, locale);
+        final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(tenantID);
+        return new FormDefinitionAPIImpl(tenantToUse, document, formCacheUtil, processDeployementDate, locale);
     }
 }

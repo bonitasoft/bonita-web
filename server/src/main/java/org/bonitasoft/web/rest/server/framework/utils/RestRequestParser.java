@@ -31,12 +31,12 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class RestRequestParser {
 
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
     private String apiName;
     private String resourceName;
     private APIID id;
 
-    public RestRequestParser(HttpServletRequest request) {
+    public RestRequestParser(final HttpServletRequest request) {
         this.request = request;
     }
 
@@ -53,7 +53,12 @@ public class RestRequestParser {
     }
 
     public RestRequestParser invoke() {
-        final String[] path = request.getPathInfo().split("/");
+        String pathInfo = request.getPathInfo();
+        if (pathInfo == null) {
+            // it's not an URL like API/bpm/...
+            pathInfo = request.getServletPath();
+        }
+        final String[] path = pathInfo.split("/");
         // Read API tokens
         if (path.length < 3) {
             throw new APIMalformedUrlException("Missing API or resource name [" + request.getRequestURL() + "]");

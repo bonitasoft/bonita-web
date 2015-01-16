@@ -1,21 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<artifactId>forms-parent</artifactId>
 		<groupId>org.bonitasoft.forms</groupId>
-		<version>6.4.0-SNAPSHOT</version>
+		<version>6.5.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>forms-server</artifactId>
 	<name>forms server</name>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.bonitasoft.console</groupId>
-            <artifactId>console-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.forms</groupId>
 			<artifactId>forms-rpc</artifactId>
@@ -44,10 +45,10 @@
 			<artifactId>gwt-user</artifactId>
 			<scope>provided</scope>
 		</dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.engine</groupId>
 			<artifactId>bonita-client</artifactId>
@@ -56,10 +57,10 @@
 			<groupId>org.bonitasoft.engine</groupId>
 			<artifactId>bonita-common</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.engine</groupId>
 			<artifactId>bonita-server</artifactId>
@@ -89,18 +90,24 @@
 			<version>1.5.5</version>
 			<scope>test</scope>
 		</dependency>
-        <!-- Local JNDI implementation -->
-        <dependency>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.18.1-GA</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- Local JNDI implementation -->
+		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
 			<artifactId>test-toolkit</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-		  <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -143,22 +150,7 @@
 				<executions>
 					<execution>
 						<id>unpack-bonita-home</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bonitasoft.console</groupId>
-									<artifactId>bonita-home</artifactId>
-                                    <version>${project.version}</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${project.build.directory}/bonita-home</outputDirectory>
-						</configuration>
+						<phase>generate-test-resources</phase>
 					</execution>
 				</executions>
 			</plugin>

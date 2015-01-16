@@ -1,5 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode.archive;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -39,8 +40,8 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
 
     @Override
     public void consoleTestSetUp() throws Exception {
-        this.apiArchivedHumanTask = new APIArchivedHumanTask();
-        this.apiArchivedHumanTask.setCaller(getAPICaller(getInitiator().getSession(), "API/bpm/archivedHumanTask"));
+        apiArchivedHumanTask = new APIArchivedHumanTask();
+        apiArchivedHumanTask.setCaller(getAPICaller(getInitiator().getSession(), "API/bpm/archivedHumanTask"));
     }
 
     @Override
@@ -49,14 +50,14 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     }
 
     private HumanTaskInstance initArchivedHumanTaskInstance() throws Exception {
-        TestProcess defaultHumanTaskProcess = TestProcessFactory.getDefaultHumanTaskProcess();
+        final TestProcess defaultHumanTaskProcess = TestProcessFactory.getDefaultHumanTaskProcess();
         defaultHumanTaskProcess.addActor(getInitiator());
-        ProcessInstance processInstance = defaultHumanTaskProcess.startCase(getInitiator()).getProcessInstance();
-        
+        final ProcessInstance processInstance = defaultHumanTaskProcess.startCase(getInitiator()).getProcessInstance();
+
         waitPendingHumanTask();
-        
+
         // Retrieve a humanTaskInstance
-        HumanTaskInstance humanTaskInstance = getProcessAPI().getPendingHumanTaskInstances(getInitiator().getId(), 0, 10, null).get(0);
+        final HumanTaskInstance humanTaskInstance = getProcessAPI().getPendingHumanTaskInstances(getInitiator().getId(), 0, 10, null).get(0);
         getProcessAPI().assignUserTask(humanTaskInstance.getId(), getInitiator().getId());
 
         waitAssignedHumanTask();
@@ -64,7 +65,7 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         getProcessAPI().executeFlowNode(humanTaskInstance.getId());
 
         waitArchivedActivityInstance(processInstance.getId());
-        
+
         return humanTaskInstance;
     }
 
@@ -78,13 +79,13 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         return deploys;
     }
 
-    private HashMap<String, String> getNameFilter(HumanTaskInstance humanTaskInstance) {
+    private HashMap<String, String> getNameFilter(final HumanTaskInstance humanTaskInstance) {
         final HashMap<String, String> filters = new HashMap<String, String>();
         filters.put(ArchivedHumanTaskItem.ATTRIBUTE_NAME, humanTaskInstance.getName());
         return filters;
     }
 
-    private Map<String, String> buildArchivedHumanTaskStateCompletedForCaseIdFilter(APIID caseId) {
+    private Map<String, String> buildArchivedHumanTaskStateCompletedForCaseIdFilter(final APIID caseId) {
         return MapUtil.asMap(new Arg(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, caseId));
     }
 
@@ -93,7 +94,7 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
      */
     private void waitPendingHumanTask() throws Exception {
         Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 1000) {
-    
+
             @Override
             protected boolean check() throws Exception {
                 return getProcessAPI().getPendingHumanTaskInstances(getInitiator().getId(), 0, 10, null).size() >= 1;
@@ -103,7 +104,7 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
 
     private void waitAssignedHumanTask() throws Exception {
         Assert.assertTrue("Human task hasnt been assign", new WaitUntil(50, 3000) {
-    
+
             @Override
             protected boolean check() throws Exception {
                 return getProcessAPI().getAssignedHumanTaskInstances(getInitiator().getId(), 0, 10,
@@ -117,10 +118,10 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
      */
     private void waitArchivedActivityInstance(final long processInstanceId) throws Exception {
         Assert.assertTrue("no archived task instances are found", new WaitUntil(50, 3000) {
-    
+
             @Override
             protected boolean check() throws Exception {
-                SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+                final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
                 searchOptionsBuilder.filter(ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, processInstanceId);
                 return getProcessAPI().searchArchivedActivities(searchOptionsBuilder.done()).getCount() >= 1L;
             }
@@ -129,40 +130,54 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testGetArchivedHumanTask() throws Exception {
-        HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
-        ArrayList<String> deploys = getProcessIdDeploy();
-        
-        ArchivedHumanTaskItem archivedHumanTaskItem = 
+        final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
+        final ArrayList<String> deploys = getProcessIdDeploy();
+
+        final ArchivedHumanTaskItem archivedHumanTaskItem =
                 apiArchivedHumanTask.runGet(makeAPIID(humanTaskInstance.getId()), deploys, new ArrayList<String>());
-        
+
         assertEquals("Can't get the good archivedTaskItem", archivedHumanTaskItem.getName(), humanTaskInstance.getName());
     }
 
     @Test
     public void testSearchArchivedHumanTask() throws Exception {
-        HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
-        ArrayList<String> deploys = getProcessIdDeploy();
-        HashMap<String, String> filters = getNameFilter(humanTaskInstance);
+        final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
+        final ArrayList<String> deploys = getProcessIdDeploy();
+        final HashMap<String, String> filters = getNameFilter(humanTaskInstance);
 
-        ArchivedHumanTaskItem archivedHumanTaskItem = apiArchivedHumanTask.runSearch(0, 1, null, null,
+        final ArchivedHumanTaskItem archivedHumanTaskItem = apiArchivedHumanTask.runSearch(0, 1, null, null,
                 filters, deploys, new ArrayList<String>()).getResults().get(0);
-        
+
         assertNotNull("Can't find the good archivedTaskItem", archivedHumanTaskItem);
     }
 
     @Test
     public void testGetDatastore() {
-        assertNotNull("Can't get the Datastore", this.apiArchivedHumanTask.getDefaultDatastore());
+        assertNotNull("Can't get the Datastore", apiArchivedHumanTask.getDefaultDatastore());
     }
-    
+
     @Test
-    // FIXME : add an assertion
     public void archivedHumanTasksCanBeSortedByReachedStateDate() throws Exception {
-        Map<String, String> filters = buildArchivedHumanTaskStateCompletedForCaseIdFilter(makeAPIID(1L));
-        String orders = ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE + " DESC";
-        
-        ItemSearchResult<ArchivedHumanTaskItem> search = apiArchivedHumanTask.runSearch(0, 1, null, orders, filters, null, null);
-        
-//        assertEquals(search.getResults().get(0).getSourceObjectId(), archive.getId());
+        shouldSearchArchivedHumaTaskWithOrder(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE + " DESC");
     }
+
+    @Test
+    public void testSearchWithDefaultOrder() throws Exception {
+        shouldSearchArchivedHumaTaskWithOrder(apiArchivedHumanTask.defineDefaultSearchOrder());
+
+    }
+
+    private void shouldSearchArchivedHumaTaskWithOrder(final String orders) throws Exception {
+        //given
+        final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
+        final ArrayList<String> deploys = getProcessIdDeploy();
+        final HashMap<String, String> filters = getNameFilter(humanTaskInstance);
+
+        //when
+        final ItemSearchResult<ArchivedHumanTaskItem> search = apiArchivedHumanTask.runSearch(0, 1, null, orders, filters, null, null);
+
+        //then
+        assertThat(search.getResults()).as("should get results").isNotEmpty();
+    }
+
 }

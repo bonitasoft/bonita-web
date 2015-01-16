@@ -20,22 +20,69 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-msgid "Results: {{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{total}}"
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr ""
+
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr ""
+
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr ""
+
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr ""
+
+msgid "Failed Flow Nodes"
+msgstr ""
+
+msgid "Pending Flow Nodes"
+msgstr ""
+
+msgid "No cases to display"
+msgstr ""
+
+msgid "Case list"
+msgstr ""
+
+msgid "End date"
+msgstr ""
+
+msgid "Confirm delete?"
 msgstr ""
 
 msgid "Filters"
 msgstr ""
 
-msgid "All versions"
+msgid "Archived cases"
 msgstr ""
 
-msgid "All apps"
+msgid "With failures"
 msgstr ""
 
+msgid "items per page"
+msgstr ""
+
+msgid "View case details"
+msgstr ""
+
+msgid "columns selection"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} case deleted successfully"
+msgstr ""
+
+msgid "{{nbOfDeletedCases}} cases deleted successfully"
+msgstr ""
+
+msgid "One or more connectors on case start or case end failed"
+msgstr ""
 
 # processMonitoring
 
-msgid  "Monitor active cases"
+msgid  "Monitor open cases"
 msgstr ""
 
 msgid "Open cases"
@@ -87,19 +134,25 @@ msgstr ""
 msgid  "Never"
 msgstr ""
 
-msgid  "30 s."
+msgid  "1 min."
 msgstr ""
 
-msgid  "1 min."
+msgid  "5 min."
 msgstr ""
 
 msgid  "10 min."
 msgstr ""
 
+msgid  "30 min."
+msgstr ""
+
+msgid  "1 h."
+msgstr ""
+
 msgid  "Technical error."
 msgstr ""
 
-msgid  "Process state"
+msgid  "State"
 msgstr ""
 
 msgid  "Show"
@@ -118,4 +171,104 @@ msgid  "Case state"
 msgstr ""
 
 msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr ""
+
+msgid  "Disabled, no new case can be started"
+msgstr ""
+
+msgid  "Process enabled"
+msgstr ""
+
+msgid  "View case list"
+msgstr ""
+
+msgid  "View process"
+msgstr ""
+
+msgid  "Drawing process..."
+msgstr ""
+
+msgid  "Error on drawing process!"
+msgstr ""
+
+msgid  "DEFAULT ZOOM LEVEL"
+msgstr ""
+
+msgid  "MIN"
+msgstr ""
+
+msgid  "MAX"
+msgstr ""
+
+msgid  "Version"
+msgstr ""
+
+msgid  "Totals"
+msgstr ""
+
+msgid  "Loading..."
+msgstr ""
+
+msgid  "Totals"
+msgstr ""
+
+msgid  "View process design"
+msgstr ""
+
+msgid  "View case design"
+msgstr ""
+
+# Case Visu - Show Key
+msgid  "Show key"
+msgstr ""
+
+msgid  "Task1"
+msgstr ""
+
+msgid  "Cancelled, skipped instances"
+msgstr ""
+
+msgid  "Completed instances"
+msgstr ""
+
+msgid  "Failed instances"
+msgstr ""
+
+msgid  "Executing, completing, initializing instances"
+msgstr ""
+
+msgid  "Ready, waiting instances"
+msgstr ""
+
+msgid  "Items per page"
+msgstr ""
+
+msgid  "Columns selection"
+msgstr ""
+
+msgid  "Table settings"
+msgstr ""
+
+msgid  "sort by ID ascendant"
+msgstr ""
+
+msgid  "sort by ID descendant"
+msgstr ""
+
+msgid  "sort by Process name ascendant"
+msgstr ""
+
+msgid  "sort by Process name descendant"
+msgstr ""
+
+msgid  "sort by Start date ascendant"
+msgstr ""
+
+msgid  "sort by Start date descendant"
+msgstr ""
+
+msgid  "sort by End date ascendant"
+msgstr ""
+
+msgid  "sort by End date descendant"
 msgstr ""

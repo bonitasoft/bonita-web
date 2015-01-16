@@ -49,12 +49,6 @@ public class FormWorkflowUtil {
 
     public static final String EXECUTE_ACTION_AND_START_INSTANCE = "executeActionsAndStartInstance";
     
-    public static final String GET_UPDATED_VARIABLE_VALUES_FOR_PROCESS_DEFINITION = "getUpdatedVariableValuesForProcessDefinition";
-
-    public static final String GET_UPDATED_VARIABLE_VALUES_FOR_PROCESS_INSTANCE = "getUpdatedVariableValuesForProcessInstance";
-    
-    public static final String GET_UPDATED_VARIABLE_VALUES_FOR_ACTIVITY_INSTANCE = "getUpdatedVariableValuesForActivityInstance";
-    
     public static final String IS_ALLOWED_TO_SEE_OVERVIEW_FORM = "isAllowedToSeeOverviewForm";
 
 }
