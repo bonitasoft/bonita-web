@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-01-06 06:11-0500\n"
+"PO-Revision-Date: 2015-01-16 08:33-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -215,4 +215,59 @@ msgstr "View process design"
 
 msgid "View case design"
 msgstr "View case design"
+
+# Case Visu - Show Key
+msgid "Show key"
+msgstr "Show key"
+
+msgid "Task1"
+msgstr "Task1"
+
+msgid "Cancelled, skipped instances"
+msgstr "Cancelled, skipped instances"
+
+msgid "Completed instances"
+msgstr "Completed instances"
+
+msgid "Failed instances"
+msgstr "Failed instances"
+
+msgid "Executing, completing, initializing instances"
+msgstr "Executing, completing, initializing instances"
+
+msgid "Ready, waiting instances"
+msgstr "Ready, waiting instances"
+
+msgid "Items per page"
+msgstr "Items per page"
+
+msgid "Columns selection"
+msgstr "Columns selection"
+
+msgid "Table settings"
+msgstr "Table settings"
+
+msgid "sort by ID ascendant"
+msgstr "sort by ID ascendant"
+
+msgid "sort by ID descendant"
+msgstr "sort by ID descendant"
+
+msgid "sort by Process name ascendant"
+msgstr "sort by Process name ascendant"
+
+msgid "sort by Process name descendant"
+msgstr "sort by Process name descendant"
+
+msgid "sort by Start date ascendant"
+msgstr "sort by Start date ascendant"
+
+msgid "sort by Start date descendant"
+msgstr "sort by Start date descendant"
+
+msgid "sort by End date ascendant"
+msgstr "sort by End date ascendant"
+
+msgid "sort by End date descendant"
+msgstr "sort by End date descendant"
 
