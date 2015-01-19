@@ -16,6 +16,8 @@
         <module>server</module>
         <module>portal</module>
         <module>rest</module>
+    </modules>
+
     <scm>
         <developerConnection>scm:git:git@github.com:bonitasoft/bonita-web.git</developerConnection>
         <url>scm:git:git@github.com:bonitasoft/bonita-web.git</url>
