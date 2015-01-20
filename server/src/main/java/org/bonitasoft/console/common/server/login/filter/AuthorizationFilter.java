@@ -55,7 +55,7 @@ public class AuthorizationFilter implements Filter {
         addRule(new AutoLoginRule());
     }
 
-    public void addRule(AuthorizationRule rule) {
+    public void addRule(final AuthorizationRule rule) {
         rules.add(rule);
     }
 
@@ -71,16 +71,16 @@ public class AuthorizationFilter implements Filter {
                 new TenantIdAccessor(requestAccessor), chain);
     }
 
-    protected void doAuthorizationFiltering(HttpServletRequestAccessor requestAccessor,
-            HttpServletResponseAccessor responseAccessor,
-            TenantIdAccessor tenantIdAccessor,
-            FilterChain chain) throws ServletException, IOException {
+    protected void doAuthorizationFiltering(final HttpServletRequestAccessor requestAccessor,
+            final HttpServletResponseAccessor responseAccessor,
+            final TenantIdAccessor tenantIdAccessor,
+            final FilterChain chain) throws ServletException, IOException {
 
         if (!isAuthorized(requestAccessor, responseAccessor, tenantIdAccessor, chain)) {
 
             cleanHttpSession(requestAccessor.getHttpSession());
             responseAccessor.redirect(createLoginUrl(requestAccessor.asHttpServletRequest(),
-                    makeRedirectUrl(requestAccessor, requestAccessor.getRedirectUrl()).getUrl(),
+                    makeRedirectUrl(requestAccessor, requestAccessor.getRequestedUri()).getUrl(),
                     tenantIdAccessor.getRequestedTenantId()));
         }
     }
@@ -88,12 +88,12 @@ public class AuthorizationFilter implements Filter {
     /**
      * @return true if one of the rules pass false otherwise
      */
-    private boolean isAuthorized(HttpServletRequestAccessor requestAccessor,
-            HttpServletResponseAccessor responseAccessor,
-            TenantIdAccessor tenantIdAccessor,
-            FilterChain chain) throws ServletException, IOException {
+    private boolean isAuthorized(final HttpServletRequestAccessor requestAccessor,
+            final HttpServletResponseAccessor responseAccessor,
+            final TenantIdAccessor tenantIdAccessor,
+            final FilterChain chain) throws ServletException, IOException {
 
-        for (AuthorizationRule rule : rules) {
+        for (final AuthorizationRule rule : rules) {
             if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
                 chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
                 return true;
