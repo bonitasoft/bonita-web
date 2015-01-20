@@ -19,7 +19,9 @@ package org.bonitasoft.forms.server.api.impl;
 import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aStringVariable;
 import static org.bonitasoft.test.toolkit.bpm.TestProcessFactory.createProcessWithVariables;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import java.io.File;
@@ -30,6 +32,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
@@ -441,31 +445,34 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
         Assert.assertFalse(result.hasChanged());
     }
 
-    //    @Test
-    //    public void should_getDocumentValue_work_with_existing_document_and_new_file() throws Exception {
-    //
-    //        final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
-    //                5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
-    //
-    //        final File file = File.createTempFile("testDoc", "txt");
-    //        file.deleteOnExit();
-    //        FileUtils.writeStringToFile(file, "new content");
-    //        final FormFieldValue fieldValue = new FormFieldValue(file.getPath(), File.class.getName());
-    //        fieldValue.setDocumentName(doc.getName());
-    //        fieldValue.setDocument(true);
-    //        fieldValue.setDocumentId(doc.getId());
-    //        fieldValue.setDisplayedValue(file.getName());
-    //
-    //        final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
-    //
-    //        doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
-    //
-    //        final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
-    //
-    //        Assert.assertEquals(doc.getId(), result.getDocumentId().longValue());
-    //        Assert.assertTrue(result.hasChanged());
-    //        Assert.assertEquals(file.getName(), result.getFileName());
-    //    }
+    @Test
+    public void should_getDocumentValue_work_with_existing_document_and_new_file() throws Exception {
+
+        final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
+            5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
+
+        final File file = File.createTempFile("testDoc", "txt");
+        file.deleteOnExit();
+        FileUtils.writeStringToFile(file, "new content");
+        final FormFieldValue fieldValue = new FormFieldValue(file.getPath(), File.class.getName());
+        fieldValue.setDocumentName(doc.getName());
+        fieldValue.setDocument(true);
+        fieldValue.setDocumentId(doc.getId());
+        fieldValue.setDisplayedValue(file.getName());
+
+        final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
+        final TenantFolder tenantFolder = mock(TenantFolder.class);
+        doReturn(tenantFolder).when(formExpressionAPIImpl).getTenantFolder();
+        doReturn(file).when(tenantFolder).getTempFile(any(String.class), any(Long.class));
+
+        doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
+
+        final DocumentValue result = formExpressionAPIImpl.getDocumentValue(getSession(), fieldValue, true);
+
+        Assert.assertEquals(doc.getId(), result.getDocumentId().longValue());
+        Assert.assertTrue(result.hasChanged());
+        Assert.assertEquals(file.getName(), result.getFileName());
+    }
 
     @Override
     @After

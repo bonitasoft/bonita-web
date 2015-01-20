@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.APIAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -244,71 +246,74 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         Assert.assertEquals("http://www.bonitasoft.org", createdDocument.getUrl());
     }
 
-    //    @Test
-    //    public void testExecuteActionsAndTerminateWithInternalDocument() throws Exception {
-    //        final IFormWorkflowAPI api = FormAPIFactory.getFormWorkflowAPI();
-    //        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-    //
-    //            @Override
-    //            protected boolean check() throws Exception {
-    //                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
-    //            }
-    //        }.waitUntil());
-    //        HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
-    //                .get(0);
-    //
-    //        final ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-    //        final org.bonitasoft.engine.expression.Expression documentExpression = expressionBuilder.createNewInstance("doc1").setContent("doc1")
-    //                .setExpressionType(ExpressionType.TYPE_DOCUMENT.name()).setReturnType(org.bonitasoft.engine.bpm.document.Document.class.getName()).done();
-    //        final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressions = new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
-    //        expressions.put(documentExpression, new HashMap<String, Serializable>());
-    //        final Map<String, Serializable> evaluationResult = processAPI.evaluateExpressionsOnActivityInstance(humanTaskInstance.getId(), expressions);
-    //        Assert.assertTrue(evaluationResult.containsKey("doc1"));
-    //        final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult.get("doc1");
-    //        Assert.assertNotNull(document);
-    //
-    //        final Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
-    //        final File file = File.createTempFile("testDoc", "txt");
-    //        file.deleteOnExit();
-    //        FileUtils.writeStringToFile(file, "new content");
-    //        final FormFieldValue value1 = new FormFieldValue(file.getAbsolutePath(), File.class.getName());
-    //        value1.setDocument(true);
-    //        value1.setDocumentId(processAPI.getLastDocument(processInstanceID, "doc1").getId());
-    //        value1.setDocumentName("doc1");
-    //        value1.setDisplayedValue(file.getName());
-    //        fieldValues.put("fieldId1", value1);
-    //        final List<FormAction> formActions = new ArrayList<FormAction>();
-    //        final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
-    //                new ArrayList<Expression>());
-    //        formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
-    //        processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-    //        api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
-    //                "submitButtonId",
-    //                new HashMap<String, Serializable>());
-    //        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
-    //
-    //            @Override
-    //            protected boolean check() throws Exception {
-    //                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
-    //            }
-    //        }.waitUntil());
-    //        humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
-    //        final String activityName = humanTaskInstance.getName();
-    //        Assert.assertNotNull(activityName);
-    //        Assert.assertEquals("Approval", activityName);
-    //
-    //        final Map<String, Serializable> evaluationResult1 = processAPI.evaluateExpressionsOnActivityInstance(humanTaskInstance.getId(), expressions);
-    //        Assert.assertTrue(evaluationResult1.containsKey("doc1"));
-    //        final org.bonitasoft.engine.bpm.document.Document updatedDocument1 = (org.bonitasoft.engine.bpm.document.Document) evaluationResult1.get("doc1");
-    //        Assert.assertNotNull(updatedDocument1);
-    //        Assert.assertEquals(file.getName(), updatedDocument1.getContentFileName());
-    //
-    //        // Apparently if you set a document to null (using an operation) all the versions of the document are lost
-    //        // final Map<String, Serializable> evaluationResult2 = processAPI.evaluateExpressionsAtProcessInstanciation(processInstanceID, expressions);
-    //        // Assert.assertTrue(evaluationResult2.containsKey("doc1"));
-    //        // final org.bonitasoft.engine.bpm.document.Document initialDocument = (org.bonitasoft.engine.bpm.document.Document) evaluationResult2.get("doc1");
-    //        // Assert.assertNotNull(initialDocument);
-    //    }
+    @Test
+    public void testExecuteActionsAndTerminateWithInternalDocument() throws Exception {
+        final IFormWorkflowAPI api = FormAPIFactory.getFormWorkflowAPI();
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+            }
+        }.waitUntil());
+        HumanTaskInstance humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC)
+                .get(0);
+
+        final ExpressionBuilder expressionBuilder = new ExpressionBuilder();
+        final org.bonitasoft.engine.expression.Expression documentExpression = expressionBuilder.createNewInstance("doc1").setContent("doc1")
+                .setExpressionType(ExpressionType.TYPE_DOCUMENT.name()).setReturnType(org.bonitasoft.engine.bpm.document.Document.class.getName()).done();
+        final Map<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>> expressions = new HashMap<org.bonitasoft.engine.expression.Expression, Map<String, Serializable>>();
+        expressions.put(documentExpression, new HashMap<String, Serializable>());
+        final Map<String, Serializable> evaluationResult = processAPI.evaluateExpressionsOnActivityInstance(humanTaskInstance.getId(), expressions);
+        Assert.assertTrue(evaluationResult.containsKey("doc1"));
+        final org.bonitasoft.engine.bpm.document.Document document = (org.bonitasoft.engine.bpm.document.Document) evaluationResult.get("doc1");
+        Assert.assertNotNull(document);
+
+        final Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
+        final File tempFolder =  WebBonitaConstantsUtils.getInstance(getSession().getTenantId()).getTempFolder();
+        tempFolder.mkdirs();
+        final File file = File.createTempFile("testDoc", "txt", tempFolder);
+        file.deleteOnExit();
+        FileUtils.writeStringToFile(file, "new content");
+        final FormFieldValue value1 = new FormFieldValue(file.getAbsolutePath(), File.class.getName());
+        value1.setDocument(true);
+        value1.setDocumentId(processAPI.getLastDocument(processInstanceID, "doc1").getId());
+        value1.setDocumentName("doc1");
+        value1.setDisplayedValue(file.getName());
+        fieldValues.put("fieldId1", value1);
+        final List<FormAction> formActions = new ArrayList<FormAction>();
+        final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
+                new ArrayList<Expression>());
+        formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
+        processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
+
+        api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
+                "submitButtonId",
+                new HashMap<String, Serializable>());
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+
+            @Override
+            protected boolean check() throws Exception {
+                return processAPI.getPendingHumanTaskInstances(FormWorkflowAPIImplIT.this.getSession().getUserId(), 0, 10, null).size() >= 1;
+            }
+        }.waitUntil());
+        humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
+        final String activityName = humanTaskInstance.getName();
+        Assert.assertNotNull(activityName);
+        Assert.assertEquals("Approval", activityName);
+
+        final Map<String, Serializable> evaluationResult1 = processAPI.evaluateExpressionsOnActivityInstance(humanTaskInstance.getId(), expressions);
+        Assert.assertTrue(evaluationResult1.containsKey("doc1"));
+        final org.bonitasoft.engine.bpm.document.Document updatedDocument1 = (org.bonitasoft.engine.bpm.document.Document) evaluationResult1.get("doc1");
+        Assert.assertNotNull(updatedDocument1);
+        Assert.assertEquals(file.getName(), updatedDocument1.getContentFileName());
+
+        // Apparently if you set a document to null (using an operation) all the versions of the document are lost
+        // final Map<String, Serializable> evaluationResult2 = processAPI.evaluateExpressionsAtProcessInstanciation(processInstanceID, expressions);
+        // Assert.assertTrue(evaluationResult2.containsKey("doc1"));
+        // final org.bonitasoft.engine.bpm.document.Document initialDocument = (org.bonitasoft.engine.bpm.document.Document) evaluationResult2.get("doc1");
+        // Assert.assertNotNull(initialDocument);
+    }
 
     @Test
     public void testExecuteActionsAndTerminateWithEmptyDocument() throws Exception {

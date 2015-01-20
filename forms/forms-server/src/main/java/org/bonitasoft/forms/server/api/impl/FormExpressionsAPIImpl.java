@@ -373,11 +373,15 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         return documentValue;
     }
 
+    protected TenantFolder getTenantFolder() {
+        return new TenantFolder();
+    }
+
     protected DocumentValue getNewFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument, final String uri)
             throws FileTooBigException, IOException {
         DocumentValue documentValue = null;
-        final TenantFolder tenantFolder = new TenantFolder();
-        final File theSourceFile = tenantFolder.getTempFile(uri, session.getTenantId());
+
+        final File theSourceFile = getTenantFolder().getTempFile(uri, session.getTenantId());
         if (theSourceFile.exists()) {
             final long maxSize = getDocumentMaxSize(session);
             if (theSourceFile.length() > maxSize * 1048576) {
