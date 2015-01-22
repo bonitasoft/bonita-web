@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -58,6 +56,10 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.command.CommandExecutionException;
+import org.bonitasoft.engine.command.CommandNotFoundException;
+import org.bonitasoft.engine.command.CommandParameterizationException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -437,7 +439,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             } else {
                 return NOT_FOUND;
             }
-        } catch (final ProcessInstanceNotFoundException e) {
+        } catch (final ArchivedProcessInstanceNotFoundException e) {
             return NOT_FOUND;
         }
 
@@ -454,10 +456,38 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * @throws BPMEngineException
      * @throws ProcessDefinitionNotFoundException
      */
-    private long getRootProcessInstanceId(final ProcessAPI processApi, final long processInstanceId) throws ProcessInstanceNotFoundException,
+    private long getRootProcessInstanceId(final ProcessAPI processApi, final long processInstanceId) throws ArchivedProcessInstanceNotFoundException,
     InvalidSessionException, BPMEngineException, ProcessDefinitionNotFoundException {
-        final ProcessInstance processInstance = processApi.getProcessInstance(processInstanceId);
-        return identifyRootProcessInstanceId(processInstanceId, processInstance.getRootProcessInstanceId());
+        long rootProcessInstanceId;
+        try {
+            final ProcessInstance processInstance = processApi.getProcessInstance(processInstanceId);
+            rootProcessInstanceId = processInstance.getRootProcessInstanceId();
+        } catch (final ProcessInstanceNotFoundException e) {
+            final ArchivedProcessInstance archivedProcessInstance = getLatestArchivedProcessInstance(processApi, processInstanceId);
+            rootProcessInstanceId = archivedProcessInstance.getRootProcessInstanceId();
+        }
+        return identifyRootProcessInstanceId(processInstanceId, rootProcessInstanceId);
+    }
+
+    private ArchivedProcessInstance getLatestArchivedProcessInstance(final ProcessAPI processApi, final long processInstanceId)
+            throws ArchivedProcessInstanceNotFoundException {
+        ArchivedProcessInstance archivedProcessInstance = null;
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
+        searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+        searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.DESC);
+        SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
+        try {
+            searchArchivedProcessInstances = processApi.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
+        } catch (final SearchException se) {
+            throw new ArchivedProcessInstanceNotFoundException(se);
+        }
+        if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
+            archivedProcessInstance = searchArchivedProcessInstances.getResult().get(0);
+        } else {
+            throw new ArchivedProcessInstanceNotFoundException(new Exception("Unable to find an archive process instance with source ID "
+                    + processInstanceId));
+        }
+        return archivedProcessInstance;
     }
 
     private long identifyRootProcessInstanceId(final long processInstanceId, final long rootProcessInstanceId) {
@@ -702,7 +732,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public long startInstance(final APISession session, final long userID, final long processDefinitionID) throws ProcessDefinitionNotFoundException,
@@ -715,7 +744,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public void terminateTask(final APISession session, final long userID, final long activityInstanceID) throws BPMEngineException, InvalidSessionException,
@@ -741,15 +769,95 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return processAPI.isUserProcessSupervisor(getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID), session.getUserId());
     }
 
+    @Override
+    public Boolean canStartProcessDefinition(final APISession session, final long userId, final long processDefinitionId) throws BPMEngineException {
+        try {
+            final CommandAPI commandAPI = getCommandApi(session);
+            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+            if (userId != -1) {
+                parameters.put("USER_ID_KEY", userId);
+            } else {
+                parameters.put("USER_ID_KEY", session.getUserId());
+            }
+            parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionId);
+            return (Boolean) commandAPI.execute("canStartProcessDefinition", parameters);
+        } catch (final CommandExecutionException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user can start the process. Error while executing command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandParameterizationException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user can start the process. Error in the parameters of the command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandNotFoundException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unknown engine command:");
+            }
+            throw new BPMEngineException(e);
+        }
+    }
+
+    @Override
+    public Boolean isInvolvedInHumanTask(final APISession session, final long userId, final long humanTaskInstanceId) throws BPMEngineException {
+        try {
+            final CommandAPI commandAPI = getCommandApi(session);
+            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+            parameters.put("USER_ID_KEY", userId);
+            parameters.put("HUMAN_TASK_INSTANCE_ID_KEY", humanTaskInstanceId);
+            return (Boolean) commandAPI.execute("isInvolvedInHumanTask", parameters);
+        } catch (final CommandExecutionException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user is involved in the human task instance. Error while executing command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandParameterizationException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user is involved in the human task instance. Error in the parameters of the command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandNotFoundException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unknown engine command:");
+            }
+            throw new BPMEngineException(e);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean canUserSeeProcessInstance(final APISession session, final boolean isInvolvedInProcessInstance, final long processInstanceID)
+    public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        //restore once BS-8953 is fixed engine-side
-        //return bpmEngineAPIUtil.getProcessAPI(session).isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
-        return true;
+        final ProcessAPI processAPI = getProcessApi(session);
+        boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        if (!involvedInProcessInstance) {
+            try {
+                involvedInProcessInstance = processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+            } catch (final BonitaException e) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE,
+                            "The engine was not able to find out if the user is a manager of a user involved in the process instance.");
+                }
+                throw new BPMEngineException(e);
+            }
+        }
+        return involvedInProcessInstance;
+
+    }
+
+    protected ProcessAPI getProcessApi(final APISession session) throws BPMEngineException {
+        return bpmEngineAPIUtil.getProcessAPI(session);
+    }
+
+    protected CommandAPI getCommandApi(final APISession session) throws BPMEngineException {
+        return bpmEngineAPIUtil.getCommandAPI(session);
     }
 
     /**
@@ -932,7 +1040,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public long getProcessDefinitionIDFromActivityInstanceID(final APISession session, final long activityInstanceID) throws ActivityInstanceNotFoundException,
@@ -958,12 +1065,12 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceID);
             return processInstance.getProcessDefinitionId();
         } catch (final ProcessInstanceNotFoundException e) {
-            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
             searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceID);
             searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.ASC);
             SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
             try {
-                searchArchivedProcessInstances = processAPI.searchArchivedProcessInstances(searchOptionsBuilder.done());
+                searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
             } catch (final SearchException se) {
                 throw new ArchivedProcessInstanceNotFoundException(se);
             }
@@ -1027,7 +1134,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public String getActivityName(final APISession session, final long activityInstanceID) throws InvalidSessionException, BPMEngineException,

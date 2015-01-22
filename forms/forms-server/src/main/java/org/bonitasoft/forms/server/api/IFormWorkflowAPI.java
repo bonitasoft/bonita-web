@@ -956,4 +956,8 @@ public interface IFormWorkflowAPI {
     boolean isUserAdminOrProcessOwner(APISession session, long processInstanceID) throws UserNotFoundException, InvalidSessionException,
     ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException;
 
+    Boolean isInvolvedInHumanTask(APISession session, long userId, long humanTaskInstanceId) throws BPMEngineException;
+
+    Boolean canStartProcessDefinition(APISession session, long userId, long processDefinitionId) throws BPMEngineException;
+
 }
