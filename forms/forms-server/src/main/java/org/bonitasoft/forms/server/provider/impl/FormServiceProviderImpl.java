@@ -599,7 +599,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      */
     protected void canUserInstantiateProcess(final APISession session, final User user, final long processDefinitionID, final long userId,
             final Map<String, Object> context)
-                    throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException {
+            throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException {
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         if (!workflowAPI.canStartProcessDefinition(session, userId, processDefinitionID)) {
             final String message = "An attempt was made by user " + user.getUsername() + " to access the instantiation form of process "
