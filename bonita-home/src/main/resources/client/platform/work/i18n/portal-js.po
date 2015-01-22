@@ -211,3 +211,6 @@ msgstr ""
 
 msgid  "Totals"
 msgstr ""
+
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr ""
