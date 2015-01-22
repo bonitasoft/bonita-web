@@ -26,6 +26,7 @@ import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
@@ -44,7 +45,11 @@ public class OAuthLoginManagerImpl implements LoginManager {
 
     @Override
     public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
-        final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(tenantId, redirectURL);
+        long resolvedTenantId = tenantId;
+        if (tenantId == -1L) {
+            resolvedTenantId = TenantsManagementUtils.getDefaultTenantId();
+        }
+        final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(resolvedTenantId, redirectURL);
         final Token requestToken = aConsumer.getRequestToken();
         TokenCacheUtil.addRequestToken(requestToken);
         return aConsumer.getAuthorizationUrl(requestToken);

@@ -68,4 +68,37 @@ msgstr "No cases to display"
 msgid "Loading"
 msgstr "Loading"
 
+msgid  "Items per page"
+msgstr "Items per page"
+
+msgid  "Columns selection"
+msgstr "Columns selection"
+
+msgid  "Table settings"
+msgstr "Table settings"
+
+msgid  "sort by ID ascendant"
+msgstr "sort by ID ascendant"
+
+msgid  "sort by ID descendant"
+msgstr "sort by ID descendant"
+
+msgid  "sort by Process name ascendant"
+msgstr  "sort by Process name ascendant"
+
+msgid  "sort by Process name descendant"
+msgstr  "sort by Process name descendant"
+
+msgid  "sort by Start date ascendant"
+msgstr  "sort by Start date ascendant"
+
+msgid  "sort by Start date descendant"
+msgstr  "sort by Start date descendant"
+
+msgid  "sort by End date ascendant"
+msgstr  "sort by End date ascendant"
+
+msgid  "sort by End date descendant"
+msgstr  "sort by End date descendant"
+
 

@@ -17,17 +17,19 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
-import org.bonitasoft.console.common.server.login.*;
+import javax.servlet.ServletException;
+
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.AutoLoginCredentials;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 
-import javax.servlet.ServletException;
-
-public class AutoLoginRule implements AuthorizationRule {
+public class AutoLoginRule extends AuthenticationRule {
 
     @Override
-    public boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException {
+    public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         final long tenantId = tenantIdAccessor.ensureTenantId();
         return isAutoLogin(request, tenantId)
                 && doAutoLogin(request, tenantId);
@@ -49,16 +51,6 @@ public class AutoLoginRule implements AuthorizationRule {
     private boolean isAutoLogin(final HttpServletRequestAccessor request, final long tenantId) {
         return request.isAutoLoginRequested()
                 && getSecurityProperties(request, tenantId).allowAutoLogin();
-    }
-
-    // protected for purpose of testing but engine could really provide a singleton
-    protected LoginManager getLoginManager(final long tenantId) throws ServletException {
-        try {
-            // should really not use the static like.
-            return LoginManagerFactory.getLoginManager(tenantId);
-        } catch (final LoginManagerNotFoundException e) {
-            throw new ServletException(e);
-        }
     }
 
     // protected for testing
