@@ -88,7 +88,7 @@ class CommentPermissionRule implements PermissionRule {
     private boolean isInvolved(ProcessAPI processAPI, long currentUserId, long processInstanceId) {
         try {
             return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isManagerOfUserInvolvedInProcessInstance(currentUserId, processInstanceId)
-        } catch (BonitaException e1) {
+        } catch (BonitaException e) {
             return true
         }
     }
