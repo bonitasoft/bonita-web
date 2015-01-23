@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,6 +28,7 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
@@ -54,9 +55,9 @@ import org.bonitasoft.web.rest.model.document.DocumentItem;
 
 /**
  * Document data store
- * 
+ *
  * @author Yongtao Guo
- * 
+ *
  */
 public class DocumentDatastore {
 
@@ -74,8 +75,8 @@ public class DocumentDatastore {
     }
 
     public SearchResult<Document> searchDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder) throws InvalidSessionException,
-            BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException, ServletException {
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+    BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException, ServletException {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
                 || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)) {
             return processAPI.searchDocuments(builder.done());
@@ -90,7 +91,7 @@ public class DocumentDatastore {
     public SearchResult<ArchivedDocument> searchArchivedDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder)
             throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException,
             ServletException {
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
                 || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)
                 || DocumentItem.VALUE_VIEW_TYPE_TEAM_MANAGER.equals(viewType)) {
@@ -101,17 +102,17 @@ public class DocumentDatastore {
         throw new ServletException("Invalid view type.");
     }
 
-    public DocumentItem createDocument(final long processInstanceId, final String documentName, final String documentCreationType, final String path) 
-                throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
+    public DocumentItem createDocument(final long processInstanceId, final String documentName, final String documentCreationType, final String path, final TenantFolder tenantFolder)
+            throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
         DocumentItem item = new DocumentItem();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         String fileName = null;
         String mimeType = null;
         byte[] fileContent = null;
-        final File theSourceFile = new File(path);
+        final File theSourceFile = tenantFolder.getTempFile(path, apiSession.getTenantId());
         if (theSourceFile.exists()) {
-            final long maxSize = PropertiesFactory.getConsoleProperties(this.apiSession.getTenantId()).getMaxSize();
+            final long maxSize = PropertiesFactory.getConsoleProperties(apiSession.getTenantId()).getMaxSize();
             if (theSourceFile.length() > maxSize * 1048576) {
                 final String errorMessage = "This document is exceeded " + maxSize + "Mo";
                 throw new DocumentException(errorMessage);
@@ -139,7 +140,7 @@ public class DocumentDatastore {
             DocumentAttachmentException, IOException, RetrieveException, ProcessDefinitionNotFoundException {
 
         DocumentItem item = new DocumentItem();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         final String fileName = DocumentUtil.getFileNameFromUrl(path);
         final String mimeType = DocumentUtil.getMimeTypeFromUrl(path);
         if (fileName != null && mimeType != null) {
@@ -157,13 +158,13 @@ public class DocumentDatastore {
     }
 
     public DocumentItem mapToDocumentItem(final Document document) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
-            UnknownAPITypeException, ProcessDefinitionNotFoundException, RetrieveException {
+    UnknownAPITypeException, ProcessDefinitionNotFoundException, RetrieveException {
 
         if (document == null) {
             throw new IllegalArgumentException("The document must be not null!");
         }
         DocumentItem item = new DocumentItem();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         ProcessInstance processInstance;
         String caseName = "";
         String processDisplayName = "";
@@ -203,12 +204,12 @@ public class DocumentDatastore {
     }
 
     public ArchivedDocumentItem mapToArchivedDocumentItem(final ArchivedDocument document) throws InvalidSessionException, BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException, RetrieveException, ProcessDefinitionNotFoundException {
+    ServerAPIException, UnknownAPITypeException, RetrieveException, ProcessDefinitionNotFoundException {
 
         if (document == null) {
             throw new IllegalArgumentException("The document must be not null!");
         }
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(this.apiSession);
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         ArchivedDocumentItem item = new ArchivedDocumentItem();
         String caseName = "";
         String processDisplayName = "";
@@ -252,7 +253,7 @@ public class DocumentDatastore {
         item.setArchivedDate(parseDate(document.getArchiveDate()));
         return item;
     }
-    
+
     private String parseDate(final Date date) {
         String dateStr = null;
         if (date != null) {
