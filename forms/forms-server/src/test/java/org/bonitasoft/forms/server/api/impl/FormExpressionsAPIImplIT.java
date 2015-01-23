@@ -19,7 +19,9 @@ package org.bonitasoft.forms.server.api.impl;
 import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aStringVariable;
 import static org.bonitasoft.test.toolkit.bpm.TestProcessFactory.createProcessWithVariables;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import java.io.File;
@@ -31,6 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
@@ -95,7 +98,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
                 "application",
                 String.class.getName(),
                 expressionBuilder.createNewInstance("word").setContent("Word").setExpressionType(ExpressionType.TYPE_CONSTANT)
-                        .setReturnType(String.class.getName()).done());
+                .setReturnType(String.class.getName()).done());
         processBuilder.addData(
                 "dataWithNoInitialValue",
                 String.class.getName(), null);
@@ -423,7 +426,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
     public void should_getDocumentValue_work_with_existing_document_and_no_new_file() throws Exception {
 
         final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
-                5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
+            5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
 
         final FormFieldValue fieldValue = new FormFieldValue();
         fieldValue.setValueType(File.class.getName());
@@ -446,7 +449,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
     public void should_getDocumentValue_work_with_existing_document_and_new_file() throws Exception {
 
         final Document doc = processAPI.attachDocument(processInstance.getId(), "documentName", "initialDoc.txt", null, new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1,
-                5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
+            5, 6, 8, 4, 6, 6, 3, 2, 4, 5 });
 
         final File file = File.createTempFile("testDoc", "txt");
         file.deleteOnExit();
@@ -458,6 +461,9 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
         fieldValue.setDisplayedValue(file.getName());
 
         final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
+        final TenantFolder tenantFolder = mock(TenantFolder.class);
+        doReturn(tenantFolder).when(formExpressionAPIImpl).getTenantFolder();
+        doReturn(file).when(tenantFolder).getTempFile(any(String.class), any(Long.class));
 
         doReturn(15000L).when(formExpressionAPIImpl).getDocumentMaxSize(getSession());
 

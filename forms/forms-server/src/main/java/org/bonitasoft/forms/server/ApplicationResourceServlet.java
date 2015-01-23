@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 
@@ -137,18 +138,12 @@ public class ApplicationResourceServlet extends HttpServlet {
                     }
                 } else {
                     final File file = new File(processDir, lastDeployementDate + File.separator + WEB_RESOURCES_DIR + File.separator + resourcePath);
-                    try {
-                        if (!file.getCanonicalPath().startsWith(processDir.getCanonicalPath())) {
-                            throw new IOException();
-                        }
-                    } catch (final IOException e) {
-                        final String errorMessage = "Error while getting the resource " + resourcePath + " For security reasons, access to paths other than "
-                                + processDir.getName() + " is restricted";
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, errorMessage, e);
-                        }
-                        throw new ServletException(errorMessage);
+
+                    final TenantFolder tenantFolder = new TenantFolder();
+                    if (!tenantFolder.isInFolder(file, processDir)) {
+                        throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
                     }
+
                     resourceFileName = file.getName();
                     content = FileUtils.readFileToByteArray(file);
                     if (resourceFileName.endsWith(".css")) {

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.web.rest.server.framework.api.APIHasFiles;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
@@ -37,6 +38,7 @@ import org.bonitasoft.web.rest.server.framework.exception.ForbiddenAttributesExc
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.FilePathBuilder;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
@@ -145,7 +147,6 @@ public abstract class API<ITEM extends IItem> {
         if (this instanceof APIHasFiles) {
             final APIHasFiles apiHasFiles = (APIHasFiles) this;
             final List<String> fileAttributes = getFileAttributes();
-
             for (final String fileAttribute : fileAttributes) {
                 uploadForAdd(fileAttribute, item, apiHasFiles.getUploadPath(fileAttribute), apiHasFiles.getSavedPathPrefix(fileAttribute));
             }
@@ -181,7 +182,6 @@ public abstract class API<ITEM extends IItem> {
         if (this instanceof APIHasFiles) {
             final APIHasFiles apiHasFiles = (APIHasFiles) this;
             final List<String> fileAttributes = getFileAttributes();
-
             for (final String fileAttribute : fileAttributes) {
                 uploadForUpdate(fileAttribute, id, attributes, apiHasFiles.getUploadPath(fileAttribute), apiHasFiles.getSavedPathPrefix(fileAttribute));
             }
@@ -336,16 +336,21 @@ public abstract class API<ITEM extends IItem> {
     // PARAMETERS TOOLS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected final File getUploadedFile(final String attributeName, final String attributeValue) {
+    protected final File getUploadedFile(final String attributeName, final String attributeValue) throws IOException {
         if (attributeValue == null || attributeValue.isEmpty()) {
             return null;
         }
-        final File file = new File(attributeValue);
+
+        final String tmpIconPath = getCompleteTempFilePath(attributeValue);
+
+        final File file = new File(tmpIconPath);
         if (!file.exists()) {
             throw new APIFileUploadNotFoundException(attributeName, attributeValue);
         }
         return file;
     }
+
+    abstract protected String getCompleteTempFilePath(String path) throws IOException;
 
     /**
      * Upload the file to the defined directory and rename it to make sure its filename is unique.<br>
@@ -373,6 +378,8 @@ public abstract class API<ITEM extends IItem> {
 
             return upload(attributeName, attributeValue, newDirectory, destinationFilename);
 
+        } catch (final UnauthorizedFolderException e) {
+            throw new APIForbiddenException(e.getMessage());
         } catch (final IOException e) {
             throw new APIException(e);
         }
@@ -390,8 +397,9 @@ public abstract class API<ITEM extends IItem> {
      * @param newName
      *        The name to set to the file without the extension (the original extension will be kept)
      * @return This method return the file in the destination directory.
+     * @throws IOException
      */
-    protected final File upload(final String attributeName, final String attributeValue, final String newDirectory, final String newName) {
+    protected final File upload(final String attributeName, final String attributeValue, final String newDirectory, final String newName) throws IOException {
 
         // Check if the destination directory already exists. If not, creates it.
         final File destinationDirectory = new File(newDirectory);
@@ -732,4 +740,5 @@ public abstract class API<ITEM extends IItem> {
 
         return forbiddenAttributes;
     }
+
 }

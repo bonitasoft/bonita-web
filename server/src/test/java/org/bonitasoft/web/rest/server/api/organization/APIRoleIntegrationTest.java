@@ -4,7 +4,10 @@ import static java.util.Arrays.asList;
 import static org.bonitasoft.test.toolkit.organization.TestUserFactory.getJohnCarpenter;
 import static org.bonitasoft.test.toolkit.organization.TestUserFactory.getMrSpechar;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
 import org.junit.Test;
@@ -71,6 +75,22 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Role not found", output);
         assertItemEquals("Wrong role found", input, output);
+    }
+
+    @Test(expected = APIForbiddenException.class)
+    public void it_throws_an_exception_adding_icon_with_unauthorized_path() {
+        // Add
+
+        final APIRole spyApiRole = spy(getAPIRole());
+        doReturn(".").when(spyApiRole).getUploadPath(RoleItem.ATTRIBUTE_ICON);
+
+        RoleItem input = new RoleItem();
+        input.setName("Developper");
+        input.setDescription("The guys who drink a lot of coffee");
+        input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
+
+        input = spyApiRole.runAdd(input);
+
     }
 
     @Test
@@ -176,20 +196,38 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         Assert.assertEquals("Update of role failed", newDescription, output.getDescription());
     }
 
+    @Test(expected = APIForbiddenException.class)
+    public void it_throws_an_exception_updating_icon_with_unauthorized_path() {
+        // Add
+        RoleItem input = new RoleItem();
+        final APIRole spyApiRole = spy(getAPIRole());
+        input.setName("Developper");
+        input.setDescription("The guys who drink a lot of coffee");
+        input = spyApiRole.runAdd(input);
+        final APIID id = input.getId();
+        Assert.assertNotNull("Failed to add a new role", input);
+        doReturn(".").when(spyApiRole).getUploadPath(RoleItem.ATTRIBUTE_ICON);
+        input = new RoleItem();
+        input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
+
+        input = spyApiRole.runUpdate(id, input.getAttributes());
+
+    }
+
     @Test
     public void weCanCountAllUsersInAGroup() throws Exception {
-        Role roleWith2Users = createRoleWithAssignedUsers(getJohnCarpenter(), getMrSpechar());
-        List<String> counters = asList(RoleItem.COUNTER_NUMBER_OF_USERS);
-        
-        RoleItem roleItem = getAPIRole().runGet(APIID.makeAPIID(roleWith2Users.getId()), null, counters);
-        
+        final Role roleWith2Users = createRoleWithAssignedUsers(getJohnCarpenter(), getMrSpechar());
+        final List<String> counters = asList(RoleItem.COUNTER_NUMBER_OF_USERS);
+
+        final RoleItem roleItem = getAPIRole().runGet(APIID.makeAPIID(roleWith2Users.getId()), null, counters);
+
         assertEquals(2L, (long) roleItem.getNumberOfUsers());
     }
-    
-    private Role createRoleWithAssignedUsers(TestUser... users) {
-        TestGroup aGroup = TestGroupFactory.getRAndD();
-        TestRole aRole = TestRoleFactory.getDeveloper();
-        for (TestUser user : users) {
+
+    private Role createRoleWithAssignedUsers(final TestUser... users) {
+        final TestGroup aGroup = TestGroupFactory.getRAndD();
+        final TestRole aRole = TestRoleFactory.getDeveloper();
+        for (final TestUser user : users) {
             TestMembershipFactory.assignMembership(user, aGroup, aRole);
         }
         return aRole.getRole();
