@@ -76,7 +76,7 @@ public class DocumentDatastore {
 
     public SearchResult<Document> searchDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder) throws InvalidSessionException,
     BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException, ServletException {
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        final ProcessAPI processAPI = getProcessAPI();
         if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
                 || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)) {
             return processAPI.searchDocuments(builder.done());
@@ -91,7 +91,7 @@ public class DocumentDatastore {
     public SearchResult<ArchivedDocument> searchArchivedDocuments(final long userId, final String viewType, final SearchOptionsBuilder builder)
             throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, SearchException, NotFoundException,
             ServletException {
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        final ProcessAPI processAPI = getProcessAPI();
         if (DocumentItem.VALUE_VIEW_TYPE_ADMINISTRATOR.equals(viewType)
                 || DocumentItem.VALUE_VIEW_TYPE_USER.equals(viewType)
                 || DocumentItem.VALUE_VIEW_TYPE_TEAM_MANAGER.equals(viewType)) {
@@ -106,7 +106,7 @@ public class DocumentDatastore {
             throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
         DocumentItem item = new DocumentItem();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        final ProcessAPI processAPI = getProcessAPI();
         String fileName = null;
         String mimeType = null;
         byte[] fileContent = null;
@@ -135,12 +135,17 @@ public class DocumentDatastore {
         return item;
     }
 
+    protected ProcessAPI getProcessAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        return processAPI;
+    }
+
     public DocumentItem createDocumentFromUrl(final long processInstanceId, final String documentName, final String documentCreationType, final String path)
             throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, ProcessInstanceNotFoundException,
             DocumentAttachmentException, IOException, RetrieveException, ProcessDefinitionNotFoundException {
 
         DocumentItem item = new DocumentItem();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        final ProcessAPI processAPI = getProcessAPI();
         final String fileName = DocumentUtil.getFileNameFromUrl(path);
         final String mimeType = DocumentUtil.getMimeTypeFromUrl(path);
         if (fileName != null && mimeType != null) {
@@ -164,7 +169,7 @@ public class DocumentDatastore {
             throw new IllegalArgumentException("The document must be not null!");
         }
         DocumentItem item = new DocumentItem();
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        final ProcessAPI processAPI = getProcessAPI();
         ProcessInstance processInstance;
         String caseName = "";
         String processDisplayName = "";
@@ -209,7 +214,7 @@ public class DocumentDatastore {
         if (document == null) {
             throw new IllegalArgumentException("The document must be not null!");
         }
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
+        final ProcessAPI processAPI = getProcessAPI();
         ArchivedDocumentItem item = new ArchivedDocumentItem();
         String caseName = "";
         String processDisplayName = "";
