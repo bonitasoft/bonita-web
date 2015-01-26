@@ -15,11 +15,13 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
@@ -37,6 +39,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -46,11 +49,11 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Celine Souchet
  */
 public class APIProcess extends ConsoleAPI<ProcessItem> implements
-        APIHasAdd<ProcessItem>,
-        APIHasUpdate<ProcessItem>,
-        APIHasGet<ProcessItem>,
-        APIHasSearch<ProcessItem>,
-        APIHasDelete
+APIHasAdd<ProcessItem>,
+APIHasUpdate<ProcessItem>,
+APIHasGet<ProcessItem>,
+APIHasSearch<ProcessItem>,
+APIHasDelete
 {
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,9 +174,18 @@ public class APIProcess extends ConsoleAPI<ProcessItem> implements
     }
 
     String uploadIcon(final String iconTempPath) {
+        String completeIconTempPath;
+        try {
+            completeIconTempPath = getCompleteTempFilePath(iconTempPath);
+        } catch (final UnauthorizedFolderException e) {
+            throw new APIForbiddenException(e.getMessage());
+        } catch (final IOException e) {
+            throw new APIException(e);
+        }
+
         final String path = uploadAutoRename(
                 ProcessItem.ATTRIBUTE_ICON,
-                iconTempPath,
+                completeIconTempPath,
                 getWebBonitaConstantsUtils().getConsoleUserIconsFolder().getPath())
                 .getPath();
 
