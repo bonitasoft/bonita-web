@@ -59,9 +59,9 @@ public class ApplicationResourceServletTest {
         when(applicationResourceServlet.getTenantID(req)).thenReturn(1L);
 
         final File process = new File(WebBonitaConstantsUtils.getInstance(1L).getFormsWorkFolder().getAbsolutePath(), "processUUIDStr");
-        process.mkdir();
+        process.mkdirs();
         final File processDeployement = new File(process.getAbsolutePath(), "1");
-        processDeployement.mkdir();
+        processDeployement.mkdirs();
 
         try {
             applicationResourceServlet.service(req, res);
