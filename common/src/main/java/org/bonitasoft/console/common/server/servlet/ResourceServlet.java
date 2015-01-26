@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -139,18 +140,11 @@ public abstract class ResourceServlet extends HttpServlet {
         try {
             final File resourceFolder = new File(resourcesFolder, resourceName + subFolderSuffix);
             final File file = new File(resourceFolder, fileName);
-            try {
-                if (!file.getCanonicalPath().startsWith(resourceFolder.getCanonicalPath())) {
-                    throw new IOException();
-                }
-            } catch (final IOException e) {
-                final String errorMessage = "Error while using the servlet to get a resource file " + resourceName
-                        + " For security reasons, access to paths other than " + resourceFolder.getName() + " is restricted";
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, errorMessage, e);
-                }
-                throw new ServletException(errorMessage);
+            final TenantFolder tenantFolder = new TenantFolder();
+            if (!tenantFolder.isInFolder(file, resourceFolder)) {
+                throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
             }
+
             final String lowerCaseFileName = fileName.toLowerCase();
             if (lowerCaseFileName.endsWith(".jpg")) {
                 contentType = "image/jpeg";
