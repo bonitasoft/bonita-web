@@ -23,6 +23,9 @@ msgstr ""
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr ""
 
+msgid "{}-{} of {}"
+msgstr ""
+
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr ""
 
@@ -173,6 +176,9 @@ msgstr ""
 msgid  "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
 
+msgid  "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr ""
+
 msgid  "Disabled, no new case can be started"
 msgstr ""
 
@@ -271,4 +277,58 @@ msgid  "sort by End date ascendant"
 msgstr ""
 
 msgid  "sort by End date descendant"
+msgstr ""
+
+msgid  "Hide 'ID'"
+msgstr ""
+
+msgid  "Hide 'Process name'"
+msgstr ""
+
+msgid  "Hide 'Version'"
+msgstr ""
+
+msgid  "Hide 'Start date'"
+msgstr ""
+
+msgid  "Hide 'End date'"
+msgstr ""
+
+msgid  "Hide 'Started by'"
+msgstr ""
+
+msgid  "Hide 'Failed Flow Nodes'"
+msgstr ""
+
+msgid  "Hide 'Pending Flow Nodes'"
+msgstr ""
+
+msgid  "Hide 'State'"
+msgstr ""
+
+msgid  "Show 'ID'"
+msgstr ""
+
+msgid  "Show 'Process name'"
+msgstr ""
+
+msgid  "Show 'Version'"
+msgstr ""
+
+msgid  "Show 'Start date'"
+msgstr ""
+
+msgid  "Show 'End date'"
+msgstr ""
+
+msgid  "Show 'Started by'"
+msgstr ""
+
+msgid  "Show 'Failed Flow Nodes'"
+msgstr ""
+
+msgid  "Show 'Pending Flow Nodes'"
+msgstr ""
+
+msgid  "Show 'State'"
 msgstr ""

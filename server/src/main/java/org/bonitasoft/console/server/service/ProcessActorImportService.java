@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
@@ -30,7 +31,7 @@ import org.bonitasoft.web.toolkit.server.ServiceException;
 
 /**
  * @author Paul AMAR
- * 
+ *
  */
 public class ProcessActorImportService extends ConsoleService {
 
@@ -38,14 +39,17 @@ public class ProcessActorImportService extends ConsoleService {
 
     @Override
     public Object run() {
-        final APISession apiSession = getSession();
         InputStream xmlStream = null;
         try {
-            final File xmlFile = new File(getParameter("file"));
+            final TenantFolder tenantFolder = new TenantFolder();
+            final File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
+                    getTenantId());
+
             if (!xmlFile.exists()) {
-                throw new Exception("File: " + getParameter("file") + " does not exist.");
+                throw new Exception("File: " + getFileUploadParameter() + " does not exist.");
             }
 
+            final APISession apiSession = getSession();
             xmlStream = new FileInputStream(xmlFile);
             final byte[] actorsXmlContent = IOUtils.toByteArray(xmlStream);
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
@@ -54,9 +58,17 @@ public class ProcessActorImportService extends ConsoleService {
         } catch (final InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (final Exception e) {
-            throw new ServiceException(e.getMessage());
+            throw new ServiceException(TOKEN, e.getMessage());
         }
 
         return "";
+    }
+
+    protected String getFileUploadParameter() {
+        return getParameter("file");
+    }
+
+    protected long getTenantId() {
+        return getSession().getTenantId();
     }
 }

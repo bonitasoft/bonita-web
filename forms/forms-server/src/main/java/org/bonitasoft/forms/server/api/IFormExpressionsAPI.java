@@ -18,7 +18,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
@@ -26,9 +25,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.forms.client.model.DataFieldDefinition;
 import org.bonitasoft.forms.client.model.Expression;
-import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
-import org.bonitasoft.forms.client.model.InitialAttachment;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 
 /**
@@ -331,33 +328,6 @@ public interface IFormExpressionsAPI {
      * @return The object matching the {@link DataFieldDefinition}
      */
     Serializable getSerializableValue(Serializable value, String dataTypeClassName);
-
-    /**
-     * Perform a set attachment action
-     * 
-     * @param processInstanceID
-     * @param attachments
-     * @param action
-     * @param fieldValues
-     * @param locale
-     * @param setAttachment
-     * @throws FileTooBigException
-     */
-    void performSetAttachmentAction(APISession session, long processInstanceID, Set<InitialAttachment> attachments, FormAction action,
-            Map<String, FormFieldValue> fieldValues, Locale locale, boolean setAttachment) throws FileTooBigException;
-
-    /**
-     * Perform a set attachment action
-     * 
-     * @param processInstanceID
-     * @param attachments
-     * @param attachmentName
-     * @param fileName
-     * @param setAttachment
-     * @throws FileTooBigException
-     */
-    void performSetAttachmentAction(APISession session, long processInstanceID, Set<InitialAttachment> attachments, String attachmentName, String fileName,
-            boolean setAttachment) throws FileTooBigException;
 
     /**
      * evaluate an initial value expression (at form construction)
