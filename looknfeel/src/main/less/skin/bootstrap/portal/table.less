@@ -1,4 +1,15 @@
 .table thead {background-color: @thead-background}
+
+.table[resizable-column] thead th {
+  border-left: 1px dotted #ddd;
+  border-right: 1px dotted #ddd;
+}
+.table[resizable-column] thead th:first-child {
+  border-left: 1px dotted transparent;
+}
+.table[resizable-column] thead th:last-child {
+  border-right: 1px dotted transparent;
+}
 .resizable {table-layout: fixed}
 
 .resizable th, .resizable td {

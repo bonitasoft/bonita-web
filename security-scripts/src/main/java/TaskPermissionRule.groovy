@@ -90,11 +90,11 @@ class TaskPermissionRule implements PermissionRule {
             logger.debug("FilterOnUser or FilterOnAssignUser")
             return true
         } else if (filters.containsKey("parentTaskId")) {
-            def long parentTaskId = filters.get("parentTaskId")
+            def long parentTaskId = Long.parseLong(filters.get("parentTaskId"))
             try {
                 return isTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
             } catch (NotFoundException e) {
-                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId)
+                return isArchivedFlowNodeAccessible(processAPI, filters.get("parentTaskId"), currentUserId)
             }
         } else if (filters.containsKey("processId")) {
             def long processId = Long.valueOf(filters.get("processId"))

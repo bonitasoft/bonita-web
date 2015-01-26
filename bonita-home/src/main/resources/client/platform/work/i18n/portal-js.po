@@ -217,3 +217,58 @@ msgstr ""
 
 msgid  "View case design"
 msgstr ""
+
+# Case Visu - Show Key
+msgid  "Show key"
+msgstr ""
+
+msgid  "Task1"
+msgstr ""
+
+msgid  "Cancelled, skipped instances"
+msgstr ""
+
+msgid  "Completed instances"
+msgstr ""
+
+msgid  "Failed instances"
+msgstr ""
+
+msgid  "Executing, completing, initializing instances"
+msgstr ""
+
+msgid  "Ready, waiting instances"
+msgstr ""
+
+msgid  "Items per page"
+msgstr ""
+
+msgid  "Columns selection"
+msgstr ""
+
+msgid  "Table settings"
+msgstr ""
+
+msgid  "sort by ID ascendant"
+msgstr ""
+
+msgid  "sort by ID descendant"
+msgstr ""
+
+msgid  "sort by Process name ascendant"
+msgstr ""
+
+msgid  "sort by Process name descendant"
+msgstr ""
+
+msgid  "sort by Start date ascendant"
+msgstr ""
+
+msgid  "sort by Start date descendant"
+msgstr ""
+
+msgid  "sort by End date ascendant"
+msgstr ""
+
+msgid  "sort by End date descendant"
+msgstr ""
