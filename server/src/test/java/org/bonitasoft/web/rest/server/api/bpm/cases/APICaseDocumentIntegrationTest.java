@@ -149,7 +149,7 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + 1L;
         final File tmpDir = new File(targetDirPath + File.separator + WebBonitaConstants.tmpFolderName);
         tmpDir.mkdirs();
-        final File file = new File(apiCaseDocument.getCompleteTempFilePath("thisismynewfile.doc"));
+        final File file = new File(tmpDir, "thisismynewfile.doc");
         file.createNewFile();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, file.getPath());
 
