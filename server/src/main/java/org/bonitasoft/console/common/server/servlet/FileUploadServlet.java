@@ -59,7 +59,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected String[] supportedExtensionsList = new String[0];
 
-    protected boolean returnFullPathInResponse = true;
+    protected boolean returnFullPathInResponse = false;
 
     protected boolean alsoReturnOriginalFilename = false;
 
