@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 public class APII18nLocale extends API<I18nLocaleItem> {
 
     private static final String DEFAULT_APPLICATION = "portal";
-    
+
     @Override
     protected ItemDefinition<I18nLocaleItem> defineItemDefinition() {
         return I18nLocaleDefinition.get();
@@ -59,5 +60,10 @@ public class APII18nLocale extends API<I18nLocaleItem> {
     @Override
     public String defineDefaultSearchOrder() {
         return "";
+    }
+
+    @Override
+    protected String getCompleteTempFilePath(final String path) throws IOException {
+        return path;
     }
 }

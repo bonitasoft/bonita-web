@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.APIAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -106,7 +107,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
                 "Application",
                 String.class.getName(),
                 expressionBuilder.createNewInstance("word").setContent("Word").setExpressionType(ExpressionType.TYPE_CONSTANT.name())
-                        .setReturnType(String.class.getName()).done());
+                .setReturnType(String.class.getName()).done());
         processBuilder.addDocumentDefinition("doc1").addContentFileName("filename.txt").addFile("barFilename.txt");
         processBuilder.addActor("myActor");
         processBuilder.addUserTask("Request", "myActor");
@@ -225,7 +226,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final Expression fieldExpression = new Expression(null, "field_fieldId1", ExpressionType.TYPE_INPUT.name(), DocumentValue.class.getName(), null,
                 new ArrayList<Expression>());
         formActions
-                .add(new FormAction(ActionType.ASSIGNMENT, "DocumentToCreate", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
+        .add(new FormAction(ActionType.ASSIGNMENT, "DocumentToCreate", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
@@ -269,7 +270,9 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         Assert.assertNotNull(document);
 
         final Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
-        final File file = File.createTempFile("testDoc", "txt");
+        final File tempFolder =  WebBonitaConstantsUtils.getInstance(getSession().getTenantId()).getTempFolder();
+        tempFolder.mkdirs();
+        final File file = File.createTempFile("testDoc", "txt", tempFolder);
         file.deleteOnExit();
         FileUtils.writeStringToFile(file, "new content");
         final FormFieldValue value1 = new FormFieldValue(file.getAbsolutePath(), File.class.getName());
@@ -283,6 +286,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
                 new ArrayList<Expression>());
         formActions.add(new FormAction(ActionType.ASSIGNMENT, "doc1", LeftOperand.TYPE_DOCUMENT, "=", null, fieldExpression, "submitButtonId", null));
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
+
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
                 new HashMap<String, Serializable>());
