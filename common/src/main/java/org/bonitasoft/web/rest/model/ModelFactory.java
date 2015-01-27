@@ -42,6 +42,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessParameterDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
@@ -112,6 +113,8 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new DelegationDefinition();
         } else if (ProcessResolutionProblemDefinition.TOKEN.equals(token)) {
             return new ProcessResolutionProblemDefinition();
+        }else if (ProcessParameterDefinition.TOKEN.equals(token)) {
+            return new ProcessParameterDefinition();
         }
 
         // bpm.cases
