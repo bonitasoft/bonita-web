@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,11 @@ public class APII18nTranslation extends API<I18nTranslationItem> {
 
     @Override
     protected void fillCounters(final I18nTranslationItem item, final List<String> counters) {
+    }
+
+    @Override
+    protected String getCompleteTempFilePath(final String path) throws IOException {
+        return path;
     }
 
 }
