@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.api.page;
 
-import static com.bonitasoft.web.rest.model.builder.page.PageItemBuilder.aPageItem;
+import static org.bonitasoft.web.rest.model.builder.page.PageItemBuilder.aPageItem;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
