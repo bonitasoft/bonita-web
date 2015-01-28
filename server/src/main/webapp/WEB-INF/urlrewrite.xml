@@ -138,6 +138,18 @@
         <to>/APIToolkit/customuserinfo/user$1</to>
     </rule>
     <rule>
+        <from>^/API/living/application-page([\?/]|$)</from>
+        <to>/APIToolkit/living/application-page$1</to>
+    </rule>
+    <rule>
+        <from>^/API/living/application-menu([\?/]|$)</from>
+        <to>/APIToolkit/living/application-menu$1</to>
+    </rule>
+    <rule>
+        <from>^/API/living/application([\?/]|$)</from>
+        <to>/APIToolkit/living/application$1</to>
+    </rule>
+    <rule>
         <from>^/API/customuserinfo/value([\?/]|$)</from>
         <to>/APIToolkit/customuserinfo/value$1</to>
     </rule>

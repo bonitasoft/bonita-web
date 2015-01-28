@@ -1,0 +1,145 @@
+/*******************************************************************************
+ * Copyright (C) 2009, 2013 BonitaSoft S.A.
+ * BonitaSoft is a trademark of BonitaSoft SA.
+ * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
+ * For commercial licensing information, contact:
+ * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
+ * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
+ *******************************************************************************/
+package org.bonitasoft.web.rest.server.datastore.application;
+
+import java.util.List;
+import java.util.Map;
+
+import org.bonitasoft.engine.api.ApplicationAPI;
+import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.business.application.Application;
+import org.bonitasoft.engine.business.application.ApplicationCreator;
+import org.bonitasoft.engine.business.application.ApplicationPage;
+import org.bonitasoft.engine.business.application.ApplicationUpdater;
+import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.application.ApplicationItem;
+import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
+import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+
+
+/**
+ * @author Elias Ricken de Medeiros
+ *
+ */
+public class ApplicationDataStore extends CommonDatastore<ApplicationItem, Application> implements DatastoreHasAdd<ApplicationItem>,
+DatastoreHasUpdate<ApplicationItem>,
+DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreHasDelete {
+
+    private final ApplicationAPI applicationAPI;
+    private final ApplicationItemConverter converter;
+    private final PageAPI pageAPI;
+    private static final String CUSTOMPAGE_HOME = "custompage_home";
+    protected ApplicationItemConverter applicationItemConverter;
+
+    public ApplicationDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI, final ApplicationItemConverter converter) {
+        super(engineSession);
+        this.applicationAPI = applicationAPI;
+        this.pageAPI = pageAPI;
+        this.converter = converter;
+        applicationItemConverter = new ApplicationItemConverter();
+    }
+
+    @Override
+    public void delete(final List<APIID> ids) {
+        try {
+            for(final APIID id :ids){
+                applicationAPI.deleteApplication(id.toLong());
+            }
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    @Override
+    public ApplicationItem get(final APIID id) {
+        try {
+            final Application application = applicationAPI.getApplication(id.toLong());
+            return converter.toApplicationItem(application);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    @Override
+    public ApplicationItem add(final ApplicationItem item) {
+        final ApplicationCreator creator = converter.toApplicationCreator(item);
+        try {
+            final Application application = applicationAPI.createApplication(creator);
+            final Page homePageDef = pageAPI.getPageByName(CUSTOMPAGE_HOME);
+            final ApplicationPage appHomePage = applicationAPI.createApplicationPage(application.getId(), homePageDef.getId(), "home");
+            applicationAPI.setApplicationHomePage(application.getId(), appHomePage.getId());
+            return converter.toApplicationItem(application);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    @Override
+    public ApplicationItem update(final APIID id, final Map<String, String> attributes) {
+        try {
+            final ApplicationUpdater applicationUpdater = applicationItemConverter.toApplicationUpdater(attributes);
+            final Application application = applicationAPI.updateApplication(id.toLong(), applicationUpdater);
+            return applicationItemConverter.toApplicationItem(application);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    @Override
+    public ItemSearchResult<ApplicationItem> search(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters) {
+        // Build search
+        final SearchOptionsCreator creator = makeSearchOptionCreator(page, resultsByPage, search, orders, filters);
+
+        // Run search depending on filters passed
+        SearchResult<Application> searchResult;
+        try {
+            searchResult = runSearch(creator);
+
+            // Convert to ConsoleItems
+            return new ItemSearchResult<ApplicationItem>(page, resultsByPage, searchResult.getCount(), convertEngineToConsoleItemsList(searchResult.getResult()));
+        } catch (final SearchException e) {
+            throw new APIException(e);
+        }
+
+    }
+
+    protected SearchOptionsCreator makeSearchOptionCreator(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters) {
+        return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, getSearchDescriptorConverter()), new Filters(filters,
+                new ApplicationFilterCreator(getSearchDescriptorConverter())));
+    }
+
+    protected SearchResult<Application> runSearch(final SearchOptionsCreator creator) throws SearchException {
+        return applicationAPI.searchApplications(creator.create());
+    }
+
+    protected ApplicationSearchDescriptorConverter getSearchDescriptorConverter() {
+        return new ApplicationSearchDescriptorConverter();
+    }
+
+    @Override
+    protected ApplicationItem convertEngineToConsoleItem(final Application item) {
+        return new ApplicationItemConverter().toApplicationItem(item);
+    }
+
+}

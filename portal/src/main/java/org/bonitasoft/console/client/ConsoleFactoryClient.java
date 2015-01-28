@@ -119,6 +119,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      */
     public ConsoleFactoryClient() {
         angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
+        angularViewsMap.put(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
     }
 
     protected List<String> getCurrentUserAccessRights() {
