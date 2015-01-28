@@ -8,8 +8,8 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.api.page;
 
-import static org.bonitasoft.web.rest.model.builder.page.PageItemBuilder.aPageItem;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.bonitasoft.web.rest.model.builder.page.PageItemBuilder.aPageItem;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -28,7 +28,6 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
-import org.bonitasoft.web.rest.server.api.page.APIPage;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
