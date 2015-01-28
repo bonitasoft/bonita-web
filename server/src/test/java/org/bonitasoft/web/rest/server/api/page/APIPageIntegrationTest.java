@@ -28,19 +28,18 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
+import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
-import com.bonitasoft.web.rest.server.AbstractConsoleSPTest;
-
-public class APIPageIntegrationTest extends AbstractConsoleSPTest {
+public class APIPageIntegrationTest extends AbstractConsoleTest {
 
     private APIPage apiPage;
 
     @Override
-    public void consoleSPTestSetUp() throws Exception {
+    public void consoleTestSetUp() throws Exception {
         apiPage = new APIPage();
         apiPage.setCaller(getAPICaller(getInitiator().getSession(), "API/portal/page"));
     }
