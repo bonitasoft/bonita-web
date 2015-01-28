@@ -77,7 +77,7 @@ public class ThemeArchiveTest {
 
     @Test
     public void should_replace_old_directory_with_zip_content() throws Exception {
-        themeDirectory.mkdir();
+        themeDirectory.mkdirs();
         new File(themeDirectory, "old-style.css").createNewFile();
         final ThemeArchive themeArchive = new ThemeArchive(createStyleFiles("bonita.css"));
 
