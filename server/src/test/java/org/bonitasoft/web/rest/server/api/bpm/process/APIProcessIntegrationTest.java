@@ -54,7 +54,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator
                 + TestUserFactory.getJohnCarpenter().getSession().getTenantId();
         final File tmpDir = new File(targetDirPath + File.separator + WebBonitaConstants.tmpFolderName);
-        tmpDir.mkdir();
+        tmpDir.mkdirs();
 
         final BusinessArchive businessArchive = new BusinessArchiveBuilder().createNewBusinessArchive()
                 .setProcessDefinition(new ProcessDefinitionBuilder().createNewInstance("Test process", "1.0").done()).done();
