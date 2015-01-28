@@ -18,6 +18,7 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Logger;
 
+import org.bonitasoft.web.rest.server.api.bonitaPage.APIBonitaPage;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCase;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCaseDocument;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedComment;
@@ -57,6 +58,7 @@ import org.bonitasoft.web.rest.server.api.organization.APIPersonalContactData;
 import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactData;
 import org.bonitasoft.web.rest.server.api.organization.APIRole;
 import org.bonitasoft.web.rest.server.api.organization.APIUser;
+import org.bonitasoft.web.rest.server.api.page.APIPage;
 import org.bonitasoft.web.rest.server.api.platform.APIPlatform;
 import org.bonitasoft.web.rest.server.api.profile.APIProfile;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
@@ -127,6 +129,8 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
             } else if ("profileMember".equals(resourceToken)) {
             	LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
                 return new APIProfileMember();
+            } else if ("bonitaPage".equals(resourceToken)) {
+                return new APIBonitaPage();
             }
         // --------------------------------------------------------
 
@@ -137,6 +141,10 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
+            } else if ("bonitaPage".equals(resourceToken)) {
+                return new APIBonitaPage();
+            } else if ("page".equals(resourceToken)) {
+                return new APIPage();
             }
 
         } else if ("bpm".equals(apiToken)) {
