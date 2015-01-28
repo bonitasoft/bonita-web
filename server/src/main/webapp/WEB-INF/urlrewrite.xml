@@ -181,6 +181,14 @@
         <from>^/API/portal/profileMember([\?/]|$)</from>
         <to>/APIToolkit/portal/profileMember$1</to>
     </rule>
+        <rule>
+        <from>^/API/portal/page([\?/]|$)</from>
+        <to>/APIToolkit/portal/page$1</to>
+    </rule>
+        <rule>
+        <from>^/API/portal/bonitaPage([\?/]|$)</from>
+        <to>/APIToolkit/portal/bonitaPage$1</to>
+    </rule>
     <rule>
         <from>^/API/system/i18nlocale([\?/]|$)</from>
         <to>/APIToolkit/system/i18nlocale$1</to>
