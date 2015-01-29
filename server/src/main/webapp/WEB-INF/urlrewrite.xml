@@ -183,7 +183,7 @@
     </rule>
     <rule>
         <from>^/API/portal/page([\?/]|$)</from>
-        <to>/$1</to>
+        <to>/APIToolkit/portal/page$1</to>
     </rule>
     <rule>
         <from>^/API/portal/bonitaPage([\?/]|$)</from>
