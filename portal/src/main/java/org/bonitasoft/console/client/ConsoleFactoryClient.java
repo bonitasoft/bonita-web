@@ -331,7 +331,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (EditCustomPage.TOKEN.equals(token)) {    
             return new EditCustomPage();
 //        } else if (PageQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
-        } else if (PageQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {	
+        } else if (PageQuickDetailsPage.TOKEN.equals(token)) {	
             return new PageQuickDetailsPage();
 //        } else if (CustomPagePermissionsValidationPopupPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
         } else if (CustomPagePermissionsValidationPopupPage.TOKEN.equals(token)) {    
