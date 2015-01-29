@@ -181,11 +181,11 @@
         <from>^/API/portal/profileMember([\?/]|$)</from>
         <to>/APIToolkit/portal/profileMember$1</to>
     </rule>
-        <rule>
+    <rule>
         <from>^/API/portal/page([\?/]|$)</from>
-        <to>/APIToolkit/portal/page$1</to>
+        <to>/$1</to>
     </rule>
-        <rule>
+    <rule>
         <from>^/API/portal/bonitaPage([\?/]|$)</from>
         <to>/APIToolkit/portal/bonitaPage$1</to>
     </rule>

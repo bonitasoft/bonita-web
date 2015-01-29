@@ -321,15 +321,20 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ChangeLangPage();
 
             // Custom pages
-        } else if (PageListingPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        //} else if (PageListingPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (PageListingPage.TOKEN.equals(token)) {    
             return new PageListingPage();
-        } else if (AddCustomPage.TOKEN.equals(token) && isUserAuthorized(AddCustomPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        //} else if (AddCustomPage.TOKEN.equals(token) && isUserAuthorized(AddCustomPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (AddCustomPage.TOKEN.equals(token)) {    
             return new AddCustomPage();
-        } else if (EditCustomPage.TOKEN.equals(token) && isUserAuthorized(EditCustomPage.PRIVILEGES, getCurrentUserAccessRights())) {
+//        } else if (EditCustomPage.TOKEN.equals(token) && isUserAuthorized(EditCustomPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (EditCustomPage.TOKEN.equals(token)) {    
             return new EditCustomPage();
-        } else if (PageQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+//        } else if (PageQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (PageQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {	
             return new PageQuickDetailsPage();
-        } else if (CustomPagePermissionsValidationPopupPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+//        } else if (CustomPagePermissionsValidationPopupPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (CustomPagePermissionsValidationPopupPage.TOKEN.equals(token)) {    
             return new CustomPagePermissionsValidationPopupPage();
 
             // Custom pages
