@@ -120,10 +120,7 @@ public class XMLExpressionsUtil extends XPathUtil {
     
     /**
      * Parse a expression list node
-     * 
-     * @param expressionParentName
-     *            name of the parent widget
-     *            
+     *
      * @param dependenciesNode
      *            the dependencies node
      * @return a list of expressions

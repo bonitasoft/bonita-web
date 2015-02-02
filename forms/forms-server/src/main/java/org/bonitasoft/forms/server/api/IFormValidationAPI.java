@@ -124,10 +124,8 @@ public interface IFormValidationAPI {
      *            List of validators to use
      * @param submitButtonId
      *            the submit button ID
-     * @param value
+     * @param fieldValue
      *            to validate as a {@link FormFieldValue} object
-     * @param submitButtonId
-     *            the submit button ID
      * @param userLocale
      *            the user's locale
      * @param transientDataContext
@@ -138,7 +136,6 @@ public interface IFormValidationAPI {
      * @throws ProcessInstanceNotFoundException
      * @throws BPMEngineException
      * @throws InvalidSessionException
-     * @throws ProcessInstanceReadException
      * @throws IOException
      * @throws FileTooBigException
      * @throws ArchivedProcessInstanceNotFoundException
@@ -194,7 +191,7 @@ public interface IFormValidationAPI {
      *            the process definition ID
      * @param validators
      *            List of validators to use
-     * @param value
+     * @param fieldValue
      *            to validate as a {@link FormFieldValue} object
      * @param submitButtonId
      *            the submit button ID
