@@ -1,6 +1,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
@@ -9,13 +10,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
@@ -28,7 +34,10 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,6 +64,9 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     private Document mockedDocument;
 
     @Mock
+    private TenantFolder tenantFolder;
+
+    @Mock
     private SearchResult<Document> mockedEngineSearchResults;
 
     @Rule
@@ -62,14 +74,26 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
 
     private final CaseDocumentItem mockedDocumentItem = new CaseDocumentItem();
 
+    private String savedBonitaHomeProperty;
+
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        System.setProperty("bonita.home", "target/bonita-home/bonita");
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
-        documentDatastore = spy(new CaseDocumentDatastore(engineSession, constantsValue, processAPI));
+        documentDatastore = spy(new CaseDocumentDatastore(engineSession, constantsValue, processAPI, tenantFolder));
+    }
+
+    @After
+    public void teardown() throws Exception {
+        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
+        }
     }
 
     // ---------- GET METHOD TESTS ------------------------------//
@@ -78,6 +102,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_call_engine_processAPI_getDocument() throws Exception {
         // Given
         final APIID id = APIID.makeAPIID(1l);
+
 
         // When
         documentDatastore.get(id);
@@ -136,6 +161,8 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
 
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenReturn(new File(docUrl.getPath()));
+
         // When
         documentDatastore.add(mockedDocumentItem);
 
@@ -153,6 +180,8 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_DESCRIPTION, "This is a description");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_INDEX, "2");
+
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenReturn(new File(docUrl.getPath()));
 
         // When
         documentDatastore.add(mockedDocumentItem);
@@ -199,6 +228,40 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
 
     }
 
+    @Test(expected = APIForbiddenException.class)
+    public void it_throws_an_exception_adding_a_document_with_unauthorized_path() throws IOException {
+        // Given
+        final URL docUrl = getClass().getResource("/doc.jpg");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
+
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenThrow(new UnauthorizedFolderException("error"));
+
+        // When
+        documentDatastore.add(mockedDocumentItem);
+
+    }
+
+    @Test(expected = APIException.class)
+    public void it_throws_an_exception_when_cannot_write_file_on_add() throws IOException {
+        // Given
+        final URL docUrl = getClass().getResource("/doc.jpg");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
+
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenThrow(new IOException("error"));
+
+        // When
+        try {
+            documentDatastore.add(mockedDocumentItem);
+        } catch (final APIForbiddenException e) {
+            fail("Don't expect the APIException to be an APIForbiddenException");
+        }
+
+    }
+
     // ---------- UPDATE METHOD TESTS ------------------------------//
 
     @Test
@@ -207,6 +270,8 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         final Map<String, String> attributes = new HashMap<String, String>();
         final String uploadPath = getClass().getResource("/doc.jpg").getPath();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, uploadPath);
+
+        when(tenantFolder.getTempFile(uploadPath, 1L)).thenReturn(new File(uploadPath));
 
         // When
         documentDatastore.update(APIID.makeAPIID(1L), attributes);
@@ -243,6 +308,36 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         }
         // When
         documentDatastore.update(id, attributes);
+    }
+
+    @Test(expected = APIForbiddenException.class)
+    public void it_throws_an_exception_updating_a_document_with_unauthorized_path() throws IOException {
+        // Given
+        final Map<String, String> attributes = new HashMap<String, String>();
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
+
+        when(tenantFolder.getTempFile("C:\\doc.jpg", 1L)).thenThrow(new UnauthorizedFolderException("error"));
+
+        // When
+        documentDatastore.update(APIID.makeAPIID(1L), attributes);
+
+    }
+
+    @Test(expected = APIException.class)
+    public void it_throws_an_exception_when_cannot_write_file_on_update() throws IOException {
+        // Given
+        final Map<String, String> attributes = new HashMap<String, String>();
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
+
+        when(tenantFolder.getTempFile("C:\\doc.jpg", 1L)).thenThrow(new IOException("error"));
+
+        // When
+
+        try {
+            documentDatastore.update(APIID.makeAPIID(1L), attributes);
+        } catch (final APIForbiddenException e) {
+            fail("Don't expect the APIException to be an APIForbiddenException");
+        }
     }
 
     // ---------- SEARCH TESTS -------------------------------------------------//

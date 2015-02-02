@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.server.api.bpm.cases;
 import java.io.File;
 import java.util.HashMap;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
@@ -144,7 +145,11 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, expectedDocument.getContentFileName());
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, expectedDocument.getContentMimeType());
 
-        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, File.createTempFile("thisismynewfile", ".doc").getPath());
+        final File tmpDir = WebBonitaConstantsUtils.getInstance(getInitiator().getSession().getTenantId()).getTempFolder();
+        tmpDir.mkdirs();
+        final File file = new File(tmpDir, "thisismynewfile.doc");
+        file.createNewFile();
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, file.getPath());
 
         apiCaseDocument.update(APIID.makeAPIID(expectedDocument.getId()), attributes);
     }
