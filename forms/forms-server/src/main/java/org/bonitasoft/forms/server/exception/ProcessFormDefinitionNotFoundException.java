@@ -21,7 +21,7 @@ package org.bonitasoft.forms.server.exception;
  * 
  * @deprecated As of version 6.0, replaced by
  * ApplicationFormDefinitionNotFoundException
- * @see #ApplicationFormDefinitionNotFoundException
+ * @see org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException
  * 
  * @author Anthony Birembaut
  */
