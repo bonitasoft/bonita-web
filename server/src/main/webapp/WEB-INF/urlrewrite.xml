@@ -118,6 +118,10 @@
         <to>/APIToolkit/bpm/processConnectorDependency$1</to>
     </rule>
     <rule>
+        <from>^/API/bpm/processParameter([\?/]|$)</from>
+        <to>/APIToolkit/bpm/processParameter$1</to>
+    </rule>
+    <rule>
         <from>^/API/bpm/processResolutionProblem([\?/]|$)</from>
         <to>/APIToolkit/bpm/processResolutionProblem$1</to>
     </rule>
