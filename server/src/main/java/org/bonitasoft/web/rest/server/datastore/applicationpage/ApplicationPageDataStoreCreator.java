@@ -30,7 +30,7 @@ public class ApplicationPageDataStoreCreator {
     public ApplicationPageDataStore create(final APISession session) {
         ApplicationAPI applicationAPI;
         try {
-            applicationAPI = TenantAPIAccessor.getApplicationAPI(session);
+            applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
             return new ApplicationPageDataStore(session, applicationAPI, new ApplicationPageItemConverter());
         } catch (final Exception e) {
             throw new APIException(e);

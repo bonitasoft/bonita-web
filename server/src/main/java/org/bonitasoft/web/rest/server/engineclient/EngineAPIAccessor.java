@@ -86,7 +86,7 @@ public class EngineAPIAccessor {
 
     public PageAPI getPageAPI() {
         try {
-            return TenantAPIAccessor.getPageAPI(getSession());
+            return TenantAPIAccessor.getCustomPageAPI(getSession());
         } catch (final Exception e) {
             throw new APIException("Error when getting engine page API", e);
         }
