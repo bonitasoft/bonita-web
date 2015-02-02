@@ -72,9 +72,9 @@ public class PageDownloadServlet extends HttpServlet {
             final Page page = pageAPI.getPage(pageId);
             final byte[] pageContent = pageAPI.getPageContent(pageId);
             final GetUserRightsHelper getUserRightsHelper = new GetUserRightsHelper(apiSession);
-            //if (!apiSession.isTechnicalUser() && !getUserRightsHelper.getUserRights().contains("pagelisting")) {
-//                throw new IllegalAccessException("User not Authorized");
-//            }
+            if (!apiSession.isTechnicalUser() && !getUserRightsHelper.getUserRights().contains("pagelisting")) {
+                throw new IllegalAccessException("User not Authorized");
+            }
             // Set response headers
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Expires", "0");
