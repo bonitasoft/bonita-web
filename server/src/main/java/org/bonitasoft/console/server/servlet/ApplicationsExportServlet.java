@@ -57,7 +57,7 @@ public class ApplicationsExportServlet extends BonitaExportServlet {
     }
 
     protected ApplicationAPI getApplicationAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        final ApplicationAPI applicationAPI = TenantAPIAccessor.getApplicationAPI(apiSession);
+        final ApplicationAPI applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(apiSession);
         return applicationAPI;
     }
 

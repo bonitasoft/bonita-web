@@ -230,7 +230,7 @@ public class CustomPageService {
     }
 
     protected PageAPI getPageAPI(final APISession apiSession) throws BonitaException {
-        return TenantAPIAccessor.getPageAPI(apiSession);
+        return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }
 
     protected void removePageZipContent(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws IOException {

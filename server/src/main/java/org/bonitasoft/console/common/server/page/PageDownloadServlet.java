@@ -133,7 +133,7 @@ public class PageDownloadServlet extends HttpServlet {
 
     private PageAPI getPageAPI(final APISession apiSession) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
             UnknownAPITypeException {
-        return TenantAPIAccessor.getPageAPI(apiSession);
+        return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }
 
 }

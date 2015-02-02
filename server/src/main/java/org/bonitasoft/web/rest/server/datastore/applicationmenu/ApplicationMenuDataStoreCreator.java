@@ -30,7 +30,7 @@ public class ApplicationMenuDataStoreCreator {
     public ApplicationMenuDataStore create(final APISession session) {
         ApplicationAPI applicationAPI;
         try {
-            applicationAPI = TenantAPIAccessor.getApplicationAPI(session);
+            applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
             return new ApplicationMenuDataStore(session, applicationAPI, new ApplicationMenuItemConverter());
         } catch (final Exception e) {
             throw new APIException(e);

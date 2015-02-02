@@ -46,8 +46,8 @@ public class LivingApplicationServlet extends HttpServlet {
 
     ApplicationRouter createApplicationRouter(final APISession session) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return new ApplicationRouter(new ApplicationModelFactory(
-                TenantAPIAccessor.getApplicationAPI(session),
-                TenantAPIAccessor.getPageAPI(session),
+                TenantAPIAccessor.getLivingApplicationAPI(session),
+                TenantAPIAccessor.getCustomPageAPI(session),
                 TenantAPIAccessor.getProfileAPI(session)));
     }
 
