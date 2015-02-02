@@ -50,6 +50,7 @@ import org.bonitasoft.web.rest.server.api.bpm.process.APIProcess;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessCategory;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnector;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnectorDependency;
+import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessParameter;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessResolutionProblem;
 import org.bonitasoft.web.rest.server.api.document.APIArchivedDocument;
 import org.bonitasoft.web.rest.server.api.document.APIDocument;
@@ -215,6 +216,8 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProcessConnectorDependency();
             } else if ("caseVariable".equals(resourceToken)) {
                 return new APICaseVariable();
+            } else if ("processParameter".equals(resourceToken)) {
+                return new APIProcessParameter();
             }
         } else if ("living".equals(apiToken)) {
             if ("application".equals(resourceToken)) {
