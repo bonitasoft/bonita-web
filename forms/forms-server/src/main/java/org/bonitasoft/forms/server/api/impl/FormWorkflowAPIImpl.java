@@ -436,7 +436,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     /**
      * {@inheritDoc}
      *
-     * @throws ArchivedFlowNodeInstanceNotFoundException
      */
     @Override
     public ActivityEditState getTaskEditState(final APISession session, final long activityInstanceID) throws ActivityInstanceNotFoundException,
