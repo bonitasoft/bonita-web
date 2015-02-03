@@ -21,7 +21,7 @@ public class ProcessFormService {
         if ("request".equals(taskName)) {
             return "custompage_form";
         } else {
-            return "/form.html";
+            return "http://www.google.com";
         }
     }
 
