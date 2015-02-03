@@ -108,7 +108,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
     protected void buildBody(final PageItem page) {
         addBody(nameForUrlSection(page));
         addBody(contentSection(page));
-        addBody(visibleToSection(page));
+        //addBody(visibleToSection(page));
     }
 
     protected Section nameForUrlSection(final PageItem page) {
@@ -160,7 +160,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
 
             } else {
                 visibleToSection.addBody(new Html("<p>"
-                        + _("Users with the profiles above can see this page. To manage who can see this page, contact your administrator.") + "</p>"));
+                        + _("Users with the app above can see this page. To manage who can see this page, contact your administrator.") + "</p>"));
             }
         }
         visibleToSection.setId(CssId.QD_SECTION_PAGE_VISIBLETO);
