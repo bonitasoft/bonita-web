@@ -206,8 +206,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param context
      *        Map of context
      * @return the ProcessDefinitionID
-     * @throws FormNotFoundException
-     * @throws SessionTimeoutException
      */
     protected long getProcessDefinitionID(final Map<String, Object> context) throws InvalidSessionException {
         final FormContextUtil ctxu = createFormContextUtil(context);
@@ -532,11 +530,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formId
      *        the form Id
      * @param userId
-     *        the userId to performe a "Start For" or a "Do for"
+     *        the userId to perform a "Start For" or a "Do for"
      * @throws InvalidSessionException
-     * @throws BonitaHomeNotSetException
-     * @throws ServerAPIException
-     * @throws UnknownAPITypeException
      * @throws FormNotFoundException
      * @throws ForbiddenFormAccessException
      * @throws SessionTimeoutException
@@ -593,15 +588,12 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *        the API session
      * @param user
      *        the user
-     * @param workflowAPI
-     *        the workflow API
      * @param processDefinitionID
      *        the process definition ID
      * @param userId
      *        userId used for "Start for" and "Do for"
      * @throws InvalidSessionException
      * @throws ForbiddenFormAccessException
-     * @throws FormNotFoundException
      * @throws BPMEngineException
      */
     protected void canUserInstantiateProcess(final APISession session, final User user, final long processDefinitionID, final long userId,
@@ -767,10 +759,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws BPMEngineException
      * @throws FormNotFoundException
      * @throws SessionTimeoutException
-     * @throws ActivityInstanceNotFoundException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws ProcessInstanceNotFoundException
-     * @throws ArchivedProcessInstanceNotFoundException
      */
     private void resolveAndSetProcessDefinitionID(final APISession session, final IFormWorkflowAPI workflowAPI, final Map<String, Object> urlContext,
             final Map<String, Object> context)
@@ -825,7 +813,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * {@inheritDoc}
      *
      * @throws FormInitializationException
-     * @throws BPMEngineEvaluationExpressionException
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -1046,8 +1033,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formFieldValues
      * @param throwException
      * @return
-     * @throws FileTooBigException
-     * @throws IOException
      */
     protected Map<String, FormFieldValue> convertFormFieldValues(final Map<String, FormFieldValue> formFieldValues, final boolean throwException,
             final Map<String, Object> context) {
@@ -1065,7 +1050,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formFieldValue
      * @param throwException
      * @return
-     * @throws Exception
      */
     protected FormFieldValue convertValueType(final FormFieldValue formFieldValue, final boolean throwException,
             final Map<String, Object> context) {
@@ -1664,7 +1648,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *        the context of URL parameters
      * @return an instance of {@link IApplicationFormDefAccessor}
      * @throws ApplicationFormDefinitionNotFoundException
-     * @throws InvalidFormDefinitionException
      * @throws InvalidSessionException
      */
     protected IApplicationFormDefAccessor getApplicationFormDefinition(final String formId, final Document formDefinitionDocument,

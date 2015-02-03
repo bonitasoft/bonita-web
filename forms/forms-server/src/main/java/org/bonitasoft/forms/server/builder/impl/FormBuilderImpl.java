@@ -129,7 +129,6 @@ public class FormBuilderImpl implements IFormBuilder {
     /**
      * Private constructor to prevent instantiation
      *
-     * @throws SAXException
      */
     protected FormBuilderImpl() {
         productVersion = PRODUCT_VERSION;
@@ -571,7 +570,8 @@ public class FormBuilderImpl implements IFormBuilder {
     /**
      * Add a confirmation layout on an application
      *
-     * @param layoutUri
+     * @param templateUri
+     *      the uri of the template
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -863,7 +863,7 @@ public class FormBuilderImpl implements IFormBuilder {
     /**
      * Add a mandatory field label and symbol style (css class names) on an application
      *
-     * @param label
+     * @param mandatoryStyle
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -921,7 +921,7 @@ public class FormBuilderImpl implements IFormBuilder {
     /**
      * Add a max length number of characters property to a widget for textbox and textarea widgets
      *
-     * @param maxLength
+     * @param maxHeight
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -972,7 +972,8 @@ public class FormBuilderImpl implements IFormBuilder {
      * Add a page in the edition page flows and create the form if it doesn't exist yet
      *
      * @param pageId
-     * @return
+     *      id of the page to add
+     * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
     @Override
@@ -1861,8 +1862,6 @@ public class FormBuilderImpl implements IFormBuilder {
      *            name of the transient data
      * @param className
      *            classnameof the transient data
-     * @param value
-     *            value of the transient data
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
