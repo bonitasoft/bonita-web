@@ -226,7 +226,7 @@ describe("Bonita utils", function () {
                     bar = ["3", "5"];
 
                 var composite = utils.arrays.merge(foo, bar, function(a, b) {
-                    return +a < +b;
+                    return b - a;
                 });
                 
                 expect(composite).toEqual(["5", "4", "3", "2", "1"]);

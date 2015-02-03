@@ -79,7 +79,7 @@ public class DefaultValidatorsProperties {
     }
 
     /**
-     * @param the classname of the required type
+     * @param className the class name of the required type
      * @return the default validator for the given type
      */
     public String getDefaultValidator(final String className) {
