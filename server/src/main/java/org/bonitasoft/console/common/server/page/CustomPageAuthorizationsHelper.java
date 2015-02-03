@@ -1,13 +1,9 @@
 package org.bonitasoft.console.common.server.page;
 
-import javax.servlet.ServletException;
-
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPageSearchDescriptor;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
@@ -26,8 +22,7 @@ public class CustomPageAuthorizationsHelper {
         this.pageApi = pageApi;
     }
 
-    public boolean isPageAuthorized(final String appId, final String pageName) throws ServletException,
-    BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+    public boolean isPageAuthorized(final String appId, final String pageName) throws BonitaException {
 
         if (StringUtil.isBlank(appId)) {
             return isPageAuthorizedInPortal(pageName);
@@ -36,12 +31,11 @@ public class CustomPageAuthorizationsHelper {
         }
     }
 
-    private boolean isPageAuthorizedInPortal(final String pageName) throws ServletException {
+    private boolean isPageAuthorizedInPortal(final String pageName) throws BonitaException {
         return getUserRightsHelper.getUserRights().contains(pageName);
     }
 
-    private boolean isPageAuthorizedInApplication(final String applicationId, final String pageToken) throws BonitaHomeNotSetException,
-    ServerAPIException, UnknownAPITypeException {
+    private boolean isPageAuthorizedInApplication(final String applicationId, final String pageToken) throws BonitaException {
         try {
             return applicationAPI.searchApplicationPages(new SearchOptionsBuilder(0, 0)
                     .filter(ApplicationPageSearchDescriptor.APPLICATION_ID, applicationId)
