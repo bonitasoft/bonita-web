@@ -176,7 +176,7 @@ APIHasDelete {
     private PageDatastore getPageDatastore() {
         PageAPI pageAPI;
         try {
-            pageAPI = TenantAPIAccessor.getPageAPI(getEngineSession());
+            pageAPI = TenantAPIAccessor.getCustomPageAPI(getEngineSession());
         } catch (final Exception e) {
             throw new APIException(e);
         }

@@ -74,7 +74,7 @@ public class CustomPageServlet extends HttpServlet {
     protected CustomPageAuthorizationsHelper getCustomPageAuthorizationsHelper(final APISession apiSession) throws BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
         return new CustomPageAuthorizationsHelper(new GetUserRightsHelper(apiSession),
-                TenantAPIAccessor.getApplicationAPI(apiSession), TenantAPIAccessor.getPageAPI(apiSession));
+                TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession));
     }
 
     protected void handleException(final String pageName, final Exception e) throws ServletException {

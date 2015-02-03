@@ -42,7 +42,7 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     }
 
     private PageAPI getPageAPI() throws Exception {
-        return TenantAPIAccessor.getPageAPI(getInitiator().getSession());
+        return TenantAPIAccessor.getCustomPageAPI(getInitiator().getSession());
     }
 
     @Test

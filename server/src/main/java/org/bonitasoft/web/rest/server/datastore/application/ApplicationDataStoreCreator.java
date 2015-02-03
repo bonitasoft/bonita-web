@@ -32,8 +32,8 @@ public class ApplicationDataStoreCreator {
         ApplicationAPI applicationAPI;
         PageAPI pageAPI;
         try {
-            applicationAPI = TenantAPIAccessor.getApplicationAPI(session);
-            pageAPI = TenantAPIAccessor.getPageAPI(session);
+            applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
+            pageAPI = TenantAPIAccessor.getCustomPageAPI(session);
             return new ApplicationDataStore(session, applicationAPI, pageAPI, new ApplicationItemConverter());
         } catch (final Exception e) {
             throw new APIException(e);

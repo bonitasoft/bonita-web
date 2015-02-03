@@ -51,7 +51,7 @@ public class ApplicationsImportService extends BonitaImportService {
     private static final Logger LOGGER = Logger.getLogger(ApplicationsImportService.class.getName());
 
     protected ApplicationAPI getApplicationAPI() throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        return TenantAPIAccessor.getApplicationAPI(getSession());
+        return TenantAPIAccessor.getLivingApplicationAPI(getSession());
     }
 
     @Override

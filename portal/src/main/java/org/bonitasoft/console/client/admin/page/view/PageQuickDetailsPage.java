@@ -151,17 +151,8 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
         final Section visibleToSection = new Section(_("Visible to"), profileTable(page).setView(VIEW_TYPE.VIEW_LIST));
 
         if (!page.isProvided()) {
-            final String rightToAccessProfilePage = hasRightToAccessProfilePage();
-            if (AvailableTokens.tokens.contains(rightToAccessProfilePage)) {
-                // final AnchorElement anchor = AnchorElement.as(Element.as(SafeHtmlParser.parseFirst(new Html("<a></a>")));
-                visibleToSection.addBody(new Html("<p>"
-                        + _("Users with the profiles above can see this page. To manage who can see this page, go to ")
-                        + "<a href=\"#_p=profilelisting\">" + _("Profiles") + "</a>.</p>"));
-
-            } else {
-                visibleToSection.addBody(new Html("<p>"
-                        + _("Users with the profiles above can see this page. To manage who can see this page, contact your administrator.") + "</p>"));
-            }
+        	visibleToSection.addBody(new Html("<p>"
+                        + _("Users with the app above can see this page. To manage who can see this page, contact your administrator.") + "</p>"));
         }
         visibleToSection.setId(CssId.QD_SECTION_PAGE_VISIBLETO);
         visibleToSection.addClass("visibleTo");
