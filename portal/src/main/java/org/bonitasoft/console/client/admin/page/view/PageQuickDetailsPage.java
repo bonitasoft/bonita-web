@@ -152,7 +152,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
 
         if (!page.isProvided()) {
         	visibleToSection.addBody(new Html("<p>"
-                        + _("Users with the app above can see this page. To manage who can see this page, contact your administrator.") + "</p>"));
+                        + _("Users with the app above can see this page.") + "</p>"));
         }
         visibleToSection.setId(CssId.QD_SECTION_PAGE_VISIBLETO);
         visibleToSection.addClass("visibleTo");
