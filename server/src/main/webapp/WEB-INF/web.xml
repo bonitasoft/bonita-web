@@ -387,7 +387,12 @@
             <param-value>true</param-value>
         </init-param>
     </servlet>
-    <!-- End Pages -->       
+    <!-- End Pages -->
+    <!-- Forms -->
+    <servlet>
+        <servlet-name>ProcessFormServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.form.ProcessFormServlet</servlet-class>
+    </servlet>
     <!-- theme -->
     <servlet>
         <servlet-name>themeResource</servlet-name>
@@ -535,6 +540,10 @@
     <servlet-mapping>
         <servlet-name>pageUploadServlet</servlet-name>
         <url-pattern>/portal/pageUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcessFormServlet</servlet-name>
+        <url-pattern>/portal/processForm</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>formsCache</servlet-name>

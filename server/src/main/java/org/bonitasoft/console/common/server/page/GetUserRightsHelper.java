@@ -19,10 +19,10 @@ package org.bonitasoft.console.common.server.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
-
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
@@ -36,35 +36,30 @@ import org.bonitasoft.engine.session.APISession;
  */
 public class GetUserRightsHelper {
 
-    private APISession apiSession;
+    private final APISession apiSession;
 
-    public GetUserRightsHelper(APISession apiSession) {
+    public GetUserRightsHelper(final APISession apiSession) {
         this.apiSession = apiSession;
     }
-    
-    public List<String> getUserRights() throws ServletException {
-        List<String> rights = new ArrayList<String>();
-        try {
-            ProfileAPI profileAPI = TenantAPIAccessor.getProfileAPI(apiSession);
-            List<Profile> profilesForUser = profileAPI.getProfilesForUser(apiSession.getUserId());
-            for (Profile profile: profilesForUser) {
-                List<ProfileEntry> profileEntries = getProfileEntriesByProfile(profile.getId(), profileAPI);
-                for (ProfileEntry profileEntry: profileEntries) {
-                    final String userRight = profileEntry.getPage();
-                    if (userRight != null) {
-                        rights.add(userRight);                        
-                    }
+
+    public List<String> getUserRights() throws BonitaException {
+        final List<String> rights = new ArrayList<String>();
+        final ProfileAPI profileAPI = TenantAPIAccessor.getProfileAPI(apiSession);
+        final List<Profile> profilesForUser = profileAPI.getProfilesForUser(apiSession.getUserId());
+        for (final Profile profile : profilesForUser) {
+            final List<ProfileEntry> profileEntries = getProfileEntriesByProfile(profile.getId(), profileAPI);
+            for (final ProfileEntry profileEntry : profileEntries) {
+                final String userRight = profileEntry.getPage();
+                if (userRight != null) {
+                    rights.add(userRight);
                 }
             }
-            
-        } catch (Exception e) {
-           throw new ServletException();
-        } 
+        }
         return rights;
     }
 
-    private List<ProfileEntry> getProfileEntriesByProfile(long profileId, ProfileAPI profileAPI) throws Exception {
-        SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0,Integer.MAX_VALUE);
+    private List<ProfileEntry> getProfileEntriesByProfile(final long profileId, final ProfileAPI profileAPI) throws SearchException {
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0,Integer.MAX_VALUE);
         searchOptionsBuilder.filter(ProfileEntrySearchDescriptor.PROFILE_ID, profileId);
         return profileAPI.searchProfileEntries(searchOptionsBuilder.done()).getResult();
     }
