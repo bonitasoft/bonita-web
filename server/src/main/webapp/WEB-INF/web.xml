@@ -154,6 +154,7 @@
         <url-pattern>/login.jsp</url-pattern>
         <url-pattern>/portal/portal.nocache.js</url-pattern>
         <url-pattern>/portal.js/index.html</url-pattern>
+        <url-pattern>/apps/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
