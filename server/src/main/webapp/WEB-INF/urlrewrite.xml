@@ -118,6 +118,10 @@
         <to>/APIToolkit/bpm/processConnectorDependency$1</to>
     </rule>
     <rule>
+        <from>^/API/bpm/processParameter([\?/]|$)</from>
+        <to>/APIToolkit/bpm/processParameter$1</to>
+    </rule>
+    <rule>
         <from>^/API/bpm/processResolutionProblem([\?/]|$)</from>
         <to>/APIToolkit/bpm/processResolutionProblem$1</to>
     </rule>
@@ -136,6 +140,18 @@
     <rule>
         <from>^/API/customuserinfo/user([\?/]|$)</from>
         <to>/APIToolkit/customuserinfo/user$1</to>
+    </rule>
+    <rule>
+        <from>^/API/living/application-page([\?/]|$)</from>
+        <to>/APIToolkit/living/application-page$1</to>
+    </rule>
+    <rule>
+        <from>^/API/living/application-menu([\?/]|$)</from>
+        <to>/APIToolkit/living/application-menu$1</to>
+    </rule>
+    <rule>
+        <from>^/API/living/application([\?/]|$)</from>
+        <to>/APIToolkit/living/application$1</to>
     </rule>
     <rule>
         <from>^/API/customuserinfo/value([\?/]|$)</from>
@@ -180,6 +196,14 @@
     <rule>
         <from>^/API/portal/profileMember([\?/]|$)</from>
         <to>/APIToolkit/portal/profileMember$1</to>
+    </rule>
+    <rule>
+        <from>^/API/portal/page([\?/]|$)</from>
+        <to>/APIToolkit/portal/page$1</to>
+    </rule>
+    <rule>
+        <from>^/API/portal/bonitaPage([\?/]|$)</from>
+        <to>/APIToolkit/portal/bonitaPage$1</to>
     </rule>
     <rule>
         <from>^/API/system/i18nlocale([\?/]|$)</from>
