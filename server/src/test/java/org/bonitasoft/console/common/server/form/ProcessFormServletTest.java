@@ -2,6 +2,7 @@ package org.bonitasoft.console.common.server.form;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -30,6 +31,9 @@ public class ProcessFormServletTest {
     @Mock
     PageRenderer pageRenderer;
 
+    @Mock
+    ProcessFormService processFormService;
+
     @Spy
     @InjectMocks
     ProcessFormServlet servlet;
@@ -57,7 +61,14 @@ public class ProcessFormServletTest {
     public void should_get_Forbidden_Status_when_unauthorized() throws Exception {
         when(hsRequest.getParameter("process")).thenReturn("processName");
         when(hsRequest.getParameter("version")).thenReturn("processVersion");
-        when(servlet.isAuthorized(any(APISession.class), anyString(), anyString(), anyString(), anyString())).thenReturn(false);
+        when(hsRequest.getParameter("task")).thenReturn(null);
+        when(hsRequest.getParameter("taskInstance")).thenReturn(null);
+        when(hsRequest.getParameter("processInstance")).thenReturn(null);
+        when(hsRequest.getParameter("taskInstance")).thenReturn(null);
+        when(hsRequest.getParameter("user")).thenReturn(null);
+        when(processFormService.getProcessDefinitionID(apiSession, "process", "version")).thenReturn(1L);
+        when(processFormService.getTaskInstanceID(apiSession, -1L, null, -1L, -1L)).thenReturn(-1L);
+        when(servlet.isAuthorized(any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong())).thenReturn(false);
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -66,19 +77,23 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_Bad_Request_when_invalid_parameters() throws Exception {
-        when(hsRequest.getParameter("process")).thenReturn(null);
-
+        when(hsRequest.getParameter(anyString())).thenReturn(null);
+        when(processFormService.getProcessDefinitionID(apiSession, null, null)).thenReturn(-1L);
+        when(processFormService.getTaskInstanceID(apiSession, -1L, null, -1L, -1L)).thenReturn(-1L);
         servlet.doGet(hsRequest, hsResponse);
-
-        verify(hsResponse, times(1)).sendError(400, "Missing process name and/or version");
+        verify(hsResponse, times(1)).sendError(400,
+                "Either process and version parameters are required or processInstance (with or without task) or taskInstance.");
     }
 
     @Test
     public void should_display_externalPage() throws Exception {
         when(hsRequest.getParameter("process")).thenReturn("processName");
         when(hsRequest.getParameter("version")).thenReturn("processVersion");
-        when(servlet.getForm(any(APISession.class), anyString(), anyString(), anyString(), anyBoolean())).thenReturn("/externalPage");
-        when(servlet.isAuthorized(any(APISession.class), anyString(), anyString(), anyString(), anyString())).thenReturn(true);
+        when(hsRequest.getParameter("task")).thenReturn(null);
+        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.getTaskInstanceID(apiSession, -1L, null, -1L, -1L)).thenReturn(-1L);
+        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference("/externalPage", true));
+        when(servlet.isAuthorized(any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong())).thenReturn(true);
         doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "/externalPage");
 
         servlet.doGet(hsRequest, hsResponse);
@@ -90,11 +105,29 @@ public class ProcessFormServletTest {
     public void should_display_customPage() throws Exception {
         when(hsRequest.getParameter("process")).thenReturn("processName");
         when(hsRequest.getParameter("version")).thenReturn("processVersion");
-        when(servlet.getForm(any(APISession.class), anyString(), anyString(), anyString(), anyBoolean())).thenReturn("custompage_form");
-        when(servlet.isAuthorized(any(APISession.class), anyString(), anyString(), anyString(), anyString())).thenReturn(true);
+        when(hsRequest.getParameter("task")).thenReturn(null);
+        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.getTaskInstanceID(apiSession, -1L, null, -1L, -1L)).thenReturn(-1L);
+        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference("custompage_form", false));
+        when(servlet.isAuthorized(any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong())).thenReturn(true);
 
         servlet.doGet(hsRequest, hsResponse);
 
         verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+    }
+
+    @Test
+    public void should_display_lecgacyForm() throws Exception {
+        when(hsRequest.getParameter("process")).thenReturn("processName");
+        when(hsRequest.getParameter("version")).thenReturn("processVersion");
+        when(hsRequest.getParameter("task")).thenReturn(null);
+        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.getTaskInstanceID(apiSession, -1L, null, -1L, -1L)).thenReturn(-1L);
+        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference(null, false));
+        when(servlet.isAuthorized(any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong())).thenReturn(true);
+
+        servlet.doGet(hsRequest, hsResponse);
+
+        verify(servlet, times(1)).displayLegacyForm(hsRequest, hsResponse, 1L, -1L, -1L);
     }
 }

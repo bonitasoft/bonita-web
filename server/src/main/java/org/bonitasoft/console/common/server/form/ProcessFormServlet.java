@@ -55,43 +55,82 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String TASK_NAME_PARAM = "task";
 
-    private static final String INSTANCE_ID_PARAM = "id";
+    private static final String TASK_INSTANCE_ID_PARAM = "taskInstance";
+
+    private static final String PROCESS_INSTANCE_ID_PARAM = "processInstance";
+
+    private static final String USER_ID_PARAM = "user";
 
     protected PageRenderer pageRenderer = new PageRenderer();
+
+    protected ProcessFormService processFormService = new ProcessFormService();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         final String processName = request.getParameter(PROCESS_NAME_PARAM);
         final String processVersion = request.getParameter(PROCESS_VERSION_PARAM);
-        final String taskName = request.getParameter(TASK_NAME_PARAM);
-        final String instanceID = request.getParameter(INSTANCE_ID_PARAM);
-        if (processName == null || processVersion == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing process name and/or version");
-            return;
-        }
+        String taskName = request.getParameter(TASK_NAME_PARAM);
+        final String taskInstance = request.getParameter(TASK_INSTANCE_ID_PARAM);
+        final String processInstance = request.getParameter(PROCESS_INSTANCE_ID_PARAM);
+        final String user = request.getParameter(USER_ID_PARAM);
+        final long userID = convertToLong(USER_ID_PARAM, user);
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         try {
-            final String formName = getForm(apiSession, processName, processVersion, taskName, instanceID != null);
-            if (!isAuthorized(apiSession, processName, processVersion, taskName, instanceID)) {
+            final long processDefinitionID = processFormService.getProcessDefinitionID(apiSession, processName, processVersion);
+            final long processInstanceID = convertToLong(PROCESS_INSTANCE_ID_PARAM, processInstance);
+            final long taskInstanceID = processFormService.getTaskInstanceID(apiSession, convertToLong(PROCESS_INSTANCE_ID_PARAM, processInstance), taskName,
+                    convertToLong(TASK_NAME_PARAM, taskInstance), userID);
+            taskName = processFormService.ensureTaskName(apiSession, taskName, taskInstanceID);
+            if (processDefinitionID == -1 && processInstanceID == -1 && taskInstanceID == -1) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Either process and version parameters are required or processInstance (with or without task) or taskInstance.");
+                return;
+            }
+            if (!isAuthorized(apiSession, processDefinitionID, processInstanceID, taskInstanceID, userID)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                 return;
             }
-            try {
-                pageRenderer.displayCustomPage(request, response, apiSession, formName);
-            } catch (final PageNotFoundException e) {
-                displayExternalPage(request, response, formName);
+            final FormReference form = processFormService.getForm(apiSession, processDefinitionID, taskName, processInstanceID != -1);
+            if (form.getReference() != null) {
+                displayForm(request, response, apiSession, form);
+            } else {
+                displayLegacyForm(request, response, processDefinitionID, processInstanceID, taskInstanceID);
             }
         } catch (final Exception e) {
             handleException(processName, processVersion, taskName, e);
         }
     }
 
-    protected String getForm(final APISession apiSession, final String processName, final String processVersion, final String taskName, final boolean isInstance)
-            throws BonitaException {
-        final ProcessFormService processFormService = new ProcessFormService();
-        final String formName = processFormService.getForm(apiSession, processName, processVersion, taskName, isInstance);
-        return formName;
+    protected void displayLegacyForm(final HttpServletRequest request, final HttpServletResponse response, final long processDefinitionID,
+            final long processInstanceID, final long taskInstanceID) {
+        //TODO fallback to legacy form application if there is a form.xml in the business archive
+    }
+
+    protected void displayForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final FormReference form)
+            throws InstantiationException, IllegalAccessException, IOException, BonitaException {
+        if (!form.isExternal()) {
+            try {
+                pageRenderer.displayCustomPage(request, response, apiSession, form.getReference());
+            } catch (final PageNotFoundException e) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Can't find the form with name " + form.getReference());
+            }
+        } else {
+            displayExternalPage(request, response, form.getReference());
+        }
+    }
+
+    protected long convertToLong(final String parameterName, final String idAsString) {
+        if (idAsString != null) {
+            try {
+                return Long.parseLong(idAsString);
+            } catch (final NumberFormatException e) {
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, "Wrong parameter for " + parameterName + " expecting a number (long value)");
+                }
+            }
+        }
+        return -1;
     }
 
     @SuppressWarnings("unchecked")
@@ -101,8 +140,8 @@ public class ProcessFormServlet extends HttpServlet {
         response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
     }
 
-    protected boolean isAuthorized(final APISession apiSession, final String processName, final String processVersion, final String taskName,
-            final String instanceID) throws BonitaException {
+    protected boolean isAuthorized(final APISession apiSession, final long processDefinitionID, final long processInstanceID, final long taskInstanceID,
+            final long userID) throws BonitaException {
         //TODO check if the user is allowed to see the process or task form
         return true;
     }

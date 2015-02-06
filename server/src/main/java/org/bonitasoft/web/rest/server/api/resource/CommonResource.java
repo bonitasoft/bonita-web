@@ -87,6 +87,10 @@ public class CommonResource extends ServerResource {
         return parseFilters(getParameterAsList(APIServletCall.PARAMETER_FILTER));
     }
 
+    protected String getQueryParameter(boolean mandatory) {
+        return getParameter(APIServletCall.PARAMETER_QUERY,mandatory);
+    }
+
     /**
      * Builds a map where keys are Engine constants defining filter keys, and values are values corresponding to those keys.
      *
