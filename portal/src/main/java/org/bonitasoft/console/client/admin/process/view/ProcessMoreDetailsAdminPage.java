@@ -33,6 +33,7 @@ import org.bonitasoft.console.client.admin.process.view.section.category.Categor
 import org.bonitasoft.console.client.admin.process.view.section.configuration.ProcessConfigurationStateResolver;
 import org.bonitasoft.console.client.admin.process.view.section.connector.ConnectorSection;
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.EntityMappingSection;
+import org.bonitasoft.console.client.admin.process.view.section.parameter.ProcessParametersSection;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -170,6 +171,7 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
 
     protected void buildBody(final ProcessItem process, final ProcessConfigurationStateResolver stateResolver) {
         addBody(new EntityMappingSection(process, stateResolver.getActorsConfigurationState()));
+        addBody(new ProcessParametersSection(process, stateResolver.getParametersConfigurationState()));
         addBody(buildConnectorSection(process, stateResolver));
         addBody(new CategoriesSection(process));
         addBody(new CasesSection(process));

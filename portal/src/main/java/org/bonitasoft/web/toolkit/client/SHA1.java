@@ -1,11 +1,17 @@
-/*******************************************************************************
+/**
  * Copyright (C) 2009, 2013 BonitaSoft S.A.
- * BonitaSoft is a trademark of BonitaSoft SA.
- * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
- * For commercial licensing information, contact:
- *      BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
- *      or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
- *******************************************************************************/
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.web.toolkit.client;
 
 
@@ -29,8 +35,8 @@ public class SHA1 {
     // Configurable variables. You may need to tweak these to be compatible with
     // the server-side, but the defaults work in most cases.
     //
-    var hexcase = 0;  // hex output format. 0 - lowercase; 1 - uppercase        
-    var b64pad  = ""; // base-64 pad character. "=" for strict RFC compliance   
+    var hexcase = 0;  // hex output format. 0 - lowercase; 1 - uppercase
+    var b64pad  = ""; // base-64 pad character. "=" for strict RFC compliance
 
     //
     // These are the functions you'll usually want to call
@@ -131,7 +137,7 @@ public class SHA1 {
       var remainders = Array();
       var i, q, x, quotient;
 
-      // Convert to an array of 16-bit big-endian values, forming the dividend 
+      // Convert to an array of 16-bit big-endian values, forming the dividend
       var dividend = Array(Math.ceil(input.length / 2));
       for(i = 0; i < dividend.length; i++)
       {
@@ -160,12 +166,12 @@ public class SHA1 {
         dividend = quotient;
       }
 
-      // Convert the remainders to the output string 
+      // Convert the remainders to the output string
       var output = "";
       for(i = remainders.length - 1; i >= 0; i--)
         output += encoding.charAt(remainders[i]);
 
-      // Append leading zero equivalents 
+      // Append leading zero equivalents
       var full_length = Math.ceil(input.length * 8 /
                                         (Math.log(encoding.length) / Math.log(2)))
       for(i = output.length; i < full_length; i++)
@@ -186,7 +192,7 @@ public class SHA1 {
 
       while(++i < input.length)
       {
-          // Decode utf-16 surrogate pairs 
+          // Decode utf-16 surrogate pairs
         x = input.charCodeAt(i);
         y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
         if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
@@ -195,7 +201,7 @@ public class SHA1 {
           i++;
         }
 
-        // Encode output as utf-8 
+        // Encode output as utf-8
         if(x <= 0x7F)
           output += String.fromCharCode(x);
         else if(x <= 0x7FF)
@@ -265,7 +271,7 @@ public class SHA1 {
     //
     function binb_sha1(x, len)
     {
-        // append padding 
+        // append padding
       x[len >> 5] |= 0x80 << (24 - len % 32);
       x[((len + 64 >> 9) << 4) + 15] = len;
 
@@ -347,7 +353,7 @@ public class SHA1 {
       return (num << cnt) | (num >>> (32 - cnt));
     }
 
-    return rstr2hex(rstr_sha1(str2rstr_utf8(s))); 
+    return rstr2hex(rstr_sha1(str2rstr_utf8(s)));
     }-*/;
 
 }
