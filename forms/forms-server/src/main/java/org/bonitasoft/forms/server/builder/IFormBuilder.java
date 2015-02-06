@@ -89,7 +89,7 @@ public interface IFormBuilder {
     /**
      * Add a mandatory field symbol on an application
      *
-     * @param symbol
+     * @param name
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -113,7 +113,7 @@ public interface IFormBuilder {
     /**
      * Add a mandatory field label and symbol style (css class names) on an application
      *
-     * @param label
+     * @param mandatoryStyle
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -241,7 +241,7 @@ public interface IFormBuilder {
      * @param returnType
      * @param interpreter
      * @return an implementation of {@link IFormBuilder}
-     * @throws InvalidFormDefinitionExceptionn
+     * @throws InvalidFormDefinitionException
      */
     IFormBuilder addInitialValueExpression(String name, String content, String expressionType, String returnType, String interpreter)
             throws InvalidFormDefinitionException;
@@ -692,7 +692,11 @@ public interface IFormBuilder {
     /**
      * Add a display condition expression to display or not a widget
      *
-     * @param displayConditionExpression
+     * @param name
+     * @param content
+     * @param expressionType
+     * @param interpreter
+     * @param returnType
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
      */
@@ -736,7 +740,7 @@ public interface IFormBuilder {
     /**
      * Add permissions, that will be decide whether a user has right to view/submit the form.
      *
-     * @param example
+     * @param permissions
      *            The permissions
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
@@ -746,7 +750,7 @@ public interface IFormBuilder {
     /**
      * Add migration product version, that will be generated with the current version of the product used.
      *
-     * @param example
+     * @param migrationProductVersion
      *            The migrationProductVersion
      * @return an implementation of {@link IFormBuilder}
      * @throws InvalidFormDefinitionException
