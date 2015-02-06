@@ -187,4 +187,47 @@ public class CommonResourceTest {
         verify(spy).getSearchPageSize();
         verify(spy).getSearchTerm();
     }
+
+    @Test
+    public void getQueryParameter_return_value() throws Exception {
+        // given:
+        final CommonResource spy = spy(new CommonResource());
+        final String parameterName = APIServletCall.PARAMETER_QUERY;
+        final String parameterValue = "some value";
+        doReturn(parameterValue).when(spy).getRequestParameter(parameterName);
+
+        // when:
+        final String mandatoryParameter = spy.getQueryParameter(true);
+        final String optionalParameter = spy.getQueryParameter(false);
+
+        // then:
+        assertThat(mandatoryParameter).as("should return mandatory parameter").isEqualTo(parameterValue);
+        assertThat(mandatoryParameter).as("should return optional parameter").isEqualTo(parameterValue);
+        assertThat(mandatoryParameter).as("should be equals").isEqualTo(optionalParameter);
+        verify(spy, times(1)).verifyNotNullParameter(parameterValue, parameterName);
+    }
+
+    @Test
+    public void getQueryParameter_return_null() throws Exception {
+        // given:
+        final CommonResource spy = spy(new CommonResource());
+        doReturn(null).when(spy).getRequestParameter(anyString());
+
+        // when:
+        final String parameter = spy.getQueryParameter(false);
+
+        // then:
+        assertThat(parameter).as("should return null").isNull();
+        verify(spy, times(0)).verifyNotNullParameter(anyString(), anyString());
+    }
+
+    @Test(expected = APIException.class)
+    public void getQueryParameter_throws_Exception() throws Exception {
+        // given:
+        final CommonResource spy = spy(new CommonResource());
+        doReturn(null).when(spy).getRequestParameter(anyString());
+
+        // when then exception
+        final String parameter = spy.getQueryParameter(true);
+    }
 }
