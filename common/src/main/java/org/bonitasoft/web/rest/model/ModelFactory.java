@@ -65,6 +65,7 @@ import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.model.system.TenantAdminDefinition;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -181,6 +182,8 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ProfileMemberDefinition();
         } else if (SessionDefinition.TOKEN.equals(token)) {
             return new SessionDefinition();
+        } else if (TenantAdminDefinition.TOKEN.equals(token)) {
+            return new TenantAdminDefinition();
         }
 
         // monitoring
