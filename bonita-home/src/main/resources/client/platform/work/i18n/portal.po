@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-06 02:01+0100\n"
+"POT-Creation-Date: 2015-02-10 02:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,6 +341,12 @@ msgstr ""
 msgid "All pages"
 msgstr ""
 
+msgid "All processes are automatically paused."
+msgstr ""
+
+msgid "An error has occurred when deploying Business Data Model."
+msgstr ""
+
 msgid "An error occurred while creating a definition"
 msgstr ""
 
@@ -408,6 +414,9 @@ msgid "Available tasks"
 msgstr ""
 
 msgid "Avatar"
+msgstr ""
+
+msgid "BPM Services are paused. You may need to resume them."
 msgstr ""
 
 msgid "BPM services"
@@ -585,6 +594,12 @@ msgid "Confirm removing"
 msgstr ""
 
 msgid "Confirm removing ?"
+msgstr ""
+
+msgid "Confirm services pause?"
+msgstr ""
+
+msgid "Confirm services resumption?"
 msgstr ""
 
 msgid "Confirm the new page"
@@ -950,6 +965,12 @@ msgstr ""
 msgid "Error when deleting users"
 msgstr ""
 
+msgid "Error when pausing BPM services"
+msgstr ""
+
+msgid "Error when resuming BPM services"
+msgstr ""
+
 msgid "Error when searching users"
 msgstr ""
 
@@ -1131,6 +1152,9 @@ msgid "Installed by"
 msgstr ""
 
 msgid "Installed on"
+msgstr ""
+
+msgid "Invalid Business Data Model content"
 msgstr ""
 
 msgid "Item not found"
@@ -1397,6 +1421,9 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
+msgid "Only the technical user can log in to the Portal."
+msgstr ""
+
 msgid "Only the value attribute can be updated"
 msgstr ""
 
@@ -1469,6 +1496,12 @@ msgid "Password must contain at least %number% upper case characters"
 msgstr ""
 
 msgid "Passwords don't match"
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Paused"
 msgstr ""
 
 msgid "Pending"
@@ -1591,6 +1624,9 @@ msgstr ""
 msgid "Resources not recognized:"
 msgstr ""
 
+msgid "Resume"
+msgstr ""
+
 msgid "Retrieve"
 msgstr ""
 
@@ -1607,6 +1643,9 @@ msgid "Roles mapping"
 msgstr ""
 
 msgid "Roles: %nb_roles%"
+msgstr ""
+
+msgid "Running"
 msgstr ""
 
 msgid "Sa"
@@ -1711,6 +1750,12 @@ msgstr ""
 msgid "Service task (performed automatically)"
 msgstr ""
 
+msgid "Services will be paused for maintenance.\n"
+msgstr ""
+
+msgid "Services will resume. Users will be able to log in.\n"
+msgstr ""
+
 msgid "Session expired. Please log in again."
 msgstr ""
 
@@ -1799,6 +1844,9 @@ msgid "Statistics"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Status: "
 msgstr ""
 
 msgid "Stop ignoring this task so I will see it in available tasks"
@@ -2153,6 +2201,9 @@ msgstr ""
 msgid "Unable to log in. Please check your username and password."
 msgstr ""
 
+msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
+msgstr ""
+
 msgid "Unassign"
 msgstr ""
 
@@ -2225,6 +2276,12 @@ msgstr ""
 msgid "Users mapping"
 msgstr ""
 
+msgid "Users who are currently logged in, including Administrator users, are automatically logged out."
+msgstr ""
+
+msgid "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
+msgstr ""
+
 msgid "Users with the app above can see this page."
 msgstr ""
 
@@ -2249,9 +2306,6 @@ msgstr ""
 msgid "Warning:"
 msgstr ""
 
-msgid "Warning: you are logged as technical user. This user has limited rights, its purpose is to initialize the organisation."
-msgstr ""
-
 msgid "We"
 msgstr ""
 
@@ -2261,10 +2315,19 @@ msgstr ""
 msgid "Welcome: "
 msgstr ""
 
+msgid "When you resume the services, tell your users that they can log back in to the Portal."
+msgstr ""
+
 msgid "Worked on"
 msgstr ""
 
 msgid "Yes"
+msgstr ""
+
+msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
+msgstr ""
+
+msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
 msgstr ""
 
 msgid ""
