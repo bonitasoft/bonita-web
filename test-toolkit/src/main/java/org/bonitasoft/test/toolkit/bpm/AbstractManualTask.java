@@ -18,13 +18,10 @@ package org.bonitasoft.test.toolkit.bpm;
 
 import java.util.List;
 
-import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.TestToolkitUtils;
-import org.bonitasoft.test.toolkit.exception.TestToolkitException;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
-import org.bonitasoft.test.toolkit.organization.TestUser;
 
 /**
  * @author Vincent Elcrin
@@ -37,27 +34,6 @@ public abstract class AbstractManualTask {
     public abstract String getName();
 
     public abstract String getDescription();
-
-    // ////////////////////////////////////////////////////////////////////////////
-    // / Hide
-    // ////////////////////////////////////////////////////////////////////////////
-
-    private void hide(final APISession apiSession) {
-        final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
-        try {
-            processAPI.hideTasks(apiSession.getUserId(), getId());
-        } catch (Exception e) {
-            throw new TestToolkitException("Can't hide task <" + getId() + ">", e);
-        }
-    }
-
-    public void hide(final TestUser initiator) {
-        hide(initiator.getSession());
-    }
-
-    public void hide() {
-        hide(TestToolkitCtx.getInstance().getInitiator());
-    }
 
     // /////////////////////////////////////////////////////////////////////////////
     // / Test state
@@ -84,27 +60,6 @@ public abstract class AbstractManualTask {
 
     public boolean isPending() {
         return isPending(TestToolkitCtx.getInstance().getInitiator().getSession());
-    }
-
-    /**
-     * Using engine's process api, check that the human task is hidden
-     * 
-     * @param apiSession
-     * @return
-     */
-    private boolean isHidden(final APISession apiSession) {
-        final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
-        boolean hidden = false;
-        try {
-            hidden = processAPI.isTaskHidden(getId(), apiSession.getUserId());
-        } catch (Exception e) {
-            throw new TestToolkitException("Can't get hidden status for task <" + getId() + ">", e);
-        }
-        return hidden;
-    }
-
-    public boolean isHidden() {
-        return isHidden(TestToolkitCtx.getInstance().getInitiator().getSession());
     }
 
 }
