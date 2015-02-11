@@ -74,43 +74,6 @@ public final class TestToolkitUtils {
     // ////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Search pending hidden tasks for the user define by api session
-     * 
-     * @param apiSession
-     * @param pageIndex
-     * @param numberOfResults
-     * @return
-     */
-    public List<HumanTaskInstance> searchPendingHiddenTasks(final APISession apiSession, int pageIndex, int numberOfResults) {
-        final ProcessAPI processAPI = getProcessAPI(apiSession);
-
-        SearchOptionsBuilder searchBuilder = new SearchOptionsBuilder(pageIndex, numberOfResults);
-        SearchOptions searchOptions = searchBuilder.done();
-        List<HumanTaskInstance> result;
-        try {
-            result = processAPI.searchPendingHiddenTasks(apiSession.getUserId(), searchOptions)
-                    .getResult();
-        } catch (InvalidSessionException e) {
-            throw new TestToolkitException("Can't search hidden tasks. Invalid session", e);
-        } catch (SearchException e) {
-            throw new TestToolkitException("Can't search hidden tasks", e);
-        }
-
-        return result;
-    }
-
-    /**
-     * Search pending hidden tasks for the initiator
-     * 
-     * @param pageIndex
-     * @param numberOfResults
-     * @return
-     */
-    public List<HumanTaskInstance> searchPendingHiddenTasks(int pageIndex, int numberOfResults) {
-        return searchPendingHiddenTasks(TestToolkitCtx.getInstance().getInitiator().getSession(), pageIndex, numberOfResults);
-    }
-
-    /**
      * Search pending tasks for user defined by the api session
      * 
      * @param apiSession
