@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.engineclient;
 
-import org.bonitasoft.engine.api.TenantManagementAPI;
+import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.business.data.BusinessDataRepositoryDeploymentException;
 import org.bonitasoft.engine.business.data.InvalidBusinessDataModelException;
 import org.bonitasoft.engine.exception.UpdateException;
@@ -20,15 +20,15 @@ import org.bonitasoft.web.toolkit.client.common.i18n._;
  */
 public class TenantManagementEngineClient {
 
-    private final TenantManagementAPI tenantManagementAPI;
+    private final TenantAdministrationAPI tenantAdministrationAPI;
 
-    public TenantManagementEngineClient(final TenantManagementAPI tenantManagementAPI) {
-        this.tenantManagementAPI = tenantManagementAPI;
+    public TenantManagementEngineClient(final TenantAdministrationAPI tenantManagementAPI) {
+        this.tenantAdministrationAPI = tenantManagementAPI;
     }
 
     public void installBusinessDataModel(final byte[] bussinessDataModelContent) {
         try {
-            tenantManagementAPI.installBusinessDataModel(bussinessDataModelContent);
+            tenantAdministrationAPI.installBusinessDataModel(bussinessDataModelContent);
         } catch (final InvalidBusinessDataModelException e) {
             throw new APIException(new _("Invalid Business Data Model content"), e);
         } catch (final BusinessDataRepositoryDeploymentException e) {
@@ -41,14 +41,14 @@ public class TenantManagementEngineClient {
             throw new APIException(new _("Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."));
         }
         try {
-            tenantManagementAPI.uninstallBusinessDataModel();
+            tenantAdministrationAPI.uninstallBusinessDataModel();
         } catch (final BusinessDataRepositoryDeploymentException e) {
             throw new APIException(new _("An error has occurred when deploying Business Data Model."), e);
         }
     }
 
     public boolean isTenantPaused() {
-        return tenantManagementAPI.isPaused();
+        return tenantAdministrationAPI.isPaused();
     }
 
     public void pauseTenant() {
@@ -59,7 +59,7 @@ public class TenantManagementEngineClient {
 
     private void pause() {
         try {
-            tenantManagementAPI.pause();
+            tenantAdministrationAPI.pause();
         } catch (final UpdateException e) {
             throw new APIException(new _("Error when pausing BPM services"), e);
         }
@@ -73,7 +73,7 @@ public class TenantManagementEngineClient {
 
     private void resume() {
         try {
-            tenantManagementAPI.resume();
+            tenantAdministrationAPI.resume();
         } catch (final UpdateException e) {
             throw new APIException(new _("Error when resuming BPM services"), e);
         }

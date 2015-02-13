@@ -6,7 +6,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.bonitasoft.engine.api.TenantManagementAPI;
+import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.business.data.BusinessDataRepositoryDeploymentException;
 import org.bonitasoft.engine.business.data.InvalidBusinessDataModelException;
 import org.bonitasoft.engine.exception.UpdateException;
@@ -22,17 +22,17 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class TenantManagementEngineClientTest {
 
     @Mock
-    private TenantManagementAPI tenantManagementAPI;
+    private TenantAdministrationAPI tenantAdministrationAPI;
 
     @InjectMocks
     private TenantManagementEngineClient tenantManagementEngineClient;
 
     private void pauseTenant() {
-        when(tenantManagementAPI.isPaused()).thenReturn(true);
+        when(tenantAdministrationAPI.isPaused()).thenReturn(true);
     }
 
     private void resumeTenant() {
-        when(tenantManagementAPI.isPaused()).thenReturn(false);
+        when(tenantAdministrationAPI.isPaused()).thenReturn(false);
     }
 
     @Before
@@ -46,19 +46,19 @@ public class TenantManagementEngineClientTest {
 
         tenantManagementEngineClient.installBusinessDataModel(expectedContent);
 
-        verify(tenantManagementAPI).installBusinessDataModel(expectedContent);
+        verify(tenantAdministrationAPI).installBusinessDataModel(expectedContent);
     }
 
     @Test(expected = APIException.class)
     public void install_should_throw_APIException_if_InvalidBusinessDataModelException_occurs() throws Exception {
-        doThrow(new InvalidBusinessDataModelException(new NullPointerException())).when(tenantManagementAPI).installBusinessDataModel(any(byte[].class));
+        doThrow(new InvalidBusinessDataModelException(new NullPointerException())).when(tenantAdministrationAPI).installBusinessDataModel(any(byte[].class));
 
         tenantManagementEngineClient.installBusinessDataModel("".getBytes());
     }
 
     @Test(expected = APIException.class)
     public void install_should_throw_APIException_if_BusinessDataRepositoryDeploymentException_occurs() throws Exception {
-        doThrow(new BusinessDataRepositoryDeploymentException(new NullPointerException())).when(tenantManagementAPI)
+        doThrow(new BusinessDataRepositoryDeploymentException(new NullPointerException())).when(tenantAdministrationAPI)
         .installBusinessDataModel(any(byte[].class));
 
         tenantManagementEngineClient.installBusinessDataModel("".getBytes());
@@ -70,14 +70,14 @@ public class TenantManagementEngineClientTest {
 
         tenantManagementEngineClient.uninstallBusinessDataModel();
 
-        verify(tenantManagementAPI).uninstallBusinessDataModel();
+        verify(tenantAdministrationAPI).uninstallBusinessDataModel();
     }
 
     @Test(expected = APIException.class)
     public void uninstall_should_throw_APIException_if_error_occurs() throws Exception {
         pauseTenant();
 
-        doThrow(new BusinessDataRepositoryDeploymentException(new NullPointerException())).when(tenantManagementAPI).uninstallBusinessDataModel();
+        doThrow(new BusinessDataRepositoryDeploymentException(new NullPointerException())).when(tenantAdministrationAPI).uninstallBusinessDataModel();
 
         tenantManagementEngineClient.uninstallBusinessDataModel();
     }
@@ -93,7 +93,7 @@ public class TenantManagementEngineClientTest {
 
         tenantManagementEngineClient.pauseTenant();
 
-        verify(tenantManagementAPI).pause();
+        verify(tenantAdministrationAPI).pause();
     }
 
     @Test
@@ -102,12 +102,12 @@ public class TenantManagementEngineClientTest {
 
         tenantManagementEngineClient.pauseTenant();
 
-        verify(tenantManagementAPI, never()).pause();
+        verify(tenantAdministrationAPI, never()).pause();
     }
 
     @Test(expected = APIException.class)
     public void pauseTenant_throw_APIException_if_error_occurs_when_pausing_tenant() throws Exception {
-        doThrow(new UpdateException(new NullPointerException())).when(tenantManagementAPI).pause();
+        doThrow(new UpdateException(new NullPointerException())).when(tenantAdministrationAPI).pause();
 
         tenantManagementEngineClient.pauseTenant();
     }
@@ -118,7 +118,7 @@ public class TenantManagementEngineClientTest {
 
         tenantManagementEngineClient.resumeTenant();
 
-        verify(tenantManagementAPI).resume();
+        verify(tenantAdministrationAPI).resume();
     }
 
     @Test
@@ -126,13 +126,13 @@ public class TenantManagementEngineClientTest {
 
         tenantManagementEngineClient.resumeTenant();
 
-        verify(tenantManagementAPI, never()).resume();
+        verify(tenantAdministrationAPI, never()).resume();
     }
 
     @Test(expected = APIException.class)
     public void resumeTenant_throw_APIException_if_error_occurs_when_resuming_tenant() throws Exception {
         pauseTenant();
-        doThrow(new UpdateException(new NullPointerException())).when(tenantManagementAPI).resume();
+        doThrow(new UpdateException(new NullPointerException())).when(tenantAdministrationAPI).resume();
 
         tenantManagementEngineClient.resumeTenant();
     }

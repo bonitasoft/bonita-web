@@ -22,7 +22,7 @@ import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.api.TenantManagementAPI;
+import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
@@ -93,9 +93,9 @@ public class EngineAPIAccessor {
         }
     }
 
-    public TenantManagementAPI getTenantManagementAPI() {
+    public TenantAdministrationAPI getTenantAdministrationAPI() {
         try {
-            return TenantAPIAccessor.getTenantManagementCommunityAPI(getSession());
+            return TenantAPIAccessor.getTenantAdministrationAPI(getSession());
         } catch (final Exception e) {
             throw new APIException("Error when getting engine tenant management API", e);
         }
