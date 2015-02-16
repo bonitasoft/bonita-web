@@ -39,7 +39,7 @@ public class EditGroupForm extends Form {
     public EditGroupForm() {
         final ItemDefinition<GroupItem> def = GroupDefinition.get();
         addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_ICON), "Avatar", _("Select an avatar for this group"));
-        addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_NAME), _("Name"), _("Enter the name of this group"), INCREASED_MAX_LENGTH);
+        addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_NAME), _("Name"), _("Enter the name of this group"), 125L);
         addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_DISPLAY_NAME), _("Display name"), _("Enter the display name of this group"),
                 INCREASED_MAX_LENGTH);
         addAutoCompleteEntry(new JsId(GroupItem.ATTRIBUTE_PARENT_GROUP_ID), _("Parent Group"), _("Select the parent group"), def, GroupItem.ATTRIBUTE_NAME,
