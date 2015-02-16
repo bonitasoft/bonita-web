@@ -7,6 +7,7 @@
 		&.page{
 			>.body{
 				position: static;
+				word-break: break-word;
 			}
 		}
 		.toolbar{
@@ -32,37 +33,40 @@
 			.description, .definitions{
 				margin: @detailsPanel-metadatas-descriptionDefinition-margin;
 				text-overflow: ellipsis;
-				word-wrap: break-word;
-			    
 			}
 			+ .section, + css3-container + .section{
 				margin: @detailsPanel-1stSection-margin; 
 			}
 			.definitions{
-				overflow: hidden;
+				overflow-y: hidden;
+				overflow-x: auto;
+				word-wrap: break-word;
 				.definition{
-					float:left;
+					padding: @detailsPanel-definition-padding;
 					.boxSizing();
-					width: 50%;
+					width: 100%;
 					label, span{
-						height: @detailsPanel-definition-height;
 						min-height: @detailsPanel-definition-height;
 						.boxSizing();
-						display: block;
-						float: left;
+						display: inline;
 					}
-					label{
-						padding: @detailsPanel-definition-padding;
+					span{
+						white-space: pre;
 					}
 					&.displayname, &.version, &.parent-task {
 						label{
 							.bgLeft(@detailsPanel-definition-processBg);
 						}
 					}
-					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date, &.lastupdatedate, &.creationdate{
+					// remove last_update_date class that needed the calendar icon
+					&.duedate, &.start, &.deploymentdate, &.creation_date, &.lastupdatedate, &.creationdate{
 						label{
 							.bgLeft(@detailsPanel-definition-dueDateBg);
 						}
+					}
+					&.last_update_date, &.last_connection{
+						float : left;
+						width : 50%;
 					}
 					//no icon anymore in this case
 					//&.started_by, &.deployedby, &.assigned_id_firstname_lastname, &.assigned_id{
