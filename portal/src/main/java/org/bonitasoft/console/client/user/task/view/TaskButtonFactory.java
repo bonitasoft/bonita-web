@@ -21,8 +21,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
-import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
-import org.bonitasoft.console.client.user.task.action.UserTasksUnhideAction;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
@@ -40,18 +38,6 @@ public class TaskButtonFactory {
 
     public Button createMoreDetailsButton(final Action more) {
         return new MoreButton(_("Show more details about this task"), more);
-    }
-
-    public ButtonAction createRetrieveButton(UserTasksUnhideAction userTasksUnhideAction) {
-        return new ButtonAction("btn-retrieve", _("Retrieve"),
-                _("Stop ignoring this task so I will see it in available tasks"),
-                userTasksUnhideAction);
-    }
-
-    public ButtonAction createIgnoreButton(UserTasksHideAction userTasksHideAction) {
-        return new ButtonAction("btn-ignore", _("Hide"),
-                _("Hide this task so I will no longer see it. Other allowed users will still see it"),
-                userTasksHideAction);
     }
 
     public ButtonAction createUnassignedButton(TaskRelaseAction taskRelaseAction) {

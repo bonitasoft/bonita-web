@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,8 +28,6 @@ import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
-import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
-import org.bonitasoft.console.client.user.task.action.UserTasksUnhideAction;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
@@ -107,7 +105,6 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         tables.add(unassignedTable());
         tables.add(assignedTable());
         tables.add(performedTasksTable());
-        tables.add(hiddenToMeTable());
         return tables;
     }
 
@@ -122,7 +119,6 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         table.addAction(newRefreshButton(table));
         table.addGroupedAction(newAssignToMeButton());
         table.addGroupedAction(newUnasignButton());
-        table.addGroupedAction(newIgnoreButton());
         return table;
     }
 
@@ -135,7 +131,6 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
         table.addAction(newRefreshButton(table));
         table.addGroupedAction(newAssignToMeButton());
-        table.addGroupedAction(newIgnoreButton());
         return table;
     }
 
@@ -148,18 +143,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         table.addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY);
         table.addAction(newRefreshButton(table));
         table.addGroupedAction(newUnasignButton());
-        table.addGroupedAction(newIgnoreButton());
         return table;
-    }
-
-    private ItemListingTable hiddenToMeTable() {
-        return new ItemListingTable(new JsId(TABLE_IGNORED), _("Hidden to me"), hiddenToMeItemTable(), new HumanTaskQuickDetailsPage());
-    }
-
-    private ItemTable hiddenToMeItemTable() {
-        return buildItemTableColumns()
-                .addHiddenFilter(HumanTaskItem.FILTER_HIDDEN_TO_USER_ID, Session.getUserId())
-                .addGroupedAction(newRetrieveButton());
     }
 
     private ItemTable buildItemTableColumns() {
@@ -213,14 +197,6 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         return taskButtonFactory.createUnassignedButton(new TaskRelaseAction());
     }
 
-    private Link newIgnoreButton() {
-        return taskButtonFactory.createIgnoreButton(new UserTasksHideAction(Session.getUserId()));
-    }
-
-    private Link newRetrieveButton() {
-        return taskButtonFactory.createRetrieveButton(new UserTasksUnhideAction(Session.getUserId()));
-    }
-
     @Override
     protected Title defineResourceFiltersTitle() {
         final Title title = new Title(_("Processes"));
@@ -267,17 +243,12 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     @Override
     protected LinkedList<ItemListingFilter> defineSecondaryFilters() {
         final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
-        filters.add(hiddenFilter());
         filters.add(doneFilter());
         return filters;
     }
 
     private ItemListingFilter doneFilter() {
         return new ItemListingFilter(FILTER_PERFORMED, _("Done"), _("Display tasks I have done"), TABLE_PERFORMED);
-    }
-
-    private ItemListingFilter hiddenFilter() {
-        return new ItemListingFilter(FILTER_IGNORED, _("Hidden"), _("Display tasks I'm ignoring"), TABLE_IGNORED);
     }
 
     @Override
