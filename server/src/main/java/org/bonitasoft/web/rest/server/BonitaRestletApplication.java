@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,15 +24,24 @@ import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
+import org.restlet.data.CharacterSet;
+import org.restlet.data.MediaType;
 import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
 
 /**
- *
  * @author Matthieu Chaffotte
- *
  */
 public class BonitaRestletApplication extends Application {
+
+    private final FinderFactory factory;
+
+    public BonitaRestletApplication(final FinderFactory finderFactory) {
+        super();
+        factory = finderFactory;
+        getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
+        getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
+    }
 
     /**
      * Creates a root Restlet that will receive all incoming calls.
@@ -56,6 +63,8 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", TimerEventTriggerResource.class);
         // GET to case info (with task state counter)
         router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", CaseInfoResource.class);
+
+        //        router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
         return router;
     }
 
