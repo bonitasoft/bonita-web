@@ -20,7 +20,6 @@ import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
-import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
@@ -41,18 +40,6 @@ public abstract class Page extends View {
     private Title title = null;
 
     private final Container<Link> actions = new Container<Link>(new JsId("actions"));
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // CONSTRUCTORS
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public Page() {
-        super();
-
-        // FIXME dont set footer when it is a quickdetails page
-        final Text footerTxt = new Text("Bonitasoft © 2015");
-        footerTxt.getElement().setAttribute("id", "footer");
-        super.setFooter(footerTxt);
-    }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // HTML GENERATION
