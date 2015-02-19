@@ -14,6 +14,9 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
@@ -21,9 +24,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
 /**
  * @author Vincent Elcrin
@@ -39,23 +39,35 @@ public class BonitaVersionTest {
 
     @Test
     public void should_read_version_stream_to_return_its_content() throws Exception {
-        InputStream stream = IOUtils.toInputStream("1.0.0");
+        final InputStream stream = IOUtils.toInputStream("1.0.0\nBonitasoft © 2015");
         given(file.getStream()).willReturn(stream);
 
-        BonitaVersion version = new BonitaVersion(file);
+        final BonitaVersion version = new BonitaVersion(file);
 
-        assertThat(version.toString()).isEqualTo("1.0.0");
+        assertThat(version.getVersion()).isEqualTo("1.0.0");
+        assertThat(version.getCopyright()).isEqualTo("Bonitasoft © 2015");
+        IOUtils.closeQuietly(stream);
+    }
+
+    @Test
+    public void should_read_version_stream_to_return_its_version() throws Exception {
+        final InputStream stream = IOUtils.toInputStream("1.0.0");
+        given(file.getStream()).willReturn(stream);
+
+        final BonitaVersion version = new BonitaVersion(file);
+
+        assertThat(version.getVersion()).isEqualTo("1.0.0");
         IOUtils.closeQuietly(stream);
     }
 
     @Test
     public void should_trim_extra_new_line_character() throws Exception {
-        InputStream stream = IOUtils.toInputStream("1.0.0\n");
+        final InputStream stream = IOUtils.toInputStream("1.0.0\n");
         given(file.getStream()).willReturn(stream);
 
-        BonitaVersion version = new BonitaVersion(file);
+        final BonitaVersion version = new BonitaVersion(file);
 
-        assertThat(version.toString()).isEqualTo("1.0.0");
+        assertThat(version.getVersion()).isEqualTo("1.0.0");
         IOUtils.closeQuietly(stream);
     }
 
@@ -63,9 +75,10 @@ public class BonitaVersionTest {
     public void should_return_an_empty_version_when_the_stream_is_null() throws Exception {
         given(file.getStream()).willReturn(null);
 
-        BonitaVersion version = new BonitaVersion(file);
+        final BonitaVersion version = new BonitaVersion(file);
 
-        assertThat(version.toString()).isEqualTo("");
+        assertThat(version.getVersion()).isEqualTo("");
+        assertThat(version.getCopyright()).isEqualTo("");
     }
 
     @Test
@@ -73,8 +86,9 @@ public class BonitaVersionTest {
         given(stream.read()).willThrow(new RuntimeException());
         given(file.getStream()).willReturn(stream);
 
-        BonitaVersion version = new BonitaVersion(file);
+        final BonitaVersion version = new BonitaVersion(file);
 
-        assertThat(version.toString()).isEqualTo("");
+        assertThat(version.getVersion()).isEqualTo("");
+        assertThat(version.getCopyright()).isEqualTo("");
     }
 }
