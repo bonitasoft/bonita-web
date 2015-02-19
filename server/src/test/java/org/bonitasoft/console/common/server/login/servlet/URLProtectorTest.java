@@ -33,5 +33,10 @@ public class URLProtectorTest {
         assertEquals("portal/homepage#?_p=caselistinguser&test=http://www.google.fr",
                 urlProtecter.protectRedirectUrl("portal/homepage#?_p=caselistinguser&test=http://www.google.fr"));
     }
+    
+    @Test
+    public void it_should_filter_capital_letters(){
+    	assertEquals("://.google.com", urlProtecter.protectRedirectUrl("HTTPS://WWW.google.com"));
+    }
 
 }
