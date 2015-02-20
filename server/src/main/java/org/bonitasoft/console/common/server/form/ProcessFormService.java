@@ -68,7 +68,8 @@ public class ProcessFormService {
         }
     }
 
-    public long getProcessDefinitionID(final APISession apiSession, final String processName, final String processVersion) throws BonitaException {
+    public long getProcessDefinitionID(final APISession apiSession, final String processName, final String processVersion)
+            throws ProcessDefinitionNotFoundException, BonitaException {
         if (processName != null && processVersion != null) {
             try {
                 return getProcessAPI(apiSession).getProcessDefinitionId(processName, processVersion);
@@ -111,7 +112,7 @@ public class ProcessFormService {
         return -1L;
     }
 
-    public String getTaskName(final APISession apiSession, final long taskInstanceID) throws BonitaException {
+    public String getTaskName(final APISession apiSession, final long taskInstanceID) throws ActivityInstanceNotFoundException, BonitaException {
         if (taskInstanceID != -1L) {
             final ProcessAPI processAPI = getProcessAPI(apiSession);
             try {
@@ -126,7 +127,7 @@ public class ProcessFormService {
     }
 
     public long ensureProcessDefinitionID(final APISession apiSession, final long processDefinitionID, final long processInstanceID, final long taskInstanceID)
-            throws BonitaException {
+            throws ArchivedProcessInstanceNotFoundException, ActivityInstanceNotFoundException, BonitaException {
         if (processDefinitionID != -1L) {
             return processDefinitionID;
         } else if (processInstanceID != -1L) {

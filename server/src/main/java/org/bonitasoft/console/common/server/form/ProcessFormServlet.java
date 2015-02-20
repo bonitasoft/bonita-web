@@ -30,6 +30,9 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -105,7 +108,7 @@ public class ProcessFormServlet extends HttpServlet {
                 displayLegacyForm(request, response, apiSession, processDefinitionID, processInstanceID, taskInstanceID, taskName);
             }
         } catch (final Exception e) {
-            handleException(processDefinitionID, taskName, processInstanceID != -1L, e);
+            handleException(response, processDefinitionID, taskName, processInstanceID != -1L, e);
         }
     }
 
@@ -188,7 +191,7 @@ public class ProcessFormServlet extends HttpServlet {
             //TODO fallback to legacy form application if there is a form.xml in the business archive
             response.sendRedirect(response.encodeRedirectURL("homepage"));
         } else {
-            String message = "Can't find the form for process " + processDefinitionID;
+            String message = "Cannot find the form for process " + processDefinitionID;
             if (taskName != null) {
                 message = message + " and task " + taskName;
             }
@@ -207,7 +210,7 @@ public class ProcessFormServlet extends HttpServlet {
                     //TODO render the resource
                 }
             } catch (final PageNotFoundException e) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Can't find the form with name " + form.getReference());
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getReference());
             }
         } else {
             if (resourcePath == null) {
@@ -255,21 +258,34 @@ public class ProcessFormServlet extends HttpServlet {
         }
     }
 
-    protected void handleException(final long processDefinitionID, final String taskName, final boolean hasProcessInstanceID, final Exception e)
+    protected void handleException(final HttpServletResponse response, final long processDefinitionID, final String taskName,
+            final boolean hasProcessInstanceID, final Exception e)
             throws ServletException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            String message = "Error while trying to display a form";
-            if (processDefinitionID != -1) {
-                message = message + " for process " + processDefinitionID;
+        try {
+            if (e instanceof ProcessDefinitionNotFoundException) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the process");
+            } else if (e instanceof ArchivedProcessInstanceNotFoundException) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the process instance");
+            } else if (e instanceof ActivityInstanceNotFoundException) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the task instance");
+            } else {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    String message = "Error while trying to display a form";
+                    if (processDefinitionID != -1) {
+                        message = message + " for process " + processDefinitionID;
+                    }
+                    if (taskName != null) {
+                        message = message + " for task " + taskName;
+                    } else if (hasProcessInstanceID) {
+                        message = message + " ( instance overview)";
+                    }
+                    LOGGER.log(Level.WARNING, message, e);
+                }
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             }
-            if (taskName != null) {
-                message = message + " for task " + taskName;
-            } else if (hasProcessInstanceID) {
-                message = message + " ( instance overview)";
-            }
-            LOGGER.log(Level.WARNING, message, e);
+        } catch (final IOException ioe) {
+            throw new ServletException(ioe);
         }
-        throw new ServletException(e.getMessage());
     }
 
 }

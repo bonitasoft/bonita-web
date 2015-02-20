@@ -9,7 +9,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -176,7 +176,7 @@ public class ProcessFormServletTest {
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).sendError(404, "Can't find the form with name custompage_form");
+        verify(hsResponse, times(1)).sendError(404, "Cannot find the form with name custompage_form");
     }
 
     @Test
@@ -230,42 +230,52 @@ public class ProcessFormServletTest {
         verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
     }
 
-    @Test(expected = ServletException.class)
-    public void should_throw_exception_when_invalid_processInstanceID() throws Exception {
+    @Test
+    public void should_get_not_found_when_invalid_process() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenThrow(ProcessDefinitionNotFoundException.class);
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).sendError(404, "Cannot find the process");
+    }
+
+    @Test
+    public void should_get_not_found_when_invalid_processInstanceID() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
-        final ArchivedProcessInstanceNotFoundException exception = new ArchivedProcessInstanceNotFoundException(42L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenThrow(exception);
+        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenThrow(ArchivedProcessInstanceNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).handleException(-1L, null, true, exception);
+        verify(hsResponse, times(1)).sendError(404, "Cannot find the process instance");
     }
 
-    @Test(expected = ServletException.class)
-    public void should_throw_exception_when_invalid_taskInstanceID() throws Exception {
+    @Test
+    public void should_get_not_found_when_invalid_task() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
-        when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        final ActivityInstanceNotFoundException exception = new ActivityInstanceNotFoundException(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, 1L)).thenThrow(exception);
+        when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(-1L);
+        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenThrow(ActivityInstanceNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).handleException(-1L, null, true, exception);
+        verify(hsResponse, times(1)).sendError(404, "Cannot find the task instance");
     }
 
-    @Test(expected = ServletException.class)
-    public void should_throw_exception_when_issue_with_customPage() throws Exception {
+    @Test
+    public void should_get_server_error_when_issue_with_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
         when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, 1L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 1L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, "taskName", true)).thenReturn(new FormReference("custompage_form", false));
-        final InstantiationException instantiationException = new InstantiationException();
+        final InstantiationException instantiationException = new InstantiationException("instatiation exception");
         doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).handleException(-1L, "custompage_form", true, instantiationException);
+        verify(formServlet, times(1)).handleException(hsResponse, 1L, "taskName", true, instantiationException);
+
+        verify(hsResponse, times(1)).sendError(500, "instatiation exception");
     }
 }
