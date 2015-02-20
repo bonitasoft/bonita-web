@@ -14,6 +14,10 @@
  */
 
 
+import static org.mockito.Matchers.any
+import static org.mockito.Matchers.eq
+import static org.mockito.Mockito.*
+
 import org.assertj.core.api.Assertions
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.IdentityAPI
@@ -23,6 +27,7 @@ import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
 import org.bonitasoft.engine.bpm.process.ProcessInstance
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
 import org.bonitasoft.engine.search.impl.SearchResultImpl
@@ -32,10 +37,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
-
-import static org.mockito.Matchers.any
-import static org.mockito.Matchers.eq
-import static org.mockito.Mockito.*
 
 @RunWith(MockitoJUnitRunner.class)
 public class CasePermissionRuleTest {
@@ -130,6 +131,17 @@ public class CasePermissionRuleTest {
         //then
         Assertions.assertThat(isAuthorized).isTrue();
     }
+    
+    @Test
+    public void should_check_verify_resourceId_isInvolved_as_manager_on_GET() {
+        //given
+        havingResourceId(false)
+        doReturn(true).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 45l);
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+    }
 
     @Test
     public void should_check_verify_resourceId_not_isInvolved_on_GET() {
@@ -137,8 +149,8 @@ public class CasePermissionRuleTest {
         havingResourceId(false)
 
         def processInstance = mock(ProcessInstance.class)
-        doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(processInstance).when(processAPI).getProcessInstance(45l)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(false).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
@@ -153,8 +165,8 @@ public class CasePermissionRuleTest {
         havingResourceId(false)
 
         def processInstance = mock(ProcessInstance.class)
-        doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(processInstance).when(processAPI).getProcessInstance(45l)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(true).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
@@ -165,11 +177,38 @@ public class CasePermissionRuleTest {
     @Test
     public void should_check_verify_resourceId_archived_isInvolved_on_GET() {
         //given
-        havingArchivedResourceId()
+        havingArchivedResourceId(true)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_check_verify_resourceId_archived_not_isInvolved_on_GET_and_not_supervisor() {
+        //given
+        havingArchivedResourceId(false)
+        doReturn(false).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 45l);
         def instance = mock(ArchivedProcessInstance.class)
-        doReturn(currentUserId).when(instance).getStartedBy()
         doReturn(instance).when(processAPI).getArchivedProcessInstance(45l);
-        doReturn(new SearchResultImpl(1,[])).when(processAPI).searchArchivedProcessInstancesInvolvingUser(eq(currentUserId), any(SearchOptions.class))
+        doReturn(1024l).when(instance).getProcessDefinitionId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isFalse();
+    }
+    
+    @Test
+    public void should_check_verify_resourceId_archived_not_isInvolved_on_GET_but_supervisor() {
+        //given
+        havingArchivedResourceId(false)
+        def instance = mock(ArchivedProcessInstance.class)
+        doReturn(instance).when(processAPI).getArchivedProcessInstance(45l);
+        doReturn(1024l).when(instance).getProcessDefinitionId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -179,8 +218,19 @@ public class CasePermissionRuleTest {
     @Test
     public void should_check_verify_resourceId_archived_not_isInvolved_on_GET() {
         //given
-        havingArchivedResourceId()
+        havingArchivedResourceId(false)
         doThrow(new ArchivedProcessInstanceNotFoundException(new Exception())).when(processAPI).getArchivedProcessInstance(45l);
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+    }
+    
+    @Test
+    public void should_allow_when_isManager_throws_Exception_on_GET() {
+        //given
+        havingResourceId(false)
+        doThrow(new SearchException(new Exception())).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 45l);
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -195,11 +245,12 @@ public class CasePermissionRuleTest {
         doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
     }
 
-    def havingArchivedResourceId() {
+    def havingArchivedResourceId(boolean isInvolvedIn) {
         doReturn(currentUserId).when(apiSession).getUserId()
         doReturn(true).when(apiCallContext).isGET()
         doReturn("archivedCase").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
+        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
     }
 
     @Test
@@ -254,6 +305,4 @@ public class CasePermissionRuleTest {
         Assertions.assertThat(isAuthorized).isTrue();
 
     }
-
-
 }
