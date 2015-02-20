@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Request;
@@ -56,6 +57,10 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", TimerEventTriggerResource.class);
         // GET to case info (with task state counter)
         router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", CaseInfoResource.class);
+        // GET to search form mappings:
+        router.attach("/form/mapping", FormMappingResource.class);
+        // PUT to update form mapping:
+        router.attach("/form/mapping/{" + FormMappingResource.ID_PARAM_NAME + "}", FormMappingResource.class);
         return router;
     }
 

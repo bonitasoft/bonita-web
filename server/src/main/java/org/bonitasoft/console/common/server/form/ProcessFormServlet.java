@@ -34,6 +34,7 @@ import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -269,6 +270,8 @@ public class ProcessFormServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the process instance");
             } else if (e instanceof ActivityInstanceNotFoundException) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the task instance");
+            } else if (e instanceof NotFoundException) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     String message = "Error while trying to display a form";

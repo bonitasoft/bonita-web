@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.session.APISession;
@@ -75,6 +76,14 @@ public class CommonResource extends ServerResource {
         }
     }
 
+    public ProcessConfigurationAPI getEngineProcessConfigurationAPI() {
+        try {
+            return TenantAPIAccessor.getProcessConfigurationAPI(getEngineSession());
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
     public CommandAPI getEngineCommandAPI() {
         try {
             return TenantAPIAccessor.getCommandAPI(getEngineSession());
@@ -87,7 +96,7 @@ public class CommonResource extends ServerResource {
         return parseFilters(getParameterAsList(APIServletCall.PARAMETER_FILTER));
     }
 
-    protected String getQueryParameter(boolean mandatory) {
+    protected String getQueryParameter(final boolean mandatory) {
         return getParameter(APIServletCall.PARAMETER_QUERY,mandatory);
     }
 

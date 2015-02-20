@@ -163,7 +163,7 @@ public class ProcessFormServiceTest {
     @Test
     public void getForm_for_task() throws Exception {
         final FormMapping formMapping = mock(FormMapping.class);
-        when(formMapping.getPage()).thenReturn("myPage");
+        when(formMapping.getForm()).thenReturn("myPage");
         when(formMapping.isExternal()).thenReturn(false);
         when(processConfigurationAPI.getTaskForm(1L, "taskName")).thenReturn(formMapping);
 
@@ -177,7 +177,7 @@ public class ProcessFormServiceTest {
     @Test
     public void getForm_for_process_instance() throws Exception {
         final FormMapping formMapping = mock(FormMapping.class);
-        when(formMapping.getPage()).thenReturn("www.bonitasoft.com");
+        when(formMapping.getForm()).thenReturn("www.bonitasoft.com");
         when(formMapping.isExternal()).thenReturn(true);
         when(processConfigurationAPI.getProcessOverviewForm(1L)).thenReturn(formMapping);
 
@@ -191,7 +191,7 @@ public class ProcessFormServiceTest {
     @Test
     public void getForm_for_process() throws Exception {
         final FormMapping formMapping = mock(FormMapping.class);
-        when(formMapping.getPage()).thenReturn("myPage");
+        when(formMapping.getForm()).thenReturn("myPage");
         when(formMapping.isExternal()).thenReturn(false);
         when(processConfigurationAPI.getProcessStartForm(1L)).thenReturn(formMapping);
 

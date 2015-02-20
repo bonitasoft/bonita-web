@@ -41,6 +41,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
@@ -60,7 +61,7 @@ public class ProcessFormService {
     private static Logger LOGGER = Logger.getLogger(ProcessFormService.class.getName());
 
     public FormReference getForm(final APISession apiSession, final long processDefinitionId, final String taskName, final boolean hasProcessInstanceId)
-            throws BonitaException {
+            throws NotFoundException, BonitaException {
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
         final FormMapping formMapping;
         if (taskName != null) {
@@ -70,7 +71,7 @@ public class ProcessFormService {
         } else {
             formMapping = processConfigurationAPI.getProcessStartForm(processDefinitionId);
         }
-        return new FormReference(formMapping.getPage(), formMapping.isExternal());
+        return new FormReference(formMapping.getForm(), formMapping.isExternal());
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
