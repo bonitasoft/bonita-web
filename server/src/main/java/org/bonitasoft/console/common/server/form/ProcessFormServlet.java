@@ -46,7 +46,7 @@ import org.bonitasoft.engine.session.APISession;
 public class ProcessFormServlet extends HttpServlet {
 
     /**
-     * UUID
+     * UUId
      */
     private static final long serialVersionUID = -6397856355139281873L;
 
@@ -63,7 +63,7 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String TASK_PATH_SEGMENT = "task";
 
-    private static final String USER_ID_PARAM = "user";
+    private static final String USER_Id_PARAM = "user";
 
     protected PageRenderer pageRenderer = new PageRenderer();
 
@@ -72,43 +72,43 @@ public class ProcessFormServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
-        long processDefinitionID = -1L;
-        long processInstanceID = -1L;
-        long taskInstanceID = -1L;
+        long processDefinitionId = -1L;
+        long processInstanceId = -1L;
+        long taskInstanceId = -1L;
         String taskName = null;
         final List<String> pathSegments = getPathSegments(request);
-        final String user = request.getParameter(USER_ID_PARAM);
-        final long userID = convertToLong(USER_ID_PARAM, user);
+        final String user = request.getParameter(USER_Id_PARAM);
+        final long userId = convertToLong(USER_Id_PARAM, user);
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         try {
             String resourcePath = null;
             if (pathSegments.size() > 1) {
-                processDefinitionID = getProcessDefinitionID(apiSession, pathSegments);
-                processInstanceID = getProcessInstanceID(pathSegments);
-                taskInstanceID = getTaskInstanceID(apiSession, pathSegments, userID);
+                processDefinitionId = getProcessDefinitionId(apiSession, pathSegments);
+                processInstanceId = getProcessInstanceId(pathSegments);
+                taskInstanceId = getTaskInstanceId(apiSession, pathSegments, userId);
                 resourcePath = getResourcePath(pathSegments);
             }
-            if (processDefinitionID == -1L && processInstanceID == -1L && taskInstanceID == -1L) {
+            if (processDefinitionId == -1L && processInstanceId == -1L && taskInstanceId == -1L) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "Either process name and version are required or process instance ID (with or without task name) or task instance ID.");
+                        "Either process name and version are required or process instance Id (with or without task name) or task instance Id.");
                 return;
             }
-            processDefinitionID = processFormService.ensureProcessDefinitionID(apiSession, processDefinitionID, processInstanceID, taskInstanceID);
-            taskName = processFormService.getTaskName(apiSession, taskInstanceID);
-            final FormReference form = processFormService.getForm(apiSession, processDefinitionID, taskName, processInstanceID != -1L);
+            processDefinitionId = processFormService.ensureProcessDefinitionId(apiSession, processDefinitionId, processInstanceId, taskInstanceId);
+            taskName = processFormService.getTaskName(apiSession, taskInstanceId);
+            final FormReference form = processFormService.getForm(apiSession, processDefinitionId, taskName, processInstanceId != -1L);
             if (form.getReference() != null) {
-                // for resources path we don't check if the user is allowed
-                if (resourcePath == null && !isAuthorized(apiSession, processDefinitionID, processInstanceID, taskInstanceID, userID)) {
+                // for resources we don't check if the user is allowed
+                if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                 } else {
                     displayForm(request, response, apiSession, form, resourcePath);
                 }
             } else {
-                displayLegacyForm(request, response, apiSession, processDefinitionID, processInstanceID, taskInstanceID, taskName);
+                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName);
             }
         } catch (final Exception e) {
-            handleException(response, processDefinitionID, taskName, processInstanceID != -1L, e);
+            handleException(response, processDefinitionId, taskName, processInstanceId != -1L, e);
         }
     }
 
@@ -125,41 +125,41 @@ public class ProcessFormServlet extends HttpServlet {
         return segments;
     }
 
-    protected long getProcessInstanceID(final List<String> pathSegments) {
-        long processInstanceID = -1L;
+    protected long getProcessInstanceId(final List<String> pathSegments) {
+        long processInstanceId = -1L;
         if (PROCESS_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
             final String processInstance = pathSegments.get(1);
-            processInstanceID = convertToLong(PROCESS_INSTANCE_PATH_SEGMENT, processInstance);
+            processInstanceId = convertToLong(PROCESS_INSTANCE_PATH_SEGMENT, processInstance);
         }
-        return processInstanceID;
+        return processInstanceId;
     }
 
-    protected long getTaskInstanceID(final APISession apiSession, final List<String> pathSegments, final long userID) throws BonitaException {
+    protected long getTaskInstanceId(final APISession apiSession, final List<String> pathSegments, final long userId) throws BonitaException {
         if (TASK_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
             final String taskInstance = pathSegments.get(1);
             return convertToLong(TASK_INSTANCE_PATH_SEGMENT, taskInstance);
         } else if (PROCESS_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
             final String processInstance = pathSegments.get(1);
-            final long processInstanceID = convertToLong(PROCESS_INSTANCE_PATH_SEGMENT, processInstance);
+            final long processInstanceId = convertToLong(PROCESS_INSTANCE_PATH_SEGMENT, processInstance);
             if (pathSegments.size() > 2 && TASK_PATH_SEGMENT.equals(pathSegments.get(2))) {
                 final String taskName = pathSegments.get(3);
-                return processFormService.getTaskInstanceID(apiSession, processInstanceID, taskName, userID);
+                return processFormService.getTaskInstanceId(apiSession, processInstanceId, taskName, userId);
             }
         }
         return -1L;
 
     }
 
-    protected long getProcessDefinitionID(final APISession apiSession, final List<String> pathSegments) throws BonitaException {
-        long processDefinitionID = -1L;
+    protected long getProcessDefinitionId(final APISession apiSession, final List<String> pathSegments) throws BonitaException {
+        long processDefinitionId = -1L;
         if (PROCESS_PATH_SEGMENT.equals(pathSegments.get(0))) {
             final String processName = pathSegments.get(1);
             if (pathSegments.size() > 2) {
                 final String processVersion = pathSegments.get(2);
-                processDefinitionID = processFormService.getProcessDefinitionID(apiSession, processName, processVersion);
+                processDefinitionId = processFormService.getProcessDefinitionId(apiSession, processName, processVersion);
             }
         }
-        return processDefinitionID;
+        return processDefinitionId;
     }
 
     protected String getResourcePath(final List<String> pathSegments) {
@@ -185,13 +185,14 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void displayLegacyForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final long processDefinitionID,
-            final long processInstanceID, final long taskInstanceID, final String taskName) throws IOException, BonitaException {
-        if (processFormService.hasFormsXML(apiSession, processDefinitionID)) {
+            final long processDefinitionId,
+            final long processInstanceId, final long taskInstanceId, final String taskName) throws IOException, BonitaException {
+        //FIXME not sure we should check if there is a forms XML > this will impact the performances when displaying a legacy for in the portal
+        if (processFormService.hasFormsXML(apiSession, processDefinitionId)) {
             //TODO fallback to legacy form application if there is a form.xml in the business archive
             response.sendRedirect(response.encodeRedirectURL("homepage"));
         } else {
-            String message = "Cannot find the form for process " + processDefinitionID;
+            String message = "Cannot find the form for process " + processDefinitionId;
             if (taskName != null) {
                 message = message + " and task " + taskName;
             }
@@ -241,25 +242,25 @@ public class ProcessFormServlet extends HttpServlet {
         response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
     }
 
-    protected boolean isAuthorized(final APISession apiSession, final long processDefinitionID, final long processInstanceID, final long taskInstanceID,
-            final long userID) throws BonitaException {
-        final long enforcedUserID;
-        if (userID == -1L) {
-            enforcedUserID = apiSession.getUserId();
+    protected boolean isAuthorized(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
+            final long userId) throws BonitaException {
+        final long enforcedUserId;
+        if (userId == -1L) {
+            enforcedUserId = apiSession.getUserId();
         } else {
-            enforcedUserID = userID;
+            enforcedUserId = userId;
         }
-        if (taskInstanceID != -1L) {
-            return processFormService.isAllowedToSeeTask(apiSession, processDefinitionID, taskInstanceID, enforcedUserID);
-        } else if (processInstanceID != -1L) {
-            return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionID, processInstanceID, enforcedUserID);
+        if (taskInstanceId != -1L) {
+            return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId);
+        } else if (processInstanceId != -1L) {
+            return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionId, processInstanceId, enforcedUserId);
         } else {
-            return processFormService.isAllowedToStartProcess(apiSession, processDefinitionID, enforcedUserID);
+            return processFormService.isAllowedToStartProcess(apiSession, processDefinitionId, enforcedUserId);
         }
     }
 
-    protected void handleException(final HttpServletResponse response, final long processDefinitionID, final String taskName,
-            final boolean hasProcessInstanceID, final Exception e)
+    protected void handleException(final HttpServletResponse response, final long processDefinitionId, final String taskName,
+            final boolean hasProcessInstanceId, final Exception e)
             throws ServletException {
         try {
             if (e instanceof ProcessDefinitionNotFoundException) {
@@ -271,12 +272,12 @@ public class ProcessFormServlet extends HttpServlet {
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     String message = "Error while trying to display a form";
-                    if (processDefinitionID != -1) {
-                        message = message + " for process " + processDefinitionID;
+                    if (processDefinitionId != -1) {
+                        message = message + " for process " + processDefinitionId;
                     }
                     if (taskName != null) {
                         message = message + " for task " + taskName;
-                    } else if (hasProcessInstanceID) {
+                    } else if (hasProcessInstanceId) {
                         message = message + " ( instance overview)";
                     }
                     LOGGER.log(Level.WARNING, message, e);

@@ -65,8 +65,8 @@ public class ProcessFormServletTest {
     public void should_get_Forbidden_Status_when_unauthorized() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
         when(hsRequest.getParameter("user")).thenReturn(null);
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference("custompage_form", false));
         when(formServlet.isAuthorized(any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong())).thenReturn(false);
 
@@ -79,17 +79,17 @@ public class ProcessFormServletTest {
     public void should_get_Bad_Request_when_invalid_parameters() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("");
         when(hsRequest.getParameter(anyString())).thenReturn(null);
-        when(processFormService.getProcessDefinitionID(apiSession, null, null)).thenReturn(-1L);
+        when(processFormService.getProcessDefinitionId(apiSession, null, null)).thenReturn(-1L);
         formServlet.doGet(hsRequest, hsResponse);
         verify(hsResponse, times(1)).sendError(400,
-                "Either process name and version are required or process instance ID (with or without task name) or task instance ID.");
+                "Either process name and version are required or process instance Id (with or without task name) or task instance Id.");
     }
 
     @Test
     public void should_display_externalPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("/externalPage", true));
 
@@ -101,8 +101,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference("custompage_form", false));
 
@@ -114,8 +114,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_lecgacyForm() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference(null, false));
 
@@ -127,8 +127,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_resource_for_process() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/path/of/resource.css");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         final FormReference form = new FormReference("custompage_form", false);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
@@ -141,7 +141,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_resource_for_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/path/of/resource.css");
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 1L, 42L, 1L)).thenReturn(true);
         final FormReference form = new FormReference("custompage_form", false);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
@@ -154,8 +154,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_resource_for_task_from_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName/path/of/resource.css");
-        when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, 1L)).thenReturn(1L);
+        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
         final FormReference form = new FormReference("custompage_form", false);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
@@ -168,8 +168,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference("custompage_form", false));
         doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
@@ -182,8 +182,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_for_process() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", false));
 
@@ -195,7 +195,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_for_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 1L, 42L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, true)).thenReturn(new FormReference("custompage_form", false));
 
@@ -207,7 +207,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_for_task() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, -1L, 42L)).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", false));
 
@@ -219,8 +219,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_for_task_from_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
-        when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, 1L)).thenReturn(1L);
+        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 1L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, "taskName", true)).thenReturn(new FormReference("custompage_form", false));
@@ -233,7 +233,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_get_not_found_when_invalid_process() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
-        when(processFormService.getProcessDefinitionID(apiSession, "processName", "processVersion")).thenThrow(ProcessDefinitionNotFoundException.class);
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenThrow(ProcessDefinitionNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
 
@@ -241,9 +241,9 @@ public class ProcessFormServletTest {
     }
 
     @Test
-    public void should_get_not_found_when_invalid_processInstanceID() throws Exception {
+    public void should_get_not_found_when_invalid_processInstanceId() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenThrow(ArchivedProcessInstanceNotFoundException.class);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenThrow(ArchivedProcessInstanceNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
 
@@ -253,8 +253,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_get_not_found_when_invalid_task() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
-        when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(-1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, -1L)).thenThrow(ActivityInstanceNotFoundException.class);
+        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(-1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenThrow(ActivityInstanceNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
 
@@ -264,8 +264,8 @@ public class ProcessFormServletTest {
     @Test
     public void should_get_server_error_when_issue_with_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
-        when(processFormService.getTaskInstanceID(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionID(apiSession, -1L, 42L, 1L)).thenReturn(1L);
+        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 1L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, "taskName", true)).thenReturn(new FormReference("custompage_form", false));

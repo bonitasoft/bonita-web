@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
@@ -43,6 +44,7 @@ import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.form.mapping.FormMapping;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
@@ -57,18 +59,21 @@ public class ProcessFormService {
      */
     private static Logger LOGGER = Logger.getLogger(ProcessFormService.class.getName());
 
-    public FormReference getForm(final APISession apiSession, final long processDefinitionID, final String taskName, final boolean hasProcessInstanceID)
+    public FormReference getForm(final APISession apiSession, final long processDefinitionId, final String taskName, final boolean hasProcessInstanceId)
             throws BonitaException {
-        // TODO retrieve mapping from engine
-        // Mock
-        if ("request".equals(taskName)) {
-            return new FormReference("custompage_form", false);
+        final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
+        final FormMapping formMapping;
+        if (taskName != null) {
+            formMapping = processConfigurationAPI.getTaskForm(processDefinitionId, taskName);
+        } else if (hasProcessInstanceId) {
+            formMapping = processConfigurationAPI.getProcessOverviewForm(processDefinitionId);
         } else {
-            return new FormReference("/form.html", true);
+            formMapping = processConfigurationAPI.getProcessStartForm(processDefinitionId);
         }
+        return new FormReference(formMapping.getPage(), formMapping.isExternal());
     }
 
-    public long getProcessDefinitionID(final APISession apiSession, final String processName, final String processVersion)
+    public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
             throws ProcessDefinitionNotFoundException, BonitaException {
         if (processName != null && processVersion != null) {
             try {
@@ -82,26 +87,26 @@ public class ProcessFormService {
         return -1L;
     }
 
-    public long getTaskInstanceID(final APISession apiSession, final long processInstanceID, final String taskName, final long userID)
+    public long getTaskInstanceId(final APISession apiSession, final long processInstanceId, final String taskName, final long userId)
             throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
-        long filteredUserID;
-        if (userID != -1L) {
-            filteredUserID = userID;
+        long filteredUserId;
+        if (userId != -1L) {
+            filteredUserId = userId;
         } else {
-            filteredUserID = apiSession.getId();
+            filteredUserId = apiSession.getId();
         }
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
-        searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceID);
+        searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId);
         searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.NAME, taskName);
-        final SearchResult<HumanTaskInstance> searchMyAvailableHumanTasks = processAPI.searchMyAvailableHumanTasks(filteredUserID,
+        final SearchResult<HumanTaskInstance> searchMyAvailableHumanTasks = processAPI.searchMyAvailableHumanTasks(filteredUserId,
                 searchOptionsBuilder.done());
         if (searchMyAvailableHumanTasks.getCount() > 0) {
             return searchMyAvailableHumanTasks.getResult().get(0).getId();
         } else {
             final SearchOptionsBuilder archivedSearchOptionsBuilder = new SearchOptionsBuilder(0, 1);
-            archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.ASSIGNEE_ID, filteredUserID);
-            archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, processInstanceID);
+            archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.ASSIGNEE_ID, filteredUserId);
+            archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, processInstanceId);
             archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.NAME, taskName);
             final SearchResult<ArchivedHumanTaskInstance> searchArchivedHumanTasks = processAPI.searchArchivedHumanTasks(archivedSearchOptionsBuilder
                     .done());
@@ -112,32 +117,32 @@ public class ProcessFormService {
         return -1L;
     }
 
-    public String getTaskName(final APISession apiSession, final long taskInstanceID) throws ActivityInstanceNotFoundException, BonitaException {
-        if (taskInstanceID != -1L) {
+    public String getTaskName(final APISession apiSession, final long taskInstanceId) throws ActivityInstanceNotFoundException, BonitaException {
+        if (taskInstanceId != -1L) {
             final ProcessAPI processAPI = getProcessAPI(apiSession);
             try {
-                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceID);
+                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceId);
                 return activity.getName();
             } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance activity = processAPI.getArchivedActivityInstance(taskInstanceID);
+                final ArchivedActivityInstance activity = processAPI.getArchivedActivityInstance(taskInstanceId);
                 return activity.getName();
             }
         }
         return null;
     }
 
-    public long ensureProcessDefinitionID(final APISession apiSession, final long processDefinitionID, final long processInstanceID, final long taskInstanceID)
+    public long ensureProcessDefinitionId(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId)
             throws ArchivedProcessInstanceNotFoundException, ActivityInstanceNotFoundException, BonitaException {
-        if (processDefinitionID != -1L) {
-            return processDefinitionID;
-        } else if (processInstanceID != -1L) {
+        if (processDefinitionId != -1L) {
+            return processDefinitionId;
+        } else if (processInstanceId != -1L) {
             final ProcessAPI processAPI = getProcessAPI(apiSession);
             try {
-                final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceID);
+                final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceId);
                 return processInstance.getProcessDefinitionId();
             } catch (final ProcessInstanceNotFoundException e) {
                 final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
-                searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceID);
+                searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
                 searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.ASC);
                 SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
                 try {
@@ -148,69 +153,74 @@ public class ProcessFormService {
                 if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
                     return searchArchivedProcessInstances.getResult().get(0).getProcessDefinitionId();
                 } else {
-                    throw new ArchivedProcessInstanceNotFoundException(processInstanceID);
+                    throw new ArchivedProcessInstanceNotFoundException(processInstanceId);
                 }
             }
         } else {
             final ProcessAPI processAPI = getProcessAPI(apiSession);
             try {
-                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceID);
+                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceId);
                 return activity.getProcessDefinitionId();
             } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance activity = processAPI.getArchivedActivityInstance(taskInstanceID);
+                final ArchivedActivityInstance activity = processAPI.getArchivedActivityInstance(taskInstanceId);
                 return activity.getProcessDefinitionId();
             }
         }
     }
 
-    public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionID, final long taskInstanceID, final long enforcedUserID)
+    public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionId, final long taskInstanceId, final long enforcedUserId)
             throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
-        if (processAPI.isUserProcessSupervisor(processDefinitionID, apiSession.getUserId())) {
+        if (processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId())) {
             return true;
         } else {
             try {
-                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceID);
+                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceId);
                 if (FlowNodeType.HUMAN_TASK.equals(activity.getType())) {
-                    return enforcedUserID == ((HumanTaskInstance) activity).getAssigneeId();
+                    return enforcedUserId == ((HumanTaskInstance) activity).getAssigneeId();
                 } else {
                     return false;
                 }
             } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance archivedActivity = processAPI.getArchivedActivityInstance(taskInstanceID);
-                return enforcedUserID == archivedActivity.getExecutedBy();
+                final ArchivedActivityInstance archivedActivity = processAPI.getArchivedActivityInstance(taskInstanceId);
+                return enforcedUserId == archivedActivity.getExecutedBy();
             }
         }
     }
 
-    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processDefinitionID, final long processInstanceID,
-            final long enforcedUserID) throws BonitaException {
+    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processDefinitionId, final long processInstanceId,
+            final long enforcedUserId) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
-        return processAPI.isUserProcessSupervisor(processDefinitionID, apiSession.getUserId())
-                || processAPI.isInvolvedInProcessInstance(enforcedUserID, processInstanceID);
+        return processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId())
+                || processAPI.isInvolvedInProcessInstance(enforcedUserId, processInstanceId);
     }
 
-    public boolean isAllowedToStartProcess(final APISession apiSession, final long processDefinitionID, final long enforcedUserID) throws BonitaException {
+    public boolean isAllowedToStartProcess(final APISession apiSession, final long processDefinitionId, final long enforcedUserId) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
-        if (ActivationState.ENABLED.equals(getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionID).getActivationState())) {
-            if (processAPI.isUserProcessSupervisor(processDefinitionID, apiSession.getUserId())) {
+        if (ActivationState.ENABLED.equals(getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId).getActivationState())) {
+            if (processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId())) {
                 return true;
             } else {
                 final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-                parameters.put("USER_ID_KEY", enforcedUserID);
-                parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionID);
+                parameters.put("USER_Id_KEY", enforcedUserId);
+                parameters.put("PROCESS_DEFINITION_Id_KEY", processDefinitionId);
                 return (Boolean) getCommandAPI(apiSession).execute("canStartProcessDefinition", parameters);
             }
         }
         return false;
     }
 
-    public boolean hasFormsXML(final APISession apiSession, final long processDefinitionID) throws BonitaException {
-        return !getProcessAPI(apiSession).getProcessResources(processDefinitionID, FORMS_DEFINITION_FILE_IN_BAR).isEmpty();
+    public boolean hasFormsXML(final APISession apiSession, final long processDefinitionId) throws BonitaException {
+        return !getProcessAPI(apiSession).getProcessResources(processDefinitionId, FORMS_DEFINITION_FILE_IN_BAR).isEmpty();
     }
 
     protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getProcessAPI(apiSession);
+    }
+
+    protected ProcessConfigurationAPI getProcessConfigurationAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException,
+            UnknownAPITypeException {
+        return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
     }
 
     protected CommandAPI getCommandAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
