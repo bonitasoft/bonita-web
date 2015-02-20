@@ -112,9 +112,11 @@ public class ProcessFormServlet extends HttpServlet {
     protected List<String> getPathSegments(final HttpServletRequest request) {
         final List<String> segments = new ArrayList<String>();;
         final String pathInfo = request.getPathInfo();
-        for (final String segment : pathInfo.split("/")) {
-            if (!segment.isEmpty()) {
-                segments.add(segment);
+        if (pathInfo != null) {
+            for (final String segment : pathInfo.split("/")) {
+                if (!segment.isEmpty()) {
+                    segments.add(segment);
+                }
             }
         }
         return segments;
