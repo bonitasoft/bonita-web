@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 import org.bonitasoft.engine.exception.NotFoundException;
-import org.bonitasoft.engine.form.mapping.FormMapping;
+import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.junit.Test;
