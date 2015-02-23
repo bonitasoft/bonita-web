@@ -95,7 +95,7 @@ public class ProcessFormService {
         if (userId != -1L) {
             filteredUserId = userId;
         } else {
-            filteredUserId = apiSession.getId();
+            filteredUserId = apiSession.getUserId();
         }
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
         searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId);
