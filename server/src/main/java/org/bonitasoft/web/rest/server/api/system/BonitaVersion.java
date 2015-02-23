@@ -16,6 +16,8 @@ package org.bonitasoft.web.rest.server.api.system;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,23 +30,23 @@ public class BonitaVersion {
 
     private static Logger LOGGER = Logger.getLogger(BonitaVersion.class.getName());
 
-    private String version;
+    private List<String> metadata;
 
-    private VersionFile file;
+    private final VersionFile file;
 
-    public BonitaVersion(VersionFile file) {
+    public BonitaVersion(final VersionFile file) {
         this.file = file;
     }
 
-    private String read(InputStream stream) {
+    private List<String> read(final InputStream stream) {
         if (stream != null) {
             try {
-                return IOUtils.toString(stream);
+                return IOUtils.readLines(stream, "UTF-8");
             } catch (final Exception e) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, "Unable to read the file VERSION", e);
                 }
-                return "";
+                return Collections.emptyList();
             } finally {
                 try {
                     stream.close();
@@ -55,15 +57,29 @@ public class BonitaVersion {
                 }
             }
         } else {
+            return Collections.emptyList();
+        }
+    }
+
+    public String getVersion() {
+        if (metadata == null) {
+            metadata = read(file.getStream());
+        }
+        if (metadata.size() > 0) {
+            return metadata.get(0).trim();
+        } else {
             return "";
         }
     }
 
-    @Override
-    public String toString() {
-        if(version == null) {
-            version = read(file.getStream());
+    public String getCopyright() {
+        if (metadata == null) {
+            metadata = read(file.getStream());
         }
-        return version.trim();
+        if (metadata.size() > 1) {
+            return metadata.get(1).trim();
+        } else {
+            return "";
+        }
     }
 }

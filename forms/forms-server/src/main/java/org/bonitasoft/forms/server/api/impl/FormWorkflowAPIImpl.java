@@ -56,6 +56,10 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.command.CommandExecutionException;
+import org.bonitasoft.engine.command.CommandNotFoundException;
+import org.bonitasoft.engine.command.CommandParameterizationException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -816,22 +820,95 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return processAPI.isUserProcessSupervisor(getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID), session.getUserId());
     }
 
+    @Override
+    public Boolean canStartProcessDefinition(final APISession session, final long userId, final long processDefinitionId) throws BPMEngineException {
+        try {
+            final CommandAPI commandAPI = getCommandApi(session);
+            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+            if (userId != -1) {
+                parameters.put("USER_ID_KEY", userId);
+            } else {
+                parameters.put("USER_ID_KEY", session.getUserId());
+            }
+            parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionId);
+            return (Boolean) commandAPI.execute("canStartProcessDefinition", parameters);
+        } catch (final CommandExecutionException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user can start the process. Error while executing command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandParameterizationException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user can start the process. Error in the parameters of the command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandNotFoundException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unknown engine command:");
+            }
+            throw new BPMEngineException(e);
+        }
+    }
+
+    @Override
+    public Boolean isInvolvedInHumanTask(final APISession session, final long userId, final long humanTaskInstanceId) throws BPMEngineException {
+        try {
+            final CommandAPI commandAPI = getCommandApi(session);
+            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+            parameters.put("USER_ID_KEY", userId);
+            parameters.put("HUMAN_TASK_INSTANCE_ID_KEY", humanTaskInstanceId);
+            return (Boolean) commandAPI.execute("isInvolvedInHumanTask", parameters);
+        } catch (final CommandExecutionException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user is involved in the human task instance. Error while executing command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandParameterizationException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE,
+                        "The engine was not able to find out if the user is involved in the human task instance. Error in the parameters of the command:");
+            }
+            throw new BPMEngineException(e);
+        } catch (final CommandNotFoundException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unknown engine command:");
+            }
+            throw new BPMEngineException(e);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        //restore once BS-8953 is fixed engine-side
         final ProcessAPI processAPI = getProcessApi(session);
-        final boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        if (!involvedInProcessInstance) {
+            try {
+                involvedInProcessInstance = processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+            } catch (final BonitaException e) {
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE,
+                            "The engine was not able to find out if the user is a manager of a user involved in the process instance.");
+                }
+                throw new BPMEngineException(e);
+            }
+        }
         return involvedInProcessInstance;
 
     }
 
     protected ProcessAPI getProcessApi(final APISession session) throws BPMEngineException {
-        final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
-        return processAPI;
+        return bpmEngineAPIUtil.getProcessAPI(session);
+    }
+
+    protected CommandAPI getCommandApi(final APISession session) throws BPMEngineException {
+        return bpmEngineAPIUtil.getCommandAPI(session);
     }
 
     /**
