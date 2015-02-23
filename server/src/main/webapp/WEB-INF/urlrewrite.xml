@@ -237,5 +237,48 @@
         <from>^/API/userXP/profileMember([\?/]|$)</from>
         <to>/APIToolkit/userXP/profileMember$1</to>
     </rule>
+    
+    
+    <rule>
+        <from>^/portal/custom-page/(.*)/index$</from>
+        <to>/portal/custompage?page=$1&amp;locale=en</to>
+    </rule>
 
+    <rule>
+        <note>
+            Deal with custom page resources URL backward compatibility.
+            Also there is a bug with qsappend="true" which always append query string
+            using a &amp;.
+            Therefor the ?fix=true is used to fix that issue.
+        </note>
+        <from>^/portal/custom-page/(.*)/pageResource$</from>
+        <to qsappend="true" type="redirect">%{context-path}/portal/pageResource?fix=true</to>
+    </rule>
+
+    <rule>
+        <note>
+            Deal with custom page resources URL backward compatibility.
+            Also there is a bug with qsappend="true" which always append query string
+            using a &amp;.
+            Therefor the ?fix=true is used to fix that issue.
+        </note>
+        <from>^/portal/custom-page/(.*)/themeResource$</from>
+        <to qsappend="true" type="redirect">%{context-path}/portal/themeResource?fix=true</to>
+    </rule>
+    <rule>
+        <from>^/portal/custom-page/API/(.*)$</from>
+        <to qsappend="true">/API/$1?fix=true</to>
+    </rule>
+    <rule>
+        <from>^/portal/custom-page/([^\/]+)/(.*)</from>
+        <to qsappend="true">/portal/pageResource?page=$1&amp;location=$2</to>
+    </rule>
+    <rule>
+        <from>^/portal/custom-page/(.*)$</from>
+        <to type="redirect" qsappend="true">%{context-path}/portal/custom-page/$1/index</to>
+    </rule>
+    
+    <!--  Only used in dev mode  -->
+    ${proxy-portal-js}
+    
 </urlrewrite>
