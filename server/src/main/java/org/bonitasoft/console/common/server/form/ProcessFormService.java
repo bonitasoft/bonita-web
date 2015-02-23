@@ -203,8 +203,8 @@ public class ProcessFormService {
                 return true;
             } else {
                 final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-                parameters.put("USER_Id_KEY", enforcedUserId);
-                parameters.put("PROCESS_DEFINITION_Id_KEY", processDefinitionId);
+                parameters.put("USER_ID_KEY", enforcedUserId);
+                parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionId);
                 return (Boolean) getCommandAPI(apiSession).execute("canStartProcessDefinition", parameters);
             }
         }
