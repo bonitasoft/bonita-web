@@ -51,7 +51,7 @@ public class AddCustomPage extends Page {
 
     public static final JsId INSTALL_BUTTON_JS_ID = new JsId("installUpload");
 
-    public static final String UPLOAD_SERVLET_VALID_RESPONSE_REGEXP = ".*\\.(zip):.*$";
+    public static final String UPLOAD_SERVLET_VALID_RESPONSE_REGEXP = ".*\\.(zip)::.*$";
 
     protected static final String PAGE_UPLOAD_URL = GWT.getModuleBaseURL() + "pageUpload";
 
