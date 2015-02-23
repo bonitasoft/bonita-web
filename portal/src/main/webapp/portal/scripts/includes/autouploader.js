@@ -82,7 +82,7 @@ $(function () {
         input.after(uploaderEl).hide();
         
         var pluploader = new plupload.Uploader({
-            runtimes: 'html5',//,flash,silverlight,html4',
+            runtimes: 'html5,flash,silverlight,html4',
             browse_button: inputName,
             container: uploaderId,
             url: input.getOption('url'),
