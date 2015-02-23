@@ -177,7 +177,7 @@ public class ProcessFormService {
         } else {
             try {
                 final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceId);
-                if (FlowNodeType.HUMAN_TASK.equals(activity.getType())) {
+                if (FlowNodeType.USER_TASK.equals(activity.getType())) {
                     return enforcedUserId == ((HumanTaskInstance) activity).getAssigneeId();
                 } else {
                     return false;
