@@ -28,7 +28,10 @@ public class FormReference implements Serializable {
 
     private boolean external;
 
-    protected FormReference(final String form, final boolean external) {
+    public FormReference() {
+    }
+
+    public FormReference(final String form, final boolean external) {
         this.form = form;
         this.external = external;
     }
