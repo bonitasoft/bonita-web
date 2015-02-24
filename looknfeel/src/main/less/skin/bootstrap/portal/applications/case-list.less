@@ -3,125 +3,162 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 #case-list {
 
-	&-tab-content {
-		padding: 25px 0px 0 0px;
-	}
+    &-tab-content {
+        padding: 25px 0px 0 0px;
+    }
 
-	.case-list-refresh {
-		padding-left : 10px;
-		cursor: pointer;
-	}
+    .case-list-refresh {
+        padding-left : 10px;
+        cursor: pointer;
+    }
 
-	.column-visibility-name{
-		cursor : grab;
-	}
+    .column-visibility-name{
+        cursor : grab;
+    }
 
-	.column-visibility-checkbox{
-		padding: 0 0 0 10px;
-	}
-	li{
-		&[draggable=true]:hover{
-			background: url("themeResource?theme=portal&location=skin/images/dragndrophover.gif") repeat-y left;
-		}
-	}
-	
-	div.popover{
-		ul, ul li{
-			margin:0;
-			padding:0;
-			list-style: none;
-		}
-	}
-	
-	a.open-link {
-		color: inherit; /* blue colors for links too*/
-		text-decoration: inherit; /* no underline */
-	}
+    .column-visibility-checkbox{
+        padding: 0 0 0 10px;
+    }
+    li{
+        &[draggable=true]:hover{
+            background: url("themeResource?theme=portal&location=skin/images/dragndrophover.gif") repeat-y left;
+        }
+    }
+    
+    div.popover{
+        ul, ul li{
+            margin:0;
+            padding:0;
+            list-style: none;
+        }
+    }
+    
+    a.open-link {
+        color: inherit; /* blue colors for links too*/
+        text-decoration: inherit; /* no underline */
+    }
 
-	.case-{
-		&column.st-sort-{
-			&ascent:after{
-				content: '\25B2';
-			}
-			&descent:after{
-				content: '\25BC';
-			}
-		}
-		&checkbox {
-			padding-left: 15px;
-			width: 40px;
-		}
-		&selected {
-			background-color: blue;
-		}
-		&action {
-			height : 28px;
-		}
-		&link{
-			white-space: nowrap;
-		}
-	}
-	#case-filters .button-filter{
-		padding-top : 4px;
-	}
+    .case-{
+        &column.st-sort-{
+            &ascent:after{
+                content: '\25B2';
+            }
+            &descent:after{
+                content: '\25BC';
+            }
+        }
+        &checkbox {
+            padding-left: 15px;
+            width: 40px;
+        }
+        &selected {
+            background-color: blue;
+        }
+        &action {
+            height : 28px;
+        }
+        &link{
+            white-space: nowrap;
+        }
+    }
+    #case-filters .button-filter{
+        padding-top : 4px;
 
-	.title {
-		font-size: 18px;
-	}
+        .btn-group {
+            padding-left: 9px;
+        }
+    }
 
-	h1 {
-		margin-bottom : 5px;
-	}
+    .title {
+        font-size: 18px;
+    }
 
-	.cases-nb-results{
-		border: 0;
-	}
+    h1 {
+        margin-bottom : 5px;
+    }
 
-	#cases-results-size{
-		margin: 28px 20px;
-	}
+    .cases-nb-results{
+        border: 0;
+    }
 
-	button{
-		text-transform: capitalize;
-		min-width: 60px;
-	}
+    .pagination {
+        margin: 0 0;
+    }
 
-	.dropdown-menu {
-		overflow-y: auto;
-		max-height: 315px;
-		&.bo-TableSettings-content{
-		  overflow-y: visible;
-		}
-	}
+    #cases-results{
+        font-weight: normal;
+        &-size-bottom{
+            margin: 7px 20px;
+            
+        }
+        &-size-top{
+            margin: 4px 20px;
+        }
+    }
 
-	.glyphicon-none:before {
-		content: "\2122";
-		color: transparent !important;
-	}
+    button{
+        text-transform: capitalize;
+        min-width: 60px;
+    }
 
-	.pointer{
-		cursor: pointer;
-	}
+    .dropdown-menu {
+        overflow-y: auto;
+        max-height: 315px;
+        &.bo-TableSettings-content{
+          overflow-y: visible;
+        }
+    }
 
-	.glyphicon-chevron-down, .glyphicon-chevron-up {
-		font-size : 10px;
-	}
-	
-	.glyphicon-refresh-animate {
-		-animation: spin .7s infinite linear;
-		-webkit-animation: spin2 .7s infinite linear;
-	}
+    .glyphicon-none:before {
+        content: "\2122";
+        color: transparent !important;
+    }
 
-	@-webkit-keyframes spin2 {
-		from { -webkit-transform: rotate(0deg);}
-		to { -webkit-transform: rotate(360deg);}
-	}
+    .pointer{
+        cursor: pointer;
+    }
 
-	.table-buttons {
-	  padding-bottom: 3px;
-	}
+    .glyphicon-chevron-down, .glyphicon-chevron-up {
+        font-size : 10px;
+    }
+    
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
 
-  case-visu {
-	margin-right: 5px;
-  }
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    .table-buttons {
+      padding-bottom: 3px;
+    }
+
+    .bo  {
+        &-TableSettings-content {
+            min-width: 250px;
+            overflow: visible;
+        }
+        &-TableSettings-columns {
+            max-height: none;
+        }
+    }
+    .table > thead {
+
+        > tr:nth-child(1) > th{
+          border: none;
+        }
+        > tr:nth-child(2) > th {
+          border-top: none;
+        }
+        th .bo-SortButton{
+            font-weight: bold;
+        }
+    }
+
+    case-visu {
+        margin-right: 5px;
+    }
 }

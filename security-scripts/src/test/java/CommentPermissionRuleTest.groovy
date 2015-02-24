@@ -21,6 +21,7 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.bpm.process.ProcessInstance
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
 import org.junit.Before
@@ -114,21 +115,76 @@ public class CommentPermissionRuleTest {
         //then
         Assertions.assertThat(isAuthorized).isFalse();
     }
-
-
-    def havingResourceId(boolean isInvolvedIn) {
-        doReturn(currentUserId).when(apiSession).getUserId()
-        doReturn(true).when(apiCallContext).isGET()
-        doReturn("case").when(apiCallContext).getResourceName()
-        doReturn("45").when(apiCallContext).getResourceId()
-        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
+    
+    @Test
+    public void should_allow_if_isInvolved_as_manager_on_POST() {
+        // given
+        doReturn(true).when(apiCallContext).isPOST()
+        doReturn('''{ "processInstanceId":"154" }''').when(apiCallContext).getBody()
+        def processInstance = mock(ProcessInstance.class)
+        doReturn(1024l).when(processInstance).getProcessDefinitionId()
+        doReturn(processInstance).when(processAPI).getProcessInstance(154l)
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        doReturn(false).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
+        doReturn(true).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 154l);
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
     }
 
-    def havingArchivedResourceId() {
+    def havingResourceId(boolean isInvolvedIn, boolean isInvolvedAsManager) {
         doReturn(currentUserId).when(apiSession).getUserId()
         doReturn(true).when(apiCallContext).isGET()
-        doReturn("archivedCase").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
+        doReturn(["processInstanceId":"45"]).when(apiCallContext).getFilters()
+        def instance = mock(ProcessInstance.class)
+        doReturn(instance).when(processAPI).getProcessInstance(45l);
+        doReturn(1024l).when(instance).getProcessDefinitionId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
+        doReturn(isInvolvedAsManager).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 45l);
+    }
+    
+    @Test
+    public void should_allow_if_isInvolved_himself_on_get() {
+        // given
+        havingResourceId(true, false)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+    }
+    
+    @Test
+    public void should_allow_if_isInvolved_as_manager_on_get() {
+        // given
+        havingResourceId(false, true)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+    }
+    
+    @Test
+    public void should_not_allow_if_isNotInvolved_on_get() {
+        // given
+        havingResourceId(false, false)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isFalse();
+    }
+    
+    @Test
+    public void should_allow_if_isManager_throws_exception_on_get() {
+        // given
+        havingResourceId(false, false)
+        doThrow(new SearchException(new Exception())).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 45l);
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
     }
 
     @Test

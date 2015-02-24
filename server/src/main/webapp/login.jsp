@@ -148,8 +148,5 @@
 			</form>
 		</div>
 	</div>
-	<div class="footer" id="footer">
-		Bonitasoft © 2015
-	</div>
 </body>
 </html>
