@@ -24,23 +24,23 @@ public class FormReference implements Serializable {
      */
     private static final long serialVersionUID = -1692145871057019847L;
 
-    private String reference;
+    private String form;
 
     private boolean external;
 
-    protected FormReference(final String reference, final boolean external) {
-        this.reference = reference;
+    protected FormReference(final String form, final boolean external) {
+        this.form = form;
         this.external = external;
     }
 
 
-    public String getReference() {
-        return reference;
+    public String getForm() {
+        return form;
     }
 
 
-    public void setReference(final String reference) {
-        this.reference = reference;
+    public void setForm(final String form) {
+        this.form = form;
     }
 
 

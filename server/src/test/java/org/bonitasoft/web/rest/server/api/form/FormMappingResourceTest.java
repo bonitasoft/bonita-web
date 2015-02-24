@@ -14,12 +14,11 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.form.FormReference;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 import org.bonitasoft.engine.exception.NotFoundException;
-import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
-import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
 
@@ -46,7 +45,7 @@ public class FormMappingResourceTest {
         doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
 
         try {
-            spy.updateFormMapping(mock(FormMapping.class));
+            spy.updateFormMapping(mock(FormReference.class));
 
             fail("Expecting Resource Exception");
         } catch (final ResourceException e) {
@@ -61,16 +60,15 @@ public class FormMappingResourceTest {
         doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
         final ProcessConfigurationAPI processConfigurationAPI = mock(ProcessConfigurationAPI.class);
         doReturn(processConfigurationAPI).when(spy).getEngineProcessConfigurationAPI();
-        final FormMapping formMapping = mock(FormMapping.class);
-        doReturn(1L).when(formMapping).getId();
-        doReturn("myPage").when(formMapping).getForm();
-        doReturn(false).when(formMapping).isExternal();
+        final FormReference formReference = mock(FormReference.class);
+        doReturn("myPage").when(formReference).getForm();
+        doReturn(false).when(formReference).isExternal();
         doThrow(NotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", false);
 
         doReturn("1").when(spy).getAttribute(FormMappingResource.ID_PARAM_NAME);
 
         try {
-            spy.updateFormMapping(formMapping);
+            spy.updateFormMapping(formReference);
 
             fail("Expecting Resource Exception");
         } catch (final ResourceException e) {

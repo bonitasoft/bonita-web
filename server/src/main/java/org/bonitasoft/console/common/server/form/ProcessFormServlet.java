@@ -98,7 +98,7 @@ public class ProcessFormServlet extends HttpServlet {
             processDefinitionId = processFormService.ensureProcessDefinitionId(apiSession, processDefinitionId, processInstanceId, taskInstanceId);
             taskName = processFormService.getTaskName(apiSession, taskInstanceId);
             final FormReference form = processFormService.getForm(apiSession, processDefinitionId, taskName, processInstanceId != -1L);
-            if (form.getReference() != null) {
+            if (form.getForm() != null) {
                 // for resources we don't check if the user is allowed
                 if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
@@ -207,16 +207,16 @@ public class ProcessFormServlet extends HttpServlet {
         if (!form.isExternal()) {
             try {
                 if (resourcePath == null) {
-                    pageRenderer.displayCustomPage(request, response, apiSession, form.getReference());
+                    pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
                 } else {
                     //TODO render the resource
                 }
             } catch (final PageNotFoundException e) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getReference());
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getForm());
             }
         } else {
             if (resourcePath == null) {
-                displayExternalPage(request, response, form.getReference());
+                displayExternalPage(request, response, form.getForm());
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
             }

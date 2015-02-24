@@ -170,7 +170,7 @@ public class ProcessFormServiceTest {
         final FormReference formReference = processFormService.getForm(apiSession, 1L, "taskName", false);
 
         assertNotNull(formReference);
-        assertEquals("myPage", formReference.getReference());
+        assertEquals("myPage", formReference.getForm());
         assertFalse(formReference.isExternal());
     }
 
@@ -184,7 +184,7 @@ public class ProcessFormServiceTest {
         final FormReference formReference = processFormService.getForm(apiSession, 1L, null, true);
 
         assertNotNull(formReference);
-        assertEquals("www.bonitasoft.com", formReference.getReference());
+        assertEquals("www.bonitasoft.com", formReference.getForm());
         assertTrue(formReference.isExternal());
     }
 
@@ -198,7 +198,7 @@ public class ProcessFormServiceTest {
         final FormReference formReference = processFormService.getForm(apiSession, 1L, null, false);
 
         assertNotNull(formReference);
-        assertEquals("myPage", formReference.getReference());
+        assertEquals("myPage", formReference.getForm());
         assertFalse(formReference.isExternal());
     }
 }
