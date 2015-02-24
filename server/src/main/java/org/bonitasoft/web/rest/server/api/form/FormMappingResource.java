@@ -17,7 +17,7 @@ package org.bonitasoft.web.rest.server.api.form;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.form.FormReference;
-import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -59,7 +59,7 @@ public class FormMappingResource extends CommonResource {
         try {
             final long mappingId = Long.parseLong(mappingIdAsString);
             getEngineProcessConfigurationAPI().updateFormMapping(mappingId, formReference.getForm(), formReference.isExternal());
-        } catch (final NotFoundException e) {
+        } catch (final FormMappingNotFoundException e) {
             throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Cannot find form mapping", e);
         } catch (final Exception e) {
             throw new APIException(e);

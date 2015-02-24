@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.console.common.server.form.FormReference;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
-import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
@@ -63,7 +63,7 @@ public class FormMappingResourceTest {
         final FormReference formReference = mock(FormReference.class);
         doReturn("myPage").when(formReference).getForm();
         doReturn(false).when(formReference).isExternal();
-        doThrow(NotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", false);
+        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", false);
 
         doReturn("1").when(spy).getAttribute(FormMappingResource.ID_PARAM_NAME);
 
