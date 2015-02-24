@@ -22,7 +22,7 @@ public class Index implements PageController {
             
             def String pageResource="pageResource?&page="+ request.getParameter("page")+"&location=";
             
-            indexContent= indexContent.replace("@_USER_LOCALE_@", request.getParameter("locale"));
+            indexContent= indexContent.replace("@_USER_LOCALE_@", pageContext.getLocale());
             indexContent= indexContent.replace("@_PAGE_RESOURCE_@", pageResource);
             
             response.setCharacterEncoding("UTF-8");
