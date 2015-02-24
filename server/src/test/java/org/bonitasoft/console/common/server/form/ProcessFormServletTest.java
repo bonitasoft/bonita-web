@@ -95,7 +95,7 @@ public class ProcessFormServletTest {
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).displayExternalPage(hsRequest, hsResponse, "/externalPage");
+        verify(formServlet, times(1)).displayExternalPage(hsRequest, hsResponse, 1L, -1L, -1L, "/externalPage");
     }
 
     @Test
@@ -135,7 +135,7 @@ public class ProcessFormServletTest {
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, form, "path/of/resource.css");
+        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, form, "path/of/resource.css");
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ProcessFormServletTest {
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, form, "path/of/resource.css");
+        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, 42L, -1L, form, "path/of/resource.css");
     }
 
     @Test
@@ -162,7 +162,7 @@ public class ProcessFormServletTest {
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, form, "path/of/resource.css");
+        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, 42L, 1L, form, "path/of/resource.css");
     }
 
     @Test

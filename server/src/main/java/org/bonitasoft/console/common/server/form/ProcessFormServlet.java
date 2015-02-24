@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
+import org.bonitasoft.console.common.server.login.localization.UrlValue;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
@@ -64,7 +65,7 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String TASK_PATH_SEGMENT = "task";
 
-    private static final String USER_Id_PARAM = "user";
+    private static final String USER_ID_PARAM = "user";
 
     protected PageRenderer pageRenderer = new PageRenderer();
 
@@ -78,8 +79,8 @@ public class ProcessFormServlet extends HttpServlet {
         long taskInstanceId = -1L;
         String taskName = null;
         final List<String> pathSegments = getPathSegments(request);
-        final String user = request.getParameter(USER_Id_PARAM);
-        final long userId = convertToLong(USER_Id_PARAM, user);
+        final String user = request.getParameter(USER_ID_PARAM);
+        final long userId = convertToLong(USER_ID_PARAM, user);
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
         try {
@@ -103,7 +104,7 @@ public class ProcessFormServlet extends HttpServlet {
                 if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                 } else {
-                    displayForm(request, response, apiSession, form, resourcePath);
+                    displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
                 }
             } else {
                 displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName);
@@ -201,12 +202,14 @@ public class ProcessFormServlet extends HttpServlet {
         }
     }
 
-    protected void displayForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final FormReference form,
+    protected void displayForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
+            final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final FormReference form,
             final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         if (!form.isExternal()) {
             try {
                 if (resourcePath == null) {
+                    //TODO pass the processDefinition, processInstance and taskInstance IDs in order to put them in the Context of the custom page
                     pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
                 } else {
                     //TODO render the resource
@@ -216,7 +219,7 @@ public class ProcessFormServlet extends HttpServlet {
             }
         } else {
             if (resourcePath == null) {
-                displayExternalPage(request, response, form.getForm());
+                displayExternalPage(request, response, processDefinitionId, processInstanceId, taskInstanceId, form.getForm());
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
             }
@@ -237,8 +240,18 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     @SuppressWarnings("unchecked")
-    protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final String url) throws IOException {
+    protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final long processDefinitionId,
+            final long processInstanceId, final long taskInstanceId, final String url) throws IOException {
         final UrlBuilder urlBuilder = new UrlBuilder(url);
+        if (taskInstanceId != -1) {
+            urlBuilder.appendParameter(TASK_INSTANCE_PATH_SEGMENT, new UrlValue(Long.toString(taskInstanceId)));
+        }
+        if (processInstanceId != -1) {
+            urlBuilder.appendParameter(PROCESS_INSTANCE_PATH_SEGMENT, new UrlValue(Long.toString(processInstanceId)));
+        }
+        if (processDefinitionId != -1) {
+            urlBuilder.appendParameter(PROCESS_PATH_SEGMENT, new UrlValue(Long.toString(processDefinitionId)));
+        }
         urlBuilder.appendParameters(request.getParameterMap());
         response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
     }
