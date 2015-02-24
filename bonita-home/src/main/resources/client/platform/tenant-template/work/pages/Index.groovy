@@ -26,7 +26,6 @@ public class Index implements PageController {
             if (locale != null) {
                 indexContent= indexContent.replace("@_USER_LOCALE_@", locale.getLanguage());
             }
-            indexContent= indexContent.replace("@_USER_LOCALE_@", pageContext.getLocale());
             indexContent= indexContent.replace("@_PAGE_RESOURCE_@", pageResource);
             
             response.setCharacterEncoding("UTF-8");
