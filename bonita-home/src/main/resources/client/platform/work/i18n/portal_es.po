@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:02+0100\n"
-"PO-Revision-Date: 2015-01-30 03:15-0500\n"
+"POT-Creation-Date: 2015-02-11 03:01+0100\n"
+"PO-Revision-Date: 2015-02-24 03:25-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /BS-12450_start_proc_cmd/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -133,7 +133,7 @@ msgid "%nb_ongoing% ongoing"
 msgstr "%nb_ongoing% en marcha"
 
 msgid "%rolename%"
-msgstr "%nombre de actor%"
+msgstr "%rolename%"
 
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% of %groupname%"
@@ -190,7 +190,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 msgid "Actor mapping"
-msgstr "mapa de actores"
+msgstr "Mapeo de actores"
 
 msgid "Actor name"
 msgstr "Nombre del actor"
@@ -684,9 +684,6 @@ msgstr "Título dinámico"
 msgid "Display tasks I have done"
 msgstr "Mostrar las tareas que he realizado"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Mostrar las tareas que estoy ignorando"
-
 msgid "Display the case form"
 msgstr "Mostrar el formulario del caso"
 
@@ -757,7 +754,7 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr "Activado"
+msgstr "Activar"
 
 msgid "Enable selected processes"
 msgstr "Activar procesos seleccionados"
@@ -838,7 +835,7 @@ msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
 msgid "Enter the zip code of this user"
-msgstr "Ingrese el código postal de este usuario"
+msgstr "Indique el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "La asignación de actores debe resolverse antes de activar el proceso."
@@ -959,18 +956,6 @@ msgstr "Asignación de grupos"
 
 msgid "Groups: %nb_groups%"
 msgstr "Grupos: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Oculto"
-
-msgid "Hidden to me"
-msgstr "Oculto para mí"
-
-msgid "Hide"
-msgstr "Ocultar"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Ignorar esta tarea así ya no la vere. Otros usuarios no autorizados aún lo verán"
 
 msgid "High"
 msgstr "alto"
@@ -1461,9 +1446,6 @@ msgstr "Resuelto"
 msgid "Resolved processes"
 msgstr "Procesos resueltos"
 
-msgid "Retrieve"
-msgstr "recuperar"
-
 msgid "Role"
 msgstr "Rol"
 
@@ -1555,7 +1537,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en el proceso."
 
 msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
+msgstr "Seleccione el responsable de este usuario"
 
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
@@ -1664,9 +1646,6 @@ msgstr "Estatísticas"
 
 msgid "Status"
 msgstr "Estado del repositorio"
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Dejar de ignorar esta tarea así que pueda verla las tareas disponibles"
 
 msgid "Su"
 msgstr "Do"
@@ -2032,7 +2011,7 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 msgid "Version of the process"
 msgstr "Versión del proceso"
