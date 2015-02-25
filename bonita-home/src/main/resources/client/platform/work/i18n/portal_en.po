@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:02+0100\n"
-"PO-Revision-Date: 2015-01-23 09:20-0500\n"
+"POT-Creation-Date: 2015-02-11 03:01+0100\n"
+"PO-Revision-Date: 2015-02-24 03:13-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -684,9 +684,6 @@ msgstr "Display name"
 msgid "Display tasks I have done"
 msgstr "Display tasks I have done"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Display tasks I'm ignoring"
-
 msgid "Display the case form"
 msgstr "Display the case form"
 
@@ -959,18 +956,6 @@ msgstr "Groups mapping"
 
 msgid "Groups: %nb_groups%"
 msgstr "Groups: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Hidden"
-
-msgid "Hidden to me"
-msgstr "Hidden to me"
-
-msgid "Hide"
-msgstr "Hide"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Hide this task so I will no longer see it. Other allowed users will still see it"
 
 msgid "High"
 msgstr "High"
@@ -1461,9 +1446,6 @@ msgstr "Resolved"
 msgid "Resolved processes"
 msgstr "Resolved processes"
 
-msgid "Retrieve"
-msgstr "Retrieve"
-
 msgid "Role"
 msgstr "Role"
 
@@ -1664,9 +1646,6 @@ msgstr "Statistics"
 
 msgid "Status"
 msgstr "Status"
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Stop ignoring this task so I will see it in available tasks"
 
 msgid "Su"
 msgstr "Su"
