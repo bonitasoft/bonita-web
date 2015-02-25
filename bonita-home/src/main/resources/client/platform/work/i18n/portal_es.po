@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:02+0100\n"
-"PO-Revision-Date: 2015-01-23 09:39-0500\n"
+"POT-Creation-Date: 2015-02-11 03:01+0100\n"
+"PO-Revision-Date: 2015-02-24 03:26-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -684,9 +684,6 @@ msgstr "Título dinámico"
 msgid "Display tasks I have done"
 msgstr "Mostrar las tareas que he realizado"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Mostrar las tareas que estoy ignorando"
-
 msgid "Display the case form"
 msgstr "Mostrar el formulario del caso"
 
@@ -959,18 +956,6 @@ msgstr "Asignación de grupos"
 
 msgid "Groups: %nb_groups%"
 msgstr "Grupos: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Oculto"
-
-msgid "Hidden to me"
-msgstr "Oculto para mí"
-
-msgid "Hide"
-msgstr "Ocultar"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Ignorar esta tarea así ya no la vere. Otros usuarios no autorizados aún lo verán"
 
 msgid "High"
 msgstr "alto"
@@ -1461,9 +1446,6 @@ msgstr "Resuelto"
 msgid "Resolved processes"
 msgstr "Procesos resueltos"
 
-msgid "Retrieve"
-msgstr "recuperar"
-
 msgid "Role"
 msgstr "Rol"
 
@@ -1664,9 +1646,6 @@ msgstr "Estatísticas"
 
 msgid "Status"
 msgstr "Estado del repositorio"
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Dejar de ignorar esta tarea así que pueda verla las tareas disponibles"
 
 msgid "Su"
 msgstr "Do"

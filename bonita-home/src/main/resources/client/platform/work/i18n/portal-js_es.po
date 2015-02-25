@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-01-23 09:39-0500\n"
+"PO-Revision-Date: 2015-02-24 03:26-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -20,6 +20,9 @@ msgstr "Columnas"
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
+
+msgid "{}-{} of {}"
+msgstr "{}-{} of {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "El caso eliminado se eliminará permanentemente y no se archivará."
@@ -169,6 +172,9 @@ msgstr "Estado del caso"
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
+msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+
 msgid "Disabled, no new case can be started"
 msgstr "Desactivado, no puede iniciarse ningún nuevo caso"
 
@@ -268,4 +274,58 @@ msgstr "sort by End date ascendant"
 
 msgid "sort by End date descendant"
 msgstr "sort by End date descendant"
+
+msgid "Hide 'ID'"
+msgstr "Hide 'ID'"
+
+msgid "Hide 'Process name'"
+msgstr "Hide 'Process name'"
+
+msgid "Hide 'Version'"
+msgstr "Hide 'Version'"
+
+msgid "Hide 'Start date'"
+msgstr "Hide 'Start date'"
+
+msgid "Hide 'End date'"
+msgstr "Hide 'End date'"
+
+msgid "Hide 'Started by'"
+msgstr "Hide 'Started by'"
+
+msgid "Hide 'Failed Flow Nodes'"
+msgstr "Hide 'Failed Flow Nodes'"
+
+msgid "Hide 'Pending Flow Nodes'"
+msgstr "Hide 'Pending Flow Nodes'"
+
+msgid "Hide 'State'"
+msgstr "Hide 'State'"
+
+msgid "Show 'ID'"
+msgstr "Show 'ID'"
+
+msgid "Show 'Process name'"
+msgstr "Show 'Process name'"
+
+msgid "Show 'Version'"
+msgstr "Show 'Version'"
+
+msgid "Show 'Start date'"
+msgstr "Show 'Start date'"
+
+msgid "Show 'End date'"
+msgstr "Show 'End date'"
+
+msgid "Show 'Started by'"
+msgstr "Show 'Started by'"
+
+msgid "Show 'Failed Flow Nodes'"
+msgstr "Show 'Failed Flow Nodes'"
+
+msgid "Show 'Pending Flow Nodes'"
+msgstr "Show 'Pending Flow Nodes'"
+
+msgid "Show 'State'"
+msgstr "Show 'State'"
 
