@@ -82,7 +82,7 @@ $(function () {
         input.after(uploaderEl).hide();
         
         var pluploader = new plupload.Uploader({
-            runtimes: 'html5',//,flash,silverlight,html4',
+            runtimes: 'html5,flash,silverlight,html4',
             browse_button: inputName,
             container: uploaderId,
             url: input.getOption('url'),
@@ -173,7 +173,7 @@ $(function () {
             if (file.code == -601) {
             	addError(input.getOption('text.extensionerror'));
             } else if (file.code == -500) {
-            	addError('Our uploader doesn\'t support your browser. Support for:  html5, flash, silverlight');
+            	addError('The specified file cannot be uploaded. Add plugin (like flashplayer or silverlight) to your browser to handle this type of file, then try the upload again.');
             } else {
             	addError(file.message);
             }

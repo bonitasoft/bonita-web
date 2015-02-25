@@ -74,6 +74,6 @@ public class PageUploadServletTest {
 
         final String responseString = pageUploadServlet.generateResponseString(request, "fileName", zipFile);
 
-        Assert.assertEquals(zipFile.getName() + ":" + permissions, responseString);
+        Assert.assertEquals(zipFile.getName() + "::" + permissions, responseString);
     }
 }

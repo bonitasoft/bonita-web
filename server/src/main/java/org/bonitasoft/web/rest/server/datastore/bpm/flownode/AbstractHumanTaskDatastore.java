@@ -126,15 +126,6 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             // Using the same id for each test to avoid useless memory usage.
             APIID id = null;
 
-            // Hidden tasks for a specific user
-            id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_HIDDEN_TO_USER_ID));
-            if (id != null) {
-                @SuppressWarnings("unchecked")
-                final SearchResult<ENGINE_ITEM> searchPendingHiddenTasks =
-                        (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingHiddenTasks(id.toLong(), builder.done());
-                return searchPendingHiddenTasks;
-            }
-
             // Tasks claimed by a specific user
             id = APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID));
             if (id != null) {

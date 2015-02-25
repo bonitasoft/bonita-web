@@ -35,7 +35,6 @@ import org.bonitasoft.web.rest.server.api.bpm.connector.APIArchivedConnectorInst
 import org.bonitasoft.web.rest.server.api.bpm.connector.APIConnectorInstance;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.APIActivity;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.APIFlowNode;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.APIHiddenUserTask;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.APIHumanTask;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.APITask;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.APIUserTask;
@@ -193,8 +192,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIActorMember();
             } else if ("delegation".equals(resourceToken)) {
                 return new APIActorMember();
-            } else if ("hiddenUserTask".equals(resourceToken)) {
-                return new APIHiddenUserTask();
             } else if ("activity".equals(resourceToken)) {
                 return new APIActivity();
             } else if ("archivedActivity".equals(resourceToken)) {

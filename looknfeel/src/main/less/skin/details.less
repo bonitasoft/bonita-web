@@ -7,6 +7,7 @@
 		&.page{
 			>.body{
 				position: static;
+				word-break: break-word;
 			}
 		}
 		.toolbar{
@@ -32,37 +33,28 @@
 			.description, .definitions{
 				margin: @detailsPanel-metadatas-descriptionDefinition-margin;
 				text-overflow: ellipsis;
-				word-wrap: break-word;
-			    
 			}
 			+ .section, + css3-container + .section{
 				margin: @detailsPanel-1stSection-margin; 
 			}
 			.definitions{
-				overflow: hidden;
+				overflow-y: hidden;
+				overflow-x: auto;
+				word-wrap: break-word;
 				.definition{
-					float:left;
 					.boxSizing();
-					width: 50%;
+					width: 100%;
+					min-height: @detailsPanel-definition-height;
 					label, span{
-						height: @detailsPanel-definition-height;
-						min-height: @detailsPanel-definition-height;
 						.boxSizing();
-						display: block;
-						float: left;
+						display: inline;
 					}
-					label{
-						padding: @detailsPanel-definition-padding;
+					span{
+						white-space: pre;
 					}
-					&.displayname, &.version, &.parent-task {
-						label{
-							.bgLeft(@detailsPanel-definition-processBg);
-						}
-					}
-					&.duedate, &.start, &.deploymentdate, &.last_update_date, &.creation_date, &.lastupdatedate, &.creationdate{
-						label{
-							.bgLeft(@detailsPanel-definition-dueDateBg);
-						}
+					&.last_update_date, &.last_connection{
+						float : left;
+						width : 50%;
 					}
 					//no icon anymore in this case
 					//&.started_by, &.deployedby, &.assigned_id_firstname_lastname, &.assigned_id{
@@ -70,38 +62,6 @@
 					//		.bgLeft(@detailsPanel-definition-userBg);
 					//	}
 					//}
-
-					&.createdby, &.updatedby{
-						label {
-							.bgLeft(@detailsPanel-definition-userBg);
-						}
-					}
-
-					&.human_task{
-						label {
-							.bgLeft(@detailsPanel-definition-human-taskBg);
-						}
-					}
-					&.multi_instance_task{
-						label {
-							.bgLeft(@detailsPanel-definition-multi-instance-taskBg);
-						}
-					}
-					&.call_activity_task{
-						label {
-							.bgLeft(@detailsPanel-definition-call-activity-taskBg);
-						}
-					}
-					&.loop_task{
-						label {
-							.bgLeft(@detailsPanel-definition-loop-taskBg);
-						}
-					}
-					&.automatic_task{
-						label {
-							.bgLeft(@detailsPanel-definition-automatic-taskBg);
-						}
-					}
 				}
 			}
 		}

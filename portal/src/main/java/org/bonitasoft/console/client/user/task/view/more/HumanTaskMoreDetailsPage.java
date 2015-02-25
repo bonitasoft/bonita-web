@@ -18,7 +18,6 @@ package org.bonitasoft.console.client.user.task.view.more;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
@@ -28,19 +27,12 @@ import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
-import org.bonitasoft.console.client.user.task.action.UserTasksHideAction;
-import org.bonitasoft.console.client.user.task.action.UserTasksUnhideAction;
 import org.bonitasoft.console.client.user.task.view.PluginTask;
 import org.bonitasoft.console.client.user.task.view.TaskButtonFactory;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
-import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
-import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
-import org.bonitasoft.web.toolkit.client.data.api.request.APIRequest;
-import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 
 /**
@@ -87,42 +79,10 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
         if (item.isUnassigned()) {
             addToolbarLink(factory.createClaimButton(new TaskClaimAction(Session.getUserId(), item.getId())));
         }
-
-        if (!isTaskAssignedToOtherUser(item)) {
-
-            isTaskHidden(item, new APICallback() {
-
-                @Override
-                public void onSuccess(final int httpStatusCode, final String response,
-                        final Map<String, String> headers) {
-                    addRetrieveButton(factory);
-                }
-
-                @Override
-                protected void on404NotFound(final String message) {
-                    addIgnoreButton(factory);
-                }
-
-            });
-
-        }
     }
 
     private ActionShowView createPerformAction(final HumanTaskItem item) {
         return new ActionShowView(new PerformTaskPage(item.getId()));
-    }
-
-    private void addRetrieveButton(final TaskButtonFactory factory) {
-        addToolbarLink(factory.createRetrieveButton(new UserTasksUnhideAction(Session.getUserId(), getItemId())));
-    }
-
-    private void addIgnoreButton(final TaskButtonFactory factory) {
-        addToolbarLink(factory.createIgnoreButton(new UserTasksHideAction(Session.getUserId(), getItemId())));
-    }
-
-    private void isTaskHidden(final HumanTaskItem item, final APICallback callback) {
-        final APIID compAPIId = APIID.makeAPIID(Session.getUserId().toLong(), item.getId().toLong());
-        APIRequest.get(compAPIId, Definitions.get(HiddenUserTaskDefinition.TOKEN), callback).run();
     }
 
     @Override

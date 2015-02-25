@@ -16,19 +16,14 @@
  */
 package org.bonitasoft.console.client.user.task.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
-import org.bonitasoft.web.toolkit.client.data.api.request.APIAddRequest;
-import org.bonitasoft.web.toolkit.client.data.api.request.APIDeleteRequest;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIQueue;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIRequest;
 import org.bonitasoft.web.toolkit.client.data.api.request.APIUpdateRequest;
@@ -148,93 +143,6 @@ public class TaskAPI {
         final APIQueue queue = new APIQueue();
         for (final APIID taskId : taskIds) {
             queue.addRequest(makeReleaseRequest(taskId));
-        }
-        queue.run(onFinish, onError);
-    }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // HIDE
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static APIAddRequest makeHideRequest(final APIID taskId, final String userId) {
-        final HiddenUserTaskItem hiddenUserTaskItem = new HiddenUserTaskItem();
-        hiddenUserTaskItem.setUserId(userId);
-        hiddenUserTaskItem.setTaskId(taskId);
-        return APIRequest.add(hiddenUserTaskItem, Definitions.get(HiddenUserTaskDefinition.TOKEN), null);
-    }
-
-    public static void hide(final APIID taskId, final String userId, final APICallback callback) {
-        makeHideRequest(taskId, userId).run(callback);
-    }
-
-    public static void hide(final APIID taskId, final String userId, final Action onSuccess) {
-        hide(taskId, userId, new APICallback() {
-
-            @Override
-            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                onSuccess.execute();
-            }
-
-        });
-    }
-
-    public static void hide(final List<APIID> taskIds, final String userId, final Action onFinish) {
-        hide(taskIds, userId, onFinish, null);
-    }
-
-    public static void hide(final List<APIID> taskIds, final String userId, final Action onFinish, final Action onError) {
-        final Action onF = onFinish;
-        final Action onE = onError;
-
-        release(taskIds, new Action() {
-
-            @Override
-            public void execute() {
-                final APIQueue queue = new APIQueue();
-                for (final APIID taskId : taskIds) {
-                    queue.addRequest(makeHideRequest(taskId, userId));
-                }
-                queue.run(onF, onE);
-            }
-        }, onE);
-
-    }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // UNHIDE
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static APIDeleteRequest makeUnhideRequest(final String userId, final APIID... taskIds) {
-        final ArrayList<APIID> HiddenTaskIds = new ArrayList<APIID>();
-        for (final APIID taskId : taskIds) {
-            HiddenTaskIds.add(APIID.makeAPIID(userId, taskId.toString()));
-        }
-        return APIRequest.delete(HiddenTaskIds, Definitions.get(HiddenUserTaskDefinition.TOKEN), null);
-    }
-
-    public static void unhide(final APIID taskId, final String userId, final APICallback callback) {
-        makeUnhideRequest(userId, taskId).run(callback);
-    }
-
-    public static void Unhide(final APIID taskId, final String userId, final Action onSuccess) {
-        unhide(taskId, userId, new APICallback() {
-
-            @Override
-            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                onSuccess.execute();
-            }
-
-        });
-    }
-
-    public static void unhide(final List<APIID> taskIds, final String userId, final Action onFinish) {
-        unhide(taskIds, userId, onFinish, null);
-    }
-
-    public static void unhide(final List<APIID> taskIds, final String userId, final Action onFinish, final Action onError) {
-        final APIQueue queue = new APIQueue();
-        for (final APIID taskId : taskIds) {
-            queue.addRequest(makeUnhideRequest(userId, taskId));
         }
         queue.run(onFinish, onError);
     }

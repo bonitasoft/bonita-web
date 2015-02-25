@@ -4,7 +4,7 @@
     <artifactId>bonita-console</artifactId>
     <name>bonita console</name>
     <packaging>pom</packaging>
-    <version>6.5.0-SNAPSHOT</version>
+    <version>7.0.0-SNAPSHOT</version>
 
     <modules>
         <module>looknfeel</module>
@@ -24,7 +24,7 @@
     </scm>
 
     <properties>
-        <bonita.engine.version>6.5.0-SNAPSHOT</bonita.engine.version>
+        <bonita.engine.version>7.0.0-SNAPSHOT</bonita.engine.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -488,7 +488,7 @@
                                     <version>[3.0.2,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[1.6,)</version>
+                                    <version>[1.7,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -519,8 +519,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>

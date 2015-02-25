@@ -123,17 +123,6 @@ public class TaskPermissionRuleTest {
     }
 
     @Test
-    public void should_get_on_a_hiddenUserTask_task_is_ok() {
-        //given
-        havingResource("hiddenUserTask")
-        doReturn(true).when(processAPI).isTaskHidden(currentUserId, 458)
-        //when
-        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
-        //then
-        assertThat(isAuthorized).isTrue();
-    }
-
-    @Test
     public void should_get_on_a_archived_task_is_ok() {
         //given
         havingResource("archivedElement")
