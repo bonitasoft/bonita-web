@@ -39,7 +39,7 @@
         <gwtmockito.version>1.1.3</gwtmockito.version>
         <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
         <urlrewrite.version>4.0.3</urlrewrite.version>
-
+        <restlet-version>2.3.1</restlet-version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
@@ -166,7 +166,22 @@
                 <artifactId>lesscss</artifactId>
                 <version>1.3.3</version>
             </dependency>
-
+            <!-- Restlet -->
+            <dependency>
+                <groupId>org.restlet.jse</groupId>
+                <artifactId>org.restlet</artifactId>
+                <version>${restlet-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.restlet.jee</groupId>
+                <artifactId>org.restlet.ext.servlet</artifactId>
+                <version>${restlet-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.restlet.jse</groupId>
+                <artifactId>org.restlet.ext.jackson</artifactId>
+                <version>${restlet-version}</version>
+            </dependency>
             <!-- JSON -->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -253,11 +268,7 @@
                 <version>${assertj.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>net.javacrumbs.json-unit</groupId>
-                <artifactId>json-unit</artifactId>
-                <version>1.1.6</version>
-            </dependency>
+          
             <dependency>
                 <groupId>com.google.gwt.gwtmockito</groupId>
                 <artifactId>gwtmockito</artifactId>
