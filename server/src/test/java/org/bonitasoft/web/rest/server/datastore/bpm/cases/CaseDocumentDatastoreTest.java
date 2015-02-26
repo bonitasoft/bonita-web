@@ -24,6 +24,7 @@ import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
+import org.bonitasoft.engine.bpm.document.DocumentException;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
 import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.exception.DeletionException;
@@ -151,6 +152,29 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         assertTrue(convertedEngineToConsoleItem == null);
     }
 
+    // ---------- buildDocumentValueFromUploadPath TESTS ------------------------------//
+    @Test
+    public void it_should_create_documentvalue_with_given_filename() throws DocumentException, IOException {
+        final URL docUrl = getClass().getResource("/doc.jpg");
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenReturn(new File(docUrl.getPath()));
+
+        // When
+        final DocumentValue documentValue = documentDatastore.buildDocumentValueFromUploadPath(docUrl.getPath(),1,"fileName");
+        // Then
+        assertTrue(documentValue.getFileName().equals("fileName"));
+    }
+
+    @Test
+    public void it_should_create_documentvalue_with_name_of_the_uploaded_file() throws DocumentException, IOException {
+        final URL docUrl = getClass().getResource("/doc.jpg");
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenReturn(new File(docUrl.getPath()));
+
+        // When
+        final DocumentValue documentValue = documentDatastore.buildDocumentValueFromUploadPath(docUrl.getPath(), 1, "");
+        // Then
+        assertTrue(documentValue.getFileName().equals("doc.jpg"));
+    }
+
     // ---------- ADD METHOD TESTS ------------------------------//
 
     @Test
@@ -167,7 +191,26 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         documentDatastore.add(mockedDocumentItem);
 
         // Then
-        verify(documentDatastore).buildDocumentValueFromUploadPath(docUrl.getPath(), -1);
+        verify(documentDatastore).buildDocumentValueFromUploadPath(docUrl.getPath(), -1, null);
+        verify(processAPI).addDocument(eq(1L), eq("doc 1"), eq(""), any(DocumentValue.class));
+    }
+
+    @Test
+    public void it_should_add_a_document_calling_addDocument_with_upload_Path_and_fileName() throws Exception {
+        // Given
+        final URL docUrl = getClass().getResource("/doc.jpg");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, "doc_file_name.jpg");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
+
+        when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenReturn(new File(docUrl.getPath()));
+
+        // When
+        documentDatastore.add(mockedDocumentItem);
+
+        // Then
+        verify(documentDatastore).buildDocumentValueFromUploadPath(docUrl.getPath(), -1, "doc_file_name.jpg");
         verify(processAPI).addDocument(eq(1L), eq("doc 1"), eq(""), any(DocumentValue.class));
     }
 
@@ -187,7 +230,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         documentDatastore.add(mockedDocumentItem);
 
         // Then
-        verify(documentDatastore).buildDocumentValueFromUploadPath(docUrl.getPath(), 2);
+        verify(documentDatastore).buildDocumentValueFromUploadPath(docUrl.getPath(), 2, null);
         verify(processAPI).addDocument(eq(1L), eq("doc 1"), eq("This is a description"), any(DocumentValue.class));
     }
 
@@ -277,7 +320,25 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         documentDatastore.update(APIID.makeAPIID(1L), attributes);
 
         // Then
-        verify(documentDatastore).buildDocumentValueFromUploadPath(uploadPath, -1);
+        verify(documentDatastore).buildDocumentValueFromUploadPath(uploadPath, -1, null);
+        verify(processAPI).updateDocument(eq(1L), any(DocumentValue.class));
+    }
+
+    @Test
+    public void it_should_update_a_document_calling_updateDocument_with_upload_Path_and_fileName() throws Exception {
+        // Given
+        final Map<String, String> attributes = new HashMap<String, String>();
+        final String uploadPath = getClass().getResource("/doc.jpg").getPath();
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, uploadPath);
+        attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, "doc_file_name.jpg");
+
+        when(tenantFolder.getTempFile(uploadPath, 1L)).thenReturn(new File(uploadPath));
+
+        // When
+        documentDatastore.update(APIID.makeAPIID(1L), attributes);
+
+        // Then
+        verify(documentDatastore).buildDocumentValueFromUploadPath(uploadPath, -1, "doc_file_name.jpg");
         verify(processAPI).updateDocument(eq(1L), any(DocumentValue.class));
     }
 
@@ -421,4 +482,5 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         // When
         documentDatastore.delete(docs);
     }
+
 }

@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /BS-12450_start_proc_cmd/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /MasterBugFixing/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -190,7 +190,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 msgid "Actor mapping"
-msgstr "Mapeo de actores"
+msgstr "mapa de actores"
 
 msgid "Actor name"
 msgstr "Nombre del actor"
@@ -835,7 +835,7 @@ msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
 msgid "Enter the zip code of this user"
-msgstr "Indique el código postal de este usuario"
+msgstr "Ingrese el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "La asignación de actores debe resolverse antes de activar el proceso."

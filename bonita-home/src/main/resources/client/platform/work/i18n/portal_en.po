@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /BS-12450_start_proc_cmd/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /MasterBugFixing/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " To do so, go to %entitymappingprofilelink%."
