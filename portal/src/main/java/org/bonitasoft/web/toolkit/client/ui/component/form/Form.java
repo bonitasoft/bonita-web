@@ -1101,6 +1101,12 @@ public class Form extends AbstractForm {
         return this.addItemAttributeEntry(new JsId(itemAttribute.getName()), itemAttribute, label, tooltip, defaultValue, description, example, null);
     }
 
+    public Form addItemAttributeEntry(final ItemAttribute itemAttribute, final String label, final String tooltip, final String defaultValue,
+            final String description, final String example, final Long maxLength) {
+
+        return this.addItemAttributeEntry(new JsId(itemAttribute.getName()), itemAttribute, label, tooltip, defaultValue, description, example, maxLength);
+    }
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COLORPICKER
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

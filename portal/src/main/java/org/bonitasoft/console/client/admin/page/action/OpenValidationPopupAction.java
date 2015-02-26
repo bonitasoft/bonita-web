@@ -50,7 +50,7 @@ public class OpenValidationPopupAction extends Action {
     @Override
     public void execute() {
         final String pageUploaderResponse = pageUploader._getValue();
-        final String[] pageUploaderResponseArray = pageUploaderResponse.split(":");
+        final String[] pageUploaderResponseArray = pageUploaderResponse.split("::");
         final String originalFileName = pageUploaderResponseArray[pageUploaderResponseArray.length - 2];
         final String authorization = pageUploaderResponseArray[pageUploaderResponseArray.length - 1];
         if (originalFileName.length() > PageInstallCallback.FILENAME_MAX_LENGHT) {

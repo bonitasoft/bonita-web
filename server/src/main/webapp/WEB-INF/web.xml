@@ -169,11 +169,18 @@
         <filter-name>TokenValidatorFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
+		<!--
+            In the case of a custom page served in a living application calls to the
+            REST API are done though /portal/custom-page/API then forwarded to /API which breaks dynamic security rules.
+        -->
+        <url-pattern>/portal/custom-page/API/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
+		<!-- see TokenValidatorFilter comment -->
+        <url-pattern>/portal/custom-page/API/*</url-pattern>
         <!-- Uncomment those lines to apply security checks also on portal servlets -->
         <!-- <url-pattern>/portal/formsDocumentDownload</url-pattern> -->
         <!-- <url-pattern>/portal/documentDownload</url-pattern> -->
@@ -184,6 +191,8 @@
         <filter-name>TokenGeneratorFilter</filter-name>
         <url-pattern>/API/system/session/*</url-pattern>
         <url-pattern>/APIToolkit/system/session/*</url-pattern>
+		<!-- see TokenValidatorFilter comment -->
+        <url-pattern>/portal/custom-page/API/system/session/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>InternalSSOFilter</filter-name>

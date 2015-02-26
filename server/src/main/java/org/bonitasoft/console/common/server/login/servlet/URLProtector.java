@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class URLProtector {
 
-    protected List<String> tokens = Arrays.asList("https", "http", "www");
+    protected List<String> tokens = Arrays.asList("https", "http", "www", "HTTPS", "HTTP", "WWW");
 
     public String protectRedirectUrl(String redirectUrl) {
         if (redirectUrl != null && !redirectUrl.startsWith("portal")) {

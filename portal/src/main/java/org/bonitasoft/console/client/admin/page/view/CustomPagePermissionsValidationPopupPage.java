@@ -79,7 +79,7 @@ public class CustomPagePermissionsValidationPopupPage extends Page {
 
     @Override
     public void buildView() {
-        final String[] uploadValues = uploadValue.split(":");
+        final String[] uploadValues = uploadValue.split("::");
         if (uploadValues[uploadValues.length - 1].equals("[]")) {
             addBody(new Paragraph(
                     _("This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n update the page definition to specify the list of resources used.")));
@@ -105,7 +105,7 @@ public class CustomPagePermissionsValidationPopupPage extends Page {
         handleInvalidResources(invalidResources);
         final Form form = new Form(PAGE_UPLOAD_FORM_JS_ID);
         form.addEntry(new StaticText(ERROR_JS_ID, "", ""));
-        form.addHiddenEntry(PAGE_ZIP, uploadValues[0] + ":" + uploadValues[1]);
+        form.addHiddenEntry(PAGE_ZIP, uploadValues[0] + "::" + uploadValues[1]);
         if (pageId != null) {
             addBody(addButtonsForUpdate(form));
         } else {

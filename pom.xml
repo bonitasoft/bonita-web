@@ -503,7 +503,7 @@
                                     <version>[3.0.2,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[1.6,)</version>
+                                    <version>[1.7,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -534,8 +534,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>

@@ -27,6 +27,7 @@ import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
+import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
@@ -108,7 +109,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     @Override
     public PageItem add(final PageItem pageItem) {
         final String zipFileAttribute = pageItem.getAttributeValue(UNMAPPED_ATTRIBUTE_ZIP_FILE);
-        final String[] filenames = zipFileAttribute.split(":");
+        final String[] filenames = zipFileAttribute.split(FileUploadServlet.RESPONSE_SEPARATOR);
         final String filename = filenames[0];
         String originalFileName;
 
@@ -302,7 +303,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
                 final String zipFileAttribute = attributes.get(UNMAPPED_ATTRIBUTE_ZIP_FILE);
                 if (zipFileAttribute != null && !zipFileAttribute.isEmpty()) {
-                    final String[] filenames = zipFileAttribute.split(":");
+                    final String[] filenames = zipFileAttribute.split(FileUploadServlet.RESPONSE_SEPARATOR);
                     final String filename = filenames[0];
                     String originalFileName;
                     if (filenames.length > 1) {
