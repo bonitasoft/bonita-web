@@ -98,11 +98,12 @@ public class APIActorIntegrationIT extends AbstractConsoleTest {
     public void testGetWithCounters() throws Exception {
         //given
         final TestUser johnCarpenter = TestUserFactory.getJohnCarpenter();
-        TestProcessFactory.getDefaultHumanTaskProcess().addActor(johnCarpenter);
+        final TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(johnCarpenter);
+        final long actorId = process.getActors().get(0).getId();
 
         //when
         final List<String> counters = asList(COUNTER_USERS, COUNTER_GROUPS, COUNTER_ROLES, COUNTER_MEMBERSHIPS);
-        final ActorItem fetchedActorItem = apiActor.runGet(makeAPIID(johnCarpenter.getId()), null, counters);
+        final ActorItem fetchedActorItem = apiActor.runGet(makeAPIID(actorId), null, counters);
 
         //then
         assertEquals(1L, (long) fetchedActorItem.getNbSelectedUsers());
