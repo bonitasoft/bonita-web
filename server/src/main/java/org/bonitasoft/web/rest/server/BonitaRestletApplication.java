@@ -18,6 +18,7 @@ import java.util.logging.Level;
 
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -64,7 +65,8 @@ public class BonitaRestletApplication extends Application {
         // GET to case info (with task state counter)
         router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", CaseInfoResource.class);
 
-        //        router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
+        router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskResource.class));
+        router.attach("/bpm/tasks/{taskId}/execute", factory.create(TaskResource.class));
         return router;
     }
 

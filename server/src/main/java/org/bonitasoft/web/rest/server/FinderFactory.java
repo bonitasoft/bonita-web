@@ -14,10 +14,13 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.api.CommandAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
+import org.restlet.Response;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
@@ -27,7 +30,7 @@ public class FinderFactory {
     protected static Map<Class<? extends ServerResource>, Finder> finders;
     static {
         finders = new HashMap<Class<? extends ServerResource>, Finder>();
-        //        finders.put(BusinessDataResource.class, new BusinessDataResourceFinder());
+        finders.put(TaskResource.class, new TaskResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -38,19 +41,28 @@ public class FinderFactory {
         return finder;
     }
 
-    //    public static class BusinessDataResourceFinder extends Finder {
-    //
-    //        @Override
-    //        public ServerResource create(final Request request, final Response response) {
-    //            final CommandAPI commandAPI = getCommandAPI(request);
-    //            return new BusinessDataResource(commandAPI);
-    //        }
-    //    }
+    public static class TaskResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final ProcessAPI processAPI = getProcessAPI(request);
+            return new TaskResource(processAPI);
+        }
+    }
 
     private static CommandAPI getCommandAPI(final Request request) {
         final APISession apiSession = getAPISession(request);
         try {
             return TenantAPIAccessor.getCommandAPI(apiSession);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    private static ProcessAPI getProcessAPI(final Request request) {
+        final APISession apiSession = getAPISession(request);
+        try {
+            return TenantAPIAccessor.getProcessAPI(apiSession);
         } catch (final Exception e) {
             throw new APIException(e);
         }

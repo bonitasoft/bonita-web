@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
@@ -41,6 +42,8 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
+
+import com.fasterxml.jackson.core.JsonParseException;
 
 /**
  * @author Emmanuel Duchastenier
@@ -89,7 +92,7 @@ public class CommonResource extends ServerResource {
     }
 
     protected String getQueryParameter(final boolean mandatory) {
-        return getParameter(APIServletCall.PARAMETER_QUERY,mandatory);
+        return getParameter(APIServletCall.PARAMETER_QUERY, mandatory);
     }
 
     /**
@@ -188,10 +191,13 @@ public class CommonResource extends ServerResource {
         getLogger().log(Level.SEVERE, "*** problem on " + getClass().getName() + " rest resource: " + t.getMessage());
         getResponse().setStatus(getStatus(), "Cannot execute REST resource " + getClass().getName() + " rest resource: " + t.getMessage());
 
-        if (throwable.getCause() instanceof IllegalArgumentException) {
+        if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
-        getResponse().setEntity(new ErrorMessage(throwable.getCause()).toEntity());
+        else if (t instanceof NotFoundException) {
+            getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        }
+        getResponse().setEntity(new ErrorMessage(t).toEntity());
 
     }
 

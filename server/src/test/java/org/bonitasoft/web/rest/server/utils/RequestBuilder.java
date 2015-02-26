@@ -11,19 +11,27 @@ package org.bonitasoft.web.rest.server.utils;
 import org.restlet.Client;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 
 public class RequestBuilder {
 
-    private String uri;
+    private final String uri;
 
-    public RequestBuilder(String uri) {
+    public RequestBuilder(final String uri) {
         this.uri = uri;
     }
 
     public Response get() {
-        Client client = new Client(Protocol.HTTP);
+        final Client client = new Client(Protocol.HTTP);
         return client.handle(new Request(Method.GET, uri));
+    }
+
+    public Response post(final String value) {
+        final Client client = new Client(Protocol.HTTP);
+        final Request request = new Request(Method.POST, uri);
+        request.setEntity(value, MediaType.APPLICATION_JSON);
+        return client.handle(request);
     }
 }
