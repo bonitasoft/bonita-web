@@ -18,6 +18,11 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Logger;
 
+import org.bonitasoft.web.rest.server.api.application.APIApplication;
+import org.bonitasoft.web.rest.server.api.applicationmenu.APIApplicationMenu;
+import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
+import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationPage;
+import org.bonitasoft.web.rest.server.api.bonitaPage.APIBonitaPage;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCase;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCaseDocument;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedComment;
@@ -44,6 +49,7 @@ import org.bonitasoft.web.rest.server.api.bpm.process.APIProcess;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessCategory;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnector;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessConnectorDependency;
+import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessParameter;
 import org.bonitasoft.web.rest.server.api.bpm.process.APIProcessResolutionProblem;
 import org.bonitasoft.web.rest.server.api.document.APIArchivedDocument;
 import org.bonitasoft.web.rest.server.api.document.APIDocument;
@@ -56,6 +62,7 @@ import org.bonitasoft.web.rest.server.api.organization.APIPersonalContactData;
 import org.bonitasoft.web.rest.server.api.organization.APIProfessionalContactData;
 import org.bonitasoft.web.rest.server.api.organization.APIRole;
 import org.bonitasoft.web.rest.server.api.organization.APIUser;
+import org.bonitasoft.web.rest.server.api.page.APIPage;
 import org.bonitasoft.web.rest.server.api.platform.APIPlatform;
 import org.bonitasoft.web.rest.server.api.profile.APIProfile;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
@@ -63,6 +70,8 @@ import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
 import org.bonitasoft.web.rest.server.api.system.APII18nTranslation;
 import org.bonitasoft.web.rest.server.api.system.APISession;
+import org.bonitasoft.web.rest.server.datastore.application.ApplicationDataStoreCreator;
+import org.bonitasoft.web.rest.server.datastore.applicationmenu.ApplicationMenuDataStoreCreator;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
@@ -71,11 +80,10 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * @author Séverin Moussel
- * 
  */
 public class BonitaRestAPIFactory extends RestAPIFactory {
 	
-	private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
+    private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
 	
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
@@ -111,31 +119,37 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APISession();
             }
             
-        // FIXME : userXP deprecated    (BS-500)
-        //    - replaced by 'portal'
-        //    - Do not add any API here
-        //    - userXP section must be deleted in 6.4.0 version
-        //    - duplication not removed because userXp must stay like this
+            // FIXME : userXP deprecated    (BS-500)
+            //    - replaced by 'portal'
+            //    - Do not add any API here
+            //    - userXP section must be deleted in 6.4.0 version
+            //    - duplication not removed because userXp must stay like this
         } else if ("userXP".equals(apiToken)) {
             if ("profile".equals(resourceToken)) {
-            	LOGGER.warning("Deprecated API path, please use /API/portal/profile instead");
+                LOGGER.warning("Deprecated API path, please use /API/portal/profile instead");
                 return new APIProfile();
             } else if ("profileEntry".equals(resourceToken)) {
-            	LOGGER.warning("Deprecated API path, please use /API/portal/profileEntry instead");
+                LOGGER.warning("Deprecated API path, please use /API/portal/profileEntry instead");
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
-            	LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
+                LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
                 return new APIProfileMember();
+            } else if ("bonitaPage".equals(resourceToken)) {
+                return new APIBonitaPage();
             }
-        // --------------------------------------------------------
+            // --------------------------------------------------------
             
         } else if ("portal".equals(apiToken)) {
-        	if ("profile".equals(resourceToken)) {
+            if ("profile".equals(resourceToken)) {
                 return new APIProfile();
             } else if ("profileEntry".equals(resourceToken)) {
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
+            } else if ("bonitaPage".equals(resourceToken)) {
+                return new APIBonitaPage();
+            } else if ("page".equals(resourceToken)) {
+                return new APIPage();
             }
         	
         } else if ("bpm".equals(apiToken)) {
@@ -203,7 +217,18 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIDocument();
             } else if ("archiveddocument".equals(resourceToken)) {
                 return new APIArchivedDocument();
+            } else if ("processParameter".equals(resourceToken)) {
+                return new APIProcessParameter();
+           }
+        } else if ("living".equals(apiToken)) {
+            if ("application".equals(resourceToken)) {
+                return new APIApplication(new ApplicationDataStoreCreator());
+            } else if ("application-page".equals(resourceToken)) {
+                return new APIApplicationPage(new APIApplicationDataStoreFactory());
+            } else if ("application-menu".equals(resourceToken)) {
+                return new APIApplicationMenu(new ApplicationMenuDataStoreCreator());
             }
+
         } else if ("platform".equals(apiToken)) {
             if ("platform".equals(resourceToken)) {
                 return new APIPlatform();
