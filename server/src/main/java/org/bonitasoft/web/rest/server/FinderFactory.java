@@ -50,7 +50,7 @@ public class FinderFactory {
         }
     }
 
-    protected static CommandAPI getCommandAPI(final Request request) {
+    private static CommandAPI getCommandAPI(final Request request) {
         final APISession apiSession = getAPISession(request);
         try {
             return TenantAPIAccessor.getCommandAPI(apiSession);
