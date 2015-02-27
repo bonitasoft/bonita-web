@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 02:01+0100\n"
+"POT-Creation-Date: 2015-02-27 10:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -785,9 +785,6 @@ msgstr ""
 msgid "Display tasks I have done"
 msgstr ""
 
-msgid "Display tasks I'm ignoring"
-msgstr ""
-
 msgid "Display the case form"
 msgstr ""
 
@@ -1086,18 +1083,6 @@ msgid "Groups mapping"
 msgstr ""
 
 msgid "Groups: %nb_groups%"
-msgstr ""
-
-msgid "Hidden"
-msgstr ""
-
-msgid "Hidden to me"
-msgstr ""
-
-msgid "Hide"
-msgstr ""
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
 msgstr ""
 
 msgid "High"
@@ -1657,9 +1642,6 @@ msgstr ""
 msgid "Resume BPM Services"
 msgstr ""
 
-msgid "Retrieve"
-msgstr ""
-
 msgid "Role"
 msgstr ""
 
@@ -1877,9 +1859,6 @@ msgid "Status"
 msgstr ""
 
 msgid "Status: "
-msgstr ""
-
-msgid "Stop ignoring this task so I will see it in available tasks"
 msgstr ""
 
 msgid "Su"
