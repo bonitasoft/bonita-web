@@ -36,7 +36,6 @@ import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.data.CharacterSet;
-import org.restlet.data.Status;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
@@ -91,7 +90,7 @@ public class CommonResource extends ServerResource {
         return parseFilters(getParameterAsList(APIServletCall.PARAMETER_FILTER));
     }
 
-    protected String getQueryParameter(final boolean mandatory) {
+    protected String getQueryParameter(boolean mandatory) {
         return getParameter(APIServletCall.PARAMETER_QUERY, mandatory);
     }
 
@@ -119,6 +118,14 @@ public class CommonResource extends ServerResource {
 
     protected String getSearchOrder() {
         return getParameter(APIServletCall.PARAMETER_ORDER, false);
+    }
+
+    protected int getSearchPageNumber() {
+        return getIntegerParameter(APIServletCall.PARAMETER_PAGE, true);
+    }
+
+    protected int getSearchPageSize() {
+        return getIntegerParameter(APIServletCall.PARAMETER_LIMIT, true);
     }
 
     protected String getSearchTerm() {
@@ -198,7 +205,6 @@ public class CommonResource extends ServerResource {
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
         }
         getResponse().setEntity(new ErrorMessage(t).toEntity());
-
     }
 
     @Override
@@ -218,39 +224,6 @@ public class CommonResource extends ServerResource {
         } catch (final UnsupportedEncodingException e) {
         }
         return attribute;
-    }
-
-    public Long getPathParamAsLong(final String parameterName) {
-        final String value = getAttribute(parameterName);
-        try {
-            return Long.parseLong(value);
-        } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("[ " + value + " ] must be a number");
-        }
-    }
-
-    public String getPathParam(final String name) {
-        return getAttribute(name);
-    }
-
-    protected int getSearchPageNumber() {
-        try {
-            return getIntegerParameter(APIServletCall.PARAMETER_PAGE, true);
-        } catch (final APIException e) {
-            throw new IllegalArgumentException("query parameter p (page) is mandatory");
-        } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("query parameter p (page) should be a number");
-        }
-    }
-
-    protected int getSearchPageSize() {
-        try {
-            return getIntegerParameter(APIServletCall.PARAMETER_LIMIT, true);
-        } catch (final APIException e) {
-            throw new IllegalArgumentException("query parameter c (count) is mandatory");
-        } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("query parameter c (count) should be a number");
-        }
     }
 
 }

@@ -255,7 +255,12 @@
     </servlet>
     <servlet>
         <servlet-name>RestletServlet</servlet-name>
-        <servlet-class>org.bonitasoft.web.rest.server.BonitaRestletApplicationServlet</servlet-class>
+        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+        <init-param>
+            <!-- Application class name -->
+            <param-name>org.restlet.application</param-name>
+            <param-value>org.bonitasoft.web.rest.server.BonitaRestletApplication</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ConsoleServiceServlet</servlet-name>
