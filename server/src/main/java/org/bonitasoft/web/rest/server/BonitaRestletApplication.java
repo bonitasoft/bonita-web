@@ -18,6 +18,10 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Level;
 
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
@@ -27,6 +31,8 @@ import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
+import org.restlet.data.CharacterSet;
+import org.restlet.data.MediaType;
 import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
 
@@ -36,6 +42,15 @@ import org.restlet.routing.Router;
  *
  */
 public class BonitaRestletApplication extends Application {
+
+    private final FinderFactory factory;
+
+    public BonitaRestletApplication(final FinderFactory finderFactory) {
+        super();
+        factory = finderFactory;
+        getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
+        getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
+    }
 
     /**
      * Creates a root Restlet that will receive all incoming calls.
@@ -60,6 +75,13 @@ public class BonitaRestletApplication extends Application {
 
         router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskResource.class));
         router.attach("/bpm/tasks/{taskId}/execute", factory.create(TaskResource.class));
+
+        router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
+        router.attach("/bdm/businessData/{className}/{id}", factory.create(BusinessDataResource.class));
+        router.attach("/bdm/businessData/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));
+        router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
+        router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
+
         return router;
     }
 

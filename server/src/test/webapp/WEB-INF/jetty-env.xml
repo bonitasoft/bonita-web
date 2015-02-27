@@ -19,6 +19,36 @@
 		</Arg>
 	</New>
 
+    <New id="BusinessDataDS" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg>java:comp/env/BusinessDataDS</Arg>
+        <Arg>
+            <New class="bitronix.tm.resource.jdbc.PoolingDataSource">
+                <Set name="className">org.h2.jdbcx.JdbcDataSource</Set>
+                <Set name="uniqueName">BusinessDataDS</Set>
+                <Set name="minPoolSize">0</Set>
+                <Set name="maxPoolSize">5</Set>
+                <Get name="driverProperties">
+                    <Put name="URL">jdbc:h2:<SystemProperty name="bonita.home"/>/server/platform/work/databases/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Put>
+                    <Put name="user">sa</Put>
+                </Get>
+                <Call name="init" />
+            </New>
+        </Arg>
+    </New>
+
+    <New id="NotManagedBizDataDS" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg>java:comp/env/NotManagedBizDataDS</Arg>
+        <Arg>
+            <New class="org.apache.commons.dbcp.BasicDataSource">
+                <Set name="driverClassName">org.h2.Driver</Set>
+                <Set name="url">jdbc:h2:<SystemProperty name="bonita.home" />/server/platform/work/databases/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9091;AUTO_SERVER=TRUE;</Set>
+                <Set name="username">sa</Set>
+                <Set name="password"></Set>
+                <Set name="validationQuery">SELECT 1</Set>
+            </New>
+        </Arg>
+    </New>
+
 	<New id="bonitaSequenceManagerDS" class="org.mortbay.jetty.plus.naming.Resource">
 		<Arg>java:comp/env/bonitaSequenceManagerDS</Arg>
 		<Arg>

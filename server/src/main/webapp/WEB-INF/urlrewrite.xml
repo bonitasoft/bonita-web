@@ -218,6 +218,14 @@
         <to>/APIToolkit/system/session$1</to>
     </rule>
     <rule>
+        <from>^/API/system/tenant([\?/]|$)</from>
+        <to>/APIToolkit/system/tenant$1</to>
+    </rule>
+    <rule>
+        <from>^/API/tenant/bdm([\?/]|$)</from>
+        <to>/APIToolkit/tenant/bdm$1</to>
+    </rule>
+    <rule>
         <from>^/API/userXP/profile([\?/]|$)</from>
         <to>/APIToolkit/userXP/profile$1</to>
     </rule>
