@@ -27,15 +27,15 @@
             <artifactId>console-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <!--forms -->
+        
+        <!--forms-->
         <dependency>
             <groupId>org.bonitasoft.forms</groupId>
             <artifactId>forms-server</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!--Engine -->
+        <!--Engine-->
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-server</artifactId>
@@ -46,7 +46,7 @@
             <artifactId>bonita-client</artifactId>
         </dependency>
 
-        <!--Vendors -->
+        <!--Vendors-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -69,7 +69,7 @@
             <artifactId>jettison</artifactId>
         </dependency>
 
-        <!--Test -->
+        <!--Test-->
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
             <artifactId>test-toolkit</artifactId>
@@ -131,6 +131,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -432,7 +437,7 @@
                                 </baseResource>
                             </webAppConfig>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
-                            <webXml>${basedir}/target/web.xml</webXml>
+                            <webXml>${basedir}/target/console-server-${project.version}/WEB-INF/web.xml</webXml>
                             <jettyConfig>src/test/webapp/WEB-INF/jetty.xml</jettyConfig>
                             <jettyEnvXml>src/test/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
                             <webAppSourceDirectory>${webappDirectory}</webAppSourceDirectory>
