@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 02:01+0100\n"
-"PO-Revision-Date: 2015-02-24 03:23-0500\n"
+"POT-Creation-Date: 2015-02-25 04:02+0100\n"
+"PO-Revision-Date: 2015-02-25 06:06-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /BS-12120_bdm_move/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master-7.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
@@ -165,9 +165,6 @@ msgstr "%value% não é um valor válido para %className%"
 msgid "?"
 msgstr "?"
 
-msgid "A Business Data Model has a .%fileExtension% extension"
-msgstr "Um Modelo de Dados de Negócio tem a extensão  .%fileExtension%"
-
 msgid "A business archive has a .bar extension"
 msgstr "Um arquivo de negócios tem uma extensão .bar"
 
@@ -194,9 +191,6 @@ msgstr "Ações"
 
 msgid "Activate"
 msgstr "Ativar"
-
-msgid "Activate a BDM"
-msgstr "Ativar um MDN"
 
 msgid "Activate selected users"
 msgstr "Ativar usuários selecionados"
@@ -345,12 +339,6 @@ msgstr "Todos os grupos"
 msgid "All pages"
 msgstr "Todas as páginas"
 
-msgid "All processes are automatically paused."
-msgstr "Todos os processos são automaticamente suspensos."
-
-msgid "An error has occurred when deploying Business Data Model."
-msgstr "Ocorreu um erro ao implantar o modelo de dados de negócio."
-
 msgid "An error occurred while creating a definition"
 msgstr "Ocorreu um erro ao criar uma definição"
 
@@ -419,9 +407,6 @@ msgstr "Tarefas disponíveis"
 
 msgid "Avatar"
 msgstr "Avatar"
-
-msgid "BPM Services are paused. You may need to resume them."
-msgstr "Os serviços bpm estão em pausa. Você precisa retomà-los."
 
 msgid "BPM services"
 msgstr "Serviços BPM"
@@ -555,9 +540,6 @@ msgstr "Clique aqui para escolher o arquivo. "
 msgid "Click here to go to Profile listing page"
 msgstr "Clique aqui para ir para a página de perfis"
 
-msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
-msgstr "Clique em instalar para concluir a implantação ou em cancelar para interromper a implantação."
-
 msgid "Click to export this page"
 msgstr "Clique para exportar esta página"
 
@@ -602,12 +584,6 @@ msgstr "Confirme a remoção"
 
 msgid "Confirm removing ?"
 msgstr "Confirmar a remoção?"
-
-msgid "Confirm services pause?"
-msgstr "Confirmar a suspensão do serviço?"
-
-msgid "Confirm services resumption?"
-msgstr "Confirmar o reinício dos serviços?"
 
 msgid "Confirm the new page"
 msgstr "Confirmar a nova página"
@@ -782,9 +758,6 @@ msgstr "Nome de exibição"
 
 msgid "Display tasks I have done"
 msgstr "Exibir tarefas nas quais eu atuei"
-
-msgid "Display tasks I'm ignoring"
-msgstr "Exibir tarefas que eu estou ignorando"
 
 msgid "Display the case form"
 msgstr "Exibir formulário da instância de processo"
@@ -972,12 +945,6 @@ msgstr "Error when deleting groups"
 msgid "Error when deleting users"
 msgstr "Erro ao excluir usuários"
 
-msgid "Error when pausing BPM services"
-msgstr "Erro ao suspender os serviços BPM"
-
-msgid "Error when resuming BPM services"
-msgstr "Erro ao relançar os serviços BPM"
-
 msgid "Error when searching users"
 msgstr "Erro ao pesquisar usuários"
 
@@ -1059,12 +1026,6 @@ msgstr "Obter mais informações sobre o caso especificado"
 msgid "Go back to previous view"
 msgstr "Voltar à vista anterior"
 
-msgid "Go to BPM Services"
-msgstr "Ir para serviços BPM"
-
-msgid "Go to Configuration > BPM Services."
-msgstr "Vá para a página Configuração > Serviços BPM."
-
 msgid "Go to page %pagenumber%"
 msgstr "Ir para a página %pagenumber%"
 
@@ -1085,18 +1046,6 @@ msgstr "Mapeamento de grupos"
 
 msgid "Groups: %nb_groups%"
 msgstr "Grupos: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Oculto"
-
-msgid "Hidden to me"
-msgstr "Ocultar"
-
-msgid "Hide"
-msgstr "Ocultar"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Ignorar esta tarefa e torná-la invisivel para mim. Outros usuários permitidos ainda vão vê-la"
 
 msgid "High"
 msgstr "Alta"
@@ -1137,9 +1086,6 @@ msgstr "Importar / Exportar"
 msgid "Import an existing organization"
 msgstr "Importar uma organização existente"
 
-msgid "Import and activate a new Business Data Model"
-msgstr "Importar e ativar um novo Modelo de Dados de Negócio"
-
 msgid "Import or export data"
 msgstr "Importar ou exportar dados"
 
@@ -1164,17 +1110,11 @@ msgstr "Instalar"
 msgid "Install a process"
 msgstr "Instalar um processo"
 
-msgid "Install the Business Data Model"
-msgstr "Instalar o Modelo de Dados de Negócio"
-
 msgid "Installed by"
 msgstr "Instalado por"
 
 msgid "Installed on"
 msgstr "Instalado em"
-
-msgid "Invalid Business Data Model content"
-msgstr "Conteúdo de modelo de dados de negócio inválido"
 
 msgid "Item not found"
 msgstr "Item não encontrado"
@@ -1271,9 +1211,6 @@ msgstr "dd/mm/yyyy hh:MM:ss"
 
 msgid "MMMM dd, yyyy"
 msgstr "dd/MM/yyyy"
-
-msgid "Make sure all your processes are compatible with the new Business Data Model."
-msgstr "Certifique-se de que todos os processos são compatíveis com o novo modelo de Dados de negócio."
 
 msgid "Manage Look and Feel"
 msgstr "Gerenciar aparência"
@@ -1443,12 +1380,6 @@ msgstr "Outubro"
 msgid "Ok"
 msgstr "Ok"
 
-msgid "Only one Business Data Model can be active at a time."
-msgstr "Apenas um Modelo de Dados de Negócio pode estar ativo."
-
-msgid "Only the technical user can log in to the Portal."
-msgstr "Somente o usuário técnico pode fazer login no Portal."
-
 msgid "Only the value attribute can be updated"
 msgstr "Apenas o valor do atributo pode ser atualizado"
 
@@ -1520,12 +1451,6 @@ msgstr "A senha deve conter pelo menos %number% letras maiúsculas"
 
 msgid "Passwords don't match"
 msgstr "As senhas não combinam"
-
-msgid "Pause"
-msgstr "Suspender"
-
-msgid "Paused"
-msgstr "Suspenso"
 
 msgid "Pending"
 msgstr "Pendente"
@@ -1647,15 +1572,6 @@ msgstr "Recursos"
 msgid "Resources not recognized:"
 msgstr "Recursos não reconhecidos:"
 
-msgid "Resume"
-msgstr "Relançar"
-
-msgid "Resume BPM Services"
-msgstr "Retomar Serviços BPM"
-
-msgid "Retrieve"
-msgstr "Recuperar"
-
 msgid "Role"
 msgstr "Função"
 
@@ -1670,9 +1586,6 @@ msgstr "Mapeamento de funções"
 
 msgid "Roles: %nb_roles%"
 msgstr "Funções: %nb_roles%"
-
-msgid "Running"
-msgstr "Executando"
 
 msgid "Sa"
 msgstr "Sab"
@@ -1776,12 +1689,6 @@ msgstr "Tarefa de serviço"
 msgid "Service task (performed automatically)"
 msgstr "Tarefa de serviço (executada automaticamente)"
 
-msgid "Services will be paused for maintenance.\n"
-msgstr "Os serviços serão suspensos para manutenção.\n"
-
-msgid "Services will resume. Users will be able to log in.\n"
-msgstr "Os serviços serão relançados. Os usuários poderão conectar-se.\n"
-
 msgid "Session expired. Please log in again."
 msgstr "Sessão expirada. Por favor, conecte-se novamente."
 
@@ -1872,12 +1779,6 @@ msgstr "Estatísticas"
 msgid "Status"
 msgstr "Status"
 
-msgid "Status: "
-msgstr "Estado: "
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Parar de ignorar esta tarefa para vê-la em tarefas disponíveis"
-
 msgid "Su"
 msgstr "Dom"
 
@@ -1928,18 +1829,6 @@ msgstr "Aviso de usuário técnico"
 
 msgid "Th"
 msgstr "Qui"
-
-msgid "The BPM Services must be paused"
-msgstr "Os serviços BPM devem ser suspensos"
-
-msgid "The BPM Services must be paused before importing a new Business Data Model."
-msgstr "Os serviços de BPM devem ser suspensos antes de importar um novo Modelo de Dados de Negócio."
-
-msgid "The Business Data Model was successfully installed."
-msgstr "O Modelo de Dados de Negócio foi instalado com sucesso."
-
-msgid "The Business Data Model will now be installed.\nPlease note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr "O Modelo de Dados de Negócio será instalado agora. \nSaiba que as tabelas do banco de dados de negócio existente serão modificadas definitivamente. Esta ação não pode ser revertida. É altamente recomendável fazer uma cópia de segurança do banco de dados antes de prosseguir."
 
 msgid "The Process cannot be enabled"
 msgstr "O processo não pode ser ativado"
@@ -2235,9 +2124,6 @@ msgstr "Não foi possível obter as definições de dados de processo, pois o pr
 msgid "Unable to log in. Please check your username and password."
 msgstr "Não foi possível logar. Por favor, verifique seu nome de usuário e senha."
 
-msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
-msgstr "Não é possível desinstalar o modelo de dados de negócio. Por favor, suspenda os serviços BPM primeiro . Vá para Configuração > Serviços BPM."
-
 msgid "Unassign"
 msgstr "Cancelar a atribuição"
 
@@ -2310,12 +2196,6 @@ msgstr "Usuários"
 msgid "Users mapping"
 msgstr "Mapeamento de usuários"
 
-msgid "Users who are currently logged in, including Administrator users, are automatically logged out."
-msgstr "Os usuários que estão atualmente conectados, incluindo administradores, são desconectados automaticamente."
-
-msgid "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
-msgstr "Os usuários que estiverem preenchendo formulários quando o serviço for suspenso perderão toda informação que não tenha sido submetida."
-
 msgid "Users with the app above can see this page."
 msgstr "Users with the app above can see this page."
 
@@ -2340,6 +2220,9 @@ msgstr "Aviso"
 msgid "Warning:"
 msgstr "Aviso:"
 
+msgid "Warning: you are logged as technical user. This user has limited rights, its purpose is to initialize the organisation."
+msgstr "Aviso: você está conectado como usuário técnico. Este utilizador tem direitos limitados, sua finalidade é inicializar a organização."
+
 msgid "We"
 msgstr "Qua"
 
@@ -2349,23 +2232,11 @@ msgstr "Bem-vindo ao"
 msgid "Welcome: "
 msgstr "Bem-vindo: "
 
-msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
-msgstr "Quando tiver terminado, os serviços de BPM deve ser retomados para permitir aos usuários fazer login novamente."
-
-msgid "When you resume the services, tell your users that they can log back in to the Portal."
-msgstr "Ao reativar o serviço, avise os usuários que eles podem conectar-se novamente ao Portal."
-
 msgid "Worked on"
 msgstr "Trabalhou em"
 
 msgid "Yes"
 msgstr "Sim"
-
-msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
-msgstr "Você está logado como usuário técnico. Este utilizador tem direitos limitados. Seu objetivo é a organização de inicializar e ativar um modelo de dados de negócios, se necessário."
-
-msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
-msgstr "É necessário suspender o serviço BPM para fazer atualizações que não podem ser feitas enquanto há usuários ativos. Quando o serviço é suspenso:"
 
 msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
 msgstr "Existe o risco de interromper um ou mais processos.\n\nDesativar o único usuário capaz de executar uma tarefa causará a interrupção do processo.\n\nAntes de continuar, talvez deseje ir para a página 'Mais' do processo e verificar o mapeamento de atores.\n\nTem certeza que deseja desativar este usuário agora ?"
