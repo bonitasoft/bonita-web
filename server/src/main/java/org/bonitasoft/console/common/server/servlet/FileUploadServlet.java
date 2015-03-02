@@ -47,7 +47,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     private String uploadDirectoryPath = null;
 
-    protected static final String RESPONSE_SEPARATOR = ":";
+    public static final String RESPONSE_SEPARATOR = "::";
 
     protected static final String SUPPORTED_EXTENSIONS_PARAM = "SupportedExtensions";
 

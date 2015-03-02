@@ -49,6 +49,7 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -130,7 +131,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             if (caseId != -1 && documentName != null) {
 
                 if (uploadPath != null && !uploadPath.isEmpty()) {
-                    documentValue = buildDocumentValueFromUploadPath(uploadPath, index);
+                    documentValue = buildDocumentValueFromUploadPath(uploadPath, index, item.getFileName());
                 } else if (urlPath != null && !urlPath.isEmpty()) {
                     documentValue = buildDocumentValueFromUrl(urlPath, index);
                 }
@@ -160,7 +161,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
                 if (attributes.containsKey(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
                     urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH);
-                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1);
+                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1, attributes.get(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME));
                 } else {
                     urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_URL);
                     documentValue = buildDocumentValueFromUrl(urlPath, -1);
@@ -179,9 +180,9 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
         }
     }
 
-    protected DocumentValue buildDocumentValueFromUploadPath(final String uploadPath, final int index)
+    protected DocumentValue buildDocumentValueFromUploadPath(final String uploadPath, final int index, String fileName)
             throws DocumentException, IOException {
-        String fileName = null;
+
         String mimeType = null;
         byte[] fileContent = null;
 
@@ -194,7 +195,9 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             }
             fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
             if (theSourceFile.isFile()) {
-                fileName = theSourceFile.getName();
+                if(StringUtil.isBlank(fileName)){
+                    fileName = theSourceFile.getName();
+                }
                 mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
             }
         }
