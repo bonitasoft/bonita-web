@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-25 04:02+0100\n"
-"PO-Revision-Date: 2015-02-25 05:56-0500\n"
+"POT-Creation-Date: 2015-02-27 10:16+0100\n"
+"PO-Revision-Date: 2015-03-02 03:31-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -165,6 +165,9 @@ msgstr "%value% is not a valid value for %className%"
 msgid "?"
 msgstr "?"
 
+msgid "A Business Data Model has a .%fileExtension% extension"
+msgstr "A Business Data Model has a .%fileExtension% extension"
+
 msgid "A business archive has a .bar extension"
 msgstr "A business archive has a .bar extension"
 
@@ -191,6 +194,9 @@ msgstr "Actions"
 
 msgid "Activate"
 msgstr "Activate"
+
+msgid "Activate a BDM"
+msgstr "Activate a BDM"
 
 msgid "Activate selected users"
 msgstr "Activate selected users"
@@ -339,6 +345,12 @@ msgstr "All groups"
 msgid "All pages"
 msgstr "All pages"
 
+msgid "All processes are automatically paused."
+msgstr "All processes are automatically paused."
+
+msgid "An error has occurred when deploying Business Data Model."
+msgstr "An error has occurred when deploying Business Data Model."
+
 msgid "An error occurred while creating a definition"
 msgstr "An error occurred while creating a definition"
 
@@ -407,6 +419,9 @@ msgstr "Available tasks"
 
 msgid "Avatar"
 msgstr "Avatar"
+
+msgid "BPM Services are paused. You may need to resume them."
+msgstr "BPM Services are paused. You may need to resume them."
 
 msgid "BPM services"
 msgstr "BPM services"
@@ -540,6 +555,9 @@ msgstr "Click here to choose your file. "
 msgid "Click here to go to Profile listing page"
 msgstr "Click here to go to Profile listing page"
 
+msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
+msgstr "Click on Install to complete the deployment or Cancel to stop the deployment."
+
 msgid "Click to export this page"
 msgstr "Click to export this page"
 
@@ -584,6 +602,12 @@ msgstr "Confirm removing"
 
 msgid "Confirm removing ?"
 msgstr "Confirm removing ?"
+
+msgid "Confirm services pause?"
+msgstr "Confirm services pause?"
+
+msgid "Confirm services resumption?"
+msgstr "Confirm services resumption?"
 
 msgid "Confirm the new page"
 msgstr "Confirm the new page"
@@ -945,6 +969,12 @@ msgstr "Error when deleting groups"
 msgid "Error when deleting users"
 msgstr "Error when deleting users"
 
+msgid "Error when pausing BPM services"
+msgstr "Error when pausing BPM services"
+
+msgid "Error when resuming BPM services"
+msgstr "Error when resuming BPM services"
+
 msgid "Error when searching users"
 msgstr "Error when searching users"
 
@@ -1026,6 +1056,12 @@ msgstr "Getting more information about the specified case"
 msgid "Go back to previous view"
 msgstr "Go back to previous view"
 
+msgid "Go to BPM Services"
+msgstr "Go to BPM Services"
+
+msgid "Go to Configuration > BPM Services."
+msgstr "Go to Configuration > BPM Services."
+
 msgid "Go to page %pagenumber%"
 msgstr "Go to page %pagenumber%"
 
@@ -1086,6 +1122,9 @@ msgstr "Import / Export"
 msgid "Import an existing organization"
 msgstr "Import an existing organization"
 
+msgid "Import and activate a new Business Data Model"
+msgstr "Import and activate a new Business Data Model"
+
 msgid "Import or export data"
 msgstr "Import or export data"
 
@@ -1110,11 +1149,17 @@ msgstr "Install"
 msgid "Install a process"
 msgstr "Install a process"
 
+msgid "Install the Business Data Model"
+msgstr "Install the Business Data Model"
+
 msgid "Installed by"
 msgstr "Installed by"
 
 msgid "Installed on"
 msgstr "Installed on"
+
+msgid "Invalid Business Data Model content"
+msgstr "Invalid Business Data Model content"
 
 msgid "Item not found"
 msgstr "Item not found"
@@ -1211,6 +1256,9 @@ msgstr "MM/dd/yyyy h:mm:ss a"
 
 msgid "MMMM dd, yyyy"
 msgstr "MMMM dd, yyyy"
+
+msgid "Make sure all your processes are compatible with the new Business Data Model."
+msgstr "Make sure all your processes are compatible with the new Business Data Model."
 
 msgid "Manage Look and Feel"
 msgstr "Manage Look and Feel"
@@ -1380,6 +1428,12 @@ msgstr "October"
 msgid "Ok"
 msgstr "Ok"
 
+msgid "Only one Business Data Model can be active at a time."
+msgstr "Only one Business Data Model can be active at a time."
+
+msgid "Only the technical user can log in to the Portal."
+msgstr "Only the technical user can log in to the Portal."
+
 msgid "Only the value attribute can be updated"
 msgstr "Only the value attribute can be updated"
 
@@ -1451,6 +1505,12 @@ msgstr "Password must contain at least %number% upper case characters"
 
 msgid "Passwords don't match"
 msgstr "Passwords don't match"
+
+msgid "Pause"
+msgstr "Pause"
+
+msgid "Paused"
+msgstr "Paused"
 
 msgid "Pending"
 msgstr "Pending"
@@ -1572,6 +1632,12 @@ msgstr "Resources"
 msgid "Resources not recognized:"
 msgstr "Resources not recognized:"
 
+msgid "Resume"
+msgstr "Resume"
+
+msgid "Resume BPM Services"
+msgstr "Resume BPM Services"
+
 msgid "Role"
 msgstr "Role"
 
@@ -1586,6 +1652,9 @@ msgstr "Roles mapping"
 
 msgid "Roles: %nb_roles%"
 msgstr "Roles: %nb_roles%"
+
+msgid "Running"
+msgstr "Running"
 
 msgid "Sa"
 msgstr "Sa"
@@ -1689,6 +1758,12 @@ msgstr "Service task"
 msgid "Service task (performed automatically)"
 msgstr "Service task (performed automatically)"
 
+msgid "Services will be paused for maintenance.\n"
+msgstr "Services will be paused for maintenance.\n"
+
+msgid "Services will resume. Users will be able to log in.\n"
+msgstr "Services will resume. Users will be able to log in.\n"
+
 msgid "Session expired. Please log in again."
 msgstr "Session expired. Please log in again."
 
@@ -1779,6 +1854,9 @@ msgstr "Statistics"
 msgid "Status"
 msgstr "Status"
 
+msgid "Status: "
+msgstr "Status: "
+
 msgid "Su"
 msgstr "Su"
 
@@ -1829,6 +1907,18 @@ msgstr "Technical user warning"
 
 msgid "Th"
 msgstr "Th"
+
+msgid "The BPM Services must be paused"
+msgstr "The BPM Services must be paused"
+
+msgid "The BPM Services must be paused before importing a new Business Data Model."
+msgstr "The BPM Services must be paused before importing a new Business Data Model."
+
+msgid "The Business Data Model was successfully installed."
+msgstr "The Business Data Model was successfully installed."
+
+msgid "The Business Data Model will now be installed.\nPlease note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
+msgstr "The Business Data Model will now be installed.\nPlease note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
 
 msgid "The Process cannot be enabled"
 msgstr "The Process cannot be enabled"
@@ -2124,6 +2214,9 @@ msgstr "Unable to get process data definitions, process %processId% not found"
 msgid "Unable to log in. Please check your username and password."
 msgstr "Unable to log in. Please check your username and password."
 
+msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
+msgstr "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
+
 msgid "Unassign"
 msgstr "Unassign"
 
@@ -2196,6 +2289,12 @@ msgstr "Users"
 msgid "Users mapping"
 msgstr "Users mapping"
 
+msgid "Users who are currently logged in, including Administrator users, are automatically logged out."
+msgstr "Users who are currently logged in, including Administrator users, are automatically logged out."
+
+msgid "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
+msgstr "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
+
 msgid "Users with the app above can see this page."
 msgstr "Users with the app above can see this page."
 
@@ -2220,9 +2319,6 @@ msgstr "Warning"
 msgid "Warning:"
 msgstr "Warning:"
 
-msgid "Warning: you are logged as technical user. This user has limited rights, its purpose is to initialize the organisation."
-msgstr "Warning: you are logged as technical user. This user has limited rights, its purpose is to initialize the organisation."
-
 msgid "We"
 msgstr "We"
 
@@ -2232,11 +2328,23 @@ msgstr "Welcome to"
 msgid "Welcome: "
 msgstr "Welcome: "
 
+msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
+msgstr "When you are done, the BPM Services must be resumed to allow users to log in again."
+
+msgid "When you resume the services, tell your users that they can log back in to the Portal."
+msgstr "When you resume the services, tell your users that they can log back in to the Portal."
+
 msgid "Worked on"
 msgstr "Worked on"
 
 msgid "Yes"
 msgstr "Yes"
+
+msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
+msgstr "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
+
+msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
+msgstr "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
 
 msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
 msgstr "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
