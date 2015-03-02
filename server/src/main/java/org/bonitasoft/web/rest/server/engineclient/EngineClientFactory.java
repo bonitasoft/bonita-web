@@ -72,4 +72,7 @@ public class EngineClientFactory {
         return new PageEngineClient(apiAccessor.getPageAPI());
     }
 
+    public TenantManagementEngineClient createTenantManagementEngineClient() {
+        return new TenantManagementEngineClient(apiAccessor.getTenantAdministrationAPI());
+    }
 }

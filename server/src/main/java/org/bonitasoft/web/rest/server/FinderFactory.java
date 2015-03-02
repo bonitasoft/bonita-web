@@ -13,10 +13,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -30,6 +35,11 @@ public class FinderFactory {
     protected static Map<Class<? extends ServerResource>, Finder> finders;
     static {
         finders = new HashMap<Class<? extends ServerResource>, Finder>();
+        finders.put(BusinessDataResource.class, new BusinessDataResourceFinder());
+        finders.put(BusinessDataReferenceResource.class, new BusinessDataReferenceResourceFinder());
+        finders.put(BusinessDataReferencesResource.class, new BusinessDataReferencesResourceFinder());
+        finders.put(BusinessDataQueryResource.class, new BusinessDataQueryResourceFinder());
+
         finders.put(TaskResource.class, new TaskResourceFinder());
     }
 
@@ -41,6 +51,41 @@ public class FinderFactory {
         return finder;
     }
 
+    public static class BusinessDataReferenceResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final BusinessDataAPI bdmAPI = getBdmAPI(request);
+            return new BusinessDataReferenceResource(bdmAPI);
+        }
+    }
+
+    public static class BusinessDataQueryResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            return new BusinessDataQueryResource(getCommandAPI(request));
+        }
+    }
+
+    public static class BusinessDataReferencesResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final BusinessDataAPI processAPI = getBdmAPI(request);
+            return new BusinessDataReferencesResource(processAPI);
+        }
+    }
+
+    public static class BusinessDataResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final CommandAPI commandAPI = getCommandAPI(request);
+            return new BusinessDataResource(commandAPI);
+        }
+    }
+
     public static class TaskResourceFinder extends Finder {
 
         @Override
@@ -50,7 +95,7 @@ public class FinderFactory {
         }
     }
 
-    protected static CommandAPI getCommandAPI(final Request request) {
+    private static CommandAPI getCommandAPI(final Request request) {
         final APISession apiSession = getAPISession(request);
         try {
             return TenantAPIAccessor.getCommandAPI(apiSession);
@@ -63,6 +108,15 @@ public class FinderFactory {
         final APISession apiSession = getAPISession(request);
         try {
             return TenantAPIAccessor.getProcessAPI(apiSession);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    private static BusinessDataAPI getBdmAPI(final Request request) {
+        final APISession apiSession = getAPISession(request);
+        try {
+            return TenantAPIAccessor.getBusinessDataAPI(apiSession);
         } catch (final Exception e) {
             throw new APIException(e);
         }

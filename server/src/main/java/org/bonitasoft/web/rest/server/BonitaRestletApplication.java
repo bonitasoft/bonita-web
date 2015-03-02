@@ -5,10 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -16,6 +18,10 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Level;
 
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
@@ -32,7 +38,9 @@ import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
 
 /**
+ *
  * @author Matthieu Chaffotte
+ *
  */
 public class BonitaRestletApplication extends Application {
 
@@ -72,6 +80,13 @@ public class BonitaRestletApplication extends Application {
         router.attach("/form/mapping", FormMappingResource.class);
         // PUT to update form mapping:
         router.attach("/form/mapping/{" + FormMappingResource.ID_PARAM_NAME + "}", FormMappingResource.class);
+
+        router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
+        router.attach("/bdm/businessData/{className}/{id}", factory.create(BusinessDataResource.class));
+        router.attach("/bdm/businessData/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));
+        router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
+        router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
+
         return router;
     }
 

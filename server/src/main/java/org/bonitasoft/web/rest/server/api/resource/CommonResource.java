@@ -207,7 +207,6 @@ public class CommonResource extends ServerResource {
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
         }
         getResponse().setEntity(new ErrorMessage(t).toEntity());
-
     }
 
     @Override
