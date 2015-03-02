@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 02:01+0100\n"
-"PO-Revision-Date: 2015-02-24 03:16-0500\n"
+"POT-Creation-Date: 2015-02-27 10:16+0100\n"
+"PO-Revision-Date: 2015-03-02 03:33-0500\n"
 "Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /BS-12120_bdm_move/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master-7.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Um dies zu tun, gehen Sie zu %entitymappingprofilelink%."
@@ -783,9 +783,6 @@ msgstr "Name"
 msgid "Display tasks I have done"
 msgstr "Aufgaben anzeigen, die ich ausgeführt habe"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Maskierte Aufgaben anzeigen"
-
 msgid "Display the case form"
 msgstr "Anzeigen des Fall-Formulars"
 
@@ -1085,18 +1082,6 @@ msgstr "Gruppen-Mapping"
 
 msgid "Groups: %nb_groups%"
 msgstr "Gruppen: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Ausgeblendet"
-
-msgid "Hidden to me"
-msgstr "Für mich ausgeblendet"
-
-msgid "Hide"
-msgstr "Ausblenden"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Diese Aufgabe ignorieren, damit sie nicht mehr angezeigt wird. Andere befugte Benutzer können sie noch sehen"
 
 msgid "High"
 msgstr "Hoch"
@@ -1653,9 +1638,6 @@ msgstr "Wiederaufnehmen"
 msgid "Resume BPM Services"
 msgstr "Wiederaufnahme von BPM-Dienstleistungen"
 
-msgid "Retrieve"
-msgstr "Abrufen"
-
 msgid "Role"
 msgstr "Rolle"
 
@@ -1874,9 +1856,6 @@ msgstr "Status"
 
 msgid "Status: "
 msgstr "Status: "
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Diese Aufgabe als verfügbare Aufgabe anzeigen"
 
 msgid "Su"
 msgstr "So"
