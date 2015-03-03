@@ -13,9 +13,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  **/
 
-
-
-
+import static org.assertj.core.api.Assertions.assertThat
+import static org.mockito.Mockito.*
 
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.IdentityAPI
@@ -24,6 +23,8 @@ import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ProcessInstance
+import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.SearchException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
 import org.junit.Before
@@ -31,10 +32,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
-
-import static org.assertj.core.api.Assertions.assertThat
-import static org.mockito.Mockito.doReturn
-import static org.mockito.Mockito.mock
 
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentPermissionRuleTest {
@@ -99,6 +96,18 @@ public class DocumentPermissionRuleTest {
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
     }
 
+    def havingResourceId(boolean isInvolvedIn, boolean isInvolvedAsManager) {
+        doReturn(currentUserId).when(apiSession).getUserId()
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn("77").when(apiCallContext).getResourceId()
+        doReturn(["processInstanceId":"77"]).when(apiCallContext).getFilters()
+        def instance = mock(ProcessInstance.class)
+        doReturn(instance).when(processAPI).getProcessInstance(77L);
+        doReturn(2048L).when(instance).getProcessDefinitionId()
+        doReturn(false).when(processAPI).isUserProcessSupervisor(2048L, currentUserId)
+        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 77L);
+        doReturn(isInvolvedAsManager).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 77L);
+    }
 
     @Test
     public void should_check_verify_filters_on_GET_with_user_involved() {
@@ -110,6 +119,46 @@ public class DocumentPermissionRuleTest {
         assertThat(isAuthorized).isTrue();
     }
 
+    @Test
+    public void should_allow_user_involved_for_himself_on_GET() {
+        //given
+        havingResourceId(true, false)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_allow_user_involved_as_manager_on_GET() {
+        //given
+        havingResourceId(false, true)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_not_allow_user_not_involved_and_not_supervisor() {
+        //given
+        havingResourceId(false, false)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isFalse();
+    }
+
+    @Test
+    public void should_allow_user_when_isManager_throws_exception() {
+        //given
+        havingResourceId(false, false)
+        doThrow(new BonitaException("cause")).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 77L);
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
 
     @Test
     public void should_check_verify_filters_on_GET_no_filter() {
@@ -120,7 +169,6 @@ public class DocumentPermissionRuleTest {
         //then
         assertThat(isAuthorized).isFalse();
     }
-
 
     @Test
     public void should_check_verify_can_start_on_post_is_true() {
@@ -175,6 +223,4 @@ public class DocumentPermissionRuleTest {
         assertThat(isAuthorized).isTrue();
 
     }
-
-
 }

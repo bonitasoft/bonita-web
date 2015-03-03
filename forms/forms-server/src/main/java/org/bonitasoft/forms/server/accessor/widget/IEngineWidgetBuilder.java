@@ -50,7 +50,7 @@ public interface IEngineWidgetBuilder {
             boolean includeInitialValue);
 
     /**
-     * @param attachment
+     * @param attachments
      *            dataFieldDefinitions the list of {@link DocumentDefinition}
      * @param widgetIdPrefix
      *            a prefix for the id of the widget

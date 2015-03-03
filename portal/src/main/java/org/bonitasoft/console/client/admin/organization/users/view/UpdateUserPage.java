@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,8 +19,6 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.gwt.core.client.GWT;
 
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
@@ -50,6 +46,8 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Tab;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text;
 
+import com.google.gwt.core.client.GWT;
+
 /**
  * @author Yongtao Guo
  * @author Colin PUY
@@ -60,7 +58,7 @@ public class UpdateUserPage extends Page {
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
-    private UpdateUserFormAction submitAction = new UpdateUserFormAction();
+    private final UpdateUserFormAction submitAction = new UpdateUserFormAction();
 
     static {
         PRIVILEGES.add(UserListingAdminPage.TOKEN);
@@ -74,7 +72,7 @@ public class UpdateUserPage extends Page {
         // used to define page in ConsoleFactoryClient
     }
 
-    public UpdateUserPage(APIID userId) {
+    public UpdateUserPage(final APIID userId) {
         addParameter(PARAMETER_USER_ID, userId.toString());
     }
 
@@ -92,7 +90,8 @@ public class UpdateUserPage extends Page {
         final ItemDefinition itemDef = UserDefinition.get();
 
         Form form = new Form()
-        		.addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_USERNAME), itemDef.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Username"), _("Enter the username for this user"), Text.INCREASED_MAX_LENGTH)
+                .addItemAttributeEntryWithMaxLength(new JsId(UserItem.ATTRIBUTE_USERNAME), itemDef.getAttribute(UserItem.ATTRIBUTE_USERNAME), _("Username"),
+                        _("Enter the username for this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_PASSWORD), _("Password"), _("Enter the password for this user"))
                 .addPasswordEntry(new JsId(UserItem.ATTRIBUTE_PASSWORD + "_confirm"), _("Confirm password"), _("Confirm the password for this user"))
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_ICON), _("Avatar"), _("Select an avatar for this user"),
@@ -118,29 +117,29 @@ public class UpdateUserPage extends Page {
         return form;
     }
 
-    private Form addPersonalBusinessCard(Form form) {
+    private Form addPersonalBusinessCard(final Form form) {
         final ItemDefinition persoContactItem = Definitions.get(PersonalContactDataDefinition.TOKEN);
         return form.openTab(_("Personal information"))
                 .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_ADDRESS),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_ADDRESS), _("Address"),
                         _("Enter the address of this user"), Text.INCREASED_MAX_LENGTH)
-                .addItemAttributeEntry(
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_CITY),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_CITY), _("City"),
-                        _("Enter the city of this user"))
-                .addItemAttributeEntry(
+                        _("Enter the city of this user"), Text.INCREASED_MAX_LENGTH)
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_COUNTRY),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_COUNTRY), _("Country"),
-                        _("Enter the country of this user"))
+                        _("Enter the country of this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntry(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_ZIPCODE),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_ZIPCODE), _("Zip code"),
                         _("Enter the zip code of this user"))
-                .addItemAttributeEntry(
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_STATE),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_STATE), _("State"),
-                        _("Enter the state of this user"))
+                        _("Enter the state of this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + PersonalContactDataItem.ATTRIBUTE_EMAIL),
                         persoContactItem.getAttribute(PersonalContactDataItem.ATTRIBUTE_EMAIL), _("Email"),
@@ -156,31 +155,31 @@ public class UpdateUserPage extends Page {
                 .closeTab();
     }
 
-    private Form addProfessionalBusinessCard(Form form) {
+    private Form addProfessionalBusinessCard(final Form form) {
         final ItemDefinition proContactItem = Definitions.get(ProfessionalContactDataDefinition.TOKEN);
-        JsId jsIdEmail = new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_EMAIL);
+        final JsId jsIdEmail = new JsId(UserItem.DEPLOY_PERSONNAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_EMAIL);
         form.getEntry(jsIdEmail);
-        Form businessForm = form.openTab(_("Business card"))
+        final Form businessForm = form.openTab(_("Business card"))
                 .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_ADDRESS),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_ADDRESS), _("Address"),
                         _("Enter the address of this user"), Text.INCREASED_MAX_LENGTH)
-                .addItemAttributeEntry(
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_CITY),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_CITY), _("City"),
-                        _("Enter the city of this user"))
-                .addItemAttributeEntry(
+                        _("Enter the city of this user"), Text.INCREASED_MAX_LENGTH)
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_COUNTRY),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_COUNTRY), _("Country"),
-                        _("Enter the country of this user"))
+                        _("Enter the country of this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntry(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_ZIPCODE),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_ZIPCODE), _("Zip code"),
                         _("Enter the zip code of this user"))
-                .addItemAttributeEntry(
+                .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_STATE),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_STATE), _("State"),
-                        _("Enter the state of this user"))
+                        _("Enter the state of this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntryWithMaxLength(
                         new JsId(UserItem.DEPLOY_PROFESSIONAL_DATA + "_" + ProfessionalContactDataItem.ATTRIBUTE_EMAIL),
                         proContactItem.getAttribute(ProfessionalContactDataItem.ATTRIBUTE_EMAIL), _("Email"),
@@ -200,11 +199,15 @@ public class UpdateUserPage extends Page {
 
     private Form addDetails(final Form form) {
         final ItemDefinition itemDef = UserDefinition.get();
-        return form.openTab(_("Details"))
-                .addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_FIRSTNAME), itemDef.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME), _("First name"), _("Enter the first name of this user"), Text.INCREASED_MAX_LENGTH)
-                .addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_LASTNAME), itemDef.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"), _("Enter the last name of this user"), Text.INCREASED_MAX_LENGTH)
+        return form
+                .openTab(_("Details"))
+                .addItemAttributeEntryWithMaxLength(new JsId(UserItem.ATTRIBUTE_FIRSTNAME), itemDef.getAttribute(UserItem.ATTRIBUTE_FIRSTNAME),
+                        _("First name"), _("Enter the first name of this user"), Text.INCREASED_MAX_LENGTH)
+                .addItemAttributeEntryWithMaxLength(new JsId(UserItem.ATTRIBUTE_LASTNAME), itemDef.getAttribute(UserItem.ATTRIBUTE_LASTNAME), _("Last name"),
+                        _("Enter the last name of this user"), Text.INCREASED_MAX_LENGTH)
                 .addItemAttributeEntry(itemDef.getAttribute(UserItem.ATTRIBUTE_TITLE), _("Title"), _("Enter the title of this user"))
-                .addItemAttributeEntryWithMaxLength( new JsId(UserItem.ATTRIBUTE_JOB_TITLE), itemDef.getAttribute(UserItem.ATTRIBUTE_JOB_TITLE), _("Job title"), _("Enter the job title of this user"),Text.INCREASED_MAX_LENGTH)
+                .addItemAttributeEntryWithMaxLength(new JsId(UserItem.ATTRIBUTE_JOB_TITLE), itemDef.getAttribute(UserItem.ATTRIBUTE_JOB_TITLE), _("Job title"),
+                        _("Enter the job title of this user"), Text.INCREASED_MAX_LENGTH)
 
                 .addAutoCompleteEntry(
                         new JsId(UserItem.ATTRIBUTE_MANAGER_ID),
@@ -222,13 +225,15 @@ public class UpdateUserPage extends Page {
 
         final Tab tab = new Tab(_("Other"));
         model.search(0, 0, new CustomUserInformationModel.Callback() {
+
             @Override
-            void onSuccess(List<CustomUserInfoItem> information, int page, int pageSize, int total) {
+            void onSuccess(final List<CustomUserInfoItem> information, final int page, final int pageSize, final int total) {
                 tab.setTabVisibility(total > 0);
             }
         });
         tab.append(new UiComponent(new CustomUserInformationView(model, true)));
         submitAction.onSubmit(new Action() {
+
             @Override
             public void execute() {
                 model.flushChanges();

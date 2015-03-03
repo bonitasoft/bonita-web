@@ -19,6 +19,7 @@ package org.bonitasoft.web.toolkit.client.ui.component.table;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Node;
+import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -74,6 +75,9 @@ public class TableCell extends ContainerStyled<Node> {
                 rootElement.addClassName("empty");
             }
             rootElement.setInnerText(this.text);
+            if (this.text.length() > Text.NO_TOOLTIP_LIMIT_LENGTH) {
+            	rootElement.setTitle(this.text);            	
+            }
         }
 
         rootElement.addClassName("td_" + this.columnName.toLowerCase());

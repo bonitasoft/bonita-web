@@ -14,10 +14,13 @@
  **/
 
 import com.fasterxml.jackson.databind.ObjectMapper
+
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.session.APISession
 
@@ -67,7 +70,7 @@ class DocumentPermissionRule implements PermissionRule {
         }
         try {
             def processAPI = apiAccessor.getProcessAPI()
-            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId)
+            return isInvolved(processAPI, currentUserId, processInstanceId)
         } catch (NotFoundException e) {
             return true
         }
@@ -82,12 +85,18 @@ class DocumentPermissionRule implements PermissionRule {
         }
         if (processInstanceIdAsString != null) {
             def processInstanceId = Long.valueOf(processInstanceIdAsString)
-            try {
-                return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
-            } catch (NotFoundException e) {
-                return true
-            }
+            return isInvolved(processAPI, currentUserId, processInstanceId) ||
+                    processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
         }
         return false;
+    }
+
+
+    private boolean isInvolved(ProcessAPI processAPI, long currentUserId, long processInstanceId) {
+        try {
+            return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isManagerOfUserInvolvedInProcessInstance(currentUserId, processInstanceId)
+        } catch (BonitaException e) {
+            return true
+        }
     }
 }

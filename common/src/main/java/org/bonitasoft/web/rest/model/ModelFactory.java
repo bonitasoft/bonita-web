@@ -30,7 +30,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedUserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.HiddenUserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.UserTaskDefinition;
@@ -142,8 +141,6 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new HumanTaskDefinition();
         } else if (UserTaskDefinition.TOKEN.equals(token)) {
             return new UserTaskDefinition();
-        } else if (HiddenUserTaskDefinition.TOKEN.equals(token)) {
-            return new HiddenUserTaskDefinition();
         } else if (ConnectorInstanceDefinition.TOKEN.equals(token)) {
             return new ConnectorInstanceDefinition();
         }

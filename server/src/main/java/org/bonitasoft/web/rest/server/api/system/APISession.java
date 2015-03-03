@@ -54,6 +54,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
             session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
+            session.setAttribute(SessionItem.ATTRIBUTE_COPYRIGHT, getCopyright());
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
         return session;
@@ -92,7 +93,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
         return JSonSerializer.serialize(rights);
     }
 
-    private ProfileEntryEngineClient createProfileEntryEngineClient(org.bonitasoft.engine.session.APISession session) {
+    private ProfileEntryEngineClient createProfileEntryEngineClient(final org.bonitasoft.engine.session.APISession session) {
         final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(session));
         return engineClientFactory.createProfileEntryEngineClient();
     }
@@ -103,11 +104,15 @@ public class APISession extends ConsoleAPI<SessionItem> {
      * @param tenantId
      *            the current user tenant id
      */
-    protected boolean isLogoutDisabled(long tenantId) {
+    protected boolean isLogoutDisabled(final long tenantId) {
         return loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
     }
 
     public String getVersion() {
-        return new BonitaVersion(new VersionFile()).toString();
+        return new BonitaVersion(new VersionFile()).getVersion();
+    }
+
+    public String getCopyright() {
+        return new BonitaVersion(new VersionFile()).getCopyright();
     }
 }

@@ -40,7 +40,6 @@ import org.bonitasoft.engine.session.APISession
  *     <li>bpm/userTask</li>
  *     <li>bpm/archivedHumanTask</li>
  *     <li>bpm/archivedUserTask</li>
- *     <li>bpm/hiddenUserTask</li>
  *     <li>bpm/activity</li>
  *     <li>bpm/archivedActivity</li>
  *     <li>bpm/task</li>
@@ -70,11 +69,6 @@ class TaskPermissionRule implements PermissionRule {
                 return isTaskAccessibleByUser(processAPI, apiCallContext, logger, currentUserId, userName)
             } else if (apiCallContext.isPOST()) {
                 return checkPostMethod(apiCallContext, currentUserId, processAPI, userName, logger)
-            } else if (apiCallContext.isDELETE()) {
-                if ("hiddenUserTask".equals(apiCallContext.getResourceName())) {
-                    def ids = apiCallContext.getCompoundResourceId()
-                    return currentUserId.equals(Long.valueOf(ids.get(0))) && isTaskAccessible(processAPI, ids.get(1), currentUserId, userName, logger)
-                }
             }
         } catch (NotFoundException e) {
             logger.debug("flow node not found: is allowed")
@@ -92,9 +86,9 @@ class TaskPermissionRule implements PermissionRule {
         } else if (filters.containsKey("parentTaskId")) {
             def long parentTaskId = Long.parseLong(filters.get("parentTaskId"))
             try {
-                return isTaskAccessible(processAPI, parentTaskId, currentUserId, userName, logger)
+                return isTaskAccessible(processAPI, filters.get("parentTaskId"), currentUserId, userName, logger)
             } catch (NotFoundException e) {
-                return isArchivedFlowNodeAccessible(processAPI, filters.get("parentTaskId"), currentUserId)
+                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId)
             }
         } else if (filters.containsKey("processId")) {
             def long processId = Long.valueOf(filters.get("processId"))
@@ -108,13 +102,7 @@ class TaskPermissionRule implements PermissionRule {
     }
 
     private boolean checkPostMethod(APICallContext apiCallContext, long currentUserId, ProcessAPI processAPI, String userName, Logger logger) {
-        if ("hiddenUserTask".equals(apiCallContext.getResourceName())) {
-            ObjectMapper mapper = new ObjectMapper();
-            def map = mapper.readValue(apiCallContext.getBody(), Map.class)
-            def userIdAsJSON = map.get("user_id")
-            def taskIdAsJSON = map.get("task_id")
-            return userIdAsJSON != null && taskIdAsJSON != null && String.valueOf(currentUserId).equals(userIdAsJSON.toString()) && isTaskAccessible(processAPI, taskIdAsJSON.toString(), currentUserId, userName, logger)
-        } else if ("manualTask".equals(apiCallContext.getResourceName())) {
+        if ("manualTask".equals(apiCallContext.getResourceName())) {
             ObjectMapper mapper = new ObjectMapper();
             def map = mapper.readValue(apiCallContext.getBody(), Map.class)
 
@@ -134,9 +122,7 @@ class TaskPermissionRule implements PermissionRule {
     }
 
     protected boolean isTaskAccessibleByUser(ProcessAPI processAPI, APICallContext apiCallContext, Logger logger, long currentUserId, String username) throws NotFoundException {
-        if ("hiddenUserTask".equals(apiCallContext.getResourceName())) {
-            return true
-        } else if (apiCallContext.getResourceName().startsWith("archived")) {
+        if (apiCallContext.getResourceName().startsWith("archived")) {
             return isArchivedFlowNodeAccessible(processAPI, Long.valueOf(apiCallContext.getResourceId()), currentUserId, username)
         } else {
             return isTaskAccessible(processAPI, apiCallContext.getResourceId(), currentUserId, username, logger)
