@@ -87,16 +87,16 @@ public class DisplayCaseFormPage extends Page {
     }
 
     private String getCaseOverviewUrl() {
-        final String processName = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_NAME));
-        final String decodedProcessName = URL.encodeQueryString(processName);
-        final String processVersion = URL.encodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_VERSION));
+        final String encodedProcessName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
+        final String processName = URL.decodeQueryString(encodedProcessName);
+        final String encodedProcessVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
         }
         final String locale = AbstractI18n.getDefaultLocale().toString();
 
-        this.setTitle(_("Display a case form of process %app_name%", new Arg("app_name", decodedProcessName)));
+        this.setTitle(_("Display a case form of process %app_name%", new Arg("app_name", processName)));
 
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append(GWT.getModuleBaseURL())
@@ -110,9 +110,9 @@ public class DisplayCaseFormPage extends Page {
         }
 
         frameURL.append("#form=")
-        .append(processName)
+                .append(encodedProcessName)
         .append(UUID_SEPERATOR)
-        .append(processVersion)
+                .append(encodedProcessVersion)
         .append("$recap&mode=form&instance=")
         .append(caseId).append("&recap=true");
         return frameURL.toString();
@@ -123,8 +123,8 @@ public class DisplayCaseFormPage extends Page {
             throw new RuntimeException(CaseItem.ATTRIBUTE_PROCESS_ID + " attribute need to be deployed");
         }
         final Map<String, String> processParams = new HashMap<String, String>();
-        processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getProcess().getName());
-        processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getProcess().getVersion());
+        processParams.put(ProcessItem.ATTRIBUTE_NAME, URL.encodeQueryString(item.getProcess().getName()));
+        processParams.put(ProcessItem.ATTRIBUTE_VERSION, URL.encodeQueryString(item.getProcess().getVersion()));
         processParams.put(CaseItem.ATTRIBUTE_ID, item.getId().toString());
         if (item instanceof ArchivedCaseItem) {
             processParams.put(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ((ArchivedCaseItem) item).getSourceObjectId().toString());
