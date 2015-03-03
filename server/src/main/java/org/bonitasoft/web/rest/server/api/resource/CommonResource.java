@@ -197,8 +197,11 @@ public class CommonResource extends ServerResource {
         // Don't need to log the wrapping exception, the cause itself is more interesting:
         super.doCatch(t);
 
-        getLogger().log(Level.SEVERE, "*** problem on " + getClass().getName() + " rest resource: " + t.getMessage());
-        getResponse().setStatus(getStatus(), "Cannot execute REST resource " + getClass().getName() + " rest resource: " + t.getMessage());
+        final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
+        if (getLogger().isLoggable(Level.INFO)) {
+            getLogger().log(Level.INFO, "*** " + message);
+        }
+        getResponse().setStatus(getStatus(), message);
 
         if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);

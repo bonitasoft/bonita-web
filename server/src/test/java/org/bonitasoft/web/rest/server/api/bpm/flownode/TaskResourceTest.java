@@ -120,6 +120,9 @@ public class TaskResourceTest extends RestletTest {
         final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        assertThat(response)
+                .hasJsonEntityEqualTo(
+                        "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
     }
 
     @Test
