@@ -8,8 +8,6 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.api.resource;
 
-import java.util.List;
-
 import org.restlet.ext.jackson.JacksonRepresentation;
 
 /**
@@ -21,7 +19,6 @@ public class ErrorMessage {
 
     private String exception; // might be 'type' with simple name of exception
     private String message;
-    private List<String> explanations;
 
     // DO NOT PUT stacktrace, this is not coherent with old API toolkit but as a client of REST API, I do not need stacktrace.
 
@@ -50,14 +47,6 @@ public class ErrorMessage {
 
     public void setMessage(final String message) {
         this.message = message;
-    }
-
-    public List<String> getExplanations() {
-        return explanations;
-    }
-
-    public void setExplanations(final List<String> explanations) {
-        this.explanations = explanations;
     }
 
     public JacksonRepresentation<ErrorMessage> toEntity() {
