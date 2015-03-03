@@ -21,12 +21,13 @@ import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.restlet.data.Header;
 import org.restlet.data.MediaType;
-import org.restlet.data.Range;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Put;
 import org.restlet.resource.ResourceException;
+import org.restlet.util.Series;
 
 /**
  * REST resource to operate on Form Mapping.
@@ -48,13 +49,9 @@ public class FormMappingResource extends CommonResource {
         try {
             final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(buildSearchOptions());
             final Representation entity = toRepresentation(searchResult.getResult(), MediaType.APPLICATION_JSON);
-            final Range range = new Range();
-            range.setIndex(getSearchPageNumber() * getSearchPageSize());
-            range.setSize(getSearchPageSize());
-            range.setUnitName("");
-            entity.setRange(range);
-            //Doesn't work. We need a specific method for the count
-            //entity.setSize(searchResult.getCount());
+            final Series<Header> headers = getResponse().getHeaders();
+            headers.add(new Header("Content-range", getSearchPageNumber() * getSearchPageSize() + "-" + (getSearchPageSize() - 1) + "/"
+                    + searchResult.getCount()));
             return entity;
         } catch (final Exception e) {
             throw new APIException(e);
