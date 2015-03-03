@@ -314,6 +314,7 @@ public class ViewController {
     public void historyBack() {
         if (hasOpenedPopup()) {
             closePopup();
+            triggerRefresh();
         } else {
             back();
         }
