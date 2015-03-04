@@ -25,6 +25,7 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
+import org.bonitasoft.console.client.common.view.NewPerformTaskPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
@@ -70,6 +71,11 @@ public class HumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<HumanTask
         if (!isTaskAssignedToOtherUser(item) && item.isUserTask()) {
             addToolbarLink(factory.createPerformTaskButton(createPerformAction(item)));
         }
+        if (isTaskAssignedToCurrentUser(item) && item.isUserTask()) {
+            addToolbarLink(factory.createPerformTaskButtonWithMapping(createNewPerformAction(item)));
+        } else {
+            addToolbarText("Please assign this task to you in order to use the new form feature");
+        }
         // MORE
         addToolbarLink(factory.createMoreDetailsButton(createMoreDetailsAction(item)));
     }
@@ -80,6 +86,10 @@ public class HumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<HumanTask
 
     private Action createPerformAction(final HumanTaskItem item) {
         return new CheckValidSessionBeforeAction(new ActionShowView(new PerformTaskPage(item.getId())));
+    }
+
+    private Action createNewPerformAction(final HumanTaskItem item) {
+        return new CheckValidSessionBeforeAction(new ActionShowView(new NewPerformTaskPage(item.getId())));
     }
 
     @Override
