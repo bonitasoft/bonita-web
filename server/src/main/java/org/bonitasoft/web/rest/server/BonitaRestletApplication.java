@@ -66,13 +66,13 @@ public class BonitaRestletApplication extends Application {
         final Router router = new Router(context);
         // GET an activityData:
         router.attach("/bpm/activityVariable/{" + ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID + "}/{" + ActivityVariableResource.ACTIVITYDATA_DATA_NAME
-                + "}", ActivityVariableResource.class);
+                + "}", factory.create(ActivityVariableResource.class));
         // GET to search timer event triggers:
-        router.attach("/bpm/timerEventTrigger", TimerEventTriggerResource.class);
+        router.attach("/bpm/timerEventTrigger", factory.create(TimerEventTriggerResource.class));
         // PUT to update timer event trigger date:
-        router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", TimerEventTriggerResource.class);
+        router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", factory.create(TimerEventTriggerResource.class));
         // GET to case info (with task state counter)
-        router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", CaseInfoResource.class);
+        router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
 
         router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskResource.class));
         router.attach("/bpm/tasks/{taskId}/execute", factory.create(TaskResource.class));

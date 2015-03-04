@@ -21,12 +21,24 @@ import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstanceNotFoundExcep
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
 
-    // For Integration tests:
-    TimerEventTriggerResource restResource = spy(new TimerEventTriggerResource());
+    @Mock
+    ProcessAPI processAPI;
+
+    private TimerEventTriggerResource restResource;
+
+    @Before
+    public void initializeMocks() {
+        restResource = spy(new TimerEventTriggerResource(processAPI));
+    }
 
     @Override
     public void consoleTestSetUp() throws Exception {
@@ -60,7 +72,6 @@ public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
         final long timerEventTriggerId = 1L;
         doReturn("" + timerEventTriggerId).when(restResource).getAttribute(TimerEventTriggerResource.ID_PARAM_NAME);
         final ProcessAPI processAPI = mock(ProcessAPI.class);
-        doReturn(processAPI).when(restResource).getEngineProcessAPI();
         final Date date = new Date();
         doReturn(date).when(processAPI).updateExecutionDateOfTimerEventTriggerInstance(eq(timerEventTriggerId), any(Date.class));
         final TimerEventTrigger trigger = new TimerEventTrigger(System.currentTimeMillis());

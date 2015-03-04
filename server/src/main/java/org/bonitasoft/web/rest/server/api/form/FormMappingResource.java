@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.web.rest.server.api.form;
 
+import java.util.List;
+
 import org.bonitasoft.console.common.server.form.FormReference;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
@@ -21,13 +23,10 @@ import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.restlet.data.Header;
-import org.restlet.data.MediaType;
 import org.restlet.data.Status;
-import org.restlet.representation.Representation;
+import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 import org.restlet.resource.ResourceException;
-import org.restlet.util.Series;
 
 /**
  * REST resource to operate on Form Mapping.
@@ -44,15 +43,12 @@ public class FormMappingResource extends CommonResource {
 
     public static final String ID_PARAM_NAME = "id";
 
-    @Override
-    protected Representation get() throws ResourceException {
+    @Get("json")
+    public List<FormMapping> searchFormMapping() throws ResourceException {
         try {
             final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(buildSearchOptions());
-            final Representation entity = toRepresentation(searchResult.getResult(), MediaType.APPLICATION_JSON);
-            final Series<Header> headers = getResponse().getHeaders();
-            headers.add(new Header("Content-range", getSearchPageNumber() * getSearchPageSize() + "-" + (getSearchPageSize() - 1) + "/"
-                    + searchResult.getCount()));
-            return entity;
+            setContentRange(searchResult);
+            return searchResult.getResult();
         } catch (final Exception e) {
             throw new APIException(e);
         }

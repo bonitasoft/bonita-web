@@ -1,8 +1,11 @@
 package org.bonitasoft.web.rest.server.api.bpm.cases;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +30,7 @@ public class CaseInfoResourceTest {
 
     @Before
     public void initializeMocks() {
-        caseInfoResource = spy(new CaseInfoResource());
-        doReturn(processAPI).when(caseInfoResource).getEngineProcessAPI();
+        caseInfoResource = spy(new CaseInfoResource(processAPI));
     }
 
     @Test(expected = APIException.class)
