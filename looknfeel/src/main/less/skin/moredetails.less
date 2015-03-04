@@ -3,6 +3,8 @@
 		display: block;
 	}
 	>.body{
+		
+		word-break: break-word;
 		min-width: @moreDetails-min-width;
 		padding: @moreDetails-body-padding !important; 
 		.boxSizing();
@@ -95,6 +97,11 @@
 						&:hover{
 							text-decoration: @moreDetails-section-linkHover-textDecoration;
 						}
+					}
+				}
+				> .definitions {
+					.definition {
+						word-wrap : break-word;
 					}
 				}
 			}

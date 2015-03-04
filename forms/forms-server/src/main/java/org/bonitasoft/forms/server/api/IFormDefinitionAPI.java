@@ -185,13 +185,12 @@ public interface IFormDefinitionAPI {
      *
      * @param formID
      *            the form ID
-     * @param pageId
+     * @param pageID
      *            the page ID
      * @param context
      *            Map containing the URL parameters
      * @return a {@link FormPage} object containing the elements required to build the level2 (page form)
      * @throws InvalidFormDefinitionException
-     * @throws IOException
      * @throws FormNotFoundException
      * @throws ApplicationFormDefinitionNotFoundException
      * @throws FormServiceProviderNotFoundException
@@ -255,11 +254,11 @@ public interface IFormDefinitionAPI {
      *
      * @param transientData
      *            the List of transient data
-     * @param locale
+     * @param userLocale
      *            the user's locale
      * @param context
      *            Map containing the URL parameters
-     * @return a Map<String, Object> containing the context of transient data
+     * @return a Map&lt;String, Object&gt; containing the context of transient data
      * @throws FormNotFoundException
      * @throws FormServiceProviderNotFoundException
      * @throws ClassNotFoundException
@@ -298,9 +297,9 @@ public interface IFormDefinitionAPI {
     /**
      * Cache the form whose ID is specified
      * 
-     * @param formID
+     * @param formId
+     *      if of the form
      * @param context
-     * @return
      * @throws InvalidFormDefinitionException
      * @throws FormNotFoundException
      * @throws ApplicationFormDefinitionNotFoundException
@@ -317,7 +316,7 @@ public interface IFormDefinitionAPI {
      * Retrieve the list of forms of the application
      *
      * @param context
-     * @return
+     * @return the list of forms
      * @throws InvalidFormDefinitionException
      * @throws FormServiceProviderNotFoundException
      * @throws SessionTimeoutException

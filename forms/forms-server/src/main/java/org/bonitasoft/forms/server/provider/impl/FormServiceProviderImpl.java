@@ -32,9 +32,6 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
-import org.bonitasoft.engine.api.CommandAPI;
-import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
@@ -209,8 +206,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param context
      *        Map of context
      * @return the ProcessDefinitionID
-     * @throws FormNotFoundException
-     * @throws SessionTimeoutException
      */
     protected long getProcessDefinitionID(final Map<String, Object> context) throws InvalidSessionException {
         final FormContextUtil ctxu = createFormContextUtil(context);
@@ -484,9 +479,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             ForbiddenFormAccessException, SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, FormNotFoundException,
             FormAlreadySubmittedException, AbortedFormException {
         try {
-            // TODO verify if the user is admin. In this case, he can access the form
-            // TODO verify if a user is process supervisor of the process. In this case, he can access the form
-            if (!isInvolvedInHumanTask(session, userId, activityInstanceID)) {
+            if (!workflowAPI.isInvolvedInHumanTask(session, userId, activityInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the form of activity instance " + activityInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
                     getLogger().log(Level.INFO, message, context);
@@ -537,11 +530,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formId
      *        the form Id
      * @param userId
-     *        the userId to performe a "Start For" or a "Do for"
+     *        the userId to perform a "Start For" or a "Do for"
      * @throws InvalidSessionException
-     * @throws BonitaHomeNotSetException
-     * @throws ServerAPIException
-     * @throws UnknownAPITypeException
      * @throws FormNotFoundException
      * @throws ForbiddenFormAccessException
      * @throws SessionTimeoutException
@@ -598,23 +588,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *        the API session
      * @param user
      *        the user
-     * @param workflowAPI
-     *        the workflow API
      * @param processDefinitionID
      *        the process definition ID
      * @param userId
      *        userId used for "Start for" and "Do for"
      * @throws InvalidSessionException
      * @throws ForbiddenFormAccessException
-     * @throws FormNotFoundException
      * @throws BPMEngineException
      */
     protected void canUserInstantiateProcess(final APISession session, final User user, final long processDefinitionID, final long userId,
             final Map<String, Object> context)
             throws InvalidSessionException, BPMEngineException, ForbiddenFormAccessException {
-        // TODO verify if the user is admin. In this case, he can access the form
-        // TODO verify if a user is process supervisor of the process. In this case, he can access the form
-        if (!canStartProcessDefinition(session, userId, processDefinitionID)) {
+        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        if (!workflowAPI.canStartProcessDefinition(session, userId, processDefinitionID)) {
             final String message = "An attempt was made by user " + user.getUsername() + " to access the instantiation form of process "
                     + processDefinitionID;
             if (getLogger().isLoggable(Level.INFO)) {
@@ -773,10 +759,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @throws BPMEngineException
      * @throws FormNotFoundException
      * @throws SessionTimeoutException
-     * @throws ActivityInstanceNotFoundException
-     * @throws ProcessDefinitionNotFoundException
-     * @throws ProcessInstanceNotFoundException
-     * @throws ArchivedProcessInstanceNotFoundException
      */
     private void resolveAndSetProcessDefinitionID(final APISession session, final IFormWorkflowAPI workflowAPI, final Map<String, Object> urlContext,
             final Map<String, Object> context)
@@ -831,7 +813,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * {@inheritDoc}
      *
      * @throws FormInitializationException
-     * @throws BPMEngineEvaluationExpressionException
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -1052,8 +1033,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formFieldValues
      * @param throwException
      * @return
-     * @throws FileTooBigException
-     * @throws IOException
      */
     protected Map<String, FormFieldValue> convertFormFieldValues(final Map<String, FormFieldValue> formFieldValues, final boolean throwException,
             final Map<String, Object> context) {
@@ -1071,7 +1050,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * @param formFieldValue
      * @param throwException
      * @return
-     * @throws Exception
      */
     protected FormFieldValue convertValueType(final FormFieldValue formFieldValue, final boolean throwException,
             final Map<String, Object> context) {
@@ -1670,7 +1648,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      *        the context of URL parameters
      * @return an instance of {@link IApplicationFormDefAccessor}
      * @throws ApplicationFormDefinitionNotFoundException
-     * @throws InvalidFormDefinitionException
      * @throws InvalidSessionException
      */
     protected IApplicationFormDefAccessor getApplicationFormDefinition(final String formId, final Document formDefinitionDocument,
@@ -2129,51 +2106,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
     protected ClassLoader getProcessClassloader(final long processDefinitionID, final APISession session) {
         return new FormsResourcesUtils().getProcessClassLoader(session, processDefinitionID);
-    }
-
-    private Boolean canStartProcessDefinition(final APISession session, final long userId, final long processDefinitionId) throws BPMEngineException {
-        try {
-            final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
-            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-            if (userId != -1) {
-                parameters.put("USER_ID_KEY", userId);
-            } else {
-                parameters.put("USER_ID_KEY", session.getUserId());
-            }
-            parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionId);
-            return (Boolean) commandAPI.execute("canStartProcessDefinition", parameters);
-
-        } catch (final Exception e) {
-            final String message = "The engine was not able to know if the user can start the process. Error while executing command:";
-            logSevereMessage(e, message);
-            throw new BPMEngineException(message);
-        }
-    }
-
-    private Boolean isInvolvedInHumanTask(final APISession session, final long userId, final long humanTaskInstanceId) throws BPMEngineException {
-        try {
-            final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(session);
-            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-            parameters.put("USER_ID_KEY", userId);
-            parameters.put("HUMAN_TASK_INSTANCE_ID_KEY", humanTaskInstanceId);
-            return (Boolean) commandAPI.execute("isInvolvedInHumanTask", parameters);
-
-        } catch (final Exception e) {
-            final String message = "The engine was not able to know if the user is involved in the human task instance. Error while executing command:";
-            logSevereMessage(e, message);
-            throw new BPMEngineException(message);
-        }
-    }
-
-    private boolean isInvolvedInProcessInstance(final APISession session, final long userId, final long processInstanceId) throws BPMEngineException {
-        try {
-            final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(session);
-            return processAPI.isInvolvedInProcessInstance(userId, processInstanceId);
-        } catch (final Exception e) {
-            final String message = "The engine was not able to know if the user is involved in the process instance. Error while executing command:";
-            logSevereMessage(e, message);
-            throw new BPMEngineException(message);
-        }
     }
 
     /**

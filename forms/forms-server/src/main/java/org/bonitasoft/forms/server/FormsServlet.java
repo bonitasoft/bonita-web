@@ -683,7 +683,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * @param formID
      *            the form ID
      * @param context
-     * @return a Map<String, Object> containing the context of transient data
+     * @return a Map&lt;String, Object&gt; containing the context of transient data
      */
     protected Map<String, Serializable> getFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID,
             final Map<String, Object> context) {
@@ -700,7 +700,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * @param formID
      *            the form ID
      * @param context
-     * @return a Map<String, Object> containing the context of transient data
      */
     protected void removeFormTransientDataContext(final FormServiceProvider formServiceProvider, final String formID, final Map<String, Object> context) {
 

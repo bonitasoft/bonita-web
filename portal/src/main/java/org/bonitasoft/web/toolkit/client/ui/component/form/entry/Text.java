@@ -30,6 +30,8 @@ public class Text extends Input {
     
     public static final long INCREASED_MAX_LENGTH = 255L;
 
+	public static final int NO_TOOLTIP_LIMIT_LENGTH = 25;
+
     private String placeholder = null;
 
     private long maxLength = DEFAULT_MAX_LENGTH;

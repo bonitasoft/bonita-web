@@ -26,6 +26,8 @@ import javax.activation.MimetypesFileTypeMap;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentException;
@@ -46,6 +48,8 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -64,15 +68,19 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
     final FileTypeMap mimetypesFileTypeMap;
 
+    final TenantFolder tenantFolder;
+
     protected SearchOptionsCreator searchOptionsCreator;
 
     /**
      * Default constructor.
      */
-    public CaseDocumentDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final ProcessAPI processAPI) {
+    public CaseDocumentDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final ProcessAPI processAPI,
+            final TenantFolder tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.processAPI = processAPI;
+        this.tenantFolder = tenantFolder;
         maxSizeForTenant = PropertiesFactory.getConsoleProperties(engineSession.getTenantId()).getMaxSize();
         mimetypesFileTypeMap = new MimetypesFileTypeMap();
     }
@@ -123,7 +131,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             if (caseId != -1 && documentName != null) {
 
                 if (uploadPath != null && !uploadPath.isEmpty()) {
-                    documentValue = buildDocumentValueFromUploadPath(uploadPath, index);
+                    documentValue = buildDocumentValueFromUploadPath(uploadPath, index, item.getFileName());
                 } else if (urlPath != null && !urlPath.isEmpty()) {
                     documentValue = buildDocumentValueFromUrl(urlPath, index);
                 }
@@ -134,6 +142,8 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             } else {
                 throw new APIException("Error while attaching a new document. Request with bad param value.");
             }
+        } catch (final UnauthorizedFolderException e) {
+            throw new APIForbiddenException(e.getMessage());
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -151,7 +161,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
                 if (attributes.containsKey(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
                     urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH);
-                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1);
+                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1, attributes.get(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME));
                 } else {
                     urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_URL);
                     documentValue = buildDocumentValueFromUrl(urlPath, -1);
@@ -163,17 +173,21 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             } else {
                 throw new APIException("Error while attaching a new document. Request with bad param value.");
             }
+        } catch (final UnauthorizedFolderException e) {
+            throw new APIForbiddenException(e.getMessage());
         } catch (final Exception e) {
             throw new APIException(e);
         }
     }
 
-    protected DocumentValue buildDocumentValueFromUploadPath(final String uploadPath, final int index) throws DocumentException, IOException {
-        String fileName = null;
+    protected DocumentValue buildDocumentValueFromUploadPath(final String uploadPath, final int index, String fileName)
+            throws DocumentException, IOException {
+
         String mimeType = null;
         byte[] fileContent = null;
 
-        final File theSourceFile = new File(uploadPath);
+        final File theSourceFile = tenantFolder.getTempFile(uploadPath, getEngineSession().getTenantId());
+
         if (theSourceFile.exists()) {
             if (theSourceFile.length() > maxSizeForTenant * 1048576) {
                 final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
@@ -181,7 +195,9 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             }
             fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
             if (theSourceFile.isFile()) {
-                fileName = theSourceFile.getName();
+                if(StringUtil.isBlank(fileName)){
+                    fileName = theSourceFile.getName();
+                }
                 mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
             }
         }
