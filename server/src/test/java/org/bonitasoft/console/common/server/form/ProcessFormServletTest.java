@@ -9,6 +9,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -96,6 +99,8 @@ public class ProcessFormServletTest {
         formServlet.doGet(hsRequest, hsResponse);
 
         verify(formServlet, times(1)).displayExternalPage(hsRequest, hsResponse, 1L, -1L, -1L, "/externalPage");
+        verify(hsResponse, times(1)).encodeRedirectURL("/externalPage?process=1");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
     @Test
@@ -112,16 +117,42 @@ public class ProcessFormServletTest {
     }
 
     @Test
-    public void should_display_lecgacyForm() throws Exception {
+    public void should_display_legacyForm_when_no_mapping() throws Exception {
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(new FormReference(null, false));
+        doThrow(FormMappingNotFoundException.class).when(processFormService).getForm(any(APISession.class), anyLong(), anyString(), anyBoolean());
+        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
+        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null);
+        verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
+        verify(hsResponse, times(1)).encodeRedirectURL(
+                "/bonita/portal/homepage?ui=form&locale=en#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void should_display_legacyForm_when_mapping_on_legacy() throws Exception {
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
+        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
+                new FormReference(ProcessFormService.LEGACY_FORMS_NAME, false));
+        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
+        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
+        verify(hsResponse, times(1)).encodeRedirectURL(
+                "/bonita/portal/homepage?ui=form&locale=en#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
     @Test
@@ -149,20 +180,6 @@ public class ProcessFormServletTest {
         formServlet.doGet(hsRequest, hsResponse);
 
         verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, 42L, -1L, form, "path/of/resource.css");
-    }
-
-    @Test
-    public void should_display_customPage_resource_for_task_from_instance() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName/path/of/resource.css");
-        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(1L);
-        when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
-        final FormReference form = new FormReference("custompage_form", false);
-        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
-
-        formServlet.doGet(hsRequest, hsResponse);
-
-        verify(formServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, 42L, 1L, form, "path/of/resource.css");
     }
 
     @Test
@@ -217,17 +234,16 @@ public class ProcessFormServletTest {
     }
 
     @Test
-    public void should_display_customPage_for_task_from_instance() throws Exception {
+    public void should_redirect_for_task_from_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getServletPath()).thenReturn("/portal/form");
         when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(1L);
-        when(processFormService.getTaskName(apiSession, 1L)).thenReturn("taskName");
-        when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
-        when(processFormService.getForm(apiSession, 1L, "taskName", true)).thenReturn(new FormReference("custompage_form", false));
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
     @Test
@@ -263,19 +279,17 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_server_error_when_issue_with_customPage() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
-        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(1L);
-        when(processFormService.getTaskName(apiSession, 1L)).thenReturn("taskName");
-        when(processFormService.isAllowedToSeeTask(apiSession, 1L, 1L, 1L)).thenReturn(true);
-        when(processFormService.getForm(apiSession, 1L, "taskName", true)).thenReturn(new FormReference("custompage_form", false));
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
+        when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
+        when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L)).thenReturn(true);
+        when(processFormService.getForm(apiSession, 1L, "taskName", false)).thenReturn(new FormReference("custompage_form", false));
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
         doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(formServlet, times(1)).handleException(hsResponse, 1L, "taskName", true, instantiationException);
-
+        verify(formServlet, times(1)).handleException(hsResponse, 1L, "taskName", false, instantiationException);
         verify(hsResponse, times(1)).sendError(500, "instatiation exception");
     }
 }
