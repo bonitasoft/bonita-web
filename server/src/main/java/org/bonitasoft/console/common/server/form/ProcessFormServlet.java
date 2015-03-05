@@ -17,13 +17,10 @@ package org.bonitasoft.console.common.server.form;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +31,7 @@ import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 import org.bonitasoft.console.common.server.login.localization.UrlValue;
 import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -72,9 +70,11 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String ASSIGN_TASK_PARAM = "assignTask";
 
-    protected PageRenderer pageRenderer = new PageRenderer();
-
     protected ProcessFormService processFormService = new ProcessFormService();
+
+    private ResourceRenderer resourceRenderer= new ResourceRenderer();
+
+    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -83,7 +83,7 @@ public class ProcessFormServlet extends HttpServlet {
         long processInstanceId = -1L;
         long taskInstanceId = -1L;
         String taskName = null;
-        final List<String> pathSegments = getPathSegments(request);
+        final List<String> pathSegments = resourceRenderer.getPathSegments(request);
         final String user = request.getParameter(USER_ID_PARAM);
         final long userId = convertToLong(USER_ID_PARAM, user);
         final HttpSession session = request.getSession();
@@ -138,18 +138,7 @@ public class ProcessFormServlet extends HttpServlet {
         }
     }
 
-    protected List<String> getPathSegments(final HttpServletRequest request) throws UnsupportedEncodingException {
-        final List<String> segments = new ArrayList<String>();;
-        final String pathInfo = request.getPathInfo();
-        if (pathInfo != null) {
-            for (final String segment : pathInfo.split("/")) {
-                if (!segment.isEmpty()) {
-                    segments.add(URLDecoder.decode(segment, "UTF-8"));
-                }
-            }
-        }
-        return segments;
-    }
+
 
     protected long getProcessInstanceId(final List<String> pathSegments) {
         long processInstanceId = -1L;
