@@ -922,7 +922,7 @@ public class FormFieldValuesUtil {
             final Date processDeployementDate, final FormWidget formWidget) {
         if (isExpressionDynamic(formWidget.getInitialValueExpression()) || isArrayOfExpressionsDynamic(formWidget.getInitialValueExpressionArray())
                 || isExpressionDynamic(formWidget.getAvailableValuesExpression()) || isListOfExpressionsDynamic(formWidget.getAvailableValues())
-                || isListOfListOfExpressionsDynamic(formWidget.getTableAvailableValues())) {
+                || isListOfListOfExpressionsDynamic(formWidget.getTableAvailableValues()) || isExpressionDynamic(formWidget.getDisplayConditionExpression())) {
             formWidget.setHasDynamicValue(true);
         }
         final String formWidgetCacheId = formCacheUtil.storeFormWidget(formID, pageID, locale, processDeployementDate, formWidget);
