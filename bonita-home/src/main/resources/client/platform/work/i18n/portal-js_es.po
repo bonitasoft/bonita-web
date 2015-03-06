@@ -23,7 +23,7 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "{}-{} of {}"
-msgstr "{}-{} of {}"
+msgstr "{}-{} de {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "El caso eliminado se eliminará permanentemente y no se archivará."
@@ -174,7 +174,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
 msgstr "Desactivado, no puede iniciarse ningún nuevo caso"
@@ -216,117 +216,99 @@ msgid "Totals"
 msgstr "Totales"
 
 msgid "View process design"
-msgstr "View process design"
+msgstr "Ver diagrama del proceso"
 
 msgid "View case design"
-msgstr "View case design"
+msgstr "Ver diagrama del caso"
 
-# Case Visu - Show Key
 msgid "Show key"
-msgstr "Show key"
-
-msgid "Task1"
-msgstr "Task1"
+msgstr "Mostrar leyenda"
 
 msgid "Cancelled, skipped instances"
-msgstr "Cancelled, skipped instances"
+msgstr "Instancias canceladas u omitidas"
 
 msgid "Completed instances"
-msgstr "Completed instances"
+msgstr "Instancias completadas"
 
 msgid "Failed instances"
-msgstr "Failed instances"
+msgstr "Instancias fallidas"
 
 msgid "Executing, completing, initializing instances"
-msgstr "Executing, completing, initializing instances"
+msgstr "Instancias en ejecución, en terminación, en inicialización"
 
 msgid "Ready, waiting instances"
-msgstr "Ready, waiting instances"
+msgstr "Instancias listas, en espera"
 
 msgid "Items per page"
-msgstr "Items per page"
+msgstr "Número de casos por página"
 
 msgid "Columns selection"
-msgstr "Columns selection"
+msgstr "Selección de columnas"
 
 msgid "Table settings"
-msgstr "Table settings"
+msgstr "Configuración de la tabla"
 
-msgid "sort by ID ascendant"
-msgstr "sort by ID ascendant"
+msgid "sort by ID ascending"
+msgstr "ordenar por ID, ascendente"
 
-msgid "sort by ID descendant"
-msgstr "sort by ID descendant"
+msgid "sort by ID descending"
+msgstr "ordenar por ID, descendente"
 
-msgid "sort by Process name ascendant"
-msgstr "sort by Process name ascendant"
+msgid "sort by Process name ascending"
+msgstr "ordenar por nombre de proceso, ascendente"
 
-msgid "sort by Process name descendant"
-msgstr "sort by Process name descendant"
+msgid "sort by Process name descending"
+msgstr "ordenar por nombre de proceso, descendente"
 
-msgid "sort by Start date ascendant"
-msgstr "sort by Start date ascendant"
+msgid "sort by Start date ascending"
+msgstr "ordenar por fecha de inicio, ascendente"
 
-msgid "sort by Start date descendant"
-msgstr "sort by Start date descendant"
+msgid "sort by Start date descending"
+msgstr "ordenar por fecha de inicio, descendente"
 
-msgid "sort by End date ascendant"
-msgstr "sort by End date ascendant"
+msgid "sort by End date ascending"
+msgstr "ordenar por fecha de fin, ascendente"
 
-msgid "sort by End date descendant"
-msgstr "sort by End date descendant"
+msgid "sort by End date descending"
+msgstr "ordenar por fecha de fin, descendente"
 
-msgid "Hide 'ID'"
-msgstr "Hide 'ID'"
+msgid "sort by State ascending"
+msgstr "ordenar por estado, ascendente"
 
-msgid "Hide 'Process name'"
-msgstr "Hide 'Process name'"
+msgid "sort by State descending"
+msgstr "ordenar por estado, descendente"
 
-msgid "Hide 'Version'"
-msgstr "Hide 'Version'"
+msgid "sort by Version ascending"
+msgstr "ordenar por versión, ascendente"
 
-msgid "Hide 'Start date'"
-msgstr "Hide 'Start date'"
+msgid "sort by Version descending"
+msgstr "ordenar por versión, descendente"
 
-msgid "Hide 'End date'"
-msgstr "Hide 'End date'"
+msgid "sort by Cases with failures ascending"
+msgstr "ordenar por casos erróneos, ascendente"
 
-msgid "Hide 'Started by'"
-msgstr "Hide 'Started by'"
+msgid "sort by Cases with failures descending"
+msgstr "ordenar por casos erróneos, descendente"
 
-msgid "Hide 'Failed Flow Nodes'"
-msgstr "Hide 'Failed Flow Nodes'"
+msgid "sort by Healthy cases ascending"
+msgstr "ordenar por casos sin errores, ascendente"
 
-msgid "Hide 'Pending Flow Nodes'"
-msgstr "Hide 'Pending Flow Nodes'"
+msgid "sort by Healthy cases descending"
+msgstr "ordenar por casos sin errores, descendente"
 
-msgid "Hide 'State'"
-msgstr "Hide 'State'"
+msgid "sort by Open cases ascending"
+msgstr "ordenar por casos abiertos, ascendente"
 
-msgid "Show 'ID'"
-msgstr "Show 'ID'"
+msgid "sort by Open cases descending"
+msgstr "ordenar por casos abiertos, descendente"
 
-msgid "Show 'Process name'"
-msgstr "Show 'Process name'"
+msgid "Hide"
+msgstr "ocultar"
 
-msgid "Show 'Version'"
-msgstr "Show 'Version'"
+msgid "Show"
+msgstr "mostrar"
 
-msgid "Show 'Start date'"
-msgstr "Show 'Start date'"
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "Sólo los casos de procesos raíz o principales son mostrados en la tabla más abajo. No están disponibles los detalles de casos iniciados por actividades de llamada."
 
-msgid "Show 'End date'"
-msgstr "Show 'End date'"
-
-msgid "Show 'Started by'"
-msgstr "Show 'Started by'"
-
-msgid "Show 'Failed Flow Nodes'"
-msgstr "Show 'Failed Flow Nodes'"
-
-msgid "Show 'Pending Flow Nodes'"
-msgstr "Show 'Pending Flow Nodes'"
-
-msgid "Show 'State'"
-msgstr "Show 'State'"
 
