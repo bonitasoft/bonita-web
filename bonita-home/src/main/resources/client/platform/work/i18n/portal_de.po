@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:02+0100\n"
-"PO-Revision-Date: 2015-01-23 09:25-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-02-11 03:01+0100\n"
+"PO-Revision-Date: 2015-03-06 02:43-0500\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /MasterBugFixing/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: /release-6.5.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Um dies zu tun, gehen Sie zu %entitymappingprofilelink%."
@@ -684,9 +685,6 @@ msgstr "Name"
 msgid "Display tasks I have done"
 msgstr "Aufgaben anzeigen, die ich ausgeführt habe"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Maskierte Aufgaben anzeigen"
-
 msgid "Display the case form"
 msgstr "Anzeigen des Fall-Formulars"
 
@@ -959,18 +957,6 @@ msgstr "Gruppen-Mapping"
 
 msgid "Groups: %nb_groups%"
 msgstr "Gruppen: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Ausgeblendet"
-
-msgid "Hidden to me"
-msgstr "Für mich ausgeblendet"
-
-msgid "Hide"
-msgstr "Ausblenden"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Diese Aufgabe ignorieren, damit sie nicht mehr angezeigt wird. Andere befugte Benutzer können sie noch sehen"
 
 msgid "High"
 msgstr "Hoch"
@@ -1461,9 +1447,6 @@ msgstr "Gelöst"
 msgid "Resolved processes"
 msgstr "Gelöste Prozesse"
 
-msgid "Retrieve"
-msgstr "Abrufen"
-
 msgid "Role"
 msgstr "Rolle"
 
@@ -1664,9 +1647,6 @@ msgstr "Statistiken"
 
 msgid "Status"
 msgstr "Status"
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Diese Aufgabe als verfügbare Aufgabe anzeigen"
 
 msgid "Su"
 msgstr "So"

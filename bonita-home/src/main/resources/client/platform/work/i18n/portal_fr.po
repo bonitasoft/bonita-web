@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:02+0100\n"
-"PO-Revision-Date: 2015-01-23 09:20-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-02-11 03:01+0100\n"
+"PO-Revision-Date: 2015-03-06 02:41-0500\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /MasterBugFixing/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /release-6.5.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour ce faire, consultez la page %entitymappingprofilelink%."
@@ -379,7 +380,7 @@ msgid "Avatar"
 msgstr "Avatar"
 
 msgid "Back"
-msgstr "Précédent"
+msgstr "Retour"
 
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Attention, votre organisation va fusionner avec les données existantes."
@@ -684,9 +685,6 @@ msgstr "Nom affiché"
 msgid "Display tasks I have done"
 msgstr "Tâche que j'ai effectuée"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Afficher les tâches masquées"
-
 msgid "Display the case form"
 msgstr "Afficher le formulaire du cas"
 
@@ -959,18 +957,6 @@ msgstr "Association avec des groupes"
 
 msgid "Groups: %nb_groups%"
 msgstr "Groupes: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Caché"
-
-msgid "Hidden to me"
-msgstr "Qui me sont masquées"
-
-msgid "Hide"
-msgstr "Masquer"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Masquer cette tâche afin de ne plus la voir dans les tâches disponibles. Les autres utilisateurs pourront toujours la voir."
 
 msgid "High"
 msgstr "Haute"
@@ -1461,9 +1447,6 @@ msgstr "Résolue"
 msgid "Resolved processes"
 msgstr "Processus résolus"
 
-msgid "Retrieve"
-msgstr "Afficher"
-
 msgid "Role"
 msgstr "Rôle"
 
@@ -1664,9 +1647,6 @@ msgstr "Statistiques"
 
 msgid "Status"
 msgstr "Status"
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Afficher cette tâche comme tâche disponible"
 
 msgid "Su"
 msgstr "Dim"

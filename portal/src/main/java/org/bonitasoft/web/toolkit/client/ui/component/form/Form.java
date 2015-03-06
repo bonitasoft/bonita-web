@@ -160,7 +160,7 @@ public class Form extends AbstractForm {
      * @return This function returns the form itself in order to allow cascading calls
      */
     public Form addTextEntryWithPlaceholder(final JsId jsid, final String label, final String tooltip, final String placeholder) {
-        final Text textWithPlaceholder = new Text(jsid, label, tooltip, null, null, null);
+        final Text textWithPlaceholder = new Text(jsid, label, tooltip, null, null, null, Text.INCREASED_MAX_LENGTH);
         textWithPlaceholder.setPlaceholder(placeholder);
         addEntry(textWithPlaceholder);
         return this;
@@ -1099,6 +1099,12 @@ public class Form extends AbstractForm {
             final String description, final String example) {
 
         return this.addItemAttributeEntry(new JsId(itemAttribute.getName()), itemAttribute, label, tooltip, defaultValue, description, example, null);
+    }
+
+    public Form addItemAttributeEntry(final ItemAttribute itemAttribute, final String label, final String tooltip, final String defaultValue,
+            final String description, final String example, final Long maxLength) {
+
+        return this.addItemAttributeEntry(new JsId(itemAttribute.getName()), itemAttribute, label, tooltip, defaultValue, description, example, maxLength);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

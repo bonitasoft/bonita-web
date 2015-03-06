@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-18 01:02+0100\n"
-"PO-Revision-Date: 2015-01-23 09:27-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-02-11 03:01+0100\n"
+"PO-Revision-Date: 2015-03-06 02:45-0500\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /MasterBugFixing/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-File: /release-6.5.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Per eseguire questa operazione, andare a %entitymappingprofilelink%."
@@ -684,9 +685,6 @@ msgstr "Nome visualizzato"
 msgid "Display tasks I have done"
 msgstr "Mostra i task che ho eseguito"
 
-msgid "Display tasks I'm ignoring"
-msgstr "Mostra i task che sto ignorando"
-
 msgid "Display the case form"
 msgstr "Mostra modulo del caso"
 
@@ -959,18 +957,6 @@ msgstr "Mappatura gruppi"
 
 msgid "Groups: %nb_groups%"
 msgstr "Gruppi: %nb_groups%"
-
-msgid "Hidden"
-msgstr "Nascosto"
-
-msgid "Hidden to me"
-msgstr "Nascosto a me"
-
-msgid "Hide"
-msgstr "Nascondi"
-
-msgid "Hide this task so I will no longer see it. Other allowed users will still see it"
-msgstr "Ignora questo task di modo che io non lo veda più. Altri utenti abilitati continueranno a vederlo."
 
 msgid "High"
 msgstr "Alta"
@@ -1461,9 +1447,6 @@ msgstr "Risolto"
 msgid "Resolved processes"
 msgstr "Processi risolti"
 
-msgid "Retrieve"
-msgstr "Recupera"
-
 msgid "Role"
 msgstr "Ruolo"
 
@@ -1664,9 +1647,6 @@ msgstr "Statistiche"
 
 msgid "Status"
 msgstr "Status"
-
-msgid "Stop ignoring this task so I will see it in available tasks"
-msgstr "Smetti di ignorare questo task così lo vedrò fra le attività disponibili"
 
 msgid "Su"
 msgstr "Do"

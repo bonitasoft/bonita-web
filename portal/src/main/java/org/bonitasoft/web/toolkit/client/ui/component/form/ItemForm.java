@@ -37,7 +37,7 @@ import com.google.gwt.user.client.Element;
  * @author Julien Mege
  */
 
-// FIXME this is not an AbstractForm since this object include his own form 
+// FIXME this is not an AbstractForm since this object include his own form
 // FIXME need to extend Form and then remove all reference to form class variable.
 public class ItemForm<T extends IItem> extends AbstractForm {
 
@@ -108,6 +108,12 @@ public class ItemForm<T extends IItem> extends AbstractForm {
         return this;
     }
 
+    public ItemForm<T> addEntry(final String attributeName, final String label, final String tooltip, final String defaultValue, final String description,
+            final String example, final Long maxLength) {
+        this.form.addItemAttributeEntry(this.itemDefinition.getAttribute(attributeName), label, tooltip, defaultValue, description, example, maxLength);
+        return this;
+    }
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // HIDDEN ENTRIES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +165,7 @@ public class ItemForm<T extends IItem> extends AbstractForm {
             final String labelAttributeName, final String valueAttributeName, final String description) {
         final JsId jsid = new JsId(attributeName);
 
-        AutoCompleteEntry autoComplete = 
+        final AutoCompleteEntry autoComplete =
                 new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelAttributeName, valueAttributeName, description);
         this.form.addEntry(autoComplete);
 
@@ -178,7 +184,7 @@ public class ItemForm<T extends IItem> extends AbstractForm {
             final AbstractAttributeReader labelTemplate, final String valueAttributeName, final String description) {
 
         final JsId jsid = new JsId(attributeName);
-        AutoCompleteEntry autoComplete = 
+        final AutoCompleteEntry autoComplete =
                 new AutoCompleteEntry(jsid, label, tooltip, itemDefinition, labelTemplate, valueAttributeName, description);
         this.form.addEntry(autoComplete);
 
@@ -187,6 +193,7 @@ public class ItemForm<T extends IItem> extends AbstractForm {
         return this;
     }
 
+    @Override
     public void addEntry(final FormNode entry) {
         form.addEntry(entry);
     }
