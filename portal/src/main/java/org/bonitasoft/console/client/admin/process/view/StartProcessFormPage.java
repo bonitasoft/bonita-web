@@ -27,7 +27,6 @@ import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
-import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -36,7 +35,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Element;
 
@@ -57,8 +55,6 @@ public class StartProcessFormPage extends Page {
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
-    private final String UUID_SEPERATOR = "--";
-
     @Override
     public void defineTitle() {
         this.setTitle("");
@@ -74,35 +70,27 @@ public class StartProcessFormPage extends Page {
         final String encodedProcessName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
         final String processName = URL.decodeQueryString(encodedProcessName);
         final String encodedProcessVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
-
-        String userId = this.getParameter(ATTRIBUTE_USER_ID);
-        if (userId == null) {
-            userId = Session.getUserId().toString();
-        }
-        this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", processName)));
-        final StringBuilder frameURL = new StringBuilder();
-
-        frameURL.append(GWT.getModuleBaseURL())
-                .append("homepage?ui=form&locale=")
-                .append(locale);
-
-        // if tenant is filled in portal url add tenant parameter to IFrame url
+        final String userId = this.getParameter(ATTRIBUTE_USER_ID);
         final String tenantId = ClientApplicationURL.getTenantId();
+
+        this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", processName)));
+
+        final StringBuilder frameURL = new StringBuilder();
+        frameURL.append("form/process/")
+                .append(encodedProcessName)
+                .append("/")
+                .append(encodedProcessVersion)
+                .append("?locale=")
+                .append(locale);
+        // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenant=").append(tenantId);
         }
-
-        frameURL.append("#form=")
-                .append(encodedProcessName)
-                .append(UUID_SEPERATOR)
-                .append(encodedProcessVersion)
-                .append("$entry&process=")
-                .append(processId)
-                .append("&autoInstantiate=false&mode=form&userId=")
-                .append(userId);
+        if (userId != null && !userId.isEmpty()) {
+            frameURL.append("&user=").append(userId);
+        }
 
         addBody(new UiComponent(new IFrameView(frameURL.toString())));
     }
@@ -121,7 +109,6 @@ public class StartProcessFormPage extends Page {
         final Map<String, String> processParams = new HashMap<String, String>();
         processParams.put(ProcessItem.ATTRIBUTE_NAME, URL.encodeQueryString(item.getAttributeValue(ProcessItem.ATTRIBUTE_NAME)));
         processParams.put(ProcessItem.ATTRIBUTE_VERSION, URL.encodeQueryString(item.getAttributeValue(ProcessItem.ATTRIBUTE_VERSION)));
-        processParams.put(ProcessItem.ATTRIBUTE_ID, item.getAttributeValue(ProcessItem.ATTRIBUTE_ID));
         processParams.put("token", TOKEN);
         return processParams;
     }
