@@ -22,7 +22,6 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
-import org.bonitasoft.console.client.common.view.NewPerformTaskPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
@@ -34,9 +33,7 @@ import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
-import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 
 /**
  * @author Séverin Moussel
@@ -74,11 +71,6 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
         if (!isTaskAssignedToOtherUser(item) && item.isUserTask()) {
             addToolbarLink(factory.createPerformTaskButton(createPerformAction(item)));
         }
-        if (isTaskAssignedToCurrentUser(item) && item.isUserTask()) {
-            addToolbarLink(factory.createPerformTaskButtonWithMapping(createNewPerformAction(item)));
-        } else {
-            addToolbarText("Please assign this task to you in order to use the new form feature");
-        }
 
         if (isTaskAssignedToCurrentUser(item) && item.isUserTask()) {
             addToolbarLink(factory.createUnassignedButton(new TaskRelaseAction(item.getId())));
@@ -91,10 +83,6 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
 
     private ActionShowView createPerformAction(final HumanTaskItem item) {
         return new ActionShowView(new PerformTaskPage(item.getId()));
-    }
-
-    private Action createNewPerformAction(final HumanTaskItem item) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new NewPerformTaskPage(item.getId())));
     }
 
     @Override

@@ -67,7 +67,6 @@ import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.CustomPage;
 import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
-import org.bonitasoft.console.client.common.view.NewPerformTaskPage;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
@@ -297,8 +296,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ArchivedHumanTaskMoreDetailsPage();
         } else if (PerformTaskPage.TOKEN.equals(token) && isUserAuthorized(PerformTaskPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new PerformTaskPage();
-        } else if (NewPerformTaskPage.TOKEN.equals(token)) {
-            return new NewPerformTaskPage();
 
             // Visualize & Start processes
         } else if (ProcessListingPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingPage.PRIVILEGES, getCurrentUserAccessRights())) {

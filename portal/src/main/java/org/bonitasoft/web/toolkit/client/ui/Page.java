@@ -26,12 +26,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Element;
 
 /**
  * This class define a Page, which is a specific type of view.
- *
+ * 
  * @author Julien Mege, Séverin Moussel, Paul Amar
  */
 public abstract class Page extends View {
@@ -86,9 +85,9 @@ public abstract class Page extends View {
 
     /**
      * Add a list of Components in the current view.
-     *
+     * 
      * @param components
-     *        The list of Components to add in the current view.
+     *            The list of Components to add in the current view.
      */
     @Override
     protected void setHeader(final AbstractComponent... components) {
@@ -113,7 +112,7 @@ public abstract class Page extends View {
     /**
      * Set the page title. If the page is already displayed, the displayed title will be updated.<br />
      * The title format works as a Text component using the "%%" template model
-     *
+     * 
      * @param title
      * @param components
      */
@@ -137,7 +136,7 @@ public abstract class Page extends View {
 
     /**
      * Set the toolbar, empty it if already declared, and add all the links
-     *
+     * 
      * @param links
      */
     protected void setToolbar(final Link... links) {
@@ -149,13 +148,13 @@ public abstract class Page extends View {
 
     /**
      * add a toolbar Button with the following arguments :
-     *
+     * 
      * @param label
-     *        label of the button
+     *            label of the button
      * @param tooltip
-     *        tooltip for the button
+     *            tooltip for the button
      * @param action
-     *        action for the button
+     *            action for the button
      * @deprecated Use {@code addToolbarLink(Clickable link)}
      */
     @Deprecated()
@@ -167,13 +166,13 @@ public abstract class Page extends View {
 
     /**
      * add a toolbar Link with the following arguments :
-     *
+     * 
      * @param label
-     *        label for the link
+     *            label for the link
      * @param tooltip
-     *        tooltip for the link
+     *            tooltip for the link
      * @param action
-     *        action for the link
+     *            action for the link
      * @deprecated Use {@code addToolbarLink(Clickable link)}
      */
     @Deprecated()
@@ -186,13 +185,6 @@ public abstract class Page extends View {
         if (link != null) {
             initToolbar();
             toolbar.append(link);
-        }
-    }
-
-    protected void addToolbarText(final String text) {
-        if (text != null) {
-            initToolbar();
-            toolbar.getElement().appendChild(Document.get().createPElement().appendChild(Document.get().createTextNode(text)));
         }
     }
 
