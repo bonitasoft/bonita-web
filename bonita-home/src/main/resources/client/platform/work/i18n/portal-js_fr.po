@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-05 04:46-0500\n"
+"PO-Revision-Date: 2015-03-06 02:40-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -23,7 +23,7 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "{}-{} of {}"
-msgstr "{}-{} de {}"
+msgstr "{}-{} of {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
@@ -174,7 +174,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
 msgstr "Désactivé, aucun nouveau cas peut être démarré"
@@ -208,102 +208,127 @@ msgstr "Version"
 
 msgid "Totals"
 msgstr "Totaux\n"
+""
 
 msgid "Loading..."
 msgstr "Chargement..."
 
+msgid "Totals"
+msgstr "Totaux\n"
+""
+
 msgid "View process design"
-msgstr "Voir la représentation graphique du processus"
+msgstr "View process design"
 
 msgid "View case design"
-msgstr "Voir la représentation graphique du case"
+msgstr "View case design"
 
+# Case Visu - Show Key
 msgid "Show key"
-msgstr "Afficher la légende"
+msgstr "Show key"
+
+msgid "Task1"
+msgstr "Task1"
 
 msgid "Cancelled, skipped instances"
-msgstr "Instances annulées ou passées"
+msgstr "Cancelled, skipped instances"
 
 msgid "Completed instances"
-msgstr "Instances en état 'completed'"
+msgstr "Completed instances"
 
 msgid "Failed instances"
-msgstr "Instances en échec (état 'failed')"
+msgstr "Failed instances"
 
 msgid "Executing, completing, initializing instances"
-msgstr "Instances en état 'executing', 'completing' ou 'initializing'"
+msgstr "Executing, completing, initializing instances"
 
 msgid "Ready, waiting instances"
-msgstr "Instances en état 'ready' ou 'waiting'"
+msgstr "Ready, waiting instances"
 
 msgid "Items per page"
-msgstr "nombre de cas par page"
+msgstr "Items per page"
 
 msgid "Columns selection"
-msgstr "sélection des colonnes"
+msgstr "Columns selection"
 
 msgid "Table settings"
-msgstr "Paramètres du tableau"
+msgstr "Table settings"
 
-msgid "sort by ID ascending"
-msgstr "tri par Id, croissant"
+msgid "sort by ID ascendant"
+msgstr "sort by ID ascendant"
 
-msgid "sort by ID descending"
-msgstr "tri par Id, décroissant"
+msgid "sort by ID descendant"
+msgstr "sort by ID descendant"
 
-msgid "sort by Process name ascending"
-msgstr "tri par Nom du Processus, croissant"
+msgid "sort by Process name ascendant"
+msgstr "sort by Process name ascendant"
 
-msgid "sort by Process name descending"
-msgstr "tri par Nom du Processus, décroissant"
+msgid "sort by Process name descendant"
+msgstr "sort by Process name descendant"
 
-msgid "sort by Start date ascending"
-msgstr "tri par Date de début, croissant"
+msgid "sort by Start date ascendant"
+msgstr "sort by Start date ascendant"
 
-msgid "sort by Start date descending"
-msgstr "tri par Date de début, décroissant"
+msgid "sort by Start date descendant"
+msgstr "sort by Start date descendant"
 
-msgid "sort by End date ascending"
-msgstr "tri par Date de fin, croissant"
+msgid "sort by End date ascendant"
+msgstr "sort by End date ascendant"
 
-msgid "sort by End date descending"
-msgstr "tri par Date de fin, décroissant"
+msgid "sort by End date descendant"
+msgstr "sort by End date descendant"
 
-msgid "sort by State ascending"
-msgstr "tri par Etat, croissant"
+msgid "Hide 'ID'"
+msgstr "Hide 'ID'"
 
-msgid "sort by State descending"
-msgstr "tri par Etat, décroissant"
+msgid "Hide 'Process name'"
+msgstr "Hide 'Process name'"
 
-msgid "sort by Version ascending"
-msgstr "tri par Version, croissant"
+msgid "Hide 'Version'"
+msgstr "Hide 'Version'"
 
-msgid "sort by Version descending"
-msgstr "tri par Version, décroissant"
+msgid "Hide 'Start date'"
+msgstr "Hide 'Start date'"
 
-msgid "sort by Cases with failures ascending"
-msgstr "tri par Cas avec erreurs, croissant"
+msgid "Hide 'End date'"
+msgstr "Hide 'End date'"
 
-msgid "sort by Cases with failures descending"
-msgstr "tri par Cas avec erreurs, décroissant"
+msgid "Hide 'Started by'"
+msgstr "Hide 'Started by'"
 
-msgid "sort by Healthy cases ascending"
-msgstr "tri par Cas sans erreur, croissant"
+msgid "Hide 'Failed Flow Nodes'"
+msgstr "Hide 'Failed Flow Nodes'"
 
-msgid "sort by Healthy cases descending"
-msgstr "tri par Cas sans erreur, décroissant"
+msgid "Hide 'Pending Flow Nodes'"
+msgstr "Hide 'Pending Flow Nodes'"
 
-msgid "sort by Open cases ascending"
-msgstr "tri par Cas en cours, croissant"
+msgid "Hide 'State'"
+msgstr "Hide 'State'"
 
-msgid "sort by Open cases descending"
-msgstr "tri par Cas en cours, décroissant"
+msgid "Show 'ID'"
+msgstr "Show 'ID'"
 
-msgid "Hide"
-msgstr "masquer"
+msgid "Show 'Process name'"
+msgstr "Show 'Process name'"
 
-msgid "Show"
-msgstr "afficher"
+msgid "Show 'Version'"
+msgstr "Show 'Version'"
 
-msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
-msgstr "Seuls les cas issus des processus 'racines' sont affichés dans le tableau ci-dessous. Les cas démarrés par des activités appelantes ne sont donc pas affichés."
+msgid "Show 'Start date'"
+msgstr "Show 'Start date'"
+
+msgid "Show 'End date'"
+msgstr "Show 'End date'"
+
+msgid "Show 'Started by'"
+msgstr "Show 'Started by'"
+
+msgid "Show 'Failed Flow Nodes'"
+msgstr "Show 'Failed Flow Nodes'"
+
+msgid "Show 'Pending Flow Nodes'"
+msgstr "Show 'Pending Flow Nodes'"
+
+msgid "Show 'State'"
+msgstr "Show 'State'"
+
