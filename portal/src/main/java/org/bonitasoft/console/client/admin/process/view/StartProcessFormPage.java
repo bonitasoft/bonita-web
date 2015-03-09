@@ -71,9 +71,9 @@ public class StartProcessFormPage extends Page {
 
     @Override
     public void buildView() {
-        final String processName = URL.decodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_NAME));
+        final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
         final String encodedProcessName = URL.encodeQueryString(processName);
-        final String processVersion = URL.decodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_VERSION));
+        final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
         final String encodedProcessVersion = URL.encodeQueryString(processVersion);
         final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
 
