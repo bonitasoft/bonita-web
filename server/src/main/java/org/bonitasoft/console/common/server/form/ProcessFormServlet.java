@@ -122,7 +122,10 @@ public class ProcessFormServlet extends HttpServlet {
                     displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
                 }
             } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
+                //TODO restore this once the studio export LEGACY mapping
+                //response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
+                //meanwhile fallback to legacy forms
+                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
             }
         } catch (final FormMappingNotFoundException e) {
             displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
