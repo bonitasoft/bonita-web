@@ -16,6 +16,8 @@ package org.bonitasoft.console.common.server.form;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -211,16 +213,18 @@ public class ProcessFormServlet extends HttpServlet {
 
     protected String buildLegacyFormURL(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
             final long processInstanceId,
-            final long taskInstanceId, final String taskName, final long userId) throws BonitaException {
+            final long taskInstanceId, final String taskName, final long userId) throws BonitaException, UnsupportedEncodingException {
         final StringBuilder legacyFormURL = new StringBuilder(request.getContextPath());
         legacyFormURL.append("/portal/homepage?ui=form&locale=")
                 .append(pageRenderer.getCurrentLocale(request).toString())
+                .append("&theme=")
+                .append(processDefinitionId)
                 .append("#mode=form&form=")
-                .append(processFormService.getProcessDefinitionUUID(apiSession, processDefinitionId));
+                .append(URLEncoder.encode(processFormService.getProcessDefinitionUUID(apiSession, processDefinitionId), "UTF-8"));
         if (taskInstanceId != -1L) {
             legacyFormURL.append(ProcessFormService.UUID_SEPERATOR)
-                    .append(taskName)
-                    .append("$entry&task=")
+                    .append(URLEncoder.encode("$" + taskName, "UTF-8"))
+                    .append("entry&task=")
                     .append(taskInstanceId);
         } else if (processInstanceId != -1L) {
             legacyFormURL.append("$recap&instance=")

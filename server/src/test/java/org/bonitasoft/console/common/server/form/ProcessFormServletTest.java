@@ -131,7 +131,7 @@ public class ProcessFormServletTest {
 
         verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
         verify(hsResponse, times(1)).encodeRedirectURL(
-                "/bonita/portal/homepage?ui=form&locale=en#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
@@ -151,7 +151,7 @@ public class ProcessFormServletTest {
 
         verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
         verify(hsResponse, times(1)).encodeRedirectURL(
-                "/bonita/portal/homepage?ui=form&locale=en#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
