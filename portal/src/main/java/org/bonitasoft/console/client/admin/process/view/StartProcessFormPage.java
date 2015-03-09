@@ -67,9 +67,10 @@ public class StartProcessFormPage extends Page {
 
     @Override
     public void buildView() {
-        final String encodedProcessName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String processName = URL.decodeQueryString(encodedProcessName);
-        final String encodedProcessVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
+        final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
+        final String encodedProcessName = URL.encodeQueryString(processName);
+        final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
+        final String encodedProcessVersion = URL.encodeQueryString(processVersion);
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
         final String userId = this.getParameter(ATTRIBUTE_USER_ID);
@@ -107,8 +108,8 @@ public class StartProcessFormPage extends Page {
 
     public static final Map<String, String> getItemParams(final IItem item) {
         final Map<String, String> processParams = new HashMap<String, String>();
-        processParams.put(ProcessItem.ATTRIBUTE_NAME, URL.encodeQueryString(item.getAttributeValue(ProcessItem.ATTRIBUTE_NAME)));
-        processParams.put(ProcessItem.ATTRIBUTE_VERSION, URL.encodeQueryString(item.getAttributeValue(ProcessItem.ATTRIBUTE_VERSION)));
+        processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getAttributeValue(ProcessItem.ATTRIBUTE_NAME));
+        processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getAttributeValue(ProcessItem.ATTRIBUTE_VERSION));
         processParams.put(ProcessItem.ATTRIBUTE_ID, item.getAttributeValue(ProcessItem.ATTRIBUTE_ID));
         processParams.put("token", TOKEN);
         return processParams;
