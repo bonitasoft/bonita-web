@@ -81,9 +81,10 @@ public class DisplayCaseFormPage extends Page {
     }
 
     private String getCaseOverviewUrl() {
-        final String encodedProcessName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String processName = URL.decodeQueryString(encodedProcessName);
-        final String encodedProcessVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
+        final String processName = URL.decodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_NAME));
+        final String encodedProcessName = URL.encodeQueryString(processName);
+        final String processVersion = URL.decodeQueryString(this.getParameter(ProcessItem.ATTRIBUTE_VERSION));
+        final String encodedProcessVersion = URL.encodeQueryString(processVersion);
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
@@ -117,8 +118,8 @@ public class DisplayCaseFormPage extends Page {
             throw new RuntimeException(CaseItem.ATTRIBUTE_PROCESS_ID + " attribute need to be deployed");
         }
         final Map<String, String> processParams = new HashMap<String, String>();
-        processParams.put(ProcessItem.ATTRIBUTE_NAME, URL.encodeQueryString(item.getProcess().getName()));
-        processParams.put(ProcessItem.ATTRIBUTE_VERSION, URL.encodeQueryString(item.getProcess().getVersion()));
+        processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getProcess().getName());
+        processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getProcess().getVersion());
         processParams.put(CaseItem.ATTRIBUTE_ID, item.getId().toString());
         if (item instanceof ArchivedCaseItem) {
             processParams.put(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ((ArchivedCaseItem) item).getSourceObjectId().toString());
