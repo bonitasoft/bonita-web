@@ -109,6 +109,7 @@ public class StartProcessFormPage extends Page {
         final Map<String, String> processParams = new HashMap<String, String>();
         processParams.put(ProcessItem.ATTRIBUTE_NAME, URL.encodeQueryString(item.getAttributeValue(ProcessItem.ATTRIBUTE_NAME)));
         processParams.put(ProcessItem.ATTRIBUTE_VERSION, URL.encodeQueryString(item.getAttributeValue(ProcessItem.ATTRIBUTE_VERSION)));
+        processParams.put(ProcessItem.ATTRIBUTE_ID, item.getAttributeValue(ProcessItem.ATTRIBUTE_ID));
         processParams.put("token", TOKEN);
         return processParams;
     }
