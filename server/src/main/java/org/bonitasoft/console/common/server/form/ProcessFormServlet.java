@@ -69,6 +69,8 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String USER_ID_PARAM = "user";
 
+    private static final String ASSIGN_TASK_PARAM = "assignTask";
+
     protected PageRenderer pageRenderer = new PageRenderer();
 
     protected ProcessFormService processFormService = new ProcessFormService();
@@ -226,6 +228,9 @@ public class ProcessFormServlet extends HttpServlet {
                     .append(URLEncoder.encode(taskName + "$", "UTF-8"))
                     .append("entry&task=")
                     .append(taskInstanceId);
+            if ("true".equals(request.getParameter(ASSIGN_TASK_PARAM))) {
+                legacyFormURL.append("&assignTask=true");
+            }
         } else if (processInstanceId != -1L) {
             legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
                     .append("recap&instance=")
