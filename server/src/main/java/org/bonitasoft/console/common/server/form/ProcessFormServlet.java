@@ -227,10 +227,12 @@ public class ProcessFormServlet extends HttpServlet {
                     .append("entry&task=")
                     .append(taskInstanceId);
         } else if (processInstanceId != -1L) {
-            legacyFormURL.append("$recap&instance=")
+            legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
+                    .append("recap&instance=")
                     .append(processInstanceId);
         } else {
-            legacyFormURL.append("$entry&process=")
+            legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
+                    .append("entry&process=")
                     .append(processDefinitionId)
                     .append("&autoInstantiate=false");
         }

@@ -131,12 +131,12 @@ public class ProcessFormServletTest {
 
         verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
         verify(hsResponse, times(1)).encodeRedirectURL(
-                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24entry&process=1&autoInstantiate=false");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
     @Test
-    public void should_display_legacyForm_when_mapping_on_legacy() throws Exception {
+    public void should_display_legacyForm_for_process_when_mapping_on_legacy() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
@@ -151,7 +151,46 @@ public class ProcessFormServletTest {
 
         verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
         verify(hsResponse, times(1)).encodeRedirectURL(
-                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion$entry&process=1&autoInstantiate=false");
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24entry&process=1&autoInstantiate=false");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void should_display_legacyForm_for_instance_when_mapping_on_legacy() throws Exception {
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
+        when(processFormService.isAllowedToSeeProcessInstance(apiSession, 1L, 42L, 1L)).thenReturn(true);
+        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
+                new FormReference(ProcessFormService.LEGACY_FORMS_NAME, false));
+        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
+        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, 42L, -1L, null, -1L);
+        verify(hsResponse, times(1)).encodeRedirectURL(
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24recap&instance=42");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void should_display_legacyForm_for_task_when_mapping_on_legacy() throws Exception {
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
+        when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
+        when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L)).thenReturn(true);
+        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
+                new FormReference(ProcessFormService.LEGACY_FORMS_NAME, false));
+        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
+        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, 42L, "taskName", -1L);
+        verify(hsResponse, times(1)).encodeRedirectURL(
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion--taskName%24entry&task=42");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
