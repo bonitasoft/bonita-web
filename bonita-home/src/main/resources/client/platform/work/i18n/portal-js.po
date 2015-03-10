@@ -215,80 +215,35 @@ msgstr ""
 msgid  "Loading..."
 msgstr ""
 
-msgid  "sort by ID ascendant"
+msgid  "sort by ID ascending"
 msgstr ""
  
-msgid  "sort by ID descendant"
+msgid  "sort by ID descending"
 msgstr ""
  
-msgid  "sort by Process name ascendant"
+msgid  "sort by Process name ascending"
 msgstr ""
  
-msgid  "sort by Process name descendant"
+msgid  "sort by Process name descending"
 msgstr ""
  
-msgid  "sort by Start date ascendant"
+msgid  "sort by Start date ascending"
 msgstr ""
  
-msgid  "sort by Start date descendant"
+msgid  "sort by Start date descending"
 msgstr ""
  
-msgid  "sort by End date ascendant"
+msgid  "sort by End date ascending"
 msgstr ""
  
-msgid  "sort by End date descendant"
+msgid  "sort by End date descending"
 msgstr ""
  
-msgid  "Hide 'ID'"
+msgid  "Hide"
 msgstr ""
  
-msgid  "Hide 'Process name'"
+msgid  "Show"
 msgstr ""
  
-msgid  "Hide 'Version'"
-msgstr ""
-
-msgid  "Hide 'Start date'"
-msgstr ""
-
-msgid  "Hide 'End date'"
-msgstr ""
-
-msgid  "Hide 'Started by'"
-msgstr ""
-
-msgid  "Hide 'Failed Flow Nodes'"
-msgstr ""
-
-msgid  "Hide 'Pending Flow Nodes'"
-msgstr ""
-
-msgid  "Hide 'State'"
-msgstr ""
-
-msgid  "Show 'ID'"
-msgstr ""
-
-msgid  "Show 'Process name'"
-msgstr ""
-
-msgid  "Show 'Version'"
-msgstr ""
-
-msgid  "Show 'Start date'"
-msgstr ""
-
-msgid  "Show 'End date'"
-msgstr ""
-
-msgid  "Show 'Started by'"
-msgstr ""
-
-msgid  "Show 'Failed Flow Nodes'"
-msgstr ""
-
-msgid  "Show 'Pending Flow Nodes'"
-msgstr ""
-
-msgid  "Show 'State'"
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr ""
