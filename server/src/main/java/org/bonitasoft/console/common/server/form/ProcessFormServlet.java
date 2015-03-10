@@ -229,7 +229,8 @@ public class ProcessFormServlet extends HttpServlet {
         } else if (processInstanceId != -1L) {
             legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
                     .append("recap&instance=")
-                    .append(processInstanceId);
+                    .append(processInstanceId)
+                    .append("&recap=true");
         } else {
             legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
                     .append("entry&process=")
