@@ -223,7 +223,7 @@ public class ProcessFormServlet extends HttpServlet {
                 .append(URLEncoder.encode(processFormService.getProcessDefinitionUUID(apiSession, processDefinitionId), "UTF-8"));
         if (taskInstanceId != -1L) {
             legacyFormURL.append(ProcessFormService.UUID_SEPERATOR)
-                    .append(URLEncoder.encode("$" + taskName, "UTF-8"))
+                    .append(URLEncoder.encode(taskName + "$", "UTF-8"))
                     .append("entry&task=")
                     .append(taskInstanceId);
         } else if (processInstanceId != -1L) {
