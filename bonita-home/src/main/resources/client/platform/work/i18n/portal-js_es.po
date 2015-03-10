@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-09 10:22-0400\n"
+"PO-Revision-Date: 2015-03-10 07:51-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -89,7 +89,7 @@ msgid "Open cases"
 msgstr "Casos abiertos"
 
 msgid "Healthy cases"
-msgstr "Casos sin error"
+msgstr "Casos activos"
 
 msgid "Cases with failures"
 msgstr "Casos con fallos"
@@ -159,7 +159,7 @@ msgid "Show"
 msgstr "Mostrar"
 
 msgid "Healthy cases"
-msgstr "Casos sin error"
+msgstr "Casos activos"
 
 msgid "Open"
 msgstr "Abrir"
@@ -212,69 +212,59 @@ msgstr "Totales"
 msgid "Loading..."
 msgstr "Cargando…"
 
-msgid "Totals"
-msgstr "Totales"
-
-msgid "View process design"
-msgstr "View process design"
-
-msgid "View case design"
-msgstr "View case design"
-
-# Case Visu - Show Key
-msgid "Show key"
-msgstr "Show key"
-
-msgid "Task1"
-msgstr "Task1"
-
-msgid "Cancelled, skipped instances"
-msgstr "Cancelled, skipped instances"
-
-msgid "Completed instances"
-msgstr "Completed instances"
-
-msgid "Failed instances"
-msgstr "Failed instances"
-
-msgid "Executing, completing, initializing instances"
-msgstr "Executing, completing, initializing instances"
-
-msgid "Ready, waiting instances"
-msgstr "Ready, waiting instances"
-
-msgid "Items per page"
-msgstr "Items per page"
-
-msgid "Columns selection"
-msgstr "Columns selection"
-
-msgid "Table settings"
-msgstr "Table settings"
-
 msgid "sort by ID ascending"
-msgstr "sort by ID ascending"
+msgstr "ordenar por ID, ascendente"
 
 msgid "sort by ID descending"
-msgstr "sort by ID descending"
+msgstr "ordenar por ID, descendente"
 
 msgid "sort by Process name ascending"
-msgstr "sort by Process name ascending"
+msgstr "ordenar por nombre de proceso, ascendente"
 
 msgid "sort by Process name descending"
-msgstr "sort by Process name descending"
+msgstr "ordenar por nombre de proceso, descendente"
 
 msgid "sort by Start date ascending"
-msgstr "sort by Start date ascending"
+msgstr "ordenar por fecha de inicio, ascendente"
 
 msgid "sort by Start date descending"
-msgstr "sort by Start date descending"
+msgstr "ordenar por fecha de inicio, descendente"
 
 msgid "sort by End date ascending"
-msgstr "sort by End date ascending"
+msgstr "ordenar por fecha de fin, ascendente"
 
 msgid "sort by End date descending"
-msgstr "sort by End date descending"
+msgstr "ordenar por fecha de fin, descendente"
+
+msgid "sort by State ascending"
+msgstr "ordenar por estado, ascendente"
+
+msgid "sort by State descending"
+msgstr "ordenar por estado, descendente"
+
+msgid "sort by Version ascending"
+msgstr "ordenar por versión, ascendente"
+
+msgid "sort by Version descending"
+msgstr "ordenar por versión, descendente"
+
+msgid "sort by Cases with failures ascending"
+msgstr "ordenar por casos erróneos, ascendente"
+
+msgid "sort by Cases with failures descending"
+msgstr "ordenar por casos erróneos, descendente"
+
+msgid "sort by Healthy cases ascending"
+msgstr "ordenar por casos sin errores, ascendente"
+
+msgid "sort by Healthy cases descending"
+msgstr "ordenar por casos sin errores, descendente"
+
+msgid "sort by Open cases ascending"
+msgstr "ordenar por casos abiertos, ascendente"
+
+msgid "sort by Open cases descending"
+msgstr "ordenar por casos abiertos, descendente"
 
 msgid "Hide"
 msgstr "Ocultar"

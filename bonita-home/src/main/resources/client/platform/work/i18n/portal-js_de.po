@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-09 10:12-0400\n"
+"PO-Revision-Date: 2015-03-10 07:40-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -23,7 +23,7 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"
 
 msgid "{}-{} of {}"
-msgstr "{}-{} of {}"
+msgstr "{}-{} von {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "Der gelöschte Fall dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
@@ -212,69 +212,59 @@ msgstr "Gesamtzahlen"
 msgid "Loading..."
 msgstr "Laden …"
 
-msgid "Totals"
-msgstr "Gesamtzahlen"
-
-msgid "View process design"
-msgstr "View process design"
-
-msgid "View case design"
-msgstr "View case design"
-
-# Case Visu - Show Key
-msgid "Show key"
-msgstr "Show key"
-
-msgid "Task1"
-msgstr "Task1"
-
-msgid "Cancelled, skipped instances"
-msgstr "Cancelled, skipped instances"
-
-msgid "Completed instances"
-msgstr "Completed instances"
-
-msgid "Failed instances"
-msgstr "Failed instances"
-
-msgid "Executing, completing, initializing instances"
-msgstr "Executing, completing, initializing instances"
-
-msgid "Ready, waiting instances"
-msgstr "Ready, waiting instances"
-
-msgid "Items per page"
-msgstr "Items per page"
-
-msgid "Columns selection"
-msgstr "Columns selection"
-
-msgid "Table settings"
-msgstr "Table settings"
-
 msgid "sort by ID ascending"
-msgstr "sort by ID ascending"
+msgstr "sortieren nach Id, aufsteigend"
 
 msgid "sort by ID descending"
-msgstr "sort by ID descending"
+msgstr "sortieren nach Id, absteigend"
 
 msgid "sort by Process name ascending"
-msgstr "sort by Process name ascending"
+msgstr "sortieren nach Prozessname, aufsteigend"
 
 msgid "sort by Process name descending"
-msgstr "sort by Process name descending"
+msgstr "sortieren nach Prozessname, absteigend"
 
 msgid "sort by Start date ascending"
-msgstr "sort by Start date ascending"
+msgstr "sortieren nach Startdatum, aufsteigend"
 
 msgid "sort by Start date descending"
-msgstr "sort by Start date descending"
+msgstr "sortieren nach Startdatum, absteigend"
 
 msgid "sort by End date ascending"
-msgstr "sort by End date ascending"
+msgstr "sortieren nach Enddatum, aufsteigend"
 
 msgid "sort by End date descending"
-msgstr "sort by End date descending"
+msgstr "sortieren nach Enddatum, absteigend"
+
+msgid "sort by State ascending"
+msgstr "sortieren nach Zustand, aufsteigend"
+
+msgid "sort by State descending"
+msgstr "sortieren nach Zustand, absteigend"
+
+msgid "sort by Version ascending"
+msgstr "sortieren nach Version, aufsteigend"
+
+msgid "sort by Version descending"
+msgstr "sortieren nach Version, absteigend"
+
+msgid "sort by Cases with failures ascending"
+msgstr "Fälle mit Fehlern sortieren, aufsteigend"
+
+msgid "sort by Cases with failures descending"
+msgstr "Fälle mit Fehlern sortieren, absteigend"
+
+msgid "sort by Healthy cases ascending"
+msgstr "Fällen ohne Fehler sortieren, aufsteigend"
+
+msgid "sort by Healthy cases descending"
+msgstr "Fällen ohne Fehler sortieren, absteigend"
+
+msgid "sort by Open cases ascending"
+msgstr "Offene Fälle sortieren, aufsteigend"
+
+msgid "sort by Open cases descending"
+msgstr "Offene Fällen sortieren, absteigend"
 
 msgid "Hide"
 msgstr "Ausblenden"
