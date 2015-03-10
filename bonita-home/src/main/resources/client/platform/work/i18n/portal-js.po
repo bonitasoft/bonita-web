@@ -238,7 +238,37 @@ msgstr ""
  
 msgid  "sort by End date descending"
 msgstr ""
- 
+
+msgid  "sort by State ascending"
+msgstr ""
+
+msgid  "sort by State descending"
+msgstr ""
+
+msgid  "sort by Version ascending"
+msgstr ""
+
+msgid  "sort by Version descending"
+msgstr ""
+
+msgid  "sort by Cases with failures ascending"
+msgstr ""
+
+msgid  "sort by Cases with failures descending"
+msgstr ""
+
+msgid  "sort by Healthy cases ascending"
+msgstr ""
+
+msgid  "sort by Healthy cases descending"
+msgstr ""
+
+msgid  "sort by Open cases ascending"
+msgstr ""
+
+msgid  "sort by Open cases descending"
+msgstr ""
+
 msgid  "Hide"
 msgstr ""
  
