@@ -17,6 +17,7 @@ package org.bonitasoft.console.common.server.form;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -174,12 +175,12 @@ public class ProcessFormServlet extends HttpServlet {
 
     }
 
-    protected long getProcessDefinitionId(final APISession apiSession, final List<String> pathSegments) throws BonitaException {
+    protected long getProcessDefinitionId(final APISession apiSession, final List<String> pathSegments) throws BonitaException, UnsupportedEncodingException {
         long processDefinitionId = -1L;
         if (PROCESS_PATH_SEGMENT.equals(pathSegments.get(0))) {
-            final String processName = pathSegments.get(1);
             if (pathSegments.size() > 2) {
-                final String processVersion = pathSegments.get(2);
+                final String processName = URLDecoder.decode(pathSegments.get(1), "UTF-8");
+                final String processVersion = URLDecoder.decode(pathSegments.get(2), "UTF-8");
                 processDefinitionId = processFormService.getProcessDefinitionId(apiSession, processName, processVersion);
             }
         }
@@ -214,8 +215,8 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected String buildLegacyFormURL(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
-            final long processInstanceId,
-            final long taskInstanceId, final String taskName, final long userId) throws BonitaException, UnsupportedEncodingException {
+            final long processInstanceId, final long taskInstanceId, final String taskName, final long userId) throws BonitaException,
+            UnsupportedEncodingException {
         final StringBuilder legacyFormURL = new StringBuilder(request.getContextPath());
         legacyFormURL.append("/portal/homepage?ui=form&locale=")
                 .append(pageRenderer.getCurrentLocale(request).toString())
