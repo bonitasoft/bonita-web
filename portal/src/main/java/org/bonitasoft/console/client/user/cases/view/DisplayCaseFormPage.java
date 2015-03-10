@@ -86,8 +86,6 @@ public class DisplayCaseFormPage extends Page {
     private String getCaseOverviewUrl() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
         final String encodedProcessName = URL.encodeQueryString(processName);
-        final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String encodedProcessVersion = URL.encodeQueryString(processVersion);
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
@@ -95,7 +93,7 @@ public class DisplayCaseFormPage extends Page {
         final String locale = AbstractI18n.getDefaultLocale().toString();
         final String tenantId = ClientApplicationURL.getTenantId();
 
-        this.setTitle(_("Display a case form of process %app_name%", new Arg("app_name", processName)));
+        this.setTitle(_("Display a case form of process %app_name%", new Arg("app_name", encodedProcessName)));
 
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append("form/processInstance/")
