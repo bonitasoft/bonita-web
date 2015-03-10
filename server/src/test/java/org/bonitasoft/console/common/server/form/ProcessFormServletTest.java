@@ -170,7 +170,7 @@ public class ProcessFormServletTest {
 
         verify(formServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, 42L, -1L, null, -1L);
         verify(hsResponse, times(1)).encodeRedirectURL(
-                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24recap&instance=42");
+                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24recap&instance=42&recap=true");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
