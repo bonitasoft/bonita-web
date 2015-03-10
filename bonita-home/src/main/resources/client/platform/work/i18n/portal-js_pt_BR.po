@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-10 07:48-0400\n"
+"PO-Revision-Date: 2015-03-10 09:53-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -265,6 +265,15 @@ msgstr "ordena por casos abertos, crescente"
 
 msgid "sort by Open cases descending"
 msgstr "ordena por casos abertos, decrescente"
+
+msgid "Items per page"
+msgstr "Número de casos por página"
+
+msgid "Columns selection"
+msgstr "Seleção de colunas"
+
+msgid "Table settings"
+msgstr "Parâmetros da tabela"
 
 msgid "Hide"
 msgstr "Ocultar"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-10 07:51-0400\n"
+"PO-Revision-Date: 2015-03-10 09:57-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -23,7 +23,7 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "{}-{} of {}"
-msgstr "{}-{} of {}"
+msgstr "{}-{} de {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "El caso eliminado se eliminará permanentemente y no se archivará."
@@ -265,6 +265,15 @@ msgstr "ordenar por casos abiertos, ascendente"
 
 msgid "sort by Open cases descending"
 msgstr "ordenar por casos abiertos, descendente"
+
+msgid "Items per page"
+msgstr "Número de casos por página"
+
+msgid "Columns selection"
+msgstr "Selección de columnas"
+
+msgid "Table settings"
+msgstr "Configuración de la tabla"
 
 msgid "Hide"
 msgstr "Ocultar"
