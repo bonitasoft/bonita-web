@@ -273,11 +273,37 @@ public class ProcessFormServletTest {
     }
 
     @Test
+    public void should_display_customPage_for_process_with_unicode_characters() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processus+%C3%A9%2B%C3%B8/%C3%B8");
+        when(processFormService.getProcessDefinitionId(apiSession, "processus é+ø", "ø")).thenReturn(1L);
+        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
+        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
+        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", false));
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+    }
+
+    @Test
     public void should_redirect_for_task_from_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getServletPath()).thenReturn("/portal/form");
         when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void redirect_for_task_from_instance_with_unicode_characters() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/task+%C3%A9%2B%C3%B8");
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getServletPath()).thenReturn("/portal/form");
+        when(processFormService.getTaskInstanceId(apiSession, 42L, "task é+ø", -1L)).thenReturn(1L);
 
         formServlet.doGet(hsRequest, hsResponse);
 

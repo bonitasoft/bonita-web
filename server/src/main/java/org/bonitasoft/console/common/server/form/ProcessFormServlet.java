@@ -137,13 +137,13 @@ public class ProcessFormServlet extends HttpServlet {
         }
     }
 
-    protected List<String> getPathSegments(final HttpServletRequest request) {
+    protected List<String> getPathSegments(final HttpServletRequest request) throws UnsupportedEncodingException {
         final List<String> segments = new ArrayList<String>();;
         final String pathInfo = request.getPathInfo();
         if (pathInfo != null) {
             for (final String segment : pathInfo.split("/")) {
                 if (!segment.isEmpty()) {
-                    segments.add(segment);
+                    segments.add(URLDecoder.decode(segment, "UTF-8"));
                 }
             }
         }
@@ -175,12 +175,12 @@ public class ProcessFormServlet extends HttpServlet {
 
     }
 
-    protected long getProcessDefinitionId(final APISession apiSession, final List<String> pathSegments) throws BonitaException, UnsupportedEncodingException {
+    protected long getProcessDefinitionId(final APISession apiSession, final List<String> pathSegments) throws BonitaException {
         long processDefinitionId = -1L;
         if (PROCESS_PATH_SEGMENT.equals(pathSegments.get(0))) {
             if (pathSegments.size() > 2) {
-                final String processName = URLDecoder.decode(pathSegments.get(1), "UTF-8");
-                final String processVersion = URLDecoder.decode(pathSegments.get(2), "UTF-8");
+                final String processName = pathSegments.get(1);
+                final String processVersion = pathSegments.get(2);
                 processDefinitionId = processFormService.getProcessDefinitionId(apiSession, processName, processVersion);
             }
         }
