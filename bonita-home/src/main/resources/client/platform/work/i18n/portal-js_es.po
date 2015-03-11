@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-09 10:20-0400\n"
+"PO-Revision-Date: 2015-03-10 09:54-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -253,28 +253,28 @@ msgid "Table settings"
 msgstr "Table settings"
 
 msgid "sort by ID ascending"
-msgstr "sort by ID ascending"
+msgstr "ordenar por ID, ascendente"
 
 msgid "sort by ID descending"
-msgstr "sort by ID descending"
+msgstr "ordenar por ID, descendente"
 
 msgid "sort by Process name ascending"
-msgstr "sort by Process name ascending"
+msgstr "ordenar por nombre de proceso, ascendente"
 
 msgid "sort by Process name descending"
-msgstr "sort by Process name descending"
+msgstr "ordenar por nombre de proceso, descendente"
 
 msgid "sort by Start date ascending"
-msgstr "sort by Start date ascending"
+msgstr "ordenar por fecha de inicio, ascendente"
 
 msgid "sort by Start date descending"
-msgstr "sort by Start date descending"
+msgstr "ordenar por fecha de inicio, descendente"
 
 msgid "sort by End date ascending"
-msgstr "sort by End date ascending"
+msgstr "ordenar por fecha de fin, ascendente"
 
 msgid "sort by End date descending"
-msgstr "sort by End date descending"
+msgstr "ordenar por fecha de fin, descendente"
 
 msgid "Hide"
 msgstr "Ocultar"
