@@ -172,10 +172,13 @@ public class ProcessFormService {
         }
     }
 
-    public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionId, final long taskInstanceId, final long enforcedUserId)
-            throws BonitaException {
+    public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionId, final long taskInstanceId, final long enforcedUserId,
+            final boolean assignTask) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
         if (processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId())) {
+            if (assignTask) {
+                assignTaskIfNotAssigned(apiSession, taskInstanceId, enforcedUserId);
+            }
             return true;
         } else {
             try {
@@ -212,6 +215,13 @@ public class ProcessFormService {
             }
         }
         return false;
+    }
+
+    public void assignTaskIfNotAssigned(final APISession apiSession, final long taskId, final long userId) throws BonitaException {
+        final HumanTaskInstance humanTaskInstance = getProcessAPI(apiSession).getHumanTaskInstance(taskId);
+        if (humanTaskInstance.getAssigneeId() != userId) {
+            getProcessAPI(apiSession).assignUserTask(taskId, userId);
+        }
     }
 
     protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
