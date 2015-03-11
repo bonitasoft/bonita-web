@@ -1,98 +1,109 @@
 package org.bonitasoft.web.rest.server.api.form;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.console.common.server.form.FormReference;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
+import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Test;
-import org.restlet.resource.ResourceException;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.restlet.Response;
+import org.restlet.data.Status;
+import org.restlet.resource.ServerResource;
 
-// TODO refactor and improve this Classe once RestletTest is available in Community (waiting for the BDM merge)
-public class FormMappingResourceTest {
+@RunWith(MockitoJUnitRunner.class)
+public class FormMappingResourceTest extends RestletTest {
 
-    @Test
-    public void searchFormMappingShouldCallEngine() throws Exception {
-        // given:
-        final FormMappingResource spy = spy(new FormMappingResource());
-        final ProcessConfigurationAPI processConfigurationAPI = mock(ProcessConfigurationAPI.class);
-        doReturn(processConfigurationAPI).when(spy).getEngineProcessConfigurationAPI();
-        final SearchOptions searchOptions = mock(SearchOptions.class);
-        doReturn(searchOptions).when(spy).buildSearchOptions();
-        doReturn(mock(SearchResult.class)).when(processConfigurationAPI).searchFormMappings(searchOptions);
+    @Mock
+    protected ProcessConfigurationAPI processConfigurationAPI;
 
-        // when:
-        spy.searchFormMappings();
-
-        // then:
-        verify(processConfigurationAPI).searchFormMappings(searchOptions);
-    }
-
-    @Test
-    public void updateShouldCallEngine() throws Exception {
-        final FormMappingResource spy = spy(new FormMappingResource());
-        final ProcessConfigurationAPI processConfigurationAPI = mock(ProcessConfigurationAPI.class);
-        doReturn(processConfigurationAPI).when(spy).getEngineProcessConfigurationAPI();
-        final Map<String, String> requestAttributes = new HashMap<String, String>();
-        requestAttributes.put(FormMappingResource.ID_PARAM_NAME, "2");
-        doReturn(requestAttributes).when(spy).getRequestAttributes();
-        final FormReference formReference = mock(FormReference.class);
-        doReturn("myPage").when(formReference).getForm();
-        doReturn(false).when(formReference).isExternal();
-
-        spy.updateFormMapping(formReference);
-
-        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
+    @Override
+    protected ServerResource configureResource() {
+        return new FormMappingResource(processConfigurationAPI);
     }
 
     @Test
     public void updateShouldHandleNullId() throws Exception {
-        final FormMappingResource spy = spy(new FormMappingResource());
-        doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
 
-        try {
-            spy.updateFormMapping(mock(FormReference.class));
+        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"external\":\"false\"}");
 
-            fail("Expecting Resource Exception");
-        } catch (final ResourceException e) {
-            assertEquals(HttpServletResponse.SC_BAD_REQUEST, e.getStatus().getCode());
-        }
+        assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_BAD_REQUEST);
     }
 
     @Test
     public void updateShouldHandleNotFound() throws Exception {
 
-        final FormMappingResource spy = spy(new FormMappingResource());
-        doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
-        final ProcessConfigurationAPI processConfigurationAPI = mock(ProcessConfigurationAPI.class);
-        doReturn(processConfigurationAPI).when(spy).getEngineProcessConfigurationAPI();
-        final FormReference formReference = mock(FormReference.class);
-        doReturn("myPage").when(formReference).getForm();
-        doReturn(false).when(formReference).isExternal();
         doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", false);
 
-        doReturn("1").when(spy).getAttribute(FormMappingResource.ID_PARAM_NAME);
+        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"external\":\"false\"}");
 
-        try {
-            spy.updateFormMapping(formReference);
+        assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
+    }
 
-            fail("Expecting Resource Exception");
-        } catch (final ResourceException e) {
-            assertEquals(HttpServletResponse.SC_NOT_FOUND, e.getStatus().getCode());
-        }
+    @Test
+    public void searchFormMappingShouldReturnContentRange() throws Exception {
+
+        final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
+        final FormMapping formMapping = mock(FormMapping.class);
+        final List<FormMapping> formMappings = new ArrayList<FormMapping>();
+        formMappings.add(formMapping);
+        doReturn(formMappings).when(searchResult).getResult();
+        doReturn(1L).when(searchResult).getCount();
+        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+
+        final Response response = request("/form/mapping?p=0&c=10").get();
+
+        assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
+        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("0-9/1");
+    }
+
+    @Test
+    public void searchFormMappingShouldReturnMapping() throws Exception {
+
+        final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
+        final FormMapping formMapping = new FormMapping();
+        formMapping.setForm("myForm");
+        final List<FormMapping> formMappings = new ArrayList<FormMapping>();
+        formMappings.add(formMapping);
+        doReturn(formMappings).when(searchResult).getResult();
+        doReturn(1L).when(searchResult).getCount();
+        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+
+        final Response response = request("/form/mapping?p=0&c=10").get();
+
+        assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        response.getEntity().write(outputStream);
+        final String content = outputStream.toString();
+        outputStream.close();
+        assertThat(content).isNotNull();
+        assertThat(content).contains("\"form\":\"myForm\"");
+        verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+    }
+
+    @Test
+    public void updateShouldCallEngine() throws Exception {
+
+        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
+
+        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+
+        assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
+        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
     }
 }

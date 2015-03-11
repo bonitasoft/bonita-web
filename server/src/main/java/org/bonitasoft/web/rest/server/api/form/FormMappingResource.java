@@ -17,6 +17,7 @@ package org.bonitasoft.web.rest.server.api.form;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.form.FormReference;
+import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
@@ -34,20 +35,19 @@ import org.restlet.resource.ResourceException;
  */
 public class FormMappingResource extends CommonResource {
 
+    private final ProcessConfigurationAPI processConfigurationAPI;
+
+    public FormMappingResource(final ProcessConfigurationAPI processConfigurationAPI) {
+        this.processConfigurationAPI = processConfigurationAPI;
+    }
+
     public static final String ID_PARAM_NAME = "id";
 
     @Get("json")
-    public List<FormMapping> searchFormMappings() {
+    public List<FormMapping> searchFormMapping() throws ResourceException {
         try {
-            final SearchResult<FormMapping> searchResult = getEngineProcessConfigurationAPI().searchFormMappings(buildSearchOptions());
-            //TODO handle content range for pagination
-            //            getResponse().setEntity(new JacksonRepresentation(MediaType.APPLICATION_JSON, searchResult.getResult()));
-            //            Range range = new Range();
-            //            range.setIndex(index);
-            //            range.setSize(size);
-            //            range.setUnitName("");
-            //            getResponse().getEntity().setRange(range);
-            //            getResponse().getEntity().setSize(searchResult.getCount());
+            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(buildSearchOptions());
+            setContentRange(searchResult);
             return searchResult.getResult();
         } catch (final Exception e) {
             throw new APIException(e);
@@ -62,9 +62,9 @@ public class FormMappingResource extends CommonResource {
         }
         try {
             final long mappingId = Long.parseLong(mappingIdAsString);
-            getEngineProcessConfigurationAPI().updateFormMapping(mappingId, formReference.getForm(), formReference.isExternal());
+            processConfigurationAPI.updateFormMapping(mappingId, formReference.getForm(), formReference.isExternal());
         } catch (final FormMappingNotFoundException e) {
-            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Cannot find form mapping", e);
+            throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Cannot find form mapping with Id " + mappingIdAsString);
         } catch (final Exception e) {
             throw new APIException(e);
         }

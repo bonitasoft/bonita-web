@@ -125,6 +125,23 @@ public class FormFieldValuesUtilTest {
     }
 
     @Test
+    public void testStoreWidgetsInCacheAndSetCacheIDWithDisplayCondition() {
+        final List<FormWidget> formWidgets = new ArrayList<FormWidget>();
+        final FormWidget widget1 = new FormWidget();
+        widget1.setId("widget1");
+        widget1.setDisplayConditionExpression(new Expression("condition", "false", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), Boolean.class.getName(),
+                "GROOVY", null));
+        formWidgets.add(widget1);
+        final Date processDeploymentDate = new Date();
+        util.storeWidgetsInCacheAndSetCacheID(1, "formID", "pageID", Locale.ENGLISH.toString(), processDeploymentDate, formWidgets);
+        final String formWidgetCacheID = widget1.getFormWidgetCacheId();
+        final FormWidget formWidget1RetrievedFromCacheByCacheID = FormCacheUtilFactory.getTenantFormCacheUtil(1).getFormWidget(formWidgetCacheID);
+        assertNotNull(formWidget1RetrievedFromCacheByCacheID);
+        assertEquals("widget1", formWidget1RetrievedFromCacheByCacheID.getId());
+        assertTrue(formWidget1RetrievedFromCacheByCacheID.hasDynamicValue());
+    }
+
+    @Test
     public void testStoreWidgetsInCacheAndSetCacheIDWithValidators() {
         final List<FormWidget> formWidgets = new ArrayList<FormWidget>();
         final FormWidget widget1 = new FormWidget();

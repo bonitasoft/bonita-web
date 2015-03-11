@@ -512,6 +512,7 @@
     <servlet-mapping>
         <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/API/*</url-pattern>
+		<url-pattern>/portal/custom-page/API/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BonitaRestAPIServlet</servlet-name>

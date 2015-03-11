@@ -37,6 +37,7 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -53,7 +54,9 @@ import org.bonitasoft.engine.session.APISession;
 
 public class ProcessFormService {
 
-    private static final String FORMS_DEFINITION_FILE_IN_BAR = "resources/forms/forms.xml";
+    public static final String LEGACY_FORMS_NAME = "LEGACY";
+
+    public static final String UUID_SEPERATOR = "--";
 
     /**
      * Logger
@@ -211,10 +214,6 @@ public class ProcessFormService {
         return false;
     }
 
-    public boolean hasFormsXML(final APISession apiSession, final long processDefinitionId) throws BonitaException {
-        return !getProcessAPI(apiSession).getProcessResources(processDefinitionId, FORMS_DEFINITION_FILE_IN_BAR).isEmpty();
-    }
-
     protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getProcessAPI(apiSession);
     }
@@ -226,5 +225,10 @@ public class ProcessFormService {
 
     protected CommandAPI getCommandAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getCommandAPI(apiSession);
+    }
+
+    public String getProcessDefinitionUUID(final APISession apiSession, final long processDefinitionId) throws BonitaException {
+        final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
+        return processDeploymentInfo.getName() + UUID_SEPERATOR + processDeploymentInfo.getVersion();
     }
 }

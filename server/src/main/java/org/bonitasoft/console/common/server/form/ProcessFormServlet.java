@@ -16,6 +16,9 @@ package org.bonitasoft.console.common.server.form;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,7 +51,7 @@ import org.bonitasoft.engine.session.APISession;
 public class ProcessFormServlet extends HttpServlet {
 
     /**
-     * UUId
+     * UUID
      */
     private static final long serialVersionUID = -6397856355139281873L;
 
@@ -66,6 +69,8 @@ public class ProcessFormServlet extends HttpServlet {
     private static final String TASK_PATH_SEGMENT = "task";
 
     private static final String USER_ID_PARAM = "user";
+
+    private static final String ASSIGN_TASK_PARAM = "assignTask";
 
     protected PageRenderer pageRenderer = new PageRenderer();
 
@@ -86,9 +91,12 @@ public class ProcessFormServlet extends HttpServlet {
         try {
             String resourcePath = null;
             if (pathSegments.size() > 1) {
-                processDefinitionId = getProcessDefinitionId(apiSession, pathSegments);
-                processInstanceId = getProcessInstanceId(pathSegments);
                 taskInstanceId = getTaskInstanceId(apiSession, pathSegments, userId);
+                if (taskInstanceId != -1 && !TASK_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
+                    redirectToTaskPage(request, response, taskInstanceId);
+                }
+                processInstanceId = getProcessInstanceId(pathSegments);
+                processDefinitionId = getProcessDefinitionId(apiSession, pathSegments);
                 resourcePath = getResourcePath(pathSegments);
             }
             if (processDefinitionId == -1L && processInstanceId == -1L && taskInstanceId == -1L) {
@@ -98,8 +106,20 @@ public class ProcessFormServlet extends HttpServlet {
             }
             processDefinitionId = processFormService.ensureProcessDefinitionId(apiSession, processDefinitionId, processInstanceId, taskInstanceId);
             taskName = processFormService.getTaskName(apiSession, taskInstanceId);
+            displayFormOrResource(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId, resourcePath);
+        } catch (final Exception e) {
+            handleException(response, processDefinitionId, taskName, processInstanceId != -1L, e);
+        }
+    }
+
+    protected void displayFormOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
+            final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final String taskName, final long userId, final String resourcePath)
+            throws BonitaException, IOException, InstantiationException, IllegalAccessException {
+        try {
             final FormReference form = processFormService.getForm(apiSession, processDefinitionId, taskName, processInstanceId != -1L);
-            if (form.getForm() != null) {
+            if (ProcessFormService.LEGACY_FORMS_NAME.equals(form.getForm())) {
+                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
+            } else if (form.getForm() != null) {
                 // for resources we don't check if the user is allowed
                 if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
@@ -107,20 +127,23 @@ public class ProcessFormServlet extends HttpServlet {
                     displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
                 }
             } else {
-                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName);
+                //TODO restore this once the studio export LEGACY mapping
+                //response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
+                //meanwhile fallback to legacy forms
+                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
             }
-        } catch (final Exception e) {
-            handleException(response, processDefinitionId, taskName, processInstanceId != -1L, e);
+        } catch (final FormMappingNotFoundException e) {
+            displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
         }
     }
 
-    protected List<String> getPathSegments(final HttpServletRequest request) {
+    protected List<String> getPathSegments(final HttpServletRequest request) throws UnsupportedEncodingException {
         final List<String> segments = new ArrayList<String>();;
         final String pathInfo = request.getPathInfo();
         if (pathInfo != null) {
             for (final String segment : pathInfo.split("/")) {
                 if (!segment.isEmpty()) {
-                    segments.add(segment);
+                    segments.add(URLDecoder.decode(segment, "UTF-8"));
                 }
             }
         }
@@ -155,8 +178,8 @@ public class ProcessFormServlet extends HttpServlet {
     protected long getProcessDefinitionId(final APISession apiSession, final List<String> pathSegments) throws BonitaException {
         long processDefinitionId = -1L;
         if (PROCESS_PATH_SEGMENT.equals(pathSegments.get(0))) {
-            final String processName = pathSegments.get(1);
             if (pathSegments.size() > 2) {
+                final String processName = pathSegments.get(1);
                 final String processVersion = pathSegments.get(2);
                 processDefinitionId = processFormService.getProcessDefinitionId(apiSession, processName, processVersion);
             }
@@ -168,8 +191,6 @@ public class ProcessFormServlet extends HttpServlet {
         int resourcePathStartIndex;
         if (PROCESS_PATH_SEGMENT.equals(pathSegments.get(0))) {
             resourcePathStartIndex = 3;
-        } else if (PROCESS_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0)) && pathSegments.size() > 2 && TASK_PATH_SEGMENT.equals(pathSegments.get(2))) {
-            resourcePathStartIndex = 4;
         } else {
             resourcePathStartIndex = 2;
         }
@@ -187,19 +208,46 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void displayLegacyForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final long processDefinitionId,
-            final long processInstanceId, final long taskInstanceId, final String taskName) throws IOException, BonitaException {
-        //FIXME not sure we should check if there is a forms XML > this will impact the performances when displaying a legacy for in the portal
-        if (processFormService.hasFormsXML(apiSession, processDefinitionId)) {
-            //TODO fallback to legacy form application if there is a form.xml in the business archive
-            response.sendRedirect(response.encodeRedirectURL("homepage"));
-        } else {
-            String message = "Cannot find the form for process " + processDefinitionId;
-            if (taskName != null) {
-                message = message + " and task " + taskName;
+            final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final String taskName, final long userId)
+            throws IOException, BonitaException {
+        final String legacyFormURL = buildLegacyFormURL(request, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
+        response.sendRedirect(response.encodeRedirectURL(legacyFormURL));
+    }
+
+    protected String buildLegacyFormURL(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
+            final long processInstanceId, final long taskInstanceId, final String taskName, final long userId) throws BonitaException,
+            UnsupportedEncodingException {
+        final StringBuilder legacyFormURL = new StringBuilder(request.getContextPath());
+        legacyFormURL.append("/portal/homepage?ui=form&locale=")
+                .append(pageRenderer.getCurrentLocale(request).toString())
+                .append("&theme=")
+                .append(processDefinitionId)
+                .append("#mode=form&form=")
+                .append(URLEncoder.encode(processFormService.getProcessDefinitionUUID(apiSession, processDefinitionId), "UTF-8"));
+        if (taskInstanceId != -1L) {
+            legacyFormURL.append(ProcessFormService.UUID_SEPERATOR)
+                    .append(URLEncoder.encode(taskName + "$", "UTF-8"))
+                    .append("entry&task=")
+                    .append(taskInstanceId);
+            if ("true".equals(request.getParameter(ASSIGN_TASK_PARAM))) {
+                legacyFormURL.append("&assignTask=true");
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, message);
+        } else if (processInstanceId != -1L) {
+            legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
+                    .append("recap&instance=")
+                    .append(processInstanceId)
+                    .append("&recap=true");
+        } else {
+            legacyFormURL.append(URLEncoder.encode("$", "UTF-8"))
+                    .append("entry&process=")
+                    .append(processDefinitionId)
+                    .append("&autoInstantiate=false");
         }
+        if (userId != -1L) {
+            legacyFormURL.append("&userId=")
+                    .append(userId);
+        }
+        return legacyFormURL.toString();
     }
 
     protected void displayForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
@@ -240,8 +288,27 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     @SuppressWarnings("unchecked")
+    protected void redirectToTaskPage(final HttpServletRequest request, final HttpServletResponse response, final long taskInstanceId) throws IOException {
+        final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
+        taskURLBuilder.append(request.getServletPath())
+                .append("/")
+                .append(TASK_INSTANCE_PATH_SEGMENT)
+                .append("/")
+                .append(taskInstanceId);
+        final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
+        urlBuilder.appendParameters(request.getParameterMap());
+        response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
+    }
+
     protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final long processDefinitionId,
             final long processInstanceId, final long taskInstanceId, final String url) throws IOException {
+        final String externalURL = buildExternalPageURL(request, processDefinitionId, processInstanceId, taskInstanceId, url);
+        response.sendRedirect(response.encodeRedirectURL(externalURL));
+    }
+
+    @SuppressWarnings("unchecked")
+    protected String buildExternalPageURL(final HttpServletRequest request, final long processDefinitionId, final long processInstanceId,
+            final long taskInstanceId, final String url) {
         final UrlBuilder urlBuilder = new UrlBuilder(url);
         if (taskInstanceId != -1) {
             urlBuilder.appendParameter(TASK_INSTANCE_PATH_SEGMENT, new UrlValue(Long.toString(taskInstanceId)));
@@ -253,7 +320,7 @@ public class ProcessFormServlet extends HttpServlet {
             urlBuilder.appendParameter(PROCESS_PATH_SEGMENT, new UrlValue(Long.toString(processDefinitionId)));
         }
         urlBuilder.appendParameters(request.getParameterMap());
-        response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
+        return urlBuilder.build();
     }
 
     protected boolean isAuthorized(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
@@ -283,8 +350,6 @@ public class ProcessFormServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the process instance");
             } else if (e instanceof ActivityInstanceNotFoundException) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the task instance");
-            } else if (e instanceof FormMappingNotFoundException) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     String message = "Error while trying to display a form";
