@@ -226,6 +226,9 @@ public class HomepageServlet extends ThemeResourceServlet {
             FormDocumentBuilderFactory.getFormDocumentBuilder(apiSession, applicationID, Locale.ENGLISH.getLanguage(), deployemenDate);
         } catch (final FileNotFoundException e) {
             //Do nothing: there might be no forms.xml in the business archive
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "There is no forms definition file in the application " + applicationID);
+            }
         }
     }
 
