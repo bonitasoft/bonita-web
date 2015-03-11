@@ -49,7 +49,7 @@ import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 
 /**
  * Servlet for requesting home page
- * 
+ *
  * @author Ruiheng Fan, Vincent Elcrin, Anthony Birembaut
  */
 public class HomepageServlet extends ThemeResourceServlet {
@@ -167,7 +167,7 @@ public class HomepageServlet extends ThemeResourceServlet {
     protected void updateThemeFromEngine(final APISession apiSession, final File portalThemeDirectory, final File timestampFile, final long lastUpdateTimestamp)
             throws BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException, IOException {
-        Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
+        final Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
         new ThemeArchive(theme.getContent())
                 .extract(portalThemeDirectory)
                 .compile(CompilableFile.ALWAYS_COMPILED_FILES)
@@ -209,7 +209,7 @@ public class HomepageServlet extends ThemeResourceServlet {
         } catch (final Throwable e) {
             final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+                LOGGER.log(Level.WARNING, errorMessage, e);
             }
             throw new ServletException(errorMessage);
         }
