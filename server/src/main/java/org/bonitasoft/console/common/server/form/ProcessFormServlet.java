@@ -121,7 +121,8 @@ public class ProcessFormServlet extends HttpServlet {
                 displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
             } else if (form.getForm() != null) {
                 // for resources we don't check if the user is allowed
-                if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId)) {
+                final boolean assignTask = "true".equals(request.getParameter(ASSIGN_TASK_PARAM));
+                if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId, assignTask)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                 } else {
                     displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
@@ -324,7 +325,7 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected boolean isAuthorized(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
-            final long userId) throws BonitaException {
+            final long userId, final boolean assignTask) throws BonitaException {
         final long enforcedUserId;
         if (userId == -1L) {
             enforcedUserId = apiSession.getUserId();
@@ -332,7 +333,7 @@ public class ProcessFormServlet extends HttpServlet {
             enforcedUserId = userId;
         }
         if (taskInstanceId != -1L) {
-            return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId);
+            return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId, assignTask);
         } else if (processInstanceId != -1L) {
             return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionId, processInstanceId, enforcedUserId);
         } else {
