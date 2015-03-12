@@ -33,6 +33,11 @@ import org.bonitasoft.console.client.admin.organization.users.view.UserListingAd
 import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserQuickDetailsPage;
+import org.bonitasoft.console.client.admin.page.view.AddCustomPage;
+import org.bonitasoft.console.client.admin.page.view.CustomPagePermissionsValidationPopupPage;
+import org.bonitasoft.console.client.admin.page.view.EditCustomPage;
+import org.bonitasoft.console.client.admin.page.view.PageListingPage;
+import org.bonitasoft.console.client.admin.page.view.PageQuickDetailsPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessQuickDetailsAdminPage;
@@ -57,10 +62,16 @@ import org.bonitasoft.console.client.admin.profile.view.DeleteProfileMemberPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
 import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
+import org.bonitasoft.console.client.admin.tenant.view.TenantMaintenancePage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
+import org.bonitasoft.console.client.common.view.CustomPage;
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
+import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
+import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportPage;
+import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportWarningPopUp;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseQuickDetailsPage;
@@ -112,6 +123,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      */
     public ConsoleFactoryClient() {
         angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
+        angularViewsMap.put(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -310,8 +322,42 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // System
         } else if (PopupAboutPage.TOKEN.equals(token)) {
             return new PopupAboutPage();
+        } else if (TechnicalUserServicePausedView.TOKEN.equals(token)) {
+            return new TechnicalUserServicePausedView();
         } else if (ChangeLangPage.TOKEN.equals(token)) {
             return new ChangeLangPage();
+        } else if (TenantMaintenancePage.TOKEN.equals(token) && isUserAuthorized(TenantMaintenancePage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new TenantMaintenancePage();
+            // Custom pages
+        } else if (PageListingPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new PageListingPage();
+        } else if (AddCustomPage.TOKEN.equals(token) && isUserAuthorized(AddCustomPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new AddCustomPage();
+        } else if (EditCustomPage.TOKEN.equals(token) && isUserAuthorized(EditCustomPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new EditCustomPage();
+        } else if (PageQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new PageQuickDetailsPage();
+        } else if (CustomPagePermissionsValidationPopupPage.TOKEN.equals(token) && isUserAuthorized(PageListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new CustomPagePermissionsValidationPopupPage();
+
+            // Custom pages
+        } else if (token != null && token.startsWith(CustomPageWithFrame.TOKEN)) {
+            if (isUserAuthorized(token, getCurrentUserAccessRights())) {
+                return new CustomPageWithFrame(token);
+            } else {
+                return new BlankPage();
+            }
+        } else if (token != null && token.startsWith(CustomPage.TOKEN)) {
+            if (isUserAuthorized(token, getCurrentUserAccessRights())) {
+                return new CustomPage(token);
+            } else {
+                return new BlankPage();
+            }
+            // BDM
+        } else if (BDMImportPage.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new BDMImportPage();
+        } else if (BDMImportWarningPopUp.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return new BDMImportWarningPopUp();
 
         } else if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
             // No action is necessary as an unauthorized request will result in a page reload.
@@ -334,6 +380,19 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         return result;
 
+    }
+
+    protected boolean isUserAuthorized(final String token, final List<String> accessRights) {
+
+        final String sessionId = new String(Session.getParameter("session_id"));
+
+        final String calcSHA1 = SHA1.calcSHA1(token.concat(sessionId));
+
+        if (accessRights.contains(calcSHA1.toUpperCase())) {
+            return true;
+        }
+
+        return false;
     }
 
     protected Map<String, List<String>> buildApplicationPagesPrivileges() {

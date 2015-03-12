@@ -14,6 +14,9 @@
  */
 package org.bonitasoft.web.rest.model;
 
+import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
+import org.bonitasoft.web.rest.model.applicationmenu.ApplicationMenuDefinition;
+import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCommentDefinition;
@@ -41,6 +44,7 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessParameterDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
@@ -55,10 +59,13 @@ import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.web.rest.model.platform.PlatformDefinition;
+import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
+import org.bonitasoft.web.rest.model.system.TenantAdminDefinition;
+import org.bonitasoft.web.rest.model.tenant.BusinessDataModelDefinition;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -111,6 +118,8 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new DelegationDefinition();
         } else if (ProcessResolutionProblemDefinition.TOKEN.equals(token)) {
             return new ProcessResolutionProblemDefinition();
+        }else if (ProcessParameterDefinition.TOKEN.equals(token)) {
+            return new ProcessParameterDefinition();
         }
 
         // bpm.cases
@@ -171,6 +180,8 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ProfileMemberDefinition();
         } else if (SessionDefinition.TOKEN.equals(token)) {
             return new SessionDefinition();
+        } else if (TenantAdminDefinition.TOKEN.equals(token)) {
+            return new TenantAdminDefinition();
         }
 
         // monitoring
@@ -188,6 +199,25 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new DocumentDefinition();
         } else if (ArchivedDocumentDefinition.TOKEN.equals(token)) {
             return new ArchivedDocumentDefinition();
+        }
+
+        // Pages
+        else if (PageDefinition.TOKEN.equals(token)) {
+            return new PageDefinition();
+        }
+        //Applications
+        else if (ApplicationDefinition.TOKEN.equals(token)) {
+            return new ApplicationDefinition();
+        }
+        else if (ApplicationPageDefinition.TOKEN.equals(token)) {
+            return new ApplicationPageDefinition();
+        }
+        else if (ApplicationMenuDefinition.TOKEN.equals(token)) {
+            return new ApplicationMenuDefinition();
+        }
+        //tenant
+        else if (BusinessDataModelDefinition.TOKEN.equals(token)) {
+            return new BusinessDataModelDefinition();
         }
 
         // default

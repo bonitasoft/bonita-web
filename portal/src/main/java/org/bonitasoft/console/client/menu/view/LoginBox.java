@@ -104,7 +104,7 @@ public class LoginBox extends RawView {
     /**
      * Overridden in SP
      */
-    protected LogoutUrl getLogOutUrl(String locale) {
+    protected LogoutUrl getLogOutUrl(final String locale) {
         return new LogoutUrl(new UrlBuilder(), locale);
     }
 
@@ -127,18 +127,19 @@ public class LoginBox extends RawView {
     protected Container<AbstractComponent> createGreetings() {
         return new Container<AbstractComponent>(new JsId("userData"))
                 .append(createUserNameMenu().addClass("userName"))
-                .append(this.userNameAvatar.addClass("userAvatar"));
+                .append(userNameAvatar.addClass("userAvatar"));
     }
 
     protected void loadTechUserProfileMenu() {
-        this.userNameMenu.setLabel(getTechUserName());
+        userNameMenu.setLabel(getTechUserName());
         ViewController.showView(getTechnicalUserMenu(), NAVIGATION_MENU);
-        ViewController.showPopup(TechnicalUserWarningView.TOKEN);
+        final TechnicalUserMessageHandler handler = new TechnicalUserMessageHandler();
+        handler.check();
     }
 
     private void addCurrentUserProfileMenu() {
-        this.userNameMenu.addFiller(new CurrentUserAvatarFiller());
-        ProfileMenuItem profileMenuItem = new ProfileMenuItem(getMenuListCreator());
+        userNameMenu.addFiller(new CurrentUserAvatarFiller());
+        final ProfileMenuItem profileMenuItem = new ProfileMenuItem(getMenuListCreator());
         addBody(new Menu(profileMenuItem));
         getProfiles(Session.getUserId(), fillProfileMenuOnCallback(profileMenuItem));
     }
@@ -154,11 +155,11 @@ public class LoginBox extends RawView {
         };
     }
 
-    private void updateProfileMenu(ProfileMenuItem profileMenuItem, final List<ProfileItem> profiles) {
+    private void updateProfileMenu(final ProfileMenuItem profileMenuItem, final List<ProfileItem> profiles) {
         if (!profiles.isEmpty()) {
             ensureProfileId(profiles.get(0));
             profileMenuItem.addItems(profiles);
-            for (ProfileItem profile : profiles) {
+            for (final ProfileItem profile : profiles) {
                 if (profile.getId().toString().equals(ClientApplicationURL.getProfileId())) {
                     loadNavigationMenu();
                     return;
@@ -209,7 +210,7 @@ public class LoginBox extends RawView {
             public void execute() {
                 Window.Location.replace(
                         getLogOutUrl(Session.getParameter(UrlOption.LANG))
-                                .toString());
+                        .toString());
             }
         });
     }
@@ -240,12 +241,12 @@ public class LoginBox extends RawView {
 
             final String displayName = new UserAttributeReader().read(user);
 
-            LoginBox.this.userNameMenu.setLabel(displayName);
+            userNameMenu.setLabel(displayName);
 
             if (!StringUtil.isBlank(user.getIcon())) {
-                LoginBox.this.userNameAvatar
-                        .setUrl(new Path(user.getIcon()))
-                        .setTooltip(displayName);
+                userNameAvatar
+                .setUrl(new Path(user.getIcon()))
+                .setTooltip(displayName);
             }
         }
     }

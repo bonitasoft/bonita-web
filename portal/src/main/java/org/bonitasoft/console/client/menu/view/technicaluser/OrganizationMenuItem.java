@@ -22,6 +22,7 @@ import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExp
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
+import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
@@ -39,6 +40,7 @@ public class OrganizationMenuItem extends MenuFolder {
         addMenuItem(new MenuLink(new JsId(RoleListingPage.TOKEN), _("Roles"), _("Show the role list"), RoleListingPage.TOKEN));
         addMenuItem(new MenuLink(new JsId(OrganizationImportAndExportPage.TOKEN), _("Import / Export"), _("Import or export data"),
                 OrganizationImportAndExportPage.TOKEN));
+        addMenuItem(new MenuLink(new JsId(ProfileListingPage.TOKEN), _("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
 }

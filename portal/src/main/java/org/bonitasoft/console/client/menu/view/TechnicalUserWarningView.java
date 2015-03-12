@@ -42,7 +42,8 @@ public class TechnicalUserWarningView extends Page {
     @Override
     public void buildView() {
 
-        addBody(new Text(_("Warning: you are logged as technical user. This user has limited rights, its purpose is to initialize the organisation.")));
+        addBody(new Text(
+                _("You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed.")));
     }
 
 }

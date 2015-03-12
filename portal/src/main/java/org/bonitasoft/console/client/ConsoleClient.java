@@ -14,11 +14,6 @@
  */
 package org.bonitasoft.console.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.user.client.DOM;
 import org.bonitasoft.console.client.menu.view.LoginBox;
 import org.bonitasoft.forms.client.FormsApplicationLoader;
 import org.bonitasoft.forms.client.view.common.BonitaUrlContext;
@@ -39,7 +34,7 @@ public class ConsoleClient extends ClientApplication {
     protected void onLoad() {
         registerJSNIMethods();
     
-        BonitaUrlContext bonitaUrlContext = BonitaUrlContext.get();
+        final BonitaUrlContext bonitaUrlContext = BonitaUrlContext.get();
         if (bonitaUrlContext.isFormApplicationMode()) {
             new FormsApplicationLoader(URLUtilsFactory.getInstance(), bonitaUrlContext).load();
         } else {
