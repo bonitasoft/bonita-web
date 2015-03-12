@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>bonita-console</artifactId>
-        <groupId>org.bonitasoft.console</groupId>
+        <groupId>org.bonitasoft.console.pages</groupId>
         <version>7.0.0-SNAPSHOT</version>
     </parent>
 	<artifactId>console-pages</artifactId>
