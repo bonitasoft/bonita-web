@@ -14,25 +14,18 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
-import static java.util.Arrays.asList;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.Type;
 import org.bonitasoft.engine.bpm.contract.impl.ComplexInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ConstraintDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
-import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Test;
@@ -44,7 +37,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TaskResourceTest extends RestletTest {
+public class TaskContractResourceTest extends RestletTest {
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -55,7 +48,7 @@ public class TaskResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new TaskResource(processAPI);
+        return new TaskContractResource(processAPI);
     }
 
     private Map<String, Object> aComplexInput() {
@@ -102,53 +95,4 @@ public class TaskResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
 
-    @Test
-    public void should_execute_a_task_with_given_inputs() throws Exception {
-        final Map<String, Object> expectedComplexInput = aComplexInput();
-
-        final Response response = request("/bpm/tasks/2/execute").post(VALID_COMPLEX_POST_BODY);
-
-        assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
-        verify(processAPI).executeUserTask(2L, expectedComplexInput);
-    }
-
-    @Test
-    public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
-                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
-
-        final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
-
-        assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-        assertThat(response)
-                .hasJsonEntityEqualTo(
-                        "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
-    }
-
-    @Test
-    public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
-        doThrow(new FlowNodeExecutionException("aMessage"))
-                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
-
-        final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
-
-        assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
-    }
-
-    @Test
-    public void should_respond_400_Bad_request_when_trying_to_execute_with_not_json_payload() throws Exception {
-        final Response response = request("/bpm/tasks/2/execute").post("invalid json string");
-
-        assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-    }
-
-    @Test
-    public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
-        doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
-                .executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
-
-        final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
-
-        assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
-    }
 }

@@ -25,7 +25,8 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -47,9 +48,9 @@ public class FinderFactory {
         finders.put(BusinessDataReferenceResource.class, new BusinessDataReferenceResourceFinder());
         finders.put(BusinessDataReferencesResource.class, new BusinessDataReferencesResourceFinder());
         finders.put(BusinessDataQueryResource.class, new BusinessDataQueryResourceFinder());
-
         finders.put(FormMappingResource.class, new FormMappingResourceFinder());
-        finders.put(TaskResource.class, new TaskResourceFinder());
+        finders.put(TaskContractResource.class, new TaskContractResourceFinder());
+        finders.put(TaskExecutionResource.class, new TaskContractResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -122,12 +123,21 @@ public class FinderFactory {
         }
     }
 
-    public static class TaskResourceFinder extends Finder {
+    public static class TaskContractResourceFinder extends Finder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
             final ProcessAPI processAPI = getProcessAPI(request);
-            return new TaskResource(processAPI);
+            return new TaskContractResource(processAPI);
+        }
+    }
+
+    public static class TaskExecutionResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final ProcessAPI processAPI = getProcessAPI(request);
+            return new TaskExecutionResource(processAPI);
         }
     }
 
