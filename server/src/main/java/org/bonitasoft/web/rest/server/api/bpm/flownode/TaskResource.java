@@ -13,6 +13,7 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -48,7 +49,7 @@ public class TaskResource extends CommonResource {
     }
 
     @Post("json")
-    public void executeTask(final Map<String, Object> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException {
+    public void executeTask(final Map<String, Serializable> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException {
         try {
             processAPI.executeUserTask(getTaskIDParameter(), inputs);
         } catch (final ContractViolationException e) {
