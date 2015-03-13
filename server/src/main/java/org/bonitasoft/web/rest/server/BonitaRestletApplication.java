@@ -24,7 +24,8 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
@@ -64,6 +65,8 @@ public class BonitaRestletApplication extends Application {
     protected Router buildRouter() {
         final Context context = getContext();
         final Router router = new Router(context);
+        // WARNING: if you add a route you need to declare a static finder class in org.bonitasoft.web.rest.server.FinderFactory
+
         // GET an activityData:
         router.attach("/bpm/activityVariable/{" + ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID + "}/{" + ActivityVariableResource.ACTIVITYDATA_DATA_NAME
                 + "}", factory.create(ActivityVariableResource.class));
@@ -74,8 +77,8 @@ public class BonitaRestletApplication extends Application {
         // GET to case info (with task state counter)
         router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
 
-        router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskResource.class));
-        router.attach("/bpm/tasks/{taskId}/execute", factory.create(TaskResource.class));
+        router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskContractResource.class));
+        router.attach("/bpm/tasks/{taskId}/execution", factory.create(TaskExecutionResource.class));
         // GET to search form mappings:
         router.attach("/form/mapping", factory.create(FormMappingResource.class));
         // PUT to update form mapping:
