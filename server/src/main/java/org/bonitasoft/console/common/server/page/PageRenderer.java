@@ -61,8 +61,8 @@ public class PageRenderer {
     }
 
     private boolean isGroovyPage(String pageName, final APISession apiSession) {
-        File resourceFolder = getResourceFolder(pageName, apiSession);
-        File indexGroovy = customPageService.getGroovyPageFile(resourceFolder);
+        File pageFolder = getPageResourceProvider(pageName, apiSession.getTenantId()).getPageDirectory();
+        File indexGroovy = customPageService.getGroovyPageFile(pageFolder);
         return indexGroovy.exists();
     }
 
