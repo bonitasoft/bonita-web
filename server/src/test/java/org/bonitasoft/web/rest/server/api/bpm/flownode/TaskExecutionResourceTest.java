@@ -21,6 +21,7 @@ import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,12 +53,12 @@ public class TaskExecutionResourceTest extends RestletTest {
         return new TaskExecutionResource(processAPI);
     }
 
-    private Map<String, Object> aComplexInput() {
-        final HashMap<String, Object> aComplexInput = new HashMap<String, Object>();
+    private Map<String, Serializable> aComplexInput() {
+        final HashMap<String, Serializable> aComplexInput = new HashMap<>();
         aComplexInput.put("aBoolean", true);
         aComplexInput.put("aString", "hello world");
 
-        final HashMap<String, Object> childMap = new HashMap<String, Object>();
+        final HashMap<String, Serializable> childMap = new HashMap<>();
         childMap.put("aNumber", 2);
         childMap.put("aBoolean", false);
 
@@ -68,7 +69,7 @@ public class TaskExecutionResourceTest extends RestletTest {
 
     @Test
     public void should_execute_a_task_with_given_inputs() throws Exception {
-        final Map<String, Object> expectedComplexInput = aComplexInput();
+        final Map<String, Serializable> expectedComplexInput = aComplexInput();
 
         final Response response = request("/bpm/tasks/2/execute").post(VALID_COMPLEX_POST_BODY);
 
@@ -79,7 +80,7 @@ public class TaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
-                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
+        .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
 
@@ -92,7 +93,7 @@ public class TaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
         doThrow(new FlowNodeExecutionException("aMessage"))
-                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
+        .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
 
@@ -109,7 +110,7 @@ public class TaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
         doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
-                .executeUserTask(anyLong(), anyMapOf(String.class, Object.class));
+        .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/tasks/2/execute").post(VALID_POST_BODY);
 

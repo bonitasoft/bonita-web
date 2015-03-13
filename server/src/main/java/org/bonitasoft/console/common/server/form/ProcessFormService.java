@@ -140,34 +140,44 @@ public class ProcessFormService {
         if (processDefinitionId != -1L) {
             return processDefinitionId;
         } else if (processInstanceId != -1L) {
-            final ProcessAPI processAPI = getProcessAPI(apiSession);
-            try {
-                final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceId);
-                return processInstance.getProcessDefinitionId();
-            } catch (final ProcessInstanceNotFoundException e) {
-                final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
-                searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
-                searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.ASC);
-                SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
-                try {
-                    searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
-                } catch (final SearchException se) {
-                    throw new ArchivedProcessInstanceNotFoundException(se);
-                }
-                if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
-                    return searchArchivedProcessInstances.getResult().get(0).getProcessDefinitionId();
-                } else {
-                    throw new ArchivedProcessInstanceNotFoundException(processInstanceId);
-                }
-            }
+            return getProcessDefinitionIdFromProcessInstanceId(apiSession, processInstanceId);
         } else {
-            final ProcessAPI processAPI = getProcessAPI(apiSession);
+            return getProcessDefinitionIdFromTaskId(apiSession, taskInstanceId);
+        }
+    }
+
+    protected long getProcessDefinitionIdFromTaskId(final APISession apiSession, final long taskInstanceId) throws BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException, ActivityInstanceNotFoundException {
+        final ProcessAPI processAPI = getProcessAPI(apiSession);
+        try {
+            final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceId);
+            return activity.getProcessDefinitionId();
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance activity = processAPI.getArchivedActivityInstance(taskInstanceId);
+            return activity.getProcessDefinitionId();
+        }
+    }
+
+    protected long getProcessDefinitionIdFromProcessInstanceId(final APISession apiSession, final long processInstanceId) throws BonitaHomeNotSetException,
+            ServerAPIException, UnknownAPITypeException, ArchivedProcessInstanceNotFoundException {
+        final ProcessAPI processAPI = getProcessAPI(apiSession);
+        try {
+            final ProcessInstance processInstance = processAPI.getProcessInstance(processInstanceId);
+            return processInstance.getProcessDefinitionId();
+        } catch (final ProcessInstanceNotFoundException e) {
+            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
+            searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, processInstanceId);
+            searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.ASC);
+            SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
             try {
-                final ActivityInstance activity = processAPI.getActivityInstance(taskInstanceId);
-                return activity.getProcessDefinitionId();
-            } catch (final ActivityInstanceNotFoundException e) {
-                final ArchivedActivityInstance activity = processAPI.getArchivedActivityInstance(taskInstanceId);
-                return activity.getProcessDefinitionId();
+                searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
+            } catch (final SearchException se) {
+                throw new ArchivedProcessInstanceNotFoundException(se);
+            }
+            if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
+                return searchArchivedProcessInstances.getResult().get(0).getProcessDefinitionId();
+            } else {
+                throw new ArchivedProcessInstanceNotFoundException(processInstanceId);
             }
         }
     }
