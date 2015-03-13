@@ -250,7 +250,7 @@ public class ProcessFormServlet extends HttpServlet {
                     //TODO pass the processDefinition, processInstance and taskInstance IDs in order to put them in the Context of the custom page
                     pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
                 } else {
-                    //TODO render the resource
+                    resourceRenderer.renderFile(request, response, new File(resourcePath));
                 }
             } catch (final PageNotFoundException e) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getForm());
