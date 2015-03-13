@@ -24,47 +24,58 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.impl.APISessionImpl;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TimerEventTriggerResourceTest {
+
+    @Mock
+    ProcessAPI processAPI;
+
+    private TimerEventTriggerResource restResource;
+
+    @Before
+    public void initializeMocks() {
+        restResource = spy(new TimerEventTriggerResource(processAPI));
+    }
 
     @Test
     public void searchTimerEventTriggersShouldCallEngine() throws Exception {
         // given:
-        final TimerEventTriggerResource spy = spy(new TimerEventTriggerResource());
         final SearchOptions searchOptions = mock(SearchOptions.class);
-        doReturn(1L).when(spy).getLongParameter(anyString(), anyBoolean());
-        doReturn(searchOptions).when(spy).buildSearchOptions();
-        doReturn(new ArrayList<TimerEventTriggerInstance>()).when(spy).runEngineSearch(anyLong(), eq(searchOptions));
+        doReturn(1L).when(restResource).getLongParameter(anyString(), anyBoolean());
+        doReturn(searchOptions).when(restResource).buildSearchOptions();
+        doReturn(new ArrayList<TimerEventTriggerInstance>()).when(restResource).runEngineSearch(anyLong(), eq(searchOptions));
 
         // when:
-        spy.searchTimerEventTriggers();
+        restResource.searchTimerEventTriggers();
 
         // then:
-        verify(spy).runEngineSearch(1L, searchOptions);
+        verify(restResource).runEngineSearch(1L, searchOptions);
     }
 
     @Test(expected = APIException.class)
     public void searchTimerEventTriggersShouldThrowExceptionIfParameterNotFound() throws Exception {
         // given:
-        final TimerEventTriggerResource spy = spy(new TimerEventTriggerResource());
-        doReturn(null).when(spy).getParameter(anyString(), anyBoolean());
+        doReturn(null).when(restResource).getParameter(anyString(), anyBoolean());
 
         // when:
-        spy.searchTimerEventTriggers();
+        restResource.searchTimerEventTriggers();
     }
 
     @Test(expected = APIException.class)
     public void updateShouldHandleNullID() throws Exception {
-        final TimerEventTriggerResource spy = spy(new TimerEventTriggerResource());
-        doReturn(Collections.EMPTY_MAP).when(spy).getRequestAttributes();
+        doReturn(Collections.EMPTY_MAP).when(restResource).getRequestAttributes();
 
-        spy.updateTimerEventTrigger(null);
+        restResource.updateTimerEventTrigger(null);
     }
 
     @Test
     public void updateTimerEventTriggersShouldReturnStatusEngineReturnedDate() throws Exception {
-        final TimerEventTriggerResource restResource = spy(new TimerEventTriggerResource());
 
         doReturn(mock(HttpServletRequest.class)).when(restResource).getHttpRequest();
         final HttpSession session = mock(HttpSession.class);
@@ -78,8 +89,6 @@ public class TimerEventTriggerResourceTest {
 
         final long timerEventTriggerId = 1L;
         doReturn("" + timerEventTriggerId).when(restResource).getAttribute(TimerEventTriggerResource.ID_PARAM_NAME);
-        final ProcessAPI processAPI = mock(ProcessAPI.class);
-        doReturn(processAPI).when(restResource).getEngineProcessAPI();
         final Date date = new Date();
         final TimerEventTrigger timerEventTrigger = new TimerEventTrigger();
         timerEventTrigger.setExecutionDate(date.getTime());

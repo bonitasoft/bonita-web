@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="console-war" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="console-war" version="2.5">
     <display-name>Bonita</display-name>
 
-    <!-- Error pages -->
+    <!--  Error pages -->
     <error-page>
         <error-code>500</error-code>
         <location>/error-pages/500.jsp</location>
@@ -246,6 +248,7 @@
     <listener>
         <listener-class>org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
     </listener>
+	
     <servlet>
         <servlet-name>BonitaRestAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>
@@ -549,7 +552,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProcessFormServlet</servlet-name>
-        <url-pattern>/portal/processForm</url-pattern>
+        <url-pattern>/portal/form/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>formsCache</servlet-name>

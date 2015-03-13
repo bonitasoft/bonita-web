@@ -1,8 +1,11 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import java.io.Serializable;
 
@@ -27,8 +30,7 @@ public class ActivityVariableResourceTest {
 
     @Before
     public void initializeMocks() {
-        activityVariableResource = spy(new ActivityVariableResource());
-        doReturn(processAPI).when(activityVariableResource).getEngineProcessAPI();
+        activityVariableResource = spy(new ActivityVariableResource(processAPI));
     }
 
     @Test(expected = APIException.class)

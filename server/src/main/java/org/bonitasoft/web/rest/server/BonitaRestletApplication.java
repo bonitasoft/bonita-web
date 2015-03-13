@@ -24,7 +24,10 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Request;
@@ -62,21 +65,31 @@ public class BonitaRestletApplication extends Application {
     protected Router buildRouter() {
         final Context context = getContext();
         final Router router = new Router(context);
+        // WARNING: if you add a route you need to declare a static finder class in org.bonitasoft.web.rest.server.FinderFactory
+
         // GET an activityData:
         router.attach("/bpm/activityVariable/{" + ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID + "}/{" + ActivityVariableResource.ACTIVITYDATA_DATA_NAME
-                + "}", ActivityVariableResource.class);
+                + "}", factory.create(ActivityVariableResource.class));
         // GET to search timer event triggers:
-        router.attach("/bpm/timerEventTrigger", TimerEventTriggerResource.class);
+        router.attach("/bpm/timerEventTrigger", factory.create(TimerEventTriggerResource.class));
         // PUT to update timer event trigger date:
-        router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", TimerEventTriggerResource.class);
+        router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", factory.create(TimerEventTriggerResource.class));
         // GET to case info (with task state counter)
-        router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", CaseInfoResource.class);
+        router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
+
+        router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskContractResource.class));
+        router.attach("/bpm/tasks/{taskId}/execution", factory.create(TaskExecutionResource.class));
+        // GET to search form mappings:
+        router.attach("/form/mapping", factory.create(FormMappingResource.class));
+        // PUT to update form mapping:
+        router.attach("/form/mapping/{" + FormMappingResource.ID_PARAM_NAME + "}", factory.create(FormMappingResource.class));
 
         router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
         router.attach("/bdm/businessData/{className}/{id}", factory.create(BusinessDataResource.class));
         router.attach("/bdm/businessData/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));
         router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
         router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
+
         return router;
     }
 

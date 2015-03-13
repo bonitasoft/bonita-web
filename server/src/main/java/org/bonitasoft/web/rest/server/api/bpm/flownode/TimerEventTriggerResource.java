@@ -17,9 +17,11 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.util.Date;
 import java.util.List;
 
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Get;
@@ -34,6 +36,12 @@ public class TimerEventTriggerResource extends CommonResource {
 
     public static final String ID_PARAM_NAME = "id";
 
+    private final ProcessAPI processAPI;
+
+    public TimerEventTriggerResource(final ProcessAPI processAPI) {
+        this.processAPI = processAPI;
+    }
+
     @Get("json")
     public List<TimerEventTriggerInstance> searchTimerEventTriggers() {
         try {
@@ -46,7 +54,9 @@ public class TimerEventTriggerResource extends CommonResource {
     }
 
     protected List<TimerEventTriggerInstance> runEngineSearch(final long caseId, final SearchOptions searchOptions) throws SearchException {
-        return getEngineProcessAPI().searchTimerEventTriggerInstances(caseId, searchOptions).getResult();
+        final SearchResult<TimerEventTriggerInstance> searchResult = processAPI.searchTimerEventTriggerInstances(caseId, searchOptions);
+        setContentRange(searchResult);
+        return searchResult.getResult();
     }
 
     @Put("json")
@@ -57,7 +67,7 @@ public class TimerEventTriggerResource extends CommonResource {
         }
         final long timerEventTriggerInstanceId = Long.parseLong(triggerId);
         final Date executionDate = new Date(trigger.getExecutionDate());
-        return createTimerEventTrigger(getEngineProcessAPI().updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate)
+        return createTimerEventTrigger(processAPI.updateExecutionDateOfTimerEventTriggerInstance(timerEventTriggerInstanceId, executionDate)
                 .getTime());
     }
 

@@ -8,48 +8,32 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.api.resource;
 
-import org.restlet.ext.jackson.JacksonRepresentation;
+import java.util.List;
 
 /**
  * Representation for error entity
  *
  * @author Colin Puy
  */
-public class ErrorMessage {
+public class ErrorMessageWithExplanations extends ErrorMessage {
 
-    private String exception; // might be 'type' with simple name of exception
-    private String message;
+    private List<String> explanations;
 
     // DO NOT PUT stacktrace, this is not coherent with old API toolkit but as a client of REST API, I do not need stacktrace.
 
-    public ErrorMessage() {
+    public ErrorMessageWithExplanations() {
         // empty constructor for json serialization
     }
 
-    public ErrorMessage(final Throwable t) {
-        if (t != null) {
-            exception = t.getClass().toString();
-            message = t.getMessage();
-        }
+    public ErrorMessageWithExplanations(final Throwable t) {
+        super(t);
     }
 
-    public String getException() {
-        return exception;
+    public List<String> getExplanations() {
+        return explanations;
     }
 
-    public void setException(final String exception) {
-        this.exception = exception;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(final String message) {
-        this.message = message;
-    }
-
-    public JacksonRepresentation<ErrorMessage> toEntity() {
-        return new JacksonRepresentation<ErrorMessage>(this);
+    public void setExplanations(final List<String> explanations) {
+        this.explanations = explanations;
     }
 }

@@ -15,6 +15,7 @@
 package org.bonitasoft.forms.server;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
@@ -34,8 +35,10 @@ import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.themes.CompilableFile;
 import org.bonitasoft.console.common.server.themes.ThemeArchive;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
+import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.ThemeAPI;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
@@ -43,13 +46,14 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.theme.Theme;
 import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
+import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
 
 /**
  * Servlet for requesting home page
- * 
+ *
  * @author Ruiheng Fan, Vincent Elcrin, Anthony Birembaut
  */
 public class HomepageServlet extends ThemeResourceServlet {
@@ -167,7 +171,7 @@ public class HomepageServlet extends ThemeResourceServlet {
     protected void updateThemeFromEngine(final APISession apiSession, final File portalThemeDirectory, final File timestampFile, final long lastUpdateTimestamp)
             throws BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException, IOException {
-        Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
+        final Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
         new ThemeArchive(theme.getContent())
                 .extract(portalThemeDirectory)
                 .compile(CompilableFile.ALWAYS_COMPILED_FILES)
@@ -204,16 +208,28 @@ public class HomepageServlet extends ThemeResourceServlet {
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(apiSession.getTenantId());
             final Date deployemenDate = formServiceProvider.getDeployementDate(context);
             // Make sure the application content has already been retrieved
-            FormDocumentBuilderFactory.getFormDocumentBuilder(apiSession, applicationID, Locale.ENGLISH.getLanguage(), deployemenDate);
+            ensureApplicationFolderExists(apiSession, applicationID, deployemenDate);
             myApplicationsFolder = formServiceProvider.getApplicationResourceDir(deployemenDate, context);
         } catch (final Throwable e) {
             final String errorMessage = "Error while using the servlet ThemeResourceServlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+                LOGGER.log(Level.WARNING, errorMessage, e);
             }
             throw new ServletException(errorMessage);
         }
         return myApplicationsFolder;
+    }
+
+    protected static void ensureApplicationFolderExists(final APISession apiSession, final long applicationID, final Date deployemenDate)
+            throws ProcessDefinitionNotFoundException, IOException, InvalidFormDefinitionException, BPMEngineException {
+        try {
+            FormDocumentBuilderFactory.getFormDocumentBuilder(apiSession, applicationID, Locale.ENGLISH.getLanguage(), deployemenDate);
+        } catch (final FileNotFoundException e) {
+            //Do nothing: there might be no forms.xml in the business archive
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "There is no forms definition file in the application " + applicationID);
+            }
+        }
     }
 
     protected static APISession getEngineSession(final HttpServletRequest request) {
