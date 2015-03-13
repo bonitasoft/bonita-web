@@ -215,35 +215,58 @@ msgstr ""
 msgid  "Loading..."
 msgstr ""
 
-msgid  "Totals"
+msgid  "sort by ID ascending"
+msgstr ""
+ 
+msgid  "sort by ID descending"
+msgstr ""
+ 
+msgid  "sort by Process name ascending"
+msgstr ""
+ 
+msgid  "sort by Process name descending"
+msgstr ""
+ 
+msgid  "sort by Start date ascending"
+msgstr ""
+ 
+msgid  "sort by Start date descending"
+msgstr ""
+ 
+msgid  "sort by End date ascending"
+msgstr ""
+ 
+msgid  "sort by End date descending"
 msgstr ""
 
-msgid  "View process design"
+msgid  "sort by State ascending"
 msgstr ""
 
-msgid  "View case design"
+msgid  "sort by State descending"
 msgstr ""
 
-# Case Visu - Show Key
-msgid  "Show key"
+msgid  "sort by Version ascending"
 msgstr ""
 
-msgid  "Task1"
+msgid  "sort by Version descending"
 msgstr ""
 
-msgid  "Cancelled, skipped instances"
+msgid  "sort by Cases with failures ascending"
 msgstr ""
 
-msgid  "Completed instances"
+msgid  "sort by Cases with failures descending"
 msgstr ""
 
-msgid  "Failed instances"
+msgid  "sort by Healthy cases ascending"
 msgstr ""
 
-msgid  "Executing, completing, initializing instances"
+msgid  "sort by Healthy cases descending"
 msgstr ""
 
-msgid  "Ready, waiting instances"
+msgid  "sort by Open cases ascending"
+msgstr ""
+
+msgid  "sort by Open cases descending"
 msgstr ""
 
 msgid  "Items per page"
@@ -255,80 +278,11 @@ msgstr ""
 msgid  "Table settings"
 msgstr ""
 
-msgid  "sort by ID ascendant"
+msgid  "Hide"
 msgstr ""
-
-msgid  "sort by ID descendant"
+ 
+msgid  "Show"
 msgstr ""
-
-msgid  "sort by Process name ascendant"
-msgstr ""
-
-msgid  "sort by Process name descendant"
-msgstr ""
-
-msgid  "sort by Start date ascendant"
-msgstr ""
-
-msgid  "sort by Start date descendant"
-msgstr ""
-
-msgid  "sort by End date ascendant"
-msgstr ""
-
-msgid  "sort by End date descendant"
-msgstr ""
-
-msgid  "Hide 'ID'"
-msgstr ""
-
-msgid  "Hide 'Process name'"
-msgstr ""
-
-msgid  "Hide 'Version'"
-msgstr ""
-
-msgid  "Hide 'Start date'"
-msgstr ""
-
-msgid  "Hide 'End date'"
-msgstr ""
-
-msgid  "Hide 'Started by'"
-msgstr ""
-
-msgid  "Hide 'Failed Flow Nodes'"
-msgstr ""
-
-msgid  "Hide 'Pending Flow Nodes'"
-msgstr ""
-
-msgid  "Hide 'State'"
-msgstr ""
-
-msgid  "Show 'ID'"
-msgstr ""
-
-msgid  "Show 'Process name'"
-msgstr ""
-
-msgid  "Show 'Version'"
-msgstr ""
-
-msgid  "Show 'Start date'"
-msgstr ""
-
-msgid  "Show 'End date'"
-msgstr ""
-
-msgid  "Show 'Started by'"
-msgstr ""
-
-msgid  "Show 'Failed Flow Nodes'"
-msgstr ""
-
-msgid  "Show 'Pending Flow Nodes'"
-msgstr ""
-
-msgid  "Show 'State'"
+ 
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr ""
