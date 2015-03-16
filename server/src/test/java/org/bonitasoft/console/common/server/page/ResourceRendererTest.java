@@ -77,14 +77,15 @@ public class ResourceRendererTest {
     @Test
     public void renderFile_should_build_a_valid_response() throws BonitaException, URISyntaxException, IOException, IllegalAccessException, InstantiationException {
         File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
+        long contentLength = resourceFile.length();
         when(servletContext.getMimeType("file.css")).thenReturn("text/css");
         resourceRenderer.renderFile(req, res, resourceFile);
 
         verify(res).setCharacterEncoding("UTF-8");
         verify(servletContext).getMimeType("file.css");
         verify(res).setContentType("text/css");
-        verify(res).setContentLength(42);
-        verify(res).setBufferSize(42);
+        verify(res).setContentLength((int)contentLength);
+        verify(res).setBufferSize((int)contentLength);
         verify(res).setHeader("Cache-Control", "no-cache");
         verify(outputStream).write(any(byte[].class), eq(0), eq(42));
         verify(res).flushBuffer();

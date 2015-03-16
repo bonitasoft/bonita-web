@@ -130,7 +130,7 @@ public class CustomPageServletTest {
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, "\\resources\\css\\file.css"));
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"));
     }
 
     @Test(expected=ServletException.class)
