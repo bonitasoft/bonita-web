@@ -41,7 +41,6 @@ import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityStates;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
@@ -484,9 +483,10 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     public long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, BPMEngineException,
             UserNotFoundException, SearchException, ProcessDefinitionNotFoundException {
         try {
-            final long rootProcessInstanceId = getRootProcessInstanceId(getProcessAPI(session), processInstanceId);
+            final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+            final long rootProcessInstanceId = getRootProcessInstanceId(processAPI, processInstanceId);
             if (rootProcessInstanceId != NOT_FOUND) {
-                return getProcessInstanceTaskAvailableForUser(getProcessAPI(session), rootProcessInstanceId, session.getUserId());
+                return getProcessInstanceTaskAvailableForUser(processAPI, rootProcessInstanceId, session.getUserId());
             } else {
                 return NOT_FOUND;
             }
@@ -807,23 +807,23 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public boolean isUserAdminOrProcessOwner(final APISession session, final long processInstanceID) throws UserNotFoundException, InvalidSessionException,
-            ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException {
-        final ProfileAPI profileAPI = getProfileAPI(session);
+    public boolean isUserAdminOrProcessOwner(final APISession session, final long processDefinitionId) throws UserNotFoundException, InvalidSessionException,
+            ProcessDefinitionNotFoundException, BPMEngineException {
+        final ProfileAPI profileAPI = getBpmEngineAPIUtil().getProfileAPI(session);
         final List<Profile> profiles = profileAPI.getProfilesForUser(session.getUserId());
         for (final Profile profile : profiles) {
             if (ADMIN_PROFILE_NAME.equals(profile.getName())) {
                 return true;
             }
         }
-        final ProcessAPI processAPI = getProcessAPI(session);
-        return processAPI.isUserProcessSupervisor(getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID), session.getUserId());
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        return processAPI.isUserProcessSupervisor(processDefinitionId, session.getUserId());
     }
 
     @Override
     public Boolean canStartProcessDefinition(final APISession session, final long userId, final long processDefinitionId) throws BPMEngineException {
         try {
-            final CommandAPI commandAPI = getCommandApi(session);
+            final CommandAPI commandAPI = getBpmEngineAPIUtil().getCommandAPI(session);
             final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
             if (userId != -1) {
                 parameters.put("USER_ID_KEY", userId);
@@ -853,31 +853,28 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     }
 
     @Override
-    public Boolean isInvolvedInHumanTask(final APISession session, final long userId, final long humanTaskInstanceId) throws BPMEngineException {
-        try {
-            final CommandAPI commandAPI = getCommandApi(session);
-            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-            parameters.put("USER_ID_KEY", userId);
-            parameters.put("HUMAN_TASK_INSTANCE_ID_KEY", humanTaskInstanceId);
-            return (Boolean) commandAPI.execute("isInvolvedInHumanTask", parameters);
-        } catch (final CommandExecutionException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE,
-                        "The engine was not able to find out if the user is involved in the human task instance. Error while executing command:");
-            }
-            throw new BPMEngineException(e);
-        } catch (final CommandParameterizationException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE,
-                        "The engine was not able to find out if the user is involved in the human task instance. Error in the parameters of the command:");
-            }
-            throw new BPMEngineException(e);
-        } catch (final CommandNotFoundException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Unknown engine command:");
-            }
-            throw new BPMEngineException(e);
-        }
+    public Boolean canUserSeeHumanTask(final APISession session, final long userId, final long humanTaskInstanceId) throws BPMEngineException,
+            ActivityInstanceNotFoundException, UserNotFoundException {
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        return processAPI.isInvolvedInHumanTaskInstance(session.getUserId(), humanTaskInstanceId);
+        //restore this if the manager of a user should see his tasks
+        //        if (!isInvolvedInHumanTaskInstance && userId != -1L) {
+        //            try {
+        //                final IdentityAPI identityAPI = getBpmEngineAPIUtil().getIdentityAPI(session);
+        //                if (session.getUserId() != identityAPI.getUser(userId).getManagerUserId()) {
+        //                    return false;
+        //                } else {
+        //                    isInvolvedInHumanTaskInstance = processAPI.isInvolvedInHumanTaskInstance(userId, humanTaskInstanceId);
+        //                }
+        //            } catch (final BonitaException e) {
+        //                if (LOGGER.isLoggable(Level.SEVERE)) {
+        //                    LOGGER.log(Level.SEVERE,
+        //                            "The engine was not able to find out if the user is a manager of a user involved in the task " + humanTaskInstanceId);
+        //                }
+        //                throw new BPMEngineException(e);
+        //            }
+        //        }
+        //        return isInvolvedInHumanTaskInstance;
     }
 
     /**
@@ -886,7 +883,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        final ProcessAPI processAPI = getProcessApi(session);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
         if (!involvedInProcessInstance) {
             try {
@@ -894,21 +891,13 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             } catch (final BonitaException e) {
                 if (LOGGER.isLoggable(Level.SEVERE)) {
                     LOGGER.log(Level.SEVERE,
-                            "The engine was not able to find out if the user is a manager of a user involved in the process instance.");
+                            "The engine was not able to find out if the user is a manager of a user involved in the process instance " + processInstanceID);
                 }
                 throw new BPMEngineException(e);
             }
         }
         return involvedInProcessInstance;
 
-    }
-
-    protected ProcessAPI getProcessApi(final APISession session) throws BPMEngineException {
-        return bpmEngineAPIUtil.getProcessAPI(session);
-    }
-
-    protected CommandAPI getCommandApi(final APISession session) throws BPMEngineException {
-        return bpmEngineAPIUtil.getCommandAPI(session);
     }
 
     /**
@@ -1207,23 +1196,16 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return displayName;
     }
 
-    private ProcessAPI getProcessAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
-        return getBpmEngineAPIUtil().getProcessAPI(session);
-    }
-
-    private ProfileAPI getProfileAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
-        return bpmEngineAPIUtil.getProfileAPI(session);
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void assignTask(final APISession session, final long taskId) throws TaskAssignationException, InvalidSessionException {
         try {
-            final HumanTaskInstance humanTaskInstance = getProcessAPI(session).getHumanTaskInstance(taskId);
+            final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+            final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(taskId);
             if (humanTaskInstance.getAssigneeId() != session.getUserId()) {
-                getProcessAPI(session).assignUserTask(taskId, session.getUserId());
+                processAPI.assignUserTask(taskId, session.getUserId());
             }
         } catch (final BPMEngineException e) {
             throw new TaskAssignationException("An error occured while communicating with the engine", e);
@@ -1237,7 +1219,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean isTaskReady(final APISession session, final long activityInstanceID) throws BPMEngineException, InvalidSessionException {
         try {
-            final HumanTaskInstance taskInstance = getProcessAPI(session).getHumanTaskInstance(activityInstanceID);
+            final HumanTaskInstance taskInstance = getBpmEngineAPIUtil().getProcessAPI(session).getHumanTaskInstance(activityInstanceID);
             return ActivityStates.READY_STATE.equals(taskInstance.getState());
         } catch (final ActivityInstanceNotFoundException e) {
             return false;
