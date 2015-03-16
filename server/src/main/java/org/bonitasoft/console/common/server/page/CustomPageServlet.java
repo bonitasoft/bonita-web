@@ -55,6 +55,8 @@ public class CustomPageServlet extends HttpServlet {
 
     protected TenantFolder tenantFolder = new TenantFolder();
 
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
+
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         /*
@@ -62,7 +64,7 @@ public class CustomPageServlet extends HttpServlet {
          * If missing, redirect to "custom-page/page-name/"
          */
         if (isPageUrlWithoutFinalSlash(request)) {
-            response.sendRedirect(request.getRequestURL() + "/");
+            customPageRequestModifier.redirectToValidPageUrl(request, response);
             return;
         }
 

@@ -41,7 +41,7 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNullId() throws Exception {
 
-        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -51,7 +51,7 @@ public class FormMappingResourceTest extends RestletTest {
 
         doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", FormMappingTarget.INTERNAL.name());
 
-        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\" }");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
     }
@@ -102,7 +102,7 @@ public class FormMappingResourceTest extends RestletTest {
 
         doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL.name());
 
-        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
         verify(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL.name());

@@ -1,6 +1,5 @@
 package org.bonitasoft.console.common.server.page;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -10,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
@@ -31,6 +29,7 @@ public class CustomPageServletTest {
 
     MockHttpServletRequest hsRequest = new MockHttpServletRequest();
 
+    @Mock
     MockHttpServletResponse hsResponse = new MockHttpServletResponse();
 
     @Mock
@@ -54,6 +53,9 @@ public class CustomPageServletTest {
     @Mock
     TenantFolder tenantFolder;
 
+    @Mock
+    CustomPageRequestModifier customPageRequestModifier;
+
     @Spy
     @InjectMocks
     CustomPageServlet servlet;
@@ -76,8 +78,7 @@ public class CustomPageServletTest {
 
         servlet.doGet(hsRequest, hsResponse);
 
-        assertThat(hsResponse.getStatus()).isEqualTo(403);
-        assertThat(hsResponse.getErrorMessage()).isEqualTo("User not Authorized");
+        verify(hsResponse).sendError(403 ,"User not Authorized");
     }
 
     @Test
@@ -86,18 +87,17 @@ public class CustomPageServletTest {
 
         servlet.doGet(hsRequest, hsResponse);
 
-        assertThat(hsResponse.getStatus()).isEqualTo(400);
-        assertThat(hsResponse.getErrorMessage()).isEqualTo("The name of the page is required.");
+        verify(hsResponse).sendError(400, "The name of the page is required.");
     }
 
     @Test
     public void should_redirect_to_valide_url_on_missing_slash() throws Exception {
-        hsRequest.setRequestURI("/bonita/portal/custom-page/custompage_htmlexample");
+        hsRequest.setRequestURI("/bonita/portal/custom-page/custompage_htmlexample?anyparam=paramvalue");
         hsRequest.setPathInfo("/custompage_htmlexample");
 
         servlet.doGet(hsRequest, hsResponse);
 
-        assertThat(hsResponse.getRedirectedUrl()).endsWith("/custompage_htmlexample/");
+        verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
     }
 
     @Test

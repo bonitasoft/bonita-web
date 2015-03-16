@@ -53,8 +53,10 @@ public class PageRenderer {
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
+        PageResourceProvider pageResourceProvider = getPageResourceProvider(pageName,apiSession.getTenantId());
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageName, pageResourceProvider);
         if (isGroovyPage(pageName, apiSession)) {
-            displayGroovyPage(request, response, apiSession, pageName);
+            displayGroovyPage(request, response, apiSession, pageName, pageResourceProvider);
         } else {
             displaySimpleHtmlPage(request, response, apiSession, pageName);
         }
@@ -87,9 +89,8 @@ public class PageRenderer {
         return new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY);
     }
 
-    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
+    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName, final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
-        final PageResourceProvider pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageName, pageResourceProvider);
         try {

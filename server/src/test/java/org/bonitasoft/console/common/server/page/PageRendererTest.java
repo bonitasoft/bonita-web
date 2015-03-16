@@ -73,7 +73,7 @@ public class PageRendererTest{
     public void should_display_html_page() throws Exception {
         String pageName = "my_html_page_v_7";
         File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
-        File indexFile = new File(pageDir, "resources"+File.separator+"Index.html");
+        File indexFile = new File(pageDir, "resources"+File.separator+"index.html");
 
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
@@ -90,7 +90,7 @@ public class PageRendererTest{
 
         String pageName = "my_html_page_v_6";
         File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
-        File indexFile = new File(pageDir, File.separator+"Index.html");
+        File indexFile = new File(pageDir, "index.html");
 
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
