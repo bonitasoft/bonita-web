@@ -9,7 +9,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 
@@ -17,19 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstanceNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.junit.Test;
+import org.restlet.Response;
+import org.restlet.util.Series;
 
 public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
 
-    // For Integration tests:
-    TimerEventTriggerResource restResource = spy(new TimerEventTriggerResource());
+    private TimerEventTriggerResource restResource;
 
     @Override
     public void consoleTestSetUp() throws Exception {
+        restResource = spy(new TimerEventTriggerResource(TenantAPIAccessor.getProcessAPI(getInitiator().getSession())));
         doReturn(mock(HttpServletRequest.class)).when(restResource).getHttpRequest();
         final HttpSession session = mock(HttpSession.class);
         doReturn(session).when(restResource).getHttpSession();
@@ -39,11 +41,14 @@ public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
         doReturn(0).when(restResource).getIntegerParameter(anyString(), anyBoolean());
         doReturn(0L).when(restResource).getLongParameter(anyString(), anyBoolean());
         doReturn("").when(restResource).getParameter(anyString(), anyBoolean());
+        final Response response = mock(Response.class);
+        doReturn(mock(Series.class)).when(response).getHeaders();
+        doReturn(response).when(restResource).getResponse();
         doReturn(Collections.emptyList()).when(restResource).getParameterAsList(anyString());
     }
 
     @Test
-    public void searchTimerEventTriggersShouldReturnStatusCode200() throws IOException {
+    public void searchTimerEventTriggersShouldReturnStatusCode200() throws Exception {
         assertThat(restResource.searchTimerEventTriggers().toString()).isEqualTo("[]");
     }
 
@@ -58,9 +63,9 @@ public class TimerEventTriggerResourceIT extends AbstractConsoleTest {
     @Test
     public void updateTimerEventTriggersShouldReturnStatusCode200() throws Exception {
         final long timerEventTriggerId = 1L;
-        doReturn("" + timerEventTriggerId).when(restResource).getAttribute(TimerEventTriggerResource.ID_PARAM_NAME);
         final ProcessAPI processAPI = mock(ProcessAPI.class);
-        doReturn(processAPI).when(restResource).getEngineProcessAPI();
+        restResource = spy(new TimerEventTriggerResource(processAPI));
+        doReturn("" + timerEventTriggerId).when(restResource).getAttribute(TimerEventTriggerResource.ID_PARAM_NAME);
         final Date date = new Date();
         doReturn(date).when(processAPI).updateExecutionDateOfTimerEventTriggerInstance(eq(timerEventTriggerId), any(Date.class));
         final TimerEventTrigger trigger = new TimerEventTrigger(System.currentTimeMillis());

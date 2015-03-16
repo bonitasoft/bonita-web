@@ -22,7 +22,6 @@ import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
 import org.bonitasoft.engine.command.CommandParameterizationException;
-import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +63,7 @@ public class BusinessDataResourceTest extends RestletTest {
 
         final Response response = request("/bdm/businessData/org.bonitasoft.pojo.Employee/1983").get();
 
-        assertThat(response.getStatus()).isEqualTo(Status.SERVER_ERROR_INTERNAL);
+        assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
     }
 
     @Test

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -103,7 +102,7 @@ public class TodoListTaskWidget extends Composite {
 
     /**
      * Default Constructor.
-     * 
+     *
      * @param applicationHTMLPanel
      * @param elementId
      * @param currentPageHTMLPanel
@@ -132,14 +131,14 @@ public class TodoListTaskWidget extends Composite {
 
     /**
      * Fetch tasks timer creation
-     * 
+     *
      * @return
      */
     private FetchTaskTimer createFetchTaskTimer() {
         return new FetchTaskTimer(formId, urlContext) {
 
             @Override
-            public void onTaskFound(FormURLComponents nextFormURL) {
+            public void onTaskFound(final FormURLComponents nextFormURL) {
                 addAvailableTaskMessage();
                 addTaskFound(nextFormURL);
             }
@@ -150,21 +149,21 @@ public class TodoListTaskWidget extends Composite {
             }
 
             @Override
-            public void onTaskFetchingFailed(Throwable caught) {
+            public void onTaskFetchingFailed(final Throwable caught) {
                 showErrorPage();
             }
         };
     }
 
     private void addAvailableTaskMessage() {
-        Label label = new Label(FormsResourceBundle.getMessages().aTaskIsNowAvailableMessage());
+        final Label label = new Label(FormsResourceBundle.getMessages().aTaskIsNowAvailableMessage());
         label.setStyleName(AVAILABLE_TASK_TITLE_CSS_CLASS);
         flowPanel.add(label);
     }
 
     /**
      * Add task widgets to the page
-     * 
+     *
      * @param nextFormURL
      */
     private void addTaskFound(final FormURLComponents nextFormURL) {
@@ -176,24 +175,24 @@ public class TodoListTaskWidget extends Composite {
     }
 
     private void addNoTaskAvailableMessage() {
-        Label label = new Label(FormsResourceBundle.getMessages().noTaskAvailableMessage());
+        final Label label = new Label(FormsResourceBundle.getMessages().noTaskAvailableMessage());
         label.setStyleName(NO_TASK_AVAILABLE_CSS_CLASS);
         flowPanel.add(label);
     }
 
     /**
      * Create task link to assign and redirect user
-     * 
+     *
      * @param nextTaskName
      * @param nextFormURL
      * @return
      */
     private Label createTaskLink(final String nextTaskName, final FormURLComponents nextFormURL) {
-        Label link = new Label(nextTaskName);
+        final Label link = new Label(nextTaskName);
         link.addClickHandler(new ClickHandler() {
 
             @Override
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 redirectToNextTaskForm(nextFormURL);
             }
         });
@@ -206,17 +205,17 @@ public class TodoListTaskWidget extends Composite {
         getFormService().getLoggedInUser(new AsyncCallback<User>() {
 
             @Override
-            public void onSuccess(User result) {
+            public void onSuccess(final User result) {
                 buildUrlAndRedirectToNextTaskForm(nextFormURL);
             }
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onFailure(final Throwable caught) {
                 try {
                     throw caught;
-                } catch (SessionTimeoutException e) {
+                } catch (final SessionTimeoutException e) {
                     handleSessionTimeout(nextFormURL);
-                } catch (Throwable e) {
+                } catch (final Throwable e) {
                     GWT.log(e.getMessage(), e);
                 }
 
@@ -230,25 +229,16 @@ public class TodoListTaskWidget extends Composite {
      */
     private void buildUrlAndRedirectToNextTaskForm(final FormURLComponents nextFormURL) {
         changeUrlContextSafely(nextFormURL.getUrlContext());
-
-        final String applicationURL = nextFormURL.getApplicationURL();
-        urlContext.put(URLUtils.ASSIGN_TASK, true);
-        if (applicationURL != null) {
-            final String url = urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
-            if (domUtils.isPageInFrame()) {
-                urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
-            } else {
-                urlUtils.windowAssign(url);
-            }
+        final String url = urlUtils.getFormRedirectionUrl(urlContext);
+        if (domUtils.isPageInFrame()) {
+            urlUtils.frameRedirect(DOMUtils.DEFAULT_FORM_ELEMENT_ID, url);
         } else {
-            final String hash = urlUtils.getFormRedirectionHash(urlContext);
-            History.newItem(hash);
+            urlUtils.windowAssign(url);
         }
-        DOMUtils.getInstance().displayLoading();
     }
 
     protected void handleSessionTimeout(final FormURLComponents nextFormURL) {
-        DOMUtils domUtils = DOMUtils.getInstance();
+        final DOMUtils domUtils = DOMUtils.getInstance();
         String url = urlUtils.removeURLparameters(Window.Location.getHref());
         if (!domUtils.isPageInFrame()) {
             url += "?redirectUrl=" + URL.encodeQueryString(getUrlToNextTaskForm(nextFormURL));
@@ -258,21 +248,12 @@ public class TodoListTaskWidget extends Composite {
 
     /**
      * @param nextFormURL
-     * 
+     *
      * @return the next task form URL
      */
     private String getUrlToNextTaskForm(final FormURLComponents nextFormURL) {
         changeUrlContextSafely(nextFormURL.getUrlContext());
-        urlContext.put(URLUtils.ASSIGN_TASK, true);
-
-        String applicationURL = nextFormURL.getApplicationURL();
-        if (applicationURL != null) {
-            applicationURL = GWT.getModuleBaseURL() + applicationURL;
-        } else {
-            applicationURL = urlUtils.removeURLparameters(Window.Location.getHref());
-        }
-
-        return urlUtils.getFormRedirectionUrl(applicationURL, urlContext);
+        return urlUtils.getFormRedirectionUrl(urlContext);
     }
 
     private void changeUrlContextSafely(final Map<String, Object> urlContextMap) {
