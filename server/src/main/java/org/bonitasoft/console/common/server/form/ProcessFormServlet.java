@@ -31,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 import org.bonitasoft.console.common.server.login.localization.UrlValue;
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
@@ -79,6 +80,8 @@ public class ProcessFormServlet extends HttpServlet {
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
+
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
@@ -110,7 +113,7 @@ public class ProcessFormServlet extends HttpServlet {
             }
             // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
             if (resourcePath == null && !request.getPathInfo().endsWith("/")) {
-                redirectToCorrectURL(request, response);
+                customPageRequestModifier.redirectToValidPageUrl(request, response);
                 return;
             }
             processDefinitionId = processFormService.ensureProcessDefinitionId(apiSession, processDefinitionId, processInstanceId, taskInstanceId);
@@ -293,17 +296,6 @@ public class ProcessFormServlet extends HttpServlet {
                 .append(TASK_INSTANCE_PATH_SEGMENT)
                 .append("/")
                 .append(taskInstanceId)
-                .append("/");
-        final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
-        urlBuilder.appendParameters(request.getParameterMap());
-        response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
-    }
-
-    @SuppressWarnings("unchecked")
-    private void redirectToCorrectURL(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
-        final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
-        taskURLBuilder.append(request.getServletPath())
-                .append(request.getPathInfo())
                 .append("/");
         final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
         urlBuilder.appendParameters(request.getParameterMap());

@@ -31,6 +31,7 @@ public class CustomPageServletTest {
 
     MockHttpServletRequest hsRequest = new MockHttpServletRequest();
 
+    @Mock
     MockHttpServletResponse hsResponse = new MockHttpServletResponse();
 
     @Mock
@@ -53,6 +54,9 @@ public class CustomPageServletTest {
 
     @Mock
     TenantFolder tenantFolder;
+
+    @Mock
+    CustomPageRequestModifier customPageRequestModifier;
 
     @Spy
     @InjectMocks
@@ -92,12 +96,12 @@ public class CustomPageServletTest {
 
     @Test
     public void should_redirect_to_valide_url_on_missing_slash() throws Exception {
-        hsRequest.setRequestURI("/bonita/portal/custom-page/custompage_htmlexample");
+        hsRequest.setRequestURI("/bonita/portal/custom-page/custompage_htmlexample?anyparam=paramvalue");
         hsRequest.setPathInfo("/custompage_htmlexample");
 
         servlet.doGet(hsRequest, hsResponse);
 
-        assertThat(hsResponse.getRedirectedUrl()).endsWith("/custompage_htmlexample/");
+        verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
     }
 
     @Test
