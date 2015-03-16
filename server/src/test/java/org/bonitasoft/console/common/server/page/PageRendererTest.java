@@ -90,7 +90,7 @@ public class PageRendererTest{
 
         String pageName = "my_html_page_v_6";
         File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
-        File indexFile = new File(pageDir, File.separator+"index.html");
+        File indexFile = new File(pageDir, "index.html");
 
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
