@@ -1,11 +1,17 @@
-/*******************************************************************************
+/**
  * Copyright (C) 2009, 2013 BonitaSoft S.A.
- * BonitaSoft is a trademark of BonitaSoft SA.
- * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
- * For commercial licensing information, contact:
- * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
- * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
- *******************************************************************************/
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.console.client.admin.bpm.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
@@ -42,24 +48,24 @@ public class TaskTechnicalInformationSnippet implements SectionSnippet {
     public Section build() {
         String template = "";
 
-        final Arg executedByArg = buildExecutedByArg(this.activity);
+        final Arg executedByArg = buildExecutedByArg(activity);
 
-        if (TaskItem.VALUE_STATE_READY.equals(this.activity.getState())) {
+        if (TaskItem.VALUE_STATE_READY.equals(activity.getState())) {
             template = _("Ready since %task_last_update%",
-                    new Arg("task_last_update", DateFormat.dateToDisplayShort(this.activity.getLastUpdateDate())));
+                    new Arg("task_last_update", DateFormat.dateToDisplayShort(activity.getLastUpdateDate())));
 
-        } else if (TaskItem.VALUE_STATE_COMPLETED.equals(this.activity.getState())) {
+        } else if (TaskItem.VALUE_STATE_COMPLETED.equals(activity.getState())) {
             template = _("Done %task_last_update% by %executed_by%",
-                    new Arg("task_last_update", DateFormat.dateToDisplayShort(this.activity.getLastUpdateDate())),
+                    new Arg("task_last_update", DateFormat.dateToDisplayShort(activity.getLastUpdateDate())),
                     executedByArg);
 
-        } else if (TaskItem.VALUE_STATE_FAILED.equals(this.activity.getState())) {
+        } else if (TaskItem.VALUE_STATE_FAILED.equals(activity.getState())) {
             template = _("Failed on %task_last_update%",
-                    new Arg("task_last_update", DateFormat.dateToDisplay(this.activity.getLastUpdateDate())));
+                    new Arg("task_last_update", DateFormat.dateToDisplay(activity.getLastUpdateDate())));
 
-        } else if (TaskItem.VALUE_STATE_SKIPPED.equals(this.activity.getState())) {
+        } else if (TaskItem.VALUE_STATE_SKIPPED.equals(activity.getState())) {
             template = _("Skipped on %task_last_update% by %executed_by%",
-                    new Arg("task_last_update", DateFormat.dateToDisplayShort(this.activity.getLastUpdateDate())),
+                    new Arg("task_last_update", DateFormat.dateToDisplayShort(activity.getLastUpdateDate())),
                     executedByArg);
         }
 

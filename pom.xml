@@ -4,7 +4,7 @@
     <artifactId>bonita-console</artifactId>
     <name>bonita console</name>
     <packaging>pom</packaging>
-    <version>6.5.0-SNAPSHOT</version>
+    <version>7.0.0-SNAPSHOT</version>
 
     <modules>
         <module>looknfeel</module>
@@ -14,6 +14,7 @@
         <module>common</module>
         <module>forms</module>
         <module>server</module>
+        <module>custom-pages</module>
         <module>portal</module>
     </modules>
 
@@ -23,7 +24,7 @@
     </scm>
 
     <properties>
-        <bonita.engine.version>6.5.0-SNAPSHOT</bonita.engine.version>
+        <bonita.engine.version>7.0.0-SNAPSHOT</bonita.engine.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -38,7 +39,7 @@
         <gwtmockito.version>1.1.3</gwtmockito.version>
         <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
         <urlrewrite.version>4.0.3</urlrewrite.version>
-
+        <restlet-version>2.3.1</restlet-version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
@@ -165,7 +166,28 @@
                 <artifactId>lesscss</artifactId>
                 <version>1.3.3</version>
             </dependency>
-
+            <!-- xbean-classloader version should be sync with version used by bonita-server -->
+            <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-classloader</artifactId>
+                <version>3.7</version>
+            </dependency>
+            <!-- Restlet -->
+            <dependency>
+                <groupId>org.restlet.jse</groupId>
+                <artifactId>org.restlet</artifactId>
+                <version>${restlet-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.restlet.jee</groupId>
+                <artifactId>org.restlet.ext.servlet</artifactId>
+                <version>${restlet-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.restlet.jse</groupId>
+                <artifactId>org.restlet.ext.jackson</artifactId>
+                <version>${restlet-version}</version>
+            </dependency>
             <!-- JSON -->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -481,7 +503,7 @@
                                     <version>[3.0.2,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[1.6,)</version>
+                                    <version>[1.7,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -512,8 +534,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>

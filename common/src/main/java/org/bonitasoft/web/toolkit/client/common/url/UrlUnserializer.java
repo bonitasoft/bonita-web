@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,7 @@ import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public class UrlUnserializer extends UrlUtil {
 
@@ -47,7 +47,12 @@ public class UrlUnserializer extends UrlUtil {
 
                 final String[] path = key.replaceAll("\\]", "").split("\\[");
 
-                tree.addValueByPath(path, value);
+                final String[] unescapedPath = new String[path.length];
+                for (int j = 0; j < path.length; j++) {
+                    unescapedPath[j] = unescape(path[j]);
+                }
+
+                tree.addValueByPath(unescapedPath, unescape(value));
 
             }
         }

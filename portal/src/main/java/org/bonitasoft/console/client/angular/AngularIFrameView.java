@@ -13,7 +13,7 @@
  ******************************************************************************/
 package org.bonitasoft.console.client.angular;
 
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.*;
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +38,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class AngularIFrameView extends RawView {
 
     public static final String CASE_LISTING_ADMIN_TOKEN = "caselistingadmin";
+
+    public static final String APPLICATION_LISTING_PAGE = "applicationslistingadmin";
 
     public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
 

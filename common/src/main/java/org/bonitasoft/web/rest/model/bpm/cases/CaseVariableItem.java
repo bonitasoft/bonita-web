@@ -1,11 +1,17 @@
-/*******************************************************************************
+/**
  * Copyright (C) 2009, 2013 BonitaSoft S.A.
- * BonitaSoft is a trademark of BonitaSoft SA.
- * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
- * For commercial licensing information, contact:
- * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
- * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
- *******************************************************************************/
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.web.rest.model.bpm.cases;
 
 import java.io.Serializable;
@@ -17,7 +23,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Colin PUY
- * 
+ *
  */
 public class CaseVariableItem extends Item {
 
@@ -34,7 +40,7 @@ public class CaseVariableItem extends Item {
     public CaseVariableItem() {
     }
 
-    public CaseVariableItem(long caseId, String name, Serializable value, String type, String description) {
+    public CaseVariableItem(final long caseId, final String name, final Serializable value, final String type, final String description) {
         setAttribute(ATTRIBUTE_CASE_ID, String.valueOf(caseId));
         setAttribute(ATTRIBUTE_NAME, name);
         setAttribute(ATTRIBUTE_VALUE, String.valueOf(value));
@@ -42,7 +48,7 @@ public class CaseVariableItem extends Item {
         setAttribute(ATTRIBUTE_DESCRIPTION, description);
     }
 
-    public static CaseVariableItem fromIdAndAttributes(APIID apiid, Map<String, String> attributes) {
+    public static CaseVariableItem fromIdAndAttributes(final APIID apiid, final Map<String, String> attributes) {
         return new CaseVariableItem(apiid.getPartAsLong(ATTRIBUTE_CASE_ID),
                 apiid.getPart(ATTRIBUTE_NAME), attributes.get(ATTRIBUTE_VALUE),
                 attributes.get(ATTRIBUTE_TYPE), attributes.get(ATTRIBUTE_DESCRIPTION));
@@ -73,7 +79,7 @@ public class CaseVariableItem extends Item {
         return getAttributeValue(ATTRIBUTE_DESCRIPTION);
     }
 
-    public void setValue(String value) {
+    public void setValue(final String value) {
         setAttribute(ATTRIBUTE_VALUE, value);
     }
 

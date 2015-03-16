@@ -16,7 +16,8 @@ package org.bonitasoft.console.client.menu.view;
 
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
 import org.bonitasoft.console.client.menu.view.navigation.NavigationMenuView;
-import org.bonitasoft.console.client.menu.view.technicaluser.ConfigurationMenuItem;
+import org.bonitasoft.console.client.menu.view.technicaluser.BPMServicesMenuItem;
+import org.bonitasoft.console.client.menu.view.technicaluser.ResourcesMenuItem;
 import org.bonitasoft.console.client.menu.view.technicaluser.OrganizationMenuItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
@@ -45,6 +46,6 @@ public class TechnicalUserMenuView extends NavigationMenuView {
     }
 
     protected void buildMenu() {
-        navigationMenu.addMenuItem(new OrganizationMenuItem(), new ConfigurationMenuItem());
+        navigationMenu.addMenuItem(new BPMServicesMenuItem(), new OrganizationMenuItem(), new ResourcesMenuItem());
     }
 }

@@ -1,6 +1,8 @@
 package org.bonitasoft.web.rest.server.api.resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
+import static org.bonitasoft.web.rest.server.utils.RestletAppBuilder.aTestApp;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyObject;
@@ -10,6 +12,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +20,28 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
+import org.bonitasoft.web.rest.server.utils.FakeResource;
+import org.bonitasoft.web.rest.server.utils.FakeResource.FakeService;
+import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.restlet.Application;
+import org.restlet.Response;
+import org.restlet.data.Status;
 
-public class CommonResourceTest {
+@RunWith(MockitoJUnitRunner.class)
+public class CommonResourceTest extends RestletTest {
+
+    @Mock
+    private FakeService fakeService;
+
+    @Override
+    protected Application configureApplication() {
+        return aTestApp().attach("/test", new FakeResource(fakeService));
+    }
 
     @Test
     public void getParameterShouldNotVerifyNotNullIfNotMandatory() throws Exception {
@@ -230,4 +251,15 @@ public class CommonResourceTest {
         // when then exception
         final String parameter = spy.getQueryParameter(true);
     }
+
+    @Test
+    public void should_respond_400_bad_request_if_IllegalArgumentException_occurs() throws Exception {
+        when(fakeService.saySomething()).thenThrow(new IllegalArgumentException("an error message"));
+
+        final Response response = request("/test").get();
+
+        assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        assertThat(response).hasJsonEntityEqualTo("{\"exception\":\"class java.lang.IllegalArgumentException\",\"message\":\"an error message\"}'");
+    }
+
 }

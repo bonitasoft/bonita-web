@@ -2,7 +2,7 @@
     <parent>
         <groupId>org.bonitasoft.console</groupId>
         <artifactId>bonita-console</artifactId>
-        <version>6.5.0-SNAPSHOT</version>
+        <version>7.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>console-server</artifactId>
@@ -19,7 +19,6 @@
         <build.year>${maven.build.timestamp}</build.year>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <bonita.home>${bonita.home.test}/bonita</bonita.home>
-        <restlet-version>2.2.2</restlet-version>
     </properties>
 
     <dependencies>
@@ -28,15 +27,15 @@
             <artifactId>console-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <!--forms -->
+        
+        <!--forms-->
         <dependency>
             <groupId>org.bonitasoft.forms</groupId>
             <artifactId>forms-server</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!--Engine -->
+        <!--Engine-->
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-server</artifactId>
@@ -47,7 +46,7 @@
             <artifactId>bonita-client</artifactId>
         </dependency>
 
-        <!--Vendors -->
+        <!--Vendors-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -70,7 +69,7 @@
             <artifactId>jettison</artifactId>
         </dependency>
 
-        <!--Test -->
+        <!--Test-->
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
             <artifactId>test-toolkit</artifactId>
@@ -134,25 +133,35 @@
             <version>1.1.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.tuckey</groupId>
             <artifactId>urlrewritefilter</artifactId>
             <version>${urlrewrite.version}</version>
         </dependency>
+                <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
 
-        <!-- ******************************************************************* -->
-        <!-- new rest api -->
-        <!-- ******************************************************************* -->
         <dependency>
             <groupId>org.restlet.jse</groupId>
             <artifactId>org.restlet</artifactId>
-            <version>${restlet-version}</version>
         </dependency>
         <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet.ext.servlet</artifactId>
-            <version>${restlet-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.restlet.jee</groupId>
@@ -163,7 +172,6 @@
         <dependency>
             <groupId>org.restlet.jse</groupId>
             <artifactId>org.restlet.ext.jackson</artifactId>
-            <version>${restlet-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.restlet.jse</groupId>
@@ -171,7 +179,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-classloader</artifactId>
+        </dependency>
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -422,7 +437,7 @@
                                 </baseResource>
                             </webAppConfig>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
-                            <webXml>${basedir}/target/web.xml</webXml>
+                            <webXml>${basedir}/target/console-server-${project.version}/WEB-INF/web.xml</webXml>
                             <jettyConfig>src/test/webapp/WEB-INF/jetty.xml</jettyConfig>
                             <jettyEnvXml>src/test/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
                             <webAppSourceDirectory>${webappDirectory}</webAppSourceDirectory>
