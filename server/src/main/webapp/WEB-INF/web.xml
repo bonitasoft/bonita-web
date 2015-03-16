@@ -230,7 +230,7 @@
     <!--  Filter for restlet URLs -->
     <filter-mapping>
         <filter-name>UrlRewriteFilter</filter-name>
-        <url-pattern>/API/*</url-pattern>
+        <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
