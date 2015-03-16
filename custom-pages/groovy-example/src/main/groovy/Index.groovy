@@ -33,12 +33,12 @@ public class Index implements PageController {
             <head>
             <meta charset="utf-8">
             <link href="${pageResourceProvider.getBonitaThemeCSSURL()}" type="text/css" rel="stylesheet" />
-            <link href="${pageResourceProvider.getResourceURL("css/jquery-ui-1.10.4.custom.css")}" rel="stylesheet">
-            <link href="${pageResourceProvider.getResourceURL("css/style.css")}" rel="stylesheet">
-            <script src="${pageResourceProvider.getResourceURL("js/jquery-1.10.2.js")}"></script>
-            <script src="${pageResourceProvider.getResourceURL("js/jquery-ui-1.10.4.custom.js")}"></script>
-            <link href="${pageResourceProvider.getResourceURL("css/prettify.css")}" type="text/css" rel="stylesheet" />
-            <script type="text/javascript" src="${pageResourceProvider.getResourceURL("js/prettify.js")}"></script>
+            <link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css">
+            <script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+            <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+            <link href="css/style.css")}" rel="stylesheet">
+            <link href="css/prettify.css")}" type="text/css" rel="stylesheet" />
+            <script type="text/javascript" src="js/prettify.js")}"></script>
             """)
             out.write('''
             <script>
@@ -97,7 +97,7 @@ public class Index implements PageController {
             <h4>Retrieve the URL of a resource of the custom page</h4>''')
             //START_EXAMPLE:Resources
             // Get external resource using the pageResourceProvider
-            out.write("""<div> <img src="${pageResourceProvider.getResourceURL("img/logo.png")}"/> </div>""");
+            out.write("""<div> <img src="img/logo.png")}"/> </div>""");
             //END_EXAMPLE:Resources
             out.print(extractCodeSample(indexContent, "Resources"))
 

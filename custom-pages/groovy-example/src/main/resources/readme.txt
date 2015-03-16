@@ -14,10 +14,11 @@ Get localized string from resources bundles
 Content detail:
 
 Index.groovy				Index.groovy is the entry point used by the portal to display the custom page
-resources					Directory containing the web resources
+resources					Directory containing the public web resources
 resources/css				Directory containing CSS files used by the example
 resources/img				Directory of images.
 resources/js				Directory containing javascript files used by the example
+resources/jquery-ui-1.11.4  Example of an integration of jquery-ui
 lib							Directory containing jar files used by the example add added to Index.groovy class loader
 page.properties				Contains page metadata (such as name, displayName, description), and is used by the Engine when the platform starts and when a page is added or updated
 readme.txt					this file

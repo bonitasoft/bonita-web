@@ -14,8 +14,7 @@
  */
 package org.bonitasoft.console.common.server.page;
 
-import groovy.lang.GroovyClassLoader;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -26,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
+
+import groovy.lang.GroovyClassLoader;
 
 /**
  * Class used by servlets to display a custom page
@@ -41,11 +42,54 @@ public class PageRenderer {
 
     public static final String DEFAULT_LOCALE = "en";
 
+    private CustomPageService customPageService = new CustomPageService();
+
+    private ResourceRenderer resourceRenderer;
+
+    public PageRenderer(final ResourceRenderer resourceRenderer) {
+        this.resourceRenderer = resourceRenderer;
+    }
+
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
-        final CustomPageService customPageService = new CustomPageService();
-        final PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
+        if (isGroovyPage(pageName, apiSession)) {
+            displayGroovyPage(request, response, apiSession, pageName);
+        } else {
+            displaySimpleHtmlPage(request, response, apiSession, pageName);
+        }
+    }
+
+    private boolean isGroovyPage(String pageName, final APISession apiSession) {
+        File pageFolder = getPageResourceProvider(pageName, apiSession.getTenantId()).getPageDirectory();
+        File indexGroovy = customPageService.getGroovyPageFile(pageFolder);
+        return indexGroovy.exists();
+    }
+
+    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
+            throws IOException, InstantiationException, BonitaException, IllegalAccessException {
+
+        File resourceFile = getIndexFile(pageName, apiSession);
+        resourceRenderer.renderFile(request, response, resourceFile);
+    }
+
+    private File getIndexFile(String pageName, APISession apiSession) throws IOException, BonitaException {
+        File indexHtml = new File(getResourceFolder(pageName, apiSession), CustomPageService.PAGE_INDEX_FILENAME);
+        if (indexHtml.exists()) {
+            return indexHtml;
+        }
+        //fallback try to found index.html a the root of the zip to support custompage legacy.
+        return new File(getResourceFolder(pageName, apiSession).getParent(), CustomPageService.PAGE_INDEX_FILENAME);
+    }
+
+    private File getResourceFolder(String pageName, APISession apiSession) {
+        final PageResourceProvider pageResourceProvider =  getPageResourceProvider(pageName, apiSession.getTenantId());
+        return new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY);
+    }
+
+    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
+            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+        final PageResourceProvider pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageName, pageResourceProvider);
         try {
@@ -76,4 +120,9 @@ public class PageRenderer {
         }
         return new Locale(locale);
     }
+
+    public PageResourceProvider getPageResourceProvider(String pageName, long tenantId) {
+        return new PageResourceProvider(pageName, tenantId);
+    }
+
 }

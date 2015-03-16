@@ -14,7 +14,9 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -44,31 +47,99 @@ public class CustomPageServlet extends HttpServlet {
      */
     private static final long serialVersionUID = -5410859017103815654L;
 
-    public static final String PAGE_NAME_PARAM = "page";
-
     public static final String APP_ID_PARAM = "applicationId";
 
-    protected PageRenderer pageRenderer = new PageRenderer();
+    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
+
+    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
+
+    protected TenantFolder tenantFolder = new TenantFolder();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        final String pageName = request.getParameter(PAGE_NAME_PARAM);
+        /*
+         * Check if requested URL is missing last slash, like "custom-page/page-name".
+         * If missing, redirect to "custom-page/page-name/"
+         */
+        if (isPageUrlWithoutFinalSlash(request)) {
+            response.sendRedirect(request.getRequestURL() + "/");
+            return;
+        }
+
         final String appID = request.getParameter(APP_ID_PARAM);
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+
+        final List<String> pathSegments = resourceRenderer.getPathSegments(request);
+        if (pathSegments.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                    "The name of the page is required.");
+            return;
+        }
+        String pageName = pathSegments.get(0);
+
         try {
-            if (!isAuthorized(apiSession, appID, pageName)) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
-                return;
+
+            if (isPageRequest(pathSegments)) {
+                if (!isAuthorized(apiSession, appID, pageName)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
+                    return;
+                }
+                pageRenderer.displayCustomPage(request, response, apiSession, pageName);
+            } else {
+                File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
+                resourceRenderer.renderFile(request, response, resourceFile);
             }
-            pageRenderer.displayCustomPage(request, response, apiSession, pageName);
+
         } catch (final Exception e) {
             handleException(pageName, e);
         }
+
     }
 
-    protected boolean isAuthorized(final APISession apiSession, final String appID, final String pageName) throws BonitaException {
+    private boolean isPageRequest(List<String> pathSegments) {
+        if (pathSegments.size() == 1) {
+            return true;
+        } else if (pathSegments.size() == 2) {
+            return isAnIndexSegment(pathSegments.get(1));
+        }
+        return false;
+    }
+
+    private boolean isAnIndexSegment(String segment) {
+        return segment.equalsIgnoreCase(CustomPageService.PAGE_INDEX_FILENAME) || segment.equalsIgnoreCase(CustomPageService.PAGE_CONTROLLER_FILENAME)
+                || segment.equalsIgnoreCase(CustomPageService.PAGE_INDEX_NAME);
+    }
+
+    private boolean isPageUrlWithoutFinalSlash(final HttpServletRequest request) {
+        return request.getPathInfo().matches("/[^/]+");
+    }
+
+    private File getResourceFile(String resourcePath, String pageName, APISession apiSession) throws IOException, BonitaException {
+        final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+        File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
+                + getResourcePathWithoutPageName(resourcePath, pageName));
+
+        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+            throw new BonitaException("Unauthorized access to the file " + resourcePath);
+        }
+        return resourceFile;
+    }
+
+    private String getResourcePathWithoutPageName(String resourcePath, String pageName) {
+        //resource path match "/pagename/resourcefolder/filename"
+        return resourcePath.substring(pageName.length() + 2);
+    }
+
+    private boolean isAuthorized(final APISession apiSession, final String appID, final String pageName) throws BonitaException {
         return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appID, pageName);
+    }
+
+    private void handleException(final String pageName, final Exception e) throws ServletException {
+        if (LOGGER.isLoggable(Level.WARNING)) {
+            LOGGER.log(Level.WARNING, "Error while trying to render the custom page " + pageName, e);
+        }
+        throw new ServletException(e.getMessage());
     }
 
     protected CustomPageAuthorizationsHelper getCustomPageAuthorizationsHelper(final APISession apiSession) throws BonitaHomeNotSetException,
@@ -76,12 +147,4 @@ public class CustomPageServlet extends HttpServlet {
         return new CustomPageAuthorizationsHelper(new GetUserRightsHelper(apiSession),
                 TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession));
     }
-
-    protected void handleException(final String pageName, final Exception e) throws ServletException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, "Error while trying to render the custom page " + pageName, e);
-        }
-        throw new ServletException(e.getMessage());
-    }
-
 }
