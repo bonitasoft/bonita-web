@@ -26,7 +26,6 @@ import java.util.Map;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
@@ -935,19 +934,18 @@ public interface IFormWorkflowAPI {
      * Indicate if the user is admin or process owner for the current process
      *
      * @param session
-     * @param processInstanceID
+     * @param processDefinitionId
      * @return
      * @throws UserNotFoundException
      * @throws InvalidSessionException
-     * @throws ProcessInstanceNotFoundException
      * @throws ProcessDefinitionNotFoundException
-     * @throws ArchivedProcessInstanceNotFoundException
      * @throws BPMEngineException
      */
-    boolean isUserAdminOrProcessOwner(APISession session, long processInstanceID) throws UserNotFoundException, InvalidSessionException,
-    ProcessInstanceNotFoundException, ProcessDefinitionNotFoundException, ArchivedProcessInstanceNotFoundException, BPMEngineException;
+    boolean isUserAdminOrProcessOwner(APISession session, long processDefinitionId) throws UserNotFoundException, InvalidSessionException,
+            ProcessDefinitionNotFoundException, BPMEngineException;
 
-    Boolean isInvolvedInHumanTask(APISession session, long userId, long humanTaskInstanceId) throws BPMEngineException;
+    Boolean canUserSeeHumanTask(APISession session, long userId, long humanTaskInstanceId) throws BPMEngineException, ActivityInstanceNotFoundException,
+            UserNotFoundException;
 
     Boolean canStartProcessDefinition(APISession session, long userId, long processDefinitionId) throws BPMEngineException;
 
