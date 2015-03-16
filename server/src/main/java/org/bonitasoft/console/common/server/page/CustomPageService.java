@@ -68,9 +68,9 @@ public class CustomPageService {
 
     public static final String PAGE_CONTROLLER_FILENAME = "Index.groovy";
 
-    public static final String PAGE_INDEX_NAME = "Index";
+    public static final String PAGE_INDEX_NAME = "index";
 
-    public static final String PAGE_INDEX_FILENAME = "Index.html";
+    public static final String PAGE_INDEX_FILENAME = "index.html";
 
     private static final String LASTUPDATE_FILENAME = ".lastupdate";
 
@@ -82,6 +82,10 @@ public class CustomPageService {
 
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final String pageName, final PageResourceProvider pageResourceProvider)
             throws IOException, CompilationFailedException, BonitaException {
+        return buildPageClassloader(apiSession, pageName, pageResourceProvider);
+    }
+
+    public void ensurePageFolderIsUpToDate(APISession apiSession, String pageName, PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
         final File pageFolder = pageResourceProvider.getPageDirectory();
         if (!pageResourceProvider.getPageDirectory().exists()) {
             retrievePageZipContent(apiSession, pageName, pageResourceProvider);
@@ -99,7 +103,6 @@ public class CustomPageService {
                 FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
             }
         }
-        return buildPageClassloader(apiSession, pageName, pageResourceProvider);
     }
 
     @SuppressWarnings("unchecked")
