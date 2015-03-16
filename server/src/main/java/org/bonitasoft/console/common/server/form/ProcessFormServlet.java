@@ -21,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 import org.bonitasoft.console.common.server.login.localization.UrlValue;
+import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
@@ -72,7 +74,7 @@ public class ProcessFormServlet extends HttpServlet {
 
     protected ProcessFormService processFormService = new ProcessFormService();
 
-    private ResourceRenderer resourceRenderer= new ResourceRenderer();
+    private final ResourceRenderer resourceRenderer= new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
@@ -93,7 +95,8 @@ public class ProcessFormServlet extends HttpServlet {
             if (pathSegments.size() > 1) {
                 taskInstanceId = getTaskInstanceId(apiSession, pathSegments, userId);
                 if (taskInstanceId != -1 && !TASK_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
-                    redirectToTaskPage(request, response, taskInstanceId);
+                    redirectToTaskURL(request, response, taskInstanceId);
+                    return;
                 }
                 processInstanceId = getProcessInstanceId(pathSegments);
                 processDefinitionId = getProcessDefinitionId(apiSession, pathSegments);
@@ -102,6 +105,11 @@ public class ProcessFormServlet extends HttpServlet {
             if (processDefinitionId == -1L && processInstanceId == -1L && taskInstanceId == -1L) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Either process name and version are required or process instance Id (with or without task name) or task instance Id.");
+                return;
+            }
+            // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
+            if (resourcePath == null && !request.getPathInfo().endsWith("/")) {
+                redirectToCorrectURL(request, response);
                 return;
             }
             processDefinitionId = processFormService.ensureProcessDefinitionId(apiSession, processDefinitionId, processInstanceId, taskInstanceId);
@@ -137,8 +145,6 @@ public class ProcessFormServlet extends HttpServlet {
             displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
         }
     }
-
-
 
     protected long getProcessInstanceId(final List<String> pathSegments) {
         long processInstanceId = -1L;
@@ -246,7 +252,8 @@ public class ProcessFormServlet extends HttpServlet {
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         if (!form.isExternal()) {
             try {
-                if (resourcePath == null) {
+                if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
+                        || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
                     //TODO pass the processDefinition, processInstance and taskInstance IDs in order to put them in the Context of the custom page
                     pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
                 } else {
@@ -278,13 +285,25 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     @SuppressWarnings("unchecked")
-    protected void redirectToTaskPage(final HttpServletRequest request, final HttpServletResponse response, final long taskInstanceId) throws IOException {
+    protected void redirectToTaskURL(final HttpServletRequest request, final HttpServletResponse response, final long taskInstanceId) throws IOException {
         final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
         taskURLBuilder.append(request.getServletPath())
                 .append("/")
                 .append(TASK_INSTANCE_PATH_SEGMENT)
                 .append("/")
-                .append(taskInstanceId);
+                .append(taskInstanceId)
+                .append("/");
+        final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
+        urlBuilder.appendParameters(request.getParameterMap());
+        response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void redirectToCorrectURL(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
+        taskURLBuilder.append(request.getServletPath())
+                .append(request.getPathInfo())
+                .append("/");
         final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
         urlBuilder.appendParameters(request.getParameterMap());
         response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
