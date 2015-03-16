@@ -25,6 +25,7 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -164,41 +165,41 @@ public class ProcessFormServiceTest {
     public void getForm_for_task() throws Exception {
         final FormMapping formMapping = mock(FormMapping.class);
         when(formMapping.getForm()).thenReturn("myPage");
-        when(formMapping.isExternal()).thenReturn(false);
+        when(formMapping.getTarget()).thenReturn(FormMappingTarget.INTERNAL);
         when(processConfigurationAPI.getTaskForm(1L, "taskName")).thenReturn(formMapping);
 
         final FormReference formReference = processFormService.getForm(apiSession, 1L, "taskName", false);
 
         assertNotNull(formReference);
         assertEquals("myPage", formReference.getForm());
-        assertFalse(formReference.isExternal());
+        assertEquals(FormMappingTarget.INTERNAL.name(), formReference.getTarget());
     }
 
     @Test
     public void getForm_for_process_instance() throws Exception {
         final FormMapping formMapping = mock(FormMapping.class);
         when(formMapping.getForm()).thenReturn("www.bonitasoft.com");
-        when(formMapping.isExternal()).thenReturn(true);
+        when(formMapping.getTarget()).thenReturn(FormMappingTarget.URL);
         when(processConfigurationAPI.getProcessOverviewForm(1L)).thenReturn(formMapping);
 
         final FormReference formReference = processFormService.getForm(apiSession, 1L, null, true);
 
         assertNotNull(formReference);
         assertEquals("www.bonitasoft.com", formReference.getForm());
-        assertTrue(formReference.isExternal());
+        assertEquals(FormMappingTarget.URL.name(), formReference.getTarget());
     }
 
     @Test
     public void getForm_for_process() throws Exception {
         final FormMapping formMapping = mock(FormMapping.class);
         when(formMapping.getForm()).thenReturn("myPage");
-        when(formMapping.isExternal()).thenReturn(false);
+        when(formMapping.getTarget()).thenReturn(FormMappingTarget.INTERNAL);
         when(processConfigurationAPI.getProcessStartForm(1L)).thenReturn(formMapping);
 
         final FormReference formReference = processFormService.getForm(apiSession, 1L, null, false);
 
         assertNotNull(formReference);
         assertEquals("myPage", formReference.getForm());
-        assertFalse(formReference.isExternal());
+        assertEquals(FormMappingTarget.INTERNAL.name(), formReference.getTarget());
     }
 }

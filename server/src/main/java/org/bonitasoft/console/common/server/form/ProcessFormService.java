@@ -17,9 +17,14 @@ package org.bonitasoft.console.common.server.form;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
@@ -54,7 +59,9 @@ import org.bonitasoft.engine.session.APISession;
 
 public class ProcessFormService {
 
-    public static final String LEGACY_FORMS_NAME = "LEGACY";
+    private static final String PROCESS_DEPLOY = "process_deploy";
+
+	public static final String LEGACY_FORMS_NAME = "LEGACY";
 
     public static final String UUID_SEPERATOR = "--";
 
@@ -74,7 +81,7 @@ public class ProcessFormService {
         } else {
             formMapping = processConfigurationAPI.getProcessStartForm(processDefinitionId);
         }
-        return new FormReference(formMapping.getForm(), formMapping.isExternal());
+        return new FormReference(formMapping.getForm(), formMapping.getTarget().name());
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
@@ -182,6 +189,12 @@ public class ProcessFormService {
         }
     }
 
+    public boolean isAdmin(HttpServletRequest request) {
+    	final HttpSession session = request.getSession();
+    	final Set<String> userPermissions = (Set<String>) session.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
+    	return userPermissions.contains(PROCESS_DEPLOY);
+    }
+
     public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionId, final long taskInstanceId, final long enforcedUserId,
             final boolean assignTask) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
@@ -205,6 +218,7 @@ public class ProcessFormService {
         }
     }
 
+    
     public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processDefinitionId, final long processInstanceId,
             final long enforcedUserId) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
