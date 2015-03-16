@@ -62,7 +62,7 @@ public class FormMappingResource extends CommonResource {
         }
         try {
             final long mappingId = Long.parseLong(mappingIdAsString);
-            processConfigurationAPI.updateFormMapping(mappingId, formReference.getForm(), formReference.isExternal());
+            processConfigurationAPI.updateFormMapping(mappingId, formReference.getForm(), formReference.getTarget());
         } catch (final FormMappingNotFoundException e) {
             throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Cannot find form mapping with Id " + mappingIdAsString);
         } catch (final Exception e) {

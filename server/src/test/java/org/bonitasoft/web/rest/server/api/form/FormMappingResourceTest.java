@@ -15,6 +15,7 @@ import java.util.List;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
@@ -48,7 +49,7 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNotFound() throws Exception {
 
-        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", false);
+        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", FormMappingTarget.INTERNAL.name());
 
         final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"external\":\"false\"}");
 
@@ -99,11 +100,11 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldCallEngine() throws Exception {
 
-        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
+        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL.name());
 
         final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"external\":\"false\"}");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
-        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
+        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL.name());
     }
 }

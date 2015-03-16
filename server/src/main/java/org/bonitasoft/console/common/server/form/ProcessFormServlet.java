@@ -39,6 +39,7 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundExceptio
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -130,7 +131,7 @@ public class ProcessFormServlet extends HttpServlet {
             } else if (form.getForm() != null) {
                 // for resources we don't check if the user is allowed
                 final boolean assignTask = "true".equals(request.getParameter(ASSIGN_TASK_PARAM));
-                if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId, assignTask)) {
+                if (resourcePath == null && !isAuthorized(request, apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId, assignTask)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                 } else {
                     displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
@@ -194,7 +195,7 @@ public class ProcessFormServlet extends HttpServlet {
             final StringBuilder resourcePathBuilder = new StringBuilder();
             for (int i = resourcePathStartIndex; i < pathSegments.size(); i++) {
                 if (i > resourcePathStartIndex) {
-                    resourcePathBuilder.append(File.separator);
+                    resourcePathBuilder.append("/");
                 }
                 resourcePathBuilder.append(pathSegments.get(i));
             }
@@ -250,7 +251,7 @@ public class ProcessFormServlet extends HttpServlet {
             final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final FormReference form,
             final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
-        if (!form.isExternal()) {
+        if (FormMappingTarget.INTERNAL.name().equals(form.getTarget())) {
             try {
                 if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
                         || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
@@ -332,7 +333,7 @@ public class ProcessFormServlet extends HttpServlet {
         return urlBuilder.build();
     }
 
-    protected boolean isAuthorized(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
+    protected boolean isAuthorized(HttpServletRequest request, final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
             final long userId, final boolean assignTask) throws BonitaException {
         final long enforcedUserId;
         if (userId == -1L) {
@@ -340,6 +341,9 @@ public class ProcessFormServlet extends HttpServlet {
         } else {
             enforcedUserId = userId;
         }
+        if (processFormService.isAdmin(request)) {
+        	return true;
+        } 
         if (taskInstanceId != -1L) {
             return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId, assignTask);
         } else if (processInstanceId != -1L) {
