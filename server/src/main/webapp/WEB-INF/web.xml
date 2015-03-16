@@ -137,12 +137,6 @@
             <param-value>slf4j</param-value>
         </init-param>
     </filter>
-    <filter-mapping>
-        <filter-name>UrlRewriteFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
 
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
@@ -233,7 +227,15 @@
         <url-pattern>/portal/themeResource</url-pattern>
     </filter-mapping>
     <!-- Cache Filter Mapping End -->
-
+    <!--  Filter for restlet URLs -->
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/API/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+     <!-- End Filter for restlet URLs -->
+     
     <!-- Shutdown properly ehcache on tomcat shutdown -->
     <listener>
         <listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
