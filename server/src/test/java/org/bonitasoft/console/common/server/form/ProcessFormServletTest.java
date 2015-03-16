@@ -66,7 +66,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_Forbidden_Status_when_unauthorized() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(hsRequest.getParameter("user")).thenReturn(null);
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
@@ -90,7 +90,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_externalPage() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -105,7 +105,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_customPage() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -119,7 +119,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_legacyForm_when_no_mapping() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -138,7 +138,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_legacyForm_for_process_when_mapping_on_legacy() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -158,7 +158,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_legacyForm_for_instance_when_mapping_on_legacy() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 1L, 42L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
@@ -177,7 +177,7 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_legacyForm_for_task_when_mapping_on_legacy() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
-        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L, false)).thenReturn(true);
@@ -223,7 +223,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -237,7 +237,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_customPage_for_process() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -250,7 +250,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_customPage_for_instance() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 1L, 42L, 1L)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, true)).thenReturn(new FormReference("custompage_form", false));
@@ -262,7 +262,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_customPage_for_task() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L, false)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", false));
@@ -274,7 +274,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_customPage_for_process_with_unicode_characters() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processus+%C3%A9%2B%C3%B8/%C3%B8");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processus+%C3%A9%2B%C3%B8/%C3%B8/");
         when(processFormService.getProcessDefinitionId(apiSession, "processus é+ø", "ø")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
@@ -287,33 +287,46 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_redirect_for_task_from_instance() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName/");
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getServletPath()).thenReturn("/portal/form");
         when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1");
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1/");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
     @Test
     public void redirect_for_task_from_instance_with_unicode_characters() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/task+%C3%A9%2B%C3%B8");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/task+%C3%A9%2B%C3%B8/");
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getServletPath()).thenReturn("/portal/form");
         when(processFormService.getTaskInstanceId(apiSession, 42L, "task é+ø", -1L)).thenReturn(1L);
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1");
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1/");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void should_redirect_for_missing_slash() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getServletPath()).thenReturn("/portal/form");
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/42/");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
     @Test
     public void should_get_not_found_when_invalid_process() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion");
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenThrow(ProcessDefinitionNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -323,7 +336,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_not_found_when_invalid_processInstanceId() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenThrow(ArchivedProcessInstanceNotFoundException.class);
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -333,7 +346,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_not_found_when_invalid_task() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName");
+        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName/");
         when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(-1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenThrow(ActivityInstanceNotFoundException.class);
 
@@ -344,7 +357,7 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_get_server_error_when_issue_with_customPage() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L, false)).thenReturn(true);
