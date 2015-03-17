@@ -37,7 +37,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TaskContractResourceTest extends RestletTest {
+public class UserTaskContractResourceTest extends RestletTest {
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -48,7 +48,7 @@ public class TaskContractResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new TaskContractResource(processAPI);
+        return new UserTaskContractResource(processAPI);
     }
 
     private Map<String, Object> aComplexInput() {
@@ -79,7 +79,7 @@ public class TaskContractResourceTest extends RestletTest {
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
 
         //when
-        final Response response = request("/bpm/tasks/2/contract").get();
+        final Response response = request("/bpm/userTask/2/contract").get();
 
         //then
         assertThat(response).hasStatus(Status.SUCCESS_OK);
@@ -90,7 +90,7 @@ public class TaskContractResourceTest extends RestletTest {
     public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
         when(processAPI.getUserTaskContract(2)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
 
-        final Response response = request("/bpm/tasks/2/contract").get();
+        final Response response = request("/bpm/userTask/2/contract").get();
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
