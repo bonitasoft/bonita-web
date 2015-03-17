@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.bpm.flownode;
+package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
 import static org.mockito.Mockito.when;
@@ -23,7 +23,7 @@ import org.bonitasoft.engine.bpm.contract.impl.ComplexInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ConstraintDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
-import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,11 @@ import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TaskContractResourceTest extends RestletTest {
+public class ProcessContractResourceTest extends RestletTest {
+
+    private static final long PROCESS_DEFINITION_ID = 4L;
+
+    private final String TEST_CONTRACT_API_URL = "/bpm/process/" + PROCESS_DEFINITION_ID + "/contract";
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -43,13 +47,15 @@ public class TaskContractResourceTest extends RestletTest {
     @Mock
     private ProcessAPI processAPI;
 
+
     @Override
     protected ServerResource configureResource() {
-        return new TaskContractResource(processAPI);
+        return new ProcessContractResource(processAPI);
     }
 
+
     @Test
-    public void should_return_a_contract_for_a_given_task_instance() throws Exception {
+    public void should_return_a_contract_for_a_given_process_definition_id() throws Exception {
         //given
         final ContractDefinitionImpl contract = new ContractDefinitionImpl();
         contract.addSimpleInput(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
@@ -59,10 +65,10 @@ public class TaskContractResourceTest extends RestletTest {
         contract.addComplexInput(complexInputDefinitionImpl);
         contract.addConstraint(new ConstraintDefinitionImpl("aRule", "an expression", "an explanation"));
 
-        when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
+        when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contract);
 
         //when
-        final Response response = request("/bpm/tasks/2/contract").get();
+        final Response response = request(TEST_CONTRACT_API_URL).get();
 
         //then
         assertThat(response).hasStatus(Status.SUCCESS_OK);
@@ -70,11 +76,9 @@ public class TaskContractResourceTest extends RestletTest {
     }
 
     @Test
-    public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
-        when(processAPI.getUserTaskContract(2)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
-
-        final Response response = request("/bpm/tasks/2/contract").get();
-
+    public void should_respond_404_Not_found_when_process_definition_is_not_found_when_getting_contract() throws Exception {
+        when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenThrow(new ProcessDefinitionNotFoundException("process definition not found"));
+        final Response response = request(TEST_CONTRACT_API_URL).get();
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
 
