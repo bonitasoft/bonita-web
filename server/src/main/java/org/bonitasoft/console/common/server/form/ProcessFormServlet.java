@@ -322,23 +322,24 @@ public class ProcessFormServlet extends HttpServlet {
         return urlBuilder.build();
     }
 
-    protected boolean isAuthorized(HttpServletRequest request, final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
+    protected boolean isAuthorized(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
             final long userId, final boolean assignTask) throws BonitaException {
-        final long enforcedUserId;
-        if (userId == -1L) {
-            enforcedUserId = apiSession.getUserId();
+        if (processFormService.isAllowedAsAdminOrProcessSupervisor(request, apiSession, processDefinitionId, taskInstanceId, userId, assignTask)) {
+            return true;
         } else {
-            enforcedUserId = userId;
-        }
-        if (processFormService.isAdmin(request)) {
-        	return true;
-        } 
-        if (taskInstanceId != -1L) {
-            return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId, assignTask);
-        } else if (processInstanceId != -1L) {
-            return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionId, processInstanceId, enforcedUserId);
-        } else {
-            return processFormService.isAllowedToStartProcess(apiSession, processDefinitionId, enforcedUserId);
+            final long enforcedUserId;
+            if (userId == -1L) {
+                enforcedUserId = apiSession.getUserId();
+            } else {
+                enforcedUserId = userId;
+            }
+            if (taskInstanceId != -1L) {
+                return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId, assignTask);
+            } else if (processInstanceId != -1L) {
+                return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionId, processInstanceId, enforcedUserId);
+            } else {
+                return processFormService.isAllowedToStartProcess(apiSession, processDefinitionId, enforcedUserId);
+            }
         }
     }
 
