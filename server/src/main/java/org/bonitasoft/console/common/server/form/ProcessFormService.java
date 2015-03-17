@@ -61,8 +61,6 @@ public class ProcessFormService {
 
     private static final String PROCESS_DEPLOY = "process_deploy";
 
-	public static final String LEGACY_FORMS_NAME = "LEGACY";
-
     public static final String UUID_SEPERATOR = "--";
 
     /**
@@ -189,7 +187,7 @@ public class ProcessFormService {
         }
     }
 
-    public boolean isAdmin(HttpServletRequest request) {
+    public boolean isAdmin(final HttpServletRequest request) {
     	final HttpSession session = request.getSession();
     	final Set<String> userPermissions = (Set<String>) session.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
     	return userPermissions.contains(PROCESS_DEPLOY);
