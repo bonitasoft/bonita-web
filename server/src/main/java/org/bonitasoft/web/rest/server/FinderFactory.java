@@ -50,7 +50,7 @@ public class FinderFactory {
         finders.put(BusinessDataQueryResource.class, new BusinessDataQueryResourceFinder());
         finders.put(FormMappingResource.class, new FormMappingResourceFinder());
         finders.put(TaskContractResource.class, new TaskContractResourceFinder());
-        finders.put(TaskExecutionResource.class, new TaskContractResourceFinder());
+        finders.put(TaskExecutionResource.class, new TaskExecutionResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
