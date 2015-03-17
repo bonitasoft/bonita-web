@@ -144,7 +144,7 @@ public class ProcessFormServletTest {
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-                new FormReference(ProcessFormService.LEGACY_FORMS_NAME, FormMappingTarget.INTERNAL.name()));
+                new FormReference(null, FormMappingTarget.LEGACY.name()));
         when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
         when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
 
@@ -163,7 +163,7 @@ public class ProcessFormServletTest {
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 1L, 42L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-                new FormReference(ProcessFormService.LEGACY_FORMS_NAME, FormMappingTarget.INTERNAL.name()));
+                new FormReference(null, FormMappingTarget.LEGACY.name()));
         when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
         when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
 
@@ -183,7 +183,7 @@ public class ProcessFormServletTest {
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 1L, 42L, 1L, false)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-                new FormReference(ProcessFormService.LEGACY_FORMS_NAME, FormMappingTarget.INTERNAL.name()));
+                new FormReference(null, FormMappingTarget.LEGACY.name()));
         when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
         when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
 

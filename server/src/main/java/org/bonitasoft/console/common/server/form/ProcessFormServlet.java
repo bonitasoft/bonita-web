@@ -129,7 +129,7 @@ public class ProcessFormServlet extends HttpServlet {
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
             final FormReference form = processFormService.getForm(apiSession, processDefinitionId, taskName, processInstanceId != -1L);
-            if (ProcessFormService.LEGACY_FORMS_NAME.equals(form.getForm())) {
+            if (FormMappingTarget.LEGACY.name().equals(form.getTarget())) {
                 displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
             } else if (form.getForm() != null) {
                 // for resources we don't check if the user is allowed
@@ -140,10 +140,7 @@ public class ProcessFormServlet extends HttpServlet {
                     displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
                 }
             } else {
-                //TODO restore this once the studio export LEGACY mapping
-                //response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
-                //meanwhile fallback to legacy forms
-                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
             }
         } catch (final FormMappingNotFoundException e) {
             displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
