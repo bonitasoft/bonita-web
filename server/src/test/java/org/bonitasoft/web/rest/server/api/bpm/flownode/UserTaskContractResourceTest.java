@@ -37,7 +37,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TaskContractResourceTest extends RestletTest {
+public class UserTaskContractResourceTest extends RestletTest {
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -48,7 +48,7 @@ public class TaskContractResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new TaskContractResource(processAPI);
+        return new UserTaskContractResource(processAPI);
     }
 
     private Map<String, Object> aComplexInput() {

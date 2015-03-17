@@ -25,8 +25,8 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -49,8 +49,8 @@ public class FinderFactory {
         finders.put(BusinessDataReferencesResource.class, new BusinessDataReferencesResourceFinder());
         finders.put(BusinessDataQueryResource.class, new BusinessDataQueryResourceFinder());
         finders.put(FormMappingResource.class, new FormMappingResourceFinder());
-        finders.put(TaskContractResource.class, new TaskContractResourceFinder());
-        finders.put(TaskExecutionResource.class, new TaskContractResourceFinder());
+        finders.put(UserTaskContractResource.class, new UserTaskContractResourceFinder());
+        finders.put(UserTaskExecutionResource.class, new UserTaskContractResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -123,21 +123,21 @@ public class FinderFactory {
         }
     }
 
-    public static class TaskContractResourceFinder extends Finder {
+    public static class UserTaskContractResourceFinder extends Finder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
             final ProcessAPI processAPI = getProcessAPI(request);
-            return new TaskContractResource(processAPI);
+            return new UserTaskContractResource(processAPI);
         }
     }
 
-    public static class TaskExecutionResourceFinder extends Finder {
+    public static class UserTaskExecutionResourceFinder extends Finder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
             final ProcessAPI processAPI = getProcessAPI(request);
-            return new TaskExecutionResource(processAPI);
+            return new UserTaskExecutionResource(processAPI);
         }
     }
 

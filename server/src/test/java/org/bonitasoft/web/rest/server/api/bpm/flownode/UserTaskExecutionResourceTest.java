@@ -39,7 +39,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TaskExecutionResourceTest extends RestletTest {
+public class UserTaskExecutionResourceTest extends RestletTest {
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -50,7 +50,7 @@ public class TaskExecutionResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new TaskExecutionResource(processAPI);
+        return new UserTaskExecutionResource(processAPI);
     }
 
     private Map<String, Serializable> aComplexInput() {

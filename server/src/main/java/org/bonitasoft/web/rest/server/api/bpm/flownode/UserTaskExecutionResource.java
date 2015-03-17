@@ -31,13 +31,13 @@ import org.restlet.resource.Post;
  * @author Emmanuel Duchastenier
  * @author Fabio Lombardi
  */
-public class TaskExecutionResource extends CommonResource {
+public class UserTaskExecutionResource extends CommonResource {
 
     private static final String TASK_ID = "taskId";
 
     private final ProcessAPI processAPI;
 
-    public TaskExecutionResource(final ProcessAPI processAPI) {
+    public UserTaskExecutionResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 

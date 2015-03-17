@@ -24,13 +24,13 @@ import org.restlet.resource.Get;
  * @author Emmanuel Duchastenier
  * @author Fabio Lombardi
  */
-public class TaskContractResource extends CommonResource {
+public class UserTaskContractResource extends CommonResource {
 
     private static final String TASK_ID = "taskId";
 
     private final ProcessAPI processAPI;
 
-    public TaskContractResource(final ProcessAPI processAPI) {
+    public UserTaskContractResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 
