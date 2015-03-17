@@ -79,7 +79,7 @@ public class UserTaskContractResourceTest extends RestletTest {
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
 
         //when
-        final Response response = request("/bpm/task/2/contract").get();
+        final Response response = request("/bpm/userTask/2/contract").get();
 
         //then
         assertThat(response).hasStatus(Status.SUCCESS_OK);
@@ -90,7 +90,7 @@ public class UserTaskContractResourceTest extends RestletTest {
     public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
         when(processAPI.getUserTaskContract(2)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
 
-        final Response response = request("/bpm/task/2/contract").get();
+        final Response response = request("/bpm/userTask/2/contract").get();
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }

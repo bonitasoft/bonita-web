@@ -71,7 +71,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     public void should_execute_a_task_with_given_inputs() throws Exception {
         final Map<String, Serializable> expectedComplexInput = aComplexInput();
 
-        final Response response = request("/bpm/task/2/execution").post(VALID_COMPLEX_POST_BODY);
+        final Response response = request("/bpm/userTask/2/execution").post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
         verify(processAPI).executeUserTask(2L, expectedComplexInput);
@@ -82,7 +82,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
         .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
-        final Response response = request("/bpm/task/2/execution").post(VALID_POST_BODY);
+        final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         assertThat(response)
@@ -95,14 +95,14 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         doThrow(new FlowNodeExecutionException("aMessage"))
         .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
-        final Response response = request("/bpm/task/2/execution").post(VALID_POST_BODY);
+        final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_trying_to_execute_with_not_json_payload() throws Exception {
-        final Response response = request("/bpm/task/2/execution").post("invalid json string");
+        final Response response = request("/bpm/userTask/2/execution").post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -112,7 +112,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
         .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
-        final Response response = request("/bpm/task/2/execution").post(VALID_POST_BODY);
+        final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
