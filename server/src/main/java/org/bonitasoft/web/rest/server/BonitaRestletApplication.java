@@ -77,8 +77,8 @@ public class BonitaRestletApplication extends Application {
         // GET to case info (with task state counter)
         router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
 
-        router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskContractResource.class));
-        router.attach("/bpm/tasks/{taskId}/execution", factory.create(TaskExecutionResource.class));
+        router.attach("/bpm/task/{taskId}/contract", factory.create(TaskContractResource.class));
+        router.attach("/bpm/task/{taskId}/execution", factory.create(TaskExecutionResource.class));
         // GET to search form mappings:
         router.attach("/form/mapping", factory.create(FormMappingResource.class));
         // PUT to update form mapping:
