@@ -24,10 +24,9 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.engine.api.CommandAPI;
-import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
@@ -35,12 +34,16 @@ import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.data.CharacterSet;
+import org.restlet.data.Header;
 import org.restlet.data.Status;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
+import org.restlet.util.Series;
+
+import com.fasterxml.jackson.core.JsonParseException;
 
 /**
  * @author Emmanuel Duchastenier
@@ -68,28 +71,12 @@ public class CommonResource extends ServerResource {
         return ServletUtils.getRequest(getRequest());
     }
 
-    public ProcessAPI getEngineProcessAPI() {
-        try {
-            return TenantAPIAccessor.getProcessAPI(getEngineSession());
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    public CommandAPI getEngineCommandAPI() {
-        try {
-            return TenantAPIAccessor.getCommandAPI(getEngineSession());
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
     protected Map<String, String> getSearchFilters() {
         return parseFilters(getParameterAsList(APIServletCall.PARAMETER_FILTER));
     }
 
     protected String getQueryParameter(final boolean mandatory) {
-        return getParameter(APIServletCall.PARAMETER_QUERY,mandatory);
+        return getParameter(APIServletCall.PARAMETER_QUERY, mandatory);
     }
 
     /**
@@ -185,14 +172,19 @@ public class CommonResource extends ServerResource {
         // Don't need to log the wrapping exception, the cause itself is more interesting:
         super.doCatch(t);
 
-        getLogger().log(Level.SEVERE, "*** problem on " + getClass().getName() + " rest resource: " + t.getMessage());
-        getResponse().setStatus(getStatus(), "Cannot execute REST resource " + getClass().getName() + " rest resource: " + t.getMessage());
+        final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
+        if (getLogger().isLoggable(Level.INFO)) {
+            getLogger().log(Level.INFO, "*** " + message);
+        }
+        getResponse().setStatus(getStatus(), message);
 
-        if (throwable.getCause() instanceof IllegalArgumentException) {
+        if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
-        getResponse().setEntity(new ErrorMessage(throwable.getCause()).toEntity());
-
+        else if (t instanceof NotFoundException) {
+            getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        }
+        getResponse().setEntity(new ErrorMessage(t).toEntity());
     }
 
     @Override
@@ -245,6 +237,12 @@ public class CommonResource extends ServerResource {
         } catch (final NumberFormatException e) {
             throw new IllegalArgumentException("query parameter c (count) should be a number");
         }
+    }
+
+    protected void setContentRange(final SearchResult<?> searchResult) {
+        final Series<Header> headers = getResponse().getHeaders();
+        headers.add(new Header("Content-range", getSearchPageNumber() * getSearchPageSize() + "-" + (getSearchPageSize() - 1) + "/"
+                + searchResult.getCount()));
     }
 
 }

@@ -20,8 +20,6 @@ import java.util.Map;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
-import org.bonitasoft.web.rest.server.api.bdm.BusinessDataFieldValue;
-import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -104,7 +102,7 @@ public class BusinessDataQueryResourceTest extends RestletTest {
     }
 
     @Test
-    public void should_throw_exception_when_engine_exception() throws Exception {
+    public void should_throw_not_found_when_engine_NotFoundException() throws Exception {
         //given
         when(commandAPI.execute(anyString(), anyMap())).thenThrow(new CommandNotFoundException(null));
 
@@ -114,7 +112,7 @@ public class BusinessDataQueryResourceTest extends RestletTest {
         //then
         assertThat(response.getEntityAsText()).isEqualTo(
                 "{\"exception\":\"class org.bonitasoft.engine.command.CommandNotFoundException\",\"message\":\"null\"}");
-        assertThat(response.getStatus()).isEqualTo(Status.SERVER_ERROR_INTERNAL);
+        assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
     }
 
     @Test
@@ -130,7 +128,5 @@ public class BusinessDataQueryResourceTest extends RestletTest {
                 "{\"exception\":\"class org.bonitasoft.engine.command.CommandExecutionException\",\"message\":\"server error\"}");
         assertThat(response.getStatus()).isEqualTo(Status.SERVER_ERROR_INTERNAL);
     }
-
-
 
 }
