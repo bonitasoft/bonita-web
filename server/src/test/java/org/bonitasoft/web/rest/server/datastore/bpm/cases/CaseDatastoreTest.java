@@ -14,15 +14,10 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,6 +33,7 @@ import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.engine.session.APISession;
@@ -408,6 +404,31 @@ public class CaseDatastoreTest {
 
         // Then
         assertEquals(total, result);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Test
+    public void searchProcessInstances_With_PM_Filter_And_Failed_State_should_call_API() throws Exception {
+        // Given
+        final Map<String, String> filters = new HashMap<String, String>();
+        final SearchOptions searchOptions = mock(SearchOptions.class);
+        final long userId = 9L;
+        filters.put(CaseItem.FILTER_SUPERVISOR_ID, String.valueOf(userId));
+        filters.put(CaseItem.ATTRIBUTE_STATE, "failed");
+        final SearchOptionsBuilder searchOptionsBuilder = mock(SearchOptionsBuilder.class);
+        final SearchResult searchResult = mock(SearchResult.class);
+        when(searchOptionsBuilder.done()).thenReturn(searchOptions);
+        doReturn(searchOptionsBuilder).when(caseDatastore).buildSearchOptions(0, 1, "", "", filters);
+        final ItemSearchResult itemSearchResult = mock(ItemSearchResult.class);
+        doReturn(itemSearchResult).when(caseDatastore).convertEngineToConsoleSearch(0, 1, searchResult);
+
+        when(processAPI.searchFailedProcessInstancesSupervisedBy(userId, searchOptions)).thenReturn(searchResult);
+        // when
+        final ItemSearchResult<CaseItem> caseSearchResult = caseDatastore.search(0, 1, "", "", filters);
+
+        // Then
+        verify(processAPI).searchFailedProcessInstancesSupervisedBy(userId, searchOptions);
+        assertThat(itemSearchResult).isSameAs(caseSearchResult);
     }
 
 }
