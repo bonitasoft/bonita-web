@@ -16,6 +16,8 @@ package org.bonitasoft.console.common.server.form;
 
 import java.io.Serializable;
 
+import org.bonitasoft.engine.form.FormMappingTarget;
+
 
 public class FormReference implements Serializable {
 
@@ -26,12 +28,12 @@ public class FormReference implements Serializable {
 
     private String form;
 
-    private String target;
+    private FormMappingTarget target;
 
     public FormReference() {
     }
 
-    public FormReference(final String form, final String target) {
+    public FormReference(final String form, final FormMappingTarget target) {
         this.form = form;
         this.target = target;
     }
@@ -47,12 +49,12 @@ public class FormReference implements Serializable {
     }
 
 
-    public String getTarget() {
+    public FormMappingTarget getTarget() {
         return target;
     }
 
 
-    public void setTarget(final String target) {
+    public void setTarget(final FormMappingTarget target) {
         this.target = target;
     }
 

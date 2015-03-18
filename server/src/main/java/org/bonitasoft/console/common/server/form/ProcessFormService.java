@@ -78,7 +78,7 @@ public class ProcessFormService {
         } else {
             formMapping = processConfigurationAPI.getProcessStartForm(processDefinitionId);
         }
-        return new FormReference(formMapping.getForm(), formMapping.getTarget().name());
+        return new FormReference(formMapping.getForm(), formMapping.getTarget());
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
