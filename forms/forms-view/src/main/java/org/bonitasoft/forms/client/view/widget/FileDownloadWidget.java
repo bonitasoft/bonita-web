@@ -22,6 +22,7 @@ import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -49,15 +50,15 @@ public class FileDownloadWidget extends Composite {
 
     protected boolean hasImagePreview;
 
-    private final String formID;
+    protected final String formID;
 
-    private final String imageServletURL;
+    protected final String imageServletURL;
 
-    private final Map<String, Object> contextMap;
+    protected final Map<String, Object> contextMap;
 
-    private final String attachmentServletURL;
+    protected final String attachmentServletURL;
 
-    private final String valueType;
+    protected final String valueType;
 
     /**
      * Constructor
@@ -120,7 +121,7 @@ public class FileDownloadWidget extends Composite {
             }
             flowPanel.add(previewImage);
         }
-        fileNameLabel = new Anchor();
+        fileNameLabel = GWT.create(Anchor.class);
         fileNameLabel.setStyleName("bonita_download_link");
         if (fileName != null) {
             fileNameLabel.setHref(downloadURL);
