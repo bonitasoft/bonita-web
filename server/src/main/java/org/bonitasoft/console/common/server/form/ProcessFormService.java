@@ -198,7 +198,7 @@ public class ProcessFormService {
         return processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId());
     }
 
-    public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionId, final long taskInstanceId, final long enforcedUserId,
+    public boolean isAllowedToSeeTask(final APISession apiSession, final long taskInstanceId, final long enforcedUserId,
             final boolean assignTask) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
         try {
@@ -215,7 +215,7 @@ public class ProcessFormService {
         }
     }
 
-    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processDefinitionId, final long processInstanceId,
+    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processInstanceId,
             final long enforcedUserId) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
         return processAPI.isInvolvedInProcessInstance(enforcedUserId, processInstanceId);
