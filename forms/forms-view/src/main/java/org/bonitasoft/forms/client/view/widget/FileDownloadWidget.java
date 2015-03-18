@@ -51,7 +51,7 @@ public class FileDownloadWidget extends Composite {
 
     private final String formID;
 
-    private String imageServletURL;
+    private final String imageServletURL;
 
     private final Map<String, Object> contextMap;
 
@@ -97,6 +97,7 @@ public class FileDownloadWidget extends Composite {
 
         flowPanel = new FlowPanel();
         attachmentServletURL = RpcFormsServices.getAttachmentDownloadURL();
+        imageServletURL = RpcFormsServices.getAttachmentImageURL();
         String downloadURL;
         if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
             downloadURL = URLUtils.getInstance().getAttachmentURL(attachmentServletURL, formID, contextMap, this.attachmentId, fileName);
@@ -107,7 +108,6 @@ public class FileDownloadWidget extends Composite {
             previewImage = new Image();
             previewImage.setStyleName("bonita_image_preview");
             if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
-                imageServletURL = RpcFormsServices.getAttachmentImageURL();
                 final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, this.attachmentId, fileName);
                 if (fileName != null) {
                     previewImage.setUrl(imageURL);
