@@ -94,10 +94,6 @@
         <to>/APIToolkit/bpm/flowNode$1</to>
     </rule>
     <rule>
-        <from>^[/portal/custom-page]?/API/bpm/hiddenUserTask([\?/]|$)</from>
-        <to>/APIToolkit/bpm/hiddenUserTask$1</to>
-    </rule>
-    <rule>
         <from>^[/portal/custom-page]?/API/bpm/humanTask([\?/]|$)</from>
         <to>/APIToolkit/bpm/humanTask$1</to>
     </rule>
@@ -130,7 +126,7 @@
         <to>/APIToolkit/bpm/task$1</to>
     </rule>
     <rule>
-        <from>^[/portal/custom-page]?/API/bpm/userTask([\?/]|$)</from>
+        <from>^[/portal/custom-page]?/API/bpm/userTask([\?/][^/]*|$)</from>
         <to>/APIToolkit/bpm/userTask$1</to>
     </rule>
     <rule>
