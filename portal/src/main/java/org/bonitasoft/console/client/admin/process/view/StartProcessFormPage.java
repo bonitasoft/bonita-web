@@ -83,6 +83,7 @@ public class StartProcessFormPage extends Page {
                 .append(encodedProcessName)
                 .append("/")
                 .append(encodedProcessVersion)
+                .append("/")
                 .append("?locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
