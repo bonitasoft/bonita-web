@@ -30,6 +30,7 @@ import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -520,6 +521,23 @@ public class DOMUtils {
             return false;
         }
     }-*/;
+
+    /**
+     * Override a checkbox or radiobuton behavior after it is checked or unchecked
+     * 
+     * @param checbox
+     * @param checked
+     */
+    public void overrideNativeInputAfterUpdate(final CheckBox checbox, final boolean checked) {
+        final NodeList<com.google.gwt.dom.client.Element> labelNodes = checbox.getElement().getElementsByTagName("label");
+        if (labelNodes.getLength() > 0) {
+            if (checked) {
+                labelNodes.getItem(0).addClassName("checked");
+            } else {
+                labelNodes.getItem(0).removeClassName("checked");
+            }
+        }
+    }
 
     /**
      * perform a Javascript evaluation
