@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,9 +15,15 @@ import static org.mockito.Mockito.when;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
@@ -59,10 +66,17 @@ public class ProcessFormServiceTest {
     ProcessConfigurationAPI processConfigurationAPI;
 
     @Mock
+    HttpServletRequest hsRequest;
+
+    @Mock
+    HttpSession httpSession;
+
+    @Mock
     APISession apiSession;
 
     @Before
     public void beforeEach() throws Exception {
+        when(hsRequest.getSession()).thenReturn(httpSession);
         doReturn(processAPI).when(processFormService).getProcessAPI(apiSession);
         doReturn(commandAPI).when(processFormService).getCommandAPI(apiSession);
         doReturn(processConfigurationAPI).when(processFormService).getProcessConfigurationAPI(apiSession);
@@ -241,6 +255,30 @@ public class ProcessFormServiceTest {
     }
 
     @Test
+    public void isAllowedToSeeTask_should_return_true_for_archived_task() throws Exception {
+        doThrow(ActivityInstanceNotFoundException.class).when(processAPI).isInvolvedInHumanTaskInstance(1L, 42L);
+        final ArchivedActivityInstance archivedActivityInstance = mock(ArchivedActivityInstance.class);
+        when(archivedActivityInstance.getExecutedBy()).thenReturn(1L);
+        when(processAPI.getArchivedActivityInstance(42L)).thenReturn(archivedActivityInstance);
+
+        final boolean isAllowedToSeeTask = processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false);
+
+        assertTrue(isAllowedToSeeTask);
+    }
+
+    @Test
+    public void isAllowedToSeeTask_should_return_false_for_archived_task() throws Exception {
+        doThrow(ActivityInstanceNotFoundException.class).when(processAPI).isInvolvedInHumanTaskInstance(1L, 42L);
+        final ArchivedActivityInstance archivedActivityInstance = mock(ArchivedActivityInstance.class);
+        when(archivedActivityInstance.getExecutedBy()).thenReturn(2L);
+        when(processAPI.getArchivedActivityInstance(42L)).thenReturn(archivedActivityInstance);
+
+        final boolean isAllowedToSeeTask = processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false);
+
+        assertFalse(isAllowedToSeeTask);
+    }
+
+    @Test
     public void isAllowedToSeeProcessInstance_should_return_true() throws Exception {
         when(processAPI.isInvolvedInProcessInstance(1L, 42L)).thenReturn(true);
 
@@ -297,5 +335,74 @@ public class ProcessFormServiceTest {
         final boolean isAllowedToStartProcess = processFormService.isAllowedToStartProcess(apiSession, 42L, 1L);
 
         assertFalse(isAllowedToStartProcess);
+    }
+
+    @Test
+    public void isAllowedAsAdminOrProcessSupervisor_should_return_false() throws Exception {
+        final long processDefinitionId = 2L;
+        final Set<String> userPermissions = new HashSet<String>();
+        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(false);
+
+        final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
+                42L, -1L, false);
+
+        assertFalse(isAllowedAsAdminOrProcessSupervisor);
+    }
+
+    @Test
+    public void isAllowedAsAdminOrProcessSupervisor_should_return_true_if_process_supervisor() throws Exception {
+        final long processDefinitionId = 2L;
+        final Set<String> userPermissions = new HashSet<String>();
+        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(true);
+
+        final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
+                42L, -1L, false);
+
+        assertTrue(isAllowedAsAdminOrProcessSupervisor);
+    }
+
+    @Test
+    public void isAllowedAsAdminOrProcessSupervisor_should_return_true_if_admin() throws Exception {
+        final long processDefinitionId = 2L;
+        final Set<String> userPermissions = new HashSet<String>();
+        userPermissions.add(ProcessFormService.PROCESS_DEPLOY);
+        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(false);
+
+        final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
+                42L, -1L, false);
+
+        assertTrue(isAllowedAsAdminOrProcessSupervisor);
+    }
+
+    @Test
+    public void isAllowedAsAdminOrProcessSupervisor_should_assign_task() throws Exception {
+        final long processDefinitionId = 2L;
+        final long doForUser = 5L;
+        final long taskId = 42L;
+        final Set<String> userPermissions = new HashSet<String>();
+        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(true);
+        when(processAPI.getHumanTaskInstance(taskId)).thenReturn(mock(HumanTaskInstance.class));
+
+        final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
+                taskId, doForUser, true);
+
+        assertTrue(isAllowedAsAdminOrProcessSupervisor);
+        verify(processAPI).assignUserTask(taskId, doForUser);
+    }
+
+    @Test
+    public void getProcessDefinitionUUID_should_return_valid_UUID() throws Exception {
+        final ProcessDeploymentInfo processDeploymentInfo = mock(ProcessDeploymentInfo.class);
+        when(processDeploymentInfo.getName()).thenReturn("processName");
+        when(processDeploymentInfo.getVersion()).thenReturn("processVersion");
+        when(processAPI.getProcessDeploymentInfo(1L)).thenReturn(processDeploymentInfo);
+
+        final String uuid = processFormService.getProcessDefinitionUUID(apiSession, 1L);
+
+        assertEquals("processName--processVersion", uuid);
     }
 }
