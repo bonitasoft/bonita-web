@@ -24,6 +24,8 @@ import java.util.Set;
 
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -234,11 +236,24 @@ public class RadioButtonGroupWidget extends Composite implements HasClickHandler
         for (final RadioButton radioButton : radioButtons) {
             if (value != null && value.equals(radioButton.getFormValue())) {
                 radioButton.setValue(true);
+                overrideNativeInput(radioButton, true);
             } else {
                 radioButton.setValue(false);
+                overrideNativeInput(radioButton, false);
             }
             if (fireEvents) {
                 ValueChangeEvent.fire(radioButton, true);
+            }
+        }
+    }
+
+    protected void overrideNativeInput(final RadioButton radioButton, final boolean checked) {
+        final NodeList<Element> labelNodes = radioButton.getElement().getElementsByTagName("label");
+        if (labelNodes.getLength() > 0) {
+            if (checked) {
+                labelNodes.getItem(0).addClassName("checked");
+            } else {
+                labelNodes.getItem(0).removeClassName("checked");
             }
         }
     }
