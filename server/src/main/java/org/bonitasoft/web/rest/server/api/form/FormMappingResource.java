@@ -20,6 +20,7 @@ import org.bonitasoft.console.common.server.form.FormReference;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -62,7 +63,7 @@ public class FormMappingResource extends CommonResource {
         }
         try {
             final long mappingId = Long.parseLong(mappingIdAsString);
-            processConfigurationAPI.updateFormMapping(mappingId, formReference.getForm(), formReference.getTarget());
+            processConfigurationAPI.updateFormMapping(mappingId, formReference.getForm(), FormMappingTarget.valueOf(formReference.getTarget()));
         } catch (final FormMappingNotFoundException e) {
             throw new ResourceException(Status.CLIENT_ERROR_NOT_FOUND, "Cannot find form mapping with Id " + mappingIdAsString);
         } catch (final Exception e) {
