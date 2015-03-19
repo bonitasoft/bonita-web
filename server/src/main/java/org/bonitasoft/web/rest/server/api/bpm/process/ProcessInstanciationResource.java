@@ -19,7 +19,6 @@ import java.util.logging.Level;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
-import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
@@ -34,7 +33,7 @@ import org.restlet.resource.Post;
  */
 public class ProcessInstanciationResource extends CommonResource {
 
-    private static final String PROCESS_DEFINITION_ID = "processDefinitionId";
+    static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
     private final ProcessAPI processAPI;
 
@@ -44,10 +43,9 @@ public class ProcessInstanciationResource extends CommonResource {
 
     @Post("json")
     public void instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
-            ProcessExecutionException, FlowNodeExecutionException {
+            ProcessExecutionException {
         try {
-        processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs);
-
+            processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs);
         } catch (final ContractViolationException e) {
             if (getLogger().isLoggable(Level.INFO)) {
                 final StringBuilder explanations = new StringBuilder();

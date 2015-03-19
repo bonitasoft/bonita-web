@@ -26,7 +26,7 @@ import org.restlet.resource.Get;
  */
 public class TaskContractResource extends CommonResource {
 
-    private static final String TASK_ID = "taskId";
+    static final String TASK_ID = "taskId";
 
     private final ProcessAPI processAPI;
 
@@ -36,10 +36,10 @@ public class TaskContractResource extends CommonResource {
 
     @Get("json")
     public ContractDefinition getContract() throws UserTaskNotFoundException {
-        return processAPI.getUserTaskContract(getTaskIDParameter());
+        return processAPI.getUserTaskContract(getTaskIdParameter());
     }
 
-    protected long getTaskIDParameter() {
+    protected long getTaskIdParameter() {
         final String taskId = getAttribute(TASK_ID);
         if (taskId == null) {
             throw new APIException("Attribute '" + TASK_ID + "' is mandatory");

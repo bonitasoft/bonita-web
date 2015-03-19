@@ -33,7 +33,7 @@ import org.restlet.resource.Post;
  */
 public class TaskExecutionResource extends CommonResource {
 
-    private static final String TASK_ID = "taskId";
+    static final String TASK_ID = "taskId";
 
     private final ProcessAPI processAPI;
 
@@ -44,7 +44,7 @@ public class TaskExecutionResource extends CommonResource {
     @Post("json")
     public void executeTask(final Map<String, Serializable> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException {
         try {
-            processAPI.executeUserTask(getTaskIDParameter(), inputs);
+            processAPI.executeUserTask(getTaskIdParameter(), inputs);
         } catch (final ContractViolationException e) {
             if (getLogger().isLoggable(Level.INFO)) {
                 final StringBuilder explanations = new StringBuilder();
@@ -60,7 +60,7 @@ public class TaskExecutionResource extends CommonResource {
         }
     }
 
-    protected long getTaskIDParameter() {
+    protected long getTaskIdParameter() {
         final String taskId = getAttribute(TASK_ID);
         if (taskId == null) {
             throw new APIException("Attribute '" + TASK_ID + "' is mandatory");

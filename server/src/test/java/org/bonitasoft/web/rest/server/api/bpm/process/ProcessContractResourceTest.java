@@ -15,6 +15,9 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -25,6 +28,8 @@ import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -40,19 +45,29 @@ public class ProcessContractResourceTest extends RestletTest {
 
     private final String TEST_CONTRACT_API_URL = "/bpm/process/" + PROCESS_DEFINITION_ID + "/contract";
 
-    private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
-
-    private static final String VALID_POST_BODY = "{ \"key\": \"value\", \"key2\": \"value2\" }";
+    private ProcessContractResource processContractResource;
 
     @Mock
     private ProcessAPI processAPI;
 
+    @Before
+    public void initializeMocks() {
+        processContractResource = spy(new ProcessContractResource(processAPI));
+    }
 
     @Override
     protected ServerResource configureResource() {
         return new ProcessContractResource(processAPI);
     }
 
+    @Test(expected = APIException.class)
+    public void should_throw_exception_if_attribute_is_not_found() throws Exception {
+        // given:
+        doReturn(null).when(processContractResource).getAttribute(anyString());
+
+        // when:
+        processContractResource.getContract();
+    }
 
     @Test
     public void should_return_a_contract_for_a_given_process_definition_id() throws Exception {
