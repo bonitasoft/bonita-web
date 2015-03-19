@@ -58,7 +58,7 @@ import org.bonitasoft.engine.session.APISession;
 
 public class ProcessFormService {
 
-    private static final String PROCESS_DEPLOY = "process_deploy";
+    protected static final String PROCESS_DEPLOY = "process_deploy";
 
     public static final String UUID_SEPERATOR = "--";
 
@@ -81,6 +81,11 @@ public class ProcessFormService {
         return new FormReference(formMapping.getForm(), formMapping.getTarget().name());
     }
 
+    public String getProcessDefinitionUUID(final APISession apiSession, final long processDefinitionId) throws BonitaException {
+        final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
+        return processDeploymentInfo.getName() + UUID_SEPERATOR + processDeploymentInfo.getVersion();
+    }
+
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
             throws ProcessDefinitionNotFoundException, BonitaException {
         if (processName != null && processVersion != null) {
@@ -98,22 +103,22 @@ public class ProcessFormService {
     public long getTaskInstanceId(final APISession apiSession, final long processInstanceId, final String taskName, final long userId)
             throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
-        long filteredUserId;
+        long ensuredUserId;
         if (userId != -1L) {
-            filteredUserId = userId;
+            ensuredUserId = userId;
         } else {
-            filteredUserId = apiSession.getUserId();
+            ensuredUserId = apiSession.getUserId();
         }
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
         searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId);
         searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.NAME, taskName);
-        final SearchResult<HumanTaskInstance> searchMyAvailableHumanTasks = processAPI.searchMyAvailableHumanTasks(filteredUserId,
+        final SearchResult<HumanTaskInstance> searchMyAvailableHumanTasks = processAPI.searchMyAvailableHumanTasks(ensuredUserId,
                 searchOptionsBuilder.done());
         if (searchMyAvailableHumanTasks.getCount() > 0) {
             return searchMyAvailableHumanTasks.getResult().get(0).getId();
         } else {
             final SearchOptionsBuilder archivedSearchOptionsBuilder = new SearchOptionsBuilder(0, 1);
-            archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.ASSIGNEE_ID, filteredUserId);
+            archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.ASSIGNEE_ID, ensuredUserId);
             archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, processInstanceId);
             archivedSearchOptionsBuilder.filter(ArchivedHumanTaskInstanceSearchDescriptor.NAME, taskName);
             final SearchResult<ArchivedHumanTaskInstance> searchArchivedHumanTasks = processAPI.searchArchivedHumanTasks(archivedSearchOptionsBuilder
@@ -198,7 +203,7 @@ public class ProcessFormService {
         return processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId());
     }
 
-    public boolean isAllowedToSeeTask(final APISession apiSession, final long processDefinitionId, final long taskInstanceId, final long enforcedUserId,
+    public boolean isAllowedToSeeTask(final APISession apiSession, final long taskInstanceId, final long enforcedUserId,
             final boolean assignTask) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
         try {
@@ -215,7 +220,7 @@ public class ProcessFormService {
         }
     }
 
-    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processDefinitionId, final long processInstanceId,
+    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processInstanceId,
             final long enforcedUserId) throws BonitaException {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
         return processAPI.isInvolvedInProcessInstance(enforcedUserId, processInstanceId);
@@ -227,6 +232,17 @@ public class ProcessFormService {
             parameters.put("USER_ID_KEY", enforcedUserId);
             parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionId);
             return (Boolean) getCommandAPI(apiSession).execute("canStartProcessDefinition", parameters);
+        }
+        return false;
+    }
+
+    public boolean isAllowedAsAdminOrProcessSupervisor(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
+            final long taskInstanceId, final long userId, final boolean assignTask) throws BonitaException {
+        if (isLoggedUserAdmin(request) || isLoggedUserProcessSupervisor(apiSession, processDefinitionId)) {
+            if (taskInstanceId != -1L && assignTask) {
+                assignTaskIfNotAssigned(apiSession, taskInstanceId, userId);
+            }
+            return true;
         }
         return false;
     }
@@ -249,21 +265,5 @@ public class ProcessFormService {
 
     protected CommandAPI getCommandAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getCommandAPI(apiSession);
-    }
-
-    public String getProcessDefinitionUUID(final APISession apiSession, final long processDefinitionId) throws BonitaException {
-        final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
-        return processDeploymentInfo.getName() + UUID_SEPERATOR + processDeploymentInfo.getVersion();
-    }
-
-    public boolean isAllowedAsAdminOrProcessSupervisor(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
-            final long taskInstanceId, final long userId, final boolean assignTask) throws BonitaException {
-        if (isLoggedUserAdmin(request) || isLoggedUserProcessSupervisor(apiSession, processDefinitionId)) {
-            if (taskInstanceId != -1L && assignTask) {
-                assignTaskIfNotAssigned(apiSession, taskInstanceId, userId);
-            }
-            return true;
-        }
-        return false;
     }
 }

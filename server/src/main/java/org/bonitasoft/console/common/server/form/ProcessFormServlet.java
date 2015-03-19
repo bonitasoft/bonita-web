@@ -334,9 +334,9 @@ public class ProcessFormServlet extends HttpServlet {
                 enforcedUserId = userId;
             }
             if (taskInstanceId != -1L) {
-                return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId, assignTask);
+                return processFormService.isAllowedToSeeTask(apiSession, taskInstanceId, enforcedUserId, assignTask);
             } else if (processInstanceId != -1L) {
-                return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionId, processInstanceId, enforcedUserId);
+                return processFormService.isAllowedToSeeProcessInstance(apiSession, processInstanceId, enforcedUserId);
             } else {
                 return processFormService.isAllowedToStartProcess(apiSession, processDefinitionId, enforcedUserId);
             }

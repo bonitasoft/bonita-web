@@ -98,6 +98,7 @@ public class DisplayCaseFormPage extends Page {
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append("form/processInstance/")
                 .append(caseId)
+                .append("/")
                 .append("?locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
