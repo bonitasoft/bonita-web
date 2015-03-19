@@ -28,21 +28,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 
 /**
- * Servlet allowing to download process instances attachments
- *
+ * Servlet allowing to download images
+ * 
  * @author Julien Mege
  */
-public abstract class AttachmentImageServlet extends AttachmentDownloadServlet {
+public abstract class ImageDownloadServlet extends DownloadServlet {
 
     private static final long serialVersionUID = 6883709267615643971L;
 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(AttachmentImageServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ImageDownloadServlet.class.getName());
 
     public static final String SRC_PARAM = "src";
 
@@ -73,7 +73,7 @@ public abstract class AttachmentImageServlet extends AttachmentDownloadServlet {
             final File iconDir = new File(directoryPath);
             final File file = new File(iconDir, srcStr);
 
-            final TenantFolder tenantFolder = new TenantFolder();
+            final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
             try {
                 if (!tenantFolder.isInFolder(file, iconDir)) {
                     throw new ServletException("For security reasons, access to this file paths" + file.getPath() + " is restricted.");

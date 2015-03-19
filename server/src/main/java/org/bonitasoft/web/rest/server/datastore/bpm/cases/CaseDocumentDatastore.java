@@ -26,7 +26,7 @@ import javax.activation.MimetypesFileTypeMap;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
@@ -68,7 +68,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
     final FileTypeMap mimetypesFileTypeMap;
 
-    final TenantFolder tenantFolder;
+    final BonitaHomeFolderAccessor tenantFolder;
 
     protected SearchOptionsCreator searchOptionsCreator;
 
@@ -76,7 +76,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
      * Default constructor.
      */
     public CaseDocumentDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final ProcessAPI processAPI,
-            final TenantFolder tenantFolder) {
+            final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.processAPI = processAPI;

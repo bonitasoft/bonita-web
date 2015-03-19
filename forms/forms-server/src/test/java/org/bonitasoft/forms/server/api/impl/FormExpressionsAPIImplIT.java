@@ -33,7 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
@@ -461,7 +461,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
         fieldValue.setDisplayedValue(file.getName());
 
         final FormExpressionsAPIImpl formExpressionAPIImpl = spy(new FormExpressionsAPIImpl());
-        final TenantFolder tenantFolder = mock(TenantFolder.class);
+        final BonitaHomeFolderAccessor tenantFolder = mock(BonitaHomeFolderAccessor.class);
         doReturn(tenantFolder).when(formExpressionAPIImpl).getTenantFolder();
         doReturn(file).when(tenantFolder).getTempFile(any(String.class), any(Long.class));
 

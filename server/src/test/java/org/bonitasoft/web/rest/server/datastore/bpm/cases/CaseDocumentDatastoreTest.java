@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
@@ -65,7 +65,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     private Document mockedDocument;
 
     @Mock
-    private TenantFolder tenantFolder;
+    private BonitaHomeFolderAccessor tenantFolder;
 
     @Mock
     private SearchResult<Document> mockedEngineSearchResults;

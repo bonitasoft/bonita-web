@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.web.toolkit.server.ServiceException;
@@ -43,7 +43,7 @@ public class OrganizationImportService extends ConsoleService {
 
     @Override
     public Object run() {
-        final TenantFolder tenantFolder = new TenantFolder();
+        final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
         File xmlFile;
         try {
             xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
