@@ -215,58 +215,35 @@ msgstr ""
 msgid  "Loading..."
 msgstr ""
 
-msgid  "sort by ID ascending"
-msgstr ""
- 
-msgid  "sort by ID descending"
-msgstr ""
- 
-msgid  "sort by Process name ascending"
-msgstr ""
- 
-msgid  "sort by Process name descending"
-msgstr ""
- 
-msgid  "sort by Start date ascending"
-msgstr ""
- 
-msgid  "sort by Start date descending"
-msgstr ""
- 
-msgid  "sort by End date ascending"
-msgstr ""
- 
-msgid  "sort by End date descending"
+msgid  "Totals"
 msgstr ""
 
-msgid  "sort by State ascending"
+msgid  "View process design"
 msgstr ""
 
-msgid  "sort by State descending"
+msgid  "View case design"
 msgstr ""
 
-msgid  "sort by Version ascending"
+# Case Visu - Show Key
+msgid  "Show key"
 msgstr ""
 
-msgid  "sort by Version descending"
+msgid  "Task1"
 msgstr ""
 
-msgid  "sort by Cases with failures ascending"
+msgid  "Cancelled, skipped instances"
 msgstr ""
 
-msgid  "sort by Cases with failures descending"
+msgid  "Completed instances"
 msgstr ""
 
-msgid  "sort by Healthy cases ascending"
+msgid  "Failed instances"
 msgstr ""
 
-msgid  "sort by Healthy cases descending"
+msgid  "Executing, completing, initializing instances"
 msgstr ""
 
-msgid  "sort by Open cases ascending"
-msgstr ""
-
-msgid  "sort by Open cases descending"
+msgid  "Ready, waiting instances"
 msgstr ""
 
 msgid  "Items per page"
@@ -278,11 +255,35 @@ msgstr ""
 msgid  "Table settings"
 msgstr ""
 
+msgid  "sort by ID ascending"
+msgstr ""
+
+msgid  "sort by ID descending"
+msgstr ""
+
+msgid  "sort by Process name ascending"
+msgstr ""
+
+msgid  "sort by Process name descending"
+msgstr ""
+
+msgid  "sort by Start date ascending"
+msgstr ""
+
+msgid  "sort by Start date descending"
+msgstr ""
+
+msgid  "sort by End date ascending"
+msgstr ""
+
+msgid  "sort by End date descending"
+msgstr ""
+
 msgid  "Hide"
 msgstr ""
- 
+
 msgid  "Show"
 msgstr ""
- 
+
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr ""

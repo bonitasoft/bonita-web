@@ -28,6 +28,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -51,6 +53,8 @@ public class FinderFactory {
         finders.put(FormMappingResource.class, new FormMappingResourceFinder());
         finders.put(UserTaskContractResource.class, new UserTaskContractResourceFinder());
         finders.put(UserTaskExecutionResource.class, new UserTaskContractResourceFinder());
+        finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
+        finders.put(ProcessInstanciationResource.class, new ProcessInstanciationResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -140,6 +144,25 @@ public class FinderFactory {
             return new UserTaskExecutionResource(processAPI);
         }
     }
+
+
+    public static class ProcessContractResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final ProcessAPI processAPI = getProcessAPI(request);
+            return new ProcessContractResource(processAPI);
+        }
+    }
+    public static class ProcessInstanciationResourceFinder extends Finder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final ProcessAPI processAPI = getProcessAPI(request);
+            return new ProcessInstanciationResource(processAPI);
+        }
+    }
+
 
     public static class FormMappingResourceFinder extends Finder {
 

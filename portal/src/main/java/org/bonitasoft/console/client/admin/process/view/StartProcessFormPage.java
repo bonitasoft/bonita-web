@@ -71,6 +71,7 @@ public class StartProcessFormPage extends Page {
         final String encodedProcessName = URL.encodeQueryString(processName);
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
         final String encodedProcessVersion = URL.encodeQueryString(processVersion);
+        final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
         final String userId = this.getParameter(ATTRIBUTE_USER_ID);
