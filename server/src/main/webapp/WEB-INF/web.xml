@@ -260,6 +260,10 @@
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestletApplicationServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RestletServletCustomPage</servlet-name>
+        <servlet-class>com.bonitasoft.web.rest.server.BonitaSPRestletApplicationServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ConsoleServiceServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.server.ConsoleServiceServlet</servlet-class>
     </servlet>
@@ -516,7 +520,7 @@
         <url-pattern>/API/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RestletServlet</servlet-name>
+        <servlet-name>RestletServletCustomPage</servlet-name>
 	<url-pattern>/portal/custom-page/API/*</url-pattern>
     </servlet-mapping>    
     <servlet-mapping>
