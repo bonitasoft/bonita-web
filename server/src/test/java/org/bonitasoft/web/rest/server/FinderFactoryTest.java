@@ -218,5 +218,4 @@ public class FinderFactoryTest {
         assertThat(serverResource).isInstanceOf(FormMappingResource.class);
     }
 
-
 }

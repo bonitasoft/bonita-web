@@ -15,7 +15,6 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
@@ -23,9 +22,7 @@ import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
-import org.bonitasoft.web.rest.server.api.resource.ErrorMessageWithExplanations;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.restlet.data.Status;
 import org.restlet.resource.Post;
 
 /**
@@ -47,17 +44,7 @@ public class ProcessInstanciationResource extends CommonResource {
         try {
             processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs);
         } catch (final ContractViolationException e) {
-            if (getLogger().isLoggable(Level.INFO)) {
-                final StringBuilder explanations = new StringBuilder();
-                for (final String explanation : e.getExplanations()) {
-                    explanations.append(explanation);
-                }
-                getLogger().log(Level.INFO, e.getMessage() + "\nExplanations:\n" + explanations);
-            }
-            getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST, "Cannot instanciate process task.");
-            final ErrorMessageWithExplanations errorMessage = new ErrorMessageWithExplanations(e);
-            errorMessage.setExplanations(e.getExplanations());
-            getResponse().setEntity(errorMessage.toEntity());
+            manageContractViolationException(e, "Cannot instanciate process task.");
         }
 
     }

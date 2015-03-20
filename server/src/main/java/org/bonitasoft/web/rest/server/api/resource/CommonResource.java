@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
@@ -243,6 +244,20 @@ public class CommonResource extends ServerResource {
         final Series<Header> headers = getResponse().getHeaders();
         headers.add(new Header("Content-range", getSearchPageNumber() * getSearchPageSize() + "-" + (getSearchPageSize() - 1) + "/"
                 + searchResult.getCount()));
+    }
+
+    protected void manageContractViolationException(final ContractViolationException e, final String statusErrorMessage) {
+        if (getLogger().isLoggable(Level.INFO)) {
+            final StringBuilder explanations = new StringBuilder();
+            for (final String explanation : e.getExplanations()) {
+                explanations.append(explanation);
+            }
+            getLogger().log(Level.INFO, e.getMessage() + "\nExplanations:\n" + explanations);
+        }
+        getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST, statusErrorMessage);
+        final ErrorMessageWithExplanations errorMessage = new ErrorMessageWithExplanations(e);
+        errorMessage.setExplanations(e.getExplanations());
+        getResponse().setEntity(errorMessage.toEntity());
     }
 
 }
