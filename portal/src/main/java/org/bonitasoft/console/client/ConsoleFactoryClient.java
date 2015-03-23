@@ -124,6 +124,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     public ConsoleFactoryClient() {
         angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
         angularViewsMap.put(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
+        angularViewsMap.put(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -364,10 +365,23 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             new CheckValidSessionBeforeAction(emptyAction).execute();
             angularFrame.setUrl("#" + angularViewsMap.get(token), token);
             return angularFrame;
+            // TODO : to remove when merging new process more detail page to the new one !!!!
+        } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token)) {
+            // No action is necessary as an unauthorized request will result in a page reload.
+            new CheckValidSessionBeforeAction(emptyAction).execute();
+            angularFrame.setUrl("#" + angularViewsMap.get(token), token);
+            return angularFrame;
         } else {
+            for (final String key : getCurrentUserAccessRights()) {
+                print(key);
+            }
             return new BlankPage();
         }
     }
+
+    public native void print(String content) /*-{
+                                             console.log(content);
+                                             }-*/;
 
     protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
         String result = "";
@@ -415,6 +429,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ProcessListingAdminPage.TOKEN, ProcessListingAdminPage.PRIVILEGES);
         pagePrivileges.put(ProcessQuickDetailsAdminPage.TOKEN, ProcessQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(ProcessMoreDetailsAdminPage.TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(UploadProcessPage.TOKEN, UploadProcessPage.PRIVILEGES);
         pagePrivileges.put(CreateCategoryAndAddToProcessPage.TOKEN, CreateCategoryAndAddToProcessPage.PRIVILEGES);
         pagePrivileges.put(AddProcessCategoryPage.TOKEN, AddProcessCategoryPage.PRIVILEGES);
