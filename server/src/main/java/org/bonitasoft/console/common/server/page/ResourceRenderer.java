@@ -14,6 +14,7 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +51,7 @@ public class ResourceRenderer {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            content = getFileContent(resourceFile);
+            content = getFileContent(resourceFile, response);
 
             response.setContentType(request.getSession().getServletContext()
                     .getMimeType(resourceFile.getName()));
@@ -61,7 +63,9 @@ public class ResourceRenderer {
                 out.write(content, 0, content.length);
             }
             response.flushBuffer();
-        } catch (final IOException e) {
+        }catch (FileNotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        }catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
             }
@@ -69,15 +73,23 @@ public class ResourceRenderer {
         }
     }
 
-    private byte[] getFileContent(File resourceFile) throws IOException, BonitaException {
-        if(resourceFile==null){
+    private byte[] getFileContent(File resourceFile, final HttpServletResponse response) throws IOException, BonitaException {
+        if (resourceFile == null) {
             String errorMessage = "Resource file must not be null.";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, errorMessage);
             }
             throw new BonitaException(errorMessage);
         }
-        return Files.readAllBytes(resourceFile.toPath());
+        if (resourceFile.exists()) {
+            return Files.readAllBytes(resourceFile.toPath());
+        } else {
+            String fileNotFoundMessage = "Cannot find the resource file ";
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, fileNotFoundMessage + resourceFile.getCanonicalPath());
+            }
+            throw new FileNotFoundException(fileNotFoundMessage + resourceFile.getName());
+        }
     }
 
     public List<String> getPathSegments(final HttpServletRequest request) throws UnsupportedEncodingException {
