@@ -15,7 +15,6 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -35,7 +34,7 @@ public class ProcessContractResource extends CommonResource {
     }
 
     @Get("json")
-    public ContractDefinition getContract() throws UserTaskNotFoundException, ProcessDefinitionNotFoundException {
+    public ContractDefinition getContract() throws ProcessDefinitionNotFoundException {
         return processAPI.getProcessContract(getProcessDefinitionIdParameter());
     }
 

@@ -14,7 +14,10 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -25,6 +28,8 @@ import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -43,9 +48,16 @@ public class UserTaskContractResourceTest extends RestletTest {
     @Mock
     private ProcessAPI processAPI;
 
+    TaskContractResource taskContractResource;
+
     @Override
     protected ServerResource configureResource() {
         return new UserTaskContractResource(processAPI);
+    }
+
+    @Before
+    public void initializeMocks() {
+        taskContractResource = spy(new TaskContractResource(processAPI));
     }
 
     @Test
@@ -76,6 +88,22 @@ public class UserTaskContractResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/contract").get();
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
+    }
+
+    @Test
+    public void should_getTaskIDParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
+        //given
+        doReturn(null).when(taskContractResource).getAttribute(TaskContractResource.TASK_ID);
+
+        try {
+            //when
+            taskContractResource.getTaskIdParameter();
+        } catch (final Exception e) {
+            //then
+            assertThat(e).isInstanceOf(APIException.class);
+            assertThat(e.getMessage()).isEqualTo("Attribute '" + TaskContractResource.TASK_ID + "' is mandatory");
+        }
+
     }
 
 }
