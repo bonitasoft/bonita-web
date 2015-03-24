@@ -26,14 +26,14 @@ public class FormReference implements Serializable {
 
     private String form;
 
-    private boolean external;
+    private String target;
 
     public FormReference() {
     }
 
-    public FormReference(final String form, final boolean external) {
+    public FormReference(final String form, final String target) {
         this.form = form;
-        this.external = external;
+        this.target = target;
     }
 
 
@@ -47,13 +47,13 @@ public class FormReference implements Serializable {
     }
 
 
-    public boolean isExternal() {
-        return external;
+    public String getTarget() {
+        return target;
     }
 
 
-    public void setExternal(final boolean external) {
-        this.external = external;
+    public void setTarget(final String target) {
+        this.target = target;
     }
 
 

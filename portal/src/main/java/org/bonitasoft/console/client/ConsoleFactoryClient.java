@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.core.shared.GWT;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -65,7 +66,6 @@ import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
 import org.bonitasoft.console.client.admin.tenant.view.TenantMaintenancePage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
-import org.bonitasoft.console.client.common.view.CustomPage;
 import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
@@ -95,8 +95,6 @@ import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
-
-import com.google.gwt.core.shared.GWT;
 
 /**
  * console client page
@@ -345,12 +343,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (token != null && token.startsWith(CustomPageWithFrame.TOKEN)) {
             if (isUserAuthorized(token, getCurrentUserAccessRights())) {
                 return new CustomPageWithFrame(token);
-            } else {
-                return new BlankPage();
-            }
-        } else if (token != null && token.startsWith(CustomPage.TOKEN)) {
-            if (isUserAuthorized(token, getCurrentUserAccessRights())) {
-                return new CustomPage(token);
             } else {
                 return new BlankPage();
             }

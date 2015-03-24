@@ -112,6 +112,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append("form/taskInstance/")
                 .append(item.getId())
+                .append("/")
                 .append("?locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url

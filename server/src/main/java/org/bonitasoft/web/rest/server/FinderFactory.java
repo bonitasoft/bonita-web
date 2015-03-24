@@ -25,9 +25,11 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -49,8 +51,10 @@ public class FinderFactory {
         finders.put(BusinessDataReferencesResource.class, new BusinessDataReferencesResourceFinder());
         finders.put(BusinessDataQueryResource.class, new BusinessDataQueryResourceFinder());
         finders.put(FormMappingResource.class, new FormMappingResourceFinder());
-        finders.put(TaskContractResource.class, new TaskContractResourceFinder());
-        finders.put(TaskExecutionResource.class, new TaskExecutionResourceFinder());
+        finders.put(UserTaskContractResource.class, new UserTaskContractResourceFinder());
+        finders.put(UserTaskExecutionResource.class, new UserTaskContractResourceFinder());
+        finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
+        finders.put(ProcessInstanciationResource.class, new ProcessInstanciationResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -61,7 +65,51 @@ public class FinderFactory {
         return finder;
     }
 
-    public static class ActivityVariableResourceFinder extends Finder {
+    public abstract static class AbstractResourceFinder extends Finder {
+
+        protected CommandAPI getCommandAPI(final Request request) {
+            final APISession apiSession = getAPISession(request);
+            try {
+                return TenantAPIAccessor.getCommandAPI(apiSession);
+            } catch (final Exception e) {
+                throw new APIException(e);
+            }
+        }
+
+        protected ProcessAPI getProcessAPI(final Request request) {
+            final APISession apiSession = getAPISession(request);
+            try {
+                return TenantAPIAccessor.getProcessAPI(apiSession);
+            } catch (final Exception e) {
+                throw new APIException(e);
+            }
+        }
+
+        protected ProcessConfigurationAPI getProcessConfigurationAPI(final Request request) {
+            final APISession apiSession = getAPISession(request);
+            try {
+                return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
+            } catch (final Exception e) {
+                throw new APIException(e);
+            }
+        }
+
+        protected BusinessDataAPI getBdmAPI(final Request request) {
+            final APISession apiSession = getAPISession(request);
+            try {
+                return TenantAPIAccessor.getBusinessDataAPI(apiSession);
+            } catch (final Exception e) {
+                throw new APIException(e);
+            }
+        }
+
+        protected APISession getAPISession(final Request request) {
+            final HttpSession httpSession = ServletUtils.getRequest(request).getSession();
+            return (APISession) httpSession.getAttribute("apiSession");
+        }
+    }
+
+    public static class ActivityVariableResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -70,7 +118,7 @@ public class FinderFactory {
         }
     }
 
-    public static class TimerEventTriggerResourceFinder extends Finder {
+    public static class TimerEventTriggerResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -79,7 +127,7 @@ public class FinderFactory {
         }
     }
 
-    public static class CaseInfoResourceFinder extends Finder {
+    public static class CaseInfoResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -88,7 +136,7 @@ public class FinderFactory {
         }
     }
 
-    public static class BusinessDataReferenceResourceFinder extends Finder {
+    public static class BusinessDataReferenceResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -97,7 +145,7 @@ public class FinderFactory {
         }
     }
 
-    public static class BusinessDataQueryResourceFinder extends Finder {
+    public static class BusinessDataQueryResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -105,7 +153,7 @@ public class FinderFactory {
         }
     }
 
-    public static class BusinessDataReferencesResourceFinder extends Finder {
+    public static class BusinessDataReferencesResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -114,7 +162,7 @@ public class FinderFactory {
         }
     }
 
-    public static class BusinessDataResourceFinder extends Finder {
+    public static class BusinessDataResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -123,25 +171,45 @@ public class FinderFactory {
         }
     }
 
-    public static class TaskContractResourceFinder extends Finder {
+    public static class UserTaskContractResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
             final ProcessAPI processAPI = getProcessAPI(request);
-            return new TaskContractResource(processAPI);
+            return new UserTaskContractResource(processAPI);
         }
     }
 
-    public static class TaskExecutionResourceFinder extends Finder {
+    public static class UserTaskExecutionResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
             final ProcessAPI processAPI = getProcessAPI(request);
-            return new TaskExecutionResource(processAPI);
+            return new UserTaskExecutionResource(processAPI);
         }
     }
 
-    public static class FormMappingResourceFinder extends Finder {
+
+    public static class ProcessContractResourceFinder extends AbstractResourceFinder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final ProcessAPI processAPI = getProcessAPI(request);
+            return new ProcessContractResource(processAPI);
+        }
+    }
+
+    public static class ProcessInstanciationResourceFinder extends AbstractResourceFinder {
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+            final ProcessAPI processAPI = getProcessAPI(request);
+            return new ProcessInstanciationResource(processAPI);
+        }
+    }
+
+
+    public static class FormMappingResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
@@ -150,45 +218,6 @@ public class FinderFactory {
         }
     }
 
-    private static CommandAPI getCommandAPI(final Request request) {
-        final APISession apiSession = getAPISession(request);
-        try {
-            return TenantAPIAccessor.getCommandAPI(apiSession);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
 
-    private static ProcessAPI getProcessAPI(final Request request) {
-        final APISession apiSession = getAPISession(request);
-        try {
-            return TenantAPIAccessor.getProcessAPI(apiSession);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    private static ProcessConfigurationAPI getProcessConfigurationAPI(final Request request) {
-        final APISession apiSession = getAPISession(request);
-        try {
-            return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    private static BusinessDataAPI getBdmAPI(final Request request) {
-        final APISession apiSession = getAPISession(request);
-        try {
-            return TenantAPIAccessor.getBusinessDataAPI(apiSession);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    protected static APISession getAPISession(final Request request) {
-        final HttpSession httpSession = ServletUtils.getRequest(request).getSession();
-        return (APISession) httpSession.getAttribute("apiSession");
-    }
 
 }

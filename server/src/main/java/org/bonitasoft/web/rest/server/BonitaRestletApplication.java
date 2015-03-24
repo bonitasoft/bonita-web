@@ -24,9 +24,11 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -76,14 +78,18 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bpm/timerEventTrigger/{" + TimerEventTriggerResource.ID_PARAM_NAME + "}", factory.create(TimerEventTriggerResource.class));
         // GET to case info (with task state counter)
         router.attach("/bpm/caseInfo/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
-
-        router.attach("/bpm/tasks/{taskId}/contract", factory.create(TaskContractResource.class));
-        router.attach("/bpm/tasks/{taskId}/execution", factory.create(TaskExecutionResource.class));
+        // GET a task contract:
+        router.attach("/bpm/userTask/{taskId}/contract", factory.create(UserTaskContractResource.class));
+        router.attach("/bpm/userTask/{taskId}/execution", factory.create(UserTaskExecutionResource.class));
+        // GET a process contract:
+        router.attach("/bpm/process/{processDefinitionId}/contract", factory.create(ProcessContractResource.class));
+        // POST to execute a process contract:
+        router.attach("/bpm/process/{processDefinitionId}/instanciation", factory.create(ProcessInstanciationResource.class));
         // GET to search form mappings:
         router.attach("/form/mapping", factory.create(FormMappingResource.class));
         // PUT to update form mapping:
         router.attach("/form/mapping/{" + FormMappingResource.ID_PARAM_NAME + "}", factory.create(FormMappingResource.class));
-
+        //BDM
         router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
         router.attach("/bdm/businessData/{className}/{id}", factory.create(BusinessDataResource.class));
         router.attach("/bdm/businessData/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));
