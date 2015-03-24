@@ -99,11 +99,11 @@
     </rule>
     <rule>
        <from>^(/portal/custom-page)?/API/bpm/process([\?]|$)</from>
-       <to>/APIToolkit/bpm/process$1</to>
+       <to>/APIToolkit/bpm/process$2</to>
    </rule>
     <rule>
        <from>^(/portal/custom-page)?/API/bpm/process/([^/]*)$</from>
-       <to>/APIToolkit/bpm/process/$1</to>
+       <to>/APIToolkit/bpm/process/$2</to>
    </rule> 
     <rule>
         <from>^(/portal/custom-page)?/API/bpm/processCategory([\?/]|$)</from>
@@ -131,11 +131,11 @@
     </rule>
     <rule>
        <from>^(/portal/custom-page)?/API/bpm/userTask([\?]|$)</from>
-       <to>/APIToolkit/bpm/userTask$1</to>
+       <to>/APIToolkit/bpm/userTask$2</to>
    </rule>
     <rule>
        <from>^(/portal/custom-page)?/API/bpm/userTask/([^/]*)$</from>
-       <to>/APIToolkit/bpm/userTask/$1</to>
+       <to>/APIToolkit/bpm/userTask/$2</to>
    </rule>
     <rule>
         <from>^(/portal/custom-page)?/API/customuserinfo/definition([\?/]|$)</from>
