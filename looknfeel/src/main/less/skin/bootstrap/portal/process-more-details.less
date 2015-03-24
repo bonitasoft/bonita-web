@@ -38,16 +38,6 @@
       }
     }
   }
-  @media (min-width: 992px) {
-    .navbar {
-      width: 200px;
-    }
-  }
-  @media (min-width: 1200px) {
-    .navbar {
-      width: 240px;
-    }
-  }
   .sidebar-nav .navbar-header{ float: none; }
 
   span.label {
@@ -75,6 +65,37 @@
       min-width: 1px;
       height: 32px;
     }
+  }
+
+  .navbar-default {
+    background-color: white;
+    .navbar-nav {
+      > li > a:hover {
+      color: black;
+      }
+      > li > a {
+        color: @mainAccentColor;
+      }
+    }
+
+    .navbar-brand {
+      color: @mainAccentColor;
+    }
+
+    .navbar-brand:hover{
+      color: @mainAccentColor;
+    }
+    .navbar-toggle .icon-bar {
+      background-color: @mainAccentColor;
+    }
+  }
+
+  .label-info {
+    background-color: @mainAccentColor;
+  }
+
+  ul.nav > li > a {
+    color: #6e6f6b;
   }
 
 }
