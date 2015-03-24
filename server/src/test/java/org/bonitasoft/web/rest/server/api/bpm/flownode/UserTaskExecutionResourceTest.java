@@ -64,14 +64,14 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Mock
     private Logger logger;
 
-    private TaskExecutionResource taskExecutionResource;
+    private UserTaskExecutionResource userTaskExecutionResource;
 
     @Mock
     private Response response;
 
     @Before
     public void initializeMocks() {
-        taskExecutionResource = spy(new TaskExecutionResource(processAPI));
+        userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI));
     }
 
     @Override
@@ -151,15 +151,15 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
         doThrow(new ContractViolationException(message, explanations)).when(processAPI)
                 .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
-        doReturn(logger).when(taskExecutionResource).getLogger();
-        doReturn(1L).when(taskExecutionResource).getTaskIdParameter();
+        doReturn(logger).when(userTaskExecutionResource).getLogger();
+        doReturn(1L).when(userTaskExecutionResource).getTaskIdParameter();
         doReturn(true).when(logger).isLoggable(Level.INFO);
-        doReturn(response).when(taskExecutionResource).getResponse();
+        doReturn(response).when(userTaskExecutionResource).getResponse();
         final Map<String, Serializable> inputs = new HashMap<>();
         inputs.put("testKey", "testValue");
 
         //when
-        taskExecutionResource.executeTask(inputs);
+        userTaskExecutionResource.executeTask(inputs);
 
         //then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
@@ -169,15 +169,15 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_getProcessDefinitionIdParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
         //given
-        doReturn(null).when(taskExecutionResource).getAttribute(TaskExecutionResource.TASK_ID);
+        doReturn(null).when(userTaskExecutionResource).getAttribute(UserTaskExecutionResource.TASK_ID);
 
         try {
             //when
-            taskExecutionResource.getTaskIdParameter();
+            userTaskExecutionResource.getTaskIdParameter();
         } catch (final Exception e) {
             //then
             assertThat(e).isInstanceOf(APIException.class);
-            assertThat(e.getMessage()).isEqualTo("Attribute '" + TaskExecutionResource.TASK_ID + "' is mandatory");
+            assertThat(e.getMessage()).isEqualTo("Attribute '" + UserTaskExecutionResource.TASK_ID + "' is mandatory");
         }
 
     }

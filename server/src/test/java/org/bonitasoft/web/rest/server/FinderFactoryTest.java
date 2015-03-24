@@ -27,18 +27,16 @@ import org.bonitasoft.web.rest.server.FinderFactory.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.FormMappingResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.ProcessInstanciationResourceFinder;
-import org.bonitasoft.web.rest.server.FinderFactory.TaskContractResourceFinder;
-import org.bonitasoft.web.rest.server.FinderFactory.TaskExecutionResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.TimerEventTriggerResourceFinder;
+import org.bonitasoft.web.rest.server.FinderFactory.UserTaskContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.TaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
@@ -188,18 +186,18 @@ public class FinderFactoryTest {
 
     @Test
     public void should_return_TaskContractResource_for_TaskContractResourceFinder() {
-        final TaskContractResourceFinder taskContractResourceFinder = spy(new TaskContractResourceFinder());
-        doReturn(processAPI).when(taskContractResourceFinder).getProcessAPI(any(Request.class));
-        final ServerResource serverResource = taskContractResourceFinder.create(request, response);
-        assertThat(serverResource).isInstanceOf(TaskContractResource.class);
+        final UserTaskContractResourceFinder userTaskContractResourceFinder = spy(new UserTaskContractResourceFinder());
+        doReturn(processAPI).when(userTaskContractResourceFinder).getProcessAPI(any(Request.class));
+        final ServerResource serverResource = userTaskContractResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(UserTaskContractResource.class);
     }
 
     @Test
     public void should_return_TaskExecutionResource_for_TaskExecutionResourceFinder() {
-        final TaskExecutionResourceFinder taskExecutionResourceFinder = spy(new TaskExecutionResourceFinder());
-        doReturn(processAPI).when(taskExecutionResourceFinder).getProcessAPI(any(Request.class));
-        final ServerResource serverResource = taskExecutionResourceFinder.create(request, response);
-        assertThat(serverResource).isInstanceOf(TaskExecutionResource.class);
+        final UserTaskContractResourceFinder userTaskContractResourceFinder = spy(new UserTaskContractResourceFinder());
+        doReturn(processAPI).when(userTaskContractResourceFinder).getProcessAPI(any(Request.class));
+        final ServerResource serverResource = userTaskContractResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(UserTaskContractResource.class);
     }
 
     @Test

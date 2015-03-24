@@ -48,7 +48,7 @@ public class UserTaskContractResourceTest extends RestletTest {
     @Mock
     private ProcessAPI processAPI;
 
-    TaskContractResource taskContractResource;
+    UserTaskContractResource taskContractResource;
 
     @Override
     protected ServerResource configureResource() {
@@ -57,7 +57,7 @@ public class UserTaskContractResourceTest extends RestletTest {
 
     @Before
     public void initializeMocks() {
-        taskContractResource = spy(new TaskContractResource(processAPI));
+        taskContractResource = spy(new UserTaskContractResource(processAPI));
     }
 
     @Test
