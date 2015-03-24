@@ -389,6 +389,7 @@
         <servlet-class>org.bonitasoft.console.common.server.page.PageResourceServlet</servlet-class>
     </servlet>
     <servlet>
+		<servlet-name>pageDownload</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.page.PageDownloadServlet</servlet-class>
     </servlet>
     <servlet>
