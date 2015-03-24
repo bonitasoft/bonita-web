@@ -242,7 +242,8 @@ public class CommonResource extends ServerResource {
 
     protected void setContentRange(final SearchResult<?> searchResult) {
         final Series<Header> headers = getResponse().getHeaders();
-        headers.add(new Header("Content-range", getSearchPageNumber() * getSearchPageSize() + "-" + (getSearchPageSize() - 1) + "/"
+        final int startIndex = getSearchPageNumber() * getSearchPageSize();
+        headers.add(new Header("Content-range", startIndex + "-" + (startIndex + getSearchPageSize() - 1) + "/"
                 + searchResult.getCount()));
     }
 

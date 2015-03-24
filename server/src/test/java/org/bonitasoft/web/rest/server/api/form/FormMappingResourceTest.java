@@ -67,10 +67,10 @@ public class FormMappingResourceTest extends RestletTest {
         doReturn(1L).when(searchResult).getCount();
         doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
 
-        final Response response = request("/form/mapping?p=0&c=10").get();
+        final Response response = request("/form/mapping?p=2&c=10").get();
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
-        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("0-9/1");
+        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("20-29/1");
     }
 
     @Test
