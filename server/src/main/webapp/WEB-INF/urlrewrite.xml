@@ -94,10 +94,6 @@
         <to>/APIToolkit/bpm/flowNode$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/hiddenUserTask([\?/]|$)</from>
-        <to>/APIToolkit/bpm/hiddenUserTask$2</to>
-    </rule>
-    <rule>
         <from>^(/portal/custom-page)?/API/bpm/humanTask([\?/]|$)</from>
         <to>/APIToolkit/bpm/humanTask$2</to>
     </rule>
