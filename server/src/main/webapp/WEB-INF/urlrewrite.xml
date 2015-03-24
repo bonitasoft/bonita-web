@@ -102,7 +102,7 @@
         <to>/APIToolkit/bpm/humanTask$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/process([\?/]|$)</from>
+        <from>^(/portal/custom-page)?/API/bpm/process([\?/][^/]*)$</from>
         <to>/APIToolkit/bpm/process$2</to>
     </rule>
     <rule>
@@ -130,7 +130,7 @@
         <to>/APIToolkit/bpm/task$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/userTask([\?/][^/]*|$)</from>
+        <from>^(/portal/custom-page)?/API/bpm/userTask([\?/][^/]*)$</from>
         <to>/APIToolkit/bpm/userTask$2</to>
     </rule>
     <rule>
