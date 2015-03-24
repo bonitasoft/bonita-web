@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-10 09:43-0400\n"
+"PO-Revision-Date: 2015-03-24 04:14-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /release-6.5.0/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /6.5.x/bonita-web/portal/portal-js.po\n"
 
 msgid "Columns"
 msgstr "Colonnes"
@@ -23,7 +23,7 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "{}-{} of {}"
-msgstr "{}-{} de {}"
+msgstr "{}-{} of {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
@@ -268,13 +268,13 @@ msgid "sort by Open cases descending"
 msgstr "tri par Cas en cours, décroissant"
 
 msgid "Items per page"
-msgstr "nombre de cas par page"
+msgstr "Items per page"
 
 msgid "Columns selection"
-msgstr "sélection des colonnes"
+msgstr "Columns selection"
 
 msgid "Table settings"
-msgstr "Paramètres du tableau"
+msgstr "Table settings"
 
 msgid "Hide"
 msgstr "Masquer"
