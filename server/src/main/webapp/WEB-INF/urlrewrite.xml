@@ -98,9 +98,13 @@
         <to>/APIToolkit/bpm/humanTask$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/process([\?/][^/]*)$</from>
-        <to>/APIToolkit/bpm/process$2</to>
-    </rule>
+       <from>^(/portal/custom-page)?/API/bpm/process([\?]|$)</from>
+       <to>/APIToolkit/bpm/process$1</to>
+   </rule>
+    <rule>
+       <from>^(/portal/custom-page)?/API/bpm/process/([^/]*)$</from>
+       <to>/APIToolkit/bpm/process/$1</to>
+   </rule> 
     <rule>
         <from>^(/portal/custom-page)?/API/bpm/processCategory([\?/]|$)</from>
         <to>/APIToolkit/bpm/processCategory$2</to>
@@ -126,9 +130,13 @@
         <to>/APIToolkit/bpm/task$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/userTask([\?/][^/]*)$</from>
-        <to>/APIToolkit/bpm/userTask$2</to>
-    </rule>
+       <from>^(/portal/custom-page)?/API/bpm/userTask([\?]|$)</from>
+       <to>/APIToolkit/bpm/userTask$1</to>
+   </rule>
+    <rule>
+       <from>^(/portal/custom-page)?/API/bpm/userTask/([^/]*)$</from>
+       <to>/APIToolkit/bpm/userTask/$1</to>
+   </rule>
     <rule>
         <from>^(/portal/custom-page)?/API/customuserinfo/definition([\?/]|$)</from>
         <to>/APIToolkit/customuserinfo/definition$2</to>
