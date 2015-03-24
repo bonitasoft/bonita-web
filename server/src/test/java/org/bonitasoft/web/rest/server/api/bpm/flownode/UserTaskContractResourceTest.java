@@ -93,7 +93,7 @@ public class UserTaskContractResourceTest extends RestletTest {
     @Test
     public void should_getTaskIDParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
         //given
-        doReturn(null).when(taskContractResource).getAttribute(TaskContractResource.TASK_ID);
+        doReturn(null).when(taskContractResource).getAttribute(UserTaskContractResource.TASK_ID);
 
         try {
             //when
@@ -101,7 +101,7 @@ public class UserTaskContractResourceTest extends RestletTest {
         } catch (final Exception e) {
             //then
             assertThat(e).isInstanceOf(APIException.class);
-            assertThat(e.getMessage()).isEqualTo("Attribute '" + TaskContractResource.TASK_ID + "' is mandatory");
+            assertThat(e.getMessage()).isEqualTo("Attribute '" + UserTaskContractResource.TASK_ID + "' is mandatory");
         }
 
     }
