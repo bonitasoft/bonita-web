@@ -42,8 +42,6 @@ public class PageResourceProvider {
 
     private static final String VERSION_FILENAME = "VERSION";
 
-    protected final static String PAGE_RESOURCE_SERVLET_NAME = "pageResource";
-
     protected final static String THEME_RESOURCE_SERVLET_NAME = "themeResource";
 
     protected final static String PORTAL_THEME_NAME = "portal";
@@ -54,17 +52,17 @@ public class PageResourceProvider {
 
     static {
         final InputStream versionStream = PageResourceProvider.class.getClassLoader().getResourceAsStream(VERSION_FILENAME);
-        if (versionStream != null) {
-            try {
-                productVersion = IOUtils.toString(versionStream);
-            } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Unable to read the file " + VERSION_FILENAME, e);
-                }
-                productVersion = "";
-            } finally {
-                try {
-                    versionStream.close();
+                    if (versionStream != null) {
+                        try {
+                            productVersion = IOUtils.toString(versionStream);
+                        } catch (final Exception e) {
+                            if (LOGGER.isLoggable(Level.WARNING)) {
+                                LOGGER.log(Level.WARNING, "Unable to read the file " + VERSION_FILENAME, e);
+                            }
+                            productVersion = "";
+                        } finally {
+                            try {
+                                versionStream.close();
                 } catch (final IOException e) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
                         LOGGER.log(Level.WARNING, "Unable to close the input stream for file " + VERSION_FILENAME, e);
@@ -137,13 +135,12 @@ public class PageResourceProvider {
         return new FileInputStream(getResourceAsFile(resourceName));
     }
 
-    protected File getResourceAsFile(final String resourceName) {
+    public File getResourceAsFile(final String resourceName) {
         return new File(pageDirectory, resourceName);
     }
 
     public String getResourceURL(final String resourceName) {
-        return new StringBuilder(PAGE_RESOURCE_SERVLET_NAME).append("?").append(TENANT_PARAM).append("=").append(tenantId).append("&").append(PAGE_PARAM)
-                .append("=").append(pageName).append("&").append(LOCATION_PARAM).append("=").append(resourceName).append("&").append(VERSION_PARAM).append("=")
+        return new StringBuilder(resourceName).append("?").append(TENANT_PARAM).append("=").append(tenantId).append("&").append(VERSION_PARAM).append("=")
                 .append(productVersion).toString();
     }
 
@@ -153,7 +150,7 @@ public class PageResourceProvider {
                 .append(VERSION_PARAM).append("=").append(productVersion).toString();
     }
 
-    protected File getPageDirectory() {
+    public File getPageDirectory() {
         return pageDirectory;
     }
 

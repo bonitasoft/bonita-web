@@ -1,9 +1,9 @@
 package org.bonitasoft.forms.server.api.impl;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.io.Serializable;
@@ -12,11 +12,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
+import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
@@ -46,28 +44,80 @@ public class FormWorkflowAPIImplTest {
     private ProcessAPI processApi;
 
     @Mock
+    private IdentityAPI identityApi;
+
+    @Mock
+    private BPMEngineAPIUtil bpmEngineAPIUtil;
+
+    @Mock
     private IFormExpressionsAPI formExpressionsAPI;
+
     @Spy
     private FormWorkflowAPIImpl formWorkflowAPIImpl;
 
     @Mock
     private List<Expression> expressions;
-    private long userId;
-    private long processInstanceId;
 
     @Before
     public void setUp() throws Exception {
         formWorkflowAPIImpl = spy(new FormWorkflowAPIImpl());
         expressions = new ArrayList<Expression>();
-        doReturn(processApi).when(formWorkflowAPIImpl).getProcessApi(session);
+        doReturn(bpmEngineAPIUtil).when(formWorkflowAPIImpl).getBpmEngineAPIUtil();
+        doReturn(processApi).when(bpmEngineAPIUtil).getProcessAPI(session);
     }
 
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api() throws Exception {
         final boolean expected = true;
-        checkWhenApiReturn(expected);
+        checkCanUserSeeProcessInstanceWhenApiReturn(expected);
     }
-    
+
+    @Test
+    public void should_canUserSeeProcessInstance_call_engine_api_false() throws Exception {
+        final boolean expected = false;
+        checkCanUserSeeProcessInstanceWhenApiReturn(expected);
+    }
+
+    private void checkCanUserSeeProcessInstanceWhenApiReturn(final boolean expected) throws Exception {
+        final long userId = 25L;
+        final long processInstanceId = 1L;
+        //given
+        doReturn(userId).when(session).getUserId();
+        doReturn(expected).when(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
+        //when
+        final boolean canUserSeeProcessInstance = formWorkflowAPIImpl.canUserSeeProcessInstance(session, processInstanceId);
+
+        //then
+        verify(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
+        assertThat(canUserSeeProcessInstance).as("should return " + expected).isEqualTo(expected);
+    }
+
+    @Test
+    public void should_canUserSeeHumanTask_call_engine_api() throws Exception {
+        final boolean expected = true;
+        checkCanUserSeeHumanTaskWhenApiReturn(expected);
+    }
+
+    @Test
+    public void should_canUserSeeHumanTask_call_engine_api_false() throws Exception {
+        final boolean expected = false;
+        checkCanUserSeeHumanTaskWhenApiReturn(expected);
+    }
+
+    private void checkCanUserSeeHumanTaskWhenApiReturn(final boolean expected) throws Exception {
+        final long userId = 25L;
+        final long humanTaskInstanceId = 1L;
+        //given
+        doReturn(userId).when(session).getUserId();
+        doReturn(expected).when(processApi).isInvolvedInHumanTaskInstance(userId, humanTaskInstanceId);
+        //when
+        final boolean canUserSeeHumanTask = formWorkflowAPIImpl.canUserSeeHumanTask(session, -1L, humanTaskInstanceId);
+
+        //then
+        verify(processApi).isInvolvedInHumanTaskInstance(userId, humanTaskInstanceId);
+        assertThat(canUserSeeHumanTask).as("should return " + expected).isEqualTo(expected);
+    }
+
     @Test
     public void it_should_call_evaluateActivityInitialExpressions() throws Exception {
         // Given
@@ -85,12 +135,6 @@ public class FormWorkflowAPIImplTest {
     }
 
     @Test
-    public void should_canUserSeeProcessInstance_call_engine_api_false() throws Exception {
-        final boolean expected = false;
-        checkWhenApiReturn(expected);
-    }
-    
-    @Test
     public void it_should_call_evaluateProcessInitialExpressions() throws Exception {
         // Given
         final long processDefinitionID = 1;
@@ -104,21 +148,6 @@ public class FormWorkflowAPIImplTest {
         verify(formExpressionsAPI, never()).evaluateActivityInitialExpressions(session, activityInstanceID, expressions, locale, true, context);
     }
 
-    private void checkWhenApiReturn(final boolean expected) throws ProcessInstanceNotFoundException, UserNotFoundException, BPMEngineException,
-    ProcessDefinitionNotFoundException {
-        userId = 25L;
-        processInstanceId = 1L;
-        //given
-        doReturn(userId).when(session).getUserId();
-        doReturn(expected).when(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
-        //when
-        final boolean canUserSeeProcessInstance = formWorkflowAPIImpl.canUserSeeProcessInstance(session, processInstanceId);
-
-        //then
-        verify(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
-        assertThat(canUserSeeProcessInstance).as("should return " + expected).isEqualTo(expected);
-    }
-        
     @Test
     public void it_should_not_call_evaluateProcessInitialExpressions_nor_evaluateActivityInitialExpressions() throws Exception {
         // Given

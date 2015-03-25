@@ -17,9 +17,7 @@ package org.bonitasoft.console.common.server.form;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,12 +31,18 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 import org.bonitasoft.console.common.server.login.localization.UrlValue;
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
+import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.PageResourceProvider;
+import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -72,9 +76,13 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String ASSIGN_TASK_PARAM = "assignTask";
 
-    protected PageRenderer pageRenderer = new PageRenderer();
-
     protected ProcessFormService processFormService = new ProcessFormService();
+
+    private final ResourceRenderer resourceRenderer= new ResourceRenderer();
+
+    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
+
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -83,7 +91,7 @@ public class ProcessFormServlet extends HttpServlet {
         long processInstanceId = -1L;
         long taskInstanceId = -1L;
         String taskName = null;
-        final List<String> pathSegments = getPathSegments(request);
+        final List<String> pathSegments = resourceRenderer.getPathSegments(request);
         final String user = request.getParameter(USER_ID_PARAM);
         final long userId = convertToLong(USER_ID_PARAM, user);
         final HttpSession session = request.getSession();
@@ -93,7 +101,8 @@ public class ProcessFormServlet extends HttpServlet {
             if (pathSegments.size() > 1) {
                 taskInstanceId = getTaskInstanceId(apiSession, pathSegments, userId);
                 if (taskInstanceId != -1 && !TASK_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
-                    redirectToTaskPage(request, response, taskInstanceId);
+                    redirectToTaskURL(request, response, taskInstanceId);
+                    return;
                 }
                 processInstanceId = getProcessInstanceId(pathSegments);
                 processDefinitionId = getProcessDefinitionId(apiSession, pathSegments);
@@ -102,6 +111,11 @@ public class ProcessFormServlet extends HttpServlet {
             if (processDefinitionId == -1L && processInstanceId == -1L && taskInstanceId == -1L) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Either process name and version are required or process instance Id (with or without task name) or task instance Id.");
+                return;
+            }
+            // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
+            if (resourcePath == null && !request.getPathInfo().endsWith("/")) {
+                customPageRequestModifier.redirectToValidPageUrl(request, response);
                 return;
             }
             processDefinitionId = processFormService.ensureProcessDefinitionId(apiSession, processDefinitionId, processInstanceId, taskInstanceId);
@@ -117,38 +131,22 @@ public class ProcessFormServlet extends HttpServlet {
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
             final FormReference form = processFormService.getForm(apiSession, processDefinitionId, taskName, processInstanceId != -1L);
-            if (ProcessFormService.LEGACY_FORMS_NAME.equals(form.getForm())) {
+            if (FormMappingTarget.LEGACY.name().equals(form.getTarget())) {
                 displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
             } else if (form.getForm() != null) {
                 // for resources we don't check if the user is allowed
                 final boolean assignTask = "true".equals(request.getParameter(ASSIGN_TASK_PARAM));
-                if (resourcePath == null && !isAuthorized(apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId, assignTask)) {
+                if (resourcePath == null && !isAuthorized(request, apiSession, processDefinitionId, processInstanceId, taskInstanceId, userId, assignTask)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                 } else {
                     displayForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, form, resourcePath);
                 }
             } else {
-                //TODO restore this once the studio export LEGACY mapping
-                //response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
-                //meanwhile fallback to legacy forms
-                displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
             }
         } catch (final FormMappingNotFoundException e) {
             displayLegacyForm(request, response, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
         }
-    }
-
-    protected List<String> getPathSegments(final HttpServletRequest request) throws UnsupportedEncodingException {
-        final List<String> segments = new ArrayList<String>();;
-        final String pathInfo = request.getPathInfo();
-        if (pathInfo != null) {
-            for (final String segment : pathInfo.split("/")) {
-                if (!segment.isEmpty()) {
-                    segments.add(URLDecoder.decode(segment, "UTF-8"));
-                }
-            }
-        }
-        return segments;
     }
 
     protected long getProcessInstanceId(final List<String> pathSegments) {
@@ -199,7 +197,7 @@ public class ProcessFormServlet extends HttpServlet {
             final StringBuilder resourcePathBuilder = new StringBuilder();
             for (int i = resourcePathStartIndex; i < pathSegments.size(); i++) {
                 if (i > resourcePathStartIndex) {
-                    resourcePathBuilder.append(File.separator);
+                    resourcePathBuilder.append("/");
                 }
                 resourcePathBuilder.append(pathSegments.get(i));
             }
@@ -255,13 +253,14 @@ public class ProcessFormServlet extends HttpServlet {
             final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final FormReference form,
             final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
-        if (!form.isExternal()) {
+        if (FormMappingTarget.INTERNAL.name().equals(form.getTarget())) {
             try {
-                if (resourcePath == null) {
+                if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
+                        || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
                     //TODO pass the processDefinition, processInstance and taskInstance IDs in order to put them in the Context of the custom page
                     pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
                 } else {
-                    //TODO render the resource
+                    resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, form.getForm(), resourcePath));
                 }
             } catch (final PageNotFoundException e) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getForm());
@@ -273,6 +272,17 @@ public class ProcessFormServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
             }
         }
+    }
+
+    protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final String pageName, final String resourcePath)
+            throws IOException {
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+        final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
+        final TenantFolder tenantFolder = new TenantFolder();
+        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "For security reasons, access to this file path is forbidden : " + resourcePath);
+        }
+        return resourceFile;
     }
 
     protected long convertToLong(final String parameterName, final String idAsString) {
@@ -289,13 +299,14 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     @SuppressWarnings("unchecked")
-    protected void redirectToTaskPage(final HttpServletRequest request, final HttpServletResponse response, final long taskInstanceId) throws IOException {
+    protected void redirectToTaskURL(final HttpServletRequest request, final HttpServletResponse response, final long taskInstanceId) throws IOException {
         final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
         taskURLBuilder.append(request.getServletPath())
                 .append("/")
                 .append(TASK_INSTANCE_PATH_SEGMENT)
                 .append("/")
-                .append(taskInstanceId);
+                .append(taskInstanceId)
+                .append("/");
         final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
         urlBuilder.appendParameters(request.getParameterMap());
         response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
@@ -324,20 +335,24 @@ public class ProcessFormServlet extends HttpServlet {
         return urlBuilder.build();
     }
 
-    protected boolean isAuthorized(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
+    protected boolean isAuthorized(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
             final long userId, final boolean assignTask) throws BonitaException {
-        final long enforcedUserId;
-        if (userId == -1L) {
-            enforcedUserId = apiSession.getUserId();
+        if (processFormService.isAllowedAsAdminOrProcessSupervisor(request, apiSession, processDefinitionId, taskInstanceId, userId, assignTask)) {
+            return true;
         } else {
-            enforcedUserId = userId;
-        }
-        if (taskInstanceId != -1L) {
-            return processFormService.isAllowedToSeeTask(apiSession, processDefinitionId, taskInstanceId, enforcedUserId, assignTask);
-        } else if (processInstanceId != -1L) {
-            return processFormService.isAllowedToSeeProcessInstance(apiSession, processDefinitionId, processInstanceId, enforcedUserId);
-        } else {
-            return processFormService.isAllowedToStartProcess(apiSession, processDefinitionId, enforcedUserId);
+            final long enforcedUserId;
+            if (userId == -1L) {
+                enforcedUserId = apiSession.getUserId();
+            } else {
+                enforcedUserId = userId;
+            }
+            if (taskInstanceId != -1L) {
+                return processFormService.isAllowedToSeeTask(apiSession, taskInstanceId, enforcedUserId, assignTask);
+            } else if (processInstanceId != -1L) {
+                return processFormService.isAllowedToSeeProcessInstance(apiSession, processInstanceId, enforcedUserId);
+            } else {
+                return processFormService.isAllowedToStartProcess(apiSession, processDefinitionId, enforcedUserId);
+            }
         }
     }
 

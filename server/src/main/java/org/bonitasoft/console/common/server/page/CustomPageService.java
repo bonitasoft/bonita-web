@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.common.server.page;
 
-import groovy.lang.GroovyClassLoader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,6 +28,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -67,7 +66,11 @@ public class CustomPageService {
 
     private static final String PAGE_LIB_DIRECTORY = "lib";
 
-    private static final String PAGE_CONTROLLER_FILENAME = "Index.groovy";
+    public static final String PAGE_CONTROLLER_FILENAME = "Index.groovy";
+
+    public static final String PAGE_INDEX_NAME = "index";
+
+    public static final String PAGE_INDEX_FILENAME = "index.html";
 
     private static final String LASTUPDATE_FILENAME = ".lastupdate";
 
@@ -77,10 +80,12 @@ public class CustomPageService {
 
     public static final String RESOURCES_PROPERTY = "resources";
 
-    public static final String NAME_PROPERTY = "name";
-
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final String pageName, final PageResourceProvider pageResourceProvider)
             throws IOException, CompilationFailedException, BonitaException {
+        return buildPageClassloader(apiSession, pageName, pageResourceProvider);
+    }
+
+    public void ensurePageFolderIsUpToDate(APISession apiSession, String pageName, PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
         final File pageFolder = pageResourceProvider.getPageDirectory();
         if (!pageResourceProvider.getPageDirectory().exists()) {
             retrievePageZipContent(apiSession, pageName, pageResourceProvider);
@@ -98,13 +103,12 @@ public class CustomPageService {
                 FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
             }
         }
-        return buildPageClassloader(apiSession, pageName, pageResourceProvider);
     }
 
     @SuppressWarnings("unchecked")
     public Class<PageController> registerPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, IOException {
-        final File PageControllerFile = getCustomPageFile(pageResourceProvider.getPageDirectory());
+        final File PageControllerFile = getGroovyPageFile(pageResourceProvider.getPageDirectory());
         return pageClassLoader.parseClass(PageControllerFile);
     }
 
@@ -237,13 +241,8 @@ public class CustomPageService {
         FileUtils.deleteDirectory(pageResourceProvider.getPageDirectory());
     }
 
-    protected File getCustomPageFile(final File pageDirectory) {
-        final File pageControllerFile = new File(pageDirectory, PAGE_CONTROLLER_FILENAME);
-        if (pageControllerFile.exists()) {
-            return pageControllerFile;
-        } else {
-            return new File(pageDirectory.getParent(), PAGE_CONTROLLER_FILENAME);
-        }
+    public File getGroovyPageFile(final File pageDirectory) {
+        return new File(pageDirectory, PAGE_CONTROLLER_FILENAME);
     }
 
     protected File getCustomPageLibDirectory(final File pageDirectory) {

@@ -159,7 +159,8 @@ public class FormServiceProviderImplTest {
         final long processInstanceId = 3L;
 
         //given
-        doReturn(false).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, processInstanceId);
+        doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+        doReturn(false).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
         doReturn(false).when(formWorkflowAPIImpl).canUserSeeProcessInstance(apiSession, processInstanceId);
         doReturn("john").when(user).getUsername();
         doReturn("form-type").when(formServiceProviderImpl).getFormType(formId, context);
@@ -177,7 +178,8 @@ public class FormServiceProviderImplTest {
         final long processInstanceId = 3L;
 
         //given
-        doReturn(false).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, processInstanceId);
+        doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+        doReturn(false).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
         doReturn(true).when(formWorkflowAPIImpl).canUserSeeProcessInstance(apiSession, processInstanceId);
 
         //when
@@ -192,7 +194,8 @@ public class FormServiceProviderImplTest {
         final long processInstanceId = 3L;
 
         //given
-        doReturn(true).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, processInstanceId);
+        doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+        doReturn(true).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
 
         //when
         formServiceProviderImpl.canUserViewInstanceForm(apiSession, user, formWorkflowAPIImpl, processInstanceId, formId, userId, context);
@@ -221,7 +224,8 @@ public class FormServiceProviderImplTest {
 
         for (int i = 0; i < givenExceptions.size(); i++) {
             //given
-            doThrow(givenExceptions.get(i)).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, processInstanceId);
+            doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+            doThrow(givenExceptions.get(i)).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
 
             //when
             try {
@@ -240,6 +244,56 @@ public class FormServiceProviderImplTest {
     private void addGivenAndExpectedException(final Class<? extends Exception> givenException, final Class<? extends Exception> expectedException) {
         givenExceptions.add(givenException);
         expectedExceptions.add(expectedException);
+    }
+
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_canUserViewActivityInstanceForm_throw_exception_if_not_involved() throws Exception {
+        final String formId = "formId";
+        final long userId = 2L;
+        final long activityInstanceID = 3L;
+
+        //given
+        doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromActivityInstanceID(apiSession, activityInstanceID);
+        doReturn(false).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
+        doReturn(false).when(formWorkflowAPIImpl).canUserSeeHumanTask(apiSession, userId, activityInstanceID);
+        doReturn("john").when(user).getUsername();
+        doReturn("form-type").when(formServiceProviderImpl).getFormType(formId, context);
+
+        //when
+        formServiceProviderImpl.canUserViewActivityInstanceForm(apiSession, user, formWorkflowAPIImpl, activityInstanceID, formId, userId, context);
+
+        //exception
+    }
+
+    @Test
+    public void should_canUserViewActivityInstanceForm_return_true_for_involved_user() throws Exception {
+        final String formId = "formId";
+        final long userId = 2L;
+        final long activityInstanceID = 3L;
+
+        //given
+        doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromActivityInstanceID(apiSession, activityInstanceID);
+        doReturn(false).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
+        doReturn(true).when(formWorkflowAPIImpl).canUserSeeHumanTask(apiSession, userId, activityInstanceID);
+
+        //when
+        formServiceProviderImpl.canUserViewActivityInstanceForm(apiSession, user, formWorkflowAPIImpl, activityInstanceID, formId, userId, context);
+
+    }
+
+    @Test
+    public void should_canUserViewActivityInstanceForm_return_true_for_admin() throws Exception {
+        final String formId = "formId";
+        final long userId = 2L;
+        final long activityInstanceID = 3L;
+
+        //given
+        doReturn(1L).when(formWorkflowAPIImpl).getProcessDefinitionIDFromActivityInstanceID(apiSession, activityInstanceID);
+        doReturn(true).when(formWorkflowAPIImpl).isUserAdminOrProcessOwner(apiSession, 1L);
+
+        //when
+        formServiceProviderImpl.canUserViewActivityInstanceForm(apiSession, user, formWorkflowAPIImpl, activityInstanceID, formId, userId, context);
+
     }
 
     @Test
