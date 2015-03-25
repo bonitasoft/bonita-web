@@ -46,6 +46,7 @@ import org.bonitasoft.console.common.server.preferences.properties.CompoundPermi
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
+import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.Page;
@@ -222,6 +223,17 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // When
         pageDatastore.delete(ids);
+    }
+
+    @Test
+    public void zip_with_index_in_resources_should_be_valid() throws Exception {
+       final File zipFileResource = new File(getClass().getResource( "/pageWithIndexInResources.zip").toURI());
+        UnzipUtil.unzip(zipFileResource, new File("target"+File.separator+"pageWithIndexInResources").getPath(), false);
+        final File unzipFolder = new File("target"+File.separator+"pageWithIndexInResources");
+
+        boolean isValide = pageDatastore.areResourcesAvailable(unzipFolder);
+
+        assertTrue(isValide);
     }
 
     @Test

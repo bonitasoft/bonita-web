@@ -1,0 +1,101 @@
+#process-details {
+  .actions {
+    padding: 20px 0 10px 0;
+  }
+
+  .sidebar-nav .submenu {
+    padding-left : 20px;
+    font-size: 14px;
+  }
+
+
+  /* make sidebar nav vertical */ 
+  @media (min-width: 768px) {
+    
+    .navbar {
+      width: 200px;
+    }
+
+    .sidebar-nav .navbar {
+       .navbar-collapse {
+        padding: 0;
+        max-height: none;
+      }
+      ul {
+        float: none;
+      }
+      ul:not {
+        display: block;
+
+      }
+      li {
+        float: none;
+        display: block;
+      }
+      li a {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+    }
+  }
+  .sidebar-nav .navbar-header{ float: none; }
+
+  span.label {
+    font-size: 100%;
+  }
+
+  .btn {
+    height: 34px;
+  }
+
+  .bonita-toggle {
+    .btn {
+      position: absolute; 
+      padding: 3px 20px 6px 12px;
+      min-width: 1px;
+      height: 32px;
+    
+      &.toggle-off {
+        padding-right: 5px;
+      }
+    }
+    span.btn.toggle-handle {
+      position: relative; 
+      padding: 6px 12px 6px 12px;
+      min-width: 1px;
+      height: 32px;
+    }
+  }
+
+  .navbar-default {
+    background-color: white;
+    .navbar-nav {
+      > li > a:hover {
+      color: black;
+      }
+      > li > a {
+        color: @mainAccentColor;
+      }
+    }
+
+    .navbar-brand {
+      color: @mainAccentColor;
+    }
+
+    .navbar-brand:hover{
+      color: @mainAccentColor;
+    }
+    .navbar-toggle .icon-bar {
+      background-color: @mainAccentColor;
+    }
+  }
+
+  .label-info {
+    background-color: @mainAccentColor;
+  }
+
+  ul.nav > li > a {
+    color: #6e6f6b;
+  }
+
+}

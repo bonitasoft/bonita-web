@@ -15,6 +15,7 @@ import java.util.List;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
@@ -40,7 +41,7 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNullId() throws Exception {
 
-        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -48,9 +49,9 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNotFound() throws Exception {
 
-        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", false);
+        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", FormMappingTarget.INTERNAL);
 
-        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\" }");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
     }
@@ -66,10 +67,10 @@ public class FormMappingResourceTest extends RestletTest {
         doReturn(1L).when(searchResult).getCount();
         doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
 
-        final Response response = request("/form/mapping?p=0&c=10").get();
+        final Response response = request("/form/mapping?p=2&c=10").get();
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
-        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("0-9/1");
+        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("20-29/1");
     }
 
     @Test
@@ -99,11 +100,11 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldCallEngine() throws Exception {
 
-        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
+        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
 
-        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"external\":\"false\"}");
+        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
-        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", false);
+        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
     }
 }
