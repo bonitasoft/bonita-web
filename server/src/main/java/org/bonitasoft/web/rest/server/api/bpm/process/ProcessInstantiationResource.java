@@ -28,13 +28,13 @@ import org.restlet.resource.Post;
 /**
  * @author Nicolas Tith
  */
-public class ProcessInstanciationResource extends CommonResource {
+public class ProcessInstantiationResource extends CommonResource {
 
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
     private final ProcessAPI processAPI;
 
-    public ProcessInstanciationResource(final ProcessAPI processAPI) {
+    public ProcessInstantiationResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 

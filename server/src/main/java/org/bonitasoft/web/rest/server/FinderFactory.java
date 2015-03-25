@@ -29,7 +29,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -54,7 +54,7 @@ public class FinderFactory {
         finders.put(UserTaskContractResource.class, new UserTaskContractResourceFinder());
         finders.put(UserTaskExecutionResource.class, new UserTaskContractResourceFinder());
         finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
-        finders.put(ProcessInstanciationResource.class, new ProcessInstanciationResourceFinder());
+        finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -199,12 +199,12 @@ public class FinderFactory {
         }
     }
 
-    public static class ProcessInstanciationResourceFinder extends AbstractResourceFinder {
+    public static class ProcessInstantiationResourceFinder extends AbstractResourceFinder {
 
         @Override
         public ServerResource create(final Request request, final Response response) {
             final ProcessAPI processAPI = getProcessAPI(request);
-            return new ProcessInstanciationResource(processAPI);
+            return new ProcessInstantiationResource(processAPI);
         }
     }
 

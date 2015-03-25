@@ -28,7 +28,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -84,7 +84,7 @@ public class BonitaRestletApplication extends Application {
         // GET a process contract:
         router.attach("/bpm/process/{processDefinitionId}/contract", factory.create(ProcessContractResource.class));
         // POST to execute a process contract:
-        router.attach("/bpm/process/{processDefinitionId}/instanciation", factory.create(ProcessInstanciationResource.class));
+        router.attach("/bpm/process/{processDefinitionId}/instantiation", factory.create(ProcessInstantiationResource.class));
         // GET to search form mappings:
         router.attach("/form/mapping", factory.create(FormMappingResource.class));
         // PUT to update form mapping:

@@ -26,7 +26,7 @@ import org.bonitasoft.web.rest.server.FinderFactory.BusinessDataResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.FormMappingResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.ProcessContractResourceFinder;
-import org.bonitasoft.web.rest.server.FinderFactory.ProcessInstanciationResourceFinder;
+import org.bonitasoft.web.rest.server.FinderFactory.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.FinderFactory.UserTaskContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
@@ -38,7 +38,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
-import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstanciationResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,10 +122,10 @@ public class FinderFactoryTest {
 
     @Test
     public void should_return_ProcessInstanciationResource_for_ProcessInstanciationResourceFinder() {
-        final ProcessInstanciationResourceFinder processInstanciationResourceFinder = spy(new ProcessInstanciationResourceFinder());
+        final ProcessInstantiationResourceFinder processInstanciationResourceFinder = spy(new ProcessInstantiationResourceFinder());
         doReturn(processAPI).when(processInstanciationResourceFinder).getProcessAPI(any(Request.class));
         final ServerResource serverResource = processInstanciationResourceFinder.create(request, response);
-        assertThat(serverResource).isInstanceOf(ProcessInstanciationResource.class);
+        assertThat(serverResource).isInstanceOf(ProcessInstantiationResource.class);
     }
 
     @Test

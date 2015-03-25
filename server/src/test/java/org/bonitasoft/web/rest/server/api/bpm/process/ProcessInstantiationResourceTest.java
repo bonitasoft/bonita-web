@@ -36,13 +36,13 @@ import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProcessInstanciationResourceTest extends RestletTest {
+public class ProcessInstantiationResourceTest extends RestletTest {
 
     private static final long PROCESS_DEFINITION_ID = 2L;
 
     private static final String ID_PROCESS_DEFINITION = "2";
 
-    private static final String URL_API_PROCESS_INSTANCIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instanciation";
+    private static final String URL_API_PROCESS_INSTANCIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instantiation";
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -54,19 +54,19 @@ public class ProcessInstanciationResourceTest extends RestletTest {
     @Mock
     private Logger logger;
 
-    ProcessInstanciationResource processInstanciationResource;
+    ProcessInstantiationResource processInstanciationResource;
 
     @Mock
     private Response response;
 
     @Override
     protected ServerResource configureResource() {
-        return new ProcessInstanciationResource(processAPI);
+        return new ProcessInstantiationResource(processAPI);
     }
 
     @Before
     public void initializeMocks() {
-        processInstanciationResource = spy(new ProcessInstanciationResource(processAPI));
+        processInstanciationResource = spy(new ProcessInstantiationResource(processAPI));
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -160,7 +160,7 @@ public class ProcessInstanciationResourceTest extends RestletTest {
     @Test
     public void should_getProcessDefinitionIdParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
         //given
-        doReturn(null).when(processInstanciationResource).getAttribute(ProcessInstanciationResource.PROCESS_DEFINITION_ID);
+        doReturn(null).when(processInstanciationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
 
         try {
             //when
@@ -168,7 +168,7 @@ public class ProcessInstanciationResourceTest extends RestletTest {
         } catch (final Exception e) {
             //then
             assertThat(e).isInstanceOf(APIException.class);
-            assertThat(e.getMessage()).isEqualTo("Attribute '" + ProcessInstanciationResource.PROCESS_DEFINITION_ID + "' is mandatory");
+            assertThat(e.getMessage()).isEqualTo("Attribute '" + ProcessInstantiationResource.PROCESS_DEFINITION_ID + "' is mandatory");
         }
 
     }
