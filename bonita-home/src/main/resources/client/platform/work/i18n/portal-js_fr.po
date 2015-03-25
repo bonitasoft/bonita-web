@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-13 04:06-0400\n"
+"PO-Revision-Date: 2015-03-24 04:14-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -213,6 +213,47 @@ msgstr "Totaux\n"
 msgid "Loading..."
 msgstr "Chargement..."
 
+msgid "Totals"
+msgstr "Totaux\n"
+""
+
+msgid "View process design"
+msgstr "View process design"
+
+msgid "View case design"
+msgstr "View case design"
+
+# Case Visu - Show Key
+msgid "Show key"
+msgstr "Show key"
+
+msgid "Task1"
+msgstr "Task1"
+
+msgid "Cancelled, skipped instances"
+msgstr "Cancelled, skipped instances"
+
+msgid "Completed instances"
+msgstr "Completed instances"
+
+msgid "Failed instances"
+msgstr "Failed instances"
+
+msgid "Executing, completing, initializing instances"
+msgstr "Executing, completing, initializing instances"
+
+msgid "Ready, waiting instances"
+msgstr "Ready, waiting instances"
+
+msgid "Items per page"
+msgstr "Items per page"
+
+msgid "Columns selection"
+msgstr "Columns selection"
+
+msgid "Table settings"
+msgstr "Table settings"
+
 msgid "sort by ID ascending"
 msgstr "tri par Id, croissant"
 
@@ -236,45 +277,6 @@ msgstr "tri par Date de fin, croissant"
 
 msgid "sort by End date descending"
 msgstr "tri par Date de fin, décroissant"
-
-msgid "sort by State ascending"
-msgstr "tri par Etat, croissant"
-
-msgid "sort by State descending"
-msgstr "tri par Etat, décroissant"
-
-msgid "sort by Version ascending"
-msgstr "tri par Version, croissant"
-
-msgid "sort by Version descending"
-msgstr "tri par Version, décroissant"
-
-msgid "sort by Cases with failures ascending"
-msgstr "tri par Cas avec erreurs, croissant"
-
-msgid "sort by Cases with failures descending"
-msgstr "tri par Cas avec erreurs, décroissant"
-
-msgid "sort by Healthy cases ascending"
-msgstr "tri par Cas sans erreur, croissant"
-
-msgid "sort by Healthy cases descending"
-msgstr "tri par Cas sans erreur, décroissant"
-
-msgid "sort by Open cases ascending"
-msgstr "tri par Cas en cours, croissant"
-
-msgid "sort by Open cases descending"
-msgstr "tri par Cas en cours, décroissant"
-
-msgid "Items per page"
-msgstr "Items per page"
-
-msgid "Columns selection"
-msgstr "Columns selection"
-
-msgid "Table settings"
-msgstr "Table settings"
 
 msgid "Hide"
 msgstr "Masquer"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 10:16+0100\n"
-"PO-Revision-Date: 2015-03-13 04:16-0400\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"PO-Revision-Date: 2015-03-24 04:21-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1714,9 +1714,6 @@ msgstr "Seleccione un usuario escribiendo parte de su nombre."
 msgid "Select a user to be added to actor"
 msgstr "Selecciona un usuario para añadirlo al actor"
 
-msgid "Select a user to start process %app_name% %app_version%"
-msgstr "Seleccione un usuario para iniciar el proceso %app_name% %app_version%"
-
 msgid "Select an avatar for this group"
 msgstr "Elige un avatar para este grupo"
 
@@ -1816,9 +1813,6 @@ msgstr "Ordenes no son soportados por la API"
 msgid "Start"
 msgstr "Inicio"
 
-msgid "Start a process on behalf of another user"
-msgstr "Iniciar un proceso como otro usuario"
-
 msgid "Start an instance of process %app_name%"
 msgstr "Iniciar una instancia del proceso %app_name%"
 
@@ -1827,9 +1821,6 @@ msgstr "Fecha de inicio"
 
 msgid "Start this process"
 msgstr "Iniciar este proceso"
-
-msgid "Start this process on behalf of selected user"
-msgstr "Iniciar este proceso como el usuario seleccionado"
 
 msgid "Started by"
 msgstr "Iniciado por"
@@ -2028,9 +2019,6 @@ msgstr "El número de casos en marcha."
 
 msgid "The only mandatory filter is %name%"
 msgstr "El único filtro obligatorio es %name%"
-
-msgid "The openned case will be marked as started by him."
-msgstr "El caso abierto se marcará como Iniciado por él."
 
 msgid "The page allows users with relevant profiles to access the following permissions:"
 msgstr "La página permite a los usuarios con los perfiles pertinentes acceder a los siguientes permisos:"
