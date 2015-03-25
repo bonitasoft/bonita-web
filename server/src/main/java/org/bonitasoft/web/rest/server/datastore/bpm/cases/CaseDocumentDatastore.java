@@ -17,6 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -200,6 +201,8 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
                 }
                 mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
             }
+        } else {
+            throw new FileNotFoundException("Cannot find " + fileName + " in the tenant temp directory.");
         }
 
         final DocumentValue documentValue = new DocumentValue(fileContent, mimeType, fileName);
