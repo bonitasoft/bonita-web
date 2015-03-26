@@ -202,7 +202,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
                 mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
             }
         } else {
-            throw new FileNotFoundException("Cannot find " + fileName + " in the tenant temp directory.");
+            throw new FileNotFoundException("Cannot find " + uploadPath + " in the tenant temp directory.");
         }
 
         final DocumentValue documentValue = new DocumentValue(fileContent, mimeType, fileName);
