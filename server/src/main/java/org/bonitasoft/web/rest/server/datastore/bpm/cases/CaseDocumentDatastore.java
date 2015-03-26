@@ -131,10 +131,10 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
             if (caseId != -1 && documentName != null) {
 
-                if (uploadPath != null && !uploadPath.isEmpty()) {
+                if (urlPath != null) {
+                    documentValue = buildDocumentValueFromUrl(urlPath, -1);
+                } else {
                     documentValue = buildDocumentValueFromUploadPath(uploadPath, index, item.getFileName());
-                } else if (urlPath != null && !urlPath.isEmpty()) {
-                    documentValue = buildDocumentValueFromUrl(urlPath, index);
                 }
 
                 final Document document = processAPI.addDocument(caseId, documentName, documentDescription, documentValue);
@@ -160,12 +160,12 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
             if (attributes.containsKey(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH) || attributes.containsKey(CaseDocumentItem.ATTRIBUTE_URL)) {
 
-                if (attributes.containsKey(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH)) {
-                    urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH);
-                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1, attributes.get(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME));
-                } else {
+                if (attributes.containsKey(CaseDocumentItem.ATTRIBUTE_URL)) {
                     urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_URL);
                     documentValue = buildDocumentValueFromUrl(urlPath, -1);
+                } else {
+                    urlPath = attributes.get(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH);
+                    documentValue = buildDocumentValueFromUploadPath(urlPath, -1, attributes.get(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME));
                 }
 
                 final Document document = processAPI.updateDocument(id.toLong(), documentValue);
@@ -187,22 +187,24 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
         String mimeType = null;
         byte[] fileContent = null;
 
-        final File theSourceFile = tenantFolder.getTempFile(uploadPath, getEngineSession().getTenantId());
+        if (uploadPath != null) {
+            final File theSourceFile = tenantFolder.getTempFile(uploadPath, getEngineSession().getTenantId());
 
-        if (theSourceFile.exists()) {
-            if (theSourceFile.length() > maxSizeForTenant * 1048576) {
-                final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
-                throw new DocumentException(errorMessage);
-            }
-            fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
-            if (theSourceFile.isFile()) {
-                if(StringUtil.isBlank(fileName)){
-                    fileName = theSourceFile.getName();
+            if (theSourceFile.exists()) {
+                if (theSourceFile.length() > maxSizeForTenant * 1048576) {
+                    final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
+                    throw new DocumentException(errorMessage);
                 }
-                mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
+                fileContent = DocumentUtil.getArrayByteFromFile(theSourceFile);
+                if (theSourceFile.isFile()) {
+                    if (StringUtil.isBlank(fileName)) {
+                        fileName = theSourceFile.getName();
+                    }
+                    mimeType = mimetypesFileTypeMap.getContentType(theSourceFile);
+                }
+            } else {
+                throw new FileNotFoundException("Cannot find " + uploadPath + " in the tenant temp directory.");
             }
-        } else {
-            throw new FileNotFoundException("Cannot find " + uploadPath + " in the tenant temp directory.");
         }
 
         final DocumentValue documentValue = new DocumentValue(fileContent, mimeType, fileName);
