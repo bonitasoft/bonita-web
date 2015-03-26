@@ -80,6 +80,11 @@ public class URLUtils {
     public static final String RECAP_PARAM = "recap";
 
     /**
+     * User Id param : for submitting forms on behalf
+     */
+    public static final String USER_ID_PARAM = "user";
+
+    /**
      * todolist mode : if true, get one task of a given process or process instance among your todolist
      */
     public static final String TODOLIST_PARAM = "todolist";
@@ -510,27 +515,21 @@ public class URLUtils {
      * @param urlContext
      * @return
      */
-    public String getFormRedirectionUrl(final String applicationURL, final Map<String, Object> urlContext) {
-        final StringBuilder url = new StringBuilder(applicationURL);
-        if (applicationURL.contains("?")) {
-            url.append("&");
-        } else {
-            url.append("?");
-        }
+    public String getFormRedirectionUrl(final Map<String, Object> urlContext) {
+        final StringBuilder url = new StringBuilder("form/taskInstance/");
+        url.append(urlContext.get(URLUtils.TASK_ID_PARAM));
+        url.append("?");
         url.append(URLUtils.LOCALE_PARAM);
         url.append("=");
         url.append(getLocale());
-        url.append("#");
-        final Iterator<Entry<String, Object>> it = urlContext.entrySet().iterator();
-        final int size = urlContext.size();
-        for (int i = 0; i < size; i++) {
-            final Entry<String, Object> entry = it.next();
-            final String key = entry.getKey();
-            final String value = entry.getValue().toString();
-            url.append(key + "=" + URL.encodeQueryString(value));
-            if (i < size - 1) {
-                url.append("&");
-            }
+        url.append("&");
+        url.append(URLUtils.ASSIGN_TASK);
+        url.append("=true");
+        if (urlContext.get(URLUtils.USER_ID_PARAM) != null) {
+            url.append("&");
+            url.append(URLUtils.USER_ID_PARAM);
+            url.append("=");
+            url.append(urlContext.get(URLUtils.USER_ID_PARAM));
         }
         return url.toString();
     }

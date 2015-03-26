@@ -160,7 +160,7 @@ public class Form extends AbstractForm {
      * @return This function returns the form itself in order to allow cascading calls
      */
     public Form addTextEntryWithPlaceholder(final JsId jsid, final String label, final String tooltip, final String placeholder) {
-        final Text textWithPlaceholder = new Text(jsid, label, tooltip, null, null, null);
+        final Text textWithPlaceholder = new Text(jsid, label, tooltip, null, null, null, Text.INCREASED_MAX_LENGTH);
         textWithPlaceholder.setPlaceholder(placeholder);
         addEntry(textWithPlaceholder);
         return this;

@@ -12,7 +12,7 @@ import org.restlet.ext.jackson.JacksonRepresentation;
 
 /**
  * Representation for error entity
- * 
+ *
  * @author Colin Puy
  */
 public class ErrorMessage {
@@ -26,10 +26,10 @@ public class ErrorMessage {
         // empty constructor for json serialization
     }
 
-    public ErrorMessage(Throwable t) {
+    public ErrorMessage(final Throwable t) {
         if (t != null) {
-            this.exception = t.getClass().toString();
-            this.message = t.getMessage();
+            exception = t.getClass().toString();
+            message = t.getMessage();
         }
     }
 
@@ -37,7 +37,7 @@ public class ErrorMessage {
         return exception;
     }
 
-    public void setException(String exception) {
+    public void setException(final String exception) {
         this.exception = exception;
     }
 
@@ -45,7 +45,7 @@ public class ErrorMessage {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 

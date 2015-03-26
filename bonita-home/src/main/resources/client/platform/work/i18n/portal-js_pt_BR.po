@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-02-25 06:06-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"PO-Revision-Date: 2015-03-24 04:20-0400\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /master-7.0/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
 
 msgid "Columns"
 msgstr "Colunas"
@@ -251,81 +252,36 @@ msgstr "Columns selection"
 msgid "Table settings"
 msgstr "Table settings"
 
-msgid "sort by ID ascendant"
-msgstr "sort by ID ascendant"
+msgid "sort by ID ascending"
+msgstr "ordena por Id, crescente"
 
-msgid "sort by ID descendant"
-msgstr "sort by ID descendant"
+msgid "sort by ID descending"
+msgstr "ordena por Id, decrescente"
 
-msgid "sort by Process name ascendant"
-msgstr "sort by Process name ascendant"
+msgid "sort by Process name ascending"
+msgstr "ordena por nome, crescente"
 
-msgid "sort by Process name descendant"
-msgstr "sort by Process name descendant"
+msgid "sort by Process name descending"
+msgstr "ordena por nome, decrescente"
 
-msgid "sort by Start date ascendant"
-msgstr "sort by Start date ascendant"
+msgid "sort by Start date ascending"
+msgstr "ordena por data de início, crescente"
 
-msgid "sort by Start date descendant"
-msgstr "sort by Start date descendant"
+msgid "sort by Start date descending"
+msgstr "ordena por data de início, decrescente"
 
-msgid "sort by End date ascendant"
-msgstr "sort by End date ascendant"
+msgid "sort by End date ascending"
+msgstr "ordena por data fim, crescente"
 
-msgid "sort by End date descendant"
-msgstr "sort by End date descendant"
+msgid "sort by End date descending"
+msgstr "ordena por data fim, decrescente"
 
-msgid "Hide 'ID'"
-msgstr "Hide 'ID'"
+msgid "Hide"
+msgstr "Ocultar"
 
-msgid "Hide 'Process name'"
-msgstr "Hide 'Process name'"
+msgid "Show"
+msgstr "Mostar"
 
-msgid "Hide 'Version'"
-msgstr "Hide 'Version'"
-
-msgid "Hide 'Start date'"
-msgstr "Hide 'Start date'"
-
-msgid "Hide 'End date'"
-msgstr "Hide 'End date'"
-
-msgid "Hide 'Started by'"
-msgstr "Hide 'Started by'"
-
-msgid "Hide 'Failed Flow Nodes'"
-msgstr "Hide 'Failed Flow Nodes'"
-
-msgid "Hide 'Pending Flow Nodes'"
-msgstr "Hide 'Pending Flow Nodes'"
-
-msgid "Hide 'State'"
-msgstr "Hide 'State'"
-
-msgid "Show 'ID'"
-msgstr "Show 'ID'"
-
-msgid "Show 'Process name'"
-msgstr "Show 'Process name'"
-
-msgid "Show 'Version'"
-msgstr "Show 'Version'"
-
-msgid "Show 'Start date'"
-msgstr "Show 'Start date'"
-
-msgid "Show 'End date'"
-msgstr "Show 'End date'"
-
-msgid "Show 'Started by'"
-msgstr "Show 'Started by'"
-
-msgid "Show 'Failed Flow Nodes'"
-msgstr "Show 'Failed Flow Nodes'"
-
-msgid "Show 'Pending Flow Nodes'"
-msgstr "Show 'Pending Flow Nodes'"
-
-msgid "Show 'State'"
-msgstr "Show 'State'"
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "Apenas casos de processos principais são exibidos na tabela abaixo. Nenhuma informação está disponível para casos iniciados por atividades chamadoras."
 

@@ -17,7 +17,6 @@
 package org.bonitasoft.console.client.common.view;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
@@ -31,7 +30,6 @@ import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
-import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -43,8 +41,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -68,10 +64,6 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     }
 
     public static final String PARAMETER_USER_ID = "userId";
-
-    public final static String ASSIGN_AND_PERFORM_USER_TASK = "true";
-
-    private final String UUID_SEPERATOR = "--";
 
     public PerformTaskPage() {
         super(Definitions.get(HumanTaskDefinition.TOKEN));
@@ -107,50 +99,31 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
     }
 
-    /**
-     * @return
-     */
-    private APIID getUserId() {
-        return Session.getUserId();
-    }
-
     private Component createFormIframe(final HumanTaskItem item, final boolean assignTask) {
         return new UiComponent(new IFrameView(buildTasksFormURL(item, assignTask)));
     }
 
     private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
-        final StringBuilder frameURL = new StringBuilder()
 
-        .append(GWT.getModuleBaseURL()).append("homepage?ui=form&locale=")
-        .append(AbstractI18n.getDefaultLocale().toString());
-
-        // if tenant is filled in portal url add tenant parameter to IFrame url
+        final String locale = AbstractI18n.getDefaultLocale().toString();
+        final String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);
         final String tenantId = ClientApplicationURL.getTenantId();
+
+        final StringBuilder frameURL = new StringBuilder();
+        frameURL.append("form/taskInstance/")
+                .append(item.getId())
+                .append("/")
+                .append("?locale=")
+                .append(locale);
+        // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenant=").append(tenantId);
         }
-
-        String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);
-        if (userId == null) {
-            userId = getUserId().toString();
+        if (userId != null && !userId.isEmpty()) {
+            frameURL.append("&user=").append(userId);
         }
-
-        frameURL.append("#form=")
-        .append(URL.encodeQueryString(item.getProcess().getName())).append(UUID_SEPERATOR)
-        .append(URL.encodeQueryString(item.getProcess().getVersion())).append(UUID_SEPERATOR)
-        .append(URL.encodeQueryString(item.getName()))
-
-        .append("$entry")
-
-        .append("&task=").append(item.getId())
-        .append("&mode=form");
-
         if (assignTask) {
             frameURL.append("&assignTask=true");
-        }
-        if (getParameter(PARAMETER_USER_ID) != null && !getParameter(PARAMETER_USER_ID).isEmpty()) {
-            frameURL.append("&" + PARAMETER_USER_ID + "=");
-            frameURL.append(getParameter(PARAMETER_USER_ID));
         }
 
         return frameURL.toString();
@@ -175,10 +148,5 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     @Override
     protected void onItemNotFound() {
         ViewController.showPopup(new ItemNotFoundPopup(TasksListingPage.TOKEN));
-    }
-
-    @Override
-    protected List<String> defineDeploys() {
-        return Arrays.asList(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
     }
 }

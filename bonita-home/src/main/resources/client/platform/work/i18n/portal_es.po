@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 10:16+0100\n"
-"PO-Revision-Date: 2015-03-02 03:41-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"PO-Revision-Date: 2015-03-24 04:21-0400\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /master-7.0/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: es-ES\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -139,7 +140,7 @@ msgid "%pageName% is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "%rolename%"
-msgstr "%rolename%"
+msgstr "%nombre de actor%"
 
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% of %groupname%"
@@ -211,7 +212,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 msgid "Actor mapping"
-msgstr "Mapeo de actores"
+msgstr "mapa de actores"
 
 msgid "Actor name"
 msgstr "Nombre del actor"
@@ -859,7 +860,7 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr "Activar"
+msgstr "Activado"
 
 msgid "Enable selected processes"
 msgstr "Activar procesos seleccionados"
@@ -940,7 +941,7 @@ msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
 msgid "Enter the zip code of this user"
-msgstr "Indique el código postal de este usuario"
+msgstr "Ingrese el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "La asignación de actores debe resolverse antes de activar el proceso."
@@ -1713,9 +1714,6 @@ msgstr "Seleccione un usuario escribiendo parte de su nombre."
 msgid "Select a user to be added to actor"
 msgstr "Selecciona un usuario para añadirlo al actor"
 
-msgid "Select a user to start process %app_name% %app_version%"
-msgstr "Seleccione un usuario para iniciar el proceso %app_name% %app_version%"
-
 msgid "Select an avatar for this group"
 msgstr "Elige un avatar para este grupo"
 
@@ -1735,7 +1733,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en el proceso."
 
 msgid "Select the manager of this user"
-msgstr "Seleccione el responsable de este usuario"
+msgstr "Seleccione el gerente de este usuario"
 
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
@@ -1815,9 +1813,6 @@ msgstr "Ordenes no son soportados por la API"
 msgid "Start"
 msgstr "Inicio"
 
-msgid "Start a process on behalf of another user"
-msgstr "Iniciar un proceso como otro usuario"
-
 msgid "Start an instance of process %app_name%"
 msgstr "Iniciar una instancia del proceso %app_name%"
 
@@ -1826,9 +1821,6 @@ msgstr "Fecha de inicio"
 
 msgid "Start this process"
 msgstr "Iniciar este proceso"
-
-msgid "Start this process on behalf of selected user"
-msgstr "Iniciar este proceso como el usuario seleccionado"
 
 msgid "Started by"
 msgstr "Iniciado por"
@@ -2027,9 +2019,6 @@ msgstr "El número de casos en marcha."
 
 msgid "The only mandatory filter is %name%"
 msgstr "El único filtro obligatorio es %name%"
-
-msgid "The openned case will be marked as started by him."
-msgstr "El caso abierto se marcará como Iniciado por él."
 
 msgid "The page allows users with relevant profiles to access the following permissions:"
 msgstr "La página permite a los usuarios con los perfiles pertinentes acceder a los siguientes permisos:"
@@ -2305,7 +2294,7 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Version"
-msgstr "Versión"
+msgstr "Version"
 
 msgid "Version of the process"
 msgstr "Versión del proceso"

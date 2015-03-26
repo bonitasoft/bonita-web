@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 10:16+0100\n"
-"PO-Revision-Date: 2015-03-02 03:35-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"PO-Revision-Date: 2015-03-24 04:17-0400\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /master-7.0/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Per eseguire questa operazione, andare a %entitymappingprofilelink%."
@@ -1713,9 +1714,6 @@ msgstr "Seleziona un utente digitando parte del suo nome."
 msgid "Select a user to be added to actor"
 msgstr "Selezionare un utente da aggiungere all'attore"
 
-msgid "Select a user to start process %app_name% %app_version%"
-msgstr "Selezionare un utente per avviare il processo %app_name% %app_version%"
-
 msgid "Select an avatar for this group"
 msgstr "Seleziona un avatar per questo gruppo"
 
@@ -1815,9 +1813,6 @@ msgstr "L'ordinamento non è supportato da questa API"
 msgid "Start"
 msgstr "Inizia"
 
-msgid "Start a process on behalf of another user"
-msgstr "Avviare un processo per conto di un altro utente"
-
 msgid "Start an instance of process %app_name%"
 msgstr "Avviare un'istanza di processo %app_name%"
 
@@ -1826,9 +1821,6 @@ msgstr "Iniziato il"
 
 msgid "Start this process"
 msgstr "Avviare questo processo"
-
-msgid "Start this process on behalf of selected user"
-msgstr "Avviare questo processo a conto dell'utente selezionato"
 
 msgid "Started by"
 msgstr "Avviato da"
@@ -2027,9 +2019,6 @@ msgstr "Numero di casi in progresso."
 
 msgid "The only mandatory filter is %name%"
 msgstr "Il solo filtro  obbligatorio è %name%"
-
-msgid "The openned case will be marked as started by him."
-msgstr "Il caso aperto sarà contrassegnato come avviato da lui."
 
 msgid "The page allows users with relevant profiles to access the following permissions:"
 msgstr "La pagina una volta aggiunta ad un profilo, consentirà agli utenti associati a tale profilo di avere le seguenti autorizzazioni:"

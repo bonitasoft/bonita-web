@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 10:16+0100\n"
-"PO-Revision-Date: 2015-03-02 03:31-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"PO-Revision-Date: 2015-03-24 04:14-0400\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /master-7.0/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour ce faire, consultez la page %entitymappingprofilelink%."
@@ -427,7 +428,7 @@ msgid "BPM services"
 msgstr "Services BPM"
 
 msgid "Back"
-msgstr "Retour"
+msgstr "Précédent"
 
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Attention, votre organisation va fusionner avec les données existantes."
@@ -970,7 +971,7 @@ msgid "Error when deleting users"
 msgstr "Erreur lors de la désactivation des utilisateurs"
 
 msgid "Error when pausing BPM services"
-msgstr "Erreur lors de la suspension des services BPM"
+msgstr "Erreur pendant la suspension des services BPM"
 
 msgid "Error when resuming BPM services"
 msgstr "Erreur lors de la reprise des services BPM"
@@ -1633,7 +1634,7 @@ msgid "Resources not recognized:"
 msgstr "Ressources non identifiées :"
 
 msgid "Resume"
-msgstr "Relancer"
+msgstr "Reprendre"
 
 msgid "Resume BPM Services"
 msgstr "Relancer les services BPM"
@@ -1712,9 +1713,6 @@ msgstr "Sélectionnez un utilisateur en tapant une partie de son nom."
 
 msgid "Select a user to be added to actor"
 msgstr "Sélectionner un utilisateur à ajouter à l'acteur"
-
-msgid "Select a user to start process %app_name% %app_version%"
-msgstr "Sélectionnez un utilisateur pour démarrer le processus %app_name%%app_version%"
 
 msgid "Select an avatar for this group"
 msgstr "Sélectionner un avatar pour ce groupe"
@@ -1815,9 +1813,6 @@ msgstr "Le tri n'est pas supporté par cette API"
 msgid "Start"
 msgstr "Démarrer"
 
-msgid "Start a process on behalf of another user"
-msgstr "Démarrer un processus au nom d'un autre utilisateur"
-
 msgid "Start an instance of process %app_name%"
 msgstr "Démarrer une instance de processus %app_name%"
 
@@ -1826,9 +1821,6 @@ msgstr "Débuté le"
 
 msgid "Start this process"
 msgstr "Démarrer ce processus"
-
-msgid "Start this process on behalf of selected user"
-msgstr "Démarrer ce processus au nom d'un autre utilisateur"
 
 msgid "Started by"
 msgstr "Démarré par"
@@ -2027,9 +2019,6 @@ msgstr "Le nombre de cas en cours."
 
 msgid "The only mandatory filter is %name%"
 msgstr "Seul le filtre %name% est obligatoire"
-
-msgid "The openned case will be marked as started by him."
-msgstr "Les cas en cours seront marqués comme démarrés par cet utilisateur."
 
 msgid "The page allows users with relevant profiles to access the following permissions:"
 msgstr "La page donne aux profils utilisateurs concernés les autorisations suivantes :"
@@ -2344,7 +2333,7 @@ msgid "You are logged as technical user. This user has limited rights. Its purpo
 msgstr "Vous êtes connecté en tant qu'utilisateur technique. Cet utilisateur a des droits limités, son but est d'initialiser l'organisation et activer le Modèle de Données métier, le cas échéant."
 
 msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
-msgstr "Vous pouvez suspendre les services BPM pour faire une mise à jour de votre environnement qui ne peut être faite que si aucun utilisateur n'est connecté. Lorsque les services sont suspendus :"
+msgstr "Pour faire une mise à jour de votre environnement qui requiert qu'aucun utilisateur ne soit connecté, vous devez suspendre les services BPM. Lorsque les services sont suspendus :"
 
 msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
 msgstr "Cette action pourrait interrompre un ou plusieurs processus.\n\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'un(des) processus.\n\nIl est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\nConfirmez-vous la désactivation de cet utilisateur?"

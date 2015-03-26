@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 10:16+0100\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1717,9 +1717,6 @@ msgstr ""
 msgid "Select a user to be added to actor"
 msgstr ""
 
-msgid "Select a user to start process %app_name% %app_version%"
-msgstr ""
-
 msgid "Select an avatar for this group"
 msgstr ""
 
@@ -1819,9 +1816,6 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-msgid "Start a process on behalf of another user"
-msgstr ""
-
 msgid "Start an instance of process %app_name%"
 msgstr ""
 
@@ -1829,9 +1823,6 @@ msgid "Start date"
 msgstr ""
 
 msgid "Start this process"
-msgstr ""
-
-msgid "Start this process on behalf of selected user"
 msgstr ""
 
 msgid "Started by"
@@ -2034,9 +2025,6 @@ msgid "The number of on going cases."
 msgstr ""
 
 msgid "The only mandatory filter is %name%"
-msgstr ""
-
-msgid "The openned case will be marked as started by him."
 msgstr ""
 
 msgid "The page allows users with relevant profiles to access the following permissions:"

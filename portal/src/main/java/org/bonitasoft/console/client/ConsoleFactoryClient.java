@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.core.shared.GWT;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -65,7 +66,6 @@ import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
 import org.bonitasoft.console.client.admin.tenant.view.TenantMaintenancePage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
-import org.bonitasoft.console.client.common.view.CustomPage;
 import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
@@ -96,8 +96,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
-import com.google.gwt.core.shared.GWT;
-
 /**
  * console client page
  *
@@ -124,6 +122,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     public ConsoleFactoryClient() {
         angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
         angularViewsMap.put(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
+        angularViewsMap.put(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -347,12 +346,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             } else {
                 return new BlankPage();
             }
-        } else if (token != null && token.startsWith(CustomPage.TOKEN)) {
-            if (isUserAuthorized(token, getCurrentUserAccessRights())) {
-                return new CustomPage(token);
-            } else {
-                return new BlankPage();
-            }
             // BDM
         } else if (BDMImportPage.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new BDMImportPage();
@@ -364,10 +357,23 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             new CheckValidSessionBeforeAction(emptyAction).execute();
             angularFrame.setUrl("#" + angularViewsMap.get(token), token);
             return angularFrame;
+            // TODO : to remove when merging new process more detail page to the new one !!!!
+        } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token)) {
+            // No action is necessary as an unauthorized request will result in a page reload.
+            new CheckValidSessionBeforeAction(emptyAction).execute();
+            angularFrame.setUrl("#" + angularViewsMap.get(token), token);
+            return angularFrame;
         } else {
+            for (final String key : getCurrentUserAccessRights()) {
+                print(key);
+            }
             return new BlankPage();
         }
     }
+
+    public native void print(String content) /*-{
+                                             console.log(content);
+                                             }-*/;
 
     protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
         String result = "";
@@ -415,6 +421,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ProcessListingAdminPage.TOKEN, ProcessListingAdminPage.PRIVILEGES);
         pagePrivileges.put(ProcessQuickDetailsAdminPage.TOKEN, ProcessQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(ProcessMoreDetailsAdminPage.TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
+        pagePrivileges.put(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(UploadProcessPage.TOKEN, UploadProcessPage.PRIVILEGES);
         pagePrivileges.put(CreateCategoryAndAddToProcessPage.TOKEN, CreateCategoryAndAddToProcessPage.PRIVILEGES);
         pagePrivileges.put(AddProcessCategoryPage.TOKEN, AddProcessCategoryPage.PRIVILEGES);

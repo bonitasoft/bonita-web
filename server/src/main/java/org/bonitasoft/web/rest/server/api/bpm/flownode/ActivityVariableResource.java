@@ -1,5 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
@@ -10,6 +11,12 @@ public class ActivityVariableResource extends CommonResource {
 
     public static final String ACTIVITYDATA_ACTIVITY_ID = "activityid";
     public static final String ACTIVITYDATA_DATA_NAME = "dataname";
+
+    private final ProcessAPI processAPI;
+
+    public ActivityVariableResource(final ProcessAPI processAPI) {
+        this.processAPI = processAPI;
+    }
 
     @Get("json")
     public DataInstance getTaskVariable() {
@@ -24,6 +31,6 @@ public class ActivityVariableResource extends CommonResource {
 
 
     private DataInstance getTaskVariableInstance(final String dataName, final Long activityInstanceId) throws DataNotFoundException {
-            return getEngineProcessAPI().getActivityDataInstance(dataName, activityInstanceId);
+        return processAPI.getActivityDataInstance(dataName, activityInstanceId);
     }
 }

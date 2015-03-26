@@ -175,8 +175,13 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                 }
                 if (fileName.matches(PAGE_PROPERTIES)) {
                     propertiesOK = true;
-
                 }
+            }
+        }
+        if(!indexOK){
+            File indexInResources = new File(unzipPageFolder.getPath(), CustomPageService.RESOURCES_PROPERTY + File.separator + INDEX_HTML);
+            if(indexInResources.exists()){
+                indexOK = true;
             }
         }
         return indexOK && propertiesOK;

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 10:16+0100\n"
-"PO-Revision-Date: 2015-03-02 03:39-0500\n"
-"Last-Translator: rlg <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"PO-Revision-Date: 2015-03-24 04:20-0400\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-File: /master-7.0/bonita-web/portal/portal.po\n"
+"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
@@ -514,7 +515,7 @@ msgid "Case variables"
 msgstr "Variável de processo"
 
 msgid "Cases"
-msgstr "Casos"
+msgstr "Instâncias de processo"
 
 msgid "Cases I have started"
 msgstr "Casos que eu iniciei"
@@ -1713,9 +1714,6 @@ msgstr "Selecione um usuário digitando parte do seu nome."
 msgid "Select a user to be added to actor"
 msgstr "Selecione um usuário a ser adicionado ao ator"
 
-msgid "Select a user to start process %app_name% %app_version%"
-msgstr "Selecione um usuário para iniciar o processo %app_name% %app_version%"
-
 msgid "Select an avatar for this group"
 msgstr "Selecione um avatar para este grupo"
 
@@ -1815,9 +1813,6 @@ msgstr "Ordenação não é suportada nesta API"
 msgid "Start"
 msgstr "Iniciar"
 
-msgid "Start a process on behalf of another user"
-msgstr "Iniciar um processo em nome de outro usuário"
-
 msgid "Start an instance of process %app_name%"
 msgstr "Iniciar uma instância do processo %app_name%"
 
@@ -1826,9 +1821,6 @@ msgstr "Data de início"
 
 msgid "Start this process"
 msgstr "Iniciar esse processo"
-
-msgid "Start this process on behalf of selected user"
-msgstr "Iniciar esse processo em nome de usuário selecionado"
 
 msgid "Started by"
 msgstr "Iniciado por"
@@ -2027,9 +2019,6 @@ msgstr "O número de casos em curso."
 
 msgid "The only mandatory filter is %name%"
 msgstr "O único filtro obrigatório é %name%"
-
-msgid "The openned case will be marked as started by him."
-msgstr "A instância de processo aberta será marcada como iniciada por ele."
 
 msgid "The page allows users with relevant profiles to access the following permissions:"
 msgstr "A página permite que usuários com os perfis relevantes acessem as seguintes autorizações:"

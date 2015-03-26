@@ -39,12 +39,9 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundExceptio
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.expression.ExpressionType;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -479,7 +476,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             ForbiddenFormAccessException, SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, FormNotFoundException,
             FormAlreadySubmittedException, AbortedFormException {
         try {
-            if (!workflowAPI.isInvolvedInHumanTask(session, userId, activityInstanceID)) {
+            if (!(workflowAPI.isUserAdminOrProcessOwner(session, workflowAPI.getProcessDefinitionIDFromActivityInstanceID(session, activityInstanceID)) || workflowAPI
+                    .canUserSeeHumanTask(session, userId, activityInstanceID))) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the form of activity instance " + activityInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
                     getLogger().log(Level.INFO, message, context);
@@ -513,6 +511,18 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 getLogger().log(Level.INFO, message, e, context);
             }
             throw new FormNotFoundException(message);
+        } catch (final UserNotFoundException e) {
+            final String message = "The user with ID " + userId + " does not exist!";
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e, context);
+            }
+            throw new FormNotFoundException(message);
+        } catch (final ProcessDefinitionNotFoundException e) {
+            final String message = "The process definition of task instance with ID " + activityInstanceID + " could not be found.";
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message, e, context);
+            }
+            throw new FormNotFoundException(message);
         }
     }
 
@@ -541,7 +551,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final Map<String, Object> context) throws InvalidSessionException, BPMEngineException, FormNotFoundException, ForbiddenFormAccessException,
             SessionTimeoutException {
         try {
-            if (workflowAPI.isUserAdminOrProcessOwner(session, processInstanceID)) {
+            if (workflowAPI.isUserAdminOrProcessOwner(session, workflowAPI.getProcessDefinitionIDFromProcessInstanceID(session, processInstanceID))) {
                 return;
             }
             if (workflowAPI.canUserSeeProcessInstance(session, processInstanceID)) {
