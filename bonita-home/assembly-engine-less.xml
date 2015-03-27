@@ -10,7 +10,7 @@
 
     <fileSets>
         <fileSet>
-            <outputDirectory>/bonita</outputDirectory>
+            <outputDirectory>/bonita-home</outputDirectory>
             <directory>${project.build.directory}/bonita-home/engine-less</directory>
             <includes>
                 <include>**/*</include>
