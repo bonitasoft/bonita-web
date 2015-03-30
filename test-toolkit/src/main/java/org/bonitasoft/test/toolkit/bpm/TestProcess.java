@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,6 +36,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
@@ -50,7 +51,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class TestProcess {
 
@@ -76,7 +77,7 @@ public class TestProcess {
 
     /**
      * Default Constructor.
-     * 
+     *
      * @throws Exception
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
@@ -104,7 +105,7 @@ public class TestProcess {
 
     /**
      * Create an archive and deploy process
-     * 
+     *
      * @param apiSession
      * @param processDefinitionBuilder
      * @return
@@ -120,7 +121,7 @@ public class TestProcess {
 
     /**
      * Deploy process from the archive
-     * 
+     *
      * @param apiSession
      * @param businessArchiveBuilder
      * @return
@@ -156,7 +157,7 @@ public class TestProcess {
     public long getId() {
         return this.processDefinition.getId();
     }
-    
+
     public ProcessDeploymentInfo getProcessDeploymentInfo() {
         try {
             return getProcessAPI(getSession()).getProcessDeploymentInfo(getId());
@@ -167,7 +168,7 @@ public class TestProcess {
 
     /**
      * Set process enablement
-     * 
+     *
      * @param apiSession
      * @param enabled
      * @return
@@ -181,7 +182,27 @@ public class TestProcess {
         this.enabled = enabled;
         return this;
     }
-    
+
+    protected void delete(final APISession apiSession) {
+        try {
+            // Delete all process instances
+            long nbDeletedProcessInstances;
+            do {
+                nbDeletedProcessInstances = getProcessAPI(apiSession).deleteProcessInstances(processDefinition.getId(), 0, 100);
+            } while (nbDeletedProcessInstances > 0);
+
+            // Delete all archived process instances
+            long nbDeletedArchivedProcessInstances;
+            do {
+                nbDeletedArchivedProcessInstances = getProcessAPI(apiSession).deleteArchivedProcessInstances(processDefinition.getId(), 0, 100);
+            } while (nbDeletedArchivedProcessInstances > 0);
+
+            getProcessAPI(apiSession).deleteProcessDefinition(processDefinition.getId());
+        } catch (DeletionException e) {
+            throw new TestToolkitException("Can't delete process <" + this.processDefinition.getId() + ">", e);
+        }
+    }
+
     private void enableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).enableProcess(this.processDefinition.getId());
@@ -189,7 +210,7 @@ public class TestProcess {
             throw new TestToolkitException("Can't enable process <" + this.processDefinition.getId() + ">", e);
         }
     }
-    
+
     private void disableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).disableProcess(this.processDefinition.getId());
@@ -202,6 +223,10 @@ public class TestProcess {
         return setEnable(initiator.getSession(), enabled);
     }
 
+    public void delete(final TestUser initiator) {
+        delete(initiator.getSession());
+    }
+
     /**
      * Deprecated, use {@link #enable()} or {@link #disable()}
      */
@@ -209,20 +234,24 @@ public class TestProcess {
     public TestProcess setEnable(final boolean enabled) {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), enabled);
     }
-    
+
     public TestProcess enable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), true);
     }
-    
+
     public TestProcess disable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), false);
     }
 
+    public void delete() {
+        delete(TestToolkitCtx.getInstance().getInitiator());
+    }
+
     /**
      * Add actors to enable process
-     * 
+     *
      * TODO: Need to evolve to choose on which Actors category the actor will be added
-     * 
+     *
      * @param apiSession
      * @param actor
      * @return
@@ -301,7 +330,7 @@ public class TestProcess {
         testCase.waitProcessState(apiSession, TestCase.READY_STATE);
         return testCase;
     }
-    
+
     protected ProcessInstance createProcesInstance(final APISession apiSession) {
         try {
             return getProcessAPI(apiSession).startProcess(apiSession.getUserId(), processDefinition.getId());
@@ -320,7 +349,7 @@ public class TestProcess {
 
     /**
      * Start several cases and return them as a list
-     * 
+     *
      * @param number
      * @return
      */
@@ -338,7 +367,7 @@ public class TestProcess {
 
     /**
      * Add a user as process supervisor
-     * 
+     *
      * @param apiSession
      * @param user
      * @return
@@ -362,7 +391,7 @@ public class TestProcess {
 
     /**
      * Add a role as process supervisor
-     * 
+     *
      * @param apiSession
      * @param user
      * @return
@@ -386,7 +415,7 @@ public class TestProcess {
 
     /**
      * Add a group as process supervisor
-     * 
+     *
      * @param apiSession
      * @param user
      * @return
@@ -410,7 +439,7 @@ public class TestProcess {
 
     /**
      * Add a memebership as process supervisor
-     * 
+     *
      * @param apiSession
      * @param user
      * @return

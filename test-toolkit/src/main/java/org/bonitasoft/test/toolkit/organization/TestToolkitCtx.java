@@ -61,7 +61,7 @@ public class TestToolkitCtx {
         /*
          * Clear platform from its tenants
          */
-        getPlatform().destroy();
+        //getPlatform().destroy();
 
         /*
          * Clear session's variables

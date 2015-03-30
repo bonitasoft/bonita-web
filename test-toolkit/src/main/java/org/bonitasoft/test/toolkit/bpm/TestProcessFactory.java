@@ -83,6 +83,10 @@ public class TestProcessFactory {
     }
 
     public void clear() {
+        for (TestProcess testProcess : processList.values()) {
+            testProcess.disable();
+            testProcess.delete();
+        }
         processList.clear();
     }
 
