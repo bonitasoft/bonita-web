@@ -27,6 +27,7 @@ import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -75,6 +76,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Role not found", output);
         assertItemEquals("Wrong role found", input, output);
+        getAPIRole().runDelete(Arrays.asList(input.getId()));
     }
 
     @Test(expected = APIForbiddenException.class)
@@ -89,8 +91,11 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         input.setDescription("The guys who drink a lot of coffee");
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 
-        input = spyApiRole.runAdd(input);
-
+        try {
+            input = spyApiRole.runAdd(input);
+        } finally {
+            spyApiRole.runDelete(Arrays.asList(input.getId()));
+        }
     }
 
     @Test
@@ -114,6 +119,9 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Failed to deploy intiator user", output.getCreatedByUserId());
         Assert.assertEquals("Wrong process deployed", getInitiator().getUserName(), output.getCreatedByUser().getUserName());
+
+        getAPIRole().runDelete(Arrays.asList(input.getId()));
+
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +202,8 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Role not found", output);
         Assert.assertEquals("Update of role failed", newDescription, output.getDescription());
+
+        getAPIRole().runDelete(Arrays.asList(input.getId()));
     }
 
     @Test(expected = APIForbiddenException.class)
@@ -210,8 +220,11 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         input = new RoleItem();
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 
-        input = spyApiRole.runUpdate(id, input.getAttributes());
-
+        try {
+            input = spyApiRole.runUpdate(id, input.getAttributes());
+        } finally {
+            spyApiRole.runDelete(Arrays.asList(id));
+        }
     }
 
     @Test
