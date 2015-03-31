@@ -63,12 +63,15 @@ public class TestRoleFactory {
         return this.roleList;
     }
 
-    public static List<TestRole> createRandomRoles(final int nbOfRoles) {
+    public List<TestRole> createRandomRoles(final int nbOfRoles) {
         final List<TestRole> results = new ArrayList<TestRole>();
 
         for (int i = 0; i < nbOfRoles; i++) {
-            RoleCreator creator = new RoleCreator(getRandomString()).setDescription(getRandomString());
-            results.add(new TestRole(creator));
+            final String name = getRandomString();
+            RoleCreator creator = new RoleCreator(name).setDescription(getRandomString());
+            final TestRole testRole = new TestRole(creator);
+            results.add(testRole);
+            getInstance().getRoleList().put(name, testRole);
         }
 
         return results;

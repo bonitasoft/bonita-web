@@ -126,7 +126,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testSearch() throws Exception {
-        TestRoleFactory.createRandomRoles(13);
+        TestRoleFactory.getInstance().createRandomRoles(13);
 
         final ItemSearchResult<RoleItem> roleItems = getAPIRole().runSearch(0, 10, null, null, null, null, null);
 
@@ -148,18 +148,18 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testDeleteOne() throws Exception {
-        TestRoleFactory.createRandomRoles(13);
+        TestRoleFactory.getInstance().createRandomRoles(13);
 
         final ItemSearchResult<RoleItem> roleItems = getAPIRole().runSearch(0, 10, null, null, null, null, null);
         getAPIRole().runDelete(Arrays.asList(roleItems.getResults().get(0).getId()));
 
         final ItemSearchResult<RoleItem> roleItemsAfter = getAPIRole().runSearch(0, 10, null, null, null, null, null);
-        Assert.assertTrue("Failed to delete one role", roleItemsAfter.getTotal() == 12);
+        Assert.assertEquals("Failed to delete one role", 12, roleItemsAfter.getTotal());
     }
 
     @Test
     public void testDeleteMultiple() throws Exception {
-        TestRoleFactory.createRandomRoles(13);
+        TestRoleFactory.getInstance().createRandomRoles(13);
 
         final ItemSearchResult<RoleItem> roleItems = getAPIRole().runSearch(0, 10, null, null, null, null, null);
 
@@ -169,7 +169,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
                 ));
 
         final ItemSearchResult<RoleItem> roleItemsAfter = getAPIRole().runSearch(0, 10, null, null, null, null, null);
-        Assert.assertTrue("Failed to delete multiple roles", roleItemsAfter.getTotal() == 11);
+        Assert.assertEquals("Failed to delete multiple roles", 11, roleItemsAfter.getTotal());
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
