@@ -91,11 +91,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         input.setDescription("The guys who drink a lot of coffee");
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 
-        try {
-            input = spyApiRole.runAdd(input);
-        } finally {
-            spyApiRole.runDelete(Arrays.asList(input.getId()));
-        }
+        input = spyApiRole.runAdd(input);
     }
 
     @Test
