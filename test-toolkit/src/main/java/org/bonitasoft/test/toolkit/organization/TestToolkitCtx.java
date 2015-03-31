@@ -19,6 +19,7 @@ package org.bonitasoft.test.toolkit.organization;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.test.toolkit.bpm.TestCategoryFactory;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 
 /**
@@ -74,6 +75,7 @@ public class TestToolkitCtx {
         TestProcessFactory.getInstance().clear();
         TestGroupFactory.getInstance().clear();
         TestRoleFactory.getInstance().clear();
+        TestCategoryFactory.getInstance().clear();
     }
     
     // ///////////////////////////////////////////////////////

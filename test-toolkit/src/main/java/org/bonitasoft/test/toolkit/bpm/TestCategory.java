@@ -72,6 +72,14 @@ public class TestCategory {
         }
     }
 
+    public void delete() {
+        try {
+            delete(TestToolkitCtx.getInstance().getInitiator().getSession());
+        } catch (final Exception e) {
+            throw new TestToolkitException("Can't delete category", e);
+        }
+    }
+
     public TestCategory addProcess(final APISession apiSession, final TestProcess process) {
         return addProcess(apiSession, process.getId());
     }

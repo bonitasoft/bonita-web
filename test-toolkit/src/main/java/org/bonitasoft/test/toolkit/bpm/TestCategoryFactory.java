@@ -53,7 +53,7 @@ public class TestCategoryFactory {
 
     private static TestCategoryFactory instance = new TestCategoryFactory();
 
-    private static TestCategoryFactory getInstance() {
+    public static TestCategoryFactory getInstance() {
         return instance;
     }
 
@@ -86,4 +86,10 @@ public class TestCategoryFactory {
         return getCategory(HUMAN_RESOURCES_NAME, HUMAN_RESOURCES_DESCRIPTION);
     }
 
+    public void clear() {
+        for (TestCategory testCategory : categories.values()) {
+            testCategory.delete();
+        }
+        categories.clear();
+    }
 }
