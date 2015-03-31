@@ -1,4 +1,4 @@
-#process-details {
+#process-details, #editActorsMembersModal {
   .actions {
     padding: 20px 0 10px 0;
   }
@@ -97,5 +97,43 @@
   ul.nav > li > a {
     color: #6e6f6b;
   }
+
+  .outline{
+    background-color: #ffffff;
+    border: 1px solid @borderColor3;
+    color: @secondAccentColor;
+    &.label-,.btn-{
+      &primary{
+        border-color: @mainAccentColor;
+        i, span{
+          &.glyphicon{
+            color: darken(@mainAccentColor,5%);
+          }
+        }
+      }
+      &default{
+        border-color: @secondAccentColor;
+      }
+      &success{
+        //color: @btnPrimaryActionColor;
+        border-color: @btnPrimaryActionColor;
+        i, span{
+          &.glyphicon{
+            color: darken(@btnPrimaryActionColor,5%);
+          }
+        }
+      }
+    }
+  }
+  //Actor mapping
+  .members{
+    a.member{
+      margin-right: 0.75em;
+      display: inline-block;
+      margin-bottom: 0.5em;
+    }
+  }
+  
+
 
 }
