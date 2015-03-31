@@ -60,6 +60,7 @@ import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.bonitasoft.test.toolkit.bpm.ProcessVariable;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
+import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,6 +92,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
 
     @Before
     public void deployProcess() throws Exception {
+
         super.setUp();
         final ProcessDefinitionBuilder processBuilder = new ProcessDefinitionBuilder().createNewInstance("firstProcess", "1.0");
         final ExpressionBuilder expressionBuilder = new ExpressionBuilder();
@@ -138,13 +140,16 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
     @Test
     public void evaluate_expression_on_finished_activity_should_TODO() throws Exception {
         final ProcessVariable aVariable = aStringVariable("application", "Word");
-        final TestHumanTask executedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
+        final TestProcess testProcess = createProcessWithVariables("aProcess", aVariable);
+        final TestHumanTask executedTask = testProcess.addActor(getInitiator()).enable()
                 .startCase().getNextHumanTask().assignTo(getInitiator()).execute();
         final Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
 
         final Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), executedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
 
         assertEquals("Word-Excel", evaluationResult.toString());
+        testProcess.disable();
+        testProcess.delete();
     }
 
     // FIXME
@@ -152,13 +157,16 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
     @Test
     public void evaluate_expression_on_activity_should_TODO() throws Exception {
         final ProcessVariable aVariable = aStringVariable("application", "Word");
-        final TestHumanTask notExecutedTask = createProcessWithVariables("aProcess", aVariable).addActor(getInitiator()).enable()
+        final TestProcess testProcess = createProcessWithVariables("aProcess", aVariable);
+        final TestHumanTask notExecutedTask = testProcess.addActor(getInitiator()).enable()
                 .startCase().getNextHumanTask().assignTo(getInitiator());
         final Map<String, FormFieldValue> fieldValues = createFieldValueForVariable(aVariable, "Excel");
 
         final Serializable evaluationResult = formExpressionsAPI.evaluateActivityExpression(getSession(), notExecutedTask.getId(), expression, fieldValues, Locale.ENGLISH, false);
 
         assertEquals("Word-Excel", evaluationResult.toString());
+        testProcess.disable();
+        testProcess.delete();
     }
 
     @Test
