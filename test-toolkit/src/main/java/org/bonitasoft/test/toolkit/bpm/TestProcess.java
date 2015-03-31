@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
@@ -35,11 +36,16 @@ import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.form.FormMapping;
+import org.bonitasoft.engine.form.FormMappingSearchDescriptor;
+import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
@@ -50,7 +56,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TestProcess {
 
@@ -72,14 +77,17 @@ public class TestProcess {
 
     private ProcessSupervisor processSupervisor;
 
-    private final List<ActorInstance> actors = new ArrayList<ActorInstance>();
+    private final List<ActorInstance> actors = new ArrayList<>();
+
+    private boolean forceToNonBlockingFormMappingToDefaultValue;
 
     /**
      * Default Constructor.
-     * 
+     *
      * @throws Exception
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
+        setForceToNonBlockingFormMappingToDefaultValue(true);
         this.processDefinition = createProcessDefinition(apiSession, processDefinitionBuilder);
     }
 
@@ -88,6 +96,7 @@ public class TestProcess {
     }
 
     public TestProcess(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
+        setForceToNonBlockingFormMappingToDefaultValue(true);
         this.processDefinition = deployProcessDefinition(apiSession, businessArchiveBuilder);
     }
 
@@ -104,7 +113,7 @@ public class TestProcess {
 
     /**
      * Create an archive and deploy process
-     * 
+     *
      * @param apiSession
      * @param processDefinitionBuilder
      * @return
@@ -120,14 +129,17 @@ public class TestProcess {
 
     /**
      * Deploy process from the archive
-     * 
+     *
      * @param apiSession
      * @param businessArchiveBuilder
      * @return
      */
     private ProcessDefinition deployProcessDefinition(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         try {
-            return getProcessAPI(apiSession).deploy(businessArchiveBuilder.done());
+            final ProcessDefinition processDefinition = getProcessAPI(apiSession).deploy(businessArchiveBuilder.done());
+            replaceFormMappingToNonBlockingValue(getProcessConfigurationAPI(apiSession), processDefinition.getId());
+            return processDefinition;
+
         } catch (final Exception e) {
             throw new TestToolkitException("Can't deploy business archive.", e);
         }
@@ -156,7 +168,7 @@ public class TestProcess {
     public long getId() {
         return this.processDefinition.getId();
     }
-    
+
     public ProcessDeploymentInfo getProcessDeploymentInfo() {
         try {
             return getProcessAPI(getSession()).getProcessDeploymentInfo(getId());
@@ -167,7 +179,7 @@ public class TestProcess {
 
     /**
      * Set process enablement
-     * 
+     *
      * @param apiSession
      * @param enabled
      * @return
@@ -181,7 +193,7 @@ public class TestProcess {
         this.enabled = enabled;
         return this;
     }
-    
+
     private void enableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).enableProcess(this.processDefinition.getId());
@@ -189,7 +201,7 @@ public class TestProcess {
             throw new TestToolkitException("Can't enable process <" + this.processDefinition.getId() + ">", e);
         }
     }
-    
+
     private void disableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).disableProcess(this.processDefinition.getId());
@@ -209,20 +221,20 @@ public class TestProcess {
     public TestProcess setEnable(final boolean enabled) {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), enabled);
     }
-    
+
     public TestProcess enable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), true);
     }
-    
+
     public TestProcess disable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), false);
     }
 
     /**
      * Add actors to enable process
-     * 
+     * <p/>
      * TODO: Need to evolve to choose on which Actors category the actor will be added
-     * 
+     *
      * @param apiSession
      * @param actor
      * @return
@@ -301,7 +313,7 @@ public class TestProcess {
         testCase.waitProcessState(apiSession, TestCase.READY_STATE);
         return testCase;
     }
-    
+
     protected ProcessInstance createProcesInstance(final APISession apiSession) {
         try {
             return getProcessAPI(apiSession).startProcess(apiSession.getUserId(), processDefinition.getId());
@@ -320,7 +332,7 @@ public class TestProcess {
 
     /**
      * Start several cases and return them as a list
-     * 
+     *
      * @param number
      * @return
      */
@@ -338,7 +350,7 @@ public class TestProcess {
 
     /**
      * Add a user as process supervisor
-     * 
+     *
      * @param apiSession
      * @param user
      * @return
@@ -362,9 +374,9 @@ public class TestProcess {
 
     /**
      * Add a role as process supervisor
-     * 
+     *
      * @param apiSession
-     * @param user
+     * @param role
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestRole role) {
@@ -386,9 +398,9 @@ public class TestProcess {
 
     /**
      * Add a group as process supervisor
-     * 
+     *
      * @param apiSession
-     * @param user
+     * @param group
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group) {
@@ -410,9 +422,10 @@ public class TestProcess {
 
     /**
      * Add a memebership as process supervisor
-     * 
+     *
      * @param apiSession
-     * @param user
+     * @param group
+     * @param role
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group, final TestRole role) {
@@ -472,7 +485,7 @@ public class TestProcess {
         return this.actors;
     }
 
-    public List<TestCase> listOpenCases() throws SearchException  {
+    public List<TestCase> listOpenCases() throws SearchException {
         List<ProcessInstance> processInstances = searchOpenedProcessInstances();
         return convertToCasesList(processInstances);
     }
@@ -489,5 +502,36 @@ public class TestProcess {
         final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 100);
         builder.filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, getProcessDefinition().getId());
         return getProcessAPI(getSession()).searchOpenProcessInstances(builder.done()).getResult();
+    }
+
+    /**
+     * use this method to bypass pageProcessDependencyResolver since default value "internal" with a null page is not allowed
+     * URL value is a none blocking criteria for process resolution
+     *
+     * @param processDefinitionId
+     * @throws BonitaException
+     */
+    public void replaceFormMappingToNonBlockingValue(final ProcessConfigurationAPI processConfigurationAPI, final long processDefinitionId) throws Exception {
+        if (isForceToNonBlockingFormMappingToDefaultValue()) {
+            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1000);
+            searchOptionsBuilder.filter(FormMappingSearchDescriptor.PROCESS_DEFINITION_ID, processDefinitionId);
+            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(searchOptionsBuilder.done());
+            final List<FormMapping> formMappings = searchResult.getResult();
+            for (final FormMapping formMapping : formMappings) {
+                processConfigurationAPI.updateFormMapping(formMapping.getId(), "", FormMappingTarget.URL);
+            }
+        }
+    }
+
+    private ProcessConfigurationAPI getProcessConfigurationAPI(final APISession apiSession) throws Exception {
+        return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
+    }
+
+    public boolean isForceToNonBlockingFormMappingToDefaultValue() {
+        return forceToNonBlockingFormMappingToDefaultValue;
+    }
+
+    public void setForceToNonBlockingFormMappingToDefaultValue(boolean forceToNonBlockingFormMappingToDefaultValue) {
+        this.forceToNonBlockingFormMappingToDefaultValue = forceToNonBlockingFormMappingToDefaultValue;
     }
 }
