@@ -9,7 +9,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import groovy.lang.GroovyClassLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +18,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -65,7 +65,7 @@ public class CustomPageServiceTest {
         final File pageDir = pageFile.getParentFile();
         assertThat(pageFile).as("no file "+pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
-        doReturn(pageFile).when(customPageService).getCustomPageFile(any(File.class));
+        doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
         doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
         doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());

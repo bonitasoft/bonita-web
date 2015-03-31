@@ -15,6 +15,12 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.servlet.ResourceServlet;
@@ -22,13 +28,23 @@ import org.bonitasoft.console.common.server.servlet.ResourceServlet;
 /**
  * @author Anthony Birembaut
  *
+ * This servlet is deprecated.
+ * You can now access your resources through their relative URL.
+ * see the custom page documentation.
+ *
  */
+@Deprecated
 public class PageResourceServlet extends ResourceServlet {
 
     /**
      * UID
      */
     private static final long serialVersionUID = 6745970275852563050L;
+
+    /**
+     * Logger
+     */
+    private final static Logger LOGGER = Logger.getLogger(PageResourceServlet.class.getName());
 
     /**
      * theme name : the theme folder's name
@@ -39,6 +55,19 @@ public class PageResourceServlet extends ResourceServlet {
      * resources subfolder name
      */
     protected final static String RESOURCES_SUBFOLDER_NAME = "resources";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, "This servlet is deprecated. " +
+                    "You can now access your resources through their relative URL." +
+                    "see the custom page documentation.");
+        }
+        super.doGet(request, response);
+    }
 
     @Override
     protected String getResourceParameterName() {

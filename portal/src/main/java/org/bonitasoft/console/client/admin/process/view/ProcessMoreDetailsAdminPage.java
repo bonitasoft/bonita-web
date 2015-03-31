@@ -14,9 +14,9 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem.FILTER_PROCESS_ID;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-import static org.bonitasoft.web.toolkit.client.common.util.MapUtil.asMap;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.util.MapUtil.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +34,7 @@ import org.bonitasoft.console.client.admin.process.view.section.configuration.Pr
 import org.bonitasoft.console.client.admin.process.view.section.connector.ConnectorSection;
 import org.bonitasoft.console.client.admin.process.view.section.entitymapping.EntityMappingSection;
 import org.bonitasoft.console.client.admin.process.view.section.parameter.ProcessParametersSection;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -64,6 +65,7 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
 
     static {
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN);
         PRIVILEGES.add("reportlistingadminext");
     }
 
@@ -146,21 +148,21 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     @Override
     protected void buildBody(final ProcessItem item) {
         new APICaller(ProcessResolutionProblemDefinition.get())
-                .search(0, 100, null, null, asMap(new Arg(FILTER_PROCESS_ID, item.getId())), new ProcessResolutionProblemCallback(item));
+        .search(0, 100, null, null, asMap(new Arg(FILTER_PROCESS_ID, item.getId())), new ProcessResolutionProblemCallback(item));
     }
 
     private class ProcessResolutionProblemCallback extends APICallback {
 
         private final ProcessItem process;
 
-        public ProcessResolutionProblemCallback(ProcessItem process) {
+        public ProcessResolutionProblemCallback(final ProcessItem process) {
             this.process = process;
         }
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final List<ProcessResolutionProblemItem> processResolutionErrors = JSonItemReader.parseItems(response, ProcessResolutionProblemDefinition.get());
-            ProcessConfigurationStateResolver stateResolver = new ProcessConfigurationStateResolver(processResolutionErrors);
+            final ProcessConfigurationStateResolver stateResolver = new ProcessConfigurationStateResolver(processResolutionErrors);
             if (stateResolver.hasProblems()) {
                 addHeader(buildProcessResolutionProblemsCallout(stateResolver));
             }
@@ -178,12 +180,12 @@ public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessIte
     }
 
     /** Overriden in SP */
-    protected ConnectorSection buildConnectorSection(ProcessItem process, ProcessConfigurationStateResolver stateResolver) {
+    protected ConnectorSection buildConnectorSection(final ProcessItem process, final ProcessConfigurationStateResolver stateResolver) {
         return new ConnectorSection(process, stateResolver.getConnectorsConfigurationState());
     }
 
     /** Overriden in SP */
-    protected ProcessResolutionProblemsCallout buildProcessResolutionProblemsCallout(ProcessConfigurationStateResolver stateResolver) {
+    protected ProcessResolutionProblemsCallout buildProcessResolutionProblemsCallout(final ProcessConfigurationStateResolver stateResolver) {
         return new ProcessResolutionProblemsCallout(stateResolver);
     }
 

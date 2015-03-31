@@ -37,6 +37,7 @@
         <assertj.version>1.5.0</assertj.version>
         <powermock.version>1.5.1</powermock.version>
         <gwtmockito.version>1.1.3</gwtmockito.version>
+        <spring.version>3.1.2.RELEASE</spring.version>
         <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
         <urlrewrite.version>4.0.3</urlrewrite.version>
         <restlet-version>2.3.1</restlet-version>

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-03-13 04:14-0400\n"
+"PO-Revision-Date: 2015-03-30 06:06-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -212,6 +212,46 @@ msgstr "Totais"
 msgid "Loading..."
 msgstr "Carregando..."
 
+msgid "Totals"
+msgstr "Totais"
+
+msgid "View process design"
+msgstr "View process design"
+
+msgid "View case design"
+msgstr "View case design"
+
+# Case Visu - Show Key
+msgid "Show key"
+msgstr "Show key"
+
+msgid "Task1"
+msgstr "Task1"
+
+msgid "Cancelled, skipped instances"
+msgstr "Cancelled, skipped instances"
+
+msgid "Completed instances"
+msgstr "Completed instances"
+
+msgid "Failed instances"
+msgstr "Failed instances"
+
+msgid "Executing, completing, initializing instances"
+msgstr "Executing, completing, initializing instances"
+
+msgid "Ready, waiting instances"
+msgstr "Ready, waiting instances"
+
+msgid "Items per page"
+msgstr "Itens por página"
+
+msgid "Columns selection"
+msgstr "Seleção de colunas"
+
+msgid "Table settings"
+msgstr "Table settings"
+
 msgid "sort by ID ascending"
 msgstr "ordena por Id, crescente"
 
@@ -235,45 +275,6 @@ msgstr "ordena por data fim, crescente"
 
 msgid "sort by End date descending"
 msgstr "ordena por data fim, decrescente"
-
-msgid "sort by State ascending"
-msgstr "ordenar por casos abiertos, ascendente"
-
-msgid "sort by State descending"
-msgstr "ordenar por casos abiertos, descendente"
-
-msgid "sort by Version ascending"
-msgstr "ordena por versão, crescente"
-
-msgid "sort by Version descending"
-msgstr "ordena por versão, decrescente"
-
-msgid "sort by Cases with failures ascending"
-msgstr "ordena por casos com erros, crescente"
-
-msgid "sort by Cases with failures descending"
-msgstr "ordena por casos com erros, decrescente"
-
-msgid "sort by Healthy cases ascending"
-msgstr "ordena por casos sem erros, crescente"
-
-msgid "sort by Healthy cases descending"
-msgstr "ordena por casos sem erros, decrescente"
-
-msgid "sort by Open cases ascending"
-msgstr "ordena por casos abertos, crescente"
-
-msgid "sort by Open cases descending"
-msgstr "ordena por casos abertos, decrescente"
-
-msgid "Items per page"
-msgstr "Items per page"
-
-msgid "Columns selection"
-msgstr "Columns selection"
-
-msgid "Table settings"
-msgstr "Table settings"
 
 msgid "Hide"
 msgstr "Ocultar"

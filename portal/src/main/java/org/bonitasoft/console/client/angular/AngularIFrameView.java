@@ -13,10 +13,7 @@
  ******************************************************************************/
 package org.bonitasoft.console.client.angular;
 
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
-
-import java.util.Arrays;
-import java.util.List;
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.*;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -27,8 +24,6 @@ import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickHandler;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -41,13 +36,13 @@ public class AngularIFrameView extends RawView {
 
     public static final String APPLICATION_LISTING_PAGE = "applicationslistingadmin";
 
+    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "newprocessmoredetailsadmin";
+
     public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
 
     public static final String CASE_LISTING_TAB_TOKEN = "_tab";
 
     public static final String CASE_LISTING_PROCESS_ID_TOKEN = "processId";
-
-    protected static final List<String> ANGULAR_TOKENS = Arrays.asList(CASE_LISTING_ADMIN_TOKEN);
 
     private final IFrameView iframe = new IFrameView();
 
@@ -131,17 +126,5 @@ public class AngularIFrameView extends RawView {
 
     public void display(final TreeIndexed<String> params) {
         iframe.setLocation(buildAngularUrl(url, token, UrlSerializer.serialize(params)));
-    }
-
-    /**
-     * @param tokens
-     * @return
-     */
-    public boolean isFormerTokenAnAngularFrame(final String tokens) {
-        final MatchResult paramMatcher = RegExp.compile("(^|[&\\?#])_p=([^&\\?#]*)([&\\?#]|$)").exec(tokens);
-        if (paramMatcher != null && paramMatcher.getGroupCount() > 0) {
-            return ANGULAR_TOKENS.contains(paramMatcher.getGroup(2));
-        }
-        return false;
     }
 }
