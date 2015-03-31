@@ -50,6 +50,9 @@ public class TestRoleFactory {
     }
 
     public void clear() {
+        for (TestRole testRole : this.roleList.values()) {
+            testRole.delete();
+        }
         this.roleList.clear();
     }
 

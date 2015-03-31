@@ -55,4 +55,12 @@ public class TestRole extends IdentityAccessor implements TestActor  {
     public long getId() {
         return this.role.getId();
     }
+
+    public void delete() {
+        try {
+            getIdentityAPI(apiSession).deleteRole(this.role.getId());
+        } catch (final Exception e) {
+            throw new TestToolkitException("Can't delete role <" + this.role.getId() + ">", e);
+        }
+    }
 }
