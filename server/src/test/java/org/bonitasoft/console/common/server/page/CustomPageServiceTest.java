@@ -75,7 +75,7 @@ public class CustomPageServiceTest {
         when(pageAPI.getPageByName("")).thenReturn(mockedPage);
 
         // When
-        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, "", pageResourceProvider);
+        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         final Class<PageController> pageClass = customPageService.registerPage(classloader, pageResourceProvider);
         final PageController pageController = customPageService.loadPage(pageClass);
 
@@ -94,12 +94,12 @@ public class CustomPageServiceTest {
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/page.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
-        when(pageAPI.getPageByName("page1")).thenReturn(mockedPage);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
         when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page1"));
 
         // When
-        customPageService.retrievePageZipContent(apiSession, pageName, pageResourceProvider);
+        customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
 
         // Validate
         assertNotNull(pageResourceProvider.getPageDirectory().listFiles());

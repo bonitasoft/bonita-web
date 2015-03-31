@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMappingTarget;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -35,6 +37,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessFormServletTest {
 
+    public static final String CUSTOMPAGE_FORM = "custompage_form";
     @Mock
     PageRenderer pageRenderer;
 
@@ -57,6 +60,12 @@ public class ProcessFormServletTest {
     @Mock
     APISession apiSession;
 
+    @Mock
+    private Page page;
+
+    @Mock
+    private CustomPageService customPageService;
+
     @Before
     public void beforeEach() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
@@ -72,7 +81,7 @@ public class ProcessFormServletTest {
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-                new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
+                new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
         when(formServlet.isAuthorized(any(HttpServletRequest.class), any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong(), anyBoolean())).thenReturn(false);
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -107,16 +116,21 @@ public class ProcessFormServletTest {
 
     @Test
     public void should_display_customPage() throws Exception {
+        //given
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
+        when(customPageService.getPage(apiSession,CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-                new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
+                new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
 
+        //when
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        //then
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, page);
+
     }
 
     @Test
@@ -203,7 +217,7 @@ public class ProcessFormServletTest {
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-        final FormReference form = new FormReference("custompage_form", FormMappingTarget.INTERNAL.name());
+        final FormReference form = new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name());
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -216,7 +230,7 @@ public class ProcessFormServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/path/of/resource.css");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 42L, 1L)).thenReturn(true);
-        final FormReference form = new FormReference("custompage_form", FormMappingTarget.INTERNAL.name());
+        final FormReference form = new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name());
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -242,12 +256,13 @@ public class ProcessFormServletTest {
     @Test
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
+        when(customPageService.getPage(apiSession, CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
         when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-                new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+                new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
+        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, page);
 
         formServlet.doGet(hsRequest, hsResponse);
 
@@ -257,51 +272,55 @@ public class ProcessFormServletTest {
     @Test
     public void should_display_customPage_for_process() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
+        when(customPageService.getPage(apiSession, CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
+        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, page);
     }
 
     @Test
     public void should_display_customPage_for_instance() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
+        when(customPageService.getPage(apiSession, CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeProcessInstance(apiSession, 42L, 1L)).thenReturn(true);
-        when(processFormService.getForm(apiSession, 1L, null, true)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
+        when(processFormService.getForm(apiSession, 1L, null, true)).thenReturn(new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, page);
     }
 
     @Test
     public void should_display_customPage_for_task() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
+        when(customPageService.getPage(apiSession, CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false)).thenReturn(true);
         when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, page);
     }
 
     @Test
     public void should_display_customPage_for_process_with_unicode_characters() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processus+%C3%A9%2B%C3%B8/%C3%B8/");
+        when(customPageService.getPage(apiSession, CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.getProcessDefinitionId(apiSession, "processus é+ø", "ø")).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
         when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
+        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
 
         formServlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, page);
     }
 
     @Test
@@ -377,12 +396,13 @@ public class ProcessFormServletTest {
     @Test
     public void should_get_server_error_when_issue_with_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
+        when(customPageService.getPage(apiSession, CUSTOMPAGE_FORM, 1L)).thenReturn(page);
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
         when(processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false)).thenReturn(true);
-        when(processFormService.getForm(apiSession, 1L, "taskName", false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
+        when(processFormService.getForm(apiSession, 1L, "taskName", false)).thenReturn(new FormReference(CUSTOMPAGE_FORM, FormMappingTarget.INTERNAL.name()));
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
-        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
+        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, page);
 
         formServlet.doGet(hsRequest, hsResponse);
 

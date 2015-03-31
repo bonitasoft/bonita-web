@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
 
@@ -53,46 +54,56 @@ public class PageRenderer {
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
-        PageResourceProvider pageResourceProvider = getPageResourceProvider(pageName,apiSession.getTenantId());
-        customPageService.ensurePageFolderIsUpToDate(apiSession, pageName, pageResourceProvider);
-        if (isGroovyPage(pageName, apiSession)) {
-            displayGroovyPage(request, response, apiSession, pageName, pageResourceProvider);
+        PageResourceProvider pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
+        displayCustomPage(request, response, apiSession, pageResourceProvider);
+    }
+
+    public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, Page page)
+            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+
+        PageResourceProvider pageResourceProvider = getPageResourceProvider(page, apiSession.getTenantId());
+        displayCustomPage(request, response, apiSession, pageResourceProvider);
+    }
+
+    private void displayCustomPage(HttpServletRequest request, HttpServletResponse response, APISession apiSession, PageResourceProvider pageResourceProvider) throws BonitaException, IOException, InstantiationException, IllegalAccessException {
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+        if (isGroovyPage(pageResourceProvider)) {
+            displayGroovyPage(request, response, apiSession, pageResourceProvider);
         } else {
-            displaySimpleHtmlPage(request, response, apiSession, pageName);
+            displaySimpleHtmlPage(request, response, apiSession, pageResourceProvider);
         }
     }
 
-    private boolean isGroovyPage(String pageName, final APISession apiSession) {
-        File pageFolder = getPageResourceProvider(pageName, apiSession.getTenantId()).getPageDirectory();
+    private boolean isGroovyPage(PageResourceProvider pageResourceProvider) {
+        File pageFolder = pageResourceProvider.getPageDirectory();
         File indexGroovy = customPageService.getGroovyPageFile(pageFolder);
         return indexGroovy.exists();
     }
 
-    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
+    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, PageResourceProvider pageResourceProvider)
             throws IOException, InstantiationException, BonitaException, IllegalAccessException {
 
-        File resourceFile = getIndexFile(pageName, apiSession);
+        File resourceFile = getIndexFile(pageResourceProvider, apiSession);
         resourceRenderer.renderFile(request, response, resourceFile);
     }
 
-    private File getIndexFile(String pageName, APISession apiSession) throws IOException, BonitaException {
-        File indexHtml = new File(getResourceFolder(pageName, apiSession), CustomPageService.PAGE_INDEX_FILENAME);
+    private File getIndexFile(PageResourceProvider pageResourceProvider, APISession apiSession) throws IOException, BonitaException {
+        File indexHtml = new File(getResourceFolder(pageResourceProvider), CustomPageService.PAGE_INDEX_FILENAME);
         if (indexHtml.exists()) {
             return indexHtml;
         }
         //fallback try to found index.html a the root of the zip to support custompage legacy.
-        return new File(getResourceFolder(pageName, apiSession).getParent(), CustomPageService.PAGE_INDEX_FILENAME);
+        return new File(getResourceFolder(pageResourceProvider).getParent(), CustomPageService.PAGE_INDEX_FILENAME);
     }
 
-    private File getResourceFolder(String pageName, APISession apiSession) {
-        final PageResourceProvider pageResourceProvider =  getPageResourceProvider(pageName, apiSession.getTenantId());
+    private File getResourceFolder(PageResourceProvider pageResourceProvider) {
         return new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY);
     }
 
-    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName, final PageResourceProvider pageResourceProvider)
+    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
-        final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageName, pageResourceProvider);
+        final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         try {
             Thread.currentThread().setContextClassLoader(pageClassloader);
             final Class<PageController> pageClass = customPageService.registerPage(pageClassloader, pageResourceProvider);
@@ -123,7 +134,13 @@ public class PageRenderer {
     }
 
     public PageResourceProvider getPageResourceProvider(String pageName, long tenantId) {
-        return new PageResourceProvider(pageName, tenantId);
+        return getPageResourceProvider(pageName, tenantId);
     }
+
+
+    public PageResourceProvider getPageResourceProvider(Page page, long tenantId) {
+        return new PageResourceProvider(page, tenantId);
+    }
+
 
 }

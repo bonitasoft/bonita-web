@@ -43,6 +43,7 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMappingTarget;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -72,15 +73,17 @@ public class ProcessFormServlet extends HttpServlet {
 
     private static final String TASK_PATH_SEGMENT = "task";
 
-    private static final String USER_ID_PARAM = "user";
+    public static final String USER_ID_PARAM = "user";
 
     private static final String ASSIGN_TASK_PARAM = "assignTask";
 
     protected ProcessFormService processFormService = new ProcessFormService();
 
-    private final ResourceRenderer resourceRenderer= new ResourceRenderer();
+    private final ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
+
+    protected CustomPageService customPageService = new CustomPageService();
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
@@ -127,7 +130,7 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void displayFormOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final String taskName, final long userId, final String resourcePath)
+                                         final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final String taskName, final long userId, final String resourcePath)
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
             final FormReference form = processFormService.getForm(apiSession, processDefinitionId, taskName, processInstanceId != -1L);
@@ -207,14 +210,14 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void displayLegacyForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final String taskName, final long userId)
+                                     final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final String taskName, final long userId)
             throws IOException, BonitaException {
         final String legacyFormURL = buildLegacyFormURL(request, apiSession, processDefinitionId, processInstanceId, taskInstanceId, taskName, userId);
         response.sendRedirect(response.encodeRedirectURL(legacyFormURL));
     }
 
     protected String buildLegacyFormURL(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
-            final long processInstanceId, final long taskInstanceId, final String taskName, final long userId) throws BonitaException,
+                                        final long processInstanceId, final long taskInstanceId, final String taskName, final long userId) throws BonitaException,
             UnsupportedEncodingException {
         final StringBuilder legacyFormURL = new StringBuilder(request.getContextPath());
         legacyFormURL.append("/portal/homepage?ui=form&locale=")
@@ -250,17 +253,18 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void displayForm(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final FormReference form,
-            final String resourcePath)
+                               final long processDefinitionId, final long processInstanceId, final long taskInstanceId, final FormReference form,
+                               final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         if (FormMappingTarget.INTERNAL.name().equals(form.getTarget())) {
             try {
+                final Page page = customPageService.getPage(apiSession, form.getForm(), processDefinitionId);
                 if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
                         || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
                     //TODO pass the processDefinition, processInstance and taskInstance IDs in order to put them in the Context of the custom page
-                    pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
+                    pageRenderer.displayCustomPage(request, response, apiSession, page);
                 } else {
-                    resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, form.getForm(), resourcePath));
+                    resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, page, resourcePath));
                 }
             } catch (final PageNotFoundException e) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getForm());
@@ -274,9 +278,9 @@ public class ProcessFormServlet extends HttpServlet {
         }
     }
 
-    protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final String pageName, final String resourcePath)
+    protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final Page page, final String resourcePath)
             throws IOException {
-        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(page, apiSession.getTenantId());
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
         final TenantFolder tenantFolder = new TenantFolder();
         if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
@@ -313,14 +317,14 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final long processDefinitionId,
-            final long processInstanceId, final long taskInstanceId, final String url) throws IOException {
+                                       final long processInstanceId, final long taskInstanceId, final String url) throws IOException {
         final String externalURL = buildExternalPageURL(request, processDefinitionId, processInstanceId, taskInstanceId, url);
         response.sendRedirect(response.encodeRedirectURL(externalURL));
     }
 
     @SuppressWarnings("unchecked")
     protected String buildExternalPageURL(final HttpServletRequest request, final long processDefinitionId, final long processInstanceId,
-            final long taskInstanceId, final String url) {
+                                          final long taskInstanceId, final String url) {
         final UrlBuilder urlBuilder = new UrlBuilder(url);
         if (taskInstanceId != -1) {
             urlBuilder.appendParameter(TASK_INSTANCE_PATH_SEGMENT, new UrlValue(Long.toString(taskInstanceId)));
@@ -336,7 +340,7 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected boolean isAuthorized(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId,
-            final long userId, final boolean assignTask) throws BonitaException {
+                                   final long userId, final boolean assignTask) throws BonitaException {
         if (processFormService.isAllowedAsAdminOrProcessSupervisor(request, apiSession, processDefinitionId, taskInstanceId, userId, assignTask)) {
             return true;
         } else {
@@ -357,7 +361,7 @@ public class ProcessFormServlet extends HttpServlet {
     }
 
     protected void handleException(final HttpServletResponse response, final long processDefinitionId, final String taskName,
-            final boolean hasProcessInstanceId, final Exception e)
+                                   final boolean hasProcessInstanceId, final Exception e)
             throws ServletException {
         try {
             if (e instanceof ProcessDefinitionNotFoundException) {
