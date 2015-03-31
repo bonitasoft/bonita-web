@@ -583,6 +583,7 @@
                         <phase>integration-test</phase>
                         <goals>
                             <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
                         <configuration>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
