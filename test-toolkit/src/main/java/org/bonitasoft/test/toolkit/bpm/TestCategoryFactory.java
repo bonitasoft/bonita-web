@@ -88,7 +88,11 @@ public class TestCategoryFactory {
 
     public void clear() {
         for (TestCategory testCategory : categories.values()) {
-            testCategory.delete();
+            try {
+                testCategory.delete();
+            } catch (Exception e) {
+                //ignore
+            }
         }
         categories.clear();
     }
