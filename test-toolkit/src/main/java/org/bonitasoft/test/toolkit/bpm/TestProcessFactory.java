@@ -82,10 +82,16 @@ public class TestProcessFactory {
         return String.valueOf(new Random().nextLong());
     }
 
-    public void clear() {
+    public void clear() throws Exception {
         for (TestProcess testProcess : processList.values()) {
-            testProcess.disable();
-            testProcess.delete();
+            try {
+                testProcess.deleteCases();
+                testProcess.disable();
+                testProcess.delete();
+            } catch (Exception e) {
+                //do not fail, just print
+                e.printStackTrace();
+            }
         }
         processList.clear();
     }

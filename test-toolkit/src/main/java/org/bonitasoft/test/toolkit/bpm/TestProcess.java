@@ -32,6 +32,7 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
@@ -40,6 +41,8 @@ import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -518,5 +521,41 @@ public class TestProcess {
         final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 100);
         builder.filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, getProcessDefinition().getId());
         return getProcessAPI(getSession()).searchOpenProcessInstances(builder.done()).getResult();
+    }
+
+    public void deleteCases() throws Exception {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getSession());
+        int repeatNb = 10;
+        boolean repeat;
+        long sleep = 500;
+        Exception latestException = null;
+        do {
+            repeat = false;
+            repeatNb--;
+            final SearchOptions searchOptions = new SearchOptionsBuilder(0, 100000)
+                    .filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, processDefinition.getId())
+                    .sort(ProcessInstanceSearchDescriptor.ID, Order.ASC).done();
+            for (ProcessInstance pi : processAPI.searchProcessInstances(searchOptions).getResult()) {
+                try {
+                    processAPI.deleteProcessInstance(pi.getId());
+                } catch (DeletionException e) {
+                    //ignore as it may be due a process instance finishing its execution
+                    repeat = true;
+                    latestException = e;
+                }
+            }
+            try {
+                processAPI.deleteArchivedProcessInstances(processDefinition.getId(), 0, 10000);
+            } catch (DeletionException e) {
+                //ignore as it may be due a process instance finishing its execution
+                repeat = true;
+                latestException = e;
+            }
+            Thread.sleep(sleep);
+        } while (repeat && repeatNb > 0);
+        if (repeat && latestException != null) {
+            throw latestException;
+        }
+
     }
 }

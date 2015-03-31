@@ -52,7 +52,7 @@ public class TestToolkitCtx {
         return instance;
     }
 
-    public void clearSession() {
+    public void clearSession() throws Exception {
         /*
          * Clear Factories
          */
@@ -69,7 +69,7 @@ public class TestToolkitCtx {
         this.sessionsVariables.clear();
     }
 
-    protected void clearFactories() {
+    protected void clearFactories() throws Exception {
         TestUserFactory.getInstance().clear();
         TestProcessFactory.getInstance().clear();
         TestGroupFactory.getInstance().clear();
