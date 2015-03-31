@@ -91,7 +91,7 @@ public class ProcessFormServlet extends HttpServlet {
         long processInstanceId = -1L;
         long taskInstanceId = -1L;
         String taskName = null;
-        final List<String> pathSegments = resourceRenderer.getPathSegments(request);
+        final List<String> pathSegments = resourceRenderer.getPathSegments(request.getPathInfo());
         final String user = request.getParameter(USER_ID_PARAM);
         final long userId = convertToLong(USER_ID_PARAM, user);
         final HttpSession session = request.getSession();
