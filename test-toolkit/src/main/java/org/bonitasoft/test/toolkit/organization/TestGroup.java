@@ -48,6 +48,15 @@ public class TestGroup implements TestActor {
         } 
     }
 
+    public void delete() throws Exception {
+        final IdentityAPI identityAPI = new IdentityAccessor().getIdentityAPI(TestToolkitCtx.getInstance().getInitiator().getSession());
+        try {
+            identityAPI.deleteGroup(this.group.getId());
+        } catch (final Exception e) {
+            throw new TestToolkitException("Can't delete group", e);
+        }
+    }
+
     public Group getGroup() {
         return this.group;
     }

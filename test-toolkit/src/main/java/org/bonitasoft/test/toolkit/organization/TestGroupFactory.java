@@ -56,7 +56,10 @@ public class TestGroupFactory {
         return instance;
     }
 
-    public void clear() {
+    public void clear() throws Exception {
+        for (TestGroup testGroup : this.groupList.values()) {
+            testGroup.delete();
+        }
         this.groupList.clear();
     }
 
