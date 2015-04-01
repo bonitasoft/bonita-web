@@ -38,6 +38,12 @@ public class TestRole extends IdentityAccessor implements TestActor  {
     public TestRole(APISession apiSession, RoleCreator creator) {
         this.apiSession = apiSession;
         this.role = createRole(creator);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building role: " + role.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     private Role createRole(RoleCreator creator) {

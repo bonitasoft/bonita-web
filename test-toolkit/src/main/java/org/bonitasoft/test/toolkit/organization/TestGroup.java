@@ -33,10 +33,22 @@ public class TestGroup implements TestActor {
 
     public TestGroup(final APISession apiSession, final GroupCreator creator) {
         this.group = createGroup(apiSession, creator);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building group: " + group.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestGroup(final GroupCreator creator) {
         this.group = createGroup(TestToolkitCtx.getInstance().getInitiator().getSession(), creator);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building group: " + group.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     private Group createGroup(APISession apiSession, GroupCreator creator) {

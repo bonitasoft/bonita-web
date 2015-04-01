@@ -110,5 +110,9 @@ public class TestGroupFactory {
     public static TestGroup getWeb() {
         return createGroup(NAME_WEB, DESCRIPTION_WEB);
     }
-
+    public void check() {
+        if (!getGroupList().isEmpty()) {
+            throw new RuntimeException(this.getClass().getName() + " cannot be reset because the list is not empty: " + getGroupList());
+        }
+    }
 }

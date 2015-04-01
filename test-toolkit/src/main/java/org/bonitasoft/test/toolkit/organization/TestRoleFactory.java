@@ -102,4 +102,9 @@ public class TestRoleFactory {
         return createRole(NAME_DEVELOPER, DESCRIPTION_DEVELOPER);
     }
 
+    public void check() {
+        if (!getRoleList().isEmpty()) {
+            throw new RuntimeException(this.getClass().getName() + " cannot be reset because the list is not empty: " + getRoleList());
+        }
+    }
 }

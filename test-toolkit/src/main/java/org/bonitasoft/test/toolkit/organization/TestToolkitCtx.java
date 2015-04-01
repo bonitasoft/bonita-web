@@ -77,6 +77,14 @@ public class TestToolkitCtx {
         TestRoleFactory.getInstance().clear();
         TestCategoryFactory.getInstance().clear();
     }
+
+    protected void checkFactories() throws Exception {
+        TestUserFactory.getInstance().check();
+        TestProcessFactory.getInstance().check();
+        TestGroupFactory.getInstance().check();
+        TestRoleFactory.getInstance().check();
+        TestCategoryFactory.getInstance().check();
+    }
     
     // ///////////////////////////////////////////////////////
     // / Session's variables
@@ -123,4 +131,7 @@ public class TestToolkitCtx {
         return (TestUser) this.sessionsVariables.get(INITIATOR);
     }
 
+    public void check() throws Exception {
+        checkFactories();
+    }
 }

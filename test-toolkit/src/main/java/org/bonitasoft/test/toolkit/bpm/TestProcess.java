@@ -84,6 +84,12 @@ public class TestProcess {
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         this.processDefinition = createProcessDefinition(apiSession, processDefinitionBuilder);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestProcess(final ProcessDefinitionBuilder processDefinitionBuilder) {
@@ -92,6 +98,12 @@ public class TestProcess {
 
     public TestProcess(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         this.processDefinition = deployProcessDefinition(apiSession, businessArchiveBuilder);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestProcess(final BusinessArchiveBuilder businessArchiveBuilder) {

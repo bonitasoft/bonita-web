@@ -130,13 +130,10 @@ public class FormServiceProviderImplIT extends FormsTestCase {
                 "GROOVY", dependencies);
     }
 
-    @Override
     @After
     public void tearDown() throws Exception {
-
         processAPI.disableProcess(processDefinition.getId());
         processAPI.deleteProcess(processDefinition.getId());
-        super.tearDown();
     }
 
     @Test

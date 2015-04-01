@@ -65,6 +65,12 @@ public class TestUser implements TestActor {
         this.user = createUser(apiSession, userName, password);
         this.userName = userName;
         this.password = password;
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building user: " + user.getUserName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     // //////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +82,12 @@ public class TestUser implements TestActor {
         this.user = createUser(apiSession, userCreator, personalInfoCreator, professionalInfoCreator);
         this.userName = (String) userCreator.getFields().get(UserCreator.UserField.NAME);
         this.password = (String) userCreator.getFields().get(UserCreator.UserField.PASSWORD);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building user: " + user.getUserName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestUser(final APISession apiSession, final UserCreator userBuilder) {

@@ -42,6 +42,12 @@ public class TestCategory {
      */
     public TestCategory(final Category category) {
         this.category = category;
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building category: " + category.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     /**

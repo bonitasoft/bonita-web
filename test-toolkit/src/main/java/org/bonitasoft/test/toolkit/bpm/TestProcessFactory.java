@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.bpm.bar.BarResource;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
+import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.expression.Expression;
@@ -85,14 +86,7 @@ public class TestProcessFactory {
 
     public void clear() throws Exception {
         for (TestProcess testProcess : processList.values()) {
-            try {
-                testProcess.deleteCases();
-                testProcess.disable();
-                testProcess.delete();
-            } catch (Exception e) {
-                //do not fail, just print
-                e.printStackTrace();
-            }
+            clear(testProcess);
         }
         processList.clear();
     }
@@ -343,4 +337,27 @@ public class TestProcessFactory {
         return getInstance().getProcessList().get(PROCESS_CALL_ACTIVTY);
     }
 
+    public void check() {
+        if (!getProcessList().isEmpty()) {
+            throw new RuntimeException(this.getClass().getName() + " cannot be reset because the list is not empty: " + getProcessList());
+        }
+    }
+
+    private void clear(TestProcess testProcess) throws Exception {
+        testProcess.deleteCases();
+        try {
+            testProcess.disable();
+        } catch (TestToolkitException e) {
+            if (!(e.getCause() instanceof ProcessActivationException)) {
+                throw e;
+            }
+            //ignore as the process can be disabled
+        }
+        testProcess.delete();
+    }
+
+    public void delete(TestProcess testProcess) throws Exception {
+        clear(testProcess);
+        getProcessList().remove(testProcess.getProcessDefinition().getName());
+    }
 }

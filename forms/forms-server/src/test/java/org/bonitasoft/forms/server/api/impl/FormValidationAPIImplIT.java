@@ -72,8 +72,6 @@ public class FormValidationAPIImplIT extends FormsTestCase {
 
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         final ProcessDefinitionBuilder processBuilder = new ProcessDefinitionBuilder().createNewInstance("firstProcess", "1.0");
         processBuilder.addUserTask("Request_Approval", "myActor");
         processBuilder.addActor("myActor")
@@ -104,10 +102,8 @@ public class FormValidationAPIImplIT extends FormsTestCase {
 
     @After
     public void tearDown() throws Exception {
-
         processAPI.disableProcess(bonitaProcess.getId());
         processAPI.deleteProcess(bonitaProcess.getId());
-        super.tearDown();
     }
 
     @Test

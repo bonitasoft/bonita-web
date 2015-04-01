@@ -128,6 +128,8 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         this.api.runDelete(Arrays.asList(APIID.makeAPIID(category.getId())));
 
         assertNull(getFromEngine(category.getId()));
+
+        TestCategoryFactory.removeTestCategoryFromList(category);
     }
 
     @Test(expected = APIForbiddenException.class)
