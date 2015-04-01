@@ -32,7 +32,6 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
@@ -202,7 +201,7 @@ public class TestProcess {
 
             getProcessAPI(apiSession).deleteProcessDefinition(processDefinition.getId());
         } catch (DeletionException e) {
-            throw new TestToolkitException("Can't delete process <" + this.processDefinition.getId() + ">", e);
+            throw new TestToolkitException("Can't delete process <" + this.processDefinition.getId() + "> with name " + this.processDefinition.getName(), e);
         }
     }
 
