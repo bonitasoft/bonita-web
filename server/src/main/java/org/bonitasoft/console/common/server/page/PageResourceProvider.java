@@ -152,7 +152,7 @@ public class PageResourceProvider {
     }
 
     protected File buildPageTempFile(final String fullPageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), fullPageName + ".zip");
+        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), new StringBuilder().append(fullPageName).append(".zip").toString());
     }
 
     protected File buildPageDirectory(final String fullPageName, final long tenantId) {
