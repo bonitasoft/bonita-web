@@ -116,7 +116,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
         }
     }
 
-    private void fillNumberOfActiveFlowNodesIfActiveCounterExists(final CaseItem item, final List<String> counters) {
+    private void fillNumberOfPendingFlowNodesIfActiveCounterExists(final CaseItem item, final List<String> counters) {
         if (counters.contains(CaseItem.COUNTER_ACTIVE_FLOW_NODES)) {
             final FlowNodeDatastore flowNodeDatastore = getFlowNodeDatastore();
             final Map<String, String> filters = new HashMap<String, String>();
@@ -133,7 +133,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
     @Override
     protected void fillCounters(final CaseItem item, final List<String> counters) {
         fillNumberOfFailedFlowNodesIfFailedCounterExists(item, counters);
-        fillNumberOfActiveFlowNodesIfActiveCounterExists(item, counters);
+        fillNumberOfPendingFlowNodesIfActiveCounterExists(item, counters);
     }
 
     UserDatastore getUserDatastore() {
