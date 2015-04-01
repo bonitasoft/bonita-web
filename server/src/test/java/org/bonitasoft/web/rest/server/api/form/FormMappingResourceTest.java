@@ -78,7 +78,7 @@ public class FormMappingResourceTest extends RestletTest {
 
         final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
         final FormMapping formMapping = new FormMapping();
-        formMapping.setForm("myForm");
+        formMapping.setTask("myTask");
         final List<FormMapping> formMappings = new ArrayList<FormMapping>();
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
@@ -93,7 +93,7 @@ public class FormMappingResourceTest extends RestletTest {
         final String content = outputStream.toString();
         outputStream.close();
         assertThat(content).isNotNull();
-        assertThat(content).contains("\"form\":\"myForm\"");
+        assertThat(content).contains("\"task\":\"myTask\"");
         verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
     }
 

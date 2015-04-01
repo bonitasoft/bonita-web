@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.exception.FormMappingNotFoundException;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -50,7 +50,7 @@ public class PageServlet extends HttpServlet {
      */
     private static Logger LOGGER = Logger.getLogger(PageServlet.class.getName());
 
-    private static final String RESOURCE_PATH_SEPARATOR = "/content";
+    public static final String RESOURCE_PATH_SEPARATOR = "/content";
 
     protected final ResourceRenderer resourceRenderer = new ResourceRenderer();
 
@@ -100,7 +100,7 @@ public class PageServlet extends HttpServlet {
                 }
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
             }
-        } catch (final FormMappingNotFoundException e) {
+        } catch (final NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
         }
     }
