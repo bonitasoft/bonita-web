@@ -32,6 +32,23 @@
             list-style: none;
         }
     }
+    .popover-error {
+        background-color: #f2dede;
+        color: #a94442;
+        
+        &.top > .arrow:after {
+          border-top-color: #f2dede;
+        }
+        &.left > .arrow:after {
+            border-left-color: #f2dede;
+        }
+        &.right > .arrow:after {
+            border-right-color: #f2dede;
+        }
+        &.bottom > .arrow:after {
+            border-bottom-color: #f2dede;
+        }
+    }
     
     a.open-link {
         color: inherit; /* blue colors for links too*/
