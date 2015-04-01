@@ -29,16 +29,29 @@ public class AbstractFlowNodeDatastoreTest {
     }
 
     @Test
-    public void makeSearchOptionBuilder_state_Filter_Open_Adds_multiple_entries_in_SearchOption() throws Exception {
+    public void makeSearchOptionBuilder_state_Filter_Pending_Adds_multiple_entries_in_SearchOption() throws Exception {
         final Map<String, String> filters = new HashMap<String, String>();
-        filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "open");
+        filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "pending");
         final SearchOptionsBuilder makeSearchOptionBuilder = datastore.makeSearchOptionBuilder(0, 10, "", "", filters);
         assertThat(makeSearchOptionBuilder.done().getFilters()).extracting("field", "operation", "value").contains(
                 tuple(null, SearchFilterOperation.L_PARENTHESIS, null),
                 tuple("state", SearchFilterOperation.EQUALS, "ready"),
                 tuple(null, SearchFilterOperation.OR, null),
                 tuple("state", SearchFilterOperation.EQUALS, "waiting"),
-                tuple(null, SearchFilterOperation.OR, null),
+                tuple(null, SearchFilterOperation.R_PARENTHESIS, null),
+                tuple("state", SearchFilterOperation.DIFFERENT, "aborted"),
+                tuple("state", SearchFilterOperation.DIFFERENT, "cancelled"),
+                tuple("state", SearchFilterOperation.DIFFERENT, "completed")
+                );
+    }
+
+    @Test
+    public void makeSearchOptionBuilder_state_Filter_Ongoing_Adds_multiple_entries_in_SearchOption() throws Exception {
+        final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "ongoing");
+        final SearchOptionsBuilder makeSearchOptionBuilder = datastore.makeSearchOptionBuilder(0, 10, "", "", filters);
+        assertThat(makeSearchOptionBuilder.done().getFilters()).extracting("field", "operation", "value").contains(
+                tuple(null, SearchFilterOperation.L_PARENTHESIS, null),
                 tuple("state", SearchFilterOperation.EQUALS, "executing"),
                 tuple(null, SearchFilterOperation.OR, null),
                 tuple("state", SearchFilterOperation.EQUALS, "completing"),
