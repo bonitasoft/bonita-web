@@ -360,4 +360,8 @@ public class TestProcessFactory {
         clear(testProcess);
         getProcessList().remove(testProcess.getProcessDefinition().getName());
     }
+
+    public void remove(TestProcess deployedProcess) {
+        getProcessList().remove(deployedProcess.getProcessDefinition().getName());
+    }
 }
