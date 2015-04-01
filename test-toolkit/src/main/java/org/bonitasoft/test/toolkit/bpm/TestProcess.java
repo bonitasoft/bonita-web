@@ -41,11 +41,7 @@ import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.form.FormMapping;
-import org.bonitasoft.engine.form.FormMappingSearchDescriptor;
-import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
@@ -512,15 +508,15 @@ public class TestProcess {
      * @throws BonitaException
      */
     public void replaceFormMappingToNonBlockingValue(final ProcessConfigurationAPI processConfigurationAPI, final long processDefinitionId) throws Exception {
-        if (isForceToNonBlockingFormMappingToDefaultValue()) {
-            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1000);
-            searchOptionsBuilder.filter(FormMappingSearchDescriptor.PROCESS_DEFINITION_ID, processDefinitionId);
-            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(searchOptionsBuilder.done());
-            final List<FormMapping> formMappings = searchResult.getResult();
-            for (final FormMapping formMapping : formMappings) {
-                processConfigurationAPI.updateFormMapping(formMapping.getId(), "", FormMappingTarget.URL);
-            }
-        }
+//        if (isForceToNonBlockingFormMappingToDefaultValue()) {
+//            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1000);
+//            searchOptionsBuilder.filter(FormMappingSearchDescriptor.PROCESS_DEFINITION_ID, processDefinitionId);
+//            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(searchOptionsBuilder.done());
+//            final List<FormMapping> formMappings = searchResult.getResult();
+//            for (final FormMapping formMapping : formMappings) {
+//                processConfigurationAPI.updateFormMapping(formMapping.getId(), "", FormMappingTarget.URL);
+//            }
+//        }
     }
 
     private ProcessConfigurationAPI getProcessConfigurationAPI(final APISession apiSession) throws Exception {
