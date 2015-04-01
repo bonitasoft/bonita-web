@@ -35,7 +35,7 @@ public class TestHumanTask extends AbstractManualTask {
 
     private HumanTaskInstance humanTaskInstance;
 
-    private final static int GET_NEXT_NB_ATTEMPT = 10;
+    private final static int GET_NEXT_NB_ATTEMPT = 20;
 
     private final static int SLEEP_TIME_MS = 100;
 
