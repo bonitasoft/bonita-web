@@ -44,7 +44,7 @@ public class DocumentImageServletTest {
 
         final DocumentImageServlet documentImageServlet = spy(new DocumentImageServlet());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter(DocumentImageServlet.FILE_PATH_PARAM)).thenReturn("../../..");
         when(req.getParameter(DocumentImageServlet.FILE_NAME_PARAM)).thenReturn("file.txt");
         when(req.getParameter(DocumentImageServlet.RESOURCE_FILE_NAME_PARAM)).thenReturn("resources");

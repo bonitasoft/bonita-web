@@ -43,7 +43,7 @@ public class PageResourceServletTest {
 
         final PageResourceServlet pageResourceServlet = spy(new PageResourceServlet());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter(pageResourceServlet.getResourceParameterName())).thenReturn("name");
         when(req.getMethod()).thenReturn("GET");
 

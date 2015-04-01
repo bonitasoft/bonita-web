@@ -106,7 +106,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
     PageItem pageToBeAdded;
 
-    File pagesDir = new File("target/bonita-home/bonita/client/tenants/1/work/pages");
+    File pagesDir = new File("target/bonita-home/client/tenants/1/work/pages");
 
     URL zipFileUrl;
 
