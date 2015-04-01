@@ -21,8 +21,10 @@ import org.bonitasoft.engine.bpm.flownode.ActivityStates;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -160,10 +162,19 @@ public class TestCase {
 
     private ArchivedProcessInstance getArchive(final APISession apiSession) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
+        searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, getId());
+        searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.DESC);
+        SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
         try {
-            return processAPI.getArchivedProcessInstance(getId());
-        } catch (Exception e) {
-            throw new TestToolkitException("Can't get process instance archived for <" + getId() + ">", e);
+            searchArchivedProcessInstances = processAPI.searchArchivedProcessInstances(searchOptionsBuilder.done());
+        } catch (final SearchException se) {
+            throw new TestToolkitException("Can't get process instance archived for <" + getId() + ">", se);
+        }
+        if (searchArchivedProcessInstances != null && searchArchivedProcessInstances.getCount() > 0) {
+            return searchArchivedProcessInstances.getResult().get(0);
+        } else {
+            throw new TestToolkitException("Can't get process instance archived for <" + getId() + ">");
         }
     }
 
