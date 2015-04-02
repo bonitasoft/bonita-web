@@ -138,6 +138,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, FlowNodeInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
+        addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PARENT_ACTIVITY_INSTANCE_ID, FlowNodeInstanceSearchDescriptor.PARENT_ACTIVITY_INSTANCE_ID);
         addStringFilterToSearchBuilder(filters, builder, FlowNodeItem.ATTRIBUTE_PROCESS_ID, FlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
         addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, FlowNodeInstanceSearchDescriptor.LAST_UPDATE_DATE);
         addStringFilterToSearchBuilder(filters, builder, TaskItem.ATTRIBUTE_NAME, FlowNodeInstanceSearchDescriptor.NAME);
