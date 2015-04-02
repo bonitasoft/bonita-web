@@ -14,7 +14,6 @@ import java.util.List;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
-import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
@@ -40,7 +39,7 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNullId() throws Exception {
 
-        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
+        final Response response = request("/form/mapping").put("{\"pageId\":\"42\",\"url\":null}");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -48,9 +47,9 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNotFound() throws Exception {
 
-        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", FormMappingTarget.INTERNAL);
+        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, null, 42L);
 
-        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\" }");
+        final Response response = request("/form/mapping/1").put("{\"pageId\":\"42\",\"url\":null}");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
     }
@@ -99,11 +98,11 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldCallEngine() throws Exception {
 
-        doReturn(mock(FormMapping.class)).when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
+        doReturn(mock(FormMapping.class)).when(processConfigurationAPI).updateFormMapping(2L, null, 42L);
 
-        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
+        final Response response = request("/form/mapping/2").put("{\"pageId\":\"42\",\"url\":null}");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
-        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
+        verify(processConfigurationAPI).updateFormMapping(2L, null, 42L);
     }
 }
