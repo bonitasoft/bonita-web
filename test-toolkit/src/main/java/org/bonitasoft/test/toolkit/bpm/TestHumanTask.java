@@ -195,12 +195,15 @@ public class TestHumanTask extends AbstractManualTask {
             try {
                 Thread.sleep(SLEEP_TIME_MS);
             } catch (final InterruptedException e) {
-                throw new TestToolkitException("Can't get process instance <" + getId() + ">. Interrupted", e);
+                throw new TestToolkitException("Problem while wiating for state <" + state + "> for human task <" + getId() + ">. Interrupted", e);
             }
             refreshHumanTaskInstanceInstance();
             if (getHumanTaskInstance() != null && state.equals(getHumanTaskInstance().getState())) {
                 break;
             }
+        }
+        if (getHumanTaskInstance() == null || !state.equals(getHumanTaskInstance().getState())) {
+            throw new TestToolkitException("Expected state <" + state + "> has not been reached for human task<" + getId() + ">.");
         }
         return this;
     }
