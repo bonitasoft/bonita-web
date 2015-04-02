@@ -72,7 +72,6 @@ public class APIArchivedCaseIntegrationTest extends AbstractConsoleTest {
     }
 
     private void assertEquals(final String message, final ArchivedProcessInstance engineItem, final ArchivedCaseItem consoleItem) {
-
         Assert.assertEquals(message, engineItem.getId(), consoleItem.getId().toLong().longValue());
         Assert.assertEquals(message, engineItem.getLastUpdate().toString(), consoleItem.getLastUpdateDate().toString());
         Assert.assertEquals(message, engineItem.getState(), consoleItem.getState());
@@ -93,7 +92,8 @@ public class APIArchivedCaseIntegrationTest extends AbstractConsoleTest {
                 new ArrayList<String>());
 
         Assert.assertNotNull("ArchivedCase not found", caseItem);
-        assertEquals("Wrong case found", testCase.getArchive(), caseItem);
+
+        assertEquals("Wrong case found" + ". Expected=" + archivedProcessInstance + ". Found=" + caseItem.toString(), archivedProcessInstance, caseItem);
     }
 
     @Test
