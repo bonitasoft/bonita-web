@@ -62,8 +62,8 @@ public class TestCase {
      */
     public void waitProcessState(final APISession apiSession, final String state) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
+        ProcessInstance instance = null;
         for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
-            ProcessInstance instance;
             try {
                 instance = processAPI.getProcessInstance(processInstance.getId());
                 if (instance != null && state.equals(instance.getState())) {
@@ -73,6 +73,9 @@ public class TestCase {
             } catch (final Exception e) {
                 throw new TestToolkitException("Can't get process instance <" + processInstance.getId() + ">.", e);
             }
+        }
+        if (instance == null || !state.equals(instance.getState())) {
+            throw new TestToolkitException("Instance <" + processInstance.getId() + "> has not reached the expected state <" + state + ">.");
         }
     }
 
@@ -123,7 +126,7 @@ public class TestCase {
 
     /**
      * Check if state is allowed to be returned
-     *
+     * 
      * @param humanTask
      * @return
      */
@@ -167,7 +170,7 @@ public class TestCase {
         searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.DESC);
         SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
         try {
-            searchArchivedProcessInstances = processAPI.searchArchivedProcessInstances(searchOptionsBuilder.done());
+            searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
         } catch (final SearchException se) {
             throw new TestToolkitException("Can't get process instance archived for <" + getId() + ">", se);
         }
