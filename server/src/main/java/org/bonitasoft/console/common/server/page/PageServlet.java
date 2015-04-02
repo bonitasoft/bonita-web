@@ -29,6 +29,7 @@ import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -104,6 +105,8 @@ public class PageServlet extends HttpServlet {
                 }
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
             }
+        } catch (final UnauthorizedAccessException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
         } catch (final NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
         }

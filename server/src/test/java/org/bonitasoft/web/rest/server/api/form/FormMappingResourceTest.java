@@ -2,7 +2,6 @@ package org.bonitasoft.web.rest.server.api.form;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -100,7 +99,7 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldCallEngine() throws Exception {
 
-        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
+        doReturn(mock(FormMapping.class)).when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
 
         final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
 
