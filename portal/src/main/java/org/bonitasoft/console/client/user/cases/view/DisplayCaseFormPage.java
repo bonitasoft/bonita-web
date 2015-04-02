@@ -86,6 +86,8 @@ public class DisplayCaseFormPage extends Page {
     private String getCaseOverviewUrl() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
         final String encodedProcessName = URL.encodeQueryString(processName);
+        final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
+        final String encodedProcessVersion = URL.encodeQueryString(processVersion);
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
@@ -96,9 +98,12 @@ public class DisplayCaseFormPage extends Page {
         this.setTitle(_("Display a case form of process %app_name%", new Arg("app_name", encodedProcessName)));
 
         final StringBuilder frameURL = new StringBuilder();
-        frameURL.append("form/processInstance/")
-                .append(caseId)
+        frameURL.append("resource/processInstance/")
+                .append(encodedProcessName)
                 .append("/")
+                .append(encodedProcessVersion)
+                .append("/content/?id=")
+                .append(caseId)
                 .append("?locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
@@ -114,6 +119,7 @@ public class DisplayCaseFormPage extends Page {
         }
         final Map<String, String> processParams = new HashMap<String, String>();
         processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getProcess().getName());
+        processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getProcess().getVersion());
         processParams.put(CaseItem.ATTRIBUTE_ID, item.getId().toString());
         if (item instanceof ArchivedCaseItem) {
             processParams.put(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ((ArchivedCaseItem) item).getSourceObjectId().toString());

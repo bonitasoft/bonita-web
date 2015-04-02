@@ -41,6 +41,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -110,10 +111,15 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         final String tenantId = ClientApplicationURL.getTenantId();
 
         final StringBuilder frameURL = new StringBuilder();
-        frameURL.append("form/taskInstance/")
-                .append(item.getId())
+        frameURL.append("resource/taskInstance/")
+                .append(URL.encodeQueryString(item.getProcess().getName()))
                 .append("/")
-                .append("?locale=")
+                .append(URL.encodeQueryString(item.getProcess().getVersion()))
+                .append("/")
+                .append(URL.encodeQueryString(item.getName()))
+                .append("/content/?id=")
+                .append(item.getId())
+                .append("&locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {

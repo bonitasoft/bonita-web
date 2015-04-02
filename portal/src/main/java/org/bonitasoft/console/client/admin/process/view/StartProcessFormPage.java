@@ -80,12 +80,13 @@ public class StartProcessFormPage extends Page {
         this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", processName)));
 
         final StringBuilder frameURL = new StringBuilder();
-        frameURL.append("form/process/")
+        frameURL.append("resource/process/")
                 .append(encodedProcessName)
                 .append("/")
                 .append(encodedProcessVersion)
-                .append("/")
-                .append("?locale=")
+                .append("/content/?id=")
+                .append(processId)
+                .append("&locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {
