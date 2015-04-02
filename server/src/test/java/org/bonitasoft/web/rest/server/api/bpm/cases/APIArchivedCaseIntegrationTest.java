@@ -87,8 +87,9 @@ public class APIArchivedCaseIntegrationTest extends AbstractConsoleTest {
     @Test
     public void testGetArchivedCase() {
         final TestCase testCase = initArchivedCaseForGet();
+        final ArchivedProcessInstance archivedProcessInstance = testCase.getArchive();
 
-        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<String>(),
+        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(archivedProcessInstance.getId()), new ArrayList<String>(),
                 new ArrayList<String>());
 
         Assert.assertNotNull("ArchivedCase not found", caseItem);
