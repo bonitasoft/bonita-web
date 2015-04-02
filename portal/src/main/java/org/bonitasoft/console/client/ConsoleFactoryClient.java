@@ -190,11 +190,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
-            return prepareAngularPage(token);
-        } else if ("oldprocessmoredetailsadmin".equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
+            return new ProcessMoreDetailsAdminPage();
+        } else if ("newprocessmoredetailsadmin".equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
             // No action is necessary as an unauthorized request will result in a page reload.
-            return new ProcessMoreDetailsAdminPage();
+            return prepareAngularPage(token);
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
@@ -366,7 +366,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      * @param token
      * @return
      */
-    private RawView prepareAngularPage(final String token) {
+    protected RawView prepareAngularPage(final String token) {
         new CheckValidSessionBeforeAction(emptyAction).execute();
         angularFrame.setUrl("#" + angularViewsMap.get(token), token);
         return angularFrame;
