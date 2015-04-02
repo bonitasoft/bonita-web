@@ -361,7 +361,11 @@ public class TestProcessFactory {
         getProcessList().remove(testProcess.getProcessDefinition().getName());
     }
 
-    public void remove(TestProcess deployedProcess) {
-        getProcessList().remove(deployedProcess.getProcessDefinition().getName());
+    public void remove(TestProcess testProcess) {
+        getProcessList().remove(testProcess.getProcessDefinition().getName());
+    }
+
+    public void add(TestProcess testProcess) {
+        getProcessList().put(testProcess.getProcessDefinition().getName(), testProcess);
     }
 }

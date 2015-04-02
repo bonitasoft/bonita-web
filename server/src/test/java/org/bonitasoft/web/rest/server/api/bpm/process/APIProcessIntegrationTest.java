@@ -68,7 +68,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         // check the process has been correctly uploaded
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
         assertEquals("Can't add a ProcessItem to APIProcess",
-                processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT).size(), 1);
+                1, processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT).size());
     }
 
     /**
@@ -174,8 +174,11 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
     public void testGetLastProcessVersion() throws Exception {
         // create 3 version of a process
         final TestProcess p1 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "aVersion"));
+        TestProcessFactory.getInstance().add(p1);
         final TestProcess p2 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "aVersion2"));
+        TestProcessFactory.getInstance().add(p2);
         final TestProcess p3 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "anOtherVersion"));
+        TestProcessFactory.getInstance().add(p3);
 
         // map actor John Carpenter on the created processes, then set enable
         p1.addActor(TestUserFactory.getJohnCarpenter()).setEnable(true);
