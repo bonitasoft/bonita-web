@@ -1,13 +1,24 @@
 package org.bonitasoft.console.common.server.page;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.InjectMocks;
@@ -22,7 +33,13 @@ public class PageServletTest {
     PageRenderer pageRenderer;
 
     @Mock
+    ResourceRenderer resourceRenderer;
+
+    @Mock
     PageMappingService pageMappingService;
+
+    @Mock
+    TenantFolder tenantFolder;
 
     @Spy
     @InjectMocks
@@ -63,314 +80,102 @@ public class PageServletTest {
     //
     //        verify(hsResponse, times(1)).sendError(403, "User not Authorized");
     //    }
-    //
-    //    @Test
-    //    public void should_get_Bad_Request_when_invalid_parameters() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("");
-    //        when(hsRequest.getParameter(anyString())).thenReturn(null);
-    //        when(processFormService.getProcessDefinitionId(apiSession, null, null)).thenReturn(-1L);
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //        verify(hsResponse, times(1)).sendError(400,
-    //                "Either process name and version are required or process instance Id (with or without task name) or task instance Id.");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_externalPage() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("/externalPage", FormMappingTarget.URL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayExternalPage(hsRequest, hsResponse, 1L, -1L, -1L, "/externalPage");
-    //        verify(hsResponse, times(1)).encodeRedirectURL("/externalPage?process=1");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_legacyForm_when_no_mapping() throws Exception {
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        doThrow(FormMappingNotFoundException.class).when(processFormService).getForm(any(APISession.class), anyLong(), anyString(), anyBoolean());
-    //        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
-    //        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
-    //        verify(hsResponse, times(1)).encodeRedirectURL(
-    //                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24entry&process=1&autoInstantiate=false");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_display_legacyForm_for_process_when_mapping_on_legacy() throws Exception {
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference(null, FormMappingTarget.LEGACY.name()));
-    //        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
-    //        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null, -1L);
-    //        verify(hsResponse, times(1)).encodeRedirectURL(
-    //                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24entry&process=1&autoInstantiate=false");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_display_legacyForm_for_instance_when_mapping_on_legacy() throws Exception {
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToSeeProcessInstance(apiSession, 42L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference(null, FormMappingTarget.LEGACY.name()));
-    //        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
-    //        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, 42L, -1L, null, -1L);
-    //        verify(hsResponse, times(1)).encodeRedirectURL(
-    //                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion%24recap&instance=42&recap=true");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_display_legacyForm_for_task_when_mapping_on_legacy() throws Exception {
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
-    //        when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
-    //        when(processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false)).thenReturn(true);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference(null, FormMappingTarget.LEGACY.name()));
-    //        when(processFormService.getProcessDefinitionUUID(apiSession, 1L)).thenReturn("processName--processVersion");
-    //        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayLegacyForm(hsRequest, hsResponse, apiSession, 1L, -1L, 42L, "taskName", -1L);
-    //        verify(hsResponse, times(1)).encodeRedirectURL(
-    //                "/bonita/portal/homepage?ui=form&locale=en&theme=1#mode=form&form=processName--processVersion--taskName%24entry&task=42");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage_resource_for_process() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/path/of/resource.css");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        final FormReference form = new FormReference("custompage_form", FormMappingTarget.INTERNAL.name());
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, form, "path/of/resource.css");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage_resource_for_instance() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/path/of/resource.css");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToSeeProcessInstance(apiSession, 42L, 1L)).thenReturn(true);
-    //        final FormReference form = new FormReference("custompage_form", FormMappingTarget.INTERNAL.name());
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(form);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).displayForm(hsRequest, hsResponse, apiSession, 1L, 42L, -1L, form, "path/of/resource.css");
-    //    }
-    //
-    //    @Test
-    //    public void should_get_not_found_when_empty_mapping() throws Exception {
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference(null, FormMappingTarget.INTERNAL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).sendError(404, "Cannot find the form mapping");
-    //    }
-    //
-    //    @Test
-    //    public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).sendError(404, "Cannot find the form with name custompage_form");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage_for_process() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage_for_instance() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToSeeProcessInstance(apiSession, 42L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(apiSession, 1L, null, true)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage_for_task() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false)).thenReturn(true);
-    //        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //    }
-    //
-    //    @Test
-    //    public void should_display_customPage_for_process_with_unicode_characters() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processus+%C3%A9%2B%C3%B8/%C3%B8/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processus é+ø", "ø")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.isAllowedToStartProcess(apiSession, 1L, 1L)).thenReturn(true);
-    //        when(processFormService.getForm(apiSession, 1L, null, false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //    }
-    //
-    //    @Test
-    //    public void should_redirect_for_task_from_instance() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName/");
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getServletPath()).thenReturn("/portal/form");
-    //        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1/");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void redirect_for_task_from_instance_with_unicode_characters() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/task+%C3%A9%2B%C3%B8/");
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getServletPath()).thenReturn("/portal/form");
-    //        when(processFormService.getTaskInstanceId(apiSession, 42L, "task é+ø", -1L)).thenReturn(1L);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/1/");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_redirect_for_missing_slash() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
-    //        when(hsRequest.getContextPath()).thenReturn("/bonita");
-    //        when(hsRequest.getServletPath()).thenReturn("/portal/form");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/form/taskInstance/42/");
-    //        verify(hsResponse, times(1)).sendRedirect(anyString());
-    //    }
-    //
-    //    @Test
-    //    public void should_get_not_found_when_invalid_process() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenThrow(ProcessDefinitionNotFoundException.class);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).sendError(404, "Cannot find the process");
-    //    }
-    //
-    //    @Test
-    //    public void should_get_not_found_when_invalid_processInstanceId() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenThrow(ArchivedProcessInstanceNotFoundException.class);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).sendError(404, "Cannot find the process instance");
-    //    }
-    //
-    //    @Test
-    //    public void should_get_not_found_when_invalid_task() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/processInstance/42/task/taskName/");
-    //        when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(-1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, -1L)).thenThrow(ActivityInstanceNotFoundException.class);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).sendError(404, "Cannot find the task instance");
-    //    }
-    //
-    //    @Test
-    //    public void should_get_server_error_when_issue_with_customPage() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42/");
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
-    //        when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
-    //        when(processFormService.isAllowedToSeeTask(apiSession, 42L, 1L, false)).thenReturn(true);
-    //        when(processFormService.getForm(apiSession, 1L, "taskName", false)).thenReturn(new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //        final InstantiationException instantiationException = new InstantiationException("instatiation exception");
-    //        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, "custompage_form");
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(pageServlet, times(1)).handleException(hsResponse, 1L, "taskName", false, instantiationException);
-    //        verify(hsResponse, times(1)).sendError(500, "instatiation exception");
-    //    }
+
+    @Test
+    public void should_get_Bad_Request_when_invalid_parameters() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("");
+        when(hsRequest.getParameter(anyString())).thenReturn(null);
+        pageServlet.doGet(hsRequest, hsResponse);
+        verify(hsResponse, times(1)).sendError(400, "/content is expected in the URL after the page mapping key");
+    }
+
+    @Test
+    public void should_display_externalPage() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(null, "/externalPage"));
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(pageServlet, times(1)).displayExternalPage(hsRequest, hsResponse, "/externalPage");
+        verify(hsResponse, times(1)).encodeRedirectURL("/externalPage");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void should_display_customPage() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(42L, null));
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        //FIXME replace null with long page id
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, null);
+    }
+
+    @Test
+    public void should_display_customPage_resource() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/path/of/resource.css");
+        final PageReference pageReference = new PageReference(42L, null);
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(pageReference);
+        final PageResourceProvider pageResourceProvider = mock(PageResourceProvider.class);
+        final File resourceFile = mock(File.class);
+        when(pageResourceProvider.getResourceAsFile("resources/path/of/resource.css")).thenReturn(resourceFile);
+        //FIXME replace with the page ID as long
+        when(pageRenderer.getPageResourceProvider("42", apiSession.getTenantId())).thenReturn(pageResourceProvider);
+        when(tenantFolder.isInFolder(resourceFile, null)).thenReturn(true);
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, pageReference, "path/of/resource.css");
+        verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, 42L, "path/of/resource.css");
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile);
+    }
+
+    @Test
+    public void should_get_not_found_when_empty_mapping() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        doThrow(NotFoundException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion");
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).sendError(404, "Cannot find the form mapping");
+    }
+
+    @Test
+    public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(42L, null));
+        //FIXME replace null with long page id
+        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, null);
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).sendError(404, "Cannot find the page with ID 42");
+    }
+
+    @Test
+    public void should_redirect_for_missing_slash() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content");
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
+        when(hsRequest.getServletPath()).thenReturn("/portal/resource");
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/resource/process/processName/processVersion/content/");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
+    public void should_get_server_error_when_issue_with_customPage() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(42L, null));
+        final InstantiationException instantiationException = new InstantiationException("instatiation exception");
+        //FIXME replace null with long page id
+        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, null);
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", instantiationException);
+        verify(hsResponse, times(1)).sendError(500, "instatiation exception");
+    }
 }

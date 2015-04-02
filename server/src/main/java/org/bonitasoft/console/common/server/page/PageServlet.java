@@ -52,13 +52,15 @@ public class PageServlet extends HttpServlet {
 
     public static final String RESOURCE_PATH_SEPARATOR = "/content";
 
-    protected final ResourceRenderer resourceRenderer = new ResourceRenderer();
+    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
-    protected final PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
+    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
-    protected final CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
-    protected final PageMappingService pageMappingService = new PageMappingService();
+    protected PageMappingService pageMappingService = new PageMappingService();
+
+    protected TenantFolder tenantFolder = new TenantFolder();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -69,11 +71,11 @@ public class PageServlet extends HttpServlet {
         // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
         if (pathInfo.endsWith(RESOURCE_PATH_SEPARATOR)) {
             customPageRequestModifier.redirectToValidPageUrl(request, response);
-        } else {
+        } else if (pathInfo.indexOf(RESOURCE_PATH_SEPARATOR + "/") > 0) {
             final String[] pathInfoSegments = pathInfo.split(RESOURCE_PATH_SEPARATOR + "/", 2);
-            final String mappingKey = pathInfoSegments[0];
+            final String mappingKey = pathInfoSegments[0].substring(1);
             String resourcePath = null;
-            if (pathInfoSegments.length > 1) {
+            if (pathInfoSegments.length > 1 && !pathInfoSegments[1].isEmpty()) {
                 resourcePath = pathInfoSegments[1];
             }
             try {
@@ -81,6 +83,8 @@ public class PageServlet extends HttpServlet {
             } catch (final Exception e) {
                 handleException(response, mappingKey, e);
             }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "/content is expected in the URL after the page mapping key");
         }
     }
 
@@ -118,16 +122,15 @@ public class PageServlet extends HttpServlet {
                 resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, page.getPageId(), resourcePath));
             }
         } catch (final PageNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the page withID " + page.getPageId());
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the page with ID " + page.getPageId());
         }
     }
 
     protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final Long pageId, final String resourcePath)
             throws IOException {
-        //FIXME build the PageResourceProvider with the pageId
-        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(null, apiSession.getTenantId());
+        //FIXME build the PageResourceProvider with the pageId as long
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageId.toString(), apiSession.getTenantId());
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
-        final TenantFolder tenantFolder = new TenantFolder();
         if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "For security reasons, access to this file path is forbidden : " + resourcePath);
         }
