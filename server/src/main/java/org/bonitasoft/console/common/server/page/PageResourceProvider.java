@@ -135,7 +135,7 @@ public class PageResourceProvider {
         return new FileInputStream(getResourceAsFile(resourceName));
     }
 
-    protected File getResourceAsFile(final String resourceName) {
+    public File getResourceAsFile(final String resourceName) {
         return new File(pageDirectory, resourceName);
     }
 
@@ -150,7 +150,7 @@ public class PageResourceProvider {
                 .append(VERSION_PARAM).append("=").append(productVersion).toString();
     }
 
-    protected File getPageDirectory() {
+    public File getPageDirectory() {
         return pageDirectory;
     }
 

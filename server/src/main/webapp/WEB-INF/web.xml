@@ -165,7 +165,7 @@
         <filter-name>TokenValidatorFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
-		<!--
+        <!--
             In the case of a custom page served in a living application calls to the
             REST API are done though /portal/custom-page/API then forwarded to /API which breaks dynamic security rules.
         -->
@@ -175,19 +175,19 @@
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
-		<!-- see TokenValidatorFilter comment -->
+        <!-- see TokenValidatorFilter comment -->
         <url-pattern>/portal/custom-page/API/*</url-pattern>
         <!-- Uncomment those lines to apply security checks also on portal servlets -->
         <!-- <url-pattern>/portal/formsDocumentDownload</url-pattern> -->
         <!-- <url-pattern>/portal/documentDownload</url-pattern> -->
         <!-- <url-pattern>/portal/downloadDocument</url-pattern> -->
-        <!--  Add more servlet mappings here -->  
+        <!--  Add more servlet mappings here -->
     </filter-mapping>
     <filter-mapping>
         <filter-name>TokenGeneratorFilter</filter-name>
         <url-pattern>/API/system/session/*</url-pattern>
         <url-pattern>/APIToolkit/system/session/*</url-pattern>
-		<!-- see TokenValidatorFilter comment -->
+        <!-- see TokenValidatorFilter comment -->
         <url-pattern>/portal/custom-page/API/system/session/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
@@ -234,8 +234,8 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-     <!-- End Filter for restlet URLs -->
-     
+    <!-- End Filter for restlet URLs -->
+
     <!-- Shutdown properly ehcache on tomcat shutdown -->
     <listener>
         <listener-class>net.sf.ehcache.constructs.web.ShutdownListener</listener-class>
@@ -250,7 +250,7 @@
     <listener>
         <listener-class>org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
     </listener>
-	
+
     <servlet>
         <servlet-name>BonitaRestAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>
@@ -258,6 +258,10 @@
     <servlet>
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestletApplicationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestletServletCustomPage</servlet-name>
+        <servlet-class>com.bonitasoft.web.rest.server.BonitaSPRestletApplicationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConsoleServiceServlet</servlet-name>
@@ -281,8 +285,8 @@
             <param-value>xml</param-value>
         </init-param>
     </servlet>
-    
-    
+
+
     <servlet>
         <servlet-name>fileUploadServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
@@ -358,7 +362,7 @@
         <servlet-name>exportOrganizationServlet</servlet-name>
         <url-pattern>/portal/exportOrganization</url-pattern>
     </servlet-mapping>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>exportApplicationsServlet</servlet-name>
         <url-pattern>/portal/exportApplications</url-pattern>
     </servlet-mapping>
@@ -377,12 +381,15 @@
         <servlet-name>CustomPageServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.page.CustomPageServlet</servlet-class>
     </servlet>
+    <!--This pageResource servlet is deprecated.
+        You can now access your resources through their relative URL.
+        see the custom page documentation.-->
     <servlet>
         <servlet-name>pageResource</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.page.PageResourceServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>pageDownload</servlet-name>
+		<servlet-name>pageDownload</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.page.PageDownloadServlet</servlet-class>
     </servlet>
     <servlet>
@@ -424,7 +431,7 @@
         <servlet-class>org.bonitasoft.engine.api.internal.servlet.HttpAPIServlet</servlet-class>
     </servlet>
     ${enable.engine.http.api.end}
-    
+
     <servlet>
         <servlet-name>livingApplicationServlet</servlet-name>
         <servlet-class>org.bonitasoft.livingapps.LivingApplicationServlet</servlet-class>
@@ -433,8 +440,8 @@
         <servlet-name>livingApplicationServlet</servlet-name>
         <url-pattern>/apps/*</url-pattern>
     </servlet-mapping>
-    
-    
+
+
     <servlet-mapping>
         <servlet-name>homepage</servlet-name>
         <url-pattern>/portal/homepage</url-pattern>
@@ -514,7 +521,10 @@
     <servlet-mapping>
         <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/API/*</url-pattern>
-		<url-pattern>/portal/custom-page/API/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestletServletCustomPage</servlet-name>
+        <url-pattern>/portal/custom-page/API/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BonitaRestAPIServlet</servlet-name>
@@ -540,6 +550,9 @@
         <servlet-name>CustomPageServlet</servlet-name>
         <url-pattern>/portal/custom-page/*</url-pattern>
     </servlet-mapping>
+    <!--This pageResource servlet is deprecated.
+        You can now access your resources through their relative URL.
+        see the custom page documentation.-->
     <servlet-mapping>
         <servlet-name>pageResource</servlet-name>
         <url-pattern>/portal/pageResource</url-pattern>
@@ -547,7 +560,7 @@
     <servlet-mapping>
         <servlet-name>pageDownload</servlet-name>
         <url-pattern>/portal/pageDownload</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>pageUploadServlet</servlet-name>
         <url-pattern>/portal/pageUpload</url-pattern>
@@ -576,5 +589,5 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
-    
+
 </web-app>

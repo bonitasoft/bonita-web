@@ -15,21 +15,34 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyMapOf;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessActivationException;
+import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -47,6 +60,19 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
     @Mock
     private ProcessAPI processAPI;
+
+    @Mock
+    private Logger logger;
+
+    private UserTaskExecutionResource userTaskExecutionResource;
+
+    @Mock
+    private Response response;
+
+    @Before
+    public void initializeMocks() {
+        userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI));
+    }
 
     @Override
     protected ServerResource configureResource() {
@@ -80,7 +106,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
-        .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
+                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
@@ -93,7 +119,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_500_Internal_server_error_when_error_occurs_on_task_execution() throws Exception {
         doThrow(new FlowNodeExecutionException("aMessage"))
-        .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
+                .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
@@ -110,10 +136,50 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
         doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
-        .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
+                .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
+
+    @Test
+    public void should_contract_violation_exception_log_explanations_when_logger_is_info() throws UserTaskNotFoundException, FlowNodeExecutionException,
+            ProcessDefinitionNotFoundException, ProcessActivationException, ProcessExecutionException, ContractViolationException {
+        //given
+        final String message = "contract violation !!!!";
+        final List<String> explanations = Arrays.asList("explanation1", "explanation2");
+        doThrow(new ContractViolationException(message, explanations)).when(processAPI)
+                .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
+        doReturn(logger).when(userTaskExecutionResource).getLogger();
+        doReturn(1L).when(userTaskExecutionResource).getTaskIdParameter();
+        doReturn(true).when(logger).isLoggable(Level.INFO);
+        doReturn(response).when(userTaskExecutionResource).getResponse();
+        final Map<String, Serializable> inputs = new HashMap<>();
+        inputs.put("testKey", "testValue");
+
+        //when
+        userTaskExecutionResource.executeTask(inputs);
+
+        //then
+        verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+
+    }
+
+    @Test
+    public void should_getProcessDefinitionIdParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
+        //given
+        doReturn(null).when(userTaskExecutionResource).getAttribute(UserTaskExecutionResource.TASK_ID);
+
+        try {
+            //when
+            userTaskExecutionResource.getTaskIdParameter();
+        } catch (final Exception e) {
+            //then
+            assertThat(e).isInstanceOf(APIException.class);
+            assertThat(e.getMessage()).isEqualTo("Attribute '" + UserTaskExecutionResource.TASK_ID + "' is mandatory");
+        }
+
+    }
+
 }

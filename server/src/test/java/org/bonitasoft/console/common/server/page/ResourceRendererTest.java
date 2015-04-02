@@ -108,6 +108,14 @@ public class ResourceRendererTest {
     }
 
     @Test
+    public void getResourceFile_should_sendError404_on_passing_none_existing_resources() throws
+            Exception {
+        File noneExistingFile = new File("NoneExistingFile.css");
+        resourceRenderer.renderFile(req, res, noneExistingFile);
+        verify(res).sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the resource file " + noneExistingFile.getName());
+    }
+
+    @Test
     public void getPathSegments_should_return_expected_token_list() throws UnsupportedEncodingException {
         when(req.getPathInfo()).thenReturn("a/b");
 

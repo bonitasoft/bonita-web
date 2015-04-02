@@ -34,7 +34,9 @@ import org.bonitasoft.console.common.server.login.localization.UrlValue;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -258,7 +260,7 @@ public class ProcessFormServlet extends HttpServlet {
                     //TODO pass the processDefinition, processInstance and taskInstance IDs in order to put them in the Context of the custom page
                     pageRenderer.displayCustomPage(request, response, apiSession, form.getForm());
                 } else {
-                    resourceRenderer.renderFile(request, response, new File(resourcePath));
+                    resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, form.getForm(), resourcePath));
                 }
             } catch (final PageNotFoundException e) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form with name " + form.getForm());
@@ -270,6 +272,17 @@ public class ProcessFormServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
             }
         }
+    }
+
+    protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final String pageName, final String resourcePath)
+            throws IOException {
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+        final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
+        final TenantFolder tenantFolder = new TenantFolder();
+        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "For security reasons, access to this file path is forbidden : " + resourcePath);
+        }
+        return resourceFile;
     }
 
     protected long convertToLong(final String parameterName, final String idAsString) {
