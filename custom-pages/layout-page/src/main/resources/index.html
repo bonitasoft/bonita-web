@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>layout</title> 
+  <link rel="stylesheet" href="/bonita/portal/pageResource?page=custompage_layout&amp;location=css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="/bonita/portal/pageResource?page=custompage_layout&amp;location=css/widget.css"> 
+  <script src="/bonita/portal/pageResource?page=custompage_layout&amp;location=js/vendor.min.js"></script> 
+  <script src="/bonita/portal/pageResource?page=custompage_layout&amp;location=js/generator.min.js"></script> 
+  <!-- widget need to be injected at runtime --> 
+  <script src="/bonita/portal/pageResource?page=custompage_layout&amp;location=widgets/customLivingApplicationLogo/customLivingApplicationLogo.js"></script> 
+  <script src="/bonita/portal/pageResource?page=custompage_layout&amp;location=widgets/customIframe/customIframe.js"></script> 
+  <script src="/bonita/portal/pageResource?page=custompage_layout&amp;location=widgets/customLivingApplicationMenu/customLivingApplicationMenu.js"></script> 
+  <script src="/bonita/portal/pageResource?page=custompage_layout&amp;location=widgets/customUrlApplicationNameLoader/customUrlApplicationNameLoader.js"></script> 
+ </head> 
+ <body ng-app="org.bonitasoft.pagebuilder.generator" pb-model="{&quot;pageList&quot;:{&quot;type&quot;:&quot;url&quot;,&quot;value&quot;:&quot;/bonita/API/living/application-menu?c=100\u0026f=applicationId%3D{{applicationId}}\u0026d=applicationPageId\u0026o=menuIndex+ASC\u0026p=0&quot;,&quot;exposed&quot;:false},&quot;application&quot;:{&quot;type&quot;:&quot;url&quot;,&quot;value&quot;:&quot;/bonita/API/living/application?c=1\u0026f=token%3D{{applicationToken}}&quot;,&quot;exposed&quot;:false},&quot;applicationId&quot;:{&quot;type&quot;:&quot;expression&quot;,&quot;value&quot;:&quot;return $data.application[0].id;&quot;,&quot;exposed&quot;:false},&quot;applicationToken&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:null,&quot;exposed&quot;:false},&quot;pageToken&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:null,&quot;exposed&quot;:false},&quot;targetedPage&quot;:{&quot;type&quot;:&quot;url&quot;,&quot;value&quot;:&quot;/bonita/API/living/application-page?c=1\u0026f=token%3D{{pageToken}}\u0026d=pageId&quot;,&quot;exposed&quot;:false}}"> 
+  <div class="container-fluid"> 
+   <div class="row"> 
+    <div class=" " pb-parameter-values="{&quot;isDisplayed&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:true},&quot;isDisabled&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;isReadonly&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;cssClasses&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;},&quot;repeatedCollection&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;}}"> 
+     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="parameters.isDisplayed"> 
+      <div class="row"> 
+       <div class=" " pb-parameter-values="{&quot;isDisplayed&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:true},&quot;isDisabled&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;isReadonly&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;cssClasses&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;},&quot;repeatedCollection&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;}}"> 
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="parameters.isDisplayed"> 
+         <div class="row"> 
+          <div class="component col-xs-12 col-sm-12 col-md-12 col-lg-12 " pb-parameter-values="{&quot;cssClasses&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;},&quot;isDisplayed&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:true},&quot;src&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;/bonita/portal/themeResource?theme=portal\u0026location=skin/images/logo.png&quot;},&quot;width&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:null},&quot;height&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:null},&quot;style&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;padding:5px;&quot;}}"> 
+           <div ng-if="parameters.isDisplayed">
+            <custom-living-application-logo></custom-living-application-logo>
+           </div> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="component col-xs-12 col-sm-12 col-md-12 col-lg-12 null" pb-parameter-values="{&quot;cssClasses&quot;:{&quot;type&quot;:&quot;data&quot;,&quot;value&quot;:null},&quot;isDisplayed&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:true},&quot;applicationName&quot;:{&quot;type&quot;:&quot;data&quot;,&quot;value&quot;:&quot;applicationToken&quot;},&quot;pageToken&quot;:{&quot;type&quot;:&quot;data&quot;,&quot;value&quot;:&quot;pageToken&quot;}}"> 
+           <div ng-if="parameters.isDisplayed">
+            <custom-url-application-name-loader></custom-url-application-name-loader>
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="row"> 
+    <div class="component col-xs-12 col-sm-12 col-md-12 col-lg-12 " pb-parameter-values="{&quot;isDisplayed&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:true},&quot;isDisabled&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;isReadonly&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;cssClasses&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;},&quot;selectedMenu&quot;:{&quot;type&quot;:&quot;data&quot;,&quot;value&quot;:&quot;selectedApplicationMenu&quot;},&quot;menuList&quot;:{&quot;type&quot;:&quot;data&quot;,&quot;value&quot;:&quot;pageList&quot;},&quot;urlSelectedMenu&quot;:{&quot;type&quot;:&quot;data&quot;,&quot;value&quot;:&quot;pageSelectedByUrl&quot;}}"> 
+     <div ng-if="parameters.isDisplayed">
+      <custom-living-application-menu></custom-living-application-menu>
+     </div> 
+    </div> 
+   </div> 
+   <div class="row"> 
+    <div class="component col-xs-12 col-sm-12 col-md-12 col-lg-12 " pb-parameter-values="{&quot;isDisplayed&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:true},&quot;isDisabled&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;isReadonly&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:false},&quot;cssClasses&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;&quot;},&quot;src&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;/bonita/portal/custom-page/{{targetedPage[0].pageId.urlToken}}/?applicationId={{applicationId}}&quot;},&quot;contentHeight&quot;:{&quot;type&quot;:&quot;constant&quot;,&quot;value&quot;:&quot;700px&quot;}}"> 
+     <div ng-if="parameters.isDisplayed">
+      <custom-iframe></custom-iframe>
+     </div> 
+    </div> 
+   </div> 
+  </div>   
+ </body>
+</html>

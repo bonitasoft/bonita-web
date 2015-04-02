@@ -8,14 +8,13 @@ import static org.mockito.Mockito.verify;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.livingapps.ApplicationRouter;
-import org.bonitasoft.livingapps.LivingApplicationServlet;
 import org.bonitasoft.livingapps.exception.CreationException;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,18 +38,22 @@ public class LivingApplicationServletTest {
     @Mock
     ApplicationRouter router;
 
+    @Mock
+    PageRenderer pageRenderer;
+
     @Spy
     LivingApplicationServlet servlet;
 
     @Before
     public void beforeEach() throws Exception {
         doReturn(router).when(servlet).createApplicationRouter(any(APISession.class));
+        doReturn(pageRenderer).when(servlet).getPageRenderer();
         doReturn(session).when(servlet).getSession(hsRequest);
     }
 
     @Test
     public void should_send_error_404_when_the_application_page_is_not_found() throws Exception {
-        given(router.route(hsRequest, hsResponse, session))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer))
         .willThrow(new ApplicationPageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -60,7 +63,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_associated_to_application() throws Exception {
-        given(router.route(hsRequest, hsResponse, session))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer))
         .willThrow(new ApplicationPageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -70,7 +73,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_existing() throws Exception {
-        given(router.route(hsRequest, hsResponse, session))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer))
         .willThrow(new PageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -80,7 +83,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_500_on_searchException() throws Exception {
-        given(router.route(hsRequest, hsResponse, session))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer))
         .willThrow(new CreationException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -120,7 +123,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_page_is_not_found() throws Exception {
-        given(router.route(hsRequest, hsResponse, session))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer))
         .willThrow(new ApplicationPageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -130,7 +133,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_route_is_false() throws Exception {
-        given(router.route(hsRequest, hsResponse, session))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer))
                 .willReturn(false);
 
         servlet.doGet(hsRequest, hsResponse);

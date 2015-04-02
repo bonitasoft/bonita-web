@@ -56,6 +56,7 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
     private final ApplicationItemConverter converter;
     private final PageAPI pageAPI;
     private static final String CUSTOMPAGE_HOME = "custompage_home";
+    private static final String DEFAULT_LAYOUT = "custompage_layout";
     protected ApplicationItemConverter applicationItemConverter;
 
     public ApplicationDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI, final ApplicationItemConverter converter) {
@@ -89,14 +90,19 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
 
     @Override
     public ApplicationItem add(final ApplicationItem item) {
-        final ApplicationCreator creator = converter.toApplicationCreator(item);
+
         try {
-            final Application application = applicationAPI.createApplication(creator);
             final Page homePageDef = pageAPI.getPageByName(CUSTOMPAGE_HOME);
+            final Page layoutPage = pageAPI.getPageByName(DEFAULT_LAYOUT);
+
+            item.setLayoutId(layoutPage.getId());
+            final ApplicationCreator creator = converter.toApplicationCreator(item);
+
+            final Application application = applicationAPI.createApplication(creator);
             final ApplicationPage appHomePage = applicationAPI.createApplicationPage(application.getId(), homePageDef.getId(), "home");
             applicationAPI.setApplicationHomePage(application.getId(), appHomePage.getId());
             return converter.toApplicationItem(application);
-        } catch (final Exception e) {
+        }catch (final Exception e) {
             throw new APIException(e);
         }
     }

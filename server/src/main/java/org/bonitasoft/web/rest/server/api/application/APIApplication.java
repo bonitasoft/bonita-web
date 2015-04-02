@@ -19,7 +19,9 @@ import java.util.Map;
 import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
+import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
+import org.bonitasoft.web.rest.server.api.deployer.PageDeployer;
 import org.bonitasoft.web.rest.server.api.deployer.UserDeployer;
 import org.bonitasoft.web.rest.server.datastore.application.ApplicationDataStoreCreator;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
@@ -40,8 +42,11 @@ APIHasGet<ApplicationItem>, APIHasUpdate<ApplicationItem>, APIHasDelete {
 
     private final ApplicationDataStoreCreator creator;
 
-    public APIApplication(final ApplicationDataStoreCreator creator) {
+    private final APIApplicationDataStoreFactory applicationDataStoreFactory;
+
+    public APIApplication(final ApplicationDataStoreCreator creator, final  APIApplicationDataStoreFactory applicationDataStoreFactory) {
         this.creator = creator;
+        this.applicationDataStoreFactory = applicationDataStoreFactory;
     }
 
     @Override
@@ -87,6 +92,8 @@ APIHasGet<ApplicationItem>, APIHasUpdate<ApplicationItem>, APIHasDelete {
         addDeployer(new UserDeployer(
                 new UserDatastore(getEngineSession()), ApplicationItem.ATTRIBUTE_UPDATED_BY));
         addDeployer(getDeployerFactory().createProfileDeployer(ApplicationItem.ATTRIBUTE_PROFILE_ID));
+        addDeployer(new PageDeployer(
+                applicationDataStoreFactory.createPageDataStore(getEngineSession()), ApplicationItem.ATTRIBUTE_LAYOUT_ID));
         super.fillDeploys(item, deploys);
     }
 

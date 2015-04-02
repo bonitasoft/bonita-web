@@ -48,11 +48,16 @@ public class ApplicationItemConverter {
         } else {
             item.setHomePageId(-1L);
         }
+        if (application.getLayoutId() != null) {
+            item.setLayoutId(application.getLayoutId());
+        } else {
+            item.setLayoutId(-1L);
+        }
         return item;
     }
 
     public ApplicationCreator toApplicationCreator(final ApplicationItem appItem) {
-        final ApplicationCreator creator = new ApplicationCreator(appItem.getToken(), appItem.getDisplayName(), appItem.getVersion());
+        final ApplicationCreator creator = new ApplicationCreator(appItem.getToken(), appItem.getDisplayName(), appItem.getVersion(),appItem.getLayoutId().toLong());
         creator.setDescription(appItem.getDescription());
         creator.setProfileId(appItem.getProfileId().toLong());
         creator.setIconPath(appItem.getIconPath());
@@ -81,6 +86,14 @@ public class ApplicationItemConverter {
                 homePageId = null;
             }
             applicationUpdater.setHomePageId(homePageId);
+        }
+
+        if (attributes.containsKey(ApplicationItem.ATTRIBUTE_LAYOUT_ID)) {
+            Long layoutId = Long.parseLong(attributes.get(ApplicationItem.ATTRIBUTE_LAYOUT_ID));
+            if (layoutId == -1) {
+                layoutId = null;
+            }
+            applicationUpdater.setLayoutId(layoutId);
         }
 
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_STATE)) {

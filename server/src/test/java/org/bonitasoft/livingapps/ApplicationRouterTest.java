@@ -9,11 +9,9 @@ import static org.mockito.Mockito.verify;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.livingapps.ApplicationModel;
-import org.bonitasoft.livingapps.ApplicationModelFactory;
-import org.bonitasoft.livingapps.ApplicationRouter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +38,9 @@ public class ApplicationRouterTest {
     @Mock
     ApplicationModel applicationModel;
 
+    @Mock
+    PageRenderer pageRenderer;
+
     @InjectMocks
     ApplicationRouter applicationRouter;
 
@@ -51,10 +52,11 @@ public class ApplicationRouterTest {
     @Test
     public void should_redirect_to_home_page_when_accessing_living_application_root() throws Exception {
         given(applicationModel.getApplicationHomePage()).willReturn("HumanResources/home");
+        given(applicationModel.getApplicationLayoutName()).willReturn("layoutPageName");
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
         verify(hsResponse).sendRedirect("HumanResources/home");
     }
@@ -63,14 +65,14 @@ public class ApplicationRouterTest {
     public void should_throw_an_error_when_the_uri_is_malformed() throws Exception {
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
     }
 
     @Test
     public void should_forward_to_themeResource_servlet_when_accessing_a_theme_resource() throws Exception {
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources/themeResource");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
         verify(hsRequest).getRequestDispatcher("/portal/themeResource");
     }
@@ -79,27 +81,27 @@ public class ApplicationRouterTest {
     public void should_forward_to_pageResource_servlet_when_accessing_a_page_resource() throws Exception {
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources/pageResource");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
         verify(hsRequest).getRequestDispatcher("/portal/pageResource");
     }
 
     @Test
-    public void should_forward_to_the_application_page_template() throws Exception {
+    public void should_display_layout_page() throws Exception {
         accessAuthorizedPage("HumanResources", "leavingRequests");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
-        verify(hsRequest).getRequestDispatcher("/application-template.jsp");
+        verify(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession,applicationModel.getApplicationLayoutName());
     }
 
     @Test
     public void should_not_forward_to_the_application_page_template_when_the_page_is_not_in_the_application() throws Exception {
         accessUnknownPage("HumanResources", "leavingRequests");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
-        assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession)).isEqualTo(false);
+        assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer)).isEqualTo(false);
         verify(hsRequest, never()).getRequestDispatcher("/application-template.jsp");
     }
 
@@ -107,7 +109,7 @@ public class ApplicationRouterTest {
     public void should_not_forward_to_the_application_page_template_when_user_is_not_authorized() throws Exception {
         accessUnauthorizedPage("HumanResources", "leavingRequests");
 
-        assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession)).isEqualTo(false);
+        assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer)).isEqualTo(false);
         verify(hsRequest, never()).getRequestDispatcher("/application-template.jsp");
     }
 
@@ -115,7 +117,7 @@ public class ApplicationRouterTest {
     public void should_add_application_to_request_attributes() throws Exception {
         accessAuthorizedPage("HumanResources", "leavingRequests");
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
         verify(hsRequest).setAttribute("application", applicationModel);
     }
@@ -126,7 +128,7 @@ public class ApplicationRouterTest {
         final Page customPage = mock(Page.class);
         given(applicationModel.getCustomPage("leavingRequests")).willReturn(customPage);
 
-        applicationRouter.route(hsRequest, hsResponse, apiSession);
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer);
 
         verify(hsRequest).setAttribute("customPage", customPage);
     }

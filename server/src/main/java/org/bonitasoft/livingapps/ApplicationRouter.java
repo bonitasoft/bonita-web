@@ -3,15 +3,14 @@ package org.bonitasoft.livingapps;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
-import org.bonitasoft.engine.page.PageNotFoundException;
+import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.livingapps.exception.CreationException;
 
@@ -23,8 +22,8 @@ public class ApplicationRouter {
         this.applicationModelFactory = applicationModelFactory;
     }
 
-    public boolean route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session)
-            throws CreationException, ApplicationPageNotFoundException, IOException, PageNotFoundException, ServletException {
+    public boolean route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final  PageRenderer pageRenderer)
+            throws CreationException, BonitaException, IOException, ServletException, IllegalAccessException, InstantiationException {
 
         final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
         final ApplicationModel application = applicationModelFactory.createApplicationModel(parsedRequest.getApplicationName());
@@ -47,7 +46,7 @@ public class ApplicationRouter {
         if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
             hsRequest.setAttribute("application", application);
             hsRequest.setAttribute("customPage", application.getCustomPage(parsedRequest.getPageToken()));
-            forwardTo("/application-template.jsp", hsRequest, hsResponse);
+            pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
             return true;
         }
 
