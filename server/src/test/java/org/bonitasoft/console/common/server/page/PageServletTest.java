@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -65,21 +66,15 @@ public class PageServletTest {
         when(apiSession.getUserId()).thenReturn(1L);
     }
 
-    //    @Test
-    //    public void should_get_Forbidden_Status_when_unauthorized() throws Exception {
-    //        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
-    //        when(hsRequest.getParameter("user")).thenReturn(null);
-    //        when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenReturn(1L);
-    //        when(processFormService.ensureProcessDefinitionId(apiSession, 1L, -1L, -1L)).thenReturn(1L);
-    //        when(processFormService.getForm(any(APISession.class), anyLong(), anyString(), anyBoolean())).thenReturn(
-    //                new FormReference("custompage_form", FormMappingTarget.INTERNAL.name()));
-    //        when(pageServlet.isAuthorized(any(HttpServletRequest.class), any(APISession.class), anyLong(), anyLong(), anyLong(), anyLong(), anyBoolean()))
-    //                .thenReturn(false);
-    //
-    //        pageServlet.doGet(hsRequest, hsResponse);
-    //
-    //        verify(hsResponse, times(1)).sendError(403, "User not Authorized");
-    //    }
+    @Test
+    public void should_get_Forbidden_Status_when_unauthorized() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        doThrow(UnauthorizedAccessException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion");
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).sendError(403, "User not Authorized");
+    }
 
     @Test
     public void should_get_Bad_Request_when_invalid_parameters() throws Exception {

@@ -30,6 +30,7 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.page.PageURL;
 import org.bonitasoft.engine.session.APISession;
@@ -44,13 +45,13 @@ public class PageMappingService {
     private static Logger LOGGER = Logger.getLogger(PageMappingService.class.getName());
 
     public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey)
-            throws NotFoundException, BonitaException {
+            throws NotFoundException, UnauthorizedAccessException, BonitaException {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         //TODO have constants for those parameters engine-side
         context.put("QUERY_PARAMETERS", (Serializable) request.getParameterMap());
         context.put("IS_ADMIN", isLoggedUserAdmin(request));
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
-        final PageURL pageURL = processConfigurationAPI.resolvePageURL(mappingKey);
+        final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());
     }
 
