@@ -73,6 +73,7 @@ import org.bonitasoft.forms.server.exception.NoCredentialsInSessionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderFactory;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
+import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.web.rest.model.user.User;
 import org.junit.After;
 import org.junit.Assert;
@@ -111,6 +112,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
         final BusinessArchiveBuilder businessArchiveBuilder = new BusinessArchiveBuilder().createNewBusinessArchive();
         final byte[] content = new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1, 5, 6, 8, 4, 6, 6, 3, 2, 4, 5 };
         final BarResource barResource = new BarResource("barFilename.txt", content);
+        businessArchiveBuilder.setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition));
         businessArchiveBuilder.addDocumentResource(barResource);
         final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(designProcessDefinition).done();
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
@@ -632,7 +634,9 @@ public class FormServiceProviderImplIT extends FormsTestCase {
 
         final DesignProcessDefinition designProcessDefinition = processBuilder.done();
         final BusinessArchiveBuilder businessArchiveBuilderProcess = new BusinessArchiveBuilder().createNewBusinessArchive();
-        final BusinessArchive businessArchive = businessArchiveBuilderProcess.setProcessDefinition(designProcessDefinition).done();
+        final BusinessArchive businessArchive = businessArchiveBuilderProcess
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
+                .setProcessDefinition(designProcessDefinition).done();
         final ProcessDefinition processDefinition = processAPI.deploy(businessArchive);
 
         final ActorInstance processActor = processAPI.getActors(processDefinition.getId(), 0, 1, ActorCriterion.NAME_ASC).get(0);
@@ -673,7 +677,9 @@ public class FormServiceProviderImplIT extends FormsTestCase {
 
         final DesignProcessDefinition designSubProcessDefinition = subProcessBuilder.done();
         final BusinessArchiveBuilder businessArchiveBuilderSubProcess = new BusinessArchiveBuilder().createNewBusinessArchive();
-        final BusinessArchive businessArchiveSubProcess = businessArchiveBuilderSubProcess.setProcessDefinition(designSubProcessDefinition).done();
+        final BusinessArchive businessArchiveSubProcess = businessArchiveBuilderSubProcess
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designSubProcessDefinition))
+                .setProcessDefinition(designSubProcessDefinition).done();
         final ProcessDefinition subProcessDefinition = processAPI.deploy(businessArchiveSubProcess);
 
         final ActorInstance subProcessActor = processAPI.getActors(subProcessDefinition.getId(), 0, 1, ActorCriterion.NAME_ASC).get(0);

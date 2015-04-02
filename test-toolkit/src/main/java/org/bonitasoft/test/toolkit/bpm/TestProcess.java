@@ -21,13 +21,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
+import org.bonitasoft.engine.bpm.bar.form.model.FormMappingModel;
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.engine.bpm.category.CategoryCriterion;
+import org.bonitasoft.engine.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.engine.bpm.flownode.UserTaskDefinition;
+import org.bonitasoft.engine.bpm.form.FormMappingDefinitionBuilder;
+import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -36,11 +40,12 @@ import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
-import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.form.FormMappingTarget;
+import org.bonitasoft.engine.form.FormMappingType;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -75,15 +80,12 @@ public class TestProcess {
 
     private final List<ActorInstance> actors = new ArrayList<>();
 
-    private boolean forceToNonBlockingFormMappingToDefaultValue;
-
     /**
      * Default Constructor.
      *
      * @throws Exception
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
-        setForceToNonBlockingFormMappingToDefaultValue(true);
         this.processDefinition = createProcessDefinition(apiSession, processDefinitionBuilder);
     }
 
@@ -92,7 +94,6 @@ public class TestProcess {
     }
 
     public TestProcess(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
-        setForceToNonBlockingFormMappingToDefaultValue(true);
         this.processDefinition = deployProcessDefinition(apiSession, businessArchiveBuilder);
     }
 
@@ -117,11 +118,26 @@ public class TestProcess {
     private ProcessDefinition createProcessDefinition(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         try {
             return deployProcessDefinition(apiSession, new BusinessArchiveBuilder().createNewBusinessArchive()
+                    .setFormMappings(createDefaultProcessFormMapping(processDefinitionBuilder.getProcess()))
                     .setProcessDefinition(processDefinitionBuilder.done()));
         } catch (final InvalidProcessDefinitionException e) {
             throw new TestToolkitException("Invalid process definition", e);
         }
     }
+
+    public static FormMappingModel createDefaultProcessFormMapping(DesignProcessDefinition designProcessDefinition) {
+        FormMappingModel formMappingModel = new FormMappingModel();
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_START, FormMappingTarget.LEGACY).build());
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.LEGACY).build());
+        for (ActivityDefinition activityDefinition : designProcessDefinition.getFlowElementContainer().getActivities()) {
+            if (activityDefinition instanceof UserTaskDefinition) {
+                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_START, FormMappingTarget.LEGACY).withTaskname(activityDefinition.getName()).build());
+                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.LEGACY).withTaskname(activityDefinition.getName()).build());
+            }
+        }
+        return formMappingModel;
+    }
+
 
     /**
      * Deploy process from the archive
@@ -132,10 +148,7 @@ public class TestProcess {
      */
     private ProcessDefinition deployProcessDefinition(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         try {
-            final ProcessDefinition processDefinition = getProcessAPI(apiSession).deploy(businessArchiveBuilder.done());
-            replaceFormMappingToNonBlockingValue(getProcessConfigurationAPI(apiSession), processDefinition.getId());
-            return processDefinition;
-
+            return getProcessAPI(apiSession).deploy(businessArchiveBuilder.done());
         } catch (final Exception e) {
             throw new TestToolkitException("Can't deploy business archive.", e);
         }
@@ -498,36 +511,5 @@ public class TestProcess {
         final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 100);
         builder.filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, getProcessDefinition().getId());
         return getProcessAPI(getSession()).searchOpenProcessInstances(builder.done()).getResult();
-    }
-
-    /**
-     * use this method to bypass pageProcessDependencyResolver since default value "internal" with a null page is not allowed
-     * URL value is a none blocking criteria for process resolution
-     *
-     * @param processDefinitionId
-     * @throws BonitaException
-     */
-    public void replaceFormMappingToNonBlockingValue(final ProcessConfigurationAPI processConfigurationAPI, final long processDefinitionId) throws Exception {
-//        if (isForceToNonBlockingFormMappingToDefaultValue()) {
-//            final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1000);
-//            searchOptionsBuilder.filter(FormMappingSearchDescriptor.PROCESS_DEFINITION_ID, processDefinitionId);
-//            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(searchOptionsBuilder.done());
-//            final List<FormMapping> formMappings = searchResult.getResult();
-//            for (final FormMapping formMapping : formMappings) {
-//                processConfigurationAPI.updateFormMapping(formMapping.getId(), "", FormMappingTarget.URL);
-//            }
-//        }
-    }
-
-    private ProcessConfigurationAPI getProcessConfigurationAPI(final APISession apiSession) throws Exception {
-        return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
-    }
-
-    public boolean isForceToNonBlockingFormMappingToDefaultValue() {
-        return forceToNonBlockingFormMappingToDefaultValue;
-    }
-
-    public void setForceToNonBlockingFormMappingToDefaultValue(boolean forceToNonBlockingFormMappingToDefaultValue) {
-        this.forceToNonBlockingFormMappingToDefaultValue = forceToNonBlockingFormMappingToDefaultValue;
     }
 }

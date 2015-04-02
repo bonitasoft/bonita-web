@@ -119,7 +119,9 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final byte[] content = new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1, 5, 6, 8, 4, 6, 6, 3, 2, 4, 5 };
         final BarResource barResource = new BarResource("barFilename.txt", content);
         businessArchiveBuilder.addDocumentResource(barResource);
-        final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(designProcessDefinition).done();
+        final BusinessArchive businessArchive = businessArchiveBuilder
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
+                .setProcessDefinition(designProcessDefinition).done();
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
         bonitaProcess = processAPI.deploy(businessArchive);
 
