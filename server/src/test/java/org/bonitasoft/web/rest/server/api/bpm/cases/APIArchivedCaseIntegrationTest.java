@@ -93,7 +93,7 @@ public class APIArchivedCaseIntegrationTest extends AbstractConsoleTest {
                 new ArrayList<String>());
 
         Assert.assertNotNull("ArchivedCase not found", caseItem);
-        assertEquals("Wrong case found", testCase.getArchive(), caseItem);
+        assertEquals("Wrong case found", archivedProcessInstance, caseItem);
     }
 
     @Test

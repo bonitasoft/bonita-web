@@ -170,7 +170,7 @@ public class TestCase {
         searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.DESC);
         SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
         try {
-            searchArchivedProcessInstances = processAPI.searchArchivedProcessInstances(searchOptionsBuilder.done());
+            searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
         } catch (final SearchException se) {
             throw new TestToolkitException("Can't get process instance archived for <" + getId() + ">", se);
         }
