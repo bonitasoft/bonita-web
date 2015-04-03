@@ -51,7 +51,7 @@ public class PageMappingService {
         context.put("QUERY_PARAMETERS", (Serializable) request.getParameterMap());
         context.put("IS_ADMIN", isLoggedUserAdmin(request));
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
-        final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey);
+        final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey, context);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());
     }
 
