@@ -16,6 +16,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoCriterion;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
@@ -67,8 +68,18 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
 
         // check the process has been correctly uploaded
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
-        assertEquals("Can't add a ProcessItem to APIProcess",
-                1, processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT).size());
+        String assertMessage = "Can't add a ProcessItem to APIProcess. ";
+        int actualSize = -1;
+        final List<ProcessDeploymentInfo> processDeploymentInfos = processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT);
+        if (processDeploymentInfos != null) {
+            actualSize = processDeploymentInfos.size();
+            for (ProcessDeploymentInfo processDeploymentInfo : processDeploymentInfos) {
+                assertMessage += "\nprocessDeploymentInfo=" + processDeploymentInfo;
+            }
+        } else {
+            assertMessage += "processDeploymentInfos is null.";
+        }
+        assertEquals(assertMessage, 1, actualSize);
     }
 
     /**
