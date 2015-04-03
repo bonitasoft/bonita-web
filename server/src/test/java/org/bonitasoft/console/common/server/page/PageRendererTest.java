@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,6 +59,9 @@ public class PageRendererTest{
     @Mock
     PageResourceProvider pageResourceProvider;
 
+    @Mock
+    Page page;
+
     @Spy
     @InjectMocks
     PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -75,12 +79,12 @@ public class PageRendererTest{
         File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
         File indexFile = new File(pageDir, "resources"+File.separator+"index.html");
 
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(page, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
 
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
 
-        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, pageName);
+        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, page);
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
     }
@@ -92,12 +96,12 @@ public class PageRendererTest{
         File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
         File indexFile = new File(pageDir, "index.html");
 
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(page, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
 
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
 
-        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, pageName);
+        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, page);
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
     }

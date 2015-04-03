@@ -26,12 +26,14 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.page.PageNotFoundException;
 
 /**
  * This class provide access to the resources contained in the custom page zip
  *
  * @author Anthony Birembaut
- *
  */
 public class PageResourceProvider {
 
@@ -52,17 +54,17 @@ public class PageResourceProvider {
 
     static {
         final InputStream versionStream = PageResourceProvider.class.getClassLoader().getResourceAsStream(VERSION_FILENAME);
-                    if (versionStream != null) {
-                        try {
-                            productVersion = IOUtils.toString(versionStream);
-                        } catch (final Exception e) {
-                            if (LOGGER.isLoggable(Level.WARNING)) {
-                                LOGGER.log(Level.WARNING, "Unable to read the file " + VERSION_FILENAME, e);
-                            }
-                            productVersion = "";
-                        } finally {
-                            try {
-                                versionStream.close();
+        if (versionStream != null) {
+            try {
+                productVersion = IOUtils.toString(versionStream);
+            } catch (final Exception e) {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Unable to read the file " + VERSION_FILENAME, e);
+                }
+                productVersion = "";
+            } finally {
+                try {
+                    versionStream.close();
                 } catch (final IOException e) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
                         LOGGER.log(Level.WARNING, "Unable to close the input stream for file " + VERSION_FILENAME, e);
@@ -99,9 +101,13 @@ public class PageResourceProvider {
      */
     protected final static String THEME_PARAM = "theme";
 
+    private final String fullPageName;
+
     protected long tenantId;
 
     protected String pageName;
+
+    private final Long processDefinitionId;
 
     protected File pageDirectory;
 
@@ -111,24 +117,46 @@ public class PageResourceProvider {
 
     private final File pageTempFile;
 
+    private Long pageId;
+
     protected PageResourceProvider(final String pageName, final long tenantId) {
+        this(pageName, tenantId, null, null);
+    }
+
+    protected PageResourceProvider(final Page page, final long tenantId) {
+        this(page.getName(), tenantId, page.getId(), page.getProcessDefinitionId());
+    }
+
+    private PageResourceProvider(final String pageName, final long tenantId, Long pageId, Long processDefinitionId) {
         this.tenantId = tenantId;
         this.pageName = pageName;
-        pageDirectory = buildPageDirectory(pageName, tenantId);
-        pageTempDirectory = buildPageTempDirectory(pageName, tenantId);
-        pageTempFile = buildPageTempFile(pageName, tenantId);
+        this.pageId = pageId;
+        this.processDefinitionId = processDefinitionId;
+        this.fullPageName = buildFullPageName(pageName, processDefinitionId);
+        pageDirectory = buildPageDirectory(fullPageName, tenantId);
+        pageTempDirectory = buildPageTempDirectory(fullPageName, tenantId);
+        pageTempFile = buildPageTempFile(fullPageName, tenantId);
     }
 
-    protected File buildPageTempDirectory(final String pageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), pageName);
+    private String buildFullPageName(String pageName, Long processDefinitionId) {
+        final StringBuilder builder = new StringBuilder();
+        if (processDefinitionId != null) {
+            builder.append("p").append(processDefinitionId).append("_");
+        }
+        builder.append(pageName);
+        return builder.toString();
     }
 
-    protected File buildPageTempFile(final String pageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), pageName + ".zip");
+    protected File buildPageTempDirectory(final String fullPageName, final long tenantId) {
+        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), fullPageName);
     }
 
-    protected File buildPageDirectory(final String pageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getPagesFolder(), pageName);
+    protected File buildPageTempFile(final String fullPageName, final long tenantId) {
+        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), new StringBuilder().append(fullPageName).append(".zip").toString());
+    }
+
+    protected File buildPageDirectory(final String fullPageName, final long tenantId) {
+        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getPagesFolder(), fullPageName);
     }
 
     public InputStream getResourceAsStream(final String resourceName) throws FileNotFoundException {
@@ -170,4 +198,18 @@ public class PageResourceProvider {
         return ResourceBundle.getBundle(name, locale, resourceClassLoader);
     }
 
+    public String getPageName() {
+        return pageName;
+    }
+
+    public Page getPage(PageAPI pageAPI) throws PageNotFoundException {
+        if (pageId != null) {
+            return pageAPI.getPage(pageId);
+        }
+        return pageAPI.getPageByName(getPageName());
+    }
+
+    public String getFullPageName() {
+        return fullPageName;
+    }
 }
