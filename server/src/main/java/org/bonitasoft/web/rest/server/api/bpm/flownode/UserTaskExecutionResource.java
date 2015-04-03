@@ -32,6 +32,8 @@ public class UserTaskExecutionResource extends CommonResource {
 
     static final String TASK_ID = "taskId";
 
+	private static final String USER_PARAM = "user";
+
     private final ProcessAPI processAPI;
 
     public UserTaskExecutionResource(final ProcessAPI processAPI) {
@@ -40,8 +42,13 @@ public class UserTaskExecutionResource extends CommonResource {
 
     @Post("json")
     public void executeTask(final Map<String, Serializable> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException {
-        try {
-            processAPI.executeUserTask(getTaskIdParameter(), inputs);
+        String userId = getRequestParameter(USER_PARAM);
+    	try {
+    		if (userId == null) {
+    			processAPI.executeUserTask(getTaskIdParameter(), inputs);    			
+    		}else {
+    			processAPI.executeUserTask(Long.parseLong(userId), getTaskIdParameter(), inputs);
+    		}
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot execute task.");
         }
