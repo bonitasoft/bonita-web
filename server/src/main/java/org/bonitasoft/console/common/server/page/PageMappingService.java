@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -44,12 +45,14 @@ public class PageMappingService {
      */
     private static Logger LOGGER = Logger.getLogger(PageMappingService.class.getName());
 
-    public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey)
+    public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey, final Locale locale)
             throws NotFoundException, UnauthorizedAccessException, BonitaException {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         //TODO have constants for those parameters engine-side
         context.put("QUERY_PARAMETERS", (Serializable) request.getParameterMap());
         context.put("IS_ADMIN", isLoggedUserAdmin(request));
+        context.put("locale", locale.toString());
+        context.put("contextPath", request.getContextPath());
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
         final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey, context);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());

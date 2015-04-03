@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,18 +59,22 @@ public class PageServletTest {
     @Mock
     APISession apiSession;
 
+    Locale locale;
+
     @Before
     public void beforeEach() throws Exception {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("apiSession")).thenReturn(apiSession);
         when(apiSession.getUserId()).thenReturn(1L);
+        locale = new Locale("en");
+        when(pageRenderer.getCurrentLocale(hsRequest)).thenReturn(new Locale("en"));
     }
 
     @Test
     public void should_get_Forbidden_Status_when_unauthorized() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        doThrow(UnauthorizedAccessException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion");
+        doThrow(UnauthorizedAccessException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale);
 
         pageServlet.doGet(hsRequest, hsResponse);
 
@@ -87,7 +92,8 @@ public class PageServletTest {
     @Test
     public void should_display_externalPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(null, "/externalPage"));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(
+                new PageReference(null, "/externalPage"));
 
         pageServlet.doGet(hsRequest, hsResponse);
 
@@ -99,7 +105,7 @@ public class PageServletTest {
     @Test
     public void should_display_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(42L, null));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(new PageReference(42L, null));
 
         pageServlet.doGet(hsRequest, hsResponse);
 
@@ -111,7 +117,7 @@ public class PageServletTest {
     public void should_display_customPage_resource() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/path/of/resource.css");
         final PageReference pageReference = new PageReference(42L, null);
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(pageReference);
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(pageReference);
         final PageResourceProvider pageResourceProvider = mock(PageResourceProvider.class);
         final File resourceFile = mock(File.class);
         when(pageResourceProvider.getResourceAsFile("resources/path/of/resource.css")).thenReturn(resourceFile);
@@ -129,7 +135,7 @@ public class PageServletTest {
     @Test
     public void should_get_not_found_when_empty_mapping() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        doThrow(NotFoundException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion");
+        doThrow(NotFoundException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale);
 
         pageServlet.doGet(hsRequest, hsResponse);
 
@@ -139,7 +145,7 @@ public class PageServletTest {
     @Test
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(42L, null));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(new PageReference(42L, null));
         //FIXME replace null with long page id
         doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, null);
 
@@ -163,7 +169,7 @@ public class PageServletTest {
     @Test
     public void should_get_server_error_when_issue_with_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion")).thenReturn(new PageReference(42L, null));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(new PageReference(42L, null));
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
         //FIXME replace null with long page id
         doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, null);

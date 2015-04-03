@@ -93,7 +93,7 @@ public class PageServlet extends HttpServlet {
             final String mappingKey, final String resourcePath)
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
-            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey);
+            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request));
             if (page.getURL() != null) {
                 displayExternalPage(request, response, page.getURL());
             } else if (page.getPageId() != null) {

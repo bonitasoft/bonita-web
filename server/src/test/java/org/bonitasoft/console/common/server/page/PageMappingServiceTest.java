@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,6 +50,7 @@ public class PageMappingServiceTest {
         when(hsRequest.getSession()).thenReturn(httpSession);
         doReturn(processConfigurationAPI).when(pageMappingService).getProcessConfigurationAPI(apiSession);
         when(apiSession.getUserId()).thenReturn(1L);
+        when(hsRequest.getContextPath()).thenReturn("/bonita");
     }
 
     @Test
@@ -59,11 +61,13 @@ public class PageMappingServiceTest {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         context.put("QUERY_PARAMETERS", (Serializable) hsRequest.getParameterMap());
         context.put("IS_ADMIN", false);
+        context.put("locale", "en");
+        context.put("contextPath", "/bonita");
         when(processConfigurationAPI.resolvePageOrURL("process/processName/processVersion", context)).thenReturn(pageURL);
         final Set<String> userPermissions = new HashSet<String>();
         when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
 
-        final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion");
+        final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", new Locale("en"));
 
         assertNotNull(returnedPageReference);
         assertEquals(null, returnedPageReference.getPageId());
