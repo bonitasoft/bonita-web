@@ -127,12 +127,11 @@ public class TestProcess {
 
     public static FormMappingModel createDefaultProcessFormMapping(DesignProcessDefinition designProcessDefinition) {
         FormMappingModel formMappingModel = new FormMappingModel();
-        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_START, FormMappingTarget.LEGACY).build());
-        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.LEGACY).build());
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.PROCESS_START, FormMappingTarget.URL).build());
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.URL).build());
         for (ActivityDefinition activityDefinition : designProcessDefinition.getFlowElementContainer().getActivities()) {
             if (activityDefinition instanceof UserTaskDefinition) {
-                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_START, FormMappingTarget.LEGACY).withTaskname(activityDefinition.getName()).build());
-                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.LEGACY).withTaskname(activityDefinition.getName()).build());
+                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.TASK, FormMappingTarget.URL).withTaskname(activityDefinition.getName()).build());
             }
         }
         return formMappingModel;
