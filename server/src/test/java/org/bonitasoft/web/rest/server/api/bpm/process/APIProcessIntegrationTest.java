@@ -210,6 +210,11 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         assertEquals("multipleVersionsProcess", searchedProcessItem.getDisplayName());
         assertEquals("anOtherVersion", searchedProcessItem.getVersion());
 
+        //Because TestProcessFactory is based on names, at least 2 out of the three above processes should be cleaned manually.
+        // This could be improved later in TestProcessFactory
+        TestProcessFactory.getInstance().delete(p1);
+        TestProcessFactory.getInstance().delete(p2);
+        TestProcessFactory.getInstance().delete(p3);
     }
 
 }
