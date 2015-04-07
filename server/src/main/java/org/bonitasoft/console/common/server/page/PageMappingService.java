@@ -34,6 +34,7 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.page.PageURL;
+import org.bonitasoft.engine.page.URLAdapterConstants;
 import org.bonitasoft.engine.session.APISession;
 
 public class PageMappingService {
@@ -48,11 +49,10 @@ public class PageMappingService {
     public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey, final Locale locale)
             throws NotFoundException, UnauthorizedAccessException, BonitaException {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
-        //TODO have constants for those parameters engine-side
-        context.put("QUERY_PARAMETERS", (Serializable) request.getParameterMap());
-        context.put("IS_ADMIN", isLoggedUserAdmin(request));
-        context.put("locale", locale.toString());
-        context.put("contextPath", request.getContextPath());
+        context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) request.getParameterMap());
+        context.put(URLAdapterConstants.IS_ADMIN, isLoggedUserAdmin(request));
+        context.put(URLAdapterConstants.LOCALE, locale.toString());
+        context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
         final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey, context);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());
