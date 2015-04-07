@@ -252,7 +252,8 @@ public class CustomPageService {
 
     protected long getPageLastUpdateDateFromEngine(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException {
         try {
-            final Date lastUpdateDate = pageResourceProvider.getPage(getPageAPI(apiSession)).getLastModificationDate();
+            final PageAPI pageAPI = getPageAPI(apiSession);
+            final Date lastUpdateDate = pageResourceProvider.getPage(pageAPI).getLastModificationDate();
             if (lastUpdateDate != null) {
                 return lastUpdateDate.getTime();
             }

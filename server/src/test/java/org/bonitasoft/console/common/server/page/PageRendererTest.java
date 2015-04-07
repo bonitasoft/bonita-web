@@ -85,7 +85,7 @@ public class PageRendererTest{
         final File indexFile = new File(pageDir, "resources"+File.separator+"index.html");
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(42L, apiSession);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
-        when(customPageService.getPageAPI(apiSession)).thenReturn(pageAPI);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(page).when(pageResourceProvider).getPage(pageAPI);
         when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
@@ -103,7 +103,7 @@ public class PageRendererTest{
         final File indexFile = new File(pageDir, "index.html");
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(42L, apiSession);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
-        when(customPageService.getPageAPI(apiSession)).thenReturn(pageAPI);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(page).when(pageResourceProvider).getPage(pageAPI);
         when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));

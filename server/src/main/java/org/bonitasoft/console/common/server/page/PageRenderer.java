@@ -43,9 +43,9 @@ public class PageRenderer {
 
     public static final String DEFAULT_LOCALE = "en";
 
-    private final CustomPageService customPageService = new CustomPageService();
+    protected CustomPageService customPageService = new CustomPageService();
 
-    private final ResourceRenderer resourceRenderer;
+    protected ResourceRenderer resourceRenderer;
 
     public PageRenderer(final ResourceRenderer resourceRenderer) {
         this.resourceRenderer = resourceRenderer;

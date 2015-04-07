@@ -109,8 +109,7 @@ public class PageServletTest {
 
         pageServlet.doGet(hsRequest, hsResponse);
 
-        //FIXME replace null with long page id
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, null);
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
     }
 
     @Test
@@ -121,8 +120,7 @@ public class PageServletTest {
         final PageResourceProvider pageResourceProvider = mock(PageResourceProvider.class);
         final File resourceFile = mock(File.class);
         when(pageResourceProvider.getResourceAsFile("resources/path/of/resource.css")).thenReturn(resourceFile);
-        //FIXME replace with the page ID as long
-        when(pageRenderer.getPageResourceProvider("42", apiSession.getTenantId())).thenReturn(pageResourceProvider);
+        when(pageRenderer.getPageResourceProvider(42L, apiSession)).thenReturn(pageResourceProvider);
         when(tenantFolder.isInFolder(resourceFile, null)).thenReturn(true);
 
         pageServlet.doGet(hsRequest, hsResponse);
@@ -146,8 +144,7 @@ public class PageServletTest {
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(new PageReference(42L, null));
-        //FIXME replace null with long page id
-        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, null);
+        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
         pageServlet.doGet(hsRequest, hsResponse);
 
@@ -171,8 +168,7 @@ public class PageServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(new PageReference(42L, null));
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
-        //FIXME replace null with long page id
-        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, null);
+        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
         pageServlet.doGet(hsRequest, hsResponse);
 
