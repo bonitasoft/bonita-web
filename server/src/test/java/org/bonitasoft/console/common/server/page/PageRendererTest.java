@@ -21,8 +21,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -62,6 +64,9 @@ public class PageRendererTest{
     @Mock
     Page page;
 
+    @Mock
+    PageAPI pageAPI;
+
     @Spy
     @InjectMocks
     PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -75,16 +80,17 @@ public class PageRendererTest{
 
     @Test
     public void should_display_html_page() throws Exception {
-        String pageName = "my_html_page_v_7";
-        File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
-        File indexFile = new File(pageDir, "resources"+File.separator+"index.html");
-
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(page, 1L);
+        final String pageName = "my_html_page_v_7";
+        final File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
+        final File indexFile = new File(pageDir, "resources"+File.separator+"index.html");
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(42L, apiSession);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
-
+        when(customPageService.getPageAPI(apiSession)).thenReturn(pageAPI);
+        doReturn(page).when(pageResourceProvider).getPage(pageAPI);
+        when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
 
-        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, page);
+        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
     }
@@ -92,16 +98,17 @@ public class PageRendererTest{
     @Test
     public void should_display_fallback_index_if_no_index_in_resource_folder() throws Exception {
 
-        String pageName = "my_html_page_v_6";
-        File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
-        File indexFile = new File(pageDir, "index.html");
-
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(page, 1L);
+        final String pageName = "my_html_page_v_6";
+        final File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
+        final File indexFile = new File(pageDir, "index.html");
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(42L, apiSession);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
-
+        when(customPageService.getPageAPI(apiSession)).thenReturn(pageAPI);
+        doReturn(page).when(pageResourceProvider).getPage(pageAPI);
+        when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
 
-        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, page);
+        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
     }

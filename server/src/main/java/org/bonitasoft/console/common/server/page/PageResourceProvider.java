@@ -107,7 +107,6 @@ public class PageResourceProvider {
 
     protected String pageName;
 
-    private final Long processDefinitionId;
 
     protected File pageDirectory;
 
@@ -117,7 +116,7 @@ public class PageResourceProvider {
 
     private final File pageTempFile;
 
-    private Long pageId;
+    private final Long pageId;
 
     protected PageResourceProvider(final String pageName, final long tenantId) {
         this(pageName, tenantId, null, null);
@@ -127,18 +126,17 @@ public class PageResourceProvider {
         this(page.getName(), tenantId, page.getId(), page.getProcessDefinitionId());
     }
 
-    private PageResourceProvider(final String pageName, final long tenantId, Long pageId, Long processDefinitionId) {
+    private PageResourceProvider(final String pageName, final long tenantId, final Long pageId, final Long processDefinitionId) {
         this.tenantId = tenantId;
         this.pageName = pageName;
         this.pageId = pageId;
-        this.processDefinitionId = processDefinitionId;
-        this.fullPageName = buildFullPageName(pageName, processDefinitionId);
+        fullPageName = buildFullPageName(pageName, processDefinitionId);
         pageDirectory = buildPageDirectory(fullPageName, tenantId);
         pageTempDirectory = buildPageTempDirectory(fullPageName, tenantId);
         pageTempFile = buildPageTempFile(fullPageName, tenantId);
     }
 
-    private String buildFullPageName(String pageName, Long processDefinitionId) {
+    private String buildFullPageName(final String pageName, final Long processDefinitionId) {
         final StringBuilder builder = new StringBuilder();
         if (processDefinitionId != null) {
             builder.append("p").append(processDefinitionId).append("_");
@@ -202,7 +200,7 @@ public class PageResourceProvider {
         return pageName;
     }
 
-    public Page getPage(PageAPI pageAPI) throws PageNotFoundException {
+    public Page getPage(final PageAPI pageAPI) throws PageNotFoundException {
         if (pageId != null) {
             return pageAPI.getPage(pageId);
         }

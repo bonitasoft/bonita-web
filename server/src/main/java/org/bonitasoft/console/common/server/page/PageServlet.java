@@ -119,8 +119,7 @@ public class PageServlet extends HttpServlet {
             if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
                     || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
                 //TODO pass the query params in order to put them in the Context of the custom page
-                //FIXME pass the pageId
-                pageRenderer.displayCustomPage(request, response, apiSession, null);
+                pageRenderer.displayCustomPage(request, response, apiSession, page.getPageId());
             } else {
                 resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, page.getPageId(), resourcePath));
             }
@@ -130,9 +129,8 @@ public class PageServlet extends HttpServlet {
     }
 
     protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final Long pageId, final String resourcePath)
-            throws IOException {
-        //FIXME build the PageResourceProvider with the pageId as long
-        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageId.toString(), apiSession.getTenantId());
+            throws IOException, BonitaException {
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageId, apiSession);
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
         if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "For security reasons, access to this file path is forbidden : " + resourcePath);

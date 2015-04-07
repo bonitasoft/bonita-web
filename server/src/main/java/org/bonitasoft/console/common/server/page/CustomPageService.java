@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import groovy.lang.GroovyClassLoader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +30,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -85,7 +86,7 @@ public class CustomPageService {
         return buildPageClassloader(apiSession, pageResourceProvider);
     }
 
-    public void ensurePageFolderIsUpToDate(APISession apiSession, PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
+    public void ensurePageFolderIsUpToDate(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
         final File pageFolder = pageResourceProvider.getPageDirectory();
         if (!pageResourceProvider.getPageDirectory().exists()) {
             retrievePageZipContent(apiSession, pageResourceProvider);
@@ -312,7 +313,11 @@ public class CustomPageService {
         compoundPermissionsMapping.setPropertyAsSet(pageName, customPagePermissions);
     }
 
-    public Page getPage(final APISession apiSession, String pageName, long processDefinitionId) throws BonitaException {
+    public Page getPage(final APISession apiSession, final String pageName, final long processDefinitionId) throws BonitaException {
         return getPageAPI(apiSession).getPageByNameAndProcessDefinitionId(pageName, processDefinitionId);
+    }
+
+    public Page getPage(final APISession apiSession, final long pageId) throws BonitaException {
+        return getPageAPI(apiSession).getPage(pageId);
     }
 }
