@@ -190,11 +190,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessQuickDetailsAdminPage();
         } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
-            return new ProcessMoreDetailsAdminPage();
-        } else if ("newprocessmoredetailsadmin".equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
+            return prepareAngularPage(token);
+        } else if ("oldprocessmoredetailsadmin".equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
             // No action is necessary as an unauthorized request will result in a page reload.
-            return prepareAngularPage(token);
+            return new ProcessMoreDetailsAdminPage();
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
