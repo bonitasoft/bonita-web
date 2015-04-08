@@ -654,7 +654,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     }
 
     @Override
-    public void assignForm(final String formID, final Map<String, Object> urlContext) throws RPCException, SessionTimeoutException {
+    public void assignForm(final String formID, final Map<String, Object> urlContext) throws RPCException, SessionTimeoutException,
+            ForbiddenFormAccessException {
         final HttpServletRequest request = getThreadLocalRequest();
         final Map<String, Object> context = initContext(urlContext, localeUtil.resolveLocale(localeUtil.getLocale(request)));
         try {
@@ -663,13 +664,18 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
             formServiceProvider.assignForm(formID, context);
         } catch (final NoCredentialsInSessionException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Session timeout");
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Session timeout");
             }
             throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final ForbiddenFormAccessException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, e.getMessage(), e);
+            }
+            throw e;
         } catch (final SessionTimeoutException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.INFO, "Invalid Session");
+                LOGGER.log(Level.FINE, "Invalid Session");
             }
             final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor(getThreadLocalRequest());
             SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());

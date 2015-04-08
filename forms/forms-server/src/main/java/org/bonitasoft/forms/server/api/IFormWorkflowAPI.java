@@ -42,6 +42,7 @@ import org.bonitasoft.forms.client.model.ActivityEditState;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
 
@@ -907,15 +908,16 @@ public interface IFormWorkflowAPI {
      * Assign a task to the user of whom belong the session
      *
      * @param session
-     *            the user's session
+     *        the user's session
      * @param taskId
-     *            the task to assign
+     *        the task to assign
      * @throws TaskAssignationException
-     *             if the task couldn't be assign
+     *         if the task couldn't be assign
      * @throws InvalidSessionException
-     *             if session isn't valid
+     *         if session isn't valid
+     * @throws ForbiddenFormAccessException
      */
-    void assignTask(APISession session, long taskId) throws TaskAssignationException, InvalidSessionException;
+    void assignTaskIfNotAssigned(APISession session, long taskId) throws TaskAssignationException, InvalidSessionException, ForbiddenFormAccessException;
 
     /**
      * indicate if the activity instance ID passed matches a ready task

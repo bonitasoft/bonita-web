@@ -482,6 +482,8 @@ public interface FormServiceProvider {
      * @throws SessionTimeoutException
      * @throws FormNotFoundException
      * @throws TaskAssignationException
+     * @throws ForbiddenFormAccessException
      */
-    void assignForm(String formID, Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException, TaskAssignationException;
+    void assignForm(String formID, Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException, TaskAssignationException,
+            ForbiddenFormAccessException;
 }

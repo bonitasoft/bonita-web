@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FormURLComponents;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.client.rpc.FormsServiceAsync;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
@@ -137,7 +138,7 @@ public class TodoListTaskWidget extends Composite {
 
             @Override
             public void onTaskFetchingFailed(final Throwable caught) {
-                showErrorPage();
+                showErrorPage(FormsResourceBundle.getErrors().nextTaskRetrievalError());
             }
         };
     }
@@ -208,11 +209,13 @@ public class TodoListTaskWidget extends Composite {
             public void onFailure(final Throwable caught) {
                 try {
                     throw caught;
+                } catch (final ForbiddenFormAccessException e) {
+                    showErrorPage(FormsResourceBundle.getMessages().forbiddenStepReadMessage());
                 } catch (final SessionTimeoutException e) {
                     handleSessionTimeout(nextFormURL);
                 } catch (final Throwable e) {
                     GWT.log(e.getMessage(), e);
-                    showErrorPage();
+                    showErrorPage(FormsResourceBundle.getErrors().nextTaskRetrievalError());
                 }
             }
         });
@@ -243,15 +246,15 @@ public class TodoListTaskWidget extends Composite {
         return RpcFormsServices.getFormsService();
     }
 
-    private void showErrorPage() {
+    private void showErrorPage(final String message) {
         final FormsServiceAsync formsServiceAsync = getFormService();
-        formsServiceAsync.getApplicationErrorTemplate(formId, urlContext, createErrorPageHandler());
+        formsServiceAsync.getApplicationErrorTemplate(formId, urlContext, createErrorPageHandler(message));
     }
 
-    private ErrorPageHandler createErrorPageHandler() {
+    private ErrorPageHandler createErrorPageHandler(final String message) {
         return new ErrorPageHandler(applicationHTMLPanel, formId,
                 currentPageHTMLPanel,
-                FormsResourceBundle.getErrors().nextTaskRetrievalError(),
+                message,
                 elementId);
     }
 }

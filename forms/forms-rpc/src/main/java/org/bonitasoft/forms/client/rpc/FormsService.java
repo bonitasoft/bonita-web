@@ -267,8 +267,9 @@ public interface FormsService extends RemoteService {
      * @param urlContext Map containing the URL parameters
      * @throws RPCException
      * @throws SessionTimeoutException
+     * @throws ForbiddenFormAccessException
      */
-    void assignForm(String formID, Map<String, Object> urlContext) throws RPCException, SessionTimeoutException;
+    void assignForm(String formID, Map<String, Object> urlContext) throws RPCException, SessionTimeoutException, ForbiddenFormAccessException;
 
     /**
      * Retrieve the logged in user

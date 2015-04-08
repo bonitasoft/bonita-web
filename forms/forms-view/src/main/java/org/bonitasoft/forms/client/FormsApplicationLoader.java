@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FormURLComponents;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.client.view.FormsAsyncCallback;
 import org.bonitasoft.forms.client.view.common.BonitaUrlContext;
@@ -187,6 +188,9 @@ public class FormsApplicationLoader {
             public void onFailure(final Throwable caught) {
                 try {
                     throw caught;
+                } catch (final ForbiddenFormAccessException e) {
+                    getApplicationErrorTemplate(new ErrorPageHandler(null, null, FormsResourceBundle.getMessages().forbiddenStepReadMessage(),
+                            getFormElementId()));
                 } catch (final SessionTimeoutException e) {
                     handleSessionTimeout(formURLComponents);
                 } catch (final Throwable e) {
