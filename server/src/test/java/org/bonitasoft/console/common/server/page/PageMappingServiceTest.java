@@ -61,7 +61,7 @@ public class PageMappingServiceTest {
         when(pageURL.getPageId()).thenReturn(null);
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) hsRequest.getParameterMap());
-        context.put(URLAdapterConstants.IS_ADMIN, false);
+        //context.put(URLAdapterConstants.IS_ADMIN, false);
         context.put(URLAdapterConstants.LOCALE, "en");
         context.put(URLAdapterConstants.CONTEXT_PATH, "/bonita");
         when(processConfigurationAPI.resolvePageOrURL("process/processName/processVersion", context)).thenReturn(pageURL);
