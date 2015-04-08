@@ -13,7 +13,7 @@ package org.bonitasoft.web.rest.server.api.custom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 
-import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Ignore;
@@ -37,7 +37,7 @@ public class CustomResourceTest extends RestletTest {
     protected CommandAPI commandAPI;
 
     @Mock
-    private PageRenderer pageRenderer;
+    private RestApiRenderer restApiRenderer;
 
 	private CustomResource spyResource;
 
@@ -59,7 +59,7 @@ public class CustomResourceTest extends RestletTest {
                 return "custompage_helloworld";
             }
             
-        }, pageRenderer);
+        }, restApiRenderer);
     	spyResource = spy(resource);
         return spyResource;
     }
