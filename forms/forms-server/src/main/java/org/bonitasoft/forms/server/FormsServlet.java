@@ -814,7 +814,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> getAnyTodoListForm(final Map<String, Object> urlContext) throws RPCException, SessionTimeoutException {
+    public FormURLComponents getAnyTodoListForm(final Map<String, Object> urlContext) throws RPCException, SessionTimeoutException {
         final HttpServletRequest request = getThreadLocalRequest();
         final Map<String, Object> context = initContext(urlContext, localeUtil.resolveLocale(localeUtil.getLocale(request)));
         try {

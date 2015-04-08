@@ -25,7 +25,6 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
-import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
@@ -79,7 +78,7 @@ public class HumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<HumanTask
     }
 
     private Action createPerformAction(final HumanTaskItem item) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new PerformTaskPage(item.getId())));
+        return new CheckValidSessionBeforeAction(new AssignAndPerformHumanTaskFormAction(item));
     }
 
     @Override

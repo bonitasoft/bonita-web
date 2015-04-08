@@ -1133,25 +1133,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                 processInstanceID = getProcessInstanceId(urlContext);
             }
-
             final long activityInstanceId = getNextActivityInstanceId(getFormWorkFlowApi(), session, processInstanceID);
             if (activityInstanceId != -1) {
-                urlComponents = new FormURLComponents();
-                urlComponents.setApplicationURL(getAppDedicatedUrl(session, workflowAPI, activityInstanceId, UI_FORM_MODE));
-                if (urlContext != null) {
-                    final String activityDefinitionUuid = getActivityDefinitionUUID(session, workflowAPI, activityInstanceId);
-                    final Map<String, Object> newURLContext = new HashMap<String, Object>(urlContext);
-                    newURLContext.remove(FormServiceProviderUtil.PROCESS_UUID);
-                    newURLContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
-                    newURLContext.put(FormServiceProviderUtil.FORM_ID, createFormIdFromUuid(activityDefinitionUuid, FormServiceProviderUtil.ENTRY_FORM_TYPE));
-                    newURLContext.put(FormServiceProviderUtil.TASK_UUID, String.valueOf(activityInstanceId));
-                    urlComponents.setUrlContext(newURLContext);
-                }
-
-                final String taskName = getActivityName(session, workflowAPI, activityInstanceId);
-                urlComponents.setTaskName(taskName);
-
-                urlComponents.setTaskId(activityInstanceId);
+                urlComponents = buildTaskURLComponents(session, workflowAPI, activityInstanceId, urlContext);
             }
         } catch (final FormWorflowApiException e) {
             logSevereMessageWithContext(e, e.getMessage(), context);
@@ -1161,6 +1145,26 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throw new SessionTimeoutException(message);
         }
         logTime("getNextFormURLParameters - end");
+        return urlComponents;
+    }
+
+    private FormURLComponents buildTaskURLComponents(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId,
+            final Map<String, Object> urlContext) throws FormWorflowApiException {
+        final FormURLComponents urlComponents = new FormURLComponents();
+        urlComponents.setApplicationURL(getAppDedicatedUrl(session, workflowAPI, activityInstanceId, UI_FORM_MODE));
+        if (urlContext != null) {
+            final String activityDefinitionUuid = getActivityDefinitionUUID(session, workflowAPI, activityInstanceId);
+            final Map<String, Object> newURLContext = new HashMap<String, Object>(urlContext);
+            newURLContext.remove(FormServiceProviderUtil.PROCESS_UUID);
+            newURLContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
+            newURLContext.remove(FormServiceProviderUtil.TO_DO_LIST);
+            newURLContext.put(FormServiceProviderUtil.FORM_ID, activityDefinitionUuid);
+            newURLContext.put(FormServiceProviderUtil.TASK_UUID, String.valueOf(activityInstanceId));
+            urlComponents.setUrlContext(newURLContext);
+        }
+        final String taskName = getActivityName(session, workflowAPI, activityInstanceId);
+        urlComponents.setTaskName(taskName);
+        urlComponents.setTaskId(activityInstanceId);
         return urlComponents;
     }
 
@@ -1210,14 +1214,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final String message = "Error while communicating with the engine.";
             throw new FormWorflowApiException(message, e);
         }
-    }
-
-    private String createFormIdFromUuid(final String uuid, final String entryFormType) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(uuid);
-        stringBuilder.append(FormServiceProviderUtil.FORM_ID_SEPARATOR);
-        stringBuilder.append(entryFormType);
-        return stringBuilder.toString();
     }
 
     /**
@@ -1281,12 +1277,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return (Map<String, Object>) context.get(FormServiceProviderUtil.URL_CONTEXT);
     }
 
-    protected IFormWorkflowAPI getFormWorkFlowApi() {
-        return FormAPIFactory.getFormWorkflowAPI();
-    }
-
     private boolean isAssignTask(final Map<String, Object> context) {
-
         if (context.containsKey(FormServiceProviderUtil.ASSIGN_TASK)) {
             return Boolean.parseBoolean((String) context.get(FormServiceProviderUtil.ASSIGN_TASK));
         }
@@ -2000,18 +1991,19 @@ public class FormServiceProviderImpl implements FormServiceProvider {
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
+    public FormURLComponents getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException {
         final FormContextUtil ctxu = createFormContextUtil(context);
         if (getLogger().isLoggable(Level.FINEST)) {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - skipForm - start", context);
         }
+        FormURLComponents urlComponents = null;
         final Map<String, Object> urlContext = new HashMap<String, Object>();
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         if (context.get(FormServiceProviderUtil.URL_CONTEXT) != null) {
             urlContext.putAll(getUrlContext(context));
         }
-        long activityInstanceID = -1;
+        long activityInstanceId = -1;
         final APISession session = ctxu.getAPISessionFromContext();
         long processInstanceID = -1;
         long processDefinitionID = -1;
@@ -2019,16 +2011,16 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             try {
                 if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
                     processDefinitionID = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
-                    activityInstanceID = workflowAPI.getAnyTodoListTaskForProcessDefinition(session, processDefinitionID);
+                    activityInstanceId = workflowAPI.getAnyTodoListTaskForProcessDefinition(session, processDefinitionID);
                 } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                     processInstanceID = getProcessInstanceId(urlContext);
-                    activityInstanceID = workflowAPI.getAnyTodoListTaskForProcessInstance(session, processInstanceID);
+                    activityInstanceId = workflowAPI.getAnyTodoListTaskForProcessInstance(session, processInstanceID);
                 } else if (urlContext.get(FormServiceProviderUtil.THEME) != null) {
                     processDefinitionID = Long.valueOf(urlContext.get(FormServiceProviderUtil.THEME).toString());
-                    activityInstanceID = workflowAPI.getAnyTodoListTaskForProcessDefinition(session, processDefinitionID);
+                    activityInstanceId = workflowAPI.getAnyTodoListTaskForProcessDefinition(session, processDefinitionID);
                 }
-                if (activityInstanceID == -1) {
-                    activityInstanceID = workflowAPI.getAnyTodoListTaskForProcessDefinition(session, -1);
+                if (activityInstanceId == -1) {
+                    activityInstanceId = workflowAPI.getAnyTodoListTaskForProcessDefinition(session, -1);
                 }
             } catch (final UserNotFoundException e) {
                 final String message = "The user with ID " + session.getUserId() + " does not exist!";
@@ -2045,22 +2037,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 logSevereWithContext(message, e, context);
                 throw new FormNotFoundException(message);
             }
-            urlContext.remove(FormServiceProviderUtil.PROCESS_UUID);
-            urlContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
-            urlContext.remove(FormServiceProviderUtil.TO_DO_LIST);
-            if (activityInstanceID != -1) {
-                String activitydefinitionUUID = null;
-                try {
-                    activitydefinitionUUID = getActivityDefinitionUUID(session, workflowAPI, activityInstanceID);
-                    processDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
-                } catch (final FormWorflowApiException e) {
-                    logSevereMessageWithContext(e, e.getMessage(), context);
-                    throw new FormNotFoundException(e);
-                }
-                urlContext.put(FormServiceProviderUtil.TASK_UUID, String.valueOf(activityInstanceID));
-                urlContext.put(FormServiceProviderUtil.THEME, String.valueOf(processDefinitionID));
-                urlContext.put(FormServiceProviderUtil.FORM_ID, activitydefinitionUUID + FormServiceProviderUtil.FORM_ID_SEPARATOR
-                        + FormServiceProviderUtil.ENTRY_FORM_TYPE);
+            if (activityInstanceId != -1) {
+                urlComponents = buildTaskURLComponents(session, workflowAPI, activityInstanceId, urlContext);
             } else {
                 final String message = "There are no steps waiting in inbox.";
                 if (getLogger().isLoggable(Level.INFO)) {
@@ -2068,6 +2046,8 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 }
                 throw new FormNotFoundException(message);
             }
+        } catch (final FormWorflowApiException e) {
+            logSevereMessageWithContext(e, e.getMessage(), context);
         } catch (final BPMEngineException e) {
             final String message = "Error while communicating with the engine.";
             logSevereWithContext(message, e, context);
@@ -2083,7 +2063,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final String time = DATE_FORMAT.format(new Date());
             getLogger().log(Level.FINEST, "### " + time + " - skipForm - end", context);
         }
-        return urlContext;
+        return urlComponents;
     }
 
     /**
@@ -2165,6 +2145,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             id = urlContext.get(FormServiceProviderUtil.INSTANCE_UUID).toString();
         }
         return id;
+    }
+
+    protected IFormWorkflowAPI getFormWorkFlowApi() {
+        return FormAPIFactory.getFormWorkflowAPI();
     }
 
     private void logInfoMessageWithContext(final String message, final Throwable e, final Map<String, Object> context) {

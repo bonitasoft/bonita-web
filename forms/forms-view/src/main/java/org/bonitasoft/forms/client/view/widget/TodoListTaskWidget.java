@@ -228,6 +228,7 @@ public class TodoListTaskWidget extends Composite {
      * @param nextFormURL
      */
     private void buildUrlAndRedirectToNextTaskForm(final FormURLComponents nextFormURL) {
+        //TODO assign the task
         changeUrlContextSafely(nextFormURL.getUrlContext());
         final String url = urlUtils.getFormRedirectionUrl(urlContext);
         if (domUtils.isPageInFrame()) {

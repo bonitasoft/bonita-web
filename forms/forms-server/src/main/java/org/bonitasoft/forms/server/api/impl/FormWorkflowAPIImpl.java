@@ -1159,7 +1159,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             activityName = archivedActivityInstance.getName();
             processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
         }
-        return processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion() + UUID_SEPARATOR + activityName;
+        return processDefinition.getName() + "/" + processDefinition.getVersion() + "/" + activityName;
     }
 
     /**

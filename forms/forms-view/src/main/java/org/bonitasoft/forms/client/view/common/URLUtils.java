@@ -39,6 +39,12 @@ import com.google.gwt.user.client.Window;
  */
 public class URLUtils {
 
+    private static final String PAGE_ID_SEPARATOR = "/content/";
+
+    private static final String FORM_ID_PREFIX = "taskInstance/";
+
+    private static final String PAGE_SERVLET_NAME = "resource/";
+
     /**
      * Generic forms app path
      */
@@ -511,26 +517,20 @@ public class URLUtils {
     }
 
     /**
-     * @param applicationURL
      * @param urlContext
      * @return
      */
     public String getFormRedirectionUrl(final Map<String, Object> urlContext) {
-        final StringBuilder url = new StringBuilder("form/taskInstance/");
+        final StringBuilder url = new StringBuilder(PAGE_SERVLET_NAME);
+        url.append(FORM_ID_PREFIX);
+        url.append(urlContext.get(URLUtils.FORM_ID));
+        url.append(PAGE_ID_SEPARATOR);
+        url.append("?id=");
         url.append(urlContext.get(URLUtils.TASK_ID_PARAM));
-        url.append("?");
+        url.append("&");
         url.append(URLUtils.LOCALE_PARAM);
         url.append("=");
         url.append(getLocale());
-        url.append("&");
-        url.append(URLUtils.ASSIGN_TASK);
-        url.append("=true");
-        if (urlContext.get(URLUtils.USER_ID_PARAM) != null) {
-            url.append("&");
-            url.append(URLUtils.USER_ID_PARAM);
-            url.append("=");
-            url.append(urlContext.get(URLUtils.USER_ID_PARAM));
-        }
         return url.toString();
     }
 
