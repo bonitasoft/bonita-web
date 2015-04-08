@@ -50,7 +50,7 @@ public class PageMappingService {
             throws NotFoundException, UnauthorizedAccessException, BonitaException {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) request.getParameterMap());
-        context.put(URLAdapterConstants.IS_ADMIN, isLoggedUserAdmin(request));
+        //context.put(URLAdapterConstants.IS_ADMIN, isLoggedUserAdmin(request));
         context.put(URLAdapterConstants.LOCALE, locale.toString());
         context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
