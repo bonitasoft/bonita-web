@@ -14,6 +14,7 @@ import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.web.rest.server.BonitaRestletApplication;
 import org.bonitasoft.web.rest.server.FinderFactory;
+import org.bonitasoft.web.rest.server.api.custom.SpringPlatformFileSystemBeanAccessor;
 import org.junit.After;
 import org.junit.Before;
 import org.restlet.Application;
@@ -30,8 +31,8 @@ import org.restlet.resource.ServerResource;
  * <ul>
  * <li>Allow to configure tested resource via {@link #configureResource()}</li>
  * <li>Allow to configure tested app via {@link #configureApplication()}</li>
- * <li>Start restlet server bound on a random port before each tests (and stop it after)</li>
- * <li>Provide {@link #request(String)} method to perform http requests</li>
+ * <li>Start Restlet server bound on a random port before each tests (and stop it after)</li>
+ * <li>Provide {@link #request(String)} method to perform HTTP requests</li>
  * </ul>
  *
  * @author Colin Puy
@@ -43,7 +44,7 @@ public abstract class RestletTest {
 
     /**
      * Configure the {@link ServerResource} under test.
-     * Override this method in your test to return an instance of the tested ressource.
+     * Override this method in your test to return an instance of the tested resource.
      * If not overridden, production RestletApplication will be launched
      */
     protected ServerResource configureResource() {
@@ -57,7 +58,7 @@ public abstract class RestletTest {
     protected Application configureApplication() {
         final ServerResource resource = configureResource();
         final FinderFactory finderFactory = getFinderFactory(resource);
-        return new BonitaRestletApplication(finderFactory);
+        return new BonitaRestletApplication(finderFactory, new SpringPlatformFileSystemBeanAccessor());
     }
 
     /**
@@ -72,8 +73,9 @@ public abstract class RestletTest {
      * Read a file in current package
      */
     protected String readFile(final String fileName) throws IOException {
-        final InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
-        return IOUtils.toString(resourceAsStream);
+    	try (InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName)) {
+    		return IOUtils.toString(resourceAsStream);	
+    	}
     }
 
     @Before
@@ -132,6 +134,5 @@ public abstract class RestletTest {
             return super.create(clazz);
         }
     }
-
 
 }

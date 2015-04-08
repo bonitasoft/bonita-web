@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,6 +29,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
+import org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptor;
+import org.bonitasoft.web.rest.server.api.custom.SpringPlatformFileSystemBeanAccessor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -48,10 +50,12 @@ import org.restlet.routing.Router;
 public class BonitaRestletApplication extends Application {
 
     private final FinderFactory factory;
+    private final SpringPlatformFileSystemBeanAccessor springPlatformFileSystemBeanAccessor;
 
-    public BonitaRestletApplication(final FinderFactory finderFactory) {
+    public BonitaRestletApplication(final FinderFactory finderFactory, SpringPlatformFileSystemBeanAccessor springPlatformFileSystemBeanAccessor) {
         super();
         factory = finderFactory;
+        this.springPlatformFileSystemBeanAccessor = springPlatformFileSystemBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -95,6 +99,10 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bdm/businessData/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));
         router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
         router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
+
+        for (CustomResourceDescriptor customResourceDescriptor : springPlatformFileSystemBeanAccessor.getRestConfiguration()) {
+            router.attach("/custom/" + customResourceDescriptor.getPathTemplate(), factory.createCustom(customResourceDescriptor));
+        }
 
         return router;
     }

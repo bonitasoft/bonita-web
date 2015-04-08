@@ -13,6 +13,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -30,6 +32,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
+import org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptor;
+import org.bonitasoft.web.rest.server.api.custom.CustomResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -63,6 +67,10 @@ public class FinderFactory {
             throw new RuntimeException("Finder unimplemented for class " + clazz);
         }
         return finder;
+    }
+
+    public Finder createCustom(CustomResourceDescriptor customResourceDescriptor) {
+        return new CustomApiServerResourceFinder(customResourceDescriptor);
     }
 
     public abstract static class AbstractResourceFinder extends Finder {
@@ -218,6 +226,21 @@ public class FinderFactory {
         }
     }
 
+    public static class CustomApiServerResourceFinder extends AbstractResourceFinder {
 
+        private final CustomResourceDescriptor customResourceDescriptor;
+
+        public CustomApiServerResourceFinder(CustomResourceDescriptor customResourceDescriptor) {
+            this.customResourceDescriptor = customResourceDescriptor;
+        }
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+        	final ResourceRenderer resourceRenderer = new ResourceRenderer();
+        	final PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
+            return new CustomResource(customResourceDescriptor, pageRenderer);
+        }
+
+    }
 
 }

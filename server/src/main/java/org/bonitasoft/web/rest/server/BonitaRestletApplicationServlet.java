@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
+import org.bonitasoft.web.rest.server.api.custom.SpringPlatformFileSystemBeanAccessor;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.ext.servlet.ServerServlet;
@@ -18,7 +19,7 @@ public class BonitaRestletApplicationServlet extends ServerServlet {
 
     @Override
     protected Application createApplication(final Context parentContext) {
-        final BonitaRestletApplication bonitaRestletApplication = new BonitaRestletApplication(new FinderFactory());
+        final BonitaRestletApplication bonitaRestletApplication = new BonitaRestletApplication(new FinderFactory(), new SpringPlatformFileSystemBeanAccessor());
         bonitaRestletApplication.setContext(parentContext.createChildContext());
         return bonitaRestletApplication;
     }
