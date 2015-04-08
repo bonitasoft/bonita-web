@@ -2066,6 +2066,30 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return urlComponents;
     }
 
+    @Override
+    public void assignForm(final String formID, final Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException,
+            TaskAssignationException {
+        final FormContextUtil ctxu = createFormContextUtil(context);
+        logTime("assignForm - start");
+        final Map<String, Object> urlContext = getUrlContext(context);
+        final APISession session = ctxu.getAPISessionFromContext();
+        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        try {
+            if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
+                workflowAPI.assignTask(session, getActivityInstanceId(urlContext));
+            } else {
+                if (getLogger().isLoggable(Level.INFO)) {
+                    getLogger().log(Level.INFO, "The URL context do not contain any task ID. Unable to assign task for form " + formID, context);
+                }
+            }
+        } catch (final InvalidSessionException e) {
+            final String message = "The engine session is invalid.";
+            logInfoMessageWithContext(message, e, context);
+            throw new SessionTimeoutException(message);
+        }
+        logTime("getNextFormURLParameters - end");
+    }
+
     /**
      * {@inheritDoc}
      */

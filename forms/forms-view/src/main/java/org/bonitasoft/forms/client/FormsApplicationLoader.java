@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FormURLComponents;
+import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.client.view.FormsAsyncCallback;
 import org.bonitasoft.forms.client.view.common.BonitaUrlContext;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
@@ -23,6 +24,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class FormsApplicationLoader {
@@ -146,24 +148,57 @@ public class FormsApplicationLoader {
         @Override
         public void onSuccess(final FormURLComponents formURLComponents) {
             if (formURLComponents != null) {
-                //TODO assign the task
-                final String url = urlUtils.getFormRedirectionUrl(formURLComponents.getUrlContext());
-                urlUtils.windowRedirect(url);
+                buildUrlAndRedirectToTaskForm(formURLComponents);
             } else {
                 getApplicationErrorTemplate(new ErrorPageHandler(null, null, FormsResourceBundle.getMessages().noTaskAvailableMessage(), getFormElementId()));
             }
         }
         @Override
         public void onUnhandledFailure(final Throwable caught) {
-            GWT.log("Unable to get any todolist form URL", caught);
-            final Map<String, String> paramsToAdd = new HashMap<String, String>();
-            paramsToAdd.put(URLUtils.UI, URLUtils.FORM_ONLY_APPLICATION_MODE);
-            final List<String> hashParamsToRemove = new ArrayList<String>();
-            hashParamsToRemove.add(URLUtils.TODOLIST_PARAM);
-            final String urlString = urlUtils.rebuildUrl(null, paramsToAdd, hashParamsToRemove, null);
-            urlUtils.windowRedirect(urlString);
+            showTaskRetrievalError(caught);
         }
 
+    }
+
+    private void showTaskRetrievalError(final Throwable caught) {
+        GWT.log("Unable to get any todolist form URL", caught);
+        final Map<String, String> paramsToAdd = new HashMap<String, String>();
+        paramsToAdd.put(URLUtils.UI, URLUtils.FORM_ONLY_APPLICATION_MODE);
+        final List<String> hashParamsToRemove = new ArrayList<String>();
+        hashParamsToRemove.add(URLUtils.TODOLIST_PARAM);
+        final String urlString = urlUtils.rebuildUrl(null, paramsToAdd, hashParamsToRemove, null);
+        urlUtils.windowRedirect(urlString);
+    }
+
+    /**
+     * @param nextFormURL
+     */
+    private void buildUrlAndRedirectToTaskForm(final FormURLComponents formURLComponents) {
+        final Map<String, Object> urlContext = formURLComponents.getUrlContext();
+        RpcFormsServices.getFormsService().assignForm((String) urlContext.get(URLUtils.FORM_ID), urlContext, new AsyncCallback<Void>() {
+
+            @Override
+            public void onSuccess(final Void result) {
+                final String url = urlUtils.getFormRedirectionUrl(formURLComponents.getUrlContext());
+                urlUtils.windowRedirect(url);
+            }
+
+            @Override
+            public void onFailure(final Throwable caught) {
+                try {
+                    throw caught;
+                } catch (final SessionTimeoutException e) {
+                    handleSessionTimeout(formURLComponents);
+                } catch (final Throwable e) {
+                    showTaskRetrievalError(caught);
+                }
+            }
+        });
+    }
+
+    protected void handleSessionTimeout(final FormURLComponents formURLComponents) {
+        final String url = urlUtils.removeURLparameters(Window.Location.getHref());
+        urlUtils.windowRedirect(url);
     }
 }
 

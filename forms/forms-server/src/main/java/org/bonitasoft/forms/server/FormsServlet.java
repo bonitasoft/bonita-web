@@ -653,6 +653,35 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
         }
     }
 
+    @Override
+    public void assignForm(final String formID, final Map<String, Object> urlContext) throws RPCException, SessionTimeoutException {
+        final HttpServletRequest request = getThreadLocalRequest();
+        final Map<String, Object> context = initContext(urlContext, localeUtil.resolveLocale(localeUtil.getLocale(request)));
+        try {
+            context.put(FormServiceProviderUtil.REQUEST, request);
+            final long tenantID = retrieveCredentialAndReturnTenantID(request, context);
+            final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
+            formServiceProvider.assignForm(formID, context);
+        } catch (final NoCredentialsInSessionException e) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Session timeout");
+            }
+            throw new SessionTimeoutException(e.getMessage(), e);
+        } catch (final SessionTimeoutException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.INFO, "Invalid Session");
+            }
+            final HttpServletRequestAccessor httpServletRequestAccessor = new HttpServletRequestAccessor(getThreadLocalRequest());
+            SessionUtil.sessionLogout(httpServletRequestAccessor.getHttpSession());
+            throw new SessionTimeoutException();
+        } catch (final Throwable e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Error while getting the next task", e);
+            }
+            throw new RPCException(e.getMessage(), e);
+        }
+    }
+
     /**
      * store the transient data context for the current page flow displayed in the session
      *

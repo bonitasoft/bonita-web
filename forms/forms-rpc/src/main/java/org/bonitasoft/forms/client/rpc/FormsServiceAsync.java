@@ -172,16 +172,25 @@ public interface FormsServiceAsync {
     void getNextFormURL(String formID, Map<String, Object> urlContext, AsyncCallback<FormURLComponents> aCallBackHandler);
 
     /**
+     * Assign the form specified in the URL parameters to the logged in user
+     *
+     * @param formID form id
+     * @param urlContext Map containing the URL parameters
+     * @param aCallBackHandler
+     */
+    void assignForm(String formID, Map<String, Object> urlContext, AsyncCallback<Void> aCallBackHandler);
+
+    /**
      * Get async available values
      *
      * @param formID
-     *            form id
+     *        form id
      * @param urlContext
-     *            Map containing the URL parameters
+     *        Map containing the URL parameters
      * @param formWidget
-     *            the widget definition
+     *        the widget definition
      * @param currentFieldValue
-     *            the current value of the widget
+     *        the current value of the widget
      * @param asyncCallback
      */
     void getFormAsyncAvailableValues(String formID, Map<String, Object> urlContext, ReducedFormWidget formWidget, FormFieldValue currentFieldValue,

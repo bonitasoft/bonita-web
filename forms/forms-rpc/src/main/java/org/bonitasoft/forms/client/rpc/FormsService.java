@@ -261,6 +261,16 @@ public interface FormsService extends RemoteService {
     FormURLComponents getAnyTodoListForm(Map<String, Object> urlContext) throws RPCException, SessionTimeoutException;
 
     /**
+     * Assign the form specified in the URL parameters to the logged in user
+     *
+     * @param formID form Id
+     * @param urlContext Map containing the URL parameters
+     * @throws RPCException
+     * @throws SessionTimeoutException
+     */
+    void assignForm(String formID, Map<String, Object> urlContext) throws RPCException, SessionTimeoutException;
+
+    /**
      * Retrieve the logged in user
      *
      * @return the logged in {@link User}

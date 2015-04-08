@@ -473,4 +473,15 @@ public interface FormServiceProvider {
      *            Map of context (containing the URL parameters and other data)
      */
     void removeFormTransientDataContext(HttpSession session, String storageKey, Map<String, Object> context);
+
+    /**
+     * Assign the given form to the logged in user
+     *
+     * @param formID form Id
+     * @param context Map of context (containing the URL parameters and other data)
+     * @throws SessionTimeoutException
+     * @throws FormNotFoundException
+     * @throws TaskAssignationException
+     */
+    void assignForm(String formID, Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException, TaskAssignationException;
 }
