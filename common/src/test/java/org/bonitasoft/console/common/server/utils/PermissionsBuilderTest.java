@@ -14,6 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
+import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.persistence.SBonitaReadException;
@@ -61,6 +63,12 @@ public class PermissionsBuilderTest {
     @Mock
     SecurityProperties securityProperties;
 
+    @Mock
+    private Profile profile;
+
+    @Mock
+    private ApplicationAPI applicationAPI;
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -73,7 +81,7 @@ public class PermissionsBuilderTest {
 
     private void init(final boolean apiAuthorizationsCheckEnabled) {
         doReturn(apiAuthorizationsCheckEnabled).when(securityProperties).isAPIAuthorizationsCheckEnabled();
-        permissionsBuilder = spy(new PermissionsBuilder(apiSession, profileAPI, customPermissionsMapping, compoundPermissionsMapping,
+        permissionsBuilder = spy(new PermissionsBuilder(apiSession, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping,
                 securityProperties));
         doReturn("myUser").when(apiSession).getUserName();
         doReturn(1l).when(apiSession).getTenantId();
@@ -221,5 +229,19 @@ public class PermissionsBuilderTest {
             profileEntries.add(page);
         }
         return profileEntries;
+    }
+
+    @Test
+    public void testAddPagesOfApplication() throws Exception {
+        //given
+        final Set<String> permissions = new HashSet<String>(Arrays.asList("Perm1", "Perm2"));
+        doReturn(12l).when(profile).getId();
+        when(applicationAPI.getAllPagesForProfile(profile.getId())).thenReturn(Arrays.asList("Perm3", "Perm4"));
+
+        //when
+        permissionsBuilder.addPagesOfApplication(profile, permissions);
+
+        //then
+        assertThat(permissions).containsOnly("Perm1", "Perm2", "Perm3", "Perm4");
     }
 }
