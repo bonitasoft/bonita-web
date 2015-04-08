@@ -16,6 +16,8 @@ package org.bonitasoft.forms.server.api.impl;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1159,7 +1161,18 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             activityName = archivedActivityInstance.getName();
             processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
         }
-        return processDefinition.getName() + "/" + processDefinition.getVersion() + "/" + activityName;
+        return urlEncode(processDefinition.getName()) + "/" + urlEncode(processDefinition.getVersion()) + "/" + urlEncode(activityName);
+    }
+
+    protected String urlEncode(final String stringToEncode) {
+        try {
+            return URLEncoder.encode(stringToEncode, "UTF-8");
+        } catch (final UnsupportedEncodingException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unable to URL encode the process name, version and/or task name", e);
+            }
+            throw new RuntimeException(e);
+        }
     }
 
     /**
