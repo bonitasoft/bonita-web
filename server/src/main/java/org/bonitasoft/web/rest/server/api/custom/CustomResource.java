@@ -27,27 +27,27 @@ public class CustomResource extends ServerResource {
         this.restApiRenderer = restApiRenderer;
     }
 
-    @Get
+    @Get("json")
     public Object handleGet() throws Exception {
         return handleRequest("GET");
     }
 
-    @Post
+    @Post("json")
     public Object handlePost() throws Exception {
         return handleRequest("POST");
     }
 
-    @Put
+    @Put("json")
     public Object handlePut() throws Exception {
         return handleRequest("PUT");
     }
 
-    @Patch
+    @Patch("json")
     public Object handlePatch() throws Exception {
         return handleRequest("PATCH");
     }
 
-    @Delete
+    @Delete("json")
     public Object handleDelete() throws Exception {
         return handleRequest("DELETE");
     }
