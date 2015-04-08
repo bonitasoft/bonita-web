@@ -81,7 +81,12 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
         // Check
         final List<TestCategory> catList = TestCategoryFactory.getAllCategories(getInitiator().getSession());
-        Assert.assertEquals("No categories added", 1, catList.size());
+        final int nbOfCategories = catList.size();
+        String message = "No categories added. " + nbOfCategories + " categories found. Categories are: \n";
+        for (TestCategory testCategory : catList) {
+            message += " catgeory with id " + testCategory.getId() + ": " + testCategory.getCategory().getName() + "\n";
+        }
+        Assert.assertEquals(message, 1, nbOfCategories);
         final Category resultCategory = catList.get(0).getCategory();
         Assert.assertEquals("Wrong category found (not same name)", categoryItem.getName(), resultCategory.getName());
         Assert.assertEquals("Wrong category found (not same description)", categoryItem.getDescription(), resultCategory.getDescription());
