@@ -11,30 +11,32 @@ package org.bonitasoft.web.rest.server;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
-import org.bonitasoft.engine.api.BusinessDataAPI;
-import org.bonitasoft.engine.api.CommandAPI;
-import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.ext.servlet.ServletUtils;
+import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
 
@@ -53,6 +55,7 @@ public class FinderFactory {
         finders.put(FormMappingResource.class, new FormMappingResourceFinder());
         finders.put(UserTaskContractResource.class, new UserTaskContractResourceFinder());
         finders.put(UserTaskExecutionResource.class, new UserTaskExecutionResourceFinder());
+        finders.put(UserTaskContextResource.class, new UserTaskContextResourceFinder());
         finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
         finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
     }
@@ -64,160 +67,6 @@ public class FinderFactory {
         }
         return finder;
     }
-
-    public abstract static class AbstractResourceFinder extends Finder {
-
-        protected CommandAPI getCommandAPI(final Request request) {
-            final APISession apiSession = getAPISession(request);
-            try {
-                return TenantAPIAccessor.getCommandAPI(apiSession);
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
-        }
-
-        protected ProcessAPI getProcessAPI(final Request request) {
-            final APISession apiSession = getAPISession(request);
-            try {
-                return TenantAPIAccessor.getProcessAPI(apiSession);
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
-        }
-
-        protected ProcessConfigurationAPI getProcessConfigurationAPI(final Request request) {
-            final APISession apiSession = getAPISession(request);
-            try {
-                return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
-        }
-
-        protected BusinessDataAPI getBdmAPI(final Request request) {
-            final APISession apiSession = getAPISession(request);
-            try {
-                return TenantAPIAccessor.getBusinessDataAPI(apiSession);
-            } catch (final Exception e) {
-                throw new APIException(e);
-            }
-        }
-
-        protected APISession getAPISession(final Request request) {
-            final HttpSession httpSession = ServletUtils.getRequest(request).getSession();
-            return (APISession) httpSession.getAttribute("apiSession");
-        }
-    }
-
-    public static class ActivityVariableResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new ActivityVariableResource(processAPI);
-        }
-    }
-
-    public static class TimerEventTriggerResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new TimerEventTriggerResource(processAPI);
-        }
-    }
-
-    public static class CaseInfoResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new CaseInfoResource(processAPI);
-        }
-    }
-
-    public static class BusinessDataReferenceResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final BusinessDataAPI bdmAPI = getBdmAPI(request);
-            return new BusinessDataReferenceResource(bdmAPI);
-        }
-    }
-
-    public static class BusinessDataQueryResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            return new BusinessDataQueryResource(getCommandAPI(request));
-        }
-    }
-
-    public static class BusinessDataReferencesResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final BusinessDataAPI processAPI = getBdmAPI(request);
-            return new BusinessDataReferencesResource(processAPI);
-        }
-    }
-
-    public static class BusinessDataResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final CommandAPI commandAPI = getCommandAPI(request);
-            return new BusinessDataResource(commandAPI);
-        }
-    }
-
-    public static class UserTaskContractResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new UserTaskContractResource(processAPI);
-        }
-    }
-
-    public static class UserTaskExecutionResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new UserTaskExecutionResource(processAPI);
-        }
-    }
-
-
-    public static class ProcessContractResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new ProcessContractResource(processAPI);
-        }
-    }
-
-    public static class ProcessInstantiationResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessAPI processAPI = getProcessAPI(request);
-            return new ProcessInstantiationResource(processAPI);
-        }
-    }
-
-
-    public static class FormMappingResourceFinder extends AbstractResourceFinder {
-
-        @Override
-        public ServerResource create(final Request request, final Response response) {
-            final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(request);
-            return new FormMappingResource(processConfigurationAPI);
-        }
-    }
-
 
 
 }

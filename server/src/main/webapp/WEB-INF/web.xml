@@ -261,7 +261,7 @@
     </servlet>
     <servlet>
         <servlet-name>RestletServletCustomPage</servlet-name>
-        <servlet-class>com.bonitasoft.web.rest.server.BonitaSPRestletApplicationServlet</servlet-class>
+        <servlet-class>org.bonitasoft.web.rest.server.BonitaRestletApplicationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConsoleServiceServlet</servlet-name>
