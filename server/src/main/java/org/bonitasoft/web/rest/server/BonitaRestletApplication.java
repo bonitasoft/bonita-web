@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014 BonitaSoft S.A.
+ * Copyright (C) 2014, 2015 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptor;
-import org.bonitasoft.web.rest.server.api.custom.SpringPlatformFileSystemBeanAccessor;
+import org.bonitasoft.web.rest.server.api.custom.SpringTenantBeanAccessor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -50,12 +50,13 @@ import org.restlet.routing.Router;
 public class BonitaRestletApplication extends Application {
 
     private final FinderFactory factory;
-    private final SpringPlatformFileSystemBeanAccessor springPlatformFileSystemBeanAccessor;
 
-    public BonitaRestletApplication(final FinderFactory finderFactory, SpringPlatformFileSystemBeanAccessor springPlatformFileSystemBeanAccessor) {
+    private final SpringTenantBeanAccessor beanAccessor;
+
+    public BonitaRestletApplication(final FinderFactory finderFactory, final SpringTenantBeanAccessor springPlatformFileSystemBeanAccessor) {
         super();
         factory = finderFactory;
-        this.springPlatformFileSystemBeanAccessor = springPlatformFileSystemBeanAccessor;
+        this.beanAccessor = springPlatformFileSystemBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -100,10 +101,9 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
         router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
-        for (CustomResourceDescriptor customResourceDescriptor : springPlatformFileSystemBeanAccessor.getRestConfiguration()) {
+        for (CustomResourceDescriptor customResourceDescriptor : beanAccessor.getRestConfiguration()) {
             router.attach("/custom/" + customResourceDescriptor.getPathTemplate(), factory.createCustom(customResourceDescriptor));
         }
-
         return router;
     }
 

@@ -10,7 +10,7 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptor;
-import org.bonitasoft.web.rest.server.api.custom.SpringPlatformFileSystemBeanAccessor;
+import org.bonitasoft.web.rest.server.api.custom.SpringTenantBeanAccessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -27,7 +27,7 @@ public class BonitaRestletApplicationTest {
     private CustomResourceDescriptor customResourceDescriptor;
 
     @Mock
-    SpringPlatformFileSystemBeanAccessor springPlatformFileSystemBeanAccessor;
+    SpringTenantBeanAccessor springPlatformFileSystemBeanAccessor;
 
     @Test
     public void should_application_register_bdm_resources() throws Exception {
