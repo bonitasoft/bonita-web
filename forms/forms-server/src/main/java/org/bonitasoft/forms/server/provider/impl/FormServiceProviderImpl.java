@@ -327,7 +327,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             throw new FormNotFoundException(e);
                         }
                         if (isFormPermissions) {
-                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(true), context);
+                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
                             // If assignTask=true in the contextURL assign the task to the user
                             if (isAssignTask(urlContext)) {
                                 try {
@@ -367,7 +367,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 throw new FormNotFoundException(e);
                             }
                             if (isFormPermissions) {
-                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(true), context);
+                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
                             }
                         } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                             // Trying to display the overview form
@@ -1153,7 +1153,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         final FormURLComponents urlComponents = new FormURLComponents();
         urlComponents.setApplicationURL(getAppDedicatedUrl(session, workflowAPI, activityInstanceId, UI_FORM_MODE));
         if (urlContext != null) {
-            final String activityDefinitionUuid = getActivityDefinitionUUID(session, workflowAPI, activityInstanceId);
+            final String activityDefinitionUuid = getActivityDefinitionKey(session, workflowAPI, activityInstanceId);
             final Map<String, Object> newURLContext = new HashMap<String, Object>(urlContext);
             newURLContext.remove(FormServiceProviderUtil.PROCESS_UUID);
             newURLContext.remove(FormServiceProviderUtil.INSTANCE_UUID);
@@ -1204,6 +1204,22 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             throws InvalidSessionException, FormWorflowApiException {
         try {
             return workflowAPI.getActivityDefinitionUUIDFromActivityInstanceID(session, activityInstanceId);
+        } catch (final ActivityInstanceNotFoundException e) {
+            final String message = "The activity instance with ID " + activityInstanceId + " does not exist!";
+            throw new FormWorflowApiException(message, e);
+        } catch (final ProcessDefinitionNotFoundException e) {
+            final String message = "The engine was not able to read activity instance with ID " + activityInstanceId;
+            throw new FormWorflowApiException(message, e);
+        } catch (final BPMEngineException e) {
+            final String message = "Error while communicating with the engine.";
+            throw new FormWorflowApiException(message, e);
+        }
+    }
+
+    private String getActivityDefinitionKey(final APISession session, final IFormWorkflowAPI workflowAPI, final long activityInstanceId)
+            throws InvalidSessionException, FormWorflowApiException {
+        try {
+            return workflowAPI.getActivityDefinitionKeyFromActivityInstanceID(session, activityInstanceId);
         } catch (final ActivityInstanceNotFoundException e) {
             final String message = "The activity instance with ID " + activityInstanceId + " does not exist!";
             throw new FormWorflowApiException(message, e);

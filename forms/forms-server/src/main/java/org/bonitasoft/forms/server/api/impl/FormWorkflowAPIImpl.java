@@ -1162,6 +1162,28 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             activityName = archivedActivityInstance.getName();
             processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
         }
+        return processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion() + UUID_SEPARATOR + activityName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getActivityDefinitionKeyFromActivityInstanceID(final APISession session, final long activityInstanceID)
+            throws ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException {
+
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        String activityName;
+        ProcessDefinition processDefinition;
+        try {
+            final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
+            activityName = activityInstance.getName();
+            processDefinition = processAPI.getProcessDefinition(activityInstance.getProcessDefinitionId());
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+            activityName = archivedActivityInstance.getName();
+            processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
+        }
         return urlEncode(processDefinition.getName()) + "/" + urlEncode(processDefinition.getVersion()) + "/" + urlEncode(activityName);
     }
 

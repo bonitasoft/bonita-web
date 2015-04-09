@@ -951,4 +951,7 @@ public interface IFormWorkflowAPI {
 
     Boolean canStartProcessDefinition(APISession session, long userId, long processDefinitionId) throws BPMEngineException;
 
+    String getActivityDefinitionKeyFromActivityInstanceID(APISession session, long activityInstanceID) throws ActivityInstanceNotFoundException,
+            ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException;
+
 }
