@@ -7,22 +7,22 @@
  * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
  **/
 
-package org.bonitasoft.web.rest.server.api.bdm;
+package org.bonitasoft.web.rest.server;
 
-import org.bonitasoft.engine.api.BusinessDataAPI;
-import org.bonitasoft.web.rest.server.ResourceFinder;
+import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.resource.ServerResource;
 
 /**
- * @author Baptiste Mesta
- */
-public class BusinessDataReferencesResourceFinder extends ResourceFinder {
+* @author Baptiste Mesta
+*/
+public class FormMappingResourceFinder extends ResourceFinder {
 
     @Override
     public ServerResource create(final Request request, final Response response) {
-        final BusinessDataAPI processAPI = getBdmAPI(request);
-        return new BusinessDataReferencesResource(processAPI);
+        final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(request);
+        return new FormMappingResource(processConfigurationAPI);
     }
 }

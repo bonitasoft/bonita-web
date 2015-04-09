@@ -8,7 +8,10 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
@@ -42,9 +45,25 @@ import org.restlet.resource.ServerResource;
 
 public class FinderFactory {
 
-    protected static Map<Class<? extends ServerResource>, Finder> finders;
-    static {
-        finders = new HashMap<Class<? extends ServerResource>, Finder>();
+    protected Map<Class<? extends ServerResource>, ResourceFinder> finders;
+    List<ResourceFinder> resourceFinders = new ArrayList<>();
+
+    public FinderFactory() {
+        this(getDefaultFinders());
+    }
+
+    public FinderFactory(Map<Class<? extends ServerResource>, ResourceFinder> finders) {
+        this.finders = finders;
+        for (Map.Entry<Class<? extends ServerResource>, ResourceFinder> classFinderEntry : finders.entrySet()) {
+            ResourceFinder resourceFinder = classFinderEntry.getValue();
+            resourceFinders.add(resourceFinder);
+            resourceFinder.setFinderFactory(this);
+        }
+
+    }
+
+    private static Map<Class<? extends ServerResource>, ResourceFinder> getDefaultFinders() {
+        Map<Class<? extends ServerResource>, ResourceFinder> finders = new HashMap<>();
         finders.put(ActivityVariableResource.class, new ActivityVariableResourceFinder());
         finders.put(TimerEventTriggerResource.class, new TimerEventTriggerResourceFinder());
         finders.put(CaseInfoResource.class, new CaseInfoResourceFinder());
@@ -58,6 +77,7 @@ public class FinderFactory {
         finders.put(UserTaskContextResource.class, new UserTaskContextResourceFinder());
         finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
         finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
+        return finders;
     }
 
     public Finder create(final Class<? extends ServerResource> clazz) {
@@ -66,6 +86,23 @@ public class FinderFactory {
             throw new RuntimeException("Finder unimplemented for class " + clazz);
         }
         return finder;
+    }
+
+    public ResourceFinder getResourceFinderFor(Serializable object) {
+        for (ResourceFinder resourceFinder : resourceFinders) {
+            if (resourceFinder.handlesResource(object)) {
+                return resourceFinder;
+            }
+        }
+        return null;
+    }
+
+    public Serializable getContextResultElement(Serializable object) {
+        ResourceFinder resourceFinderFor = getResourceFinderFor(object);
+        if (resourceFinderFor != null) {
+            return resourceFinderFor.getContextResultElement(object);
+        }
+        return object;
     }
 
 

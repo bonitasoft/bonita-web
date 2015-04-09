@@ -10,8 +10,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.business.data.impl.MultipleBusinessDataReferenceImpl;
 import org.bonitasoft.engine.business.data.impl.SimpleBusinessDataReferenceImpl;
-import org.bonitasoft.web.rest.server.ResourceHandler;
-import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResourceFinder;
+import org.bonitasoft.web.rest.server.FinderFactory;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -37,81 +36,37 @@ public class UserTaskContextResourceTest extends RestletTest {
 
     @Mock
     private ProcessAPI processAPI;
-
+    @Mock
+    private FinderFactory finderFactory;
     UserTaskContextResource taskContextResource;
-    private ResourceHandler resourceHandler;
 
     @Override
     protected ServerResource configureResource() {
-        resourceHandler = new ResourceHandler();
-        resourceHandler.addResource(new BusinessDataReferenceResourceFinder());
-        return new UserTaskContextResource(processAPI, resourceHandler);
+        return new UserTaskContextResource(processAPI, finderFactory);
     }
 
     @Before
     public void initializeMocks() {
-        taskContextResource = spy(new UserTaskContextResource(processAPI, new ResourceHandler()));
-    }
-
-    @Test
-    public void should_return_a_context_for_a_given_task_instance() throws Exception {
-        //given
-        final Map<String, Serializable> context = new HashMap<String, Serializable>();
-        context.put("processDefinitionId", "8883000");
-
-        when(processAPI.getUserTaskExecutionContext(2L)).thenReturn(context);
-
-        //when
-        final Response response = request("/bpm/userTask/2/context").get();
-
-        //then
-        assertThat(response).hasStatus(Status.SUCCESS_OK);
-        assertThat(response).hasJsonEntityEqualTo("{\"processDefinitionId\" : \"8883000\"}");
+        taskContextResource = spy(new UserTaskContextResource(processAPI, finderFactory));
     }
 
     @Test
     public void should_return_a_context_of_type_SingleBusinessDataRef_for_a_given_task_instance() throws Exception {
         //given
+
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
-        SimpleBusinessDataReferenceImpl bizDataRef = new SimpleBusinessDataReferenceImpl("Ticket", "com.acme.object.Ticket", 7L);
+        String engineResult = "object returned by engine";
 
-        context.put("Ticket", bizDataRef);
-
+        context.put("Ticket", engineResult);
         when(processAPI.getUserTaskExecutionContext(2L)).thenReturn(context);
+        doReturn("clientResult").when(finderFactory).getContextResultElement(engineResult);
 
         //when
         final Response response = request("/bpm/userTask/2/context").get();
 
         //then
         assertThat(response).hasStatus(Status.SUCCESS_OK);
-        assertThat(response).hasJsonEntityEqualTo("{\"Ticket\":{\"type\":\"com.acme.object.Ticket\",\"value\":\"7\",\"link\":\"API/bdm/businessData/com.acme.object.Ticket/7\"}}");
-    }
-
-    @Test
-    public void should_return_a_context_of_type_MultipleBusinessDataRef_for_a_given_task_instance() throws Exception {
-        //given
-        final Map<String, Serializable> context = new HashMap<String, Serializable>();
-        MultipleBusinessDataReferenceImpl bizDataRef = new MultipleBusinessDataReferenceImpl("Ticket", "com.acme.object.Ticket", Arrays.asList(7L, 8L));
-
-        context.put("Ticket", bizDataRef);
-
-        when(processAPI.getUserTaskExecutionContext(2L)).thenReturn(context);
-
-        //when
-        final Response response = request("/bpm/userTask/2/context").get();
-
-        //then
-        assertThat(response).hasStatus(Status.SUCCESS_OK);
-        assertThat(response).hasJsonEntityEqualTo("{\"Ticket\":{\"type\":\"com.acme.object.Ticket\",\"value\":\"[7, 8]\",\"link\":\"API/bdm/businessData/com.acme.object.Ticket/?q=findByIds&f=ids=7,8\"}}");
-    }
-
-    @Test
-    public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
-        when(processAPI.getUserTaskExecutionContext(2)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
-
-        final Response response = request("/bpm/userTask/2/context").get();
-
-        assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        assertThat(response).hasJsonEntityEqualTo("{\"Ticket\":\"clientResult\"}");
     }
 
     @Test
@@ -129,5 +84,14 @@ public class UserTaskContextResourceTest extends RestletTest {
         }
 
     }
+    @Test
+    public void should_respond_404_Not_found_when_task_is_not_found_when_getting_contract() throws Exception {
+        when(processAPI.getUserTaskExecutionContext(2)).thenThrow(new UserTaskNotFoundException("task 2 not found"));
+
+        final Response response = request("/bpm/userTask/2/context").get();
+
+        assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
+    }
+
 
 }

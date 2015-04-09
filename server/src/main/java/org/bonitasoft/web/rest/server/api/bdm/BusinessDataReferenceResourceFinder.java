@@ -1,11 +1,18 @@
+/**
+ * Copyright (C) 2015 BonitaSoft S.A.
+ * BonitaSoft is a trademark of BonitaSoft SA.
+ * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
+ * For commercial licensing information, contact:
+ * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
+ * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
+ **/
+
 package org.bonitasoft.web.rest.server.api.bdm;
 
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.business.data.BusinessDataReference;
 import org.bonitasoft.engine.business.data.MultipleBusinessDataReference;
 import org.bonitasoft.engine.business.data.SimpleBusinessDataReference;
-import org.bonitasoft.engine.business.data.impl.MultipleBusinessDataReferenceImpl;
-import org.bonitasoft.engine.business.data.impl.SimpleBusinessDataReferenceImpl;
 import org.bonitasoft.web.rest.server.BonitaRestletApplication;
 import org.bonitasoft.web.rest.server.ResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ContextResultElement;
@@ -16,8 +23,8 @@ import org.restlet.resource.ServerResource;
 import java.io.Serializable;
 
 /**
-* Created by fabiolombardi on 09/04/2015.
-*/
+ * @author Baptiste Mesta
+ */
 public class BusinessDataReferenceResourceFinder extends ResourceFinder {
 
     @Override

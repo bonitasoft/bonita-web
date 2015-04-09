@@ -2,14 +2,10 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
-import org.bonitasoft.engine.business.data.impl.MultipleBusinessDataReferenceImpl;
 import org.bonitasoft.engine.expression.ExpressionEvaluationException;
-import org.bonitasoft.web.rest.server.BonitaRestletApplication;
-import org.bonitasoft.web.rest.server.ResourceFinder;
-import org.bonitasoft.web.rest.server.ResourceHandler;
+import org.bonitasoft.web.rest.server.FinderFactory;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.engine.business.data.impl.SimpleBusinessDataReferenceImpl;
 import org.restlet.resource.Get;
 
 import java.io.Serializable;
@@ -20,9 +16,9 @@ public class UserTaskContextResource extends CommonResource {
     static final String TASK_ID = "taskId";
 
     private final ProcessAPI processAPI;
-    private ResourceHandler resourceHandler;
+    private FinderFactory resourceHandler;
 
-    public UserTaskContextResource(final ProcessAPI processAPI, ResourceHandler resourceHandler) {
+    public UserTaskContextResource(final ProcessAPI processAPI, FinderFactory resourceHandler) {
         this.processAPI = processAPI;
         this.resourceHandler = resourceHandler;
     }

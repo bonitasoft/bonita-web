@@ -1,3 +1,12 @@
+/**
+ * Copyright (C) 2015 BonitaSoft S.A.
+ * BonitaSoft is a trademark of BonitaSoft SA.
+ * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
+ * For commercial licensing information, contact:
+ * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
+ * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
+ **/
+
 package org.bonitasoft.web.rest.server;
 
 import org.bonitasoft.engine.api.BusinessDataAPI;
@@ -14,13 +23,10 @@ import org.restlet.resource.Finder;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
-/**
-* Created by fabiolombardi on 09/04/2015.
-*/
 public abstract class ResourceFinder extends Finder {
 
 
-    private ResourceHandler resourceHandler;
+    private FinderFactory finderFactory;
 
     public boolean handlesResource(Serializable object){
         return false;
@@ -68,12 +74,12 @@ public abstract class ResourceFinder extends Finder {
         return (APISession) httpSession.getAttribute("apiSession");
     }
 
-    public void setResourceHandler(ResourceHandler resourceHandler) {
-        this.resourceHandler = resourceHandler;
+    public void setFinderFactory(FinderFactory finderFactory) {
+        this.finderFactory = finderFactory;
     }
 
-    public ResourceHandler getResourceHandler() {
-        return resourceHandler;
+    public FinderFactory getFinderFactory() {
+        return finderFactory;
     }
 
     public Serializable getContextResultElement(Serializable object) {
