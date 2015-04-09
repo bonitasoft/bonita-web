@@ -94,18 +94,14 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
     @Override
     public void buildView(final HumanTaskItem task) {
-        if (task.getAssignedId() != null) {
-            addBody(createFormIframe(task, false));
-        } else {
-            addBody(createFormIframe(task, true));
-        }
+        addBody(createFormIframe(task));
     }
 
-    private Component createFormIframe(final HumanTaskItem item, final boolean assignTask) {
-        return new UiComponent(new IFrameView(buildTasksFormURL(item, assignTask)));
+    private Component createFormIframe(final HumanTaskItem item) {
+        return new UiComponent(new IFrameView(buildTasksFormURL(item)));
     }
 
-    private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
+    private String buildTasksFormURL(final HumanTaskItem item) {
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
         final String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);
@@ -128,9 +124,6 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
         if (userId != null && !userId.isEmpty()) {
             frameURL.append("&user=").append(userId);
-        }
-        if (assignTask) {
-            frameURL.append("&assignTask=true");
         }
 
         return frameURL.toString();
