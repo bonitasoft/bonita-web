@@ -327,7 +327,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             throw new FormNotFoundException(e);
                         }
                         if (isFormPermissions) {
-                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
+                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(true), context);
                             // If assignTask=true in the contextURL assign the task to the user
                             if (isAssignTask(urlContext)) {
                                 try {
@@ -367,7 +367,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                                 throw new FormNotFoundException(e);
                             }
                             if (isFormPermissions) {
-                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
+                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(true), context);
                             }
                         } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                             // Trying to display the overview form
