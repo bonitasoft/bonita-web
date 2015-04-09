@@ -1,9 +1,9 @@
-package org.bonitasoft.web.rest.server.api.custom;
+package org.bonitasoft.web.rest.server.api.extension;
 
 /**
  * @author Laurent Leseigneur
  */
-public interface CustomResourceDescriptor {
+public interface ResourceExtensionDescriptor {
 
     String getPathTemplate();
 

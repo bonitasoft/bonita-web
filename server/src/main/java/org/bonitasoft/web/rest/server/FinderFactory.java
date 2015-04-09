@@ -30,8 +30,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
-import org.bonitasoft.web.rest.server.api.custom.CustomResource;
-import org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptor;
+import org.bonitasoft.web.rest.server.api.extension.ApiExtensionResource;
+import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -67,8 +67,8 @@ public class FinderFactory {
         return finder;
     }
 
-    public Finder createCustom(CustomResourceDescriptor customResourceDescriptor) {
-        return new CustomApiServerResourceFinder(customResourceDescriptor);
+    public Finder createExtensionResource(ResourceExtensionDescriptor resourceExtensionDescriptor) {
+        return new ApiExtensionResourceFinder(resourceExtensionDescriptor);
     }
 
     public abstract static class AbstractResourceFinder extends Finder {
@@ -224,18 +224,18 @@ public class FinderFactory {
         }
     }
 
-    public static class CustomApiServerResourceFinder extends AbstractResourceFinder {
+    public static class ApiExtensionResourceFinder extends AbstractResourceFinder {
 
-        private final CustomResourceDescriptor customResourceDescriptor;
+        private final ResourceExtensionDescriptor resourceExtensionDescriptor;
 
-        public CustomApiServerResourceFinder(CustomResourceDescriptor customResourceDescriptor) {
-            this.customResourceDescriptor = customResourceDescriptor;
+        public ApiExtensionResourceFinder(ResourceExtensionDescriptor resourceExtensionDescriptor) {
+            this.resourceExtensionDescriptor = resourceExtensionDescriptor;
         }
 
         @Override
         public ServerResource create(final Request request, final Response response) {
         	final RestApiRenderer restApiRenderer = new RestApiRenderer();
-            return new CustomResource(customResourceDescriptor, restApiRenderer);
+            return new ApiExtensionResource(resourceExtensionDescriptor, restApiRenderer);
         }
 
     }

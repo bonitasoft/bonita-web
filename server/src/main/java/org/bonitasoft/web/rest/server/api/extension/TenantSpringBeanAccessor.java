@@ -14,39 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.custom;
+package org.bonitasoft.web.rest.server.api.extension;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Matthieu Chaffotte
  */
-public class CustomResourceDescriptorImpl implements CustomResourceDescriptor {
+public class TenantSpringBeanAccessor {
 
-	private String pathTemplate;
-	
-	private String method;
-	
-	private String pageName;
-	
-	public CustomResourceDescriptorImpl(String pathTemplate, String method, String pageName) {
-		super();
-		this.pathTemplate = pathTemplate;
-		this.method = method;
-		this.pageName = pageName;
+	private AbsolutePathFileSystemXmlApplicationContext context;
+
+	public TenantSpringBeanAccessor(File directory) {
+		final File restFile = new File(directory, "restAPI.xml");
+		if (restFile.exists()) {
+			context = new AbsolutePathFileSystemXmlApplicationContext(new String [] {restFile.getPath()}, true, null);
+		}
 	}
 
-	@Override
-	public String getPathTemplate() {
-		return pathTemplate;
-	}
-
-	@Override
-	public String getMethod() {
-		return method;
-	}
-
-	@Override
-	public String getPageName() {
-		return pageName;
+	public List<ResourceExtensionDescriptor> getResourceExtensionConfiguration() {
+		if (context == null) {
+			return Collections.emptyList();
+		}
+		return new ArrayList<>(context.getBeansOfType(ResourceExtensionDescriptor.class).values());
 	}
 
 }

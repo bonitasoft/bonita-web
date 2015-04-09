@@ -1,4 +1,4 @@
-package org.bonitasoft.web.rest.server.api.custom;
+package org.bonitasoft.web.rest.server.api.extension;
 
 import java.io.OutputStream;
 import javax.servlet.http.HttpServletResponse;

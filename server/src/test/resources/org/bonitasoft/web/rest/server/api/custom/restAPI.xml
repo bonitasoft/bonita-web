@@ -1,13 +1,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean class="org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptorImpl">
+	<bean class="org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptorImpl">
 		<constructor-arg name="method" value="GET" />
 		<constructor-arg name="pathTemplate" value="hello_world" />
 		<constructor-arg name="pageName" value="custom_hello" />
 	</bean>
 
-	<bean class="org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptorImpl">
+	<bean class="org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptorImpl">
 		<constructor-arg name="method" value="GET" />
 		<constructor-arg name="pathTemplate" value="say" />
 		<constructor-arg name="pageName" value="custom_say_hello" />

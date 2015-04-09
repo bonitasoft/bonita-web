@@ -29,8 +29,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
-import org.bonitasoft.web.rest.server.api.custom.CustomResourceDescriptor;
-import org.bonitasoft.web.rest.server.api.custom.SpringTenantBeanAccessor;
+import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
+import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -49,14 +49,15 @@ import org.restlet.routing.Router;
  */
 public class BonitaRestletApplication extends Application {
 
+    public static final String ROUTER_EXTENSION_PREFIX = "/extension/";
     private final FinderFactory factory;
 
-    private final SpringTenantBeanAccessor beanAccessor;
+    private final TenantSpringBeanAccessor beanAccessor;
 
-    public BonitaRestletApplication(final FinderFactory finderFactory, final SpringTenantBeanAccessor springPlatformFileSystemBeanAccessor) {
+    public BonitaRestletApplication(final FinderFactory finderFactory, final TenantSpringBeanAccessor tenantSpringBeanAccessor) {
         super();
         factory = finderFactory;
-        this.beanAccessor = springPlatformFileSystemBeanAccessor;
+        this.beanAccessor = tenantSpringBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -101,14 +102,20 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
         router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
-        for (CustomResourceDescriptor customResourceDescriptor : beanAccessor.getRestConfiguration()) {
-            router.attach("/custom/" + customResourceDescriptor.getPathTemplate(), factory.createCustom(customResourceDescriptor));
-        }
+        buildRouterExtension(router);
         return router;
+    }
+
+    private void buildRouterExtension(Router router) {
+        for (ResourceExtensionDescriptor resourceExtensionDescriptor : beanAccessor.getResourceExtensionConfiguration()) {
+            router.attach(ROUTER_EXTENSION_PREFIX + resourceExtensionDescriptor.getPathTemplate(), factory.createExtensionResource(resourceExtensionDescriptor));
+        }
     }
 
     @Override
     public void handle(final Request request, final Response response) {
+
+
         request.setLoggable(false);
         Engine.setLogLevel(Level.OFF);
         Engine.setRestletLogLevel(Level.OFF);

@@ -16,8 +16,6 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import groovy.lang.GroovyClassLoader;
@@ -33,21 +31,18 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 public class RestApiRenderer {
 
-    public static final String PROFILE_PARAM = "profile";
-
-    public static final String LOCALE_PARAM = "locale";
-
-    public static final String DEFAULT_LOCALE = "en";
 
     private CustomPageService customPageService = new CustomPageService();
 
-    public Object handleCustomRestApiCall(final HttpServletRequest request, final APISession apiSession, final String pageName)
+    public Object handleRestApiCall(final HttpServletRequest request, final String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
+        final PageContextHelper pageContextHelper = new PageContextHelper(request);
+        APISession apiSession = pageContextHelper.getApiSession();
         PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageName, pageResourceProvider);
         if (isGroovyPage(pageResourceProvider)) {
-            return displayGroovyPage(request, apiSession, pageName, pageResourceProvider);
+            return displayGroovyPage(request, apiSession, pageContextHelper, pageName, pageResourceProvider);
         }
         throw new BonitaException("unable to handle custom rest api call to " + pageName);
     }
@@ -58,38 +53,20 @@ public class RestApiRenderer {
         return indexGroovy.exists();
     }
 
-    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final String pageName, final PageResourceProvider pageResourceProvider)
+    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, PageContextHelper pageContextHelper, final String pageName, final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageName, pageResourceProvider);
         try {
             Thread.currentThread().setContextClassLoader(pageClassloader);
-            final Class<RestApiController> pageClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider);
-            final RestApiController restApiController = customPageService.loadRestApiPage(pageClass);
+            final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider);
+            final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             return restApiController.doHandle(request, pageResourceProvider,
-                    new PageContext(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
+                    new PageContext(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()));
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassloader);
         }
     }
-
-    public String getCurrentProfile(final HttpServletRequest request) {
-        return request.getParameter(PROFILE_PARAM);
-    }
-
-    public Locale getCurrentLocale(final HttpServletRequest request) {
-        final String locale = request.getParameter(LOCALE_PARAM);
-        if (locale == null) {
-            for (final Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("BOS_Locale")) {
-                    return new Locale(cookie.getValue());
-                }
-            }
-            return new Locale(DEFAULT_LOCALE);
-        }
-        return new Locale(locale);
-    }
-
 
 }

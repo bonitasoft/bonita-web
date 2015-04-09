@@ -11,7 +11,7 @@
  * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
  * Floor, Boston, MA 02110-1301, USA.
  **/
-package org.bonitasoft.web.rest.server.api.custom;
+package org.bonitasoft.web.rest.server.api.extension;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
