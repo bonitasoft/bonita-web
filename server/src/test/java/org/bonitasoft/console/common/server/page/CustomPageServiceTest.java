@@ -87,7 +87,7 @@ public class CustomPageServiceTest {
     public void should_load_rest_api_page_return_api_impl() throws Exception {
         // Given
         when(apiSession.getTenantId()).thenReturn(0L);
-        final File pageFile = new File(getClass().getResource("/Index.groovy").toURI());
+        final File pageFile = new File(getClass().getResource("/IndexRestApi.groovy").toURI());
         final File pageDir = pageFile.getParentFile();
         assertThat(pageFile).as("no file "+pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
@@ -101,7 +101,7 @@ public class CustomPageServiceTest {
         when(pageAPI.getPageByName("")).thenReturn(mockedPage);
 
         // When
-        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, "", pageResourceProvider);
+        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, "IndexRestApi.groovy", pageResourceProvider);
         final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider);
         final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
 
