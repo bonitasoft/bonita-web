@@ -17,6 +17,7 @@
 package org.bonitasoft.console.client.common.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
@@ -154,5 +155,10 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     @Override
     protected void onItemNotFound() {
         ViewController.showPopup(new ItemNotFoundPopup(TasksListingPage.TOKEN));
+    }
+
+    @Override
+    protected List<String> defineDeploys() {
+        return Arrays.asList(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
     }
 }
