@@ -85,9 +85,9 @@ public class DisplayCaseFormPage extends Page {
 
     private String getCaseOverviewUrl() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String encodedProcessName = URL.encodeQueryString(processName);
+        final String encodedProcessName = URL.encodePathSegment(processName);
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String encodedProcessVersion = URL.encodeQueryString(processVersion);
+        final String encodedProcessVersion = URL.encodePathSegment(processVersion);
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);

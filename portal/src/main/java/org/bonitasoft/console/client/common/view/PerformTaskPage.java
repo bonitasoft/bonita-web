@@ -109,11 +109,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append("resource/taskInstance/")
-                .append(URL.encodeQueryString(item.getProcess().getName()))
+                .append(URL.encodePathSegment(item.getProcess().getName()))
                 .append("/")
-                .append(URL.encodeQueryString(item.getProcess().getVersion()))
+                .append(URL.encodePathSegment(item.getProcess().getVersion()))
                 .append("/")
-                .append(URL.encodeQueryString(item.getName()))
+                .append(URL.encodePathSegment(item.getName()))
                 .append("/content/?id=")
                 .append(item.getId())
                 .append("&locale=")
