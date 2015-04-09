@@ -54,7 +54,7 @@ public class CustomResource extends ServerResource {
 
     private Object handleRequest(String method) throws Exception {
         final HttpServletRequest request = ServletUtils.getRequest(getRequest());
-        return restApiRenderer.handleCustomRestApiCall(request, getAPISession(request), customResourceDescriptor.getPageName(), method);
+        return restApiRenderer.handleCustomRestApiCall(request, getAPISession(request), customResourceDescriptor.getPageName());
     }
 
     protected APISession getAPISession(final HttpServletRequest request) {

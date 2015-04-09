@@ -25,12 +25,12 @@ public interface RestApiController {
     /**
      * Let the custom page parse request for specific attribute handling.
      *
+     * @param method               the HTTP method to handle, such as GET,PUT,POST, or other
      * @param request              the HTTP servlet request intended to be used as in a servlet
      * @param pageResourceProvider provide access to the resources contained in the custom page zip
      * @param pageContext          provide access to the data relative to the context in which the custom page is displayed
-     * @param method               the HTTP method to handle, such as GET,PUT,POST, or other
      * @return a Serializable response
      * @since 7.0
      */
-    public Serializable doHandle(HttpServletRequest request, PageResourceProvider pageResourceProvider, PageContext pageContext, String method);
+    public Serializable doHandle(HttpServletRequest request, PageResourceProvider pageResourceProvider, PageContext pageContext);
 }
