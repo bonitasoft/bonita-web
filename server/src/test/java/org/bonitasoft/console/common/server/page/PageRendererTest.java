@@ -1,4 +1,5 @@
-/*******************************************************************************
+/**
+ * ****************************************************************************
  * Copyright (C) 2015 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This library is free software; you can redistribute it and/or modify it under the terms
@@ -10,10 +11,12 @@
  * You should have received a copy of the GNU Lesser General Public License along with this
  * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
  * Floor, Boston, MA 02110-1301, USA.
- ******************************************************************************/
+ * ****************************************************************************
+ */
 
 package org.bonitasoft.console.common.server.page;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
@@ -36,11 +39,12 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
 /**
  * @author Julien Mege
  */
 @RunWith(MockitoJUnitRunner.class)
-public class PageRendererTest{
+public class PageRendererTest {
 
     MockHttpServletRequest hsRequest = new MockHttpServletRequest();
 
@@ -72,7 +76,7 @@ public class PageRendererTest{
     PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
     @Before
-    public void beforeEach(){
+    public void beforeEach() {
         hsRequest.setSession(httpSession);
         doReturn(apiSession).when(httpSession).getAttribute("apiSession");
         doReturn(1L).when(apiSession).getTenantId();
@@ -82,7 +86,7 @@ public class PageRendererTest{
     public void should_display_html_page() throws Exception {
         final String pageName = "my_html_page_v_7";
         final File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
-        final File indexFile = new File(pageDir, "resources"+File.separator+"index.html");
+        final File indexFile = new File(pageDir, "resources" + File.separator + "index.html");
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(42L, apiSession);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
@@ -112,5 +116,33 @@ public class PageRendererTest{
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
     }
+
+    @Test
+    public void should_get_pageResourceProvider_by_pageId() throws Exception {
+        //given
+        final String pageName = "pageName";
+        doReturn(pageName).when(page).getName();
+        doReturn(page).when(customPageService).getPage(apiSession, 42L);
+
+        //when
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(42L, apiSession);
+
+        //then
+        assertThat(pageResourceProvider.getPageName()).isEqualTo(pageName);
+    }
+
+    @Test
+    public void should_get_pageResourceProvider_by_pageName() throws Exception {
+        //given
+        final String pageName = "pageName";
+        doReturn(pageName).when(page).getName();
+
+        //when
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageName,1L);
+
+        //then
+        assertThat(pageResourceProvider.getPageName()).isEqualTo(pageName);
+    }
+
 
 }
