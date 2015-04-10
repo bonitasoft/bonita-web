@@ -14,22 +14,22 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public interface PageController {
+/**
+ * @author Laurent Leseigneur
+ */
+public interface RestApiController {
 
     /**
      * Let the custom page parse request for specific attribute handling.
      *
-     * @param request
-     *            the HTTP servlet request intended to be used as in a servlet
-     * @param response
-     *            the HTTP servlet response intended to be used as in a servlet
-     * @param pageResourceProvider
-     *            provide access to the resources contained in the custom page zip
-     * @param pageContext
-     *            provide access to the data relative to the context in which the custom page is displayed
+     * @param request              the HTTP servlet request intended to be used as in a servlet
+     * @param pageResourceProvider provide access to the resources contained in the custom page zip
+     * @param pageContext          provide access to the data relative to the context in which the custom page is displayed
+     * @return a Serializable response
+     * @since 7.0
      */
-    void doGet(HttpServletRequest request, HttpServletResponse response, PageResourceProvider pageResourceProvider, PageContext pageContext);
+    Serializable doHandle(HttpServletRequest request, PageResourceProvider pageResourceProvider, PageContext pageContext);
 }

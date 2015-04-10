@@ -10,9 +10,9 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -30,6 +30,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
+import org.bonitasoft.web.rest.server.api.extension.ApiExtensionResource;
+import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
@@ -63,6 +65,10 @@ public class FinderFactory {
             throw new RuntimeException("Finder unimplemented for class " + clazz);
         }
         return finder;
+    }
+
+    public Finder createExtensionResource(ResourceExtensionDescriptor resourceExtensionDescriptor) {
+        return new ApiExtensionResourceFinder(resourceExtensionDescriptor);
     }
 
     public abstract static class AbstractResourceFinder extends Finder {
@@ -218,6 +224,20 @@ public class FinderFactory {
         }
     }
 
+    public static class ApiExtensionResourceFinder extends AbstractResourceFinder {
 
+        private final ResourceExtensionDescriptor resourceExtensionDescriptor;
+
+        public ApiExtensionResourceFinder(ResourceExtensionDescriptor resourceExtensionDescriptor) {
+            this.resourceExtensionDescriptor = resourceExtensionDescriptor;
+        }
+
+        @Override
+        public ServerResource create(final Request request, final Response response) {
+        	final RestApiRenderer restApiRenderer = new RestApiRenderer();
+            return new ApiExtensionResource(resourceExtensionDescriptor, restApiRenderer);
+        }
+
+    }
 
 }
