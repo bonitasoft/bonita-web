@@ -104,7 +104,7 @@ public class DisplayCaseFormPage extends Page {
                 .append(encodedProcessVersion)
                 .append("/content/?id=")
                 .append(caseId)
-                .append("?locale=")
+                .append("&locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {
