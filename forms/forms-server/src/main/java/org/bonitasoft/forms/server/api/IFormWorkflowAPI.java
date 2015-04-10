@@ -58,16 +58,17 @@ public interface IFormWorkflowAPI {
      * Check the child and parent pocesses and retrieve the next task uuid if it is in the user task list
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processInstanceId
-     *            the UUID of the current process instance
+     *        the UUID of the current process instance
+     * @param userId
      * @return the next task UUID or null there is no next task or if the next task is not in the user todolist
      * @throws BPMEngineException
      * @throws UserNotFoundException
      * @throws ProcessDefinitionNotFoundException
      */
-    long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, RetrieveException,
-    BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
+    long getRelatedProcessesNextTask(final APISession session, final long processInstanceId, final long userId) throws InvalidSessionException,
+            RetrieveException, BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
 
     /**
      * Retrieve any task id of the user todolist. If the process UUID is valid, the task belong to the process otherwise any task from the user todolist can be

@@ -1133,7 +1133,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
                 processInstanceID = getProcessInstanceId(urlContext);
             }
-            final long activityInstanceId = getNextActivityInstanceId(getFormWorkFlowApi(), session, processInstanceID);
+            final long activityInstanceId = getNextActivityInstanceId(getFormWorkFlowApi(), session, processInstanceID, ctxu.getUserId(true));
             if (activityInstanceId != -1) {
                 urlComponents = buildTaskURLComponents(session, workflowAPI, activityInstanceId, urlContext);
             }
@@ -1264,13 +1264,13 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return id;
     }
 
-    private long getNextActivityInstanceId(final IFormWorkflowAPI formWorkflowApi, final APISession session, final long processInstanceId)
+    private long getNextActivityInstanceId(final IFormWorkflowAPI formWorkflowApi, final APISession session, final long processInstanceId, final long userId)
             throws FormWorflowApiException {
         long activityInstanceId = -1L;
         try {
-            activityInstanceId = formWorkflowApi.getRelatedProcessesNextTask(session, processInstanceId);
+            activityInstanceId = formWorkflowApi.getRelatedProcessesNextTask(session, processInstanceId, userId);
         } catch (final UserNotFoundException e) {
-            final String message = "The user with ID " + session.getUserId() + " does not exist!";
+            final String message = "The user with ID " + userId + " does not exist!";
             throw new FormWorflowApiException(message, e);
         } catch (final InvalidSessionException e) {
             final String message = "The engine session is invalid.";

@@ -531,6 +531,12 @@ public class URLUtils {
         url.append(URLUtils.LOCALE_PARAM);
         url.append("=");
         url.append(getLocale());
+        if (urlContext.containsKey(URLUtils.USER_ID_PARAM)) {
+            url.append("&");
+            url.append(URLUtils.USER_ID_PARAM);
+            url.append("=");
+            url.append(urlContext.get(URLUtils.USER_ID_PARAM));
+        }
         return url.toString();
     }
 

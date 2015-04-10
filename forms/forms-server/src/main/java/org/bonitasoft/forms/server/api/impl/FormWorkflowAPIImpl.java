@@ -483,13 +483,13 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * @throws ProcessDefinitionNotFoundException
      */
     @Override
-    public long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, BPMEngineException,
-            UserNotFoundException, SearchException, ProcessDefinitionNotFoundException {
+    public long getRelatedProcessesNextTask(final APISession session, final long processInstanceId, final long userId) throws InvalidSessionException,
+            BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException {
         try {
             final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
             final long rootProcessInstanceId = getRootProcessInstanceId(processAPI, processInstanceId);
             if (rootProcessInstanceId != NOT_FOUND) {
-                return getProcessInstanceTaskAvailableForUser(processAPI, rootProcessInstanceId, session.getUserId());
+                return getProcessInstanceTaskAvailableForUser(processAPI, rootProcessInstanceId, userId);
             } else {
                 return NOT_FOUND;
             }
