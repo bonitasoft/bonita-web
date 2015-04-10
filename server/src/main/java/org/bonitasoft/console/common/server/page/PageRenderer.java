@@ -134,7 +134,7 @@ public class PageRenderer {
     }
 
     public PageResourceProvider getPageResourceProvider(final String pageName, final long tenantId) {
-        return getPageResourceProvider(pageName, tenantId);
+        return new PageResourceProvider(pageName, tenantId);
     }
 
 
