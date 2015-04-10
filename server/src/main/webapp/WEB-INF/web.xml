@@ -207,11 +207,6 @@
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/portal/homepage</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>BPMURLSupportFilter</filter-name>
-        <url-pattern>/portal/BonitaConsole.html</url-pattern>
-        <url-pattern>/portal/homepage</url-pattern>
-    </filter-mapping>
     <!-- Cache Filter Mapping Start -->
     <filter-mapping>
         <filter-name>CacheFilter</filter-name>
