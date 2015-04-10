@@ -15,6 +15,10 @@ public class PageContextHelper {
 
     public static final String DEFAULT_LOCALE = "en";
 
+    public static final String LOCALE_COOKIE_NAME = "BOS_Locale";
+
+    public static final String ATTRIBUTE_API_SESSION = "apiSession";
+
     private final HttpServletRequest request;
 
     public PageContextHelper(HttpServletRequest request) {
@@ -29,7 +33,7 @@ public class PageContextHelper {
         final String locale = request.getParameter(LOCALE_PARAM);
         if (locale == null) {
             for (final Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("BOS_Locale")) {
+                if (cookie.getName().equals(LOCALE_COOKIE_NAME)) {
                     return new Locale(cookie.getValue());
                 }
             }
@@ -40,7 +44,7 @@ public class PageContextHelper {
 
     public APISession getApiSession() {
         final HttpSession httpSession = request.getSession();
-        return (APISession) httpSession.getAttribute("apiSession");
+        return (APISession) httpSession.getAttribute(ATTRIBUTE_API_SESSION);
 
     }
 }
