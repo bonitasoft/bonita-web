@@ -8,12 +8,6 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
@@ -43,26 +37,37 @@ import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FinderFactory {
 
     protected Map<Class<? extends ServerResource>, ResourceFinder> finders;
     List<ResourceFinder> resourceFinders = new ArrayList<>();
 
     public FinderFactory() {
-        this(getDefaultFinders());
+        this.finders = getDefaultFinders();
+        createResourceFinderList(finders);
     }
 
     public FinderFactory(Map<Class<? extends ServerResource>, ResourceFinder> finders) {
         this.finders = finders;
+        createResourceFinderList(finders);
+
+    }
+
+    private void createResourceFinderList(Map<Class<? extends ServerResource>, ResourceFinder> finders) {
         for (Map.Entry<Class<? extends ServerResource>, ResourceFinder> classFinderEntry : finders.entrySet()) {
             ResourceFinder resourceFinder = classFinderEntry.getValue();
             resourceFinders.add(resourceFinder);
             resourceFinder.setFinderFactory(this);
         }
-
     }
 
-    private static Map<Class<? extends ServerResource>, ResourceFinder> getDefaultFinders() {
+    protected Map<Class<? extends ServerResource>, ResourceFinder> getDefaultFinders() {
         Map<Class<? extends ServerResource>, ResourceFinder> finders = new HashMap<>();
         finders.put(ActivityVariableResource.class, new ActivityVariableResourceFinder());
         finders.put(TimerEventTriggerResource.class, new TimerEventTriggerResourceFinder());
@@ -104,6 +109,4 @@ public class FinderFactory {
         }
         return object;
     }
-
-
 }
