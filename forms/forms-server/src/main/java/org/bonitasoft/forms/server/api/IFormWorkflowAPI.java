@@ -912,13 +912,15 @@ public interface IFormWorkflowAPI {
      *        the user's session
      * @param taskId
      *        the task to assign
+     * @param userId
      * @throws TaskAssignationException
      *         if the task couldn't be assign
      * @throws InvalidSessionException
      *         if session isn't valid
      * @throws ForbiddenFormAccessException
      */
-    void assignTaskIfNotAssigned(APISession session, long taskId) throws TaskAssignationException, InvalidSessionException, ForbiddenFormAccessException;
+    void assignTaskIfNotAssigned(APISession session, long taskId, long userId) throws TaskAssignationException, InvalidSessionException,
+            ForbiddenFormAccessException;
 
     /**
      * indicate if the activity instance ID passed matches a ready task

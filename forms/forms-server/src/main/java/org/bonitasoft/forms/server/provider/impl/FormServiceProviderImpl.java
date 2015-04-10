@@ -331,7 +331,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                             // If assignTask=true in the contextURL assign the task to the user
                             if (isAssignTask(urlContext)) {
                                 try {
-                                    getFormWorkFlowApi().assignTaskIfNotAssigned(session, activityInstanceID);
+                                    getFormWorkFlowApi().assignTaskIfNotAssigned(session, activityInstanceID, ctxu.getUserId(true));
                                 } catch (final TaskAssignationException e) {
                                     logSevereWithContext(e.getMessage(), e, context);
                                     throw e;
@@ -2092,7 +2092,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
         try {
             if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
-                workflowAPI.assignTaskIfNotAssigned(session, getActivityInstanceId(urlContext));
+                workflowAPI.assignTaskIfNotAssigned(session, getActivityInstanceId(urlContext), ctxu.getUserId(true));
             } else {
                 if (getLogger().isLoggable(Level.INFO)) {
                     getLogger().log(Level.INFO, "The URL context do not contain any task ID. Unable to assign task for form " + formID, context);

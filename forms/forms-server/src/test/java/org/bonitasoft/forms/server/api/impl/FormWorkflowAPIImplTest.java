@@ -175,7 +175,7 @@ public class FormWorkflowAPIImplTest {
         doReturn(0L).when(humanTaskInstance).getAssigneeId();
         doReturn(userId).when(session).getUserId();
         // When
-        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID);
+        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID, session.getUserId());
         // Then
         verify(processApi).assignUserTask(activityInstanceID, userId);
     }
@@ -189,7 +189,7 @@ public class FormWorkflowAPIImplTest {
         doReturn(25L).when(humanTaskInstance).getAssigneeId();
         doReturn(userId).when(session).getUserId();
         // When
-        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID);
+        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID, session.getUserId());
         // Then
         verify(processApi, never()).assignUserTask(activityInstanceID, userId);
     }
@@ -203,6 +203,6 @@ public class FormWorkflowAPIImplTest {
         doReturn(33L).when(humanTaskInstance).getAssigneeId();
         doReturn(userId).when(session).getUserId();
         // When
-        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID);
+        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID, session.getUserId());
     }
 }

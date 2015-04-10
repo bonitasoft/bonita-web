@@ -460,7 +460,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID);
+        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID, getSession().getUserId());
         Assert.assertTrue(activityInstanceID >= 0);
         final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
         Assert.assertEquals("Approval", activityInstance.getName());
@@ -479,7 +479,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
                 .get(0);
         Assert.assertNotNull(humanTaskInstance);
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID);
+        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID, getSession().getUserId());
         Assert.assertTrue(activityInstanceID > 0);
         final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
         Assert.assertEquals("Request", activityInstance.getName());

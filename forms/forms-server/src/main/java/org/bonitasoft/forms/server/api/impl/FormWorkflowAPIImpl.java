@@ -1236,14 +1236,15 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public void assignTaskIfNotAssigned(final APISession session, final long taskId) throws TaskAssignationException, InvalidSessionException,
+    public void assignTaskIfNotAssigned(final APISession session, final long taskId, final long userId) throws TaskAssignationException,
+            InvalidSessionException,
             ForbiddenFormAccessException {
         try {
             final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
             final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(taskId);
             if (humanTaskInstance.getAssigneeId() <= 0) {
-                processAPI.assignUserTask(taskId, session.getUserId());
-            } else if (humanTaskInstance.getAssigneeId() != session.getUserId()) {
+                processAPI.assignUserTask(taskId, userId);
+            } else if (humanTaskInstance.getAssigneeId() != userId) {
                 throw new ForbiddenFormAccessException("The task " + taskId + " is already assigned to another user.");
             }
         } catch (final BPMEngineException e) {

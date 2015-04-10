@@ -393,7 +393,7 @@ public class FormServiceProviderImplTest {
 
         formServiceProviderImpl.assignForm(formId, context);
 
-        verify(workflowAPI, times(1)).assignTaskIfNotAssigned(apiSession, Long.parseLong(expectedTaskId));
+        verify(workflowAPI, times(1)).assignTaskIfNotAssigned(apiSession, Long.parseLong(expectedTaskId), apiSession.getUserId());
     }
 
 }
