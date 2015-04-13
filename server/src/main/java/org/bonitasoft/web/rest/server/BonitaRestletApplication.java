@@ -87,8 +87,6 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bpm/process/{processDefinitionId}/instantiation", factory.create(ProcessInstantiationResource.class));
         // GET to search form mappings:
         router.attach("/form/mapping", factory.create(FormMappingResource.class));
-        // PUT to update form mapping:
-        router.attach("/form/mapping/{" + FormMappingResource.ID_PARAM_NAME + "}", factory.create(FormMappingResource.class));
         //BDM
         router.attach("/bdm/businessData/{className}", factory.create(BusinessDataQueryResource.class));
         router.attach("/bdm/businessData/{className}/{id}", factory.create(BusinessDataResource.class));
