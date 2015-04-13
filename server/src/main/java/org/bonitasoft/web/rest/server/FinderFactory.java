@@ -18,6 +18,8 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
@@ -80,6 +82,7 @@ public class FinderFactory {
         finders.put(TimerEventTriggerResource.class, new TimerEventTriggerResourceFinder());
         finders.put(CaseInfoResource.class, new CaseInfoResourceFinder());
         finders.put(CaseContextResource.class, new CaseContextResourceFinder());
+        finders.put(ArchivedCaseContextResource.class, new ArchivedCaseContextResourceFinder());
         finders.put(BusinessDataResource.class, new BusinessDataResourceFinder());
         finders.put(BusinessDataReferenceResource.class, new BusinessDataReferenceResourceFinder());
         finders.put(BusinessDataReferencesResource.class, new BusinessDataReferencesResourceFinder());

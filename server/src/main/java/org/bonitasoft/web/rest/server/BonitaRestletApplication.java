@@ -20,6 +20,7 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
@@ -63,6 +64,7 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
     public static final String BPM_CASE_CONTEXT = "/bpm/case";
+    private static final String BPM_ARCHIVED_CASE_CONTEXT = "/bpm/archivedCase";
 
 
     private final FinderFactory factory;
@@ -104,6 +106,9 @@ public class BonitaRestletApplication extends Application {
 
         // GET to retrieve a case context:
         router.attach(BPM_CASE_CONTEXT + "/{caseId}/context", factory.create(CaseContextResource.class));
+
+        // GET to retrieve an archived case context
+        router.attach(BPM_ARCHIVED_CASE_CONTEXT + "/{archivedCaseId}/context", factory.create(ArchivedCaseContextResource.class));
 
         // GET a task contract:
         router.attach(BPM_USER_TASK_URL + "/{taskId}/contract", factory.create(UserTaskContractResource.class));
