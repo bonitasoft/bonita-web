@@ -34,7 +34,7 @@ public class BonitaRestletApplicationTest {
         //given
         doReturn(Arrays.asList(resourceExtensionDescriptor)).when(springPlatformFileSystemBeanAccessor).getResourceExtensionConfiguration();
 
-        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory,springPlatformFileSystemBeanAccessor );
+        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory, springPlatformFileSystemBeanAccessor);
 
         //when
         bonitaSPRestletApplication.buildRouter();
