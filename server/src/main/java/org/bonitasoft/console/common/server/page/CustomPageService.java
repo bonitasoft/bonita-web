@@ -119,7 +119,7 @@ public class CustomPageService {
         return pageClassLoader.parseClass(PageControllerFile);
     }
 
-    public void verifyPageClass(final String pageName, final File tempPageDirectory) throws IOException, CompilationFailedException {
+    public void verifyPageClass(final File tempPageDirectory) throws IOException, CompilationFailedException {
         final File pageControllerFile = new File(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
         if (pageControllerFile.exists()) {
             final GroovyClassLoader pageClassLoader = new GroovyClassLoader();
