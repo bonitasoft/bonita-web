@@ -28,8 +28,8 @@ public class AssignAndPerformHumanTaskFormAction extends FormAction {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                @SuppressWarnings("unchecked")
-                final HumanTaskItem updatedHumanTaskItem = JSonItemReader.parseItem(response, HumanTaskDefinition.get());
+
+                final HumanTaskItem updatedHumanTaskItem = (HumanTaskItem) JSonItemReader.parseItem(response, humanTaskItem.getItemDefinition());
                 if (updatedHumanTaskItem.getAssignedId() == null) {
                     // assign the task to the logged user
                     final HashMap<String, String> attributesToUpdate = new HashMap<String, String>();
