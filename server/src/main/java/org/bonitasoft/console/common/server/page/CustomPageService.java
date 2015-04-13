@@ -119,6 +119,7 @@ public class CustomPageService {
         return pageClassLoader.parseClass(PageControllerFile);
     }
 
+    public void verifyPageClass(final String pageName, final File tempPageDirectory) throws IOException, CompilationFailedException {
         final File pageControllerFile = new File(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
         if (pageControllerFile.exists()) {
             final GroovyClassLoader pageClassLoader = new GroovyClassLoader();
@@ -282,13 +283,13 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final Properties properties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-                                                final boolean alsoReturnResourcesNotFound) {
+            final boolean alsoReturnResourcesNotFound) {
         final SimpleProperties pageProperties = new SimpleProperties(properties);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     protected Set<String> getCustomPagePermissions(final SimpleProperties pageProperties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-                                                   final boolean alsoReturnResourcesNotFound) {
+            final boolean alsoReturnResourcesNotFound) {
         final Set<String> pageRestResources = new HashSet<String>(pageProperties.getPropertyAsSet(RESOURCES_PROPERTY));
         // pageRestResources.addAll(Arrays.asList(GET_SYSTEM_SESSION, GET_PORTAL_PROFILE, GET_IDENTITY_USER));
         final Set<String> permissions = new HashSet<String>();
@@ -310,13 +311,13 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final File file, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-                                                final boolean alsoReturnResourcesNotFound) {
+            final boolean alsoReturnResourcesNotFound) {
         final SimpleProperties pageProperties = new SimpleProperties(file);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     public void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
-                                                    final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
+            final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_SYSTEM_SESSION));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_PORTAL_PROFILE));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_IDENTITY_USER));
