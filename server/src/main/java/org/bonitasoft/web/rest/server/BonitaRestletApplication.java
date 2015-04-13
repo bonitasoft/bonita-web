@@ -27,6 +27,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
@@ -57,6 +58,7 @@ public class BonitaRestletApplication extends Application {
     public static final String FORM_MAPPING_URL = "/form/mapping";
     public static final String BPM_PROCESS_URL = "/bpm/process";
     public static final String BPM_USER_TASK_URL = "/bpm/userTask";
+    public static final String BPM_ARCHIVED_USER_TASK_URL = "/bpm/archivedUserTask";
     public static final String BPM_TIMER_EVENT_TRIGGER_URL = "/bpm/timerEventTrigger";
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
@@ -109,6 +111,9 @@ public class BonitaRestletApplication extends Application {
         router.attach(BPM_USER_TASK_URL + "/{taskId}/execution", factory.create(UserTaskExecutionResource.class));
         // GET to retrieve a task context:
         router.attach(BPM_USER_TASK_URL + "/{taskId}/context", factory.create(UserTaskContextResource.class));
+
+        // GET an archived task context:
+        router.attach(BPM_ARCHIVED_USER_TASK_URL + "/{archivedTaskId}/context", factory.create(ArchivedUserTaskContextResource.class));
 
         // GET a process contract:
         router.attach(BPM_PROCESS_URL + "/{processDefinitionId}/contract", factory.create(ProcessContractResource.class));

@@ -50,8 +50,12 @@
         <to>/APIToolkit/bpm/archivedTask$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/archivedUserTask([\?/]|$)</from>
+        <from>^(/portal/custom-page)?/API/bpm/archivedUserTask([\?]|$)</from>
         <to>/APIToolkit/bpm/archivedUserTask$2</to>
+    </rule>
+    <rule>
+        <from>^(/portal/custom-page)?/API/bpm/archivedUserTask/([^/]*)$</from>
+        <to>/APIToolkit/bpm/archivedUserTask/$2</to>
     </rule>
     <rule>
        <from>^(/portal/custom-page)?/API/bpm/case([\?]|$)</from>
