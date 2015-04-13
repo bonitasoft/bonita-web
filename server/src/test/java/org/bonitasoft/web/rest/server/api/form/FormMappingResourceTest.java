@@ -2,7 +2,6 @@ package org.bonitasoft.web.rest.server.api.form;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -15,7 +14,6 @@ import java.util.List;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.form.FormMapping;
-import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
@@ -41,7 +39,7 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNullId() throws Exception {
 
-        final Response response = request("/form/mapping").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
+        final Response response = request("/form/mapping").put("{\"pageId\":\"42\",\"url\":null}");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -49,9 +47,9 @@ public class FormMappingResourceTest extends RestletTest {
     @Test
     public void updateShouldHandleNotFound() throws Exception {
 
-        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, "myPage", FormMappingTarget.INTERNAL);
+        doThrow(FormMappingNotFoundException.class).when(processConfigurationAPI).updateFormMapping(1L, null, 42L);
 
-        final Response response = request("/form/mapping/1").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\" }");
+        final Response response = request("/form/mapping/1").put("{\"pageId\":\"42\",\"url\":null}");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_NOT_FOUND);
     }
@@ -78,7 +76,7 @@ public class FormMappingResourceTest extends RestletTest {
 
         final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
         final FormMapping formMapping = new FormMapping();
-        formMapping.setForm("myForm");
+        formMapping.setTask("myTask");
         final List<FormMapping> formMappings = new ArrayList<FormMapping>();
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
@@ -93,18 +91,18 @@ public class FormMappingResourceTest extends RestletTest {
         final String content = outputStream.toString();
         outputStream.close();
         assertThat(content).isNotNull();
-        assertThat(content).contains("\"form\":\"myForm\"");
+        assertThat(content).contains("\"task\":\"myTask\"");
         verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
     }
 
     @Test
     public void updateShouldCallEngine() throws Exception {
 
-        doNothing().when(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
+        doReturn(mock(FormMapping.class)).when(processConfigurationAPI).updateFormMapping(2L, null, 42L);
 
-        final Response response = request("/form/mapping/2").put("{\"form\":\"myPage\",\"target\":\"INTERNAL\"}");
+        final Response response = request("/form/mapping/2").put("{\"pageId\":\"42\",\"url\":null}");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
-        verify(processConfigurationAPI).updateFormMapping(2L, "myPage", FormMappingTarget.INTERNAL);
+        verify(processConfigurationAPI).updateFormMapping(2L, null, 42L);
     }
 }

@@ -60,6 +60,7 @@ import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.bonitasoft.test.toolkit.bpm.ProcessVariable;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
+import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -109,7 +110,9 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
 
         final DesignProcessDefinition designProcessDefinition = processBuilder.done();
         final BusinessArchiveBuilder businessArchiveBuilder = new BusinessArchiveBuilder().createNewBusinessArchive();
-        final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(designProcessDefinition).done();
+        final BusinessArchive businessArchive = businessArchiveBuilder
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
+                .setProcessDefinition(designProcessDefinition).done();
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
         processDefinition = processAPI.deploy(businessArchive);
 

@@ -68,9 +68,9 @@ public class StartProcessFormPage extends Page {
     @Override
     public void buildView() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String encodedProcessName = URL.encodeQueryString(processName);
+        final String encodedProcessName = URL.encodePathSegment(processName);
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String encodedProcessVersion = URL.encodeQueryString(processVersion);
+        final String encodedProcessVersion = URL.encodePathSegment(processVersion);
         final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
@@ -80,12 +80,13 @@ public class StartProcessFormPage extends Page {
         this.setTitle(_("Start an instance of process %app_name%", new Arg("app_name", processName)));
 
         final StringBuilder frameURL = new StringBuilder();
-        frameURL.append("form/process/")
+        frameURL.append("resource/process/")
                 .append(encodedProcessName)
                 .append("/")
                 .append(encodedProcessVersion)
-                .append("/")
-                .append("?locale=")
+                .append("/content/?id=")
+                .append(processId)
+                .append("&locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {

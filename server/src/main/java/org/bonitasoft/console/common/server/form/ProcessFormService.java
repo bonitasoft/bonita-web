@@ -15,6 +15,8 @@
 package org.bonitasoft.console.common.server.form;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -46,11 +48,9 @@ import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.FormMappingNotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
@@ -60,30 +60,14 @@ public class ProcessFormService {
 
     protected static final String PROCESS_DEPLOY = "process_deploy";
 
-    public static final String UUID_SEPERATOR = "--";
-
     /**
      * Logger
      */
     private static Logger LOGGER = Logger.getLogger(ProcessFormService.class.getName());
 
-    public FormReference getForm(final APISession apiSession, final long processDefinitionId, final String taskName, final boolean hasProcessInstanceId)
-            throws FormMappingNotFoundException, BonitaException {
-        final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
-        final FormMapping formMapping;
-        if (taskName != null) {
-            formMapping = processConfigurationAPI.getTaskForm(processDefinitionId, taskName);
-        } else if (hasProcessInstanceId) {
-            formMapping = processConfigurationAPI.getProcessOverviewForm(processDefinitionId);
-        } else {
-            formMapping = processConfigurationAPI.getProcessStartForm(processDefinitionId);
-        }
-        return new FormReference(formMapping.getForm(), formMapping.getTarget().name());
-    }
-
-    public String getProcessDefinitionUUID(final APISession apiSession, final long processDefinitionId) throws BonitaException {
+    public String getProcessPath(final APISession apiSession, final long processDefinitionId) throws BonitaException, UnsupportedEncodingException {
         final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
-        return processDeploymentInfo.getName() + UUID_SEPERATOR + processDeploymentInfo.getVersion();
+        return URLEncoder.encode(processDeploymentInfo.getName(), "UTF-8") + "/" + URLEncoder.encode(processDeploymentInfo.getVersion(), "UTF-8");
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
