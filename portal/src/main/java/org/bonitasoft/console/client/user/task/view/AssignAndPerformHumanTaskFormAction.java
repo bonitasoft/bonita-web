@@ -23,16 +23,19 @@ public class AssignAndPerformHumanTaskFormAction extends FormAction {
 
     @Override
     public void execute() {
-        // assign the task to the logged user
-        final HashMap<String, String> attributesToUpdate = new HashMap<String, String>();
-        attributesToUpdate.put(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId().toString());
-        new APICaller<HumanTaskItem>(HumanTaskDefinition.get()).update(humanTaskItem.getId(), attributesToUpdate, new APICallback() {
+        if (!Session.getUserId().equals(humanTaskItem.getAssignedId())) {
+            // assign the task to the logged user
+            final HashMap<String, String> attributesToUpdate = new HashMap<String, String>();
+            attributesToUpdate.put(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId().toString());
+            new APICaller<HumanTaskItem>(HumanTaskDefinition.get()).update(humanTaskItem.getId(), attributesToUpdate, new APICallback() {
 
-            @Override
-            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                ViewController.showView(new PerformTaskPage(humanTaskItem.getId()));
-            }
-        });
-
+                @Override
+                public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+                    ViewController.showView(new PerformTaskPage(humanTaskItem.getId()));
+                }
+            });
+        } else {
+            ViewController.showView(new PerformTaskPage(humanTaskItem.getId()));
+        }
     }
 }
