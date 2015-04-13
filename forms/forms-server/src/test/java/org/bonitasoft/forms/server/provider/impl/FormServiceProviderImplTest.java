@@ -383,4 +383,17 @@ public class FormServiceProviderImplTest {
 
     }
 
+    @Test
+    public void should_assignForm_call_worflowAPI() throws Exception {
+        final String formId = "formId";
+        final String expectedTaskId = "42";
+        doReturn(formContextUtil).when(formServiceProviderImpl).createFormContextUtil(context);
+        doReturn(apiSession).when(formContextUtil).getAPISessionFromContext();
+        doReturn(expectedTaskId).when(urlContext).get(FormServiceProviderUtil.TASK_UUID);
+
+        formServiceProviderImpl.assignForm(formId, context);
+
+        verify(workflowAPI, times(1)).assignTaskIfNotAssigned(apiSession, Long.parseLong(expectedTaskId), apiSession.getUserId());
+    }
+
 }

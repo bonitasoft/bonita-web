@@ -24,8 +24,9 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.engine.impl.PageImpl;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.page.impl.PageImpl;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 
@@ -81,8 +82,8 @@ public class PageItemBuilder {
     }
 
     public Page toPage() {
-        final PageImpl page = new PageImpl(id, urlToken, displayName, isProvided, description, createdBy, 1l, 1l, 1l, contentName);
-        return page;
+        final PageImpl pageImpl = new PageImpl(id, urlToken, displayName, isProvided, description, createdBy, 1l, 1l, 1l, contentName, ContentType.PAGE,null);
+        return pageImpl;
     }
 
     public PageItemBuilder fromEngineItem(final Page page) {

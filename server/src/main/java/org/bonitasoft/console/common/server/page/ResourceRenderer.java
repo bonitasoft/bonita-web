@@ -44,7 +44,7 @@ public class ResourceRenderer {
      */
     private final static Logger LOGGER = Logger.getLogger(ResourceRenderer.class.getName());
 
-    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, File resourceFile)
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;
@@ -63,7 +63,7 @@ public class ResourceRenderer {
                 out.write(content, 0, content.length);
             }
             response.flushBuffer();
-        }catch (FileNotFoundException e) {
+        }catch (final FileNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -73,9 +73,9 @@ public class ResourceRenderer {
         }
     }
 
-    private byte[] getFileContent(File resourceFile, final HttpServletResponse response) throws IOException, BonitaException {
+    private byte[] getFileContent(final File resourceFile, final HttpServletResponse response) throws IOException, BonitaException {
         if (resourceFile == null) {
-            String errorMessage = "Resource file must not be null.";
+            final String errorMessage = "Resource file must not be null.";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, errorMessage);
             }
@@ -84,7 +84,7 @@ public class ResourceRenderer {
         if (resourceFile.exists()) {
             return Files.readAllBytes(resourceFile.toPath());
         } else {
-            String fileNotFoundMessage = "Cannot find the resource file ";
+            final String fileNotFoundMessage = "Cannot find the resource file ";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, fileNotFoundMessage + resourceFile.getCanonicalPath());
             }
@@ -92,9 +92,8 @@ public class ResourceRenderer {
         }
     }
 
-    public List<String> getPathSegments(final HttpServletRequest request) throws UnsupportedEncodingException {
+    public List<String> getPathSegments(final String pathInfo) throws UnsupportedEncodingException {
         final List<String> segments = new ArrayList<>();
-        final String pathInfo = request.getPathInfo();
         if (pathInfo != null) {
             for (final String segment : pathInfo.split("/")) {
                 if (!segment.isEmpty()) {
