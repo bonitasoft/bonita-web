@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.common.server.page;
 
-import groovy.lang.GroovyClassLoader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,6 +49,8 @@ import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
+
+import groovy.lang.GroovyClassLoader;
 
 /**
  * @author Anthony Birembaut, Fabio Lombardi

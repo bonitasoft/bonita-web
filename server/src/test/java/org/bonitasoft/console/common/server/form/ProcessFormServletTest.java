@@ -152,6 +152,21 @@ public class ProcessFormServletTest {
     }
 
     @Test
+    public void should_redirect_to_page_servlet_for_task_with_unicode_characters_and_slash() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
+        when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
+        when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName/é+ø");
+        when(processFormService.getProcessPath(apiSession, 1L)).thenReturn("processName/processVersion");
+
+        formServlet.doGet(hsRequest, hsResponse);
+
+        verify(formServlet, times(1)).redirectToPageServlet(hsRequest, hsResponse, apiSession, 1L, -1L, 42L, "taskName/é+ø");
+        verify(hsResponse, times(1)).encodeRedirectURL(
+                "/bonita/portal/resource/taskInstance/processName/processVersion/taskName/%C3%A9%2B%C3%B8/content/?id=42");
+        verify(hsResponse, times(1)).sendRedirect(anyString());
+    }
+
+    @Test
     public void should_get_not_found_when_invalid_process() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/");
         when(processFormService.getProcessDefinitionId(apiSession, "processName", "processVersion")).thenThrow(ProcessDefinitionNotFoundException.class);

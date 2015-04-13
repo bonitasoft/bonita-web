@@ -25,6 +25,8 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
 
+import groovy.lang.GroovyClassLoader;
+
 /**
  * Class used by servlets to display a custom rest api
  * Since each instance of the servlet carry an instance of this class, it should have absolutely no instance attribute
@@ -44,7 +46,7 @@ public class RestApiRenderer {
         final PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         if (isGroovyPage(pageResourceProvider)) {
-            return displayGroovyPage(request, apiSession, pageContextHelper, pageName, pageResourceProvider);
+            return displayGroovyPage(request, apiSession, pageContextHelper, pageResourceProvider);
         }
         throw new BonitaException("unable to handle custom rest api call to " + pageName);
     }
@@ -55,7 +57,8 @@ public class RestApiRenderer {
         return indexGroovy.exists();
     }
 
-    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper, final String pageName, final PageResourceProvider pageResourceProvider)
+    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
+            final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);

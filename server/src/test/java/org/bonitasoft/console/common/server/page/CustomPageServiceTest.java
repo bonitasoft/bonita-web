@@ -28,6 +28,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import groovy.lang.GroovyClassLoader;
+
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
 
@@ -58,7 +60,7 @@ public class CustomPageServiceTest {
         when(apiSession.getTenantId()).thenReturn(0L);
         final File pageFile = new File(getClass().getResource("/Index.groovy").toURI());
         final File pageDir = pageFile.getParentFile();
-        assertThat(pageFile).as("no file "+pageFile.getAbsolutePath()).exists().canRead();
+        assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
         doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
@@ -84,7 +86,7 @@ public class CustomPageServiceTest {
         when(apiSession.getTenantId()).thenReturn(0L);
         final File pageFile = new File(getClass().getResource("/IndexRestApi.groovy").toURI());
         final File pageDir = pageFile.getParentFile();
-        assertThat(pageFile).as("no file "+pageFile.getAbsolutePath()).exists().canRead();
+        assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
         doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
@@ -104,11 +106,9 @@ public class CustomPageServiceTest {
         assertNotNull(restApiController);
     }
 
-
     @Test
     public void should_retrievePageZipContent_save_it_in_bonita_home() throws Exception {
         // Given
-        final String pageName = new String("page1");
         final Page mockedPage = mock(Page.class);
         when(mockedPage.getId()).thenReturn(1l);
         when(mockedPage.getName()).thenReturn("page1");
@@ -137,7 +137,7 @@ public class CustomPageServiceTest {
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(new HashSet<String>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment")))
-        .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
+                .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
         final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile, resourcesPermissionsMapping, true);
@@ -156,7 +156,7 @@ public class CustomPageServiceTest {
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
         doReturn(new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment")))
-        .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
+                .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
         final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile, resourcesPermissionsMapping, false);
@@ -175,7 +175,7 @@ public class CustomPageServiceTest {
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(new HashSet<String>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment")))
-        .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
+                .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
         final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile, resourcesPermissionsMapping, true);
