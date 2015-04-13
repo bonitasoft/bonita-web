@@ -84,6 +84,33 @@ public class CustomPageServiceTest {
     }
 
     @Test
+    public void should_load_rest_api_page_return_api_impl() throws Exception {
+        // Given
+        when(apiSession.getTenantId()).thenReturn(0L);
+        final File pageFile = new File(getClass().getResource("/IndexRestApi.groovy").toURI());
+        final File pageDir = pageFile.getParentFile();
+        assertThat(pageFile).as("no file "+pageFile.getAbsolutePath()).exists().canRead();
+        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
+        doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
+        final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
+        doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
+        doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getLastModificationDate()).thenReturn(new Date(0L));
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        when(pageAPI.getPageByName("")).thenReturn(mockedPage);
+
+        // When
+        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, "IndexRestApi.groovy", pageResourceProvider);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider);
+        final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
+
+        // Then
+        assertNotNull(restApiController);
+    }
+
+
+    @Test
     public void should_retrievePageZipContent_save_it_in_bonita_home() throws Exception {
         // Given
         final String pageName = new String("page1");

@@ -1,12 +1,20 @@
-/*******************************************************************************
+/**
+ * ****************************************************************************
  * Copyright (C) 2009, 2013 BonitaSoft S.A.
  * BonitaSoft is a trademark of BonitaSoft SA.
  * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
  * For commercial licensing information, contact:
  * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
  * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
- *******************************************************************************/
+ * *****************************************************************************
+ */
 package org.bonitasoft.web.rest.server;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResourceFinder;
@@ -34,16 +42,11 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
+import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FinderFactory {
 
@@ -96,11 +99,16 @@ public class FinderFactory {
         return finder;
     }
 
+    public Finder createExtensionResource(ResourceExtensionDescriptor resourceExtensionDescriptor) {
+        return new ApiExtensionResourceFinder(resourceExtensionDescriptor);
+    }
+
     public ResourceFinder getResourceFinderFor(Serializable object) {
         for (ResourceFinder resourceFinder : resourceFinders) {
             if (resourceFinder.handlesResource(object)) {
                 return resourceFinder;
             }
+
         }
         return null;
     }
@@ -112,4 +120,5 @@ public class FinderFactory {
         }
         return object;
     }
+
 }
