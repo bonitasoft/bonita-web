@@ -1,16 +1,16 @@
 /**
- * Copyright (C) 2014 BonitaSoft S.A.
+ * Copyright (C) 2014, 2015 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,6 +29,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
+import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
+import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -47,11 +49,15 @@ import org.restlet.routing.Router;
  */
 public class BonitaRestletApplication extends Application {
 
+    public static final String ROUTER_EXTENSION_PREFIX = "/extension/";
     private final FinderFactory factory;
 
-    public BonitaRestletApplication(final FinderFactory finderFactory) {
+    private final TenantSpringBeanAccessor beanAccessor;
+
+    public BonitaRestletApplication(final FinderFactory finderFactory, final TenantSpringBeanAccessor tenantSpringBeanAccessor) {
         super();
         factory = finderFactory;
+        this.beanAccessor = tenantSpringBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -94,11 +100,20 @@ public class BonitaRestletApplication extends Application {
         router.attach("/bdm/businessDataReference", factory.create(BusinessDataReferencesResource.class));
         router.attach("/bdm/businessDataReference/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
+        buildRouterExtension(router);
         return router;
+    }
+
+    private void buildRouterExtension(Router router) {
+        for (ResourceExtensionDescriptor resourceExtensionDescriptor : beanAccessor.getResourceExtensionConfiguration()) {
+            router.attach(ROUTER_EXTENSION_PREFIX + resourceExtensionDescriptor.getPathTemplate(), factory.createExtensionResource(resourceExtensionDescriptor));
+        }
     }
 
     @Override
     public void handle(final Request request, final Response response) {
+
+
         request.setLoggable(false);
         Engine.setLogLevel(Level.OFF);
         Engine.setRestletLogLevel(Level.OFF);
