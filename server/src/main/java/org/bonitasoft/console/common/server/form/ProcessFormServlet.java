@@ -129,7 +129,7 @@ public class ProcessFormServlet extends HttpServlet {
                     .append("/")
                     .append(processFormService.getProcessPath(apiSession, processDefinitionId))
                     .append("/")
-                    .append(URLEncoder.encode(taskName, "UTF-8"))
+                    .append(URLEncoder.encode(taskName, "UTF-8").replaceAll("%2F", "/"))
                     .append(PageServlet.RESOURCE_PATH_SEPARATOR)
                     .append("/?")
                     .append(ID_PARAM)

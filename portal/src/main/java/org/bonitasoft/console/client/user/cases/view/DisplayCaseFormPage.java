@@ -30,13 +30,13 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -85,9 +85,9 @@ public class DisplayCaseFormPage extends Page {
 
     private String getCaseOverviewUrl() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String encodedProcessName = URL.encodePathSegment(processName);
+        final String encodedProcessName = UrlUtil.escapePathSegment(processName);
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String encodedProcessVersion = URL.encodePathSegment(processVersion);
+        final String encodedProcessVersion = UrlUtil.escapePathSegment(processVersion);
         String caseId = this.getParameter(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID);
         if (caseId == null) {
             caseId = this.getParameter(CaseItem.ATTRIBUTE_ID);
