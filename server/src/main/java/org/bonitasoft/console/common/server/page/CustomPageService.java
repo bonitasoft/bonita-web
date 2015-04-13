@@ -113,7 +113,13 @@ public class CustomPageService {
         return pageClassLoader.parseClass(pageControllerFile);
     }
 
-    public void verifyPageClass(final File tempPageDirectory) throws IOException, CompilationFailedException {
+    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider)
+            throws CompilationFailedException, IOException {
+        final File PageControllerFile = getGroovyPageFile(pageResourceProvider.getPageDirectory());
+        return pageClassLoader.parseClass(PageControllerFile);
+    }
+
+    public void verifyPageClass(File tempPageDirectory) throws IOException, CompilationFailedException {
         final File pageControllerFile = new File(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
         if (pageControllerFile.exists()) {
             final GroovyClassLoader pageClassLoader = new GroovyClassLoader();
@@ -127,6 +133,10 @@ public class CustomPageService {
 
     public PageController loadPage(final Class<PageController> pageClass) throws InstantiationException, IllegalAccessException {
         return pageClass.newInstance();
+    }
+
+    public RestApiController loadRestApiPage(final Class<RestApiController> restApiControllerClass) throws InstantiationException, IllegalAccessException {
+        return restApiControllerClass.newInstance();
     }
 
     public void removePage(final APISession apiSession, final String pageName) throws IOException {
