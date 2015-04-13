@@ -1189,7 +1189,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
 
     protected String urlEncode(final String stringToEncode) {
         try {
-            return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20");
+            return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20").replaceAll("%2F", "/");
         } catch (final UnsupportedEncodingException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Unable to URL encode the process name, version and/or task name", e);

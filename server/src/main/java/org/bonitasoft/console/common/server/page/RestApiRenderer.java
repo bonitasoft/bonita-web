@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import groovy.lang.GroovyClassLoader;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -33,14 +35,14 @@ import groovy.lang.GroovyClassLoader;
  */
 public class RestApiRenderer {
 
-    private CustomPageService customPageService = new CustomPageService();
+    private final CustomPageService customPageService = new CustomPageService();
 
     public Object handleRestApiCall(final HttpServletRequest request, final String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
         final PageContextHelper pageContextHelper = new PageContextHelper(request);
-        APISession apiSession = pageContextHelper.getApiSession();
-        PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
+        final APISession apiSession = pageContextHelper.getApiSession();
+        final PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         if (isGroovyPage(pageResourceProvider)) {
             return displayGroovyPage(request, apiSession, pageContextHelper, pageResourceProvider);
@@ -48,9 +50,9 @@ public class RestApiRenderer {
         throw new BonitaException("unable to handle custom rest api call to " + pageName);
     }
 
-    private boolean isGroovyPage(PageResourceProvider pageResourceProvider) {
-        File pageFolder = pageResourceProvider.getPageDirectory();
-        File indexGroovy = customPageService.getGroovyPageFile(pageFolder);
+    private boolean isGroovyPage(final PageResourceProvider pageResourceProvider) {
+        final File pageFolder = pageResourceProvider.getPageDirectory();
+        final File indexGroovy = customPageService.getGroovyPageFile(pageFolder);
         return indexGroovy.exists();
     }
 

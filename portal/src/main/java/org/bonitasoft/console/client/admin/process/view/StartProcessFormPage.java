@@ -29,13 +29,13 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -68,9 +68,9 @@ public class StartProcessFormPage extends Page {
     @Override
     public void buildView() {
         final String processName = this.getParameter(ProcessItem.ATTRIBUTE_NAME);
-        final String encodedProcessName = URL.encodePathSegment(processName);
+        final String encodedProcessName = UrlUtil.escapePathSegment(processName);
         final String processVersion = this.getParameter(ProcessItem.ATTRIBUTE_VERSION);
-        final String encodedProcessVersion = URL.encodePathSegment(processVersion);
+        final String encodedProcessVersion = UrlUtil.escapePathSegment(processVersion);
         final String processId = this.getParameter(ProcessItem.ATTRIBUTE_ID);
 
         final String locale = AbstractI18n.getDefaultLocale().toString();

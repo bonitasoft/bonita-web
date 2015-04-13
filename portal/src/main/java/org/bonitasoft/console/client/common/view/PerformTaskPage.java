@@ -33,6 +33,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
@@ -42,7 +43,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -109,11 +109,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
         final StringBuilder frameURL = new StringBuilder();
         frameURL.append("resource/taskInstance/")
-                .append(URL.encodePathSegment(item.getProcess().getName()))
+                .append(UrlUtil.escapePathSegment(item.getProcess().getName()))
                 .append("/")
-                .append(URL.encodePathSegment(item.getProcess().getVersion()))
+                .append(UrlUtil.escapePathSegment(item.getProcess().getVersion()))
                 .append("/")
-                .append(URL.encodePathSegment(item.getName()))
+                .append(UrlUtil.escapePathSegment(item.getName()))
                 .append("/content/?id=")
                 .append(item.getId())
                 .append("&locale=")
