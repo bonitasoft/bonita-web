@@ -22,8 +22,12 @@
         <to>/APIToolkit/bpm/archivedActivity$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/archivedCase([\?/]|$)</from>
+        <from>^(/portal/custom-page)?/API/bpm/archivedCase([\?]|$)</from>
         <to>/APIToolkit/bpm/archivedCase$2</to>
+    </rule>
+    <rule>
+        <from>^(/portal/custom-page)?/API/bpm/archivedCase/([^/]*)$</from>
+        <to>/APIToolkit/bpm/archivedCase/$2</to>
     </rule>
     <rule>
         <from>^(/portal/custom-page)?/API/bpm/archivedComment([\?/]|$)</from>
