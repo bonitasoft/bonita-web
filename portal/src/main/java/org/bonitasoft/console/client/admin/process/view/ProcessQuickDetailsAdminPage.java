@@ -74,7 +74,7 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
     @Override
     protected void buildToolbar(final ProcessItem process) {
         addToolbarLink(new MoreButton(_("Show more details about this process"), createMoreDetailsAction(process)));
-        addToolbarLink(new Button("btn-more2", _("More (new)"), _("New process more details view"), createNewMoreDetailsAction(process)));
+        addToolbarLink(new Button("btn-more2", _("More (BETA)"), _("New process more details view"), createNewMoreDetailsAction(process)));
 
     }
 
