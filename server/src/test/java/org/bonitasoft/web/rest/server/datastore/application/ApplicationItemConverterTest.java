@@ -148,8 +148,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(fields.get(ApplicationField.DESCRIPTION)).isEqualTo(DESCRIPTION);
         assertThat(fields.get(ApplicationField.ICON_PATH)).isEqualTo(ICON_PATH);
         assertThat(fields.get(ApplicationField.PROFILE_ID)).isEqualTo(PROFILE_ID);
-        assertThat(fields.get(ApplicationField.LAYOUT_ID)).isEqualTo(LAYOUT_ID);
-
     }
 
     @Test
@@ -164,7 +162,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_ICON_PATH, ICON_PATH);
         fields.put(ApplicationItem.ATTRIBUTE_PROFILE_ID, String.valueOf(PROFILE_ID));
         fields.put(ApplicationItem.ATTRIBUTE_HOME_PAGE_ID, String.valueOf(HOME_PAGE_ID));
-        fields.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, String.valueOf(LAYOUT_ID));
         fields.put(ApplicationItem.ATTRIBUTE_STATE, STATE);
 
 
@@ -180,7 +177,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(updater.getFields().get(ApplicationField.ICON_PATH)).isEqualTo(ICON_PATH);
         assertThat(updater.getFields().get(ApplicationField.PROFILE_ID)).isEqualTo(PROFILE_ID);
         assertThat(updater.getFields().get(ApplicationField.HOME_PAGE_ID)).isEqualTo(HOME_PAGE_ID);
-        assertThat(updater.getFields().get(ApplicationField.LAYOUT_ID)).isEqualTo(LAYOUT_ID);
 
     }
 

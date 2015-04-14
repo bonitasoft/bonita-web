@@ -44,6 +44,11 @@ APIHasGet<ApplicationItem>, APIHasUpdate<ApplicationItem>, APIHasDelete {
 
     private final APIApplicationDataStoreFactory applicationDataStoreFactory;
 
+    public APIApplication() {
+        this.creator = null;
+        this.applicationDataStoreFactory = null;
+    }
+
     public APIApplication(final ApplicationDataStoreCreator creator, final  APIApplicationDataStoreFactory applicationDataStoreFactory) {
         this.creator = creator;
         this.applicationDataStoreFactory = applicationDataStoreFactory;

@@ -57,14 +57,12 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
     private final PageAPI pageAPI;
     private static final String CUSTOMPAGE_HOME = "custompage_home";
     private static final String DEFAULT_LAYOUT = "custompage_layout";
-    protected ApplicationItemConverter applicationItemConverter;
 
     public ApplicationDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI, final ApplicationItemConverter converter) {
         super(engineSession);
         this.applicationAPI = applicationAPI;
         this.pageAPI = pageAPI;
         this.converter = converter;
-        applicationItemConverter = new ApplicationItemConverter();
     }
 
     @Override
@@ -110,9 +108,9 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
     @Override
     public ApplicationItem update(final APIID id, final Map<String, String> attributes) {
         try {
-            final ApplicationUpdater applicationUpdater = applicationItemConverter.toApplicationUpdater(attributes);
+            final ApplicationUpdater applicationUpdater = converter.toApplicationUpdater(attributes);
             final Application application = applicationAPI.updateApplication(id.toLong(), applicationUpdater);
-            return applicationItemConverter.toApplicationItem(application);
+            return converter.toApplicationItem(application);
         } catch (final Exception e) {
             throw new APIException(e);
         }

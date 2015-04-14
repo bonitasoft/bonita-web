@@ -87,7 +87,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Test
     public void should_return_application_created_by_ApplicationAPI_converted_to_ApplicationItem_on_add() throws Exception {
         //given
-        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0", 2L);
+        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0");
         ApplicationItem app = new ApplicationItem();
         app.setLayoutId(2L);
         given(converter.toApplicationCreator(app)).willReturn(creator);
@@ -113,7 +113,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Test
     public void should_create_default_home_page_on_add() throws Exception {
         //given
-        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0", 2L);
+        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0");
         ApplicationItem item = new ApplicationItem();
         item.setLayoutId(2L);
         given(converter.toApplicationCreator(item)).willReturn(creator);
