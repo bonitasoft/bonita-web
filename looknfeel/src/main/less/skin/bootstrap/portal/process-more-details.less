@@ -159,7 +159,7 @@
     }
   }
   .members, .managers{
-    a.member, a.manager{
+    a.member, a.manager, label.member, label.manager{
       margin-right: 0.75em;
       display: inline-block;
       margin-bottom: 0.5em;
@@ -213,13 +213,27 @@
   }
 
   td {
-    color: grey;
+    color: #6e6f6b;
   }
 
 }
 
-#form-mapping td.xeditable {
-  width: 70%;
+#form-mapping {
+  td {
+    color: #6e6f6b;
+    .xeditable {
+      width: 70%;
+    }
+  }
+  button.glyphicon{
+    border: none;
+    font-weight: normal;
+    background-color: transparent;
+    text-align: inherit;
+    padding: 1px 0;
+    white-space: nowrap;
+    text-transform: none !important;
+  }
 }
 #manage-categories-modal {
  
