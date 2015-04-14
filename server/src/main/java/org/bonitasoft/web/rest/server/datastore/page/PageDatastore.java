@@ -217,7 +217,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected void savePageInBonitahome(final String urlToken, final File unzipPageTempFolder) throws IOException {
-        customPageService.verifyPageClass(urlToken, unzipPageTempFolder);
+        customPageService.verifyPageClass(unzipPageTempFolder);
         final File pagesFolder = new File(constants.getPagesFolder(), urlToken);
         FileUtils.copyDirectory(unzipPageTempFolder, pagesFolder);
         deleteTempDirectory(unzipPageTempFolder);

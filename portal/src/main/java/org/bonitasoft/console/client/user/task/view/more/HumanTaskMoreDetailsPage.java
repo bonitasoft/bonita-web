@@ -22,18 +22,18 @@ import java.util.List;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
-import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.task.action.TaskClaimAction;
 import org.bonitasoft.console.client.user.task.action.TaskRelaseAction;
+import org.bonitasoft.console.client.user.task.view.AssignAndPerformHumanTaskFormAction;
 import org.bonitasoft.console.client.user.task.view.PluginTask;
 import org.bonitasoft.console.client.user.task.view.TaskButtonFactory;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
-import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 
 /**
  * @author Séverin Moussel
@@ -81,8 +81,8 @@ public class HumanTaskMoreDetailsPage extends AbstractMoreTaskDetailPage<HumanTa
         }
     }
 
-    private ActionShowView createPerformAction(final HumanTaskItem item) {
-        return new ActionShowView(new PerformTaskPage(item.getId()));
+    private Action createPerformAction(final HumanTaskItem item) {
+        return new AssignAndPerformHumanTaskFormAction(item);
     }
 
     @Override
