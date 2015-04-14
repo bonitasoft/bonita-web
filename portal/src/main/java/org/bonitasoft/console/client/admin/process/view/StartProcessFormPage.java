@@ -87,7 +87,8 @@ public class StartProcessFormPage extends Page {
                 .append("/content/?id=")
                 .append(processId)
                 .append("&locale=")
-                .append(locale);
+                .append(locale)
+                .append("&autoInstantiate=false");
         // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {
             frameURL.append("&tenant=").append(tenantId);
