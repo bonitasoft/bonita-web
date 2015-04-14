@@ -118,7 +118,7 @@ public abstract class RestletTest {
         }
     }
 
-    private class MockFinderFactory extends FinderFactory {
+    protected class MockFinderFactory extends FinderFactory {
 
         private final ServerResource serverResource;
 

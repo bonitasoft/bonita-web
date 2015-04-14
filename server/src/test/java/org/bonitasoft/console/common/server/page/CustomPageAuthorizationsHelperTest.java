@@ -12,7 +12,8 @@ import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
 import org.bonitasoft.engine.business.application.ApplicationPageSearchDescriptor;
-import org.bonitasoft.engine.impl.PageImpl;
+import org.bonitasoft.engine.page.ContentType;
+import org.bonitasoft.engine.page.impl.PageImpl;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
@@ -42,7 +43,7 @@ public class CustomPageAuthorizationsHelperTest {
     @Test
     public void should_authorize_page_when_appId_not_null_and_page_authorized_in_application() throws Exception {
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class)))
-                .willReturn(new SearchResultImpl<ApplicationPage>(1, Collections.<ApplicationPage>emptyList()));
+                .willReturn(new SearchResultImpl<>(1, Collections.<ApplicationPage>emptyList()));
 
         final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
 
@@ -63,7 +64,7 @@ public class CustomPageAuthorizationsHelperTest {
 
     @Test
     public void should_filter_application_page_search_on_custom_page_id() throws Exception {
-        given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, "", 0, 0, 0, 0, ""));
+        given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, "", 0, 0, 0, 0, "", ContentType.PAGE,null));
         final ArgumentCaptor<SearchOptions> captor = ArgumentCaptor.forClass(SearchOptions.class);
 
         customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
@@ -77,7 +78,7 @@ public class CustomPageAuthorizationsHelperTest {
     @Test
     public void should_not_authorize_page_when_appId_not_null_and_page_unauthorized_in_application() throws Exception {
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class)))
-                .willReturn(new SearchResultImpl<ApplicationPage>(0, Collections.<ApplicationPage>emptyList()));
+                .willReturn(new SearchResultImpl<>(0, Collections.<ApplicationPage>emptyList()));
 
         final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
 
