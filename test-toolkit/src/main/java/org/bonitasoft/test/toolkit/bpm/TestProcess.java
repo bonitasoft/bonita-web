@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,8 +25,13 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
+import org.bonitasoft.engine.bpm.bar.form.model.FormMappingModel;
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.engine.bpm.category.CategoryCriterion;
+import org.bonitasoft.engine.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.engine.bpm.flownode.UserTaskDefinition;
+import org.bonitasoft.engine.bpm.form.FormMappingDefinitionBuilder;
+import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -39,6 +44,8 @@ import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.form.FormMappingTarget;
+import org.bonitasoft.engine.form.FormMappingType;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -50,7 +57,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TestProcess {
 
@@ -72,11 +78,11 @@ public class TestProcess {
 
     private ProcessSupervisor processSupervisor;
 
-    private final List<ActorInstance> actors = new ArrayList<ActorInstance>();
+    private final List<ActorInstance> actors = new ArrayList<>();
 
     /**
      * Default Constructor.
-     * 
+     *
      * @throws Exception
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
@@ -104,7 +110,7 @@ public class TestProcess {
 
     /**
      * Create an archive and deploy process
-     * 
+     *
      * @param apiSession
      * @param processDefinitionBuilder
      * @return
@@ -112,15 +118,29 @@ public class TestProcess {
     private ProcessDefinition createProcessDefinition(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         try {
             return deployProcessDefinition(apiSession, new BusinessArchiveBuilder().createNewBusinessArchive()
+                    .setFormMappings(createDefaultProcessFormMapping(processDefinitionBuilder.getProcess()))
                     .setProcessDefinition(processDefinitionBuilder.done()));
         } catch (final InvalidProcessDefinitionException e) {
             throw new TestToolkitException("Invalid process definition", e);
         }
     }
 
+    public static FormMappingModel createDefaultProcessFormMapping(DesignProcessDefinition designProcessDefinition) {
+        FormMappingModel formMappingModel = new FormMappingModel();
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.PROCESS_START, FormMappingTarget.URL).build());
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.URL).build());
+        for (ActivityDefinition activityDefinition : designProcessDefinition.getFlowElementContainer().getActivities()) {
+            if (activityDefinition instanceof UserTaskDefinition) {
+                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.TASK, FormMappingTarget.URL).withTaskname(activityDefinition.getName()).build());
+            }
+        }
+        return formMappingModel;
+    }
+
+
     /**
      * Deploy process from the archive
-     * 
+     *
      * @param apiSession
      * @param businessArchiveBuilder
      * @return
@@ -156,7 +176,7 @@ public class TestProcess {
     public long getId() {
         return this.processDefinition.getId();
     }
-    
+
     public ProcessDeploymentInfo getProcessDeploymentInfo() {
         try {
             return getProcessAPI(getSession()).getProcessDeploymentInfo(getId());
@@ -167,7 +187,7 @@ public class TestProcess {
 
     /**
      * Set process enablement
-     * 
+     *
      * @param apiSession
      * @param enabled
      * @return
@@ -181,7 +201,7 @@ public class TestProcess {
         this.enabled = enabled;
         return this;
     }
-    
+
     private void enableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).enableProcess(this.processDefinition.getId());
@@ -189,7 +209,7 @@ public class TestProcess {
             throw new TestToolkitException("Can't enable process <" + this.processDefinition.getId() + ">", e);
         }
     }
-    
+
     private void disableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).disableProcess(this.processDefinition.getId());
@@ -209,20 +229,20 @@ public class TestProcess {
     public TestProcess setEnable(final boolean enabled) {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), enabled);
     }
-    
+
     public TestProcess enable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), true);
     }
-    
+
     public TestProcess disable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), false);
     }
 
     /**
      * Add actors to enable process
-     * 
+     * <p/>
      * TODO: Need to evolve to choose on which Actors category the actor will be added
-     * 
+     *
      * @param apiSession
      * @param actor
      * @return
@@ -301,7 +321,7 @@ public class TestProcess {
         testCase.waitProcessState(apiSession, TestCase.READY_STATE);
         return testCase;
     }
-    
+
     protected ProcessInstance createProcesInstance(final APISession apiSession) {
         try {
             return getProcessAPI(apiSession).startProcess(apiSession.getUserId(), processDefinition.getId());
@@ -320,7 +340,7 @@ public class TestProcess {
 
     /**
      * Start several cases and return them as a list
-     * 
+     *
      * @param number
      * @return
      */
@@ -338,7 +358,7 @@ public class TestProcess {
 
     /**
      * Add a user as process supervisor
-     * 
+     *
      * @param apiSession
      * @param user
      * @return
@@ -362,9 +382,9 @@ public class TestProcess {
 
     /**
      * Add a role as process supervisor
-     * 
+     *
      * @param apiSession
-     * @param user
+     * @param role
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestRole role) {
@@ -386,9 +406,9 @@ public class TestProcess {
 
     /**
      * Add a group as process supervisor
-     * 
+     *
      * @param apiSession
-     * @param user
+     * @param group
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group) {
@@ -410,9 +430,10 @@ public class TestProcess {
 
     /**
      * Add a memebership as process supervisor
-     * 
+     *
      * @param apiSession
-     * @param user
+     * @param group
+     * @param role
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group, final TestRole role) {
@@ -472,7 +493,7 @@ public class TestProcess {
         return this.actors;
     }
 
-    public List<TestCase> listOpenCases() throws SearchException  {
+    public List<TestCase> listOpenCases() throws SearchException {
         List<ProcessInstance> processInstances = searchOpenedProcessInstances();
         return convertToCasesList(processInstances);
     }

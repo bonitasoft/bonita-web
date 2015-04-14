@@ -9,6 +9,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import groovy.lang.GroovyClassLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,7 +19,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -32,6 +32,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import groovy.lang.GroovyClassLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
@@ -63,7 +65,7 @@ public class CustomPageServiceTest {
         when(apiSession.getTenantId()).thenReturn(0L);
         final File pageFile = new File(getClass().getResource("/Index.groovy").toURI());
         final File pageDir = pageFile.getParentFile();
-        assertThat(pageFile).as("no file "+pageFile.getAbsolutePath()).exists().canRead();
+        assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
         doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
@@ -75,7 +77,7 @@ public class CustomPageServiceTest {
         when(pageAPI.getPageByName("")).thenReturn(mockedPage);
 
         // When
-        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, "", pageResourceProvider);
+        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         final Class<PageController> pageClass = customPageService.registerPage(classloader, pageResourceProvider);
         final PageController pageController = customPageService.loadPage(pageClass);
 
@@ -84,9 +86,34 @@ public class CustomPageServiceTest {
     }
 
     @Test
+    public void should_load_rest_api_page_return_api_impl() throws Exception {
+        // Given
+        when(apiSession.getTenantId()).thenReturn(0L);
+        final File pageFile = new File(getClass().getResource("/IndexRestApi.groovy").toURI());
+        final File pageDir = pageFile.getParentFile();
+        assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
+        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
+        doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
+        final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
+        doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
+        doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getLastModificationDate()).thenReturn(new Date(0L));
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        when(pageAPI.getPageByName("")).thenReturn(mockedPage);
+
+        // When
+        final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider);
+        final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
+
+        // Then
+        assertNotNull(restApiController);
+    }
+
+    @Test
     public void should_retrievePageZipContent_save_it_in_bonita_home() throws Exception {
         // Given
-        final String pageName = new String("page1");
         final Page mockedPage = mock(Page.class);
         when(mockedPage.getId()).thenReturn(1l);
         when(mockedPage.getName()).thenReturn("page1");
@@ -94,12 +121,12 @@ public class CustomPageServiceTest {
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/page.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
-        when(pageAPI.getPageByName("page1")).thenReturn(mockedPage);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
         when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page1"));
 
         // When
-        customPageService.retrievePageZipContent(apiSession, pageName, pageResourceProvider);
+        customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
 
         // Validate
         assertNotNull(pageResourceProvider.getPageDirectory().listFiles());

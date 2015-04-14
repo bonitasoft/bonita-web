@@ -16,6 +16,8 @@ package org.bonitasoft.forms.server.api.impl;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +80,7 @@ import org.bonitasoft.forms.client.model.ActivityEditState;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.server.accessor.DefaultFormsProperties;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
@@ -480,13 +483,13 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * @throws ProcessDefinitionNotFoundException
      */
     @Override
-    public long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, BPMEngineException,
-            UserNotFoundException, SearchException, ProcessDefinitionNotFoundException {
+    public long getRelatedProcessesNextTask(final APISession session, final long processInstanceId, final long userId) throws InvalidSessionException,
+            BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException {
         try {
             final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
             final long rootProcessInstanceId = getRootProcessInstanceId(processAPI, processInstanceId);
             if (rootProcessInstanceId != NOT_FOUND) {
-                return getProcessInstanceTaskAvailableForUser(processAPI, rootProcessInstanceId, session.getUserId());
+                return getProcessInstanceTaskAvailableForUser(processAPI, rootProcessInstanceId, userId);
             } else {
                 return NOT_FOUND;
             }
@@ -1166,6 +1169,39 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
+    public String getActivityDefinitionKeyFromActivityInstanceID(final APISession session, final long activityInstanceID)
+            throws ActivityInstanceNotFoundException, ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException {
+
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        String activityName;
+        ProcessDefinition processDefinition;
+        try {
+            final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
+            activityName = activityInstance.getName();
+            processDefinition = processAPI.getProcessDefinition(activityInstance.getProcessDefinitionId());
+        } catch (final ActivityInstanceNotFoundException e) {
+            final ArchivedActivityInstance archivedActivityInstance = processAPI.getArchivedActivityInstance(activityInstanceID);
+            activityName = archivedActivityInstance.getName();
+            processDefinition = processAPI.getProcessDefinition(archivedActivityInstance.getProcessDefinitionId());
+        }
+        return urlEncode(processDefinition.getName()) + "/" + urlEncode(processDefinition.getVersion()) + "/" + urlEncode(activityName);
+    }
+
+    protected String urlEncode(final String stringToEncode) {
+        try {
+            return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20").replaceAll("%2F", "/");
+        } catch (final UnsupportedEncodingException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Unable to URL encode the process name, version and/or task name", e);
+            }
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isProcessEnabled(final APISession session, final long processDefinitionID) throws InvalidSessionException, BPMEngineException,
             ProcessDefinitionNotFoundException {
         final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
@@ -1200,12 +1236,16 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      * {@inheritDoc}
      */
     @Override
-    public void assignTask(final APISession session, final long taskId) throws TaskAssignationException, InvalidSessionException {
+    public void assignTaskIfNotAssigned(final APISession session, final long taskId, final long userId) throws TaskAssignationException,
+            InvalidSessionException,
+            ForbiddenFormAccessException {
         try {
             final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
             final HumanTaskInstance humanTaskInstance = processAPI.getHumanTaskInstance(taskId);
-            if (humanTaskInstance.getAssigneeId() != session.getUserId()) {
-                processAPI.assignUserTask(taskId, session.getUserId());
+            if (humanTaskInstance.getAssigneeId() <= 0) {
+                processAPI.assignUserTask(taskId, userId);
+            } else if (humanTaskInstance.getAssigneeId() != userId) {
+                throw new ForbiddenFormAccessException("The task " + taskId + " is already assigned to another user.");
             }
         } catch (final BPMEngineException e) {
             throw new TaskAssignationException("An error occured while communicating with the engine", e);

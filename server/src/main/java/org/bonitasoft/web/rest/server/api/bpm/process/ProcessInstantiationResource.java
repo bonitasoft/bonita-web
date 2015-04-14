@@ -32,6 +32,8 @@ public class ProcessInstantiationResource extends CommonResource {
 
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
+    private static final String USER_PARAM = "user";
+    
     private final ProcessAPI processAPI;
 
     public ProcessInstantiationResource(final ProcessAPI processAPI) {
@@ -41,8 +43,14 @@ public class ProcessInstantiationResource extends CommonResource {
     @Post("json")
     public void instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
             ProcessExecutionException {
+    	String userId = getRequestParameter(USER_PARAM);
         try {
-            processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs);
+        	if (userId == null) {
+        		processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs); 			
+    		} else {
+    			processAPI.startProcessWithInputs(Long.parseLong(userId),getProcessDefinitionIdParameter(), inputs);
+    		}
+            
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instanciate process task.");
         }

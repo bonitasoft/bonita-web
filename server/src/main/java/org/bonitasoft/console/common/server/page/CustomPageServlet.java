@@ -72,13 +72,13 @@ public class CustomPageServlet extends HttpServlet {
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
 
-        final List<String> pathSegments = resourceRenderer.getPathSegments(request);
+        final List<String> pathSegments = resourceRenderer.getPathSegments(request.getPathInfo());
         if (pathSegments.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "The name of the page is required.");
             return;
         }
-        String pageName = pathSegments.get(0);
+        final String pageName = pathSegments.get(0);
 
         try {
 
@@ -89,7 +89,7 @@ public class CustomPageServlet extends HttpServlet {
                 }
                 pageRenderer.displayCustomPage(request, response, apiSession, pageName);
             } else {
-                File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
+                final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
                 resourceRenderer.renderFile(request, response, resourceFile);
             }
 
@@ -99,7 +99,7 @@ public class CustomPageServlet extends HttpServlet {
 
     }
 
-    private boolean isPageRequest(List<String> pathSegments) {
+    private boolean isPageRequest(final List<String> pathSegments) {
         if (pathSegments.size() == 1) {
             return true;
         } else if (pathSegments.size() == 2) {
@@ -108,7 +108,7 @@ public class CustomPageServlet extends HttpServlet {
         return false;
     }
 
-    private boolean isAnIndexSegment(String segment) {
+    private boolean isAnIndexSegment(final String segment) {
         return segment.equalsIgnoreCase(CustomPageService.PAGE_INDEX_FILENAME) || segment.equalsIgnoreCase(CustomPageService.PAGE_CONTROLLER_FILENAME)
                 || segment.equalsIgnoreCase(CustomPageService.PAGE_INDEX_NAME);
     }
@@ -117,9 +117,9 @@ public class CustomPageServlet extends HttpServlet {
         return request.getPathInfo().matches("/[^/]+");
     }
 
-    private File getResourceFile(String resourcePath, String pageName, APISession apiSession) throws IOException, BonitaException {
+    private File getResourceFile(final String resourcePath, final String pageName, final APISession apiSession) throws IOException, BonitaException {
         final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
-        File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
+        final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePathWithoutPageName(resourcePath, pageName));
 
         if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
@@ -128,7 +128,7 @@ public class CustomPageServlet extends HttpServlet {
         return resourceFile;
     }
 
-    private String getResourcePathWithoutPageName(String resourcePath, String pageName) {
+    private String getResourcePathWithoutPageName(final String resourcePath, final String pageName) {
         //resource path match "/pagename/resourcefolder/filename"
         return resourcePath.substring(pageName.length() + 2);
     }
