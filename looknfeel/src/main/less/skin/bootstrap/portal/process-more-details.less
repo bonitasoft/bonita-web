@@ -1,4 +1,4 @@
-#process-details {
+.process-details  {
   .actions {
     padding: 20px 0 10px 0;
   }
@@ -14,10 +14,17 @@
     
     .navbar {
       width: 200px;
+      border: 0px;
+      li {
+        border-color: #e7e7e7;
+        border-radius: 4px;
+        border: 1px solid #e7e7e7;
+        margin-bottom: 2px;
+      }
     }
 
     .sidebar-nav .navbar {
-       .navbar-collapse {
+      .navbar-collapse {
         padding: 0;
         max-height: none;
       }
@@ -32,9 +39,8 @@
         float: none;
         display: block;
       }
-      li a {
-        padding-top: 12px;
-        padding-bottom: 12px;
+      li > a{
+        padding: 3px 15px 0px;
       }
     }
   }
@@ -45,7 +51,7 @@
   }
 
   .btn {
-    height: 34px;
+    height: 25px;
   }
 
   .bonita-toggle {
@@ -53,7 +59,7 @@
       position: absolute; 
       padding: 3px 20px 6px 12px;
       min-width: 1px;
-      height: 32px;
+      height: 25;
     
       &.toggle-off {
         padding-right: 5px;
@@ -63,7 +69,11 @@
       position: relative; 
       padding: 6px 12px 6px 12px;
       min-width: 1px;
-      height: 32px;
+      height: 25px;
+    }
+    label.btn {
+      height: 25px;
+      padding: 0px 20px 0px 12px;
     }
   }
 
@@ -98,4 +108,127 @@
     color: #6e6f6b;
   }
 
+  label, a{
+    &.outline{
+      background-color: #ffffff;
+      border: 1px solid @borderColor3;
+      color: @secondAccentColor;
+      @primary-color: #337ab7;
+      @danger-color: #b20706;
+      &.label-,.btn-{
+        &primary{
+          border-color: @primary-color;
+          &:hover{
+            i, span{
+              &.glyphicon{
+                color: darken(@primary-color,5%);
+              }
+            }
+          }
+        }
+        &danger{
+          border-color: @danger-color;
+          &:hover{
+            i, span{
+              &.glyphicon{
+                color: darken(@danger-color,5%);
+              }
+            }
+          }
+
+        }
+        &default{
+          border-color: @secondAccentColor;
+        }
+        &success{
+          border-color: @btnPrimaryActionColor;
+          i, span{
+            &.glyphicon{
+              color: darken(@btnPrimaryActionColor,5%);
+            }
+          }
+        }
+      }
+    }
+  }
+  //Actor mapping
+  .actorMappingList, .processManagerMappingList{
+    table-layout: fixed;
+    td.actorName{
+      vertical-align: middle;
+    }
+  }
+  .members, .managers{
+    a.member, a.manager{
+      margin-right: 0.75em;
+      display: inline-block;
+      margin-bottom: 0.5em;
+    }
+  }
+
+
+  button.glyphicon{
+    border: none;
+    font-weight: normal;
+    background-color: transparent;
+    text-align: inherit;
+    padding: 1px 0;
+    white-space: nowrap;
+    text-transform: none !important;
+  }
+
+  .categories{
+    padding-top: 10px;
+  }
+
+  .tags-suggestion-list{
+    overflow: hidden;
+  }
+
+  .toggle.btn {
+    min-height: 25px;  
+  }
+
+  .metatags-label {
+    padding-right: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .table {
+    margin-bottom: 0px;
+  }
+  span.edit-categories {
+    top: 0;
+    font-size: 0.6em;
+    color: #000000;
+  }
+
+
+  #params td.xeditable {
+    width: 10%;
+  }
+
+  #params .btn {
+    min-width: 1px;
+  }
+
+  td {
+    color: grey;
+  }
+
+}
+
+#form-mapping td.xeditable {
+  width: 70%;
+}
+#manage-categories-modal {
+ 
+  .tags .tag.editable{
+    background-color: black;
+  }
+
+  ul.tags-suggestion-list.dropdown-menu {
+    overflow-x: hidden;
+    width : 100%;
+  }
 }

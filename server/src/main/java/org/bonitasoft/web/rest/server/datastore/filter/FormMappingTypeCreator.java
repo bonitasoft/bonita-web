@@ -15,25 +15,29 @@ package org.bonitasoft.web.rest.server.datastore.filter;
 
 import java.io.Serializable;
 
-import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
-import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeTypeConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
+import org.bonitasoft.engine.form.FormMappingSearchDescriptor;
+import org.bonitasoft.engine.form.FormMappingType;
+import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.converter.ValueConverter;
 
 /**
- * @author Florine Boudin
+ * author Emmanuel Duchastenier
  */
-public class ActivityFilterCreator implements FilterCreator {
+public class FormMappingTypeCreator implements FilterCreator {
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.web.rest.server.datastore.filter.FilterCreator#create(java.lang.String, java.lang.String)
-     */
     @Override
     public Filter<? extends Serializable> create(String attribute, String value) {
-        if (ActivityItem.ATTRIBUTE_TYPE.equals(attribute)) {
-            return new Filter<>(new Field(attribute, new ActivityAttributeConverter()), new Value<>(value, new FlowNodeTypeConverter()));
+        if (FormMappingSearchDescriptor.TYPE.equals(attribute)) {
+            return new Filter<>(new Field(attribute), new Value<>(value, new FormMappingTypeValueConverter()));
         }
-        return new GenericFilterCreator(new ActivityAttributeConverter()).create(attribute, value);
+        return new GenericFilterCreator(new EmptyAttributeConverter()).create(attribute, value);
     }
 
+    class FormMappingTypeValueConverter implements ValueConverter<FormMappingType> {
+
+        @Override
+        public FormMappingType convert(String value) {
+            return FormMappingType.valueOf(value);
+        }
+    }
 }
