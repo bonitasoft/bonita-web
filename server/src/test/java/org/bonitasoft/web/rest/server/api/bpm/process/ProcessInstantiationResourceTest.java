@@ -43,6 +43,8 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     private static final String ID_PROCESS_DEFINITION = "2";
 
     private static final String URL_API_PROCESS_INSTANCIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instantiation";
+    
+    private static final String URL_API_PROCESS_INSTANCIATION_TEST_WITH_USER = URL_API_PROCESS_INSTANCIATION_TEST + "?user=1";
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -91,6 +93,17 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
         verify(processAPI).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
+    }
+    
+    @Test
+    public void should_instanciate_a_process_with_given_inputs_for_a_specific_user() throws Exception {
+        final Map<String, Serializable> expectedComplexInput = aComplexInput();
+
+        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST_WITH_USER).post(VALID_COMPLEX_POST_BODY);
+
+        assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
+        verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
+        verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }
 
     @Test

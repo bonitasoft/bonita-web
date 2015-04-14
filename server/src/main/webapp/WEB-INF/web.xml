@@ -208,11 +208,6 @@
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/portal/homepage</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>BPMURLSupportFilter</filter-name>
-        <url-pattern>/portal/BonitaConsole.html</url-pattern>
-        <url-pattern>/portal/homepage</url-pattern>
-    </filter-mapping>
     <!-- Cache Filter Mapping Start -->
     <filter-mapping>
         <filter-name>CacheFilter</filter-name>
@@ -411,6 +406,10 @@
         <servlet-name>ProcessFormServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.form.ProcessFormServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PageServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.page.PageServlet</servlet-class>
+    </servlet>
     <!-- theme -->
     <servlet>
         <servlet-name>themeResource</servlet-name>
@@ -569,6 +568,10 @@
     <servlet-mapping>
         <servlet-name>ProcessFormServlet</servlet-name>
         <url-pattern>/portal/form/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PageServlet</servlet-name>
+        <url-pattern>/portal/resource/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>formsCache</servlet-name>

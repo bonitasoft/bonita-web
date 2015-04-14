@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,15 +46,15 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  * Form flow service Helps building the forms application
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public interface FormsService extends RemoteService {
 
     /**
      * Retrieve the application config including the application template
-     * 
+     *
      * @param formID
      * @param urlContext
      * @param includeApplicationTemplate
@@ -68,7 +68,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Retrieve the first page in the page flow associated with the form
-     * 
+     *
      * @param formID
      * @param urlContext
      * @return
@@ -89,7 +89,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Retrieve the next page in the page flow associated with the form
-     * 
+     *
      * @param nextPageExpressionId
      *            next form id expression Id
      * @param urlContext
@@ -98,7 +98,7 @@ public interface FormsService extends RemoteService {
      *            the current page Id
      * @param fieldValues
      *            the current page's fields values
-     * 
+     *
      * @throws SessionTimeoutException
      * @throws RPCException
      * @throws SuspendedFormException
@@ -116,7 +116,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Validate a form field value using the validators provided
-     * 
+     *
      * @param formID
      *            a form page id
      * @param urlContext
@@ -137,7 +137,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Validate a form page using the validators provided
-     * 
+     *
      * @param formID
      *            a form page id
      * @param urlContext
@@ -157,7 +157,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Retrieve the confirmation page for a form
-     * 
+     *
      * @param formID
      *            the form id
      * @param urlContext
@@ -170,7 +170,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Retrieve the error page for a formID
-     * 
+     *
      * @param formID
      *            form id
      * @param urlContext
@@ -183,7 +183,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Skip a form
-     * 
+     *
      * @param formID
      *            current form ID
      * @param urlContext
@@ -200,7 +200,7 @@ public interface FormsService extends RemoteService {
     /**
      * start terminate a task and execute a number of actions specifying the pressed submit button id (this way, only actions
      * related to this button will be performed)
-     * 
+     *
      * @param formID
      *            form id
      * @param urlContext
@@ -220,7 +220,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Retrieve the next task uuid if it is in the user task list and form id
-     * 
+     *
      * @param formID
      *            form id
      * @param urlContext
@@ -233,7 +233,7 @@ public interface FormsService extends RemoteService {
 
     /**
      * Get async available values
-     * 
+     *
      * @param formID
      *            form id
      * @param urlContext
@@ -251,25 +251,36 @@ public interface FormsService extends RemoteService {
 
     /**
      * Get any todolist form URL
-     * 
+     *
      * @param urlContext
-     *            Map containing the URL parameters
-     * @return new urlContext Map containing the URL parameters
+     *        Map containing the URL parameters
+     * @return new FormURLComponents containing the URL parameters
      * @throws RPCException
      * @throws SessionTimeoutException
      */
-    Map<String, Object> getAnyTodoListForm(Map<String, Object> urlContext) throws RPCException, SessionTimeoutException;
+    FormURLComponents getAnyTodoListForm(Map<String, Object> urlContext) throws RPCException, SessionTimeoutException;
+
+    /**
+     * Assign the form specified in the URL parameters to the logged in user
+     *
+     * @param formID form Id
+     * @param urlContext Map containing the URL parameters
+     * @throws RPCException
+     * @throws SessionTimeoutException
+     * @throws ForbiddenFormAccessException
+     */
+    void assignForm(String formID, Map<String, Object> urlContext) throws RPCException, SessionTimeoutException, ForbiddenFormAccessException;
 
     /**
      * Retrieve the logged in user
-     * 
+     *
      * @return the logged in {@link User}
      */
     User getLoggedInUser() throws RPCException, SessionTimeoutException;
 
     /**
      * generate a token to change application
-     * 
+     *
      * @return the token
      */
     String generateTemporaryToken() throws RPCException, SessionTimeoutException;

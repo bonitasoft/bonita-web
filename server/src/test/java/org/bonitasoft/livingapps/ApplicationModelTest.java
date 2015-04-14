@@ -19,7 +19,8 @@ import org.bonitasoft.engine.business.application.ApplicationPageNotFoundExcepti
 import org.bonitasoft.engine.business.application.impl.ApplicationImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationMenuImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
-import org.bonitasoft.engine.impl.PageImpl;
+import org.bonitasoft.engine.page.ContentType;
+import org.bonitasoft.engine.page.impl.PageImpl;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.profile.impl.ProfileImpl;
@@ -29,7 +30,6 @@ import org.bonitasoft.engine.search.Sort;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.livingapps.ApplicationModel;
 import org.bonitasoft.livingapps.menu.MenuFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -132,7 +132,7 @@ public class ApplicationModelTest {
 
     private void givenSearchApplicationMenusWillReturns(final List<ApplicationMenu> menuList) throws Exception {
         given(applicationApi.searchApplicationMenus(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<ApplicationMenu>(menuList.size(), menuList));
+                new SearchResultImpl<>(menuList.size(), menuList));
     }
 
     @Test
@@ -164,7 +164,7 @@ public class ApplicationModelTest {
     @Test
     public void should_getCustomPage_return_expectedPage() throws Exception {
         given(applicationApi.getApplicationPage("token", "pageToken")).willReturn(new ApplicationPageImpl(1, 1, "pageToken"));
-        given(pageApi.getPage(1)).willReturn(new PageImpl(1, "", "", false, "", 0L, 0L, 0L, 0L, ""));
+        given(pageApi.getPage(1)).willReturn(new PageImpl(1, "", "", false, "", 0L, 0L, 0L, 0L, "", ContentType.PAGE,null));
 
         assertThat(model.getCustomPage("pageToken").getId()).isEqualTo(1);
     }

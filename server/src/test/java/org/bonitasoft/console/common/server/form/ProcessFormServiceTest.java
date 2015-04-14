@@ -2,7 +2,6 @@ package org.bonitasoft.console.common.server.form;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -37,8 +36,6 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.form.FormMapping;
-import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -179,48 +176,6 @@ public class ProcessFormServiceTest {
     @Test
     public void getProcessDefinitionId_with_no_name_and_version() throws Exception {
         assertEquals(-1L, processFormService.getProcessDefinitionId(apiSession, null, null));
-    }
-
-    @Test
-    public void getForm_for_task() throws Exception {
-        final FormMapping formMapping = mock(FormMapping.class);
-        when(formMapping.getForm()).thenReturn("myPage");
-        when(formMapping.getTarget()).thenReturn(FormMappingTarget.INTERNAL);
-        when(processConfigurationAPI.getTaskForm(1L, "taskName")).thenReturn(formMapping);
-
-        final FormReference formReference = processFormService.getForm(apiSession, 1L, "taskName", false);
-
-        assertNotNull(formReference);
-        assertEquals("myPage", formReference.getForm());
-        assertEquals(FormMappingTarget.INTERNAL.name(), formReference.getTarget());
-    }
-
-    @Test
-    public void getForm_for_process_instance() throws Exception {
-        final FormMapping formMapping = mock(FormMapping.class);
-        when(formMapping.getForm()).thenReturn("www.bonitasoft.com");
-        when(formMapping.getTarget()).thenReturn(FormMappingTarget.URL);
-        when(processConfigurationAPI.getProcessOverviewForm(1L)).thenReturn(formMapping);
-
-        final FormReference formReference = processFormService.getForm(apiSession, 1L, null, true);
-
-        assertNotNull(formReference);
-        assertEquals("www.bonitasoft.com", formReference.getForm());
-        assertEquals(FormMappingTarget.URL.name(), formReference.getTarget());
-    }
-
-    @Test
-    public void getForm_for_process() throws Exception {
-        final FormMapping formMapping = mock(FormMapping.class);
-        when(formMapping.getForm()).thenReturn("myPage");
-        when(formMapping.getTarget()).thenReturn(FormMappingTarget.INTERNAL);
-        when(processConfigurationAPI.getProcessStartForm(1L)).thenReturn(formMapping);
-
-        final FormReference formReference = processFormService.getForm(apiSession, 1L, null, false);
-
-        assertNotNull(formReference);
-        assertEquals("myPage", formReference.getForm());
-        assertEquals(FormMappingTarget.INTERNAL.name(), formReference.getTarget());
     }
 
     @Test
@@ -401,8 +356,8 @@ public class ProcessFormServiceTest {
         when(processDeploymentInfo.getVersion()).thenReturn("processVersion");
         when(processAPI.getProcessDeploymentInfo(1L)).thenReturn(processDeploymentInfo);
 
-        final String uuid = processFormService.getProcessDefinitionUUID(apiSession, 1L);
+        final String uuid = processFormService.getProcessPath(apiSession, 1L);
 
-        assertEquals("processName--processVersion", uuid);
+        assertEquals("processName/processVersion", uuid);
     }
 }

@@ -42,6 +42,7 @@ import org.bonitasoft.forms.client.model.ActivityEditState;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.FormFieldValue;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.bonitasoft.forms.server.exception.TaskAssignationException;
 
@@ -57,16 +58,17 @@ public interface IFormWorkflowAPI {
      * Check the child and parent pocesses and retrieve the next task uuid if it is in the user task list
      *
      * @param session
-     *            the API session
+     *        the API session
      * @param processInstanceId
-     *            the UUID of the current process instance
+     *        the UUID of the current process instance
+     * @param userId
      * @return the next task UUID or null there is no next task or if the next task is not in the user todolist
      * @throws BPMEngineException
      * @throws UserNotFoundException
      * @throws ProcessDefinitionNotFoundException
      */
-    long getRelatedProcessesNextTask(final APISession session, final long processInstanceId) throws InvalidSessionException, RetrieveException,
-    BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
+    long getRelatedProcessesNextTask(final APISession session, final long processInstanceId, final long userId) throws InvalidSessionException,
+            RetrieveException, BPMEngineException, UserNotFoundException, SearchException, ProcessDefinitionNotFoundException;
 
     /**
      * Retrieve any task id of the user todolist. If the process UUID is valid, the task belong to the process otherwise any task from the user todolist can be
@@ -907,15 +909,18 @@ public interface IFormWorkflowAPI {
      * Assign a task to the user of whom belong the session
      *
      * @param session
-     *            the user's session
+     *        the user's session
      * @param taskId
-     *            the task to assign
+     *        the task to assign
+     * @param userId
      * @throws TaskAssignationException
-     *             if the task couldn't be assign
+     *         if the task couldn't be assign
      * @throws InvalidSessionException
-     *             if session isn't valid
+     *         if session isn't valid
+     * @throws ForbiddenFormAccessException
      */
-    void assignTask(APISession session, long taskId) throws TaskAssignationException, InvalidSessionException;
+    void assignTaskIfNotAssigned(APISession session, long taskId, long userId) throws TaskAssignationException, InvalidSessionException,
+            ForbiddenFormAccessException;
 
     /**
      * indicate if the activity instance ID passed matches a ready task
@@ -948,5 +953,8 @@ public interface IFormWorkflowAPI {
             UserNotFoundException;
 
     Boolean canStartProcessDefinition(APISession session, long userId, long processDefinitionId) throws BPMEngineException;
+
+    String getActivityDefinitionKeyFromActivityInstanceID(APISession session, long activityInstanceID) throws ActivityInstanceNotFoundException,
+            ProcessDefinitionNotFoundException, BPMEngineException, InvalidSessionException;
 
 }
