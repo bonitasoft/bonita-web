@@ -102,6 +102,17 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
         verify(processAPI).executeUserTask(2L, expectedComplexInput);
     }
+    
+    @Test
+    public void should_execute_a_task_with_given_inputs_for_a_specific_user() throws Exception {
+        final Map<String, Serializable> expectedComplexInput = aComplexInput();
+
+        final Response response = request("/bpm/userTask/2/execution?user=1").post(VALID_COMPLEX_POST_BODY);
+
+        assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
+        verify(processAPI).executeUserTask(1L, 2L, expectedComplexInput);
+        verify(processAPI, times(0)).executeUserTask(2L, expectedComplexInput);
+    }
 
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {

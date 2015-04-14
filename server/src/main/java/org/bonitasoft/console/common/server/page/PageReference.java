@@ -12,50 +12,44 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.form;
+package org.bonitasoft.console.common.server.page;
 
 import java.io.Serializable;
 
 
-public class FormReference implements Serializable {
+public class PageReference implements Serializable {
 
     /**
      * UID
      */
     private static final long serialVersionUID = -1692145871057019847L;
 
-    private String form;
+    private Long pageId;
 
-    private String target;
+    private String url;
 
-    public FormReference() {
+    public PageReference() {
     }
 
-    public FormReference(final String form, final String target) {
-        this.form = form;
-        this.target = target;
+    public PageReference(final Long pageId, final String url) {
+        this.pageId = pageId;
+        this.url = url;
     }
 
-
-    public String getForm() {
-        return form;
+    public Long getPageId() {
+        return pageId;
     }
 
-
-    public void setForm(final String form) {
-        this.form = form;
+    public void setPageId(final Long pageId) {
+        this.pageId = pageId;
     }
 
-
-    public String getTarget() {
-        return target;
+    public String getURL() {
+        return url;
     }
 
-
-    public void setTarget(final String target) {
-        this.target = target;
+    public void setURL(final String url) {
+        this.url = url;
     }
-
-
 
 }
