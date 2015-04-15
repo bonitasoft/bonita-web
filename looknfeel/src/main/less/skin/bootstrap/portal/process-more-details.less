@@ -52,6 +52,7 @@
 
   .btn {
     height: 25px;
+    margin-right: 5px;
   }
 
   .bonita-toggle {
@@ -206,14 +207,19 @@
 
   #params td.xeditable {
     width: 10%;
+    
   }
 
   #params .btn {
-    min-width: 1px;
+    min-width: 30px;
   }
 
   td {
     color: #6e6f6b;
+  }
+  
+  .multiSelect button{
+    margin: 0 5px 0 5px;
   }
 
 }
@@ -221,8 +227,16 @@
 #form-mapping {
   td {
     color: #6e6f6b;
-    .xeditable {
+    &.xeditable {
       width: 70%;
+    }
+    input[type="text"]{
+      height: 30px;
+    }
+    button{
+      margin-top: 2px;
+      min-width: 30px;
+      padding: 0 0 0 0;
     }
   }
   button.glyphicon{
