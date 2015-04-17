@@ -537,6 +537,12 @@ public class URLUtils {
             url.append("=");
             url.append(urlContext.get(URLUtils.USER_ID_PARAM));
         }
+        if (urlContext.containsKey(URLUtils.VIEW_MODE_PARAM)) {
+            url.append("&");
+            url.append(URLUtils.VIEW_MODE_PARAM);
+            url.append("=");
+            url.append(urlContext.get(URLUtils.VIEW_MODE_PARAM));
+        }
         return url.toString();
     }
 
