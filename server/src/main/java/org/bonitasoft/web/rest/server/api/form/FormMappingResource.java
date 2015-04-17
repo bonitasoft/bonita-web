@@ -20,6 +20,8 @@ import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
+import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.filter.FormMappingTypeCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
@@ -46,6 +48,11 @@ public class FormMappingResource extends CommonResource {
         } catch (final Exception e) {
             throw new APIException(e);
         }
+    }
+
+    @Override
+    protected Filters buildFilters() {
+        return new Filters(getSearchFilters(), new FormMappingTypeCreator());
     }
 
 }

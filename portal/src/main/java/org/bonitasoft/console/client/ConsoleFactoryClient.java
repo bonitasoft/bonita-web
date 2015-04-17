@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.core.shared.GWT;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -95,6 +94,8 @@ import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction
 import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
+
+import com.google.gwt.core.shared.GWT;
 
 /**
  * console client page
@@ -187,12 +188,13 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessListingAdminPage();
         } else if (ProcessQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new ProcessQuickDetailsAdminPage();
-        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
+                getCurrentUserAccessRights())) {
+            // No action is necessary as an unauthorized request will result in a page reload.
             return new ProcessMoreDetailsAdminPage();
-            /*
-             * } else if (StartProcessOnBehalfPage.TOKEN.equals(token)) {
-             * return new StartProcessOnBehalfPage();
-             */
+        } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
+                getCurrentUserAccessRights())) {
+            return prepareAngularPage(token);
         } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
@@ -354,21 +356,20 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
         } else if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
             // No action is necessary as an unauthorized request will result in a page reload.
-            new CheckValidSessionBeforeAction(emptyAction).execute();
-            angularFrame.setUrl("#" + angularViewsMap.get(token), token);
-            return angularFrame;
-            // TODO : to remove when merging new process more detail page to the new one !!!!
-        } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token)) {
-            // No action is necessary as an unauthorized request will result in a page reload.
-            new CheckValidSessionBeforeAction(emptyAction).execute();
-            angularFrame.setUrl("#" + angularViewsMap.get(token), token);
-            return angularFrame;
+            return prepareAngularPage(token);
         } else {
-            for (final String key : getCurrentUserAccessRights()) {
-                print(key);
-            }
             return new BlankPage();
         }
+    }
+
+    /**
+     * @param token
+     * @return
+     */
+    protected RawView prepareAngularPage(final String token) {
+        new CheckValidSessionBeforeAction(emptyAction).execute();
+        angularFrame.setUrl("#" + angularViewsMap.get(token), token);
+        return angularFrame;
     }
 
     public native void print(String content) /*-{

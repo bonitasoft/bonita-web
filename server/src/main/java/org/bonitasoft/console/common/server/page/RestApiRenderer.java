@@ -35,6 +35,7 @@ import groovy.lang.GroovyClassLoader;
  */
 public class RestApiRenderer {
 
+
     private final CustomPageService customPageService = new CustomPageService();
 
     public Object handleRestApiCall(final HttpServletRequest request, final String pageName)
@@ -56,7 +57,7 @@ public class RestApiRenderer {
         return indexGroovy.exists();
     }
 
-    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, PageContextHelper pageContextHelper,
+    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
             final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
