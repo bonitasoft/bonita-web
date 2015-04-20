@@ -13,7 +13,12 @@
  ******************************************************************************/
 package org.bonitasoft.console.client.angular;
 
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.*;
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -36,7 +41,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String APPLICATION_LISTING_PAGE = "applicationslistingadmin";
 
-    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "newprocessmoredetailsadmin";
+    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "ngprocessmoredetailsadmin";
 
     public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
 
@@ -45,6 +50,8 @@ public class AngularIFrameView extends RawView {
     public static final String CASE_LISTING_PROCESS_ID_TOKEN = "processId";
 
     private final IFrameView iframe = new IFrameView();
+
+    protected final static Map<String, List<String>> acceptedToken = initAcceptedTokens();
 
     private String url;
 
@@ -60,6 +67,15 @@ public class AngularIFrameView extends RawView {
                 updateHash(angularParameterCleaner.getHashWithoutAngularParameters());
             }
         });
+    }
+
+    /**
+     * @return
+     */
+    private static Map<String, List<String>> initAcceptedTokens() {
+        final Map<String, List<String>> results = new HashMap<String, List<String>>();
+        results.put(PROCESS_MORE_DETAILS_ADMIN_TOKEN, Arrays.asList("id", "tab"));
+        return results;
     }
 
     public native String getHash() /*-{
@@ -110,10 +126,15 @@ public class AngularIFrameView extends RawView {
      * @return the angular url to access for the given token
      */
     protected String buildAngularUrl(final String url, final String token, final String queryString) {
-        return new AngularUrlBuilder(url)
+        final AngularUrlBuilder angularUrlBuilder = new AngularUrlBuilder(url)
         .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
-        .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash())
-        .build() + (isBlank(queryString) ? "" : "?" + queryString.replaceAll(token + '_', ""));
+        .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash());
+        if (acceptedToken.containsKey(token)) {
+            for (final String param : acceptedToken.get(token)) {
+                angularUrlBuilder.appendQueryStringParameter(param, queryString + "&" + getHash());
+            }
+        }
+        return angularUrlBuilder.build() + (isBlank(queryString) ? "" : "?" + queryString.replaceAll(token + '_', ""));
     }
 
     /**
