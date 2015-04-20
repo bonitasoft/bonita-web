@@ -5,6 +5,7 @@ import org.bonitasoft.console.common.server.preferences.properties.CompoundPermi
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
+import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -15,14 +16,16 @@ public class PermissionsBuilderAccessor {
 
     public static PermissionsBuilder createPermissionBuilder(final APISession session) throws LoginFailedException {
         ProfileAPI profileAPI;
+        ApplicationAPI applicationAPI;
         try {
             profileAPI = TenantAPIAccessor.getProfileAPI(session);
+            applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
         } catch (final BonitaException e) {
             throw new LoginFailedException(e);
         }
         final SecurityProperties securityProperties = PropertiesFactory.getSecurityProperties(session.getTenantId());
         final CustomPermissionsMapping customPermissionsMapping = PropertiesFactory.getCustomPermissionsMapping(session.getTenantId());
         final CompoundPermissionsMapping compoundPermissionsMapping = PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
-        return new PermissionsBuilder(session, profileAPI, customPermissionsMapping, compoundPermissionsMapping, securityProperties);
+        return new PermissionsBuilder(session, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping, securityProperties);
     }
 }

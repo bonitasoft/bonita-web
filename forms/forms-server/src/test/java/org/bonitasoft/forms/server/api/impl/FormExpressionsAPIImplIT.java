@@ -109,7 +109,9 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
 
         final DesignProcessDefinition designProcessDefinition = processBuilder.done();
         final BusinessArchiveBuilder businessArchiveBuilder = new BusinessArchiveBuilder().createNewBusinessArchive();
-        final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(designProcessDefinition).done();
+        final BusinessArchive businessArchive = businessArchiveBuilder
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
+                .setProcessDefinition(designProcessDefinition).done();
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
         processDefinition = processAPI.deploy(businessArchive);
 

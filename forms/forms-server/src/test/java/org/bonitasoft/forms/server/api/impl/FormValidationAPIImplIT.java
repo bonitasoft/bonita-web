@@ -47,6 +47,7 @@ import org.bonitasoft.forms.server.validator.CharFieldValidator;
 import org.bonitasoft.forms.server.validator.DateOrderTestPageValidator;
 import org.bonitasoft.forms.server.validator.InstanceIDTestFieldValidator;
 import org.bonitasoft.forms.server.validator.RegexFieldValidator;
+import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,7 +81,9 @@ public class FormValidationAPIImplIT extends FormsTestCase {
 
         DesignProcessDefinition designProcessDefinition = processBuilder.done();
         final BusinessArchiveBuilder businessArchiveBuilder = new BusinessArchiveBuilder().createNewBusinessArchive();
-        final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(designProcessDefinition).done();
+        final BusinessArchive businessArchive = businessArchiveBuilder
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
+                .setProcessDefinition(designProcessDefinition).done();
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
         bonitaProcess = processAPI.deploy(businessArchive);
 

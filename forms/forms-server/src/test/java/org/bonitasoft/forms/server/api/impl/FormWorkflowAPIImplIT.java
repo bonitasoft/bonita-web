@@ -117,7 +117,9 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         final byte[] content = new byte[] { 5, 0, 1, 4, 6, 5, 2, 3, 1, 5, 6, 8, 4, 6, 6, 3, 2, 4, 5 };
         final BarResource barResource = new BarResource("barFilename.txt", content);
         businessArchiveBuilder.addDocumentResource(barResource);
-        final BusinessArchive businessArchive = businessArchiveBuilder.setProcessDefinition(designProcessDefinition).done();
+        final BusinessArchive businessArchive = businessArchiveBuilder
+                .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
+                .setProcessDefinition(designProcessDefinition).done();
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
         bonitaProcess = processAPI.deploy(businessArchive);
 
@@ -454,7 +456,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         }.waitUntil());
         humanTaskInstance = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0);
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID);
+        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID, getSession().getUserId());
         Assert.assertTrue(activityInstanceID >= 0);
         final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
         Assert.assertEquals("Approval", activityInstance.getName());
@@ -473,7 +475,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
                 .get(0);
         Assert.assertNotNull(humanTaskInstance);
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
-        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID);
+        final long activityInstanceID = formWorkflowApi.getRelatedProcessesNextTask(getSession(), processInstanceID, getSession().getUserId());
         Assert.assertTrue(activityInstanceID > 0);
         final ActivityInstance activityInstance = processAPI.getActivityInstance(activityInstanceID);
         Assert.assertEquals("Request", activityInstance.getName());

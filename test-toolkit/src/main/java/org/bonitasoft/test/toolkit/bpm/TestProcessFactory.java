@@ -109,10 +109,10 @@ public class TestProcessFactory {
     public static ProcessDefinitionBuilder getDefaultProcessDefinitionBuilder(final String processName, final String version) {
         final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, version);
         processDefinitionBuidler.addActor("Employees", true)
-        .addDescription("This a default process")
-        .addStartEvent("Start")
-        .addUserTask("Activity 1", "Employees")
-        .addEndEvent("Finish");
+                .addDescription("This a default process")
+                .addStartEvent("Start")
+                .addUserTask("Activity 1", "Employees")
+                .addEndEvent("Finish");
         return processDefinitionBuidler;
     }
 
@@ -120,12 +120,12 @@ public class TestProcessFactory {
         final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, "1.0");
         try {
             processDefinitionBuidler.addActor("Employees", true)
-            .addDescription("This a default process")
+                    .addDescription("This a default process")
 
-            .addStartEvent("Start")
-            .addUserTask("Activity 1", "Employees")
-            .addData("FailedData", "FailedClassName", new ExpressionBuilder().createInputExpression("input", Boolean.class.getName()))
-            .addEndEvent("Finish");
+                    .addStartEvent("Start")
+                    .addUserTask("Activity 1", "Employees")
+                    .addData("FailedData", "FailedClassName", new ExpressionBuilder().createInputExpression("input", Boolean.class.getName()))
+                    .addEndEvent("Finish");
         } catch (final InvalidExpressionException e) {
             throw new TestToolkitException("Invalid expression definition", e);
         }
@@ -137,12 +137,13 @@ public class TestProcessFactory {
         final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, "1.0");
         processDefinitionBuidler.addDocumentDefinition("Document 1667").addContentFileName("filename.txt").addFile("attachedfile.txt");
         processDefinitionBuidler.addActor("Employees", true)
-        .addStartEvent("Start")
-        .addUserTask("Activity 1", "Employees")
-        .addEndEvent("Finish");
+                .addStartEvent("Start")
+                .addUserTask("Activity 1", "Employees")
+                .addEndEvent("Finish");
 
         try {
             return new BusinessArchiveBuilder().createNewBusinessArchive()
+                    .setFormMappings(TestProcess.createDefaultProcessFormMapping(processDefinitionBuidler.getProcess()))
                     .addDocumentResource(new BarResource("attachedfile.txt", "thisisthecontentofthedocumentattached".getBytes()))
                     .setProcessDefinition(processDefinitionBuidler.done());
         } catch (final InvalidProcessDefinitionException e) {
@@ -172,11 +173,11 @@ public class TestProcessFactory {
         }
 
         final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder()
-        .createNewInstance(PROCESS_CALL_ACTIVTY, "1.0");
+                .createNewInstance(PROCESS_CALL_ACTIVTY, "1.0");
         processDefinitionBuidler.addActor("Employees", true)
-        .addStartEvent("Start")
-        .addCallActivity("Call Activity", expressionName, expressionVersion)
-        .addEndEvent("Finish");
+                .addStartEvent("Start")
+                .addCallActivity("Call Activity", expressionName, expressionVersion)
+                .addEndEvent("Finish");
         return processDefinitionBuidler;
     }
 

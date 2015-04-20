@@ -21,6 +21,7 @@ import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
+import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
@@ -32,6 +33,8 @@ public class ProcessInstantiationResource extends CommonResource {
 
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
+    private static final String USER_PARAM = "user";
+    
     private final ProcessAPI processAPI;
 
     public ProcessInstantiationResource(final ProcessAPI processAPI) {
@@ -39,14 +42,20 @@ public class ProcessInstantiationResource extends CommonResource {
     }
 
     @Post("json")
-    public void instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
+    public ProcessInstance instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
             ProcessExecutionException {
+    	String userId = getRequestParameter(USER_PARAM);
         try {
-            processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs);
+        	if (userId == null) {
+        		return processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs); 			
+    		} else {
+    		    return processAPI.startProcessWithInputs(Long.parseLong(userId),getProcessDefinitionIdParameter(), inputs);
+    		}
+            
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instanciate process task.");
+            return null;
         }
-
     }
 
     protected long getProcessDefinitionIdParameter() {

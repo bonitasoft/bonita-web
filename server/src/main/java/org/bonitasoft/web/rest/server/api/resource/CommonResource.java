@@ -164,7 +164,11 @@ public class CommonResource extends ServerResource {
 
     public SearchOptions buildSearchOptions() {
         return new SearchOptionsCreator(getSearchPageNumber(), getSearchPageSize(), getSearchTerm(), new Sorts(
-                getSearchOrder()), new Filters(getSearchFilters())).create();
+                getSearchOrder()), buildFilters()).create();
+    }
+
+    protected Filters buildFilters() {
+        return new Filters(getSearchFilters());
     }
 
     @Override

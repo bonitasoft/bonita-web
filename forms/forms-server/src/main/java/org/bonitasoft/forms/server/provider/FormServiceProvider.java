@@ -196,12 +196,12 @@ public interface FormServiceProvider {
      * Retrieve the next form ID and additional parameters required in the URL to display the next form after a form submission.
      *
      * @param formID
-     *            the form ID
+     *        the form ID
      * @param context
-     *            Map of context (containing the URL parameters and other data)
+     *        Map of context (containing the URL parameters and other data)
      * @return FormURLComponents the map of URL parameters
      * @throws FormNotFoundException
-     *             if the form cannot be found
+     *         if the form cannot be found
      * @throws SessionTimeoutException
      */
     FormURLComponents getNextFormURLParameters(final String formID, Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
@@ -397,12 +397,12 @@ public interface FormServiceProvider {
      * The map returned should contain the new URL parameters that will be set client-side (including or not a form ID).
      *
      * @param context
-     *            Map of context (containing the URL parameters and other data) (including the formID)
-     * @return a {@link Map} of URL parameters. This Map should be empty if there are no forms to display
+     *        Map of context (containing the URL parameters and other data) (including the formID)
+     * @return a {@link FormURLComponents} null if there are no forms to display
      * @throws FormNotFoundException
      * @throws SessionTimeoutException
      */
-    Map<String, Object> getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
+    FormURLComponents getAnyTodoListForm(final Map<String, Object> context) throws FormNotFoundException, SessionTimeoutException;
 
     /**
      * Get the directory in which the application resources (like process layout, CSS...) are deployed.<br>
@@ -473,4 +473,17 @@ public interface FormServiceProvider {
      *            Map of context (containing the URL parameters and other data)
      */
     void removeFormTransientDataContext(HttpSession session, String storageKey, Map<String, Object> context);
+
+    /**
+     * Assign the given form to the logged in user
+     *
+     * @param formID form Id
+     * @param context Map of context (containing the URL parameters and other data)
+     * @throws SessionTimeoutException
+     * @throws FormNotFoundException
+     * @throws TaskAssignationException
+     * @throws ForbiddenFormAccessException
+     */
+    void assignForm(String formID, Map<String, Object> context) throws SessionTimeoutException, FormNotFoundException, TaskAssignationException,
+            ForbiddenFormAccessException;
 }

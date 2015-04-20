@@ -9,6 +9,7 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
+import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.Profile;
@@ -30,14 +31,16 @@ public class PermissionsBuilder {
 
     protected final APISession session;
     private final ProfileAPI profileAPI;
+    private final ApplicationAPI applicationAPI;
     private final CustomPermissionsMapping customPermissionsMapping;
     private final CompoundPermissionsMapping compoundPermissionsMapping;
     private final boolean apiAuthorizationsCheckEnabled;
 
-    protected PermissionsBuilder(final APISession session, final ProfileAPI profileAPI, final CustomPermissionsMapping customPermissionsMapping,
+    protected PermissionsBuilder(final APISession session, final ProfileAPI profileAPI,final ApplicationAPI applicationAPI, final CustomPermissionsMapping customPermissionsMapping,
             final CompoundPermissionsMapping compoundPermissionsMapping, final SecurityProperties securityProperties) {
         this.session = session;
         this.profileAPI = profileAPI;
+        this.applicationAPI = applicationAPI;
         this.customPermissionsMapping = customPermissionsMapping;
         this.compoundPermissionsMapping = compoundPermissionsMapping;
         apiAuthorizationsCheckEnabled = securityProperties.isAPIAuthorizationsCheckEnabled();
@@ -95,6 +98,7 @@ public class PermissionsBuilder {
 
     void addPageAndCustomPermissionsOfProfile(final Set<String> permissions, final Set<String> pageTokens, final Profile profile) throws SearchException {
         addPagesOfProfile(profile, pageTokens);
+        addPagesOfApplication(profile, pageTokens);
         addCustomProfilePermissions(permissions, profile);
         addProfilesPermissions(permissions, profile);
     }
@@ -116,6 +120,11 @@ public class PermissionsBuilder {
             }
             entriesIndex = entriesIndex + nbOfProfileEntriesRetrieved;
         }
+    }
+
+    void addPagesOfApplication(final Profile profile, final Set<String> pageTokens) throws SearchException {
+        final List<String> allPagesForProfile = applicationAPI.getAllPagesForProfile(profile.getId());
+        pageTokens.addAll(allPagesForProfile);
     }
 
     void addCustomProfilePermissions(final Set<String> permissions, final Profile profile) {
