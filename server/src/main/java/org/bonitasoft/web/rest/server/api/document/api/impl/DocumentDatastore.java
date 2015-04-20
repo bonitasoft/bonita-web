@@ -28,7 +28,7 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
@@ -102,7 +102,7 @@ public class DocumentDatastore {
         throw new ServletException("Invalid view type.");
     }
 
-    public DocumentItem createDocument(final long processInstanceId, final String documentName, final String documentCreationType, final String path, final TenantFolder tenantFolder)
+    public DocumentItem createDocument(final long processInstanceId, final String documentName, final String documentCreationType, final String path, final BonitaHomeFolderAccessor tenantFolder)
             throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, DocumentException, IOException, ProcessInstanceNotFoundException, DocumentAttachmentException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException {
 
         DocumentItem item = new DocumentItem();

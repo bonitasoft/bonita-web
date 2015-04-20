@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.page.PageNotFoundException;
@@ -42,7 +42,7 @@ public class PageServletTest {
     PageMappingService pageMappingService;
 
     @Mock
-    TenantFolder tenantFolder;
+    BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
 
     @Spy
     @InjectMocks
@@ -122,7 +122,7 @@ public class PageServletTest {
         final File resourceFile = mock(File.class);
         when(pageResourceProvider.getResourceAsFile("resources/path/of/resource.css")).thenReturn(resourceFile);
         when(pageRenderer.getPageResourceProvider(42L, apiSession)).thenReturn(pageResourceProvider);
-        when(tenantFolder.isInFolder(resourceFile, null)).thenReturn(true);
+        when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
 
         pageServlet.doGet(hsRequest, hsResponse);
 

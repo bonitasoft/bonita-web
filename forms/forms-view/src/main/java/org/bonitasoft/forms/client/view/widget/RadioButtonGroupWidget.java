@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
+import org.bonitasoft.forms.client.view.common.DOMUtils;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -232,10 +233,13 @@ public class RadioButtonGroupWidget extends Composite implements HasClickHandler
             fireEvents = false;
         }
         for (final RadioButton radioButton : radioButtons) {
+            final DOMUtils domUtils = DOMUtils.getInstance();
             if (value != null && value.equals(radioButton.getFormValue())) {
                 radioButton.setValue(true);
+                domUtils.overrideNativeInputAfterUpdate(radioButton, true);
             } else {
                 radioButton.setValue(false);
+                domUtils.overrideNativeInputAfterUpdate(radioButton, false);
             }
             if (fireEvents) {
                 ValueChangeEvent.fire(radioButton, true);
