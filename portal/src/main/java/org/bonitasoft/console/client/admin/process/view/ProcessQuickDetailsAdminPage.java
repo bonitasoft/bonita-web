@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,14 +30,12 @@ import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
-import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -79,35 +77,11 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
     }
 
     private Action createMoreDetailsAction(final ProcessItem process) {
-    	return new CheckValidSessionBeforeAction(new ActionShowView(new ProcessMoreDetailsAdminPage(process)));
+        return new CheckValidSessionBeforeAction(new ActionShowView(new ProcessMoreDetailsAdminPage(process)));
     }
 
     private Action createNewMoreDetailsAction(final ProcessItem process) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new PageOnItem<IItem>(process.getId(), ProcessDefinition.get()) {
-
-
-            @Override
-            public String getToken() {
-                addParameter(PARAMETER_ITEM_ID, getItemId().toString());
-                return super.getToken();
-            }
-
-            @Override
-            protected void defineTitle(final IItem item) {
-
-            }
-
-            @Override
-            protected void buildView(final IItem item) {
-            }
-
-            @Override
-            public String defineToken() {
-                return AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN;
-            }
-
-
-        }));
+        return new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.redirectToMoreDetailsPage(process)));
     }
 
     @Override

@@ -13,7 +13,7 @@
  ******************************************************************************/
 package org.bonitasoft.console.client.angular;
 
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,13 +21,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
+import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickEvent;
 import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickHandler;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -56,6 +60,32 @@ public class AngularIFrameView extends RawView {
     private String url;
 
     private String token;
+
+    public static RawView redirectToMoreDetailsPage(final ProcessItem process) {
+        return new PageOnItem<IItem>(process.getId(), ProcessDefinition.get()) {
+
+            @Override
+            public String getToken() {
+                addParameter(PARAMETER_ITEM_ID, getItemId().toString());
+                return super.getToken();
+            }
+
+            @Override
+            protected void defineTitle(final IItem item) {
+
+            }
+
+            @Override
+            protected void buildView(final IItem item) {
+            }
+
+            @Override
+            public String defineToken() {
+                return AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN;
+            }
+
+        };
+    }
 
     public AngularIFrameView() {
         MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
