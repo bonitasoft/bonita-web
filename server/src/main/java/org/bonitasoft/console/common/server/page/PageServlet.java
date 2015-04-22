@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
@@ -61,7 +61,7 @@ public class PageServlet extends HttpServlet {
 
     protected PageMappingService pageMappingService = new PageMappingService();
 
-    protected TenantFolder tenantFolder = new TenantFolder();
+    protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -132,7 +132,7 @@ public class PageServlet extends HttpServlet {
             throws IOException, BonitaException {
         final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageId, apiSession);
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
-        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+        if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "For security reasons, access to this file path is forbidden : " + resourcePath);
         }
         return resourceFile;

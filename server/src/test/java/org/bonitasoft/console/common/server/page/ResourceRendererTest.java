@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +63,7 @@ public class ResourceRendererTest {
     HttpSession httpSession;
 
     @Mock
-    TenantFolder tenantFolder;
+    BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
 
     ResourceRenderer resourceRenderer;
 

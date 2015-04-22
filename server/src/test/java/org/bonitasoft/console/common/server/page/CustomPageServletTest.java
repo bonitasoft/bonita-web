@@ -13,7 +13,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class CustomPageServletTest {
     PageResourceProvider pageResourceProvider;
 
     @Mock
-    TenantFolder tenantFolder;
+    BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
 
     @Mock
     CustomPageRequestModifier customPageRequestModifier;
@@ -127,7 +127,7 @@ public class CustomPageServletTest {
         given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/file.css")).willReturn(Arrays.asList("custompage_htmlexample", "css", "file.css"));
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample",1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
-        doReturn(true).when(tenantFolder).isInFolder(any(File.class), any(File.class));
+        doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -142,7 +142,7 @@ public class CustomPageServletTest {
                 Arrays.asList("custompage_htmlexample", "css", "..", "..", "..", "file.css"));
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample", 1L);
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
-        doReturn(false).when(tenantFolder).isInFolder(any(File.class), any(File.class));
+        doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         servlet.doGet(hsRequest, hsResponse);
     }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentDefinition;
@@ -103,6 +103,6 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
         }
         final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
 
-        return new CaseDocumentDatastore(getEngineSession(), constants, processAPI, new TenantFolder());
+        return new CaseDocumentDatastore(getEngineSession(), constants, processAPI, new BonitaHomeFolderAccessor());
     }
 }
