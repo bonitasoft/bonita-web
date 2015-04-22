@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
@@ -105,8 +105,8 @@ DatastoreHasDelete
         return convertEngineToConsoleItem(processDeploymentInfo);
     }
 
-    protected TenantFolder getTenantFolder() {
-        final TenantFolder tenantFolder = new TenantFolder();
+    protected BonitaHomeFolderAccessor getTenantFolder() {
+        final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
         return tenantFolder;
     }
 

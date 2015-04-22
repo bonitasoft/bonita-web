@@ -43,14 +43,14 @@ public class TestCase {
 
     private ProcessInstance processInstance;
 
-    private final static int GET_NEXT_NB_ATTEMPT = 10;
+    private final static int GET_NEXT_NB_ATTEMPT = 20;
 
     private final static int SLEEP_TIME_MS = 100;
 
     public final static String READY_STATE = "started";
 
-    public TestCase(ProcessInstance instance) {
-        this.processInstance = instance;
+    public TestCase(final ProcessInstance instance) {
+        processInstance = instance;
     }
 
     /**
@@ -65,18 +65,18 @@ public class TestCase {
         ProcessInstance instance = null;
         for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
             try {
-                instance = processAPI.getProcessInstance(this.processInstance.getId());
+                instance = processAPI.getProcessInstance(processInstance.getId());
                 if (instance != null && state.equals(instance.getState())) {
                     break;
                 }
                 Thread.sleep(SLEEP_TIME_MS);
             } catch (final Exception e) {
-                throw new TestToolkitException("Can't get process instance <" + this.processInstance.getId() + ">.", e);
+                throw new TestToolkitException("Can't get process instance <" + processInstance.getId() + ">.", e);
             }
         }
         if (instance == null || !state.equals(instance.getState())) {
             throw new TestToolkitException("Instance <" + this.processInstance.getId() + "> has not reached the expected state <" + state + ">.");
-        }
+    }
     }
 
     /**
@@ -149,18 +149,18 @@ public class TestCase {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         try {
             return processAPI.getProcessInstance(getId());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new TestToolkitException("Can't get process instance for <" + getId() + ">. Not found", e);
         }
     }
 
     public TestCase refreshProcessInstance() {
-        this.processInstance = fetchProcessInstance(TestToolkitCtx.getInstance().getInitiator().getSession());
+        processInstance = fetchProcessInstance(TestToolkitCtx.getInstance().getInitiator().getSession());
         return this;
     }
 
     public ProcessInstance getProcessInstance() {
-        return this.processInstance;
+        return processInstance;
     }
 
     private ArchivedProcessInstance getArchive(final APISession apiSession) {
@@ -181,7 +181,7 @@ public class TestCase {
         }
     }
 
-    public ArchivedProcessInstance getArchive(TestUser initiator) {
+    public ArchivedProcessInstance getArchive(final TestUser initiator) {
         return getArchive(initiator.getSession());
     }
 
@@ -190,8 +190,8 @@ public class TestCase {
     }
 
     public void archive() throws InterruptedException {
-        TestUser user = TestToolkitCtx.getInstance().getInitiator();
-        APISession session = user.getSession();
+        final TestUser user = TestToolkitCtx.getInstance().getInitiator();
+        final APISession session = user.getSession();
         try {
             while (true) {
                 final TestHumanTask nextActivityInstance = getNextHumanTask(session);
@@ -200,13 +200,13 @@ public class TestCase {
                 }
                 Thread.sleep(SLEEP_TIME_MS);
             }
-        } catch (NoActivityLeftException e) {
+        } catch (final NoActivityLeftException e) {
             // no more activity, finished
         }
     }
 
     public long getId() {
-        return this.processInstance.getId();
+        return processInstance.getId();
     }
 
     // ///////////////////////////////////////////////////////////////////
@@ -241,9 +241,9 @@ public class TestCase {
     private void addComment(final APISession apiSession, final String content) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         try {
-            processAPI.addComment(this.processInstance.getId(), content);
+            processAPI.addComment(processInstance.getId(), content);
         } catch (final Exception e) {
-            throw new TestToolkitException("Can't add comment to <" + this.processInstance.getId() + ">", e);
+            throw new TestToolkitException("Can't add comment to <" + processInstance.getId() + ">", e);
         }
     }
 
@@ -257,7 +257,7 @@ public class TestCase {
         }
     }
 
-    public void addComment(String content) {
+    public void addComment(final String content) {
         addComment(TestToolkitCtx.getInstance().getInitiator(), content);
     }
 }

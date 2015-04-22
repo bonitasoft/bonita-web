@@ -21,7 +21,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
@@ -41,7 +41,7 @@ public class ProcessActorImportService extends ConsoleService {
     public Object run() {
         InputStream xmlStream = null;
         try {
-            final TenantFolder tenantFolder = new TenantFolder();
+            final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
             final File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
                     getTenantId());
 

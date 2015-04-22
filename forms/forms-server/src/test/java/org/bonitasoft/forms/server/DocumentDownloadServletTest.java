@@ -58,7 +58,7 @@ public class DocumentDownloadServletTest {
         try {
             documentDownloadServlet.doGet(req, res);
         } catch (final ServletException e) {
-            assertTrue(e.getMessage().startsWith("For security reasons, access to this file paths"));
+            assertTrue(e.getMessage().startsWith("Unauthorized access to the file"));
         }
     }
 

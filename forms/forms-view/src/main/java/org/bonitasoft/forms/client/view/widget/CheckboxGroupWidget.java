@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.bonitasoft.forms.client.model.ReducedFormFieldAvailableValue;
+import org.bonitasoft.forms.client.view.common.DOMUtils;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -40,7 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Widget displaying a group of checkboxes
- * 
+ *
  * @author Anthony Birembaut
  */
 public class CheckboxGroupWidget extends Composite implements HasClickHandlers, ClickHandler, HasValueChangeHandlers<Boolean>, ValueChangeHandler<Boolean> {
@@ -78,14 +79,14 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
 
     /**
      * Constructor
-     * 
+     *
      * @param availableValues
      *            available values of the group
      * @param initialValues
      *            initial values
      * @param itemsStyle
      *            the css classes of each radio button
-     * 
+     *
      */
     public CheckboxGroupWidget(final List<ReducedFormFieldAvailableValue> availableValues, final Collection<String> initialValues, final String itemsStyle) {
         this(availableValues, initialValues, itemsStyle, false);
@@ -93,7 +94,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
 
     /**
      * Constructor
-     * 
+     *
      * @param availableValues
      *            available values of the group
      * @param initialValues
@@ -102,13 +103,13 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
      *            the css classes of each radio button
      * @param allowHTML
      *            allow HTML in the checkboxes labels
-     * 
+     *
      */
     public CheckboxGroupWidget(final List<ReducedFormFieldAvailableValue> availableValues, final Collection<String> initialValues, final String itemsStyle,
             final boolean allowHTML) {
 
-        this.inputDiv = new FlowPanel();
-        this.groupWidgets = new FlowPanel();
+        inputDiv = new FlowPanel();
+        groupWidgets = new FlowPanel();
         this.allowHTML = allowHTML;
         this.itemsStyle = itemsStyle;
 
@@ -169,7 +170,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
 
     /**
      * Set the value of the widget
-     * 
+     *
      * @param value
      */
     public void setValue(final Collection<String> values, boolean fireEvents) {
@@ -178,10 +179,13 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
             fireEvents = false;
         }
         for (final CheckBox checkbox : checkboxes) {
+            final DOMUtils domUtils = DOMUtils.getInstance();
             if (values != null && values.contains(checkbox.getFormValue())) {
                 checkbox.setValue(true);
+                domUtils.overrideNativeInputAfterUpdate(checkbox, true);
             } else {
                 checkbox.setValue(false);
+                domUtils.overrideNativeInputAfterUpdate(checkbox, false);
             }
         }
         if (fireEvents) {
@@ -191,7 +195,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
 
     /**
      * Set the wigdet available values
-     * 
+     *
      * @param availableValues
      */
     public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
@@ -219,7 +223,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
 
     /**
      * Enable or disable the checkbox group
-     * 
+     *
      * @param isEnabled
      */
     public void setEnabled(final boolean isEnabled) {
@@ -231,6 +235,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public HandlerRegistration addClickHandler(final ClickHandler clickHandler) {
         if (clickHandlers == null) {
             clickHandlers = new ArrayList<ClickHandler>();
@@ -242,6 +247,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public HandlerRegistration addValueChangeHandler(final ValueChangeHandler<Boolean> valueChangeHandler) {
         if (valueChangeHandlers == null) {
             valueChangeHandlers = new ArrayList<ValueChangeHandler<Boolean>>();
@@ -253,6 +259,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void onClick(final ClickEvent clickEvent) {
         for (final ClickHandler clickHandler : clickHandlers) {
             clickHandler.onClick(clickEvent);
@@ -262,6 +269,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void onValueChange(final ValueChangeEvent<Boolean> valueChangeEvent) {
         for (final ValueChangeHandler<Boolean> valueChangeHandler : valueChangeHandlers) {
             valueChangeHandler.onValueChange(valueChangeEvent);
@@ -279,6 +287,7 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
             this.eventHandler = eventHandler;
         }
 
+        @Override
         public void removeHandler() {
             if (eventHandler instanceof ClickHandler) {
                 clickHandlers.remove(eventHandler);

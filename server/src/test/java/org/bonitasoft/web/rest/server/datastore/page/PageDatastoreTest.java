@@ -44,7 +44,7 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
@@ -90,7 +90,7 @@ public class PageDatastoreTest extends APITestWithMock {
     Page mockedPage;
 
     @Mock
-    TenantFolder tenantFolder;
+    BonitaHomeFolderAccessor tenantFolder;
 
     @Mock
     CompoundPermissionsMapping compoundPermissionsMapping;
@@ -231,7 +231,7 @@ public class PageDatastoreTest extends APITestWithMock {
         UnzipUtil.unzip(zipFileResource, new File("target"+File.separator+"pageWithIndexInResources").getPath(), false);
         final File unzipFolder = new File("target"+File.separator+"pageWithIndexInResources");
 
-        boolean isValide = pageDatastore.areResourcesAvailable(unzipFolder);
+        final boolean isValide = pageDatastore.areResourcesAvailable(unzipFolder);
 
         assertTrue(isValide);
     }

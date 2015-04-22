@@ -34,7 +34,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -140,7 +140,7 @@ public abstract class ResourceServlet extends HttpServlet {
         try {
             final File resourceFolder = new File(resourcesFolder, resourceName + subFolderSuffix);
             final File file = new File(resourceFolder, fileName);
-            final TenantFolder tenantFolder = new TenantFolder();
+            final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
             if (!tenantFolder.isInFolder(file, resourceFolder)) {
                 throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
             }

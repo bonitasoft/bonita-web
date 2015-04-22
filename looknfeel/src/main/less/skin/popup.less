@@ -24,12 +24,12 @@
 				}
 			}
 			.form {
-                max-width: none;
+				max-width: none;
 			}
 		}
 		p {
 		  margin: 15px 0;
-		} 
+		}
 	}
 
 	.popupcontainerheader{
@@ -60,9 +60,13 @@
 					&.table_view_table, &.table_view_form{
 						.table{
 							table-layout: auto;
+							.td, .th{
+								word-break: break-all;
+								word-wrap: break-word;
+							}
 						}
 					}
-					
+
 					.td_icon{
 						.iconMixin(popup);
 					}
@@ -71,23 +75,23 @@
 						margin: @popup-actions-margin;
 						a {
 							&.cancel{
-								
+
 							}
 							&.add{
-								
+
 							}
 							+a, + css3-container + a{
-								margin-left: @popup-button-marginBetween; 
+								margin-left: @popup-button-marginBetween;
 							}
 						}
 					}
-				}	
+				}
 			}
 		}
         .page_AddCustomProfileEntry{
             .body{
                 .tableTitle{
-                    padding: 5px 0;   
+                    padding: 5px 0;
                 }
                 .pages_added .pager{
                     display: none;
@@ -128,10 +132,10 @@
                     min-width: 80px;
                     border-left:none;
                 }
-            }    
+            }
         }
 	}
-	
+
 	.popupframe{
 		top: 150px;
 		text-align: center;

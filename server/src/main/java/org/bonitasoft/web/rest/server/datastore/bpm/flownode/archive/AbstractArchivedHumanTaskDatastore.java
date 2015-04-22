@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,7 +34,6 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
- * 
  */
 public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHumanTaskItem, ENGINE_ITEM extends ArchivedHumanTaskInstance>
         extends AbstractArchivedTaskDatastore<CONSOLE_ITEM, ENGINE_ITEM> {
@@ -49,9 +46,9 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
      * Fill a console item using the engine item passed.
      * 
      * @param result
-     *            The console item to fill
+     *        The console item to fill
      * @param item
-     *            The engine item to use for filling
+     *        The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
     public static ArchivedHumanTaskItem fillConsoleItem(final ArchivedHumanTaskItem result, final ArchivedHumanTaskInstance item) {
@@ -59,8 +56,7 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
 
         result.setActorId(APIID.makeAPIID(item.getActorId()));
         result.setAssignedId(APIID.makeAPIID(item.getAssigneeId()));
-        // FIXME Reactivate while engine has corrected this
-        // result.setAssignedDate(item.getClaimedDate());
+        result.setAssignedDate(item.getClaimedDate());
         result.setPriority(item.getPriority() != null ? item.getPriority().toString().toLowerCase() : null);
         result.setDueDate(item.getExpectedEndDate());
 

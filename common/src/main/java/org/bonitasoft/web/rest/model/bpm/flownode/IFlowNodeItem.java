@@ -51,6 +51,8 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
      */
     public final static String ATTRIBUTE_PARENT_CASE_ID = "parentCaseId";
 
+    public final static String ATTRIBUTE_PARENT_ACTIVITY_INSTANCE_ID = "parentActivityInstanceId";
+
     public final static String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
 
     public final static String ATTRIBUTE_STATE = "state";
