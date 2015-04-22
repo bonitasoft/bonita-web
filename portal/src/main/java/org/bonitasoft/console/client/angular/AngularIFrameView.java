@@ -45,7 +45,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String APPLICATION_LISTING_PAGE = "applicationslistingadmin";
 
-    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "ngprocessmoredetailsadmin";
+    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "processmoredetailsadmin";
 
     public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
 

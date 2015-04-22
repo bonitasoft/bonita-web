@@ -71,8 +71,8 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
 
     @Override
     protected void buildToolbar(final ProcessItem process) {
-        addToolbarLink(new MoreButton(_("Show more details about this process"), createMoreDetailsAction(process)));
-        addToolbarLink(new Button("btn-more2", _("More (BETA)"), _("New process more details view"), createNewMoreDetailsAction(process)));
+        addToolbarLink(new MoreButton(_("Show more details about this process"), createAngularMoreDetailsAction(process)));
+        addToolbarLink(new Button("btn-more2", _("More (Old)"), _("Former process more details view"), createMoreDetailsAction(process)));
 
     }
 
@@ -80,7 +80,7 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
         return new CheckValidSessionBeforeAction(new ActionShowView(new ProcessMoreDetailsAdminPage(process)));
     }
 
-    private Action createNewMoreDetailsAction(final ProcessItem process) {
+    private Action createAngularMoreDetailsAction(final ProcessItem process) {
         return new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.redirectToMoreDetailsPage(process)));
     }
 

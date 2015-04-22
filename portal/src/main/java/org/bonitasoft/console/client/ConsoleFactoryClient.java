@@ -188,7 +188,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new ProcessListingAdminPage();
         } else if (ProcessQuickDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new ProcessQuickDetailsAdminPage();
-        } else if (ProcessMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
+        } else if ("gwtprocessmoredetailsadmin".equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
             // No action is necessary as an unauthorized request will result in a page reload.
             return new ProcessMoreDetailsAdminPage();
