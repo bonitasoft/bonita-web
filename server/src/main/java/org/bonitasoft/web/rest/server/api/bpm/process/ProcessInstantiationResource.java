@@ -16,7 +16,9 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -34,8 +36,10 @@ public class ProcessInstantiationResource extends CommonResource {
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
     private static final String USER_PARAM = "user";
-    
+
     private final ProcessAPI processAPI;
+
+    protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
     public ProcessInstantiationResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
@@ -44,25 +48,30 @@ public class ProcessInstantiationResource extends CommonResource {
     @Post("json")
     public ProcessInstance instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
             ProcessExecutionException {
-    	String userId = getRequestParameter(USER_PARAM);
+    	final String userId = getRequestParameter(USER_PARAM);
+        final long processDefinitionId = getProcessDefinitionIdParameter();
         try {
+            final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs);
         	if (userId == null) {
-        		return processAPI.startProcessWithInputs(getProcessDefinitionIdParameter(), inputs); 			
+                return processAPI.startProcessWithInputs(processDefinitionId, processedInputs);
     		} else {
-    		    return processAPI.startProcessWithInputs(Long.parseLong(userId),getProcessDefinitionIdParameter(), inputs);
+                return processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs);
     		}
-            
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instanciate process task.");
             return null;
+        } catch (final Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
     protected long getProcessDefinitionIdParameter() {
-        final String taskId = getAttribute(PROCESS_DEFINITION_ID);
-        if (taskId == null) {
+        final String processDefinitionId = getAttribute(PROCESS_DEFINITION_ID);
+        if (processDefinitionId == null) {
             throw new APIException("Attribute '" + PROCESS_DEFINITION_ID + "' is mandatory");
         }
-        return Long.parseLong(taskId);
+        return Long.parseLong(processDefinitionId);
     }
 }

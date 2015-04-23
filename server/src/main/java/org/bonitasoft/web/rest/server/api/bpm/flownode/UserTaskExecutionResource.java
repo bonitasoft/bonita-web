@@ -16,7 +16,9 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
@@ -36,18 +38,23 @@ public class UserTaskExecutionResource extends CommonResource {
 
     private final ProcessAPI processAPI;
 
+    protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
+
     public UserTaskExecutionResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 
     @Post("json")
     public void executeTask(final Map<String, Serializable> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException {
-        String userId = getRequestParameter(USER_PARAM);
-    	try {
+        final String userId = getRequestParameter(USER_PARAM);
+        final long taskId = getTaskIdParameter();
+        try {
+            final ContractDefinition taskContract = processAPI.getUserTaskContract(taskId);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs);
     		if (userId == null) {
-    			processAPI.executeUserTask(getTaskIdParameter(), inputs);    			
-    		}else {
-    			processAPI.executeUserTask(Long.parseLong(userId), getTaskIdParameter(), inputs);
+                processAPI.executeUserTask(taskId, processedInputs);
+            } else {
+                processAPI.executeUserTask(Long.parseLong(userId), taskId, processedInputs);
     		}
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot execute task.");
