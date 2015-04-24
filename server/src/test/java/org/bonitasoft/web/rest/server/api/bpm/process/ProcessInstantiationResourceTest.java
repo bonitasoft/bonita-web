@@ -22,10 +22,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.contract.ComplexInputDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
-import org.bonitasoft.engine.bpm.contract.SimpleInputDefinition;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
@@ -72,8 +71,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Before
     public void initializeMocks() {
         processInstanciationResource = spy(new ProcessInstantiationResource(processAPI));
-        when(contractDefinition.getComplexInputs()).thenReturn(Collections.<ComplexInputDefinition> emptyList());
-        when(contractDefinition.getSimpleInputs()).thenReturn(Collections.<SimpleInputDefinition> emptyList());
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
     @Override

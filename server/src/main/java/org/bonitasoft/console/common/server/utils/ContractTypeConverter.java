@@ -24,9 +24,8 @@ import java.util.Map.Entry;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ComplexInputDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.SimpleInputDefinition;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.contract.Type;
 
 /**
@@ -54,7 +53,7 @@ public class ContractTypeConverter {
 
     public Map<String, Serializable> getProcessedInput(final ContractDefinition contractDefinition, final Map<String, Serializable> input) {
         final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
-        final Map<String, Serializable> contractDefinitionMap = createContractInputMap(contractDefinition.getSimpleInputs(), contractDefinition.getComplexInputs());
+        final Map<String, Serializable> contractDefinitionMap = createContractInputMap(contractDefinition.getInputs());
 
         for (final Entry<String, Serializable> inputEntry : input.entrySet()) {
             processedInputs.put(inputEntry.getKey(), convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey())));
@@ -96,19 +95,21 @@ public class ContractTypeConverter {
             }
             return (Serializable) convertedMapOfValues;
         } else {
-            final SimpleInputDefinition simpleInputDefinition = (SimpleInputDefinition) inputDefinition;
+            final InputDefinition simpleInputDefinition = (InputDefinition) inputDefinition;
             return (Serializable) convertToType(simpleInputDefinition.getType(), inputValue);
         }
     }
 
-    protected Map<String, Serializable> createContractInputMap(final List<SimpleInputDefinition> simpleInputs, final List<ComplexInputDefinition> complexInputs) {
+    protected Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
         final Map<String, Serializable> contractDefinitionMap = new HashMap<String, Serializable>();
-        for (final SimpleInputDefinition simpleInputDefinition : simpleInputs) {
-            contractDefinitionMap.put(simpleInputDefinition.getName(), simpleInputDefinition);
-        }
-        for (final ComplexInputDefinition complexInputDefinition : complexInputs) {
-            contractDefinitionMap.put(complexInputDefinition.getName(),
-                    (Serializable) createContractInputMap(complexInputDefinition.getSimpleInputs(), complexInputDefinition.getComplexInputs()));
+        for (final InputDefinition inputDefinition : inputDefinitions) {
+            if(inputDefinition.hasChildren()){
+                contractDefinitionMap.put(inputDefinition.getName(),
+                        (Serializable) createContractInputMap(inputDefinition.getInputs()));
+            }else{
+                contractDefinitionMap.put(inputDefinition.getName(), inputDefinition);
+            }
+
         }
         return contractDefinitionMap;
     }
