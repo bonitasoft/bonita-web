@@ -18,7 +18,7 @@ package org.bonitasoft.web.rest.server.api;
 
 import java.io.IOException;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -43,7 +43,7 @@ public abstract class PlatformAPI<T extends IItem> extends API<T> {
 
     @Override
     protected String getCompleteTempFilePath(final String path) throws IOException {
-        final TenantFolder tenantFolder = new TenantFolder();
-        return tenantFolder.getCompleteTempFilePath(path);
+        final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
+        return tempFolderAccessor.getCompleteTempFilePath(path);
     }
 }

@@ -14,20 +14,25 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Servlet allowing to download process instances attachments
- * 
+ *
  * @author Julien Mege
  */
-public class AttachmentDownloadServlet extends HttpServlet {
+public abstract class DownloadServlet extends HttpServlet {
 
     /**
      * UID
@@ -37,7 +42,7 @@ public class AttachmentDownloadServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(AttachmentDownloadServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DownloadServlet.class.getName());
 
     /**
      * {@inheritDoc}

@@ -27,9 +27,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.Document;
@@ -71,23 +71,20 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
         byte[] fileContent = null;
         String contentType = null;
         if (filePath != null) {
-            final File file = new File(filePath);
-
-            final TenantFolder tenantFolder = new TenantFolder();
+            final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
             try {
-                if (!tenantFolder.isInTempFolder(file, WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()))) {
-                    throw new ServletException("For security reasons, access to this file paths" + filePath + " is restricted.");
+                final File file = tempFolderAccessor.getTempFile(filePath, apiSession.getTenantId());
+                if (fileName == null) {
+                    fileName = file.getName();
                 }
+                final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
+                contentType = mimetypesFileTypeMap.getContentType(file);
+                fileContent = getFileContent(file, filePath);
+            } catch (final UnauthorizedFolderException e) {
+                throw new ServletException(e.getMessage());
             } catch (final IOException e) {
                 throw new ServletException(e);
             }
-
-            if (fileName == null) {
-                fileName = file.getName();
-            }
-            final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
-            contentType = mimetypesFileTypeMap.getContentType(file);
-            fileContent = getFileContent(file, filePath);
         } else if (documentId != null) {
             try {
                 final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(apiSession);
