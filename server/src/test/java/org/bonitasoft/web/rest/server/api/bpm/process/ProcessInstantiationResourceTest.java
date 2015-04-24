@@ -46,9 +46,9 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     private static final String ID_PROCESS_DEFINITION = "2";
 
-    private static final String URL_API_PROCESS_INSTANCIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instantiation";
+    private static final String URL_ADI_PROCESS_INSTANTIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instantiation";
 
-    private static final String URL_API_PROCESS_INSTANCIATION_TEST_WITH_USER = URL_API_PROCESS_INSTANCIATION_TEST + "?user=1";
+    private static final String URL_ADI_PROCESS_INSTANTIATION_TEST_WITH_USER = URL_ADI_PROCESS_INSTANTIATION_TEST + "?user=1";
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -60,7 +60,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Mock
     Logger logger;
 
-    ProcessInstantiationResource processInstanciationResource;
+    ProcessInstantiationResource processInstantiationResource;
 
     @Mock
     Response response;
@@ -70,7 +70,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Before
     public void initializeMocks() {
-        processInstanciationResource = spy(new ProcessInstantiationResource(processAPI));
+        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI));
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
@@ -99,7 +99,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         when(processAPI.startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput)).thenReturn(new ProcessInstanceImpl("complexProcessInstance"));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST).post(VALID_COMPLEX_POST_BODY);
+        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
@@ -120,7 +120,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         when(processAPI.startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput)).thenReturn(new ProcessInstanceImpl("complexProcessInstance"));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST_WITH_USER).post(VALID_COMPLEX_POST_BODY);
+        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST_WITH_USER).post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
@@ -141,7 +141,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST).post(VALID_POST_BODY);
+        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         assertThat(response)
@@ -154,14 +154,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         doThrow(new ProcessExecutionException("aMessage"))
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
 
-        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST).post(VALID_POST_BODY);
+        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_trying_to_execute_with_not_json_payload() throws Exception {
-        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST).post("invalid json string");
+        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -172,7 +172,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_API_PROCESS_INSTANCIATION_TEST).post(VALID_POST_BODY);
+        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
@@ -184,16 +184,16 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
         doThrow(new ContractViolationException(message, explanations)).when(processAPI)
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
-        doReturn(logger).when(processInstanciationResource).getLogger();
-        doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstanciationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
+        doReturn(logger).when(processInstantiationResource).getLogger();
+        doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
         doReturn(contractDefinition).when(processAPI).getProcessContract(PROCESS_DEFINITION_ID);
         doReturn(true).when(logger).isLoggable(Level.INFO);
-        doReturn(response).when(processInstanciationResource).getResponse();
+        doReturn(response).when(processInstantiationResource).getResponse();
         final Map<String, Serializable> inputs = new HashMap<>();
         inputs.put("testKey", "testValue");
 
         // when
-        processInstanciationResource.instanciateProcess(inputs);
+        processInstantiationResource.instanciateProcess(inputs);
 
         // then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
@@ -203,11 +203,11 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Test
     public void should_getProcessDefinitionIdParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
         // given
-        doReturn(null).when(processInstanciationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
+        doReturn(null).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
 
         try {
             // when
-            processInstanciationResource.getProcessDefinitionIdParameter();
+            processInstantiationResource.getProcessDefinitionIdParameter();
         } catch (final Exception e) {
             // then
             assertThat(e).isInstanceOf(APIException.class);
