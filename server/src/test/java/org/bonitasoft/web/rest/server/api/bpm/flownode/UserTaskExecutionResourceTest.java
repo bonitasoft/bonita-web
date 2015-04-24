@@ -24,9 +24,11 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
@@ -69,9 +73,13 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Mock
     private Response response;
 
+    @Mock
+    private ContractDefinition contractDefinition;
+
     @Before
     public void initializeMocks() {
         userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI));
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
     @Override
@@ -96,16 +104,18 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_execute_a_task_with_given_inputs() throws Exception {
         final Map<String, Serializable> expectedComplexInput = aComplexInput();
+        when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
 
         final Response response = request("/bpm/userTask/2/execution").post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
         verify(processAPI).executeUserTask(2L, expectedComplexInput);
     }
-    
+
     @Test
     public void should_execute_a_task_with_given_inputs_for_a_specific_user() throws Exception {
         final Map<String, Serializable> expectedComplexInput = aComplexInput();
+        when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
 
         final Response response = request("/bpm/userTask/2/execution?user=1").post(VALID_COMPLEX_POST_BODY);
 
@@ -116,6 +126,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
+        when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
         doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
                 .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
@@ -146,6 +157,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
     @Test
     public void should_respond_404_Not_found_when_task_is_not_found_when_trying_to_execute_it() throws Exception {
+        when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
         doThrow(new UserTaskNotFoundException("task not found")).when(processAPI)
                 .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
@@ -162,6 +174,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
         doThrow(new ContractViolationException(message, explanations)).when(processAPI)
                 .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
+        when(processAPI.getUserTaskContract(1L)).thenReturn(contractDefinition);
         doReturn(logger).when(userTaskExecutionResource).getLogger();
         doReturn(1L).when(userTaskExecutionResource).getTaskIdParameter();
         doReturn(true).when(logger).isLoggable(Level.INFO);
