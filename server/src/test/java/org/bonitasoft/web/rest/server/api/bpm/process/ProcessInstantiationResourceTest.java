@@ -27,6 +27,7 @@ import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -50,9 +51,6 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     private static final String VALID_POST_BODY = "{ \"key\": \"value\", \"key2\": \"value2\" }";
 
-    static {
-        I18n.getInstance();
-    }
 
     @Mock
     ProcessAPI processAPI;
@@ -67,6 +65,11 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Mock
     ContractDefinition contractDefinition;
+
+    @BeforeClass
+    public static void initClass() {
+        I18n.getInstance();
+    }
 
     @Before
     public void initializeMocks() {
@@ -122,8 +125,8 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                        "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\",\"rootCaseId\":\"0\","
-                                + "\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\",\"rootCaseId\":\"0\","
+                        + "\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
         verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
         verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }
