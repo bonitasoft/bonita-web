@@ -53,7 +53,7 @@ public class ContractTypeConverterTest {
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input);
 
-        assertThat(processedInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(0L)),
+        assertThat(processedInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
                 entry("inputInteger", 125686181L), entry("inputDecimal", new Double(12.8)));
     }
 
@@ -69,7 +69,7 @@ public class ContractTypeConverterTest {
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input);
         assertThat(processedInput).containsKey("inputComplex");
         final Map<String, Serializable> processedComplexInput = (Map<String, Serializable>) processedInput.get("inputComplex");
-        assertThat(processedComplexInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(0L)),
+        assertThat(processedComplexInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
                 entry("inputInteger", 125686181L), entry("inputDecimal", new Double(12.8)));
     }
 
@@ -91,7 +91,7 @@ public class ContractTypeConverterTest {
         assertThat(processedMultipleComplexInput).hasSize(2);
         for (final Serializable processedComplexInput : processedMultipleComplexInput) {
             final Map<String, Serializable> processedComplexInputMap = (Map<String, Serializable>) processedComplexInput;
-            assertThat(processedComplexInputMap).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(0L)),
+            assertThat(processedComplexInputMap).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
                     entry("inputInteger", 125686181L), entry("inputDecimal", new Double(12.8)));
         }
     }
@@ -100,7 +100,7 @@ public class ContractTypeConverterTest {
         final Map<String, Serializable> inputMap = new HashMap<String, Serializable>();
         inputMap.put("inputText", "text");
         inputMap.put("inputBoolean", "true");
-        inputMap.put("inputDate", "1970-01-01T01:00:00.000Z");
+        inputMap.put("inputDate", "1970-01-01T13:00:00.000Z");
         inputMap.put("inputInteger", 125686181);
         inputMap.put("inputDecimal", "12.8");
         return inputMap;

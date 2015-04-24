@@ -35,8 +35,8 @@ import org.bonitasoft.engine.bpm.contract.Type;
 
 public class ContractTypeConverter {
 
-    public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'hh:mm:ss", "yyyy-MM-dd'T'hh:mm:ss'Z'",
-            "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'" };
+    public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" };
 
     private final ConvertUtilsBean convertUtilsBean;
 
