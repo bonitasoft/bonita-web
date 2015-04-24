@@ -1,16 +1,10 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static java.util.Arrays.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.bonitasoft.web.rest.server.utils.ResponseAssert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -21,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ComplexInputDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -54,6 +49,10 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
     private static final String VALID_POST_BODY = "{ \"key\": \"value\", \"key2\": \"value2\" }";
+
+    static {
+        I18n.getInstance();
+    }
 
     @Mock
     ProcessAPI processAPI;
@@ -106,12 +105,8 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":0,\"name\":\"complexProcessInstance\",\"state\":null,\"startDate\":null,\"startedBy\":0,"
-                        + "\"startedBySubstitute\":0,\"endDate\":null,\"lastUpdate\":null,\"processDefinitionId\":0,"
-                        + "\"description\":null,\"rootProcessInstanceId\":0,\"callerId\":0,\"stringIndex1\":null,"
-                        + "\"stringIndex2\":null,\"stringIndex3\":null,\"stringIndex4\":null,\"stringIndex5\":null,"
-                        + "\"stringIndexLabel1\":null,\"stringIndexLabel2\":null,\"stringIndexLabel3\":null,\"stringIndexLabel4\":null,"
-                        + "\"stringIndexLabel5\":null,\"startedByDelegate\":0}");
+                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\","
+                        + "\"rootCaseId\":\"0\",\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
         verify(processAPI).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
 
     }
@@ -126,13 +121,9 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
-                .isEqualTo(
-                        "{\"id\":0,\"name\":\"complexProcessInstance\",\"state\":null,\"startDate\":null,\"startedBy\":0,"
-                        + "\"startedBySubstitute\":0,\"endDate\":null,\"lastUpdate\":null,\"processDefinitionId\":0,"
-                        + "\"description\":null,\"rootProcessInstanceId\":0,\"callerId\":0,\"stringIndex1\":null,"
-                        + "\"stringIndex2\":null,\"stringIndex3\":null,\"stringIndex4\":null,\"stringIndex5\":null,"
-                        + "\"stringIndexLabel1\":null,\"stringIndexLabel2\":null,\"stringIndexLabel3\":null,\"stringIndexLabel4\":null,"
-                        + "\"stringIndexLabel5\":null,\"startedByDelegate\":0}");
+        .isEqualTo(
+                        "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\",\"rootCaseId\":\"0\","
+                                + "\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
         verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
         verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }

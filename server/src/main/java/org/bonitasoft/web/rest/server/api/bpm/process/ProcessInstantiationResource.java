@@ -24,7 +24,9 @@ import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
+import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseItemConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
 
@@ -46,18 +48,18 @@ public class ProcessInstantiationResource extends CommonResource {
     }
 
     @Post("json")
-    public ProcessInstance instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
-            ProcessExecutionException {
-    	final String userId = getRequestParameter(USER_PARAM);
+    public String instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
+    ProcessExecutionException {
+        final String userId = getRequestParameter(USER_PARAM);
         final long processDefinitionId = getProcessDefinitionIdParameter();
         try {
             final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
             final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs);
-        	if (userId == null) {
-                return processAPI.startProcessWithInputs(processDefinitionId, processedInputs);
-    		} else {
-                return processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs);
-    		}
+            if (userId == null) {
+                return convertEngineToConsoleItem(processAPI.startProcessWithInputs(processDefinitionId, processedInputs)).toJson();
+            } else {
+                return convertEngineToConsoleItem(processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs)).toJson();
+            }
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instanciate process task.");
             return null;
@@ -65,6 +67,10 @@ public class ProcessInstantiationResource extends CommonResource {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    protected CaseItem convertEngineToConsoleItem(final ProcessInstance item) {
+        return new CaseItemConverter().convert(item);
     }
 
     protected long getProcessDefinitionIdParameter() {
