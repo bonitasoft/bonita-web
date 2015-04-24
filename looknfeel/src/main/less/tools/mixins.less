@@ -150,11 +150,12 @@
 }
 
 .opacity (@opacity:1) {
-	@ieOp:~`@{opacity}*100`;
-    filter:~`"alpha(opacity=@{ieOp})"`;
 	-moz-opacity:@opacity;
 	-khtml-opacity:@opacity;
 	opacity:@opacity;
+	// IE8 filter
+	@opacity-ie: (@opacity * 100);
+	filter: ~"alpha(opacity=@{opacity-ie})";
 }
 
 .disableSelection() {

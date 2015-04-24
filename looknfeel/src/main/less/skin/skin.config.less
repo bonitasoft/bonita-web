@@ -7,7 +7,8 @@
 @width: @w;
 @mainAccentColor: #DD0033; //the main skin color (red)
 //@mainAccentColor: #2674b0; //the main skin color (blue)
-@secondAccentColor: #313433;
+//@secondAccentColor: #313433;
+@secondAccentColor: #2c3e50;
 @color3: #666666; //calendar links, button3 text color
 @color4: #035;//link color
 
@@ -65,11 +66,11 @@
 @btnTxtColor : @color3;
 @btnTxtStrokeColor: transparent;
 
-@btnActionColor: #272727;//black
+@btnActionColor: #95a5a6;//black
 @btnActionTxtColor : #fff;
 @btnActionTxtStokeColor: #000;
 
-@btnPrimaryActionColor: #7bb800;
+@btnPrimaryActionColor: #2c3e50;
 @btnPrimaryActionTxtColor: #fff;
 @btnPrimaryActionTxtStokeColor: transparent;
 
@@ -170,7 +171,7 @@
 @header-menu-height: @header-menu-fontSize + @header-menu-link-paddingY * 2;
 @header-menu-margin: 0 0 0 @filtersPanel-width;
 @header-menu-background: @mainAccentColor;
-@header-menu-gradientColor1: lighten(@mainAccentColor, 5.5%);
+@header-menu-gradientColor1: @mainAccentColor;
 @header-menu-gradientColor2: @mainAccentColor;
 
 @header-menu-gradientColor1Hover: lighten(@mainAccentColor, 13%);
@@ -270,13 +271,14 @@
 
 @tablesPanel-tableActions-textAlign: right;
 @tablesPanel-table-thead-fontSize: 18;
-@tablesPanel-table-thead-bgColor: lighten(@mainAccentColor, 8.5%);
+@tablesPanel-table-thead-bgColor: @mainAccentColor;
 @tablesPanel-table-thead-height: 3*@h;
 @tablesPanel-table-thead-paddingTop: 3*@h;
 @tablesPanel-table-thead-paddingBottom: 3*@h;
 @tablesPanel-table-thead-textColor: #fff;
 @tablesPanel-table-thead-margin: @tablesPanel-table-line-margin;
-@tablesPanel-table-thead-tr-gradientColor1:  lighten(@mainAccentColor, 7.5%);
+//@tablesPanel-table-thead-tr-gradientColor1:  lighten(@mainAccentColor, 7.5%);
+@tablesPanel-table-thead-tr-gradientColor1:  @mainAccentColor;
 @tablesPanel-table-sort-textAlign: right;
 @tablesPanel-table-thead-tr-gradientPosition1: 0%;
 @tablesPanel-table-thead-tr-gradientColor2: lighten(@mainAccentColor, 1.5%);

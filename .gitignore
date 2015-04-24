@@ -17,3 +17,4 @@ btm2.tlog
 
 *.orig
 *.tmp
+node_modules
