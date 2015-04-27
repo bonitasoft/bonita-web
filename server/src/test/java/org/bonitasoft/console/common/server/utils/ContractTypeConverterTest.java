@@ -131,9 +131,10 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinitions = new ArrayList<>();
         final InputDefinition inputDefinition = mock(InputDefinition.class);
         when(inputDefinition.getName()).thenReturn("inputComplex");
-        final List<InputDefinition> complexInputDefinitions = generateSimpleInputDefinition();
-        when(inputDefinition.getInputs()).thenReturn(inputDefinitions);
-        complexInputDefinitions.add(inputDefinition);
-        return complexInputDefinitions;
+        when(inputDefinition.hasChildren()).thenReturn(true);
+        final List<InputDefinition> childInputDefinitions = generateSimpleInputDefinition();
+        when(inputDefinition.getInputs()).thenReturn(childInputDefinitions);
+        inputDefinitions.add(inputDefinition);
+        return inputDefinitions;
     }
 }
