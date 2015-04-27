@@ -36,6 +36,9 @@ import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.exception.UpdateException;
+import org.bonitasoft.engine.exception.UpdatingWithInvalidPageTokenException;
+import org.bonitasoft.engine.exception.UpdatingWithInvalidPageZipContentException;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageCreator;
@@ -78,7 +81,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
      */
     public static final String UNMAPPED_ATTRIBUTE_ZIP_FILE = "pageZip";
 
-    private static final String PAGE_TOKEN_PREFIX = "custompage_";
+    static final String PAGE_TOKEN_PREFIX = "custompage_";
 
     protected final WebBonitaConstantsUtils constants;
 
@@ -138,7 +141,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
         }
     }
 
-    private File unzipContentFile(final File zipFile) throws InvalidPageZipContentException {
+    protected File unzipContentFile(final File zipFile) throws InvalidPageZipContentException {
         File unzipPageTempFolder = null;
         try {
             final Random randomGen = new Random();
@@ -159,7 +162,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected boolean isPageTokenValid(final String urlToken) {
-        return urlToken.matches(PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
+        return urlToken.matches("^" + PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
     }
 
     protected boolean areResourcesAvailable(final File unzipPageFolder) throws IOException {
@@ -197,16 +200,30 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
         }
     }
 
-    protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException {
+    protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException,
+            UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
 
         try {
-            final byte[] zipContent = FileUtils.readFileToByteArray(zipFile);
+            final byte[] zipContent = readZipFile(zipFile);
 
-            return pageAPI.createPage(pageItem.getContentName(), zipContent);
+            Page page = pageAPI.createPage(pageItem.getContentName(), zipContent);
+            if (pageItem.getProcessId() != null) {
+                final PageUpdater pageUpdater = new PageUpdater();
+                pageUpdater.setProcessDefinitionId(pageItem.getProcessId().toLong());
+                if (pageItem.getContentType() != null) {
+                    pageUpdater.setContentType(pageItem.getContentType());
+                }
+                page = pageAPI.updatePage(page.getId(), pageUpdater);
+            }
+            return page;
 
         } finally {
             zipFile.delete();
         }
+    }
+
+    protected byte[] readZipFile(final File zipFile) throws IOException {
+        return FileUtils.readFileToByteArray(zipFile);
     }
 
     protected PageCreator buildPageCreatorFrom(final PageItem pageItem) {
@@ -344,7 +361,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
     CompilationFailedException, BonitaException {
         if (zipFile != null) {
-            pageAPI.updatePageContent(id.toLong(), FileUtils.readFileToByteArray(zipFile));
+            pageAPI.updatePageContent(id.toLong(), readZipFile(zipFile));
             zipFile.delete();
         }
         customPageService.removePage(getEngineSession(), oldURLToken);

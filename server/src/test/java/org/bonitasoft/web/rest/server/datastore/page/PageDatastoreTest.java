@@ -16,19 +16,25 @@
  */
 package org.bonitasoft.web.rest.server.datastore.page;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,11 +55,18 @@ import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.io.IOUtil;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.page.PageCreator;
+import org.bonitasoft.engine.page.PageCreator.PageField;
 import org.bonitasoft.engine.page.PageNotFoundException;
+import org.bonitasoft.engine.page.PageUpdater;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
+import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
+import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
@@ -64,6 +77,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -84,6 +98,9 @@ public class PageDatastoreTest extends APITestWithMock {
     PageAPI pageAPI;
 
     @Mock
+    PageItem pageItem;
+
+    @Mock
     WebBonitaConstantsUtils constantsValue;
 
     @Mock
@@ -100,6 +117,9 @@ public class PageDatastoreTest extends APITestWithMock {
 
     @Mock
     CustomPageService customPageService;
+
+    @Mock
+    private File mockedZipFile;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -137,8 +157,9 @@ public class PageDatastoreTest extends APITestWithMock {
         when(constantsValue.getTempFolder()).thenReturn(zipFile.getParentFile());
         when(constantsValue.getPagesFolder()).thenReturn(pagesDir);
 
-        pageDatastore = new PageDatastore(engineSession, constantsValue, pageAPI, customPageService, compoundPermissionsMapping, resourcesPermissionsMapping,
-                tenantFolder);
+        pageDatastore = spy(new PageDatastore(engineSession, constantsValue, pageAPI, customPageService, compoundPermissionsMapping,
+                resourcesPermissionsMapping,
+                tenantFolder));
 
         pageToBeAdded = new PageItem();
         pageToBeAdded.setUrlToken("custompage_page1");
@@ -227,9 +248,9 @@ public class PageDatastoreTest extends APITestWithMock {
 
     @Test
     public void zip_with_index_in_resources_should_be_valid() throws Exception {
-       final File zipFileResource = new File(getClass().getResource( "/pageWithIndexInResources.zip").toURI());
-        UnzipUtil.unzip(zipFileResource, new File("target"+File.separator+"pageWithIndexInResources").getPath(), false);
-        final File unzipFolder = new File("target"+File.separator+"pageWithIndexInResources");
+        final File zipFileResource = new File(getClass().getResource("/pageWithIndexInResources.zip").toURI());
+        UnzipUtil.unzip(zipFileResource, new File("target" + File.separator + "pageWithIndexInResources").getPath(), false);
+        final File unzipFolder = new File("target" + File.separator + "pageWithIndexInResources");
 
         final boolean isValide = pageDatastore.areResourcesAvailable(unzipFolder);
 
@@ -243,7 +264,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
         final HashSet<String> resourcePermissions = new HashSet<String>(Arrays.asList("Case Visualization", "Organization Visualization"));
         doReturn(resourcePermissions).when(customPageService)
-        .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
+                .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
 
         // When
         pageDatastore.add(pageToBeAdded);
@@ -314,6 +335,11 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
+    public void it_throws_an_exception_updatting_page_with_unauthorized_pathSuffix() throws Exception {
+        throw new RuntimeException("not yet implemented");
+    }
+
+    @Test
     public void it_throws_an_exception_when_cannot_write_file_on_update() throws IOException, PageNotFoundException {
         // Given
         final Map<String, String> attributes = new HashMap<String, String>();
@@ -344,5 +370,147 @@ public class PageDatastoreTest extends APITestWithMock {
             }
         }
     }
+
+
+    @Test
+    public void it_should_set_the_process_definition_id_on_creation() throws Exception {
+        final byte[] zipContent = new byte[1];
+        final APIID processId = APIID.makeAPIID(2555L);
+        doReturn("contentName").when(pageItem).getContentName();
+        doReturn(null).when(pageItem).getContentType();
+        doReturn(processId).when(pageItem).getProcessId();
+        doReturn(zipContent).when(pageDatastore).readZipFile(mockedZipFile);
+        doReturn(mockedPage).when(pageAPI).createPage(anyString(), any(byte[].class));
+        pageDatastore.createEnginePage(pageItem, mockedZipFile);
+        final PageUpdater pageUpdater = new PageUpdater();
+        pageUpdater.setProcessDefinitionId(processId.toLong());
+        final ArgumentCaptor<PageUpdater> argumentCaptor = ArgumentCaptor.forClass(PageUpdater.class);
+
+        verify(pageAPI, times(1)).updatePage(eq(1L), argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(pageUpdater);
+    }
+
+    @Test
+    public void it_should_not_set_the_process_definition_id_on_creation() throws Exception {
+        final byte[] zipContent = new byte[1];
+        final APIID processId = APIID.makeAPIID(2555L);
+        doReturn("contentName").when(pageItem).getContentName();
+        doReturn(null).when(pageItem).getProcessId();
+        doReturn(zipContent).when(pageDatastore).readZipFile(mockedZipFile);
+        doReturn(mockedPage).when(pageAPI).createPage(anyString(), any(byte[].class));
+        pageDatastore.createEnginePage(pageItem, mockedZipFile);
+        verify(pageAPI, times(0)).updatePage(anyLong(), any(PageUpdater.class));
+    }
+
+    @Test
+    public void it_should_set_the_content_type_on_creation_if_it_is_given() throws Exception {
+        final byte[] zipContent = new byte[1];
+        final APIID processId = APIID.makeAPIID(2555L);
+        doReturn("contentName").when(pageItem).getContentName();
+        doReturn(ContentType.PAGE).when(pageItem).getContentType();
+        doReturn(processId).when(pageItem).getProcessId();
+        doReturn(zipContent).when(pageDatastore).readZipFile(mockedZipFile);
+        doReturn(mockedPage).when(pageAPI).createPage(anyString(), any(byte[].class));
+        pageDatastore.createEnginePage(pageItem, mockedZipFile);
+        final PageUpdater pageUpdater = new PageUpdater();
+        pageUpdater.setContentType(ContentType.PAGE);
+        pageUpdater.setProcessDefinitionId(processId.toLong());
+        final ArgumentCaptor<PageUpdater> argumentCaptor = ArgumentCaptor.forClass(PageUpdater.class);
+
+        verify(pageAPI, times(1)).updatePage(eq(1L), argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(pageUpdater);
+    }
+
+    @Test
+    public void it_should_set_the_new_name_value_to_original_file_name_field_on_creation() throws Exception {
+
+        // Given
+        deleteDir(pagesDir);
+        pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "page.zip::newPage.zip");
+        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
+
+
+        // When
+        final PageItem addedPage = pageDatastore.add(pageToBeAdded);
+
+        final ArgumentCaptor<PageItem> argumentCaptor = ArgumentCaptor.forClass(PageItem.class);
+
+        //then
+        verify(pageDatastore, times(1)).createEnginePage(argumentCaptor.capture(), any(File.class));
+
+        assertThat(argumentCaptor.getValue().getContentName()).isEqualTo("newPage.zip");
+    }
+
+    @Test
+    public void testBuildPageCreatorFrom() throws Exception {
+        final String testUrlTokenString = "testUrlTokenString";
+        final String testContentNameString = "testContentName";
+        final String testDescriptionString = "testDescriptionString";
+        final String testDisplayNameString = "testDescriptionString";
+
+        doReturn(testUrlTokenString).when(pageItem).getUrlToken();
+        doReturn(testContentNameString).when(pageItem).getContentName();
+        doReturn(testDescriptionString).when(pageItem).getDescription();
+        doReturn(testDisplayNameString).when(pageItem).getDisplayName();
+
+        final PageCreator pageCreator = pageDatastore.buildPageCreatorFrom(pageItem);
+
+        final Map<PageField, Serializable> expectedFields = new HashMap<PageField, Serializable>();
+        expectedFields.put(PageField.NAME, testUrlTokenString);
+        expectedFields.put(PageField.CONTENT_NAME, testContentNameString);
+        expectedFields.put(PageField.CONTENT_TYPE, ContentType.PAGE);
+        expectedFields.put(PageField.DESCRIPTION, testDescriptionString);
+        expectedFields.put(PageField.DISPLAY_NAME, testDisplayNameString);
+
+        assertThat(pageCreator.getFields()).isEqualTo(expectedFields);
+    }
+
+    @Test
+    public void should_IsPageTokenValid_returns_true_when_url_token_starts_with_custom_page_prefix() throws Exception {
+        assertThat(pageDatastore.isPageTokenValid(PageDatastore.PAGE_TOKEN_PREFIX + "anySuffix123456")).isTrue();
+    }
+
+    @Test
+    public void should_IsPageTokenValid_returns_false_when_url_token_contains_non_alphanumeric_values() throws Exception {
+        assertThat(pageDatastore.isPageTokenValid(PageDatastore.PAGE_TOKEN_PREFIX + "suffixxx_dsqds")).isFalse();
+    }
+
+    @Test
+    public void should_IsPageTokenValid_returns_false_when_url_token_does_not_starts_with_custom_page_prefix() throws Exception {
+        assertThat(pageDatastore.isPageTokenValid("WrongStartString" + PageDatastore.PAGE_TOKEN_PREFIX + "suffixx")).isFalse();
+    }
+
+    @Test
+    public void testValidateZipContent() throws Exception {
+        doReturn(false).when(pageDatastore).areResourcesAvailable(any(File.class));
+        try{
+            pageDatastore.validateZipContent(mockedZipFile);
+        } catch (final Exception e) {
+            assertThat(e).isInstanceOf(InvalidPageZipContentException.class);
+            assertThat(e.getMessage()).isEqualTo("index file (Index.groovy or index.html) or page.properties is missing.");
+        }
+    }
+
+    @Test
+    public void should_ConvertEngineToConsoleItem_returns_null_if_item_is_null() throws Exception {
+        assertThat(pageDatastore.convertEngineToConsoleItem(null)).isNull();
+    }
+
+    @Test
+    public void testAPIIdsToLong() throws Exception {
+        final APIID id1 = makeAPIID("1");
+        final APIID id2 = makeAPIID("2");
+        final List<APIID> listId = Arrays.asList(id1, id2);
+
+        assertThat(pageDatastore.APIIdsToLong(listId)).isEqualTo(Arrays.asList(1L, 2L));
+    }
+
+    @Test
+    public void testRunSearch() throws Exception {
+        final SearchOptionsCreator creator = new SearchOptionsCreator(0, 1, null, new Sorts(null), new Filters(null));
+        pageDatastore.runSearch(null, creator);
+        verify(pageAPI, times(1)).searchPages(creator.create());
+    }
+
 
 }
