@@ -42,9 +42,9 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     private static final String ID_PROCESS_DEFINITION = "2";
 
-    private static final String URL_ADI_PROCESS_INSTANTIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instantiation";
+    private static final String URL_API_PROCESS_INSTANTIATION_TEST = "/bpm/process/" + ID_PROCESS_DEFINITION + "/instantiation";
 
-    private static final String URL_ADI_PROCESS_INSTANTIATION_TEST_WITH_USER = URL_ADI_PROCESS_INSTANTIATION_TEST + "?user=1";
+    private static final String URL_API_PROCESS_INSTANTIATION_TEST_WITH_USER = URL_API_PROCESS_INSTANTIATION_TEST + "?user=1";
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -101,7 +101,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         when(processAPI.startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput)).thenReturn(new ProcessInstanceImpl("complexProcessInstance"));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_COMPLEX_POST_BODY);
+        final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
@@ -118,7 +118,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         when(processAPI.startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput)).thenReturn(new ProcessInstanceImpl("complexProcessInstance"));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST_WITH_USER).post(VALID_COMPLEX_POST_BODY);
+        final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST_WITH_USER).post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
@@ -135,7 +135,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
+        final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         assertThat(response)
@@ -148,14 +148,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         doThrow(new ProcessExecutionException("aMessage"))
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
 
-        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
+        final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_trying_to_execute_with_not_json_payload() throws Exception {
-        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post("invalid json string");
+        final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -166,7 +166,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
-        final Response response = request(URL_ADI_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
+        final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
