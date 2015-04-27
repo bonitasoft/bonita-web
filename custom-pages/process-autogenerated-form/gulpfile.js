@@ -53,7 +53,7 @@ var htmlminOpt = {
 var useminOpt = {
   css: ['concat', rev()],
   html: [htmlmin(htmlminOpt)],
-  js: [uglify(), rev()]
+  js: ['concat', rev()]
 };
 
 function serve(configuration) {
