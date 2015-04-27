@@ -10,8 +10,6 @@
 	<packaging>pom</packaging>
 
 	<build>
-		<directory>build</directory>
-
 
 		<pluginManagement>
 			<plugins>
