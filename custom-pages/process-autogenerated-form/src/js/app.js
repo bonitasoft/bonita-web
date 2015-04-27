@@ -45,7 +45,7 @@
       for (var prop in $scope.autofill) {
         $scope.dataToSend[prop] = $scope.autofill[prop];
       }
-    }
+    };
 
 
 
@@ -55,7 +55,7 @@
         return input.name;
       }
       return defaultValues[input.type];
-    }
+    };
 
   }])
   .config(['$locationProvider',function($locationProvider) {
