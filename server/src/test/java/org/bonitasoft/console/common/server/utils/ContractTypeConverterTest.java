@@ -33,7 +33,7 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInputs_with_empty_contract_should_return_unmodified_inputs() throws Exception {
-        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition>emptyList());
         final Map<String, Serializable> input = new HashMap<>();
         input.put("input1", "value1");
         input.put("input2", "value2");

@@ -10,7 +10,7 @@
  * You should have received a copy of the GNU Lesser General Public License along with this
  * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
  * Floor, Boston, MA 02110-1301, USA.
- **/
+ */
 package org.bonitasoft.console.common.server.utils;
 
 import java.io.Serializable;
@@ -34,8 +34,8 @@ import org.bonitasoft.engine.bpm.contract.Type;
 
 public class ContractTypeConverter {
 
-    public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" };
+    public static final String[] ISO_8601_DATE_PATTERNS = new String[]{"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
 
     private final ConvertUtilsBean convertUtilsBean;
 
@@ -103,10 +103,10 @@ public class ContractTypeConverter {
     protected Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
         final Map<String, Serializable> contractDefinitionMap = new HashMap<String, Serializable>();
         for (final InputDefinition inputDefinition : inputDefinitions) {
-            if(inputDefinition.hasChildren()){
+            if (inputDefinition.hasChildren()) {
                 contractDefinitionMap.put(inputDefinition.getName(),
                         (Serializable) createContractInputMap(inputDefinition.getInputs()));
-            }else{
+            } else {
                 contractDefinitionMap.put(inputDefinition.getName(), inputDefinition);
             }
 
