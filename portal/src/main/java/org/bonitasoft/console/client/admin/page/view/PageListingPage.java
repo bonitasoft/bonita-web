@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.console.client.admin.page.view;
 
-import static java.util.Arrays.asList;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static java.util.Arrays.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -110,7 +110,8 @@ public class PageListingPage extends ItemListingPage<PageItem> {
 
     private ItemTable itemTable() {
         showSearchBar = false;
-        return new ItemTable(new JsId("profile"), Definitions.get(PageDefinition.TOKEN)).addColumn(PageItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true, true)
+        return new ItemTable(new JsId("profile"), Definitions.get(PageDefinition.TOKEN)).addHiddenFilter("processDefinitionId", "")
+                .addColumn(PageItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true, true)
                 .addColumn(PageItem.ATTRIBUTE_DESCRIPTION, _("Description"), false)
                 .addColumn(PageItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Updated on"), true, false)
                 .addCellFormatter(PageItem.ATTRIBUTE_DISPLAY_NAME, new I18NCellFormatter())
