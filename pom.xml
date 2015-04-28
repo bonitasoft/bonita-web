@@ -575,7 +575,7 @@
                                     <excludes>META*/**</excludes>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${bonita.home.test}</outputDirectory>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -593,7 +593,7 @@
                         <configuration>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
                             <systemPropertyVariables>
-                                <bonita.home>${bonita.home.test}/bonita</bonita.home>
+                                <bonita.home>${bonita.home.test}</bonita.home>
                             </systemPropertyVariables>
                             <includes>
                                 <!--the following are failsafe conventions -->
@@ -768,7 +768,7 @@
                                 <configuration>
                                     <argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
                                     <systemPropertyVariables>
-                                        <bonita.home>${bonita.home.test}/bonita</bonita.home>
+                                        <bonita.home>${bonita.home.test}</bonita.home>
                                     </systemPropertyVariables>
                                     <includes>
                                         <!--the following are failsafe conventions -->

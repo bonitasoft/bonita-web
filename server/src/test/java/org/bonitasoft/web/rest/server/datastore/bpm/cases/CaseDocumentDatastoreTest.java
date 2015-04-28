@@ -81,7 +81,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void setUp() throws Exception {
         initMocks(this);
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);

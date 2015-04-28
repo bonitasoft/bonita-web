@@ -41,11 +41,14 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.form.FormMappingType;
+import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -82,11 +85,17 @@ public class TestProcess {
 
     /**
      * Default Constructor.
-     *
+     * 
      * @throws Exception
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         this.processDefinition = createProcessDefinition(apiSession, processDefinitionBuilder);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestProcess(final ProcessDefinitionBuilder processDefinitionBuilder) {
@@ -95,6 +104,12 @@ public class TestProcess {
 
     public TestProcess(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         this.processDefinition = deployProcessDefinition(apiSession, businessArchiveBuilder);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestProcess(final BusinessArchiveBuilder businessArchiveBuilder) {
@@ -110,7 +125,7 @@ public class TestProcess {
 
     /**
      * Create an archive and deploy process
-     *
+     * 
      * @param apiSession
      * @param processDefinitionBuilder
      * @return
@@ -140,7 +155,7 @@ public class TestProcess {
 
     /**
      * Deploy process from the archive
-     *
+     * 
      * @param apiSession
      * @param businessArchiveBuilder
      * @return
@@ -176,7 +191,7 @@ public class TestProcess {
     public long getId() {
         return this.processDefinition.getId();
     }
-
+    
     public ProcessDeploymentInfo getProcessDeploymentInfo() {
         try {
             return getProcessAPI(getSession()).getProcessDeploymentInfo(getId());
@@ -187,7 +202,7 @@ public class TestProcess {
 
     /**
      * Set process enablement
-     *
+     * 
      * @param apiSession
      * @param enabled
      * @return
@@ -201,6 +216,26 @@ public class TestProcess {
         this.enabled = enabled;
         return this;
     }
+    
+    protected void delete(final APISession apiSession) {
+        try {
+            // Delete all process instances
+            long nbDeletedProcessInstances;
+            do {
+                nbDeletedProcessInstances = getProcessAPI(apiSession).deleteProcessInstances(processDefinition.getId(), 0, 100);
+            } while (nbDeletedProcessInstances > 0);
+
+            // Delete all archived process instances
+            long nbDeletedArchivedProcessInstances;
+            do {
+                nbDeletedArchivedProcessInstances = getProcessAPI(apiSession).deleteArchivedProcessInstances(processDefinition.getId(), 0, 100);
+            } while (nbDeletedArchivedProcessInstances > 0);
+
+            getProcessAPI(apiSession).deleteProcessDefinition(processDefinition.getId());
+        } catch (DeletionException e) {
+            throw new TestToolkitException("Can't delete process <" + this.processDefinition.getId() + "> with name " + this.processDefinition.getName(), e);
+        }
+    }
 
     private void enableProcess(APISession apiSession) {
         try {
@@ -209,7 +244,7 @@ public class TestProcess {
             throw new TestToolkitException("Can't enable process <" + this.processDefinition.getId() + ">", e);
         }
     }
-
+    
     private void disableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).disableProcess(this.processDefinition.getId());
@@ -222,6 +257,10 @@ public class TestProcess {
         return setEnable(initiator.getSession(), enabled);
     }
 
+    public void delete(final TestUser initiator) {
+        delete(initiator.getSession());
+    }
+
     /**
      * Deprecated, use {@link #enable()} or {@link #disable()}
      */
@@ -229,20 +268,24 @@ public class TestProcess {
     public TestProcess setEnable(final boolean enabled) {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), enabled);
     }
-
+    
     public TestProcess enable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), true);
     }
-
+    
     public TestProcess disable() {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), false);
+    }
+
+    public void delete() {
+        delete(TestToolkitCtx.getInstance().getInitiator());
     }
 
     /**
      * Add actors to enable process
      * <p/>
      * TODO: Need to evolve to choose on which Actors category the actor will be added
-     *
+     * 
      * @param apiSession
      * @param actor
      * @return
@@ -321,7 +364,7 @@ public class TestProcess {
         testCase.waitProcessState(apiSession, TestCase.READY_STATE);
         return testCase;
     }
-
+    
     protected ProcessInstance createProcesInstance(final APISession apiSession) {
         try {
             return getProcessAPI(apiSession).startProcess(apiSession.getUserId(), processDefinition.getId());
@@ -340,7 +383,7 @@ public class TestProcess {
 
     /**
      * Start several cases and return them as a list
-     *
+     * 
      * @param number
      * @return
      */
@@ -358,7 +401,7 @@ public class TestProcess {
 
     /**
      * Add a user as process supervisor
-     *
+     * 
      * @param apiSession
      * @param user
      * @return
@@ -382,7 +425,7 @@ public class TestProcess {
 
     /**
      * Add a role as process supervisor
-     *
+     * 
      * @param apiSession
      * @param role
      * @return
@@ -406,7 +449,7 @@ public class TestProcess {
 
     /**
      * Add a group as process supervisor
-     *
+     * 
      * @param apiSession
      * @param group
      * @return
@@ -430,7 +473,7 @@ public class TestProcess {
 
     /**
      * Add a memebership as process supervisor
-     *
+     * 
      * @param apiSession
      * @param group
      * @param role
@@ -493,7 +536,7 @@ public class TestProcess {
         return this.actors;
     }
 
-    public List<TestCase> listOpenCases() throws SearchException {
+    public List<TestCase> listOpenCases() throws SearchException  {
         List<ProcessInstance> processInstances = searchOpenedProcessInstances();
         return convertToCasesList(processInstances);
     }
@@ -510,5 +553,41 @@ public class TestProcess {
         final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 100);
         builder.filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, getProcessDefinition().getId());
         return getProcessAPI(getSession()).searchOpenProcessInstances(builder.done()).getResult();
+    }
+
+    public void deleteCases() throws Exception {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getSession());
+        int repeatNb = 10;
+        boolean repeat;
+        long sleep = 500;
+        Exception latestException = null;
+        do {
+            repeat = false;
+            repeatNb--;
+            final SearchOptions searchOptions = new SearchOptionsBuilder(0, 100000)
+                    .filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, processDefinition.getId())
+                    .sort(ProcessInstanceSearchDescriptor.ID, Order.ASC).done();
+            for (ProcessInstance pi : processAPI.searchProcessInstances(searchOptions).getResult()) {
+                try {
+                    processAPI.deleteProcessInstance(pi.getId());
+                } catch (DeletionException e) {
+                    //ignore as it may be due a process instance finishing its execution
+                    repeat = true;
+                    latestException = e;
+                }
+            }
+            try {
+                processAPI.deleteArchivedProcessInstances(processDefinition.getId(), 0, 10000);
+            } catch (DeletionException e) {
+                //ignore as it may be due a process instance finishing its execution
+                repeat = true;
+                latestException = e;
+            }
+            Thread.sleep(sleep);
+        } while (repeat && repeatNb > 0);
+        if (repeat && latestException != null) {
+            throw latestException;
+        }
+
     }
 }

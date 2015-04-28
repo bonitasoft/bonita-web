@@ -106,7 +106,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
     PageItem pageToBeAdded;
 
-    File pagesDir = new File("target/bonita-home/bonita/client/tenants/1/work/pages");
+    File pagesDir = new File("target/bonita-home/client/tenants/1/work/pages");
 
     URL zipFileUrl;
 
@@ -169,7 +169,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // Validate
         assertNotNull(addedPage);
-        assertTrue(new File("target/bonita-home/bonita/client/tenants/1/work/pages", addedPage.getUrlToken()).listFiles().length > 0);
+        assertTrue(new File("target/bonita-home/client/tenants/1/work/pages", addedPage.getUrlToken()).listFiles().length > 0);
     }
 
     @Test(expected = APIException.class)

@@ -42,7 +42,7 @@ public class ThemeResourceServletTest {
 
         final ThemeResourceServlet themeResourceServlet = spy(new ThemeResourceServlet());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter(themeResourceServlet.getResourceParameterName())).thenReturn("theme");
         when(req.getMethod()).thenReturn("GET");
 

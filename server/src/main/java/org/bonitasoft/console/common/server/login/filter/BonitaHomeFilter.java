@@ -48,7 +48,7 @@ public class BonitaHomeFilter implements Filter {
     /**
      * bonita-client conf file
      */
-    protected static final String BONITA_CLIENT_CONF_FILENAME = "bonita-client.properties";
+    protected static final String BONITA_CLIENT_CONF_FILENAME = "bonita-client-custom.properties";
 
     /**
      * Logger
@@ -72,7 +72,7 @@ public class BonitaHomeFilter implements Filter {
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
         final String theBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        final File bonitaClientFile = new File(theBonitaHome + File.separator + "client" + File.separator + "conf" + File.separator
+        final File bonitaClientFile = new File(theBonitaHome + File.separator + "engine-client" + File.separator + "conf" + File.separator
                 + BONITA_CLIENT_CONF_FILENAME);
 
         if (theBonitaHome == null || theBonitaHome.isEmpty()) {
