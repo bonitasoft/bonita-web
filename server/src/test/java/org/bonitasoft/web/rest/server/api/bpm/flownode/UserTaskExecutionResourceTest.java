@@ -36,10 +36,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.contract.ComplexInputDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
-import org.bonitasoft.engine.bpm.contract.SimpleInputDefinition;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
@@ -80,8 +79,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Before
     public void initializeMocks() {
         userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI));
-        when(contractDefinition.getComplexInputs()).thenReturn(Collections.<ComplexInputDefinition> emptyList());
-        when(contractDefinition.getSimpleInputs()).thenReturn(Collections.<SimpleInputDefinition> emptyList());
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
     @Override
