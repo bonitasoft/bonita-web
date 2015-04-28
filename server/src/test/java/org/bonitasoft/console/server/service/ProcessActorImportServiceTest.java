@@ -28,7 +28,7 @@ public class ProcessActorImportServiceTest {
 
         final ProcessActorImportService processActorImportService = spy(new ProcessActorImportService());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         doReturn(".." + File.separator + ".." + File.separator + ".." + File.separator + "file.txt").when(processActorImportService).getFileUploadParameter();
 
         doReturn(1L).when(processActorImportService).getTenantId();

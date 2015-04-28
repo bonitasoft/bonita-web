@@ -31,7 +31,6 @@ public class DefaultValidatorsAccessorIT extends FormsTestCase {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         defaultValidatorsAccessor = DefaultValidatorsProperties.getInstance();
     }
     

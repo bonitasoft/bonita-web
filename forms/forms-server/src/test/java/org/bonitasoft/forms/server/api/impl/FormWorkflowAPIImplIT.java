@@ -95,10 +95,8 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     private FormWorkflowAPIImpl formWorkflowApi;
 
-    @Override
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         formWorkflowApi = (FormWorkflowAPIImpl) FormAPIFactory.getFormWorkflowAPI();
 
         final ProcessDefinitionBuilder processBuilder = new ProcessDefinitionBuilder().createNewInstance("firstProcess", "1.0");
@@ -140,14 +138,12 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         dataExpression = new Expression(null, "Application", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), "GROOVY", dependencies);
     }
 
-    @Override
     @After
     public void tearDown() throws Exception {
         processAPI.removeActorMember(actorMember.getId());
         processAPI.disableProcess(bonitaProcess.getId());
         processAPI.deleteProcessInstances(bonitaProcess.getId(), 0, 100);
         processAPI.deleteProcessDefinition(bonitaProcess.getId());
-        super.tearDown();
     }
 
     @Test

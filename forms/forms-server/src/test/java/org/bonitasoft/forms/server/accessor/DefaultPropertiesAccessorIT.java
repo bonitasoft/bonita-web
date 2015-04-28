@@ -27,10 +27,8 @@ public class DefaultPropertiesAccessorIT extends FormsTestCase {
 
     private DefaultFormsProperties defaultPropertiesAccessor;
 
-    @Override
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         defaultPropertiesAccessor = DefaultFormsPropertiesFactory.getDefaultFormProperties(TenantsManagementUtils.getDefaultTenantId());
     }
 
