@@ -53,6 +53,8 @@ public class PageServlet extends HttpServlet {
 
     public static final String RESOURCE_PATH_SEPARATOR = "/content";
 
+    public static final String API_PATH_SEPARATOR = "/API";
+
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -84,6 +86,10 @@ public class PageServlet extends HttpServlet {
             } catch (final Exception e) {
                 handleException(response, mappingKey, e);
             }
+        } else if (pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
+            //Support relative calls to the REST API from the forms using ../API/
+            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
+            request.getRequestDispatcher(apiPath).forward(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "/content is expected in the URL after the page mapping key");
         }
