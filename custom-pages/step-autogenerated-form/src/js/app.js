@@ -50,13 +50,29 @@
 
 
 
-    var defaultValues = {BOOLEAN : true, INTEGER:0};
     $scope.generateValue = function(input) {
-      if(input.type==='TEXT') {
-        return input.name;
-      }
-      return defaultValues[input.type];
-    };
+         if(input.type==='TEXT' && input.multiple) {
+           return '["' + input.name + '"]';
+         }
+         if(input.type==='TEXT') {
+           return input.name;
+         }
+         if(input.type==='BOOLEAN') {
+           return input.name.length % 2 === 0;
+         }
+         if(input.type==='INTEGER') {
+           return input.name.length;
+         }
+         if(input.inputs.length>0) {
+            var result = '{';
+           for (var i = 0; i < input.inputs.length; i++) {
+             result += '"' + input.inputs[i].name + '":' + $scope.generateValue(input.inputs[i]);
+           }
+            result+='}';
+            return result;
+         }
+         return null;
+       };
   }])
   .config(['$locationProvider',function($locationProvider) {
     $locationProvider.html5Mode({

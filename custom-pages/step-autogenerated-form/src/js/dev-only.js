@@ -67,34 +67,34 @@
           constraintType:'MANDATORY'
         }
       ],
-      complexInputs:[
+      inputs:[
         {
           "description":null,
           "name":"complex",
           "multiple":true,
-          "simpleInputs":[
+          "inputs":[
             {
               "description":null,
-              "name":"test2",
+              "name":"child",
               "multiple":false,
               "type":"TEXT"
             }
-          ],
-          "complexInputs":[           ]
-        }
-      ],
-      simpleInputs:[
+          ]
+        },
+
         {
-          description:null,
+          description:"Leave a comment to explain the issue.",
           name:'ticket_comment',
           multiple:false,
-          type:'TEXT'
+          type:'TEXT',
+          inputs:[]
         },
         {
           description:'Steps to execute to reproduce the issue within the product.',
           name:'ticket_step_to_reproduce',
           multiple:true,
-          type:'TEXT'
+          type:'TEXT',
+          inputs:[]
         }
       ]
     } ;
@@ -138,28 +138,44 @@
           constraintType:'MANDATORY'
         }
       ],
-      complexInputs:[     ],
-      simpleInputs:[
-        {
-          description:null,
-          name:'ticket_account',
-          multiple:false,
-          type:'TEXT'
-        },
-        {
-          description:null,
-          name:'ticket_description',
-          multiple:false,
-          type:'TEXT'
-        },
-        {
-          description:null,
-          name:'ticket_subject',
-          multiple:false,
-          type:'TEXT'
-        }
-      ]
-    };
+      inputs:[
+             {
+                description:'Customer Account Name',
+                name:'ticket_account',
+                multiple:false,
+                type:'BOOLEAN',
+                inputs:[]
+              },
+              {
+                description:'Description of your issue',
+                name:'ticket_description',
+                multiple:false,
+                type:'INTEGER',
+                inputs:[]
+              },
+              {
+                description:null,
+                name:'ticket_subject',
+                multiple:true,
+                type:'TEXT',
+                inputs:[]
+              },
+              {
+                "description":null,
+                "name":"complex",
+                "multiple":true,
+                "inputs":[
+                  {
+                    "description":null,
+                    "name":"test2",
+                    "multiple":false,
+                    "type":"TEXT",
+                    "inputs":[]
+                  }
+                ]
+              }
+            ]
+          };
 
     //-------------------------------------------------------------
     //---------------------  Human Tasks  -------------------------

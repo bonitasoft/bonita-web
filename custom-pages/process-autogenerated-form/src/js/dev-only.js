@@ -135,40 +135,41 @@
           constraintType:'MANDATORY'
         }
       ],
-      complexInputs:[
-        {
-          "description":null,
-          "name":"complex",
-          "multiple":true,
-          "simpleInputs":[
-            {
-              "description":null,
-              "name":"test2",
-              "multiple":false,
-              "type":"TEXT"
-            }
-          ],
-          "complexInputs":[           ]
-        }
-      ],
-      simpleInputs:[
-        {
+      inputs:[
+       {
           description:'Customer Account Name',
           name:'ticket_account',
           multiple:false,
-          type:'BOOLEAN'
+          type:'BOOLEAN',
+          inputs:[]
         },
         {
           description:'Description of your issue',
           name:'ticket_description',
           multiple:false,
-          type:'INTEGER'
+          type:'INTEGER',
+          inputs:[]
         },
         {
           description:null,
           name:'ticket_subject',
           multiple:true,
-          type:'TEXT'
+          type:'TEXT',
+          inputs:[]
+        },
+        {
+          "description":null,
+          "name":"complex",
+          "multiple":true,
+          "inputs":[
+            {
+              "description":null,
+              "name":"test2",
+              "multiple":false,
+              "type":"TEXT",
+              "inputs":[]
+            }
+          ]
         }
       ]
     };
