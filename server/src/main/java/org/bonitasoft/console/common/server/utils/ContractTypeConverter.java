@@ -10,7 +10,7 @@
  * You should have received a copy of the GNU Lesser General Public License along with this
  * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
  * Floor, Boston, MA 02110-1301, USA.
- **/
+ */
 package org.bonitasoft.console.common.server.utils;
 
 import java.io.Serializable;
@@ -24,9 +24,8 @@ import java.util.Map.Entry;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ComplexInputDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.SimpleInputDefinition;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.contract.Type;
 
 /**
@@ -35,8 +34,8 @@ import org.bonitasoft.engine.bpm.contract.Type;
 
 public class ContractTypeConverter {
 
-    public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" };
+    public static final String[] ISO_8601_DATE_PATTERNS = new String[]{"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
 
     private final ConvertUtilsBean convertUtilsBean;
 
@@ -54,7 +53,7 @@ public class ContractTypeConverter {
 
     public Map<String, Serializable> getProcessedInput(final ContractDefinition contractDefinition, final Map<String, Serializable> input) {
         final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
-        final Map<String, Serializable> contractDefinitionMap = createContractInputMap(contractDefinition.getSimpleInputs(), contractDefinition.getComplexInputs());
+        final Map<String, Serializable> contractDefinitionMap = createContractInputMap(contractDefinition.getInputs());
 
         for (final Entry<String, Serializable> inputEntry : input.entrySet()) {
             processedInputs.put(inputEntry.getKey(), convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey())));
@@ -96,19 +95,21 @@ public class ContractTypeConverter {
             }
             return (Serializable) convertedMapOfValues;
         } else {
-            final SimpleInputDefinition simpleInputDefinition = (SimpleInputDefinition) inputDefinition;
+            final InputDefinition simpleInputDefinition = (InputDefinition) inputDefinition;
             return (Serializable) convertToType(simpleInputDefinition.getType(), inputValue);
         }
     }
 
-    protected Map<String, Serializable> createContractInputMap(final List<SimpleInputDefinition> simpleInputs, final List<ComplexInputDefinition> complexInputs) {
+    protected Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
         final Map<String, Serializable> contractDefinitionMap = new HashMap<String, Serializable>();
-        for (final SimpleInputDefinition simpleInputDefinition : simpleInputs) {
-            contractDefinitionMap.put(simpleInputDefinition.getName(), simpleInputDefinition);
-        }
-        for (final ComplexInputDefinition complexInputDefinition : complexInputs) {
-            contractDefinitionMap.put(complexInputDefinition.getName(),
-                    (Serializable) createContractInputMap(complexInputDefinition.getSimpleInputs(), complexInputDefinition.getComplexInputs()));
+        for (final InputDefinition inputDefinition : inputDefinitions) {
+            if (inputDefinition.hasChildren()) {
+                contractDefinitionMap.put(inputDefinition.getName(),
+                        (Serializable) createContractInputMap(inputDefinition.getInputs()));
+            } else {
+                contractDefinitionMap.put(inputDefinition.getName(), inputDefinition);
+            }
+
         }
         return contractDefinitionMap;
     }
