@@ -187,4 +187,17 @@ public class PageServletTest {
         verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", instantiationException);
         verify(hsResponse, times(1)).sendError(500, "instatiation exception");
     }
+
+    @Test
+    public void should_get_bad_request_when_issue_with_parameters() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale)).thenReturn(new PageReference(42L, null));
+        final IllegalArgumentException illegalArgumentException = new IllegalArgumentException();
+        doThrow(illegalArgumentException).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale);
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", illegalArgumentException);
+        verify(hsResponse, times(1)).sendError(400);
+    }
 }
