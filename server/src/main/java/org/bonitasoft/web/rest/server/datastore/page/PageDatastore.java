@@ -162,7 +162,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected boolean isPageTokenValid(final String urlToken) {
-        return urlToken.matches("^" + PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
+        return urlToken.matches(PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
     }
 
     protected boolean areResourcesAvailable(final File unzipPageFolder) throws IOException {
@@ -193,11 +193,15 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     protected void deleteTempDirectory(final File unzipPage) {
         try {
             if (unzipPage.isDirectory()) {
-                IOUtil.deleteDir(unzipPage);
+                IOUtilDeleteDir(unzipPage);
             }
         } catch (final IOException e) {
             throw new APIException(e);
         }
+    }
+
+    protected void IOUtilDeleteDir(final File unzipPage) throws IOException {
+        IOUtil.deleteDir(unzipPage);
     }
 
     protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException,
