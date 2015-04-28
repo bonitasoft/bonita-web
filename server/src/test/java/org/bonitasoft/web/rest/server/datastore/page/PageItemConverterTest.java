@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
@@ -44,6 +45,9 @@ public class PageItemConverterTest extends APITestWithMock{
         when(engineItem.getLastModificationDate()).thenReturn(new Date(1));
         when(engineItem.getLastUpdatedBy()).thenReturn(1l);
         when(engineItem.getContentName()).thenReturn("page1.zip");
+        when(engineItem.getProcessDefinitionId()).thenReturn(2L);
+        when(engineItem.getContentType()).thenReturn(ContentType.FORM);
+
 
         //When
         final PageItem pageItem = pageitemConverter.convert(engineItem);
@@ -59,6 +63,8 @@ public class PageItemConverterTest extends APITestWithMock{
         assertTrue(pageItem.getLastUpdateDate().equals(engineItem.getLastModificationDate()));
         assertTrue(pageItem.getUpdatedByUserId().equals(engineItem.getLastUpdatedBy()));
         assertTrue(pageItem.getContentName().equals(engineItem.getContentName()));
+        assertTrue(pageItem.getProcessId().equals(engineItem.getProcessDefinitionId()));
+        assertTrue(pageItem.getContentType().equals(engineItem.getContentType()));
 
     }
 }
