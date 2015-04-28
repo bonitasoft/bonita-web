@@ -335,11 +335,6 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void it_throws_an_exception_updatting_page_with_unauthorized_pathSuffix() throws Exception {
-        throw new RuntimeException("not yet implemented");
-    }
-
-    @Test
     public void it_throws_an_exception_when_cannot_write_file_on_update() throws IOException, PageNotFoundException {
         // Given
         final Map<String, String> attributes = new HashMap<String, String>();
@@ -429,7 +424,6 @@ public class PageDatastoreTest extends APITestWithMock {
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "page.zip::newPage.zip");
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
 
-
         // When
         final PageItem addedPage = pageDatastore.add(pageToBeAdded);
 
@@ -512,5 +506,43 @@ public class PageDatastoreTest extends APITestWithMock {
         verify(pageAPI, times(1)).searchPages(creator.create());
     }
 
+    @Test
+    public void should_Get_returns_a_page_item_for_a_given_APIID() throws Exception {
+        final APIID apiid = makeAPIID(2L);
+        pageDatastore.get(apiid);
+        verify(pageAPI, times(1)).getPage(eq(apiid.toLong()));
+        verify(pageDatastore, times(1)).convertEngineToConsoleItem(any(Page.class));
+    }
+
+    @Test
+    public void should_ConvertEngineToConsoleItem_return_null_when_null_page_is_given() throws Exception {
+        //given
+        final Page nullPage = null;
+        //when
+        final PageItem testPageItem = pageDatastore.convertEngineToConsoleItem(nullPage);
+        //then
+        assertThat(testPageItem).isNull();
+    }
+
+    @Test
+    public void should_ConvertEngineToConsoleItem_return_a_page_item_when_page_is_given() throws Exception {
+        //when
+        final PageItem testPageItem = pageDatastore.convertEngineToConsoleItem(mockedPage);
+        //then
+        assertThat(testPageItem).isNotNull();
+    }
+
+    @Test
+    public void should_DeleteTempDirectory_throw_API_Exception_when_an_exception_is_raised() throws Exception {
+        //given
+        doThrow(new IOException("to be test")).when(pageDatastore).IOUtilDeleteDir(any(File.class));
+
+        //when
+        try {
+            pageDatastore.deleteTempDirectory(mockedZipFile);
+        } catch (final Exception e) {
+            assertThat(e).isInstanceOf(APIException.class);
+        }
+    }
 
 }
