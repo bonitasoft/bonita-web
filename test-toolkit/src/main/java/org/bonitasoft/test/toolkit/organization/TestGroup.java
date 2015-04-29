@@ -33,10 +33,22 @@ public class TestGroup implements TestActor {
 
     public TestGroup(final APISession apiSession, final GroupCreator creator) {
         this.group = createGroup(apiSession, creator);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building group: " + group.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestGroup(final GroupCreator creator) {
         this.group = createGroup(TestToolkitCtx.getInstance().getInitiator().getSession(), creator);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building group: " + group.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     private Group createGroup(APISession apiSession, GroupCreator creator) {
@@ -46,6 +58,15 @@ public class TestGroup implements TestActor {
         } catch (final Exception e) {
             throw new TestToolkitException("Can't create group", e);
         } 
+    }
+
+    public void delete() throws Exception {
+        final IdentityAPI identityAPI = new IdentityAccessor().getIdentityAPI(TestToolkitCtx.getInstance().getInitiator().getSession());
+        try {
+            identityAPI.deleteGroup(this.group.getId());
+        } catch (final Exception e) {
+            throw new TestToolkitException("Can't delete group", e);
+        }
     }
 
     public Group getGroup() {

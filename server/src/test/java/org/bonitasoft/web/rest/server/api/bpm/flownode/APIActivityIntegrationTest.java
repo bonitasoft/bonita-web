@@ -33,6 +33,7 @@ import org.bonitasoft.engine.expression.ExpressionBuilder;
 import org.bonitasoft.engine.expression.InvalidExpressionException;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
+import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
@@ -62,30 +63,9 @@ public class APIActivityIntegrationTest extends AbstractConsoleTest {
         return TestUserFactory.getJohnCarpenter();
     }
 
-    /**
-     * Variables :
-     * - variable1 : String
-     * - variable2 : Long
-     * - variable3 : Date
-     */
-    private TestHumanTask createActivityWithVariables() throws InvalidExpressionException {
-        final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance("processName", "1.0");
-        processDefinitionBuidler.addActor("Employees", true)
-        .addDescription("This a default process")
-        .addStartEvent("Start")
-        .addUserTask("Activity 1", "Employees")
-
-        .addData("variable1", String.class.getName(), new ExpressionBuilder().createConstantStringExpression("defaultValue"))
-        .addData("variable2", Long.class.getName(), new ExpressionBuilder().createConstantLongExpression(1))
-        .addData("variable3", Date.class.getName(), new ExpressionBuilder().createConstantDateExpression("428558400000"))
-
-        .addEndEvent("Finish");
-        return new TestProcess(processDefinitionBuidler).addActor(getInitiator()).setEnable(true).startCase().getNextHumanTask().assignTo(getInitiator());
-    }
-
     @Test
     public void api_can_update_activity_variables() throws Exception {
-        final TestHumanTask activity = createActivityWithVariables();
+        final TestHumanTask activity = TestProcessFactory.createActivityWithVariables(getInitiator());
         final Map<String, String> attributes = new HashMap<String, String>();
         attributes.put(ActivityItem.ATTRIBUTE_VARIABLES, JSON_UPDATE_VARIABLES);
 
@@ -98,7 +78,7 @@ public class APIActivityIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void api_can_update_variables_and_terminate_activity() throws Exception {
-        final TestHumanTask activity = createActivityWithVariables();
+        final TestHumanTask activity = TestProcessFactory.createActivityWithVariables(getInitiator());
         final Map<String, String> attributes = new HashMap<String, String>();
         attributes.put(ActivityItem.ATTRIBUTE_VARIABLES, JSON_UPDATE_VARIABLES);
         attributes.put(ActivityItem.ATTRIBUTE_STATE, ActivityItem.VALUE_STATE_COMPLETED);
@@ -148,7 +128,7 @@ public class APIActivityIntegrationTest extends AbstractConsoleTest {
     @Test
     public void api_can_search_with_default_search_order() throws Exception {
         //given
-        createActivityWithVariables();
+        TestProcessFactory.createActivityWithVariables(getInitiator());
 
         //when
         final ItemSearchResult<ActivityItem> searchResult = apiActivity.runSearch(0, 1, null, apiActivity.defineDefaultSearchOrder(), null, null, null);

@@ -17,6 +17,11 @@ import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
+import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.engine.search.SearchOptions;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
@@ -24,11 +29,20 @@ import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.After;
 import org.junit.Test;
 
 public class APIPageIntegrationTest extends AbstractConsoleTest {
 
     private APIPage apiPage;
+
+    @After
+    public void cleanPages() throws Exception {
+        final SearchOptions searchOptions = new SearchOptionsBuilder(0, 100000).done();
+        for (Page page : getPageAPI().searchPages(searchOptions).getResult()) {
+            getPageAPI().deletePage(page.getId());
+        }
+    }
 
     @Override
     public void consoleTestSetUp() throws Exception {

@@ -27,7 +27,7 @@ public class OrganizationImportServiceTest {
 
         final OrganizationImportService organizationImportService = spy(new OrganizationImportService());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         doReturn(".." + File.separator + ".." + File.separator + ".." + File.separator + "file.txt").when(organizationImportService).getFileUploadParameter();
 
         doReturn(1L).when(organizationImportService).getTenantId();

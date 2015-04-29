@@ -79,6 +79,7 @@ public class ProcessEngineClientIntegrationTest extends AbstractConsoleTest {
         processEngineClient.deleteDisabledProcesses(asList(deployedProcess.getId()));
 
         assertNull(getProcessDefinition(deployedProcess.getId()));
+        TestProcessFactory.getInstance().remove(deployedProcess);
     }
 
     @Test
