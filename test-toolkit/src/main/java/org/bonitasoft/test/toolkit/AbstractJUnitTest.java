@@ -29,14 +29,15 @@ import org.junit.Before;
 public abstract class AbstractJUnitTest extends EngineSetup {
 
     @Before
-    public void setUp() throws Exception {
+    public final void aaSetUp() throws Exception {
+        getContext().check();
         getContext().setInitiator(getInitiator());
         testSetUp();
     }
 
 
     @After
-    public void tearDown() throws Exception {
+    public final void zzTearDown() throws Exception {
         testTearDown();
         getContext().clearSession();
     }

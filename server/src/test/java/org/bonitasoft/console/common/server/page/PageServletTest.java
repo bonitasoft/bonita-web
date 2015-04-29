@@ -200,4 +200,13 @@ public class PageServletTest {
         verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", illegalArgumentException);
         verify(hsResponse, times(1)).sendError(400);
     }
+
+    @Test
+    public void should_forward_when_API_call() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/API/bpm/process/1");
+
+        pageServlet.doGet(hsRequest, hsResponse);
+
+        verify(hsRequest, times(1)).getRequestDispatcher("/API/bpm/process/1");
+    }
 }

@@ -174,4 +174,10 @@ public class TestUserFactory {
 
         return getInstance().getUserList().get(MR_SPECHAR_LOGIN);
     }
+
+    public void check() {
+        if (!getUserList().isEmpty()) {
+            throw new RuntimeException(this.getClass().getName() + " cannot be reset because the list is not empty: " + getUserList());
+        }
+    }
 }

@@ -50,6 +50,9 @@ public class TestRoleFactory {
     }
 
     public void clear() {
+        for (TestRole testRole : this.roleList.values()) {
+            testRole.delete();
+        }
         this.roleList.clear();
     }
 
@@ -60,12 +63,15 @@ public class TestRoleFactory {
         return this.roleList;
     }
 
-    public static List<TestRole> createRandomRoles(final int nbOfRoles) {
+    public List<TestRole> createRandomRoles(final int nbOfRoles) {
         final List<TestRole> results = new ArrayList<TestRole>();
 
         for (int i = 0; i < nbOfRoles; i++) {
-            RoleCreator creator = new RoleCreator(getRandomString()).setDescription(getRandomString());
-            results.add(new TestRole(creator));
+            final String name = getRandomString();
+            RoleCreator creator = new RoleCreator(name).setDescription(getRandomString());
+            final TestRole testRole = new TestRole(creator);
+            results.add(testRole);
+            getInstance().getRoleList().put(name, testRole);
         }
 
         return results;
@@ -96,4 +102,9 @@ public class TestRoleFactory {
         return createRole(NAME_DEVELOPER, DESCRIPTION_DEVELOPER);
     }
 
+    public void check() {
+        if (!getRoleList().isEmpty()) {
+            throw new RuntimeException(this.getClass().getName() + " cannot be reset because the list is not empty: " + getRoleList());
+        }
+    }
 }

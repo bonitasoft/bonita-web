@@ -46,7 +46,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
     @Override
     public void consoleTestSetUp() throws Exception {
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         apiUser = new APIUser();
         apiUser.setCaller(getAPICaller(getInitiator().getSession(), "API/identity/user"));
 

@@ -27,6 +27,7 @@ import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -75,6 +76,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Role not found", output);
         assertItemEquals("Wrong role found", input, output);
+        getAPIRole().runDelete(Arrays.asList(input.getId()));
     }
 
     @Test(expected = APIForbiddenException.class)
@@ -90,7 +92,6 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 
         input = spyApiRole.runAdd(input);
-
     }
 
     @Test
@@ -114,6 +115,9 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Failed to deploy intiator user", output.getCreatedByUserId());
         Assert.assertEquals("Wrong process deployed", getInitiator().getUserName(), output.getCreatedByUser().getUserName());
+
+        getAPIRole().runDelete(Arrays.asList(input.getId()));
+
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +126,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testSearch() throws Exception {
-        TestRoleFactory.createRandomRoles(13);
+        TestRoleFactory.getInstance().createRandomRoles(13);
 
         final ItemSearchResult<RoleItem> roleItems = getAPIRole().runSearch(0, 10, null, null, null, null, null);
 
@@ -144,18 +148,18 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void testDeleteOne() throws Exception {
-        TestRoleFactory.createRandomRoles(13);
+        TestRoleFactory.getInstance().createRandomRoles(13);
 
         final ItemSearchResult<RoleItem> roleItems = getAPIRole().runSearch(0, 10, null, null, null, null, null);
         getAPIRole().runDelete(Arrays.asList(roleItems.getResults().get(0).getId()));
 
         final ItemSearchResult<RoleItem> roleItemsAfter = getAPIRole().runSearch(0, 10, null, null, null, null, null);
-        Assert.assertTrue("Failed to delete one role", roleItemsAfter.getTotal() == 12);
+        Assert.assertEquals("Failed to delete one role", 12, roleItemsAfter.getTotal());
     }
 
     @Test
     public void testDeleteMultiple() throws Exception {
-        TestRoleFactory.createRandomRoles(13);
+        TestRoleFactory.getInstance().createRandomRoles(13);
 
         final ItemSearchResult<RoleItem> roleItems = getAPIRole().runSearch(0, 10, null, null, null, null, null);
 
@@ -165,7 +169,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
                 ));
 
         final ItemSearchResult<RoleItem> roleItemsAfter = getAPIRole().runSearch(0, 10, null, null, null, null, null);
-        Assert.assertTrue("Failed to delete multiple roles", roleItemsAfter.getTotal() == 11);
+        Assert.assertEquals("Failed to delete multiple roles", 11, roleItemsAfter.getTotal());
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +198,8 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         Assert.assertNotNull("Role not found", output);
         Assert.assertEquals("Update of role failed", newDescription, output.getDescription());
+
+        getAPIRole().runDelete(Arrays.asList(input.getId()));
     }
 
     @Test(expected = APIForbiddenException.class)
@@ -210,8 +216,11 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         input = new RoleItem();
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 
-        input = spyApiRole.runUpdate(id, input.getAttributes());
-
+        try {
+            input = spyApiRole.runUpdate(id, input.getAttributes());
+        } finally {
+            spyApiRole.runDelete(Arrays.asList(id));
+        }
     }
 
     @Test

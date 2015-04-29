@@ -19,6 +19,7 @@ package org.bonitasoft.test.toolkit.organization;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.test.toolkit.bpm.TestCategoryFactory;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 
 /**
@@ -52,7 +53,7 @@ public class TestToolkitCtx {
         return instance;
     }
 
-    public void clearSession() {
+    public void clearSession() throws Exception {
         /*
          * Clear Factories
          */
@@ -61,7 +62,7 @@ public class TestToolkitCtx {
         /*
          * Clear platform from its tenants
          */
-        getPlatform().destroy();
+        //getPlatform().destroy();
 
         /*
          * Clear session's variables
@@ -69,11 +70,20 @@ public class TestToolkitCtx {
         this.sessionsVariables.clear();
     }
 
-    protected void clearFactories() {
+    protected void clearFactories() throws Exception {
         TestUserFactory.getInstance().clear();
         TestProcessFactory.getInstance().clear();
         TestGroupFactory.getInstance().clear();
         TestRoleFactory.getInstance().clear();
+        TestCategoryFactory.getInstance().clear();
+    }
+
+    protected void checkFactories() throws Exception {
+        TestUserFactory.getInstance().check();
+        TestProcessFactory.getInstance().check();
+        TestGroupFactory.getInstance().check();
+        TestRoleFactory.getInstance().check();
+        TestCategoryFactory.getInstance().check();
     }
     
     // ///////////////////////////////////////////////////////
@@ -121,4 +131,7 @@ public class TestToolkitCtx {
         return (TestUser) this.sessionsVariables.get(INITIATOR);
     }
 
+    public void check() throws Exception {
+        checkFactories();
+    }
 }

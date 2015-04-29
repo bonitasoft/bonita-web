@@ -45,7 +45,7 @@ public class TenantImageServletTest {
 
         final TenantImageServlet tenantImageServlet = spy(new TenantImageServlet());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter(ImageDownloadServlet.SRC_PARAM)).thenReturn("../../../file.txt");
 
         tenantImageServlet.setDirectoryPath("./temp");
