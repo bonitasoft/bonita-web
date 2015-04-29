@@ -151,11 +151,18 @@ public class PageServlet extends HttpServlet {
     protected void handleException(final HttpServletResponse response, final String mappingKey, final Exception e)
             throws ServletException {
         try {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                final String message = "Error while trying to display a page for key " + mappingKey;
-                LOGGER.log(Level.WARNING, message, e);
+            if (e instanceof IllegalArgumentException) {
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.log(Level.FINE, "The parameters passed to the servlet are invalid.", e);
+                }
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            } else {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    final String message = "Error while trying to display a page for key " + mappingKey;
+                    LOGGER.log(Level.WARNING, message, e);
+                }
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             }
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         } catch (final IOException ioe) {
             throw new ServletException(ioe);
         }

@@ -33,6 +33,7 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.page.AuthorizationRuleConstants;
 import org.bonitasoft.engine.page.PageURL;
 import org.bonitasoft.engine.page.URLAdapterConstants;
 import org.bonitasoft.engine.session.APISession;
@@ -50,7 +51,7 @@ public class PageMappingService {
             throws NotFoundException, UnauthorizedAccessException, BonitaException {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) request.getParameterMap());
-        //context.put(URLAdapterConstants.IS_ADMIN, isLoggedUserAdmin(request));
+        context.put(AuthorizationRuleConstants.IS_ADMIN, isLoggedUserAdmin(request));
         context.put(URLAdapterConstants.LOCALE, locale.toString());
         context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
