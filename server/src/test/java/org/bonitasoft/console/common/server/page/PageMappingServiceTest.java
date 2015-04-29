@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.page.AuthorizationRuleConstants;
 import org.bonitasoft.engine.page.PageURL;
 import org.bonitasoft.engine.page.URLAdapterConstants;
 import org.bonitasoft.engine.session.APISession;
@@ -61,7 +62,7 @@ public class PageMappingServiceTest {
         when(pageURL.getPageId()).thenReturn(null);
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) hsRequest.getParameterMap());
-        //context.put(URLAdapterConstants.IS_ADMIN, false);
+        context.put(AuthorizationRuleConstants.IS_ADMIN, false);
         context.put(URLAdapterConstants.LOCALE, "en");
         context.put(URLAdapterConstants.CONTEXT_PATH, "/bonita");
         when(processConfigurationAPI.resolvePageOrURL("process/processName/processVersion", context)).thenReturn(pageURL);
