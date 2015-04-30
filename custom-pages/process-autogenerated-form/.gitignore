@@ -1,0 +1,32 @@
+# eclipse settings
+*.project
+*.settings
+*.classpath
+
+# intellij settings
+*.iml
+.idea/
+
+# local files
+btm1.tlog
+btm2.tlog
+
+# target
+target/
+
+# maven shade plugin
+dependency-reduced-pom.xml
+
+# maven node plugin
+node
+
+# merge files
+*.orig
+
+# node.js
+node_modules
+bower_components
+dist
+npm-debug.log
+
+**/src/js/templates.js
