@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.server;
 
+import java.util.logging.Level;
+
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
@@ -30,6 +32,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
@@ -43,8 +46,6 @@ import org.restlet.data.CharacterSet;
 import org.restlet.data.MediaType;
 import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
-
-import java.util.logging.Level;
 
 /**
  *
@@ -74,7 +75,7 @@ public class BonitaRestletApplication extends Application {
     public BonitaRestletApplication(final FinderFactory finderFactory, final TenantSpringBeanAccessor tenantSpringBeanAccessor) {
         super();
         factory = finderFactory;
-        this.beanAccessor = tenantSpringBeanAccessor;
+        beanAccessor = tenantSpringBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -120,6 +121,8 @@ public class BonitaRestletApplication extends Application {
         // GET an archived task context:
         router.attach(BPM_ARCHIVED_USER_TASK_URL + "/{archivedTaskId}/context", factory.create(ArchivedUserTaskContextResource.class));
 
+        // GET a process defintion design :
+        router.attach(BPM_PROCESS_URL + "/{processDefinitionId}/design", factory.create(ProcessDefinitionDesignResource.class));
         // GET a process contract:
         router.attach(BPM_PROCESS_URL + "/{processDefinitionId}/contract", factory.create(ProcessContractResource.class));
         // POST to instantiate a process with contract:
@@ -142,8 +145,8 @@ public class BonitaRestletApplication extends Application {
         return router;
     }
 
-    private void buildRouterExtension(Router router) {
-        for (ResourceExtensionDescriptor resourceExtensionDescriptor : beanAccessor.getResourceExtensionConfiguration()) {
+    private void buildRouterExtension(final Router router) {
+        for (final ResourceExtensionDescriptor resourceExtensionDescriptor : beanAccessor.getResourceExtensionConfiguration()) {
             router.attach(ROUTER_EXTENSION_PREFIX + resourceExtensionDescriptor.getPathTemplate(), factory.createExtensionResource(resourceExtensionDescriptor));
         }
     }
