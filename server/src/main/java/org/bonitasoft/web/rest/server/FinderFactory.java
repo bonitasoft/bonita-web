@@ -10,6 +10,12 @@
  */
 package org.bonitasoft.web.rest.server;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
@@ -38,6 +44,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskC
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
@@ -46,38 +54,32 @@ import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class FinderFactory {
 
     protected Map<Class<? extends ServerResource>, ResourceFinder> finders;
     List<ResourceFinder> resourceFinders = new ArrayList<>();
 
     public FinderFactory() {
-        this.finders = getDefaultFinders();
+        finders = getDefaultFinders();
         createResourceFinderList(finders);
     }
 
-    public FinderFactory(Map<Class<? extends ServerResource>, ResourceFinder> finders) {
+    public FinderFactory(final Map<Class<? extends ServerResource>, ResourceFinder> finders) {
         this.finders = finders;
         createResourceFinderList(finders);
 
     }
 
-    private void createResourceFinderList(Map<Class<? extends ServerResource>, ResourceFinder> finders) {
-        for (Map.Entry<Class<? extends ServerResource>, ResourceFinder> classFinderEntry : finders.entrySet()) {
-            ResourceFinder resourceFinder = classFinderEntry.getValue();
+    private void createResourceFinderList(final Map<Class<? extends ServerResource>, ResourceFinder> finders) {
+        for (final Map.Entry<Class<? extends ServerResource>, ResourceFinder> classFinderEntry : finders.entrySet()) {
+            final ResourceFinder resourceFinder = classFinderEntry.getValue();
             resourceFinders.add(resourceFinder);
             resourceFinder.setFinderFactory(this);
         }
     }
 
     protected Map<Class<? extends ServerResource>, ResourceFinder> getDefaultFinders() {
-        Map<Class<? extends ServerResource>, ResourceFinder> finders = new HashMap<>();
+        final Map<Class<? extends ServerResource>, ResourceFinder> finders = new HashMap<>();
         finders.put(ActivityVariableResource.class, new ActivityVariableResourceFinder());
         finders.put(TimerEventTriggerResource.class, new TimerEventTriggerResourceFinder());
         finders.put(CaseInfoResource.class, new CaseInfoResourceFinder());
@@ -93,6 +95,7 @@ public class FinderFactory {
         finders.put(UserTaskContextResource.class, new UserTaskContextResourceFinder());
         finders.put(ArchivedUserTaskContextResource.class, new ArchivedUserTaskContextResourceFinder());
         finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
+        finders.put(ProcessDefinitionDesignResource.class, new ProcessDefinitionDesignResourceFinder());
         finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
         return finders;
     }
@@ -105,12 +108,12 @@ public class FinderFactory {
         return finder;
     }
 
-    public Finder createExtensionResource(ResourceExtensionDescriptor resourceExtensionDescriptor) {
+    public Finder createExtensionResource(final ResourceExtensionDescriptor resourceExtensionDescriptor) {
         return new ApiExtensionResourceFinder(resourceExtensionDescriptor);
     }
 
-    public ResourceFinder getResourceFinderFor(Serializable object) {
-        for (ResourceFinder resourceFinder : resourceFinders) {
+    public ResourceFinder getResourceFinderFor(final Serializable object) {
+        for (final ResourceFinder resourceFinder : resourceFinders) {
             if (resourceFinder.handlesResource(object)) {
                 return resourceFinder;
             }
@@ -119,8 +122,8 @@ public class FinderFactory {
         return null;
     }
 
-    public Serializable getContextResultElement(Serializable object) {
-        ResourceFinder resourceFinderFor = getResourceFinderFor(object);
+    public Serializable getContextResultElement(final Serializable object) {
+        final ResourceFinder resourceFinderFor = getResourceFinderFor(object);
         if (resourceFinderFor != null) {
             return resourceFinderFor.getContextResultElement(object);
         }
