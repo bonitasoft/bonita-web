@@ -7,8 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
@@ -26,7 +30,7 @@ public class LivingApplicationServlet extends HttpServlet {
 
         final APISession session = getSession(hsRequest);
         try {
-            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session)) {
+            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer(), getResourceRenderer(), new TenantFolder())) {
                 hsResponse.sendError(404);
             }
         } catch (final ApplicationPageNotFoundException e) {
@@ -41,6 +45,12 @@ public class LivingApplicationServlet extends HttpServlet {
             hsResponse.sendError(500);
         } catch (final CreationException e) {
             hsResponse.sendError(404);
+        } catch (BonitaException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
@@ -53,5 +63,13 @@ public class LivingApplicationServlet extends HttpServlet {
 
     APISession getSession(final HttpServletRequest hsRequest) {
         return (APISession) hsRequest.getSession().getAttribute("apiSession");
+    }
+
+    PageRenderer getPageRenderer(){
+        return new PageRenderer(getResourceRenderer());
+    }
+
+    ResourceRenderer getResourceRenderer(){
+        return new ResourceRenderer();
     }
 }

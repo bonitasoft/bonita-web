@@ -44,6 +44,10 @@ public class ApplicationModel {
         return application.getId();
     }
 
+    public String getApplicationLayoutName() throws PageNotFoundException {
+        return pageApi.getPage(application.getLayoutId()).getName();
+    }
+
     public String getApplicationHomePage() throws ApplicationPageNotFoundException {
         return application.getToken() + "/" + applicationApi.getApplicationHomePage(application.getId()).getToken();
     }

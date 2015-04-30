@@ -21,6 +21,7 @@ import org.bonitasoft.engine.business.application.impl.ApplicationMenuImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
 import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.impl.PageImpl;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.profile.impl.ProfileImpl;
@@ -48,6 +49,9 @@ public class ApplicationModelTest {
     PageAPI pageApi;
 
     @Mock
+    Page page;
+
+    @Mock
     APISession session;
 
     @Mock
@@ -58,7 +62,7 @@ public class ApplicationModelTest {
 
     ApplicationModel model;
 
-    ApplicationImpl application = new ApplicationImpl("token", "version", "description");
+    ApplicationImpl application = new ApplicationImpl("token", "version", "description",1L);
 
     @Before
     public void beforeEach() throws Exception {
@@ -145,6 +149,16 @@ public class ApplicationModelTest {
         given(applicationApi.getApplicationHomePage(1L)).willReturn(new ApplicationPageImpl(1, 1, "pageToken"));
 
         assertThat(model.getApplicationHomePage()).isEqualTo("token/pageToken");
+    }
+
+    @Test
+    public void should_getApplicationLayoutName_return_valide_name() throws Exception {
+        given(page.getName()).willReturn("layoutPage");
+        given(pageApi.getPage(1L)).willReturn(page);
+
+        String appLayoutName = model.getApplicationLayoutName();
+
+        assertThat(appLayoutName).isEqualTo("layoutPage");
     }
 
     @Test

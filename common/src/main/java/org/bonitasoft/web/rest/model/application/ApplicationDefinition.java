@@ -42,6 +42,7 @@ public class ApplicationDefinition extends ItemDefinition<ApplicationItem> {
         createAttribute(ApplicationItem.ATTRIBUTE_DISPLAY_NAME, ItemAttribute.TYPE.STRING);
         createAttribute(ApplicationItem.ATTRIBUTE_PROFILE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ApplicationItem.ATTRIBUTE_HOME_PAGE_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(ApplicationItem.ATTRIBUTE_LAYOUT_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ApplicationItem.ATTRIBUTE_VERSION, ItemAttribute.TYPE.STRING);
         createAttribute(ApplicationItem.ATTRIBUTE_DESCRIPTION, ItemAttribute.TYPE.TEXT);
         createAttribute(ApplicationItem.ATTRIBUTE_ICON_PATH, ItemAttribute.TYPE.STRING);
