@@ -1,0 +1,6 @@
+{ 
+  "id": 654,
+  "processDefinitionId": 4,
+  "content": "//a new content to a groovy script\n System.out.println(\"test\"); return new Object();",
+  "name": "testScript"
+}

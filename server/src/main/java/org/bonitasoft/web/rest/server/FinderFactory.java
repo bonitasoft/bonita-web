@@ -48,6 +48,8 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignRes
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.process.script.ProcessScriptResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.script.ProcessScriptResourceFinder;
 import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
@@ -96,6 +98,7 @@ public class FinderFactory {
         finders.put(ArchivedUserTaskContextResource.class, new ArchivedUserTaskContextResourceFinder());
         finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
         finders.put(ProcessDefinitionDesignResource.class, new ProcessDefinitionDesignResourceFinder());
+        finders.put(ProcessScriptResource.class, new ProcessScriptResourceFinder());
         finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
         return finders;
     }
