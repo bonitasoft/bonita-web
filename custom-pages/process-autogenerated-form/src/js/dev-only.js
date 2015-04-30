@@ -30,6 +30,30 @@
       return [204, {}, {}];
     });
 
+    $httpBackend.whenPOST('/bonita/API/bpm/userTask/'+4+'/execution').respond(function() {
+      console.log('Getting mock ERROR response for execution of Step 4');
+      return [400, step4ExecutionFailed, {}];
+    });
+
+    $httpBackend.whenPOST('/bonita/API/bpm/userTask/'+5+'/execution').respond(function() {
+      console.log('Getting mock ERROR response for execution of Step 5');
+      return [500, step5ExecutionFailed, {}];
+    });
+
+    var step5ExecutionFailed = {
+      "exception":"class org.bonitasoft.engine.bpm.process.ProcessExecutionException","message":"USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \"bjh\"\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]"
+    };
+
+    var step4ExecutionFailed = {
+      "exception":"class org.bonitasoft.engine.bpm.contract.ContractViolationException",
+      "message":"USERNAME=william.jobs | Contract is not valid: ",
+      "explanations":[
+        "Expected input [ticket_account] is missing",
+        "Expected input [ticket_description] is missing",
+        "Expected input [ticket_subject] is missing"
+      ]
+    };
+
 
     var contractStep2 = {
       constraints:[
@@ -43,19 +67,34 @@
           constraintType:'MANDATORY'
         }
       ],
-      complexInputs:[     ],
-      simpleInputs:[
+      inputs:[
         {
-          description:null,
+          "description":null,
+          "name":"complex",
+          "multiple":true,
+          "inputs":[
+            {
+              "description":null,
+              "name":"child",
+              "multiple":false,
+              "type":"TEXT"
+            }
+          ]
+        },
+
+        {
+          description:"Leave a comment to explain the issue.",
           name:'ticket_comment',
           multiple:false,
-          type:'BOOLEAN'
+          type:'TEXT',
+          inputs:[]
         },
         {
           description:'Steps to execute to reproduce the issue within the product.',
           name:'ticket_step_to_reproduce',
-          multiple:false,
-          type:'TEXT'
+          multiple:true,
+          type:'TEXT',
+          inputs:[]
         }
       ]
     } ;
@@ -164,15 +203,47 @@
           "inputs":[
             {
               "description":null,
-              "name":"test2",
+              "name":"child1",
               "multiple":false,
               "type":"TEXT",
               "inputs":[]
+            },
+            {
+             "description":null,
+             "name":"children",
+             "multiple":true,
+             "type":"DECIMAL",
+             "inputs":[]
             }
           ]
-        }
+        },
+         {
+          description:"Business cost associated to this issue. In US Dollars.",
+          name:'ticket_cost',
+          multiple:false,
+          type:'DECIMAL',
+          inputs:[]
+        },
+       {
+         description:"Ticket creation date",
+         name:'ticket_date',
+         multiple:false,
+         type:'DATE',
+         inputs:[]
+       }
       ]
     };
+
+    //-------------------------------------------------------------
+    //---------------------  Human Tasks  -------------------------
+    //-------------------------------------------------------------
+
+    $httpBackend.whenGET('/bonita/API/bpm/humanTask/'+2).respond(function() {
+      console.log('Getting mock response for Human Task 2.');
+      return [200, step2, {}];
+    });
+
+    var step2 = {"displayDescription":"","executedBySubstitute":"0","processId":"7843764322062200989","parentCaseId":"4","state":"ready","rootContainerId":"4","type":"USER_TASK","assigned_id":"","assigned_date":"","id":"12","executedBy":"0","caseId":"4","priority":"normal","actorId":"1","description":"","name":"Ticket review","reached_state_date":"2015-04-14 17:26:39.783","rootCaseId":"4","displayName":"Ticket review","dueDate":"2015-04-14 18:26:39.778","last_update_date":"2015-04-14 17:26:39.783"};
 
     //--------------------------------------------------------------------------
     //--------------------- List Archived Human Tasks  -------------------------

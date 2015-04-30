@@ -16,61 +16,93 @@
     $scope.process = {};
     $scope.message = undefined;
 
-        $scope.getInputName = function() {
-      return 'dataToSend.attribute1';
-    };
-
-
     contractSrvc.fetchContract(processId).then(function(result){
       $scope.contract = result.data;
     });
 
     processAPI.get({id:processId}, function(result){
-
       $scope.process = result;
     });
 
+var jsonify = function(data) {
+    var jsonified = {};
+    for (var prop in data) {
+
+        if((typeof data[prop]==='string') && ((data[prop].lastIndexOf("{", 0)===0) || (data[prop].lastIndexOf("[", 0)===0))) {
+            console.log("Jsonification of prop: ", data[prop]);
+            jsonified[prop] = angular.fromJson(data[prop]);
+        } else {
+            jsonified[prop] = data[prop];
+        }
+
+    }
+    return jsonified;
+}
+
+
     $scope.postData = function() {
       $scope.message = undefined;
-      contractSrvc.startProcess(processId, $scope.dataToSend).then(function(result){
+      var jsonifiedDataToSend = jsonify($scope.dataToSend);
+
+      contractSrvc.startProcess(processId, jsonifiedDataToSend).then(function(result){
         console.log($window.top.location.href);
         $window.top.location.href = "/bonita";
       }, function(reason){
         $scope.message = reason.data.explanations?reason.data.explanations:reason.data.message;
-    });
+      });
     };
 
     $scope.fillData = function() {
-
       for (var prop in $scope.autofill) {
         $scope.dataToSend[prop] = $scope.autofill[prop];
       }
     };
 
 
+    var generateValueForChildrenAttribute = function(input) {
+        var result = $scope.generateValue(input);
+        if(input.type==='TEXT') {
+          return '"'+result+'"';
+        }
+        return result;
+    };
+
 
     $scope.generateValue = function(input) {
-        if(input.type==='TEXT' && input.multiple) {
-          return '["' + input.name + '"]';
-        }
+        var result = null;
+
         if(input.type==='TEXT') {
-          return input.name;
+          result = input.name;
         }
         if(input.type==='BOOLEAN') {
-          return input.name.length % 2 === 0;
+          result = input.name.length % 2 === 0;
         }
         if(input.type==='INTEGER') {
-          return input.name.length;
+          result =  input.name.length;
+        }
+        if(input.type==='DECIMAL') {
+          result =  input.name.length + (input.name.length +1) / 10;
+        }
+        if(input.type==='DATE') {
+          result = '"' + new Date().toJSON().slice(0,10) + '"';
         }
         if(input.inputs.length>0) {
            var result = '{';
           for (var i = 0; i < input.inputs.length; i++) {
-            result += '"' + input.inputs[i].name + '":' + $scope.generateValue(input.inputs[i]);
+            if(i>0) {
+                result += ',';
+            }
+            result += '"' + input.inputs[i].name + '":' + generateValueForChildrenAttribute(input.inputs[i]);
           }
            result+='}';
-           return result;
         }
-        return null;
+        if(input.multiple) {
+            if(input.type==='TEXT') {
+                result = '"' + result + '"';
+            }
+           result = '[' + result + ']';
+         }
+        return result;
     };
 
   }])
