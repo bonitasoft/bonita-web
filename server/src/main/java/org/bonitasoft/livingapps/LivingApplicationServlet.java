@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.utils.TenantFolder;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -29,7 +30,7 @@ public class LivingApplicationServlet extends HttpServlet {
 
         final APISession session = getSession(hsRequest);
         try {
-            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer())) {
+            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer(), getResourceRenderer(), new TenantFolder())) {
                 hsResponse.sendError(404);
             }
         } catch (final ApplicationPageNotFoundException e) {
