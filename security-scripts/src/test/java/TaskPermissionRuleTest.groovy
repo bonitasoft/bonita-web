@@ -25,6 +25,7 @@ import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceNotFoundException
 import org.bonitasoft.engine.bpm.flownode.UserTaskInstance
+import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
 import org.bonitasoft.engine.search.impl.SearchResultImpl
@@ -243,7 +244,20 @@ public class TaskPermissionRuleTest {
         assertThat(isAuthorized).isTrue();
     }
 
+    @Test
+     public void should_GET_an_archivedHumanTask_providing_a_parentTaskId() {
+        def archivedTask = mock(ArchivedHumanTaskInstance.class)
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn(null).when(apiCallContext).getResourceName()
+        havingFilters([parentTaskId: "4"])
+        doThrow(NotFoundException).when(processAPI).getFlowNodeInstance(4);
+        doReturn(archivedTask).when(processAPI).getArchivedActivityInstance(4)
+        doReturn(currentUserId).when(archivedTask).getAssigneeId()
 
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        assertThat(isAuthorized).isTrue();
+    }
 
     def havingResource(String resourceName) {
         doReturn(true).when(apiCallContext).isGET()
