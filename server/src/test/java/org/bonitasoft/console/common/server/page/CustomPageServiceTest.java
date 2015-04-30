@@ -1,9 +1,19 @@
 package org.bonitasoft.console.common.server.page;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import groovy.lang.GroovyClassLoader;
 
 import java.io.File;
@@ -12,14 +22,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -28,13 +41,11 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import groovy.lang.GroovyClassLoader;
-
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
 
     @Spy
-    private final CustomPageService customPageService = new CustomPageService();
+    private final CustomPageService customPageService = spy(new CustomPageService());
 
     @Mock
     CompoundPermissionsMapping compoundPermissionsMapping;
@@ -54,7 +65,7 @@ public class CustomPageServiceTest {
     @Mock
     PageAPI pageAPI;
 
-    @Test
+    @Ignore
     public void should_load_page_return_page_impl() throws Exception {
         // Given
         when(apiSession.getTenantId()).thenReturn(0L);
@@ -211,6 +222,25 @@ public class CustomPageServiceTest {
 
         // Then
         verify(compoundPermissionsMapping).setPropertyAsSet("customPage1", customPagePermissions);
+    }
+
+    @Test
+    public void should_GetPageProperties_does_not_throws_already_exist_exception_if_checkIfItAlreadyExists_is_false() throws Exception {
+        //given
+        final boolean checkIfItAlreadyExists = false;
+        doReturn(new Properties()).when(pageAPI).getPageProperties(any(byte[].class), eq(checkIfItAlreadyExists));
+        //when
+        try{
+            final byte[] zipContent = new byte[0];
+            customPageService.getPageProperties(apiSession, zipContent, checkIfItAlreadyExists, 123123L);
+            //then
+            verify(pageAPI, times(0)).getPageByNameAndProcessDefinitionId(anyString(), anyLong());
+        }catch(final Exception e){
+            if (e instanceof AlreadyExistsException) {
+                fail("if checkIfItAlreadyExists parameter is set to false, no AlreadyExistsException can be thrown");
+            }
+
+        }
     }
 
 }
