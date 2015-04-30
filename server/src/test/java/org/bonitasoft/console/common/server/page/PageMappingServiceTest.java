@@ -65,11 +65,12 @@ public class PageMappingServiceTest {
         context.put(AuthorizationRuleConstants.IS_ADMIN, false);
         context.put(URLAdapterConstants.LOCALE, "en");
         context.put(URLAdapterConstants.CONTEXT_PATH, "/bonita");
-        when(processConfigurationAPI.resolvePageOrURL("process/processName/processVersion", context)).thenReturn(pageURL);
+        when(processConfigurationAPI.resolvePageOrURL("process/processName/processVersion", context, true)).thenReturn(pageURL);
         final Set<String> userPermissions = new HashSet<String>();
         when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
 
-        final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", new Locale("en"));
+        final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", new Locale("en"),
+                true);
 
         assertNotNull(returnedPageReference);
         assertEquals(null, returnedPageReference.getPageId());

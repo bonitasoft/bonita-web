@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,20 +41,15 @@ public class PageMappingService {
 
     protected static final String PROCESS_DEPLOY = "process_deploy";
 
-    /**
-     * Logger
-     */
-    private static Logger LOGGER = Logger.getLogger(PageMappingService.class.getName());
-
-    public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey, final Locale locale)
-            throws NotFoundException, UnauthorizedAccessException, BonitaException {
+    public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey, final Locale locale,
+            final boolean executeAuthorizationRules) throws NotFoundException, UnauthorizedAccessException, BonitaException {
         final Map<String, Serializable> context = new HashMap<String, Serializable>();
         context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) request.getParameterMap());
         context.put(AuthorizationRuleConstants.IS_ADMIN, isLoggedUserAdmin(request));
         context.put(URLAdapterConstants.LOCALE, locale.toString());
         context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());
         final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
-        final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey, context);
+        final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey, context, executeAuthorizationRules);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());
     }
 

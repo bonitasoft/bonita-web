@@ -99,7 +99,8 @@ public class PageServlet extends HttpServlet {
             final String mappingKey, final String resourcePath)
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
-            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request));
+            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request),
+                    isNotResourcePath(resourcePath));
             if (page.getURL() != null) {
                 displayExternalPage(request, response, page.getURL());
             } else if (page.getPageId() != null) {
@@ -122,8 +123,7 @@ public class PageServlet extends HttpServlet {
             final PageReference page, final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
-            if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
-                    || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
+            if (isNotResourcePath(resourcePath)) {
                 //TODO pass the query params in order to put them in the Context of the custom page
                 pageRenderer.displayCustomPage(request, response, apiSession, page.getPageId());
             } else {
@@ -132,6 +132,11 @@ public class PageServlet extends HttpServlet {
         } catch (final PageNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the page with ID " + page.getPageId());
         }
+    }
+
+    private boolean isNotResourcePath(final String resourcePath) {
+        return resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
+                || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath);
     }
 
     protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final Long pageId, final String resourcePath)
