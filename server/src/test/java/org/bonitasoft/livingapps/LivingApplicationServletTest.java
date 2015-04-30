@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
@@ -59,7 +59,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_application_page_is_not_found() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new TenantFolder()))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
         .willThrow(new ApplicationPageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -69,7 +69,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_associated_to_application() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new TenantFolder()))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
         .willThrow(new ApplicationPageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -79,7 +79,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_existing() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new TenantFolder()))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
         .willThrow(new PageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -89,7 +89,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_500_on_searchException() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new TenantFolder()))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
         .willThrow(new CreationException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -129,7 +129,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_page_is_not_found() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new TenantFolder()))
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
         .willThrow(new ApplicationPageNotFoundException(""));
 
         servlet.doGet(hsRequest, hsResponse);
@@ -139,8 +139,7 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_route_is_false() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new TenantFolder()))
-                .willReturn(false);
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
 
         servlet.doGet(hsRequest, hsResponse);
 

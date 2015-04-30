@@ -15,7 +15,7 @@ import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.livingapps.exception.CreationException;
@@ -24,13 +24,13 @@ public class ApplicationRouter {
 
     private final ApplicationModelFactory applicationModelFactory;
 
-    protected TenantFolder tenantFolder = new TenantFolder();
+    protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     public ApplicationRouter(final ApplicationModelFactory applicationModelFactory) {
         this.applicationModelFactory = applicationModelFactory;
     }
 
-    public boolean route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final  PageRenderer pageRenderer, final  ResourceRenderer resourceRenderer, final TenantFolder tenantFolder)
+    public boolean route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final  PageRenderer pageRenderer, final  ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor)
             throws CreationException, BonitaException, IOException, ServletException, IllegalAccessException, InstantiationException {
 
         final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
@@ -71,7 +71,7 @@ public class ApplicationRouter {
                 return true;
             }
         } else {
-            final File resourceFile = getLayoutResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments.get(0), application.getApplicationLayoutName(), session, tenantFolder);
+            final File resourceFile = getLayoutResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments.get(0), application.getApplicationLayoutName(), session, bonitaHomeFolderAccessor);
             resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile);
         }
 
@@ -82,12 +82,12 @@ public class ApplicationRouter {
             return pathSegments.size() == 2;
     }
 
-    private File getLayoutResourceFile(final  PageRenderer pageRenderer, String resourcePath, final String applicationName, final String layoutName, final APISession apiSession, final TenantFolder tenantFolder) throws IOException, BonitaException {
+    private File getLayoutResourceFile(final  PageRenderer pageRenderer, String resourcePath, final String applicationName, final String layoutName, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException, BonitaException {
         final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(layoutName, apiSession.getTenantId());
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePathWithoutApplicationName(resourcePath, applicationName));
 
-        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+        if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             throw new BonitaException("Unauthorized access to the file " + resourcePath);
         }
         return resourceFile;

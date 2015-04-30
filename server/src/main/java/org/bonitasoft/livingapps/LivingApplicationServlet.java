@@ -1,7 +1,6 @@
 package org.bonitasoft.livingapps;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -30,7 +29,7 @@ public class LivingApplicationServlet extends HttpServlet {
 
         final APISession session = getSession(hsRequest);
         try {
-            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer(), getResourceRenderer(), new TenantFolder())) {
+            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer(), getResourceRenderer(), new BonitaHomeFolderAccessor())) {
                 hsResponse.sendError(404);
             }
         } catch (final ApplicationPageNotFoundException e) {
