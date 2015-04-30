@@ -3,7 +3,6 @@ package org.bonitasoft.console.common.server.page;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
@@ -29,7 +28,6 @@ import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.api.PageAPI;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Rule;
@@ -228,18 +226,13 @@ public class CustomPageServiceTest {
         //given
         final boolean checkIfItAlreadyExists = false;
         doReturn(new Properties()).when(pageAPI).getPageProperties(any(byte[].class), eq(checkIfItAlreadyExists));
-        //when
-        try{
-            final byte[] zipContent = new byte[0];
-            customPageService.getPageProperties(apiSession, zipContent, checkIfItAlreadyExists, 123123L);
-            //then
-            verify(pageAPI, times(0)).getPageByNameAndProcessDefinitionId(anyString(), anyLong());
-        }catch(final Exception e){
-            if (e instanceof AlreadyExistsException) {
-                fail("if checkIfItAlreadyExists parameter is set to false, no AlreadyExistsException can be thrown");
-            }
 
-        }
+        //when
+        final byte[] zipContent = new byte[0];
+        customPageService.getPageProperties(apiSession, zipContent, checkIfItAlreadyExists, 123123L);
+
+        //then
+        verify(pageAPI, times(0)).getPageByNameAndProcessDefinitionId(anyString(), anyLong());
     }
 
 }
