@@ -32,7 +32,6 @@ import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -65,7 +64,7 @@ public class CustomPageServiceTest {
     @Mock
     PageAPI pageAPI;
 
-    @Ignore
+    @Test
     public void should_load_page_return_page_impl() throws Exception {
         // Given
         when(apiSession.getTenantId()).thenReturn(0L);
