@@ -740,6 +740,10 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
+#: main/features/admin/cases/list/cases-list.html
+msgid "Start for"
+msgstr ""
+
 msgid "Started"
 msgstr ""
 
@@ -785,7 +789,7 @@ msgid "The application"
 msgstr ""
 
 #: main/features/admin/processes/details/forms.html
-msgid "The current Process has no Task defined."
+msgid "The current process has no task defined."
 msgstr ""
 
 #: main/features/admin/processes/details/process-connectors.html
