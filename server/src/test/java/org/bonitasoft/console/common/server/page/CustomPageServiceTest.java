@@ -1,19 +1,27 @@
 package org.bonitasoft.console.common.server.page;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-import groovy.lang.GroovyClassLoader;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -27,8 +35,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import groovy.lang.GroovyClassLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
@@ -53,6 +59,12 @@ public class CustomPageServiceTest {
 
     @Mock
     PageAPI pageAPI;
+
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private PageContext pageContext;
 
     @Test
     public void should_load_page_return_page_impl() throws Exception {
@@ -80,6 +92,7 @@ public class CustomPageServiceTest {
         assertNotNull(pageController);
     }
 
+
     @Test
     public void should_load_rest_api_page_return_api_impl() throws Exception {
         // Given
@@ -88,7 +101,7 @@ public class CustomPageServiceTest {
         final File pageDir = pageFile.getParentFile();
         assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
-        doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
+        doReturn(pageFile).when(customPageService).getPageFile(any(File.class),anyString());
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
         doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
         doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
@@ -99,7 +112,7 @@ public class CustomPageServiceTest {
 
         // When
         final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
-        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider, CustomPageService.PAGE_CONTROLLER_FILENAME);
         final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
 
         // Then
@@ -211,6 +224,54 @@ public class CustomPageServiceTest {
 
         // Then
         verify(compoundPermissionsMapping).setPropertyAsSet("customPage1", customPagePermissions);
+    }
+
+    @Test
+    public void should_retrieve_class_file() throws Exception {
+        // Given
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getName()).thenReturn("page1");
+        when(apiSession.getTenantId()).thenReturn(0L);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/page.zip"));
+        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
+        when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page1"));
+
+        // When
+        customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
+        final File file = customPageService.getPageFile(pageResourceProvider.getPageDirectory(), "readme.txt");
+
+        // Validate
+        assertThat(file).as("should return file").exists();
+    }
+
+    @Test
+    public void should_register_restApiPage() throws Exception {
+        // Given
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getName()).thenReturn("page2");
+        when(apiSession.getTenantId()).thenReturn(0L);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/pageRestApi.zip"));
+        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
+        when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page2"));
+
+        final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
+
+        // When
+        customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider, "RestResource.groovy");
+
+        // then
+        final RestApiController restApiController = restApiControllerClass.newInstance();
+        final Serializable serializable = restApiController.doHandle(request, pageResourceProvider, pageContext);
+        assertThat(serializable).as("should return result").isEqualTo("RestResource.groovy!");
     }
 
 }

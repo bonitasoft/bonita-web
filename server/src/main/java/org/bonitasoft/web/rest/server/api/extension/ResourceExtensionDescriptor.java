@@ -11,4 +11,5 @@ public interface ResourceExtensionDescriptor {
 
     String getPageName();
 
+    String getClassFileName();
 }

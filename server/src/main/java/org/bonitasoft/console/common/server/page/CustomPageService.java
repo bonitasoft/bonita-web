@@ -91,7 +91,7 @@ public class CustomPageService {
         if (!pageResourceProvider.getPageDirectory().exists()) {
             retrievePageZipContent(apiSession, pageResourceProvider);
         } else {
-            final File timestampFile = new File(pageFolder, LASTUPDATE_FILENAME);
+            final File timestampFile = getPageFile(pageFolder, LASTUPDATE_FILENAME);
             final long lastUpdateTimestamp = getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
             if (timestampFile.exists()) {
                 final String timestampString = FileUtils.readFileToString(timestampFile);
@@ -113,14 +113,14 @@ public class CustomPageService {
         return pageClassLoader.parseClass(pageControllerFile);
     }
 
-    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider)
+    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider, String classFileName)
             throws CompilationFailedException, IOException {
-        final File PageControllerFile = getGroovyPageFile(pageResourceProvider.getPageDirectory());
+        final File PageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(),classFileName);
         return pageClassLoader.parseClass(PageControllerFile);
     }
 
     public void verifyPageClass(final File tempPageDirectory) throws IOException, CompilationFailedException {
-        final File pageControllerFile = new File(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
+        final File pageControllerFile = getPageFile(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
         if (pageControllerFile.exists()) {
             final GroovyClassLoader pageClassLoader = new GroovyClassLoader();
             final File customPageLibDirectory = getCustomPageLibDirectory(tempPageDirectory);
@@ -173,7 +173,7 @@ public class CustomPageService {
             final ClassLoader parentClassLoader;
             if (customPageLibDirectory.exists()) {
                 File libTempFolder = null;
-                libTempFolder = new File(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getTempFolder(), pageResourceProvider.getPageName()
+                libTempFolder = getPageFile(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getTempFolder(), pageResourceProvider.getPageName()
                         + Long.toString(new Date().getTime()));
                 // FileUtils.copyDirectory(customPageLibDirectory, libTempFolder);
                 removePageLibTempFolder(pageResourceProvider.getPageName());
@@ -236,7 +236,7 @@ public class CustomPageService {
         final byte[] pageContent = pageAPI.getPageContent(page.getId());
         FileUtils.writeByteArrayToFile(pageResourceProvider.getTempPageFile(), pageContent);
         UnzipUtil.unzip(pageResourceProvider.getTempPageFile(), pageResourceProvider.getPageDirectory().getPath(), true);
-        final File timestampFile = new File(pageResourceProvider.getPageDirectory(), LASTUPDATE_FILENAME);
+        final File timestampFile = getPageFile(pageResourceProvider.getPageDirectory(), LASTUPDATE_FILENAME);
         long lastUpdateTimestamp = 0L;
         if (page.getLastModificationDate() != null) {
             lastUpdateTimestamp = page.getLastModificationDate().getTime();
@@ -253,11 +253,15 @@ public class CustomPageService {
     }
 
     public File getGroovyPageFile(final File pageDirectory) {
-        return new File(pageDirectory, PAGE_CONTROLLER_FILENAME);
+        return getPageFile(pageDirectory, PAGE_CONTROLLER_FILENAME);
+    }
+
+    public File getPageFile(File pageDirectory, String fileName) {
+        return new File(pageDirectory, fileName);
     }
 
     protected File getCustomPageLibDirectory(final File pageDirectory) {
-        return new File(pageDirectory, PAGE_LIB_DIRECTORY);
+        return getPageFile(pageDirectory, PAGE_LIB_DIRECTORY);
     }
 
     protected long getPageLastUpdateDateFromEngine(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException {

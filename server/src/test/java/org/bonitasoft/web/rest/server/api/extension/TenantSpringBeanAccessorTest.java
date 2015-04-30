@@ -1,4 +1,4 @@
-package org.bonitasoft.web.rest.server.api.custom;
+package org.bonitasoft.web.rest.server.api.extension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,8 +6,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
-import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.junit.Test;
 
 
