@@ -87,10 +87,8 @@ public class FormDefinitionAPIImplIT extends FormsTestCase {
 
     private ProcessAPI processAPI;
 
-    @Override
     @Before
     public void setUp() throws Exception {
-        super.setUp();
 
         formBuilder = FormBuilderImpl.getInstance();
 
@@ -121,12 +119,10 @@ public class FormDefinitionAPIImplIT extends FormsTestCase {
         context.put(FormServiceProviderUtil.API_SESSION, getSession());
     }
 
-    @Override
     @After
     public void tearDown() throws Exception {
 
         processAPI.deleteProcessDefinition(bonitaProcess.getId());
-        super.tearDown();
     }
 
     @Test

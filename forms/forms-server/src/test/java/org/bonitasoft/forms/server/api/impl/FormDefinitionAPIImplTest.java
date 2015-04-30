@@ -124,7 +124,7 @@ public class FormDefinitionAPIImplTest {
 
     @Before
     public void before() throws Exception {
-        System.setProperty("bonita.home", "target/bonita-home/bonita");
+        System.setProperty("bonita.home", "target/bonita-home");
         doReturn(urlContext).when(context).get(FormServiceProviderUtil.URL_CONTEXT);
         doReturn(apiSession).when(context).get(FormServiceProviderUtil.API_SESSION);
         doReturn(TENANT_ID).when(apiSession).getTenantId();

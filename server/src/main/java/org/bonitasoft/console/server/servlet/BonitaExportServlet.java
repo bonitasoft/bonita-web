@@ -88,7 +88,9 @@ abstract class BonitaExportServlet extends HttpServlet {
             throw new ServletException(e.getMessage(), e);
         } finally {
             try {
-                out.close();
+                if (out != null) {
+                    out.close();
+                }
             } catch (final Exception e) {
                 getLogger().log(Level.SEVERE, e.getMessage(), e);
             }

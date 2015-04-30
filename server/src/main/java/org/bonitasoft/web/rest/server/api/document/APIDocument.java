@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -142,7 +142,7 @@ public class APIDocument extends ConsoleAPI<DocumentItem> {
             DocumentItem returnedItem = new DocumentItem();
             if (processInstanceId != -1 && documentName != null && documentCreationType != null) {
                 if (path != null && !path.isEmpty()) {
-                    returnedItem = getDataStore().createDocument(processInstanceId, documentName, documentCreationType, path, new TenantFolder());
+                    returnedItem = getDataStore().createDocument(processInstanceId, documentName, documentCreationType, path, new BonitaHomeFolderAccessor());
                 } else if (urlPath != null && !urlPath.isEmpty()) {
                     returnedItem = getDataStore().createDocumentFromUrl(processInstanceId, documentName, documentCreationType, urlPath);
                 }

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.spy;
 
 import java.io.File;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
@@ -31,7 +31,7 @@ public class DocumentDatastoreTest {
     private DocumentDatastore documentDatastore;
 
     @Mock
-    private TenantFolder tenantFolder;
+    private BonitaHomeFolderAccessor tenantFolder;
 
     @Test
     public void should_verify_authorisation_for_the_given_document_path() throws

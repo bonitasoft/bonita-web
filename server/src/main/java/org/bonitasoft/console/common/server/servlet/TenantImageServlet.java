@@ -26,7 +26,7 @@ import org.bonitasoft.engine.session.APISession;
  * @author Anthony Birembaut
  * 
  */
-public class TenantImageServlet extends AttachmentImageServlet {
+public class TenantImageServlet extends ImageDownloadServlet {
 
     /**
      * UID

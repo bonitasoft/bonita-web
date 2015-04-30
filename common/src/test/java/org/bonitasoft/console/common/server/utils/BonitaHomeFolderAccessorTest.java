@@ -16,13 +16,13 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TenantFolderTest {
+public class BonitaHomeFolderAccessorTest {
 
     @Mock
     private WebBonitaConstantsUtils webBonitaConstantsUtils;
 
     @Spy
-    private final TenantFolder tenantFolder = new TenantFolder();
+    private final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
 
     @Before
     public void setUp() throws Exception {

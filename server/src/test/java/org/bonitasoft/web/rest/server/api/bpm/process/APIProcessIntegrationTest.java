@@ -16,6 +16,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
+import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoCriterion;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
@@ -67,8 +68,18 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
 
         // check the process has been correctly uploaded
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
-        assertEquals("Can't add a ProcessItem to APIProcess",
-                processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT).size(), 1);
+        String assertMessage = "Can't add a ProcessItem to APIProcess. ";
+        int actualSize = -1;
+        final List<ProcessDeploymentInfo> processDeploymentInfos = processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT);
+        if (processDeploymentInfos != null) {
+            actualSize = processDeploymentInfos.size();
+            for (ProcessDeploymentInfo processDeploymentInfo : processDeploymentInfos) {
+                assertMessage += "\nprocessDeploymentInfo=" + processDeploymentInfo;
+            }
+        } else {
+            assertMessage += "processDeploymentInfos is null.";
+        }
+        assertEquals(assertMessage, 1, actualSize);
     }
 
     /**
@@ -174,8 +185,11 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
     public void testGetLastProcessVersion() throws Exception {
         // create 3 version of a process
         final TestProcess p1 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "aVersion"));
+        TestProcessFactory.getInstance().add(p1);
         final TestProcess p2 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "aVersion2"));
+        TestProcessFactory.getInstance().add(p2);
         final TestProcess p3 = new TestProcess(TestProcessFactory.getDefaultProcessDefinitionBuilder("multipleVersionsProcess", "anOtherVersion"));
+        TestProcessFactory.getInstance().add(p3);
 
         // map actor John Carpenter on the created processes, then set enable
         p1.addActor(TestUserFactory.getJohnCarpenter()).setEnable(true);
@@ -196,6 +210,11 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         assertEquals("multipleVersionsProcess", searchedProcessItem.getDisplayName());
         assertEquals("anOtherVersion", searchedProcessItem.getVersion());
 
+        //Because TestProcessFactory is based on names, at least 2 out of the three above processes should be cleaned manually.
+        // This could be improved later in TestProcessFactory
+        TestProcessFactory.getInstance().delete(p1);
+        TestProcessFactory.getInstance().delete(p2);
+        TestProcessFactory.getInstance().delete(p3);
     }
 
 }

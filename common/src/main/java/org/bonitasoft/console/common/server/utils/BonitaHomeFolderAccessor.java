@@ -7,14 +7,14 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
-public class TenantFolder {
+public class BonitaHomeFolderAccessor {
 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(TenantFolder.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BonitaHomeFolderAccessor.class.getName());
 
-    public TenantFolder() {
+    public BonitaHomeFolderAccessor() {
     }
 
     public File getTempFile(final String filePath, final Long tenantId) throws IOException {

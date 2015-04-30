@@ -22,8 +22,12 @@
         <to>/APIToolkit/bpm/archivedActivity$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/archivedCase([\?/]|$)</from>
+        <from>^(/portal/custom-page)?/API/bpm/archivedCase([\?]|$)</from>
         <to>/APIToolkit/bpm/archivedCase$2</to>
+    </rule>
+    <rule>
+        <from>^(/portal/custom-page)?/API/bpm/archivedCase/([^/]*)$</from>
+        <to>/APIToolkit/bpm/archivedCase/$2</to>
     </rule>
     <rule>
         <from>^(/portal/custom-page)?/API/bpm/archivedComment([\?/]|$)</from>
@@ -50,14 +54,22 @@
         <to>/APIToolkit/bpm/archivedTask$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/archivedUserTask([\?/]|$)</from>
+        <from>^(/portal/custom-page)?/API/bpm/archivedUserTask([\?]|$)</from>
         <to>/APIToolkit/bpm/archivedUserTask$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/bpm/case([\?/]|$)</from>
-        <to>/APIToolkit/bpm/case$2</to>
+        <from>^(/portal/custom-page)?/API/bpm/archivedUserTask/([^/]*)$</from>
+        <to>/APIToolkit/bpm/archivedUserTask/$2</to>
     </rule>
-	<rule>
+    <rule>
+       <from>^(/portal/custom-page)?/API/bpm/case([\?]|$)</from>
+       <to>/APIToolkit/bpm/case$2</to>
+    </rule>
+    <rule>
+       <from>^(/portal/custom-page)?/API/bpm/case/([^/]*)$</from>
+       <to>/APIToolkit/bpm/case/$2</to>
+    </rule>
+    <rule>
         <from>^(/portal/custom-page)?/API/bpm/caseDocument([\?/]|$)</from>
         <to>/APIToolkit/bpm/caseDocument$2</to>
     </rule>

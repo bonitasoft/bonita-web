@@ -8,7 +8,7 @@ import static org.mockito.Mockito.spy;
 
 import java.io.IOException;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -35,7 +35,7 @@ public class ProcessDatastoreTest extends APITestWithMock {
     private ProcessEngineClient processEngineClient;
 
     @Mock
-    private TenantFolder tenantFolder;
+    private BonitaHomeFolderAccessor tenantFolder;
 
     private final ProcessItem processItem = new ProcessItem();
 
