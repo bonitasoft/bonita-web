@@ -73,6 +73,10 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void addCategoryTest() {
+        //before
+        //avoid conflict with addingTwiceSameCategoryIsForbidden
+        TestCategoryFactory.getInstance().clear();
+
         // API call
         final CategoryItem categoryItem = new CategoryItem();
         categoryItem.setName("categoryTest");
@@ -139,8 +143,10 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
+        //given
         CategoryItem categoryItem = aCategoryItem().build();
 
+        //when then exception
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
     }
