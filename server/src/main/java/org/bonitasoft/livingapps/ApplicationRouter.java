@@ -26,6 +26,8 @@ public class ApplicationRouter {
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
+    protected final String THEME_TOKEN = "theme";
+
     public ApplicationRouter(final ApplicationModelFactory applicationModelFactory) {
         this.applicationModelFactory = applicationModelFactory;
     }
@@ -36,34 +38,41 @@ public class ApplicationRouter {
         final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
         final ApplicationModel application = applicationModelFactory.createApplicationModel(parsedRequest.getApplicationName());
 
+        //Test if url contain at least application name
         final List<String> pathSegments = resourceRenderer.getPathSegments(hsRequest.getPathInfo());
         if (pathSegments.isEmpty()) {
             hsResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                    "The name of the page is required.");
+                    "The name of the application is required.");
         }
 
+        //If no page name, redirect to Home page
         if (parsedRequest.getPageToken() == null) {
             hsResponse.sendRedirect(application.getApplicationHomePage());
             return true;
         }
 
+        //If URL finish with '/', send 404 error
         if (hsRequest.getPathInfo().endsWith("/")) {
             hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "Application page url cannot finish with '/' caractere.");
             return true;
         }
 
+        //Deprecated themeResource servlet
         if (hsRequest.getRequestURI().endsWith("themeResource")) {
             forwardTo("/portal/themeResource", hsRequest, hsResponse);
             return true;
         }
 
+        //Deprecated pageResource servlet
         if (hsRequest.getRequestURI().endsWith("pageResource")) {
             forwardTo("/portal/pageResource", hsRequest, hsResponse);
             return true;
         }
 
+
         if (isApplicationPageRequest(pathSegments)) {
+            //Application page request
             if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
                 hsRequest.setAttribute("application", application);
                 hsRequest.setAttribute("customPage", application.getCustomPage(parsedRequest.getPageToken()));
@@ -71,7 +80,8 @@ public class ApplicationRouter {
                 return true;
             }
         } else {
-            final File resourceFile = getLayoutResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments.get(0), application.getApplicationLayoutName(), session, bonitaHomeFolderAccessor);
+            //Layout or theme resource file request
+            final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
             resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile);
         }
 
@@ -82,10 +92,18 @@ public class ApplicationRouter {
             return pathSegments.size() == 2;
     }
 
-    private File getLayoutResourceFile(final  PageRenderer pageRenderer, String resourcePath, final String applicationName, final String layoutName, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException, BonitaException {
-        final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(layoutName, apiSession.getTenantId());
+    private File getResourceFile(final  PageRenderer pageRenderer, String resourcePath, final List<String> pathSegments, final ApplicationModel application, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException, BonitaException {
+
+        String  pageName;
+        if(THEME_TOKEN.equals(pathSegments.get(1))){
+            pageName =  application.getApplicationThemeName();
+        }else{
+            pageName = application.getApplicationLayoutName();
+        }
+
+        final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
-                + getResourcePathWithoutApplicationName(resourcePath, applicationName));
+                + getResourcePath(resourcePath, pathSegments.get(0)));
 
         if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             throw new BonitaException("Unauthorized access to the file " + resourcePath);
@@ -93,9 +111,26 @@ public class ApplicationRouter {
         return resourceFile;
     }
 
-    private String getResourcePathWithoutApplicationName(final String resourcePath, final String applicationName) {
-        //resource path match "/applicationName/filename"
+    private String getResourcePath(final String fullResourcePath, final String applicationName) {
+        //resource path match "/applicationName/{resourcePath}"
+        // or "/applicationName/theme/{resourcePath}"
+        String resourcePath = getResourcePathWithoutApplicationToken(fullResourcePath, applicationName);
+        resourcePath = getResourcePathWithoutThemeToken(resourcePath);
+
+        return resourcePath;
+    }
+
+    private String getResourcePathWithoutApplicationToken(final String resourcePath, final String applicationName) {
+        //resource path match "/applicationName/{resourcePath}"
         return resourcePath.substring(applicationName.length() + 2);
+    }
+
+    private String getResourcePathWithoutThemeToken(final String resourcePath) {
+        //resource path match "theme/{resourcePath}"
+        if (resourcePath.startsWith(THEME_TOKEN)){
+            return resourcePath.substring(THEME_TOKEN.length() + 1);
+        }
+        return resourcePath;
     }
 
     private void forwardTo(final String url, final ServletRequest servletRequest, final ServletResponse servletResponse)

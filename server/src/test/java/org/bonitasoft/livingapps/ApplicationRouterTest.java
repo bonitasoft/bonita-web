@@ -137,6 +137,20 @@ public class ApplicationRouterTest {
     }
 
     @Test
+    public void should_access_Theme_resource() throws Exception {
+        accessAuthorizedPage("HumanResources", "theme/css/file.css");
+        File themeFolder = new File("theme");
+        given(applicationModel.getApplicationThemeName()).willReturn("theme");
+        given(pageRenderer.getPageResourceProvider("theme", 1L)).willReturn(pageResourceProvider);
+        given(pageResourceProvider.getPageDirectory()).willReturn(themeFolder);
+        given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
+
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
+
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"));
+    }
+
+    @Test
     public void should_not_forward_to_the_application_page_template_when_the_page_is_not_in_the_application() throws Exception {
         accessUnknownPage("HumanResources", "leavingRequests");
 
