@@ -16,12 +16,6 @@
     $scope.task = {};
     $scope.message = undefined;
 
-
-    $scope.getInputName = function() {
-      return 'dataToSend.attribute1';
-    };
-
-
     contractSrvc.fetchContract(taskId).then(function(result){
       $scope.contract = result.data;
     });
@@ -30,10 +24,27 @@
       $scope.task = result;
     });
 
+var jsonify = function(data) {
+    var jsonified = {};
+    for (var prop in data) {
+
+        if((typeof data[prop]==='string') && ((data[prop].lastIndexOf("{", 0)===0) || (data[prop].lastIndexOf("[", 0)===0))) {
+            console.log("Jsonification of prop: ", data[prop]);
+            jsonified[prop] = angular.fromJson(data[prop]);
+        } else {
+            jsonified[prop] = data[prop];
+        }
+
+    }
+    return jsonified;
+}
+
 
     $scope.postData = function() {
       $scope.message = undefined;
-      contractSrvc.executeTask(taskId, $scope.dataToSend).then(function(result){
+      var jsonifiedDataToSend = jsonify($scope.dataToSend);
+
+      contractSrvc.executeTask(taskId, jsonifiedDataToSend).then(function(result){
         console.log($window.top.location.href);
         $window.top.location.href = "/bonita";
       }, function(reason){
@@ -42,21 +53,58 @@
     };
 
     $scope.fillData = function() {
-
       for (var prop in $scope.autofill) {
         $scope.dataToSend[prop] = $scope.autofill[prop];
       }
     };
 
 
-
-    var defaultValues = {BOOLEAN : true, INTEGER:0};
-    $scope.generateValue = function(input) {
-      if(input.type==='TEXT') {
-        return input.name;
-      }
-      return defaultValues[input.type];
+    var generateValueForChildrenAttribute = function(input) {
+        var result = $scope.generateValue(input);
+        if(input.type==='TEXT') {
+          return '"'+result+'"';
+        }
+        return result;
     };
+
+
+    $scope.generateValue = function(input) {
+        var result = null;
+
+        if(input.type==='TEXT') {
+          result = input.name;
+        }
+        if(input.type==='BOOLEAN') {
+          result = input.name.length % 2 === 0;
+        }
+        if(input.type==='INTEGER') {
+          result =  input.name.length;
+        }
+        if(input.type==='DECIMAL') {
+          result =  input.name.length + (input.name.length +1) / 10;
+        }
+        if(input.type==='DATE') {
+          result = '"' + new Date().toJSON().slice(0,10) + '"';
+        }
+        if(input.inputs.length>0) {
+           var result = '{';
+          for (var i = 0; i < input.inputs.length; i++) {
+            if(i>0) {
+                result += ',';
+            }
+            result += '"' + input.inputs[i].name + '":' + generateValueForChildrenAttribute(input.inputs[i]);
+          }
+           result+='}';
+        }
+        if(input.multiple) {
+            if(input.type==='TEXT') {
+                result = '"' + result + '"';
+            }
+           result = '[' + result + ']';
+         }
+        return result;
+    };
+
   }])
   .config(['$locationProvider',function($locationProvider) {
     $locationProvider.html5Mode({

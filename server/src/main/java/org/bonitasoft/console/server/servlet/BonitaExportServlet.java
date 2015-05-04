@@ -17,6 +17,7 @@ package org.bonitasoft.console.server.servlet;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,19 +60,7 @@ abstract class BonitaExportServlet extends HttpServlet {
             final byte[] resourceBytes = exportResources(resourcesIDs, apiSession);
 
             // Set response headers
-            response.setCharacterEncoding("UTF-8");
-            response.setHeader("Expires", "0");
-            response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-            response.setHeader("Pragma", "public");
-            response.setContentType("application/octet-stream");
-            final String encodedfileName = URLEncoder.encode(getFileExportName(), "UTF-8");
-            final String userAgent = request.getHeader("User-Agent");
-            if (userAgent != null && userAgent.contains("Firefox")) {
-                response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName);
-            } else {
-                response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedfileName.replaceAll("\\_", " ") + "\"; filename*=UTF-8''"
-                        + encodedfileName);
-            }
+            setResponseHeaders(request, response);
             out = response.getOutputStream();
             out.write(resourceBytes);
             out.flush();
@@ -94,6 +83,22 @@ abstract class BonitaExportServlet extends HttpServlet {
             } catch (final Exception e) {
                 getLogger().log(Level.SEVERE, e.getMessage(), e);
             }
+        }
+    }
+
+    protected void setResponseHeaders(final HttpServletRequest request, final HttpServletResponse response) throws UnsupportedEncodingException {
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Expires", "0");
+        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+        response.setHeader("Pragma", "public");
+        response.setContentType("application/octet-stream");
+        final String encodedfileName = URLEncoder.encode(getFileExportName(), "UTF-8");
+        final String userAgent = request.getHeader("User-Agent");
+        if (userAgent != null && userAgent.contains("Firefox")) {
+            response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName);
+        } else {
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedfileName.replaceAll("\\_", " ") + "\"; filename*=UTF-8''"
+                    + encodedfileName);
         }
     }
 
