@@ -61,8 +61,9 @@ public class ApiExtensionResourceTest {
         doReturn(method).when(request).getMethod();
         doReturn(GET).when(resourceExtensionDescriptor).getMethod();
         doReturn(CUSTOM_PAGE_NAME).when(resourceExtensionDescriptor).getPageName();
+        doReturn(CustomPageService.PAGE_INDEX_NAME).when(resourceExtensionDescriptor).getClassFileName();
 
-        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), CustomPageService.PAGE_INDEX_NAME);
+        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), eq(CustomPageService.PAGE_INDEX_NAME));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -78,7 +79,7 @@ public class ApiExtensionResourceTest {
         doReturn(method).when(request).getMethod();
         doReturn(GET).when(resourceExtensionDescriptor).getMethod();
         doReturn(CUSTOM_PAGE_NAME).when(resourceExtensionDescriptor).getPageName();
-        doReturn("resource.groovy").when(resourceExtensionDescriptor).getPageName();
+        doReturn("resource.groovy").when(resourceExtensionDescriptor).getClassFileName();
 
         doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), eq("resource.groovy"));
 
