@@ -1,6 +1,6 @@
 {
 	"constraints":[
-		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[],"constraintType":"CUSTOM"}
+		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}
 	],
 	"inputs":[
 		{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT","inputs":[]},
