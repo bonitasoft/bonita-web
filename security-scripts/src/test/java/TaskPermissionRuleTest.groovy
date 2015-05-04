@@ -21,10 +21,11 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException
-import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
+import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException
+import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceNotFoundException
 import org.bonitasoft.engine.bpm.flownode.UserTaskInstance
+import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
@@ -129,9 +130,10 @@ public class TaskPermissionRuleTest {
     public void should_get_on_a_archived_task_is_ok() {
         //given
         havingResource("archivedElement")
-        def archivedTask = mock(ArchivedHumanTaskInstance.class)
-        doReturn(currentUserId).when(archivedTask).getAssigneeId()
-        doReturn(archivedTask).when(processAPI).getArchivedActivityInstance(458)
+        def archivedTask = mock(ArchivedFlowNodeInstance.class)
+        doReturn(FlowNodeType.HUMAN_TASK).when(archivedTask).getType()
+        doReturn(currentUserId).when(archivedTask).getExecutedBy()
+        doReturn(archivedTask).when(processAPI).getArchivedFlowNodeInstance(458)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -142,9 +144,10 @@ public class TaskPermissionRuleTest {
     public void should_get_on_a_archived_task_is_not_the_assignee() {
         //given
         havingResource("archivedElement")
-        def archivedTask = mock(ArchivedHumanTaskInstance.class)
-        doReturn(58l).when(archivedTask).getAssigneeId()
-        doReturn(archivedTask).when(processAPI).getArchivedActivityInstance(458)
+        def archivedTask = mock(ArchivedFlowNodeInstance.class)
+        doReturn(FlowNodeType.HUMAN_TASK).when(archivedTask).getType()
+        doReturn(58l).when(archivedTask).getExecutedBy()
+        doReturn(archivedTask).when(processAPI).getArchivedFlowNodeInstance(458)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -155,7 +158,7 @@ public class TaskPermissionRuleTest {
     public void should_get_on_a_archived_task_is_not_found() {
         //given
         havingResource("archivedElement")
-        doThrow(new ActivityInstanceNotFoundException(458)).when(processAPI).getArchivedActivityInstance(458)
+        doThrow(new ArchivedFlowNodeInstanceNotFoundException(458)).when(processAPI).getArchivedFlowNodeInstance(458)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -246,13 +249,14 @@ public class TaskPermissionRuleTest {
 
     @Test
      public void should_GET_an_archivedHumanTask_providing_a_parentTaskId() {
-        def archivedTask = mock(ArchivedHumanTaskInstance.class)
+        def archivedTask = mock(ArchivedFlowNodeInstance.class)
+        doReturn(FlowNodeType.HUMAN_TASK).when(archivedTask).getType()
         doReturn(true).when(apiCallContext).isGET()
         doReturn(null).when(apiCallContext).getResourceName()
         havingFilters([parentTaskId: "4"])
-        doThrow(NotFoundException).when(processAPI).getFlowNodeInstance(4);
-        doReturn(archivedTask).when(processAPI).getArchivedActivityInstance(4)
-        doReturn(currentUserId).when(archivedTask).getAssigneeId()
+        doThrow(NotFoundException).when(processAPI).getFlowNodeInstance(4)
+        doReturn(archivedTask).when(processAPI).getArchivedFlowNodeInstance(4)
+        doReturn(currentUserId).when(archivedTask).getExecutedBy()
 
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then

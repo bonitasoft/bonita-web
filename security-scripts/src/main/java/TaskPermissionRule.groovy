@@ -24,6 +24,7 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ArchivedManualTaskInstance
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ManualTaskInstance
+import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.identity.UserSearchDescriptor
 import org.bonitasoft.engine.search.SearchOptionsBuilder
@@ -130,13 +131,13 @@ class TaskPermissionRule implements PermissionRule {
     }
 
     private boolean isArchivedFlowNodeAccessible(ProcessAPI processAPI, long taskId, long currentUserId, String username) throws NotFoundException {
-        def archivedFlowNodeInstance = processAPI.getArchivedActivityInstance(taskId)
-        if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance) {
-            if (currentUserId == archivedFlowNodeInstance.getAssigneeId()) {
+        def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(taskId)
+        if (FlowNodeType.HUMAN_TASK.equals(archivedFlowNodeInstance.getType())) {
+            if (currentUserId == archivedFlowNodeInstance.getExecutedBy()) {
                 return true
             }
             //get the last flow node in journal
-            if(archivedFlowNodeInstance.getAssigneeId() == 0){
+            if(archivedFlowNodeInstance.getExecutedBy() == 0){
                 try{
                     def instance1 = processAPI.getHumanTaskInstance(archivedFlowNodeInstance.getSourceObjectId())
                     if(currentUserId == instance1.getAssigneeId()){
