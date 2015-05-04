@@ -225,6 +225,7 @@ public class CustomPageServiceTest {
     public void should_GetPageProperties_does_not_throws_already_exist_exception_if_checkIfItAlreadyExists_is_false() throws Exception {
         //given
         final boolean checkIfItAlreadyExists = false;
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(new Properties()).when(pageAPI).getPageProperties(any(byte[].class), eq(checkIfItAlreadyExists));
 
         //when
