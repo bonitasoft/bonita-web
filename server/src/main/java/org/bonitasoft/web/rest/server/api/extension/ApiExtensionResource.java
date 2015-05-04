@@ -52,7 +52,7 @@ public class ApiExtensionResource extends ServerResource {
         if (httpMethod.equalsIgnoreCase(resourceExtensionDescriptor.getMethod())) {
             final HttpServletRequest httpServletRequest = ServletUtils.getRequest(request);
             try {
-                return restApiRenderer.handleRestApiCall(httpServletRequest, resourceExtensionDescriptor.getPageName());
+                return restApiRenderer.handleRestApiCall(httpServletRequest, resourceExtensionDescriptor.getPageName(), resourceExtensionDescriptor.getClassFileName());
             } catch (InstantiationException | IllegalAccessException | IOException | BonitaException e) {
                 throw new BonitaException("error while getting result", e);
             }
