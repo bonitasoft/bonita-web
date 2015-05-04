@@ -5,14 +5,6 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.contract.Type;
@@ -22,12 +14,24 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContractTypeConverterTest {
 
     @Mock
     ContractDefinition contractDefinition;
+
+    long maxSizeForTenant = 1000L;
+
+    long tenantId = 1L;
 
     ContractTypeConverter contractTypeConverter = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
@@ -38,7 +42,7 @@ public class ContractTypeConverterTest {
         input.put("input1", "value1");
         input.put("input2", "value2");
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
 
         assertThat(processedInput).isEqualTo(input);
     }
@@ -49,7 +53,7 @@ public class ContractTypeConverterTest {
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = generateInputMap();
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
 
         assertThat(processedInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
                 entry("inputInteger", 125686181L), entry("inputDecimal", 12.8));
@@ -63,7 +67,7 @@ public class ContractTypeConverterTest {
         final Map<String, Serializable> complexInput = generateInputMap();
         input.put("inputComplex", (Serializable) complexInput);
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
         assertThat(processedInput).containsKey("inputComplex");
         final Map<String, Serializable> processedComplexInput = (Map<String, Serializable>) processedInput.get("inputComplex");
         assertThat(processedComplexInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
@@ -81,7 +85,7 @@ public class ContractTypeConverterTest {
         multipleComplexInput.add((Serializable) complexInput);
         input.put("inputComplex", (Serializable) multipleComplexInput);
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
         assertThat(processedInput).containsKey("inputComplex");
         final List<Serializable> processedMultipleComplexInput = (List<Serializable>) processedInput.get("inputComplex");
         assertThat(processedMultipleComplexInput).hasSize(2);
