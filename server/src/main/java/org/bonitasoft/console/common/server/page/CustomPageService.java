@@ -278,7 +278,8 @@ public class CustomPageService {
     }
 
     public Properties getPageProperties(final APISession apiSession, final byte[] zipContent, final boolean checkIfItAlreadyExists,
-            final Long processDefinitionId) throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException, InvalidPageZipInconsistentException,
+            final Long processDefinitionId) throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException,
+            InvalidPageZipInconsistentException,
             InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
         final PageAPI pageAPI = getPageAPI(apiSession);
         Properties properties;
@@ -286,12 +287,14 @@ public class CustomPageService {
             properties = pageAPI.getPageProperties(zipContent, checkIfItAlreadyExists);
         } else {
             properties = pageAPI.getPageProperties(zipContent, false);
-            try {
-                final String pageName = properties.getProperty(NAME_PROPERTY);
-                pageAPI.getPageByNameAndProcessDefinitionId(pageName, processDefinitionId);
-                throw new AlreadyExistsException("A page with name " + pageName + " already exists for the process " + processDefinitionId);
-            } catch (final PageNotFoundException e) {
-                //Do nothing (if the page was not found, it means a page with the same name doesn't already exist)
+            if (checkIfItAlreadyExists) {
+                try {
+                    final String pageName = properties.getProperty(NAME_PROPERTY);
+                    pageAPI.getPageByNameAndProcessDefinitionId(pageName, processDefinitionId);
+                    throw new AlreadyExistsException("A page with name " + pageName + " already exists for the process " + processDefinitionId);
+                } catch (final PageNotFoundException e) {
+                    //Do nothing (if the page was not found, it means a page with the same name doesn't already exist)
+                }
             }
         }
         return properties;
