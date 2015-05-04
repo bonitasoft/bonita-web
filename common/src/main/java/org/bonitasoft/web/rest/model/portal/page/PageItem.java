@@ -23,8 +23,6 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasCreator;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 /**
@@ -51,6 +49,12 @@ public class PageItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_UPDATED_BY_USER_ID = "updatedBy";
     
     public static final String ATTRIBUTE_CONTENT_NAME = "contentName";
+
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FILTERS
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final String FILTER_CONTENT_TYPE = "contentType";
 
     public PageItem() {
     }
