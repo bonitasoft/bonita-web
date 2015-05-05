@@ -8,9 +8,10 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -42,8 +43,6 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignRes
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
-import org.bonitasoft.web.rest.server.api.bpm.process.script.ProcessScriptResource;
-import org.bonitasoft.web.rest.server.api.bpm.process.script.ProcessScriptResourceFinder;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.junit.Before;
@@ -204,14 +203,6 @@ public class FinderFactoryTest {
         doReturn(processAPI).when(userTaskContractResourceFinder).getProcessAPI(any(Request.class));
         final ServerResource serverResource = userTaskContractResourceFinder.create(request, response);
         assertThat(serverResource).isInstanceOf(UserTaskContractResource.class);
-    }
-
-    @Test
-    public void should_return_ProcessScriptResource_for_ProcessScriptResourceFinder() {
-        final ProcessScriptResourceFinder processScriptResourceFinder = spy(new ProcessScriptResourceFinder());
-        doReturn(processAPI).when(processScriptResourceFinder).getProcessAPI(any(Request.class));
-        final ServerResource serverResource = processScriptResourceFinder.create(request, response);
-        assertThat(serverResource).isInstanceOf(ProcessScriptResource.class);
     }
 
     @Test
