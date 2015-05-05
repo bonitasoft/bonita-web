@@ -48,8 +48,6 @@ import org.bonitasoft.engine.session.APISession;
  */
 public class ProcessFormServlet extends HttpServlet {
 
-    private static final String PAGE_SERVLET_MAPPING = "/portal/resource/";
-
     /**
      * UUID
      */
@@ -59,6 +57,8 @@ public class ProcessFormServlet extends HttpServlet {
      * Logger
      */
     private static Logger LOGGER = Logger.getLogger(ProcessFormServlet.class.getName());
+
+    private static final String PAGE_SERVLET_MAPPING = "/portal/resource/";
 
     private static final String PROCESS_PATH_SEGMENT = "process";
 
@@ -82,7 +82,6 @@ public class ProcessFormServlet extends HttpServlet {
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-
         long processDefinitionId = -1L;
         long processInstanceId = -1L;
         long taskInstanceId = -1L;

@@ -53,6 +53,8 @@ public class PageServlet extends HttpServlet {
 
     public static final String RESOURCE_PATH_SEPARATOR = "/content";
 
+    public static final String API_PATH_SEPARATOR = "/API";
+
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -84,6 +86,10 @@ public class PageServlet extends HttpServlet {
             } catch (final Exception e) {
                 handleException(response, mappingKey, e);
             }
+        } else if (pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
+            //Support relative calls to the REST API from the forms using ../API/
+            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
+            request.getRequestDispatcher(apiPath).forward(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "/content is expected in the URL after the page mapping key");
         }
@@ -93,7 +99,8 @@ public class PageServlet extends HttpServlet {
             final String mappingKey, final String resourcePath)
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
-            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request));
+            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request),
+                    isNotResourcePath(resourcePath));
             if (page.getURL() != null) {
                 displayExternalPage(request, response, page.getURL());
             } else if (page.getPageId() != null) {
@@ -116,8 +123,7 @@ public class PageServlet extends HttpServlet {
             final PageReference page, final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
-            if (resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
-                    || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath)) {
+            if (isNotResourcePath(resourcePath)) {
                 //TODO pass the query params in order to put them in the Context of the custom page
                 pageRenderer.displayCustomPage(request, response, apiSession, page.getPageId());
             } else {
@@ -126,6 +132,11 @@ public class PageServlet extends HttpServlet {
         } catch (final PageNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the page with ID " + page.getPageId());
         }
+    }
+
+    private boolean isNotResourcePath(final String resourcePath) {
+        return resourcePath == null || CustomPageService.PAGE_INDEX_FILENAME.equals(resourcePath)
+                || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath);
     }
 
     protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final Long pageId, final String resourcePath)
@@ -145,11 +156,18 @@ public class PageServlet extends HttpServlet {
     protected void handleException(final HttpServletResponse response, final String mappingKey, final Exception e)
             throws ServletException {
         try {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                final String message = "Error while trying to display a page for key " + mappingKey;
-                LOGGER.log(Level.WARNING, message, e);
+            if (e instanceof IllegalArgumentException) {
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.log(Level.FINE, "The parameters passed to the servlet are invalid.", e);
+                }
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            } else {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    final String message = "Error while trying to display a page for key " + mappingKey;
+                    LOGGER.log(Level.WARNING, message, e);
+                }
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             }
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         } catch (final IOException ioe) {
             throw new ServletException(ioe);
         }
